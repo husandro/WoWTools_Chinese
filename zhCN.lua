@@ -1,5 +1,4 @@
 local id, e = ...
-if e.Not_Is_EU then return end
 
 local tab={
     ["101_CutsceneName_Ref"] = "纳兹乌罗",

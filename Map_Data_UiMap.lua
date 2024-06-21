@@ -1,17 +1,8 @@
 local id, e = ...
-if e.Not_Is_EU then return end
-
-
 
 
 --https://wago.tools/db2/UiMap?build=11.0.0.55120&locale=zhCN
 local tab={
-
-
-
-
-
-
 [1]= '杜隆塔尔',
 [2]= '火刃集会所',
 [3]= '提拉加德城堡',

@@ -1,9 +1,5 @@
 local id, e= ...
-e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
-
-if e.Not_Is_EU then
-    return
-end
+--e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
 
 e.strText={}--主要，汉化
 
