@@ -1,0 +1,19 @@
+## Interface: 110000
+## Title: |cffff00ffWoW|r|cff00ff00Tools|rChinese
+## Author: husandro
+## Version: 1
+## Notes: |A:Icon-WoW:0:0|aWoW |cffff0000中文化|r|n|cffffd100|A:communities-icon-invitemail:0:0|ahusandro@qq.com|r|n|A:WoWShare-TwitterLogo:0:0|a|cff00ccffhttps://www.curseforge.com/wow/addons/wowtools_Chinese|r
+## SavedVariables: WoWDateChinese
+## DefaultState: Enabled
+
+##繁体，简体，不会载加
+##界面，中文化，主要function
+WoWTools_Chinese.lua
+
+Map\Map.lua
+Map\Map_Data_Group.lua
+Map\Map_Data_UiMap.lua
+
+
+Data\Global_Strings_zhCN.lua
+Data\Data_Achievement.lua
