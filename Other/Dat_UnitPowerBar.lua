@@ -1,8 +1,5 @@
-
 local id, e = ...
-if (e.Player.region~=3 and not e.Is_PTR) or LOCALE_zhCN or LOCALE_zhTW then
-    return
-end
+if e.Not_Is_EU then return end
 --[ID]= {'Name_lang', 'Cost_lang', 'OutOfError_lang', 'ToolTip_lang'},
 
 local tab={

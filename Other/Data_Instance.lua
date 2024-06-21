@@ -1,7 +1,8 @@
 local id, e = ...
-if (e.Player.region~=3 and not e.Is_PTR) or LOCALE_zhCN or LOCALE_zhTW then
-    return
-end
+if e.Not_Is_EU then return end
+
+
+
 --https://wago.tools/db2/JournalInstance?locale=zhCN&build=11.0.0.55120
 local instanceTab={
     [63]= {'死亡矿井', '曾经有人称死亡矿井的黄金乃是暴风城国库储备的三分之一。在第一次大战的混乱中，矿井遭到了遗弃，闹鬼不断、无人问津，直到迪菲亚兄弟会的到来——他们曾经是一群工人，如今却成了强盗，他们将这迷宫变成了自己的行动基地，来实施对暴风城的破坏活动。'},

@@ -1563,7 +1563,7 @@ local function Init()
                     else
                         local PLAYER_FACTION_NAME= UnitFactionGroup('player')=='Alliance' and PLAYER_FACTION_COLOR_ALLIANCE:WrapTextInColorCode('联盟') or (UnitFactionGroup('player')=='Horde' and PLAYER_FACTION_COLOR_HORDE:WrapTextInColorCode('部落')) or '中立'
                         set(self.Description, format('招募战友，与你一起游玩《魔兽世界》！|n你每%2$d天可以邀请%1$d个战友。', maxRecruitLinkUses, daysInCycle))
-                        set(self.FactionAndRealm, format('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', PLAYER_FACTION_NAME, e.Player.realm))
+                        set(self.FactionAndRealm, format('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', PLAYER_FACTION_NAME, GetRealmName()))
                     end
 
                     if recruitsAreMaxed then
@@ -3159,7 +3159,7 @@ local function Init()
         set(StableFrame.ActivePetList.ListName, '激活')
         set(StableFrame.StabledPetList.ListName, '兽栏')
         dia('RELEASE_PET', {text ='你确定要|cnRED_FONT_COLOR:永久释放|r你的宠物吗？你将永远无法再召唤此宠物。', button1='|cnRED_FONT_COLOR:确定|r', button2='|cnGREEN_FONT_COLOR:取消|r',})
-        StableFrameTitleText:SetFormattedText('%s%s%s|r 的宠物', e.Icon.player, e.Player.col, e.Player.name)
+        --StableFrameTitleText:SetFormattedText('%s%s%s|r 的宠物', e.Icon.player, e.Player.col, e.Player.name)
         hooksecurefunc(StableFrame.PetModelScene.PetInfo, 'SetPet', function(self, petData)
             if petData.isExotic then
                 set(self.Exotic, '特殊')
