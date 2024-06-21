@@ -3,7 +3,7 @@ local addName= BUG_CATEGORY15
 local Save={}
 
 --e.disbledCN=true,--禁用汉化
-
+--WoW_Tools_Chinese_CN(text, tab) 全局
 
 local function font(lable)
     if lable then
@@ -2051,6 +2051,28 @@ local function Init()
             end
         end
     end)
+
+--成就 11版本， 错误
+hooksecurefunc(ACHIEVEMENT_TRACKER_MODULE, 'SetBlockHeader', function(self, block, text)--Blizzard_AchievementObjectiveTracker.lua
+    local name= e.cn(text, true)--汉化
+    local icon= select(10, GetAchievementInfo(block.id))--local achievementID = block.id
+    if name or icon then
+        text= '|T'..icon..':0|t'..(name or text)
+        local height = self:SetStringText(block.HeaderText, text, nil, OBJECTIVE_TRACKER_COLOR["Header"], block.isHighlighted)
+        block.height = height
+    end
+end)
+hooksecurefunc(ACHIEVEMENT_TRACKER_MODULE, 'AddObjective', function(self, block, objectiveKey, text, lineType, useFullHeight, dashStyle, colorStyle, adjustForNoText, overrideHeight)
+    local name= e.cn(text)--汉化
+    if name then
+        local line = self:GetLine(block, objectiveKey, lineType)
+        local textHeight = self:SetStringText(line.Text, name, useFullHeight, colorStyle, block.isHighlighted)
+        local height = overrideHeight or textHeight
+        line:SetHeight(height)
+    end
+end)  
+
+
     C_Timer.After(2, function()
 
 
@@ -7560,6 +7582,12 @@ panel:SetScript("OnEvent", function(self, event, arg1)
                 })
 
 
+                function WoW_Tools_Chinese_CN(text, tab)
+                    if tab then
+
+                    end
+                    return e.strText[text]
+                end
         elseif arg1 then
             if EnabledTab then
                 table.insert(EnabledTab, arg1)
