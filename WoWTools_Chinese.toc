@@ -13,7 +13,10 @@ WoWTools_Chinese.lua
 Func.lua
 
 Data_zhCN.lua
-Data_Achievement.lua
+
+Achievement.lua
+Achievement_Data.lua
+
 
 Map.lua
 Map_Data_Group.lua

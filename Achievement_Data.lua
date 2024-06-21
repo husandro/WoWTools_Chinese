@@ -11350,19 +11350,6 @@ end
 
 
 
-
-
-local function set(label, text)
-    if label then
-        text= text or label:GetText()
-        text= e.strText[text]
-        if text then
-            label:SetText(text)
-        end
-    end
-end
-
-
 --InGuildView() 是否，查看，公会
 --local achievementFunctions = ACHIEVEMENT_FUNCTIONS
 local function InGuildView()
@@ -11388,13 +11375,13 @@ local function Init_AchievementUI()
     AchievementFrame.SearchBox.Instructions:SetText('搜索')
     AchievementFrameSummaryAchievementsHeaderTitle:SetText('近期成就')
     AchievementFrameSummaryCategoriesHeaderTitle:SetText('进展总览')
-    set(AchievementFrameSummaryCategoriesStatusBarTitle)  
-    set(AchievementFrameFilterDropDownText)--全部，已获得，未完成
+    e.set(AchievementFrameSummaryCategoriesStatusBarTitle)  
+    e.set(AchievementFrameFilterDropDownText)--全部，已获得，未完成
 
     --标题
     AchievementFrame.Header.Title:SetText('成就点数')
     hooksecurefunc('AchievementFrame_RefreshView', function(self)--Blizzard_AchievementUI.lua
-        set(AchievementFrame.Header.Title)
+        e.set(AchievementFrame.Header.Title)
     end)
 
     --近期成就
@@ -11413,8 +11400,8 @@ local function Init_AchievementUI()
                     achievementID = select(i, ...)
                     if achievementID then
                         _, name, _, _, _, _, _, description = GetAchievementInfo(achievementID)
-                        set(button.Label, name)
-                        set(button.Description, description)
+                        e.set(button.Label, name)
+                        e.set(button.Description, description)
                     end
                 else
                     local tAchievements
@@ -11432,8 +11419,8 @@ local function Init_AchievementUI()
                         if ( completed ) then
                             defaultAchievementCount = defaultAchievementCount+1
                         else
-                            set(button.Label, name)
-                            set(button.Description, description)
+                            e.set(button.Label, name)
+                            e.set(button.Description, description)
                             defaultAchievementCount = defaultAchievementCount+1
                             button.tooltipTitle = "未获得的成就"
                             button.tooltip = "达到每个成就所要求的条件，赢取成就点数、奖励和荣耀！"
@@ -11449,7 +11436,7 @@ local function Init_AchievementUI()
             local statusBar = _G["AchievementFrameSummaryCategoriesCategory"..i]
             if statusBar and i <= #categories then
                 local categoryName = GetCategoryInfo(categories[i])
-                set(statusBar.Label, categoryName)
+                e.set(statusBar.Label, categoryName)
             end
         end
     end)
@@ -11461,7 +11448,7 @@ local function Init_AchievementUI()
         end
         for _, btn in pairs(frame:GetFrames() or {}) do
             if btn.Button then
-                set(btn.Button.Label, btn.Button.name)
+                e.set(btn.Button.Label, btn.Button.name)
                 --print(btn.Button.Label:GetText(), e.cn(btn.Button.name))
             end
         end
@@ -11490,10 +11477,10 @@ local function Init_AchievementUI()
         else            
             _, name, _, _, _, _, _, description, _, _, rewardText = GetAchievementInfo(self.id)--Social
         end
-        set(self.Label, name)
-        set(self.Description, description)
-        set(self.HiddenDescription, description)
-        set(self.Reward, rewardText)        
+        e.set(self.Label, name)
+        e.set(self.Description, description)
+        e.set(self.HiddenDescription, description)
+        e.set(self.Reward, rewardText)        
     end)
     hooksecurefunc('AchievementObjectives_DisplayCriteria', function(objectivesFrame, ID)--条件
         if not objectivesFrame or not ID then
@@ -11518,7 +11505,7 @@ local function Init_AchievementUI()
                 metas = metas + 1
                 local achievementName = select(2, GetAchievementInfo(assetID))
                 local metaCriteria = objectivesFrame:GetMeta(metas)
-                set(metaCriteria.Label, achievementName)
+                e.set(metaCriteria.Label, achievementName)
 
             elseif not (bit.band(flags, EVALUATION_TREE_FLAG_PROGRESS_BAR) == EVALUATION_TREE_FLAG_PROGRESS_BAR) then
                 textStrings = textStrings + 1
@@ -11548,7 +11535,7 @@ local function Init_AchievementUI()
             if ( index <= numResults ) then
                 local achievementID = GetFilteredAchievementID(index)
                 local name= achievementID and select(2, GetAchievementInfo(achievementID))
-                set(searchPreview.Name, name)
+                e.set(searchPreview.Name, name)
             end
         end
 
@@ -11558,7 +11545,7 @@ local function Init_AchievementUI()
     end)
     hooksecurefunc(AchievementFullSearchResultsButtonMixin, 'Init', function(self)
         local _, name, _, completed = GetAchievementInfo(self.achievementID)
-        set(self.Name, name)
+        e.set(self.Name, name)
 
         if ( completed ) then
             self.ResultType:SetText('已获得')
@@ -11598,7 +11585,7 @@ local function Init_AchievementUI()
                 end
             else
                 local name= select(2, GetAchievementInfo(category))
-                set(self.Text, name)
+                e.set(self.Text, name)
             end
         end
     end)
@@ -11609,8 +11596,8 @@ local function Init_AchievementUI()
     --比较
     hooksecurefunc(AchievementComparisonTemplateMixin, 'Init', function(self, elementData)
         local _, name, _, _, _, _, _, description = GetAchievementInfo(elementData.category, elementData.index)
-        set(self.Player.Label, name)
-        set(self.Player.Description, description)    
+        e.set(self.Player.Label, name)
+        e.set(self.Player.Description, description)    
         if not GetAchievementComparisonInfo(self.id) then
             self.Friend.Status:SetText('未完成')
         end        
@@ -11638,7 +11625,7 @@ local function Init_AchievementUI()
             
         else
             local name= select(2, GetAchievementInfo(category))            
-            set(self.Text, name)
+            e.set(self.Text, name)
         end
     end)
 

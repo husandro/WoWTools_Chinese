@@ -2,7 +2,9 @@ local id, e= ...
 --e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
 
 e.strText={}--主要，汉化
---取得中文 
+--WoW_Tools_Chinese_CN(text, notFind_notReturn, tab) = e.cn(...) 全局 Func.lua
+
+
 function e.cn(text, notFind_notReturn, tab)--{gossipOptionID=, questID=}
     if notFind_notReturn then
         return e.strText[text]
@@ -11,35 +13,96 @@ function e.cn(text, notFind_notReturn, tab)--{gossipOptionID=, questID=}
     end
 end
 
---local battleTag= select(2, BNGetInfo())
---local baseClass= UnitClassBase('player')
---local playerRealm= GetRealmName():gsub(' ', '')
-e.Player={
-    class= UnitClassBase('player'),
-    sex= UnitSex("player"),
-}
-    --[[realm= playerRealm,
-    Realms= {},--多服务器
-    name_realm= UnitName('player')..'-'..playerRealm,
-    name= UnitName('player'),
-    sex= UnitSex("player"),
-    class= baseClass,
-    r= GetClassColor(baseClass),
-    g= select(2,GetClassColor(baseClass)),
-    b= select(3, GetClassColor(baseClass)),
-    col= '|c'..select(4, GetClassColor(baseClass)),
-    cn= GetCurrentRegion()==5,
-    region= GetCurrentRegion(),--1US (includes Brazil and Oceania) 2Korea 3Europe (includes Russia) 4Taiwan 5China
-    --Lo= GetLocale(),
-    week= GetWeek(),--周数
-    guid= UnitGUID('player'),
-    levelMax= UnitLevel('player')==MAX_PLAYER_LEVEL,--玩家是否最高等级
-    level= UnitLevel('player'),--UnitEffectiveLevel('player')
-    husandro= battleTag== '古月剑龙#5972' or battleTag=='SandroChina#2690' or battleTag=='Sandro126#2297' or battleTag=='Sandro163EU#2603',
-    faction= UnitFactionGroup('player'),--玩家, 派系  "Alliance", "Horde", "Neutral"
-    Layer= nil, --位面数字
-    --useColor= nil,--使用颜色
-    L={},--多语言，文本]]
+function e.font(lable)
+    if lable then
+        local _, size2, fontFlag2= lable:GetFont()
+        lable:SetFont('Fonts\\ARHei.ttf', size2, fontFlag2 or 'OUTLINE')
+    end
+end
+
+local function set(label, text)
+    text= text or label:GetText()
+    text= e.strText[text]
+    if text then
+        label:SetText(text)
+    end
+end
+function e.set(label, text, affer, setFont)
+    if label then
+        if setFont then
+            e.font(lable)
+        end
+        if affer then
+            C_Timer.After(affer, function() set(label, text) end)
+        else
+            set(label, text)
+        end
+    end
+end
+
+function e.dia(string, tab)
+    if StaticPopupDialogs[string] then
+        for name, text in pairs(tab) do
+            if StaticPopupDialogs[string][name] then
+                StaticPopupDialogs[string][name]= text
+            end
+        end
+    end
+end
+
+
+function e.hookLable(label, setFont)
+    if label then
+        if setFont then
+            e.font(label)
+        end
+        e.set(lable)
+        hooksecurefunc(lable, 'SetText', function(self, name)
+            set(self, name)
+        end)
+    end
+end
+
+function e.hookButton(btn, setFont)
+    local label= btn and btn:GetFontString()
+    if label then
+        if setFont then
+            e.font(label)
+        end
+        e.set(label)
+        hooksecurefunc(label, 'SetText', function(self, name)
+            set(self, name)
+        end)
+    end
+end
+
+
+
+function e.hookDia(string, text, func)
+    if StaticPopupDialogs[string] then
+        if StaticPopupDialogs[string][text] then
+            hooksecurefunc(StaticPopupDialogs[string], text, func)
+        else
+            StaticPopupDialogs[string][text]=func
+        end
+    end
+end
+
+function e.reg(self, text, index)
+    if self then
+        for i, region in pairs({self:GetRegions()}) do
+            if region:GetObjectType()=='FontString' and (index==i or not index) then
+                text= index==i and text or e.strText[region:GetText()]
+                set(region, text)
+                if index then
+                    return
+                end
+            end
+        end
+    end
+end
+
+
 
 
 
@@ -160,6 +223,48 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+--local battleTag= select(2, BNGetInfo())
+--local baseClass= UnitClassBase('player')
+--local playerRealm= GetRealmName():gsub(' ', '')
+e.Player={
+    class= UnitClassBase('player'),
+    sex= UnitSex("player"),
+}
+    --[[realm= playerRealm,
+    Realms= {},--多服务器
+    name_realm= UnitName('player')..'-'..playerRealm,
+    name= UnitName('player'),
+    sex= UnitSex("player"),
+    class= baseClass,
+    r= GetClassColor(baseClass),
+    g= select(2,GetClassColor(baseClass)),
+    b= select(3, GetClassColor(baseClass)),
+    col= '|c'..select(4, GetClassColor(baseClass)),
+    cn= GetCurrentRegion()==5,
+    region= GetCurrentRegion(),--1US (includes Brazil and Oceania) 2Korea 3Europe (includes Russia) 4Taiwan 5China
+    --Lo= GetLocale(),
+    week= GetWeek(),--周数
+    guid= UnitGUID('player'),
+    levelMax= UnitLevel('player')==MAX_PLAYER_LEVEL,--玩家是否最高等级
+    level= UnitLevel('player'),--UnitEffectiveLevel('player')
+    husandro= battleTag== '古月剑龙#5972' or battleTag=='SandroChina#2690' or battleTag=='Sandro126#2297' or battleTag=='Sandro163EU#2603',
+    faction= UnitFactionGroup('player'),--玩家, 派系  "Alliance", "Horde", "Neutral"
+    Layer= nil, --位面数字
+    --useColor= nil,--使用颜色
+    L={},--多语言，文本]]
 
 
 
