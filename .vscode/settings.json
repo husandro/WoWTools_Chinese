@@ -12,5 +12,8 @@
         "WoWToolsSave_Chinese",
         "ITEM_UPGRADE_TOOLTIP_FORMAT_STRING",
         "ENCHANTED_TOOLTIP_LINE"
+    ],
+    "Lua.diagnostics.disable": [
+        "undefined-global"
     ]
 }
