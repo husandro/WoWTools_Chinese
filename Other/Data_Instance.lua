@@ -1345,7 +1345,7 @@ local function Init_EncounterJournal()
         EncounterJournalMonthlyActivitiesTab:SetText('旅行者日志')
         EncounterJournalMonthlyActivitiesTab:SetScript('OnEnter', function()
             if not C_PlayerInfo.IsTravelersLogAvailable() then
-                local tradingPostLocation = e.Player.faction == "Alliance" and '暴风城' or '奥格瑞玛'
+                local tradingPostLocation = UnitFactionGroup('player') == "Alliance" and '暴风城' or '奥格瑞玛'
                 GameTooltip_AddBlankLineToTooltip(GameTooltip)
                 GameTooltip_AddErrorLine(GameTooltip, format('拜访%s的商栈，查看旅行者日志。', tradingPostLocation))
                 if AreMonthlyActivitiesRestricted() then

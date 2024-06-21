@@ -392,39 +392,41 @@ local function Init()
         set(ReputationDetailInactiveCheckBoxText, '隐藏')
         set(ReputationDetailAtWarCheckBoxText, '交战状态')
         --11版本
-        --[[hooksecurefunc('ReputationFrame_InitReputationRow', function(factionRow, elementData)
-            local factionIndex = elementData.index
-            local name, description, standingID, _, _, _, _, _, _, _, _, _, _, factionID = GetFactionInfo(factionIndex)
-            name= name and e.strText[name]
-            local factionContainer = factionRow.Container
-            set(factionContainer.Name, name)
-            if not factionID then
-                return
-            end
-
-            local factionStandingtext
-            local isMajorFaction = factionID and C_Reputation.IsMajorFaction(factionID)
-            local repInfo = factionID and C_GossipInfo.GetFriendshipReputation(factionID)
-            if (repInfo and repInfo.friendshipFactionID > 0) then
-                factionStandingtext = e.strText[repInfo.reaction]
-
-            elseif ( isMajorFaction ) then
-                local majorFactionData = C_MajorFactions.GetMajorFactionData(factionID) or {}
-                factionStandingtext = '名望'..majorFactionData.renownLevel
-            else
-                factionStandingtext = e.strText[GetText("FACTION_STANDING_LABEL"..standingID, e.Player.sex)]
-            end
-            if factionStandingtext then
-                set(factionContainer.ReputationBar.FactionStanding, factionStandingtext)
-                factionRow.standingText = factionStandingtext
-            end
-            if ( factionIndex == GetSelectedFaction() ) then
-                if ( ReputationDetailFrame:IsShown() ) then
-                    set(ReputationDetailFactionName, name)
-                    set(ReputationDetailFactionDescription, e.strText[description])
+        if ReputationFrame_InitReputationRow then
+            hooksecurefunc('ReputationFrame_InitReputationRow', function(factionRow, elementData)
+                local factionIndex = elementData.index
+                local name, description, standingID, _, _, _, _, _, _, _, _, _, _, factionID = GetFactionInfo(factionIndex)
+                name= name and e.strText[name]
+                local factionContainer = factionRow.Container
+                set(factionContainer.Name, name)
+                if not factionID then
+                    return
                 end
-            end
-        end)]]
+
+                local factionStandingtext
+                local isMajorFaction = factionID and C_Reputation.IsMajorFaction(factionID)
+                local repInfo = factionID and C_GossipInfo.GetFriendshipReputation(factionID)
+                if (repInfo and repInfo.friendshipFactionID > 0) then
+                    factionStandingtext = e.strText[repInfo.reaction]
+
+                elseif ( isMajorFaction ) then
+                    local majorFactionData = C_MajorFactions.GetMajorFactionData(factionID) or {}
+                    factionStandingtext = '名望'..majorFactionData.renownLevel
+                else
+                    factionStandingtext = e.strText[GetText("FACTION_STANDING_LABEL"..standingID, UnitSex("player"))]
+                end
+                if factionStandingtext then
+                    set(factionContainer.ReputationBar.FactionStanding, factionStandingtext)
+                    factionRow.standingText = factionStandingtext
+                end
+                if ( factionIndex == GetSelectedFaction() ) then
+                    if ( ReputationDetailFrame:IsShown() ) then
+                        set(ReputationDetailFactionName, name)
+                        set(ReputationDetailFactionDescription, e.strText[description])
+                    end
+                end
+            end)
+        end
 
 
 
@@ -446,14 +448,16 @@ local function Init()
 			end
 		end)
 
-        --[[hooksecurefunc('TokenFrame_InitTokenButton',function(_, frame)--Blizzard_TokenUI.lua
+        --11版本
+        if TokenFrame_InitTokenButton then
+        hooksecurefunc('TokenFrame_InitTokenButton',function(_, frame)--Blizzard_TokenUI.lua
 			if frame and frame.Name then
                 local name= e.strText[frame.Name:GetText()]--汉化
                 if name then
                     frame.Name:SetText(name)
                 end
             end
-		end)]]
+		end)
         hooksecurefunc('TokenFrame_Update', function()
 			local f=TokenFrame
 			if not f.ScrollBox:GetView() then
@@ -480,44 +484,46 @@ local function Init()
 
 
 
-    --[[法术 SpellBookFrame.lua
-    hooksecurefunc('SpellBookFrame_Update', function()
-        set(SpellBookFrameTabButton1, '法术')
-        set(SpellBookFrameTabButton2, '专业')
-        set(SpellBookFrameTabButton3, '宠物')
+    --法术 SpellBookFrame.lua 11版本
+    if SpellBookFrame_Update then
+        hooksecurefunc('SpellBookFrame_Update', function()
+            set(SpellBookFrameTabButton1, '法术')
+            set(SpellBookFrameTabButton2, '专业')
+            set(SpellBookFrameTabButton3, '宠物')
 
-        if SpellBookFrame.bookType== BOOKTYPE_SPELL then
-            SpellBookFrame:SetTitle('法术')
-        elseif SpellBookFrame.bookType== BOOKTYPE_PROFESSION then
-            SpellBookFrame:SetTitle('专业')
-        elseif SpellBookFrame.bookType== BOOKTYPE_PET then
-            SpellBookFrame:SetTitle('宠物')
-        end
-    end)
-    hooksecurefunc('SpellBookFrame_UpdatePages', function()
-        local currentPage, maxPages = SpellBook_GetCurrentPage()
-        if ( maxPages == nil or maxPages == 0 ) then
-            return
-        end
-        SpellBookPageText:SetFormattedText('第%d页', currentPage)
-    end)
+            if SpellBookFrame.bookType== BOOKTYPE_SPELL then
+                SpellBookFrame:SetTitle('法术')
+            elseif SpellBookFrame.bookType== BOOKTYPE_PROFESSION then
+                SpellBookFrame:SetTitle('专业')
+            elseif SpellBookFrame.bookType== BOOKTYPE_PET then
+                SpellBookFrame:SetTitle('宠物')
+            end
+        end)
+        hooksecurefunc('SpellBookFrame_UpdatePages', function()
+            local currentPage, maxPages = SpellBook_GetCurrentPage()
+            if ( maxPages == nil or maxPages == 0 ) then
+                return
+            end
+            SpellBookPageText:SetFormattedText('第%d页', currentPage)
+        end)
 
-    hooksecurefunc('UpdateProfessionButton', function(self)
-        local parent = self:GetParent()
-        if not parent.professionInitialized then
-            return
-        end
-        local spellIndex = self:GetID() + parent.spellOffset
-        local spellName, _, spellID = C_Spell.GetSpellBookItemName(spellIndex, SpellBookFrame.bookType)
-        set(self.spellString, e.strText[spellName])
-        if spellID then
-            local spell = Spell:CreateFromSpellID(spellID)
-            spell:ContinueOnSpellLoad(function()
-                local text= spell:GetSpellSubtext()
-                set(self.subSpellString, e.strText[text] or text)
-            end)
-        end
-    end)]]
+        hooksecurefunc('UpdateProfessionButton', function(self)
+            local parent = self:GetParent()
+            if not parent.professionInitialized then
+                return
+            end
+            local spellIndex = self:GetID() + parent.spellOffset
+            local spellName, _, spellID = C_Spell.GetSpellBookItemName(spellIndex, SpellBookFrame.bookType)
+            set(self.spellString, e.strText[spellName])
+            if spellID then
+                local spell = Spell:CreateFromSpellID(spellID)
+                spell:ContinueOnSpellLoad(function()
+                    local text= spell:GetSpellSubtext()
+                    set(self.subSpellString, e.strText[text] or text)
+                end)
+            end
+        end)
+    end
 
 
 
@@ -1554,7 +1560,7 @@ local function Init()
                             set(self.FactionAndRealm, format('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', e.strText[recruitmentInfo.sourceFaction] or recruitmentInfo.sourceFaction, reaml))
                         end
                     else
-                        local PLAYER_FACTION_NAME= e.Player.faction=='Alliance' and PLAYER_FACTION_COLOR_ALLIANCE:WrapTextInColorCode('联盟') or (e.Player.faction=='Horde' and PLAYER_FACTION_COLOR_HORDE:WrapTextInColorCode('部落')) or '中立'
+                        local PLAYER_FACTION_NAME= UnitFactionGroup('player')=='Alliance' and PLAYER_FACTION_COLOR_ALLIANCE:WrapTextInColorCode('联盟') or (UnitFactionGroup('player')=='Horde' and PLAYER_FACTION_COLOR_HORDE:WrapTextInColorCode('部落')) or '中立'
                         set(self.Description, format('招募战友，与你一起游玩《魔兽世界》！|n你每%2$d天可以邀请%1$d个战友。', maxRecruitLinkUses, daysInCycle))
                         set(self.FactionAndRealm, format('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', PLAYER_FACTION_NAME, e.Player.realm))
                     end
@@ -5654,7 +5660,7 @@ local function Init_Loaded(arg1)
             set(EncounterJournalMonthlyActivitiesTab, '旅行者日志')
                 EncounterJournalMonthlyActivitiesTab:SetScript('OnEnter', function()
                     if not C_PlayerInfo.IsTravelersLogAvailable() then
-                        local tradingPostLocation = e.Player.faction == "Alliance" and '暴风城' or '奥格瑞玛'
+                        local tradingPostLocation = UnitFactionGroup('player') == "Alliance" and '暴风城' or '奥格瑞玛'
                         GameTooltip_AddBlankLineToTooltip(GameTooltip)
                         GameTooltip_AddErrorLine(GameTooltip, format('拜访%s的商栈，查看旅行者日志。', tradingPostLocation))
                         if AreMonthlyActivitiesRestricted() then

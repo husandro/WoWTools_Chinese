@@ -14,6 +14,35 @@ local Save={}
 e.strText={}--主要，汉化
 
 
+--local battleTag= select(2, BNGetInfo())
+--local baseClass= UnitClassBase('player')
+--local playerRealm= GetRealmName():gsub(' ', '')
+e.Player={
+    class= UnitClassBase('player'),
+    sex= UnitSex("player"),
+}
+    --[[realm= playerRealm,
+    Realms= {},--多服务器
+    name_realm= UnitName('player')..'-'..playerRealm,
+    name= UnitName('player'),
+    sex= UnitSex("player"),
+    class= baseClass,
+    r= GetClassColor(baseClass),
+    g= select(2,GetClassColor(baseClass)),
+    b= select(3, GetClassColor(baseClass)),
+    col= '|c'..select(4, GetClassColor(baseClass)),
+    cn= GetCurrentRegion()==5,
+    region= GetCurrentRegion(),--1US (includes Brazil and Oceania) 2Korea 3Europe (includes Russia) 4Taiwan 5China
+    --Lo= GetLocale(),
+    week= GetWeek(),--周数
+    guid= UnitGUID('player'),
+    levelMax= UnitLevel('player')==MAX_PLAYER_LEVEL,--玩家是否最高等级
+    level= UnitLevel('player'),--UnitEffectiveLevel('player')
+    husandro= battleTag== '古月剑龙#5972' or battleTag=='SandroChina#2690' or battleTag=='Sandro126#2297' or battleTag=='Sandro163EU#2603',
+    faction= UnitFactionGroup('player'),--玩家, 派系  "Alliance", "Horde", "Neutral"
+    Layer= nil, --位面数字
+    --useColor= nil,--使用颜色
+    L={},--多语言，文本]]
 
 
 

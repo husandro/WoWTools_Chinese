@@ -11513,7 +11513,7 @@ local function Init_AchievementUI()
         if ( not objectivesFrame.completed ) then
             requiresRep, _, repLevel = GetAchievementGuildRep(ID)
             if ( requiresRep and repLevel) then
-                local factionStandingtext = GetText("FACTION_STANDING_LABEL"..repLevel, e.Player.sex)
+                local factionStandingtext = GetText("FACTION_STANDING_LABEL"..repLevel, UnitSex("player"))
                 objectivesFrame.RepCriteria:SetFormattedText('|cffffffff需要公会声望：|r %s', e.cn(factionStandingtext) or '')
             end
         end
