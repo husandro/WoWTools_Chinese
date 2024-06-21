@@ -5,13 +5,15 @@
 ## Notes: |A:Icon-WoW:0:0|aWoW |cff28a3ff中文化|r |cff00ff00仅限欧服|r|n|cffffd100|A:communities-icon-invitemail:0:0|ahusandro@qq.com|r|n|A:WoWShare-TwitterLogo:0:0|a|cff00ccffhttps://www.curseforge.com/wow/addons/wowtools_chinese|r
 ## SavedVariables: WoWToolsSave_Chinese
 ## DefaultState: Enabled
-## IconTexture: Interface\AddOns\WoWTools\Sesource\Texture\WoWtools.tga
+## IconTexture: Interface\AddOns\WoWTools_Chinese\Sesource\Texture\WoWtools.tga
 
 ##繁体，简体，不会载加
 ##界面，中文化，主要function
 WoWTools_Chinese.lua
 Func.lua
-zhCN.lua
+
+Data_zhCN.lua
+Data_Achievement.lua
 
 Map.lua
 Map_Data_Group.lua
@@ -19,4 +21,4 @@ Map_Data_UiMap.lua
 
 
 
-Data_Achievement.lua
+

@@ -11070,7 +11070,7 @@ local tab={--[ID]= {'Title_lang', 'Description_lang',  'Reward_lang'},
 
 
 --https://wago.tools/db2/Achievement_Category?locale=zhCN&page=1
-local category={
+local categoryTab={
 [1]= '属性',
 [21]= 'PvP',
 [81]= '光辉事迹',
@@ -11326,7 +11326,7 @@ local function Add_Text()
     tab= nil
 
     do
-        for categoryID, text in pairs(category) do
+        for categoryID, text in pairs(categoryTab) do
             local name = GetCategoryInfo((categoryID))
             if name and text then
                 e.strText[name]= text

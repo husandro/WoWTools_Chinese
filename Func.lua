@@ -7582,12 +7582,7 @@ panel:SetScript("OnEvent", function(self, event, arg1)
                 })
 
 
-                function WoW_Tools_Chinese_CN(text, tab)
-                    if tab then
-
-                    end
-                    return e.strText[text]
-                end
+                WoW_Tools_Chinese_CN= e.cn                
         elseif arg1 then
             if EnabledTab then
                 table.insert(EnabledTab, arg1)

@@ -2,7 +2,14 @@ local id, e= ...
 --e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
 
 e.strText={}--主要，汉化
-
+--取得中文 
+function e.cn(text, notFind_notReturn, tab)--{gossipOptionID=, questID=}
+    if notFind_notReturn then
+        return e.strText[text]
+    else
+        return e.strText[text] or text
+    end
+end
 
 --local battleTag= select(2, BNGetInfo())
 --local baseClass= UnitClassBase('player')
@@ -46,8 +53,9 @@ local function get_variableIndex()
     variableIndex= variableIndex+1
     return variableIndex
 end
+
 --插件名称
-local Category = Settings.RegisterVerticalLayoutCategory('|TInterface\\AddOns\\WoWTools\\Sesource\\WoWtools.tga:0|t|cffff00ffWoW|r |cff00ff00Tools|r_|cff28a3ffChinese|r')
+local Category = Settings.RegisterVerticalLayoutCategory('|TInterface\\AddOns\\WoWTools_Chinese\\Sesource\\WoWtools.tga:0|t|cffff00ffWoW|r |cff00ff00Tools|r_|cff28a3ffChinese|r')
 Settings.RegisterAddOnCategory(Category)
 
 --添加，Check 11版本
@@ -118,14 +126,8 @@ function e.Cstr(self, tab)
         if justifyH then font:SetJustifyH(justifyH) end
         --if alpha then font:SetAlpha(alpha) end
     else
-        if e.onlyChinese or size then--THICKOUTLINE
-            local fontName2, size2, fontFlag2= font:GetFont()
-            if e.onlyChinese then
-                fontName2= 'Fonts\\ARHei.ttf'--黑体字
-            end
-            font:SetFont(fontName2, size or size2, notFlag and fontFlag2 or 'OUTLINE')
-        end
-
+        local _, size2, fontFlag2= font:GetFont()
+        font:SetFont('Fonts\\ARHei.ttf', size or size2, notFlag and fontFlag2 or 'OUTLINE')
         font:SetJustifyH(justifyH or 'LEFT')
     end
     if not notShadow then
