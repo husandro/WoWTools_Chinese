@@ -794,7 +794,7 @@ local function Init()
             elseif ( pendingStatus == "cancelled" or appStatus == "cancelled" or appStatus == "failed" ) then
                 self.PendingLabel:SetText('|cffff0000已取消|r')
             elseif ( appStatus == "declined" or appStatus == "declined_full" or appStatus == "declined_delisted" ) then
-                self.PendingLabel:SetText(appStatus == "declined_full") and ' "满"' or '已拒绝')
+                self.PendingLabel:SetText(appStatus == "declined_full" and ' "满"' or '已拒绝')
             elseif ( appStatus == "timedout" ) then
                 self.PendingLabel:SetText('已过期')
             elseif ( appStatus == "invited" ) then
@@ -1256,11 +1256,11 @@ local function Init()
             local finda, findb= text:match(a), text:match(b)
             local findc1, findc2= text:match(c)
             if finda then
-                self.OutputText:SetFormattedText('|cffff0000主要动作 |cffff00ff%s|r 现在没有绑定！|r', e.strText[finda] or finda))
+                self.OutputText:SetFormattedText('|cffff0000主要动作 |cffff00ff%s|r 现在没有绑定！|r', e.strText[finda] or finda)
             elseif findb then
-                self.OutputText:SetFormattedText('|cffff0000动作 |cffff00ff%s|r 现在没有绑定！|r', e.strText[findb] or findb))
+                self.OutputText:SetFormattedText('|cffff0000动作 |cffff00ff%s|r 现在没有绑定！|r', e.strText[findb] or findb)
             elseif findc1 and findc2 then
-                self.OutputText:SetFormattedText('设置 |cnGREEN_FONT_COLOR:%s|r 的快捷键，或者按 %s 取消', e.strText[findc1] or findc1, findc2))
+                self.OutputText:SetFormattedText('设置 |cnGREEN_FONT_COLOR:%s|r 的快捷键，或者按 %s 取消', e.strText[findc1] or findc1, findc2)
             end
         end
     end
@@ -1437,31 +1437,31 @@ local function Init()
                         local expireDate = date("*t", recruitmentInfo.expireTime)
                         recruitmentInfo.expireDateString = FormatShortDate(expireDate.day, expireDate.month, expireDate.year)
 
-                        self.Description, format('招募战友，与你一起游玩《魔兽世界》！|n你每%2$d天可以邀请%1$d个战友。', recruitmentInfo.totalUses, daysInCycle))
+                        self.Description:SetFormattedText('招募战友，与你一起游玩《魔兽世界》！|n你每%2$d天可以邀请%1$d个战友。', recruitmentInfo.totalUses, daysInCycle)
 
                         if recruitmentInfo.sourceFaction ~= "" then
                             local region= e.Get_Region(recruitmentInfo.sourceRealm)
                             local reaml= (region and region.col or '')..(recruitmentInfo.sourceRealm or '')
-                            self.FactionAndRealm, format('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', e.strText[recruitmentInfo.sourceFaction] or recruitmentInfo.sourceFaction, reaml))
+                            self.FactionAndRealm:SetFormattedText('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', e.strText[recruitmentInfo.sourceFaction] or recruitmentInfo.sourceFaction, reaml)
                         end
                     else
                         local PLAYER_FACTION_NAME= UnitFactionGroup('player')=='Alliance' and PLAYER_FACTION_COLOR_ALLIANCE:WrapTextInColorCode('联盟') or (UnitFactionGroup('player')=='Horde' and PLAYER_FACTION_COLOR_HORDE:WrapTextInColorCode('部落')) or '中立'
-                        self.Description:SetFormattedText('招募战友，与你一起游玩《魔兽世界》！|n你每%2$d天可以邀请%1$d个战友。', maxRecruitLinkUses, daysInCycle))
-                        self.FactionAndRealm:SetFormattedText('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', PLAYER_FACTION_NAME, GetRealmName()))
+                        self.Description:SetFormattedText('招募战友，与你一起游玩《魔兽世界》！|n你每%2$d天可以邀请%1$d个战友。', maxRecruitLinkUses, daysInCycle)
+                        self.FactionAndRealm:SetFormattedText('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', PLAYER_FACTION_NAME, GetRealmName())
                     end
 
                     if recruitsAreMaxed then
-                        self.InfoText1:SetFormattedText('"%d/%d 已招募的战友。已达到最大招募数量。', maxRecruits, maxRecruits))
+                        self.InfoText1:SetFormattedText('"%d/%d 已招募的战友。已达到最大招募数量。', maxRecruits, maxRecruits)
                     elseif recruitmentInfo then
                         if recruitmentInfo.remainingUses > 0 then
-                            self.InfoText:SetFormattedText('此链接会在|cnGREEN_FONT_COLOR:%s|r后过期', recruitmentInfo.expireDateString))
+                            self.InfoText:SetFormattedText('此链接会在|cnGREEN_FONT_COLOR:%s|r后过期', recruitmentInfo.expireDateString)
                         else
-                            self.InfoText1:SetFormattedText('你在|cnGREEN_FONT_COLOR:%s|r后即可创建一个新链接', recruitmentInfo.expireDateString))
+                            self.InfoText1:SetFormattedText('你在|cnGREEN_FONT_COLOR:%s|r后即可创建一个新链接', recruitmentInfo.expireDateString)
                         end
 
 
                         local timesUsed = recruitmentInfo.totalUses - recruitmentInfo.remainingUses
-                        self.InfoText2:SetFormattedText('%d/%d 名朋友已经使用了这个链接。', timesUsed, recruitmentInfo.totalUses))
+                        self.InfoText2:SetFormattedText('%d/%d 名朋友已经使用了这个链接。', timesUsed, recruitmentInfo.totalUses)
                     end
                 end)
             end
@@ -3498,9 +3498,9 @@ end)
         local name= text:match(e.Magic(BATTLETAG_REMOVE_FRIEND_CONFIRMATION))
         local name2= text:match(e.Magic(REMOVE_FRIEND_CONFIRMATION))
         if name then
-            set(self.text, format('你确定要将  |cnRED_FONT_COLOR:%s|r 移出|cff82c5ff战网昵称|r好友名单吗？', name))
+            self.text:SetFormattedText('你确定要将  |cnRED_FONT_COLOR:%s|r 移出|cff82c5ff战网昵称|r好友名单吗？', name)
         elseif name2 then
-            set(self.text, format('你确定要将 |cnRED_FONT_COLOR:%s|r 移出|cnGREEN_FONT_COLOR:实名|r好友名单？', name2))
+            self.text:SetFormattedText('你确定要将 |cnRED_FONT_COLOR:%s|r 移出|cnGREEN_FONT_COLOR:实名|r好友名单？', name2)
         end
     end)
     e.dia("PICKUP_MONEY", {text = '提取总额', button1 = '接受', button2 = '取消'})
