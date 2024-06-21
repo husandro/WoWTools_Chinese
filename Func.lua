@@ -7572,12 +7572,12 @@ panel:SetScript("OnEvent", function(self, event, arg1)
 
             --添加控制面板
             e.AddPanel_Check({
-                name= '中文化',
-                tooltip= '|A:Icon-WoW:0:0|aWoW |cff28a3ff中文化|r |cff00ff00仅限欧服|r|n|cffffd100|A:communities-icon-invitemail:0:0|ahusandro@qq.com|r|n|A:WoWShare-TwitterLogo:0:0|a|cff00ccffhttps://www.curseforge.com/wow/addons/wowtools_chinese|r',
+                name= '启用',
+                tooltip= '|A:Icon-WoW:0:0|aWoW |cff28a3ff中文化|r|n|cffffd100|A:communities-icon-invitemail:0:0|ahusandro@qq.com|r|n|A:WoWShare-TwitterLogo:0:0|a|cff00ccffhttps://www.curseforge.com/wow/addons/wowtools_chinese|r',
                 value= not Save.disabled,
                 func= function()
                     Save.disabled = not Save.disabled and true or nil
-                    print(id, addName, e.GetEnabeleDisable(not Save.disabled), e.onlyChinese and '需求重新加载' or REQUIRES_RELOAD)
+                    print(id, addName, e.GetEnabeleDisable(not Save.disabled), '需求重新加载')
                 end
                 })
 
