@@ -1,6 +1,6 @@
-# WoW UI 中文化，仅限欧服
-
-# wago.io 主页
+# WoWTools Chinese
+## WoW UI 中文化，仅限欧服
+## wago.io 主页
 * https://wago.io/p/husandro2
 ---
 
