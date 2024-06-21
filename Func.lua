@@ -438,8 +438,8 @@ local function Init()
         set(TokenFramePopup.Title, '货币设置')
         set(TokenFramePopup.InactiveCheckBox.Text, '未使用')
         set(TokenFramePopup.BackpackCheckBox.Text, '在行囊上显示')
---11版本
-        if TokenFrame_InitTokenButton then
+
+        if TokenFrame.ScrollBox then--11版本
             hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
                 if not f:GetView() then
                     return
@@ -448,30 +448,6 @@ local function Init()
                     setLabel(frame.Content.Name)
                 end
             end)
-
-            hooksecurefunc('TokenFrame_InitTokenButton',function(_, frame)--Blizzard_TokenUI.lua
-                if frame and frame.Name then
-                    local name= e.strText[frame.Name:GetText()]--汉化
-                    if name then
-                        frame.Name:SetText(name)
-                    end
-                end
-            end)
-            hooksecurefunc('TokenFrame_Update', function()
-                local f=TokenFrame
-                if not f.ScrollBox:GetView() then
-                    return
-                end
-                for _, frame in pairs(f.ScrollBox:GetFrames()) do
-                    if frame.Name then
-                        local name= e.strText[frame.Name:GetText()]--汉化
-                        if name then
-                            frame.Name:SetText(name)
-                        end
-                    end
-                end
-            end)
-
         else
             hooksecurefunc('TokenFrame_InitTokenButton',function(_, frame)--Blizzard_TokenUI.lua
                 if frame and frame.Name then
