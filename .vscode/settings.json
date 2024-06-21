@@ -1,0 +1,16 @@
+{
+    "Lua.diagnostics.globals": [
+        "LOCALE_zhCN",
+        "LOCALE_zhTW",
+        "BUG_CATEGORY15",
+        "StaticPopupDialogs",
+        "Settings",
+        "ENABLE",
+        "DISABLE",
+        "WorldMapFrame",
+        "WoWToolsSave_Chinese_Chinese",
+        "WoWToolsSave_Chinese",
+        "ITEM_UPGRADE_TOOLTIP_FORMAT_STRING",
+        "ENCHANTED_TOOLTIP_LINE"
+    ]
+}

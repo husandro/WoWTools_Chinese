@@ -1,7 +1,6 @@
 local id, e = ...
-if (e.Player.region~=3 and not e.Is_PTR) or LOCALE_zhCN or LOCALE_zhTW then
-    return
-end
+if e.Not_Is_EU then return end
+
 --[[
 ['Name_lang']= {UiMapGroupID,UiMapID},
 https://wago.tools/db2/UiMapGroupMember?build=11.0.0.55185&locale=zhCN

@@ -1,7 +1,5 @@
 local id, e = ...
-if (e.Player.region~=3 and not e.Is_PTR) or LOCALE_zhCN or LOCALE_zhTW then
-    return
-end
+if e.Not_Is_EU then return end
 
 local tab={
     ["101_CutsceneName_Ref"] = "纳兹乌罗",
