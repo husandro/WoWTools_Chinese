@@ -5,12 +5,6 @@ if e.Not_Is_EU then
     return
 end
 
-
-
-
-
-local addName= 'Chinese'
-local Save={}
 e.strText={}--主要，汉化
 
 
@@ -60,20 +54,37 @@ end
 local Category = Settings.RegisterVerticalLayoutCategory('|TInterface\\AddOns\\WoWTools\\Sesource\\WoWtools.tga:0|t|cffff00ffWoW|r |cff00ff00Tools|r_|cff28a3ffChinese|r')
 Settings.RegisterAddOnCategory(Category)
 
---添加，Check
-function e.AddPanel_Check(tab)
-    local name = tab.name
-    local tooltip = tab.tooltip
-    local category= tab.category or Category
-    local defaultValue= tab.value and true or false
-    local func= tab.func
+--添加，Check 11版本
+if Settings.CreateCheckboxWithOptions then
+    function e.AddPanel_Check(tab)
+        local name = tab.name
+        local tooltip = tab.tooltip
+        local category= tab.category or Category
+        local defaultValue= tab.value and true or false
+        local func= tab.func
 
-    local variable = id..name..(category.order or '')..get_variableIndex()
-    local setting= Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
+        local variable = id..name..(category.order or '')..get_variableIndex()
+        local setting= Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
 
-    local initializer= Settings.CreateCheckboxWithOptions(category, setting, nil, tooltip);
-    Settings.SetOnValueChangedCallback(variable, func, initializer)
-    return initializer
+        local initializer= Settings.CreateCheckboxWithOptions(category, setting, nil, tooltip);
+        Settings.SetOnValueChangedCallback(variable, func, initializer)
+        return initializer
+    end
+else
+    function e.AddPanel_Check(tab)
+        local name = tab.name
+        local tooltip = tab.tooltip
+        local category= tab.category or Category
+        local defaultValue= tab.value and true or false
+        local func= tab.func
+
+        local variable = id..name..(category.order or '')..get_variableIndex()
+        local setting= Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
+
+        local initializer= Settings.CreateCheckBox(category, setting, tooltip)
+        Settings.SetOnValueChangedCallback(variable, func, initializer)
+        return initializer
+    end
 end
 
 function e.GetEnabeleDisable(ed)--启用或禁用字符

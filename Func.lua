@@ -438,18 +438,17 @@ local function Init()
         set(TokenFramePopup.Title, '货币设置')
         set(TokenFramePopup.InactiveCheckBox.Text, '未使用')
         set(TokenFramePopup.BackpackCheckBox.Text, '在行囊上显示')
-
-        hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
-			if not f:GetView() then
-				return
-			end
-			for _, frame in pairs(f:GetFrames()) do
-				setLabel(frame.Content.Name)
-			end
-		end)
-
-        --11版本
+--11版本
         if TokenFrame_InitTokenButton then
+            hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
+                if not f:GetView() then
+                    return
+                end
+                for _, frame in pairs(f:GetFrames()) do
+                    setLabel(frame.Content.Name)
+                end
+            end)
+
             hooksecurefunc('TokenFrame_InitTokenButton',function(_, frame)--Blizzard_TokenUI.lua
                 if frame and frame.Name then
                     local name= e.strText[frame.Name:GetText()]--汉化
@@ -470,7 +469,31 @@ local function Init()
                             frame.Name:SetText(name)
                         end
                     end
-                end			
+                end
+            end)
+
+        else
+            hooksecurefunc('TokenFrame_InitTokenButton',function(_, frame)--Blizzard_TokenUI.lua
+                if frame and frame.Name then
+                    local name= e.strText[frame.Name:GetText()]--汉化
+                    if name then
+                        frame.Name:SetText(name)
+                    end
+                end
+            end)
+            hooksecurefunc('TokenFrame_Update', function()
+                local f=TokenFrame
+                if not f.ScrollBox:GetView() then
+                    return
+                end
+                for _, frame in pairs(f.ScrollBox:GetFrames()) do
+                    if frame.Name then
+                        local name= e.strText[frame.Name:GetText()]--汉化
+                        if name then
+                            frame.Name:SetText(name)
+                        end
+                    end
+                end
             end)
         end
 
@@ -507,7 +530,7 @@ local function Init()
             end
             SpellBookPageText:SetFormattedText('第%d页', currentPage)
         end)
-
+--[[11版本
         hooksecurefunc('UpdateProfessionButton', function(self)
             local parent = self:GetParent()
             if not parent.professionInitialized then
@@ -524,6 +547,7 @@ local function Init()
                 end)
             end
         end)
+        ]]
     end
 
 
@@ -555,9 +579,9 @@ local function Init()
     GroupFinderFrame:HookScript('OnShow', function()
         PVEFrame:SetTitle('地下城和团队副本')
     end)
-  
-    
-    
+
+
+
     --set(GroupFinderFrameGroupButton1Name, '地下城查找器')
     --set(GroupFinderFrameGroupButton2Name, '团队查找器')
     --set(GroupFinderFrameGroupButton3Name, '预创建队伍')
@@ -2028,7 +2052,7 @@ local function Init()
             set(ScenarioChallengeModeBlock.Level, format('%d级', level))
         end
     end)
-    
+
     --出现Bug SCENARIO_CONTENT_TRACKER_MODULE:SetHeader(ObjectiveTrackerFrame.BlocksFrame.ScenarioHeader, '场景战役', nil)
     --Blizzard_ScenarioObjectiveTracker.lua
     hooksecurefunc(SCENARIO_CONTENT_TRACKER_MODULE, 'Update', function()
@@ -2514,7 +2538,7 @@ local function Init()
         GameTooltip:SetText(headerText)
         GameTooltip:Show()
     end)
-    
+
     hookLable(MinimapZoneText)
 
     --背包
@@ -2937,7 +2961,7 @@ local function Init()
                 self.tooltipText = MicroButtonTooltipText('法术书和专业', "TOGGLESPELLBOOK")
             end
         end)
-    
+
         TalentMicroButton.tooltipText = MicroButtonTooltipText('专精和天赋', "TOGGLETALENTS")
         TalentMicroButton.newbieText = '天赋的各种组合选择能够强化你的角色，并使你的角色与众不同。'
         TalentMicroButton:HookScript('OnEvent', function(self, event)
@@ -2947,7 +2971,7 @@ local function Init()
         end)
     end
 
-    
+
     AchievementMicroButton.tooltipText = MicroButtonTooltipText('成就', "TOGGLEACHIEVEMENT")
     AchievementMicroButton.newbieText = '浏览有关你的成就和统计数据的信息。'
     AchievementMicroButton:HookScript('OnEvent', function(self, event)
@@ -7474,7 +7498,7 @@ local function Init_Loaded(arg1)
             return shouldDisplayBeginEnd;
         end
         hooksecurefunc('CalendarFrame_UpdateDayEvents', function(index, day, monthOffset, selectedEventIndex, contextEventIndex)
-            local dayButtonName= 'CalendarDayButton'..index    
+            local dayButtonName= 'CalendarDayButton'..index
             local numEvents = C_Calendar.GetNumDayEvents(monthOffset, day);
             local eventIndex = 1;
             local eventButtonIndex = 1;
@@ -7491,7 +7515,7 @@ local function Init_Loaded(arg1)
                 eventIndex = eventIndex + 1;
             end
         end)
-        
+
 
     elseif arg1=='Blizzard_EventTrace' then--ETRACE
         set(EventTraceTitleText, '事件记录')
@@ -7568,12 +7592,12 @@ panel:SetScript("OnEvent", function(self, event, arg1)
                     end
                 end
                 EnabledTab=nil
-            else 
+            else
                 EnabledTab=nil
                 self:UnregisterEvent("ADDON_LOADED")
                 e.disbledCN=true
             end
-            
+
             --添加控制面板
             e.AddPanel_Check({
                 name= '中文化',
@@ -7584,7 +7608,7 @@ panel:SetScript("OnEvent", function(self, event, arg1)
                     print(id, addName, e.GetEnabeleDisable(not Save.disabled), e.onlyChinese and '需求重新加载' or REQUIRES_RELOAD)
                 end
                 })
-            
+
 
         elseif arg1 then
             if EnabledTab then
