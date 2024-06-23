@@ -2006,7 +2006,7 @@ end)
     end
     BankItemSearchBox.Instructions:SetText('搜索')
     e.reg(BankSlotsFrame)
-
+    e.dia('BANK_CONFIRM_CLEANUP', {text='你确定要自动整理你的物品吗？|n该操作会影响所有的战团标签。', button1='接受', button2 = '取消',})
 
     --商人
     MerchantFrameTab1:SetText('商人')
