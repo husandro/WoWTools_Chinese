@@ -2617,20 +2617,20 @@ end)  ]]
             e.set(self.Slider.MaxText, settingData.displayInfo.maxText)
         end
     end)
-    EditModeManagerFrame.CloseButton:HookScript('OnEnter', function()--EditModeUnsavedChangesCheckerMixin:OnEnter()
+    --[[EditModeManagerFrame.CloseButton:HookScript('OnEnter', function()--EditModeUnsavedChangesCheckerMixin:OnEnter()
         if EditModeManagerFrame:TryShowUnsavedChangesGlow() then
             GameTooltip_AddNormalLine(GameTooltip, '你有未保存的改动')
             GameTooltip:Show()
         end
-    end)
-    hooksecurefunc(EditModeDropdownEntryMixin, 'OnEnter', function(self)
+    end)]]
+    --[[hooksecurefunc(EditModeDropdownEntryMixin, 'OnEnter', function(self)
         if not self.isEnabled then
             local text= e.strText[self.disabledTooltip]
             if text then
                 GameTooltip_ShowDisabledTooltip(GameTooltip, self, text)
             end
         end
-    end)
+    end)]]
     local maxLayoutsErrorText = format('最多允许%d种角色布局和%d种账号布局', Constants.EditModeConsts.EditModeMaxLayoutsPerType, Constants.EditModeConsts.EditModeMaxLayoutsPerType)
     hooksecurefunc(EditModeDropdownEntryMixin, 'Init', function(self, text, _, disableOnMaxLayouts, disableOnActiveChanges, _, _, _, _, disabledText)
         if disableOnMaxLayouts and EditModeManagerFrame:AreLayoutsFullyMaxed() then
