@@ -2427,7 +2427,7 @@ end)  ]]
         GameTooltip:Show()
     end)
 
-    e.hookLable(MinimapZoneText)
+    --e.hookLable(MinimapZoneText)
 
     --背包
     BagItemSearchBox.Instructions:SetText('搜索')
@@ -2490,7 +2490,7 @@ end)  ]]
     EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.FramesTitle.Title:SetText('框体')
     EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.CombatTitle.Title:SetText('战斗')
     EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.MiscTitle.Title:SetText('其它')
-    EditModeManagerFrame.LayoutDropdown.Label:SetText('布局：')
+    EditModeManagerFrame.LayoutLabel:SetText('布局：')
     hooksecurefunc(EditModeManagerFrame.AccountSettings, 'SetExpandedState', function(self, expanded, isUserInput)
         self.Expander.Label:SetText(expanded and '收起选项 |A:editmode-up-arrow:16:11:0:3|a' or '展开选项 |A:editmode-down-arrow:16:11:0:-7|a')
     end)
