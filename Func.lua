@@ -2006,7 +2006,11 @@ end)
     end
     BankItemSearchBox.Instructions:SetText('搜索')
     e.reg(BankSlotsFrame)
-    e.dia('BANK_CONFIRM_CLEANUP', {text='你确定要自动整理你的物品吗？|n该操作会影响所有的战团标签。', button1='接受', button2 = '取消',})
+    e.dia('BANK_CONFIRM_CLEANUP', {text='你确定要自动整理你的物品吗？|n该操作会影响所有的战团标签。', button1='接受', button2 = '取消'})
+    e.dia('CONFIRM_BUY_BANK_TAB', {text='你是否想要购买一个战团银行标签？', button1='是', button2 = '否'})
+    e.dia('BANK_MONEY_WITHDRAW', {text='提取数量：', button1='接受', button2 = '取消'})
+    e.dia('BANK_MONEY_DEPOSIT', {text='存放数量：', button1='接受', button2 = '取消'})
+    
 
     --商人
     MerchantFrameTab1:SetText('商人')
