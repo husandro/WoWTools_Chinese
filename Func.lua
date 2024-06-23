@@ -1620,26 +1620,28 @@ local function Init()
         for index, value in ipairs(checkBoxTable) do
             checkBoxName = checkBoxNameString..index
             checkBox = _G[checkBoxName]
-            if ( value.text ) then
-                text = value.text
-                if type(text) == "function" then
-                    text = text()
+            if checkBox then
+                if ( value.text ) then
+                    text = value.text
+                    if type(text) == "function" then
+                        text = text()
+                    end
+                else
+                    text = _G[value.type]
                 end
-            else
-                text = _G[value.type]
-            end
-            text= e.strText[text]
-            if text then
-                checkBoxFontString = _G[checkBoxName.."CheckText"]
-                e.set(checkBoxFontString, text)
-                e.set(checkBox.BlankText, text)
-                check = _G[checkBoxName.."Check"]
-                if value.tooltip and e.strText[value.tooltip] then
-                    check.tooltip = e.strText[value.tooltip]
-                end
-                if ( value.maxWidth ) then
-                    if ( checkBoxFontString:GetWidth() > value.maxWidth ) then
-                        check.tooltip = text
+                text= e.strText[text]
+                if text then
+                    checkBoxFontString = _G[checkBoxName.."CheckText"]
+                    e.set(checkBoxFontString, text)
+                    e.set(checkBox.BlankText, text)
+                    check = _G[checkBoxName.."Check"]
+                    if value.tooltip and e.strText[value.tooltip] then
+                        check.tooltip = e.strText[value.tooltip]
+                    end
+                    if ( value.maxWidth ) then
+                        if ( checkBoxFontString:GetWidth() > value.maxWidth ) then
+                            check.tooltip = text
+                        end
                     end
                 end
             end
@@ -2324,8 +2326,8 @@ end)  ]]
     QuestLogPopupDetailFrameShareButton:SetText('共享')
     QuestLogPopupDetailFrame.ShowMapButton.Text:SetText('显示地图')
 
-    QuestMapFrame.DetailsFrame.BackButton:SetText('返回')
-    QuestMapFrame.DetailsFrame.AbandonButton:SetText('放弃')
+    --[[QuestMapFrame.DetailsFrame.BackButton:SetText('返回')
+    QuestMapFrame.DetailsFrame.AbandonButton:SetText('放弃')]]
 
    hooksecurefunc('QuestMapFrame_UpdateQuestDetailsButtons', function()
         local questID = C_QuestLog.GetSelectedQuest()
@@ -2400,7 +2402,7 @@ end)  ]]
     MinimapCluster.ZoneTextButton:HookScript('OnEvent', function(self)
         self.tooltipText = MicroButtonTooltipText('世界地图', "TOGGLEWORLDMAP")
     end)
-    Minimap.ZoomIn:HookScript('OnEnter', function()
+    --[[Minimap.ZoomIn:HookScript('OnEnter', function()
         if GameTooltip:IsShown() then
             GameTooltip:SetText('放大')
         end
@@ -2414,7 +2416,7 @@ end)  ]]
         GameTooltip:SetText('追踪', 1, 1, 1)
 	    GameTooltip:AddLine('点击以开启或关闭追踪类型。', nil, nil, nil, true)
         GameTooltip:Show()
-    end)
+    end)]]
     hooksecurefunc('MinimapMailFrameUpdate', function()
         local senders = { GetLatestThreeSenders() }
         local headerText = #senders >= 1 and '未读邮件来自：' or '你有未阅读的邮件'
