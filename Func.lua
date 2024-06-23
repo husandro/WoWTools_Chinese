@@ -399,12 +399,12 @@ local function Init()
             end
             local spellIndex = self:GetID() + parent.spellOffset
             local spellName, _, spellID = C_Spell.GetSpellBookItemName(spellIndex, SpellBookFrame.bookType)
-            set(self.spellString, e.strText[spellName])
+            e.set(self.spellString, e.strText[spellName])
             if spellID then
                 local spell = Spell:CreateFromSpellID(spellID)
                 spell:ContinueOnSpellLoad(function()
                     local text= spell:GetSpellSubtext()
-                    set(self.subSpellString, e.strText[text] or text)
+                    e.set(self.subSpellString, e.strText[text] or text)
                 end)
             end
         end)
@@ -823,9 +823,7 @@ local function Init()
 
     hooksecurefunc('LFGListEntryCreation_Show', function(self, _, selectedCategory)
         local categoryInfo = C_LFGList.GetLfgCategoryInfo(selectedCategory)
-        if e.strText[categoryInfo.name] then
-            set(self.Label, e.strText[categoryInfo.name])
-        end
+        e.set(self.Label,categoryInfo.name)
     end)
 
     LFGListFrame.ApplicationViewer.AutoAcceptButton.Label:SetText('自动邀请')
@@ -1012,7 +1010,7 @@ local function Init()
     e.dia("LFG_LIST_INVITING_CONVERT_TO_RAID", {text = '邀请这名玩家或队伍会将你的小队转化为团队。', button1 = '邀请', button2 = '取消'})
 
     hooksecurefunc('LFGDungeonReadyDialog_UpdateInstanceInfo', function(name, completedEncounters, totalEncounters)
-        set(LFGDungeonReadyDialogInstanceInfoFrame.name, name)
+        e.set(LFGDungeonReadyDialogInstanceInfoFrame.name, name)
         if ( totalEncounters > 0 ) then
             LFGDungeonReadyDialogInstanceInfoFrame.statusText:SetFormattedText('已消灭|cnGREEN_FONT_COLOR:%d/%d|r个首领', completedEncounters, totalEncounters)
         end
@@ -1074,7 +1072,7 @@ local function Init()
             end
             role= _G[role]
             if subtypeID ~= LFG_SUBTYPEID_SCENARIO and subtypeID ~= LFG_SUBTYPEID_FLEXRAID then
-                set(LFGDungeonReadyDialogRoleLabel, role)
+                e.set(LFGDungeonReadyDialogRoleLabel, role)
             end
         end
     end)
@@ -1125,12 +1123,12 @@ local function Init()
 
 
     hooksecurefunc('LFGListSearchPanel_SetCategory', function(self, categoryID, filters)--LFGList.lua
-        local categoryInfo = C_LFGList.GetLfgCategoryInfo(categoryID) or {} --if categoryInfo.searchPromptOverride then set(self.SearchBox.Instructions, e.strText[categoryInfo.searchPromptOverride])
+        local categoryInfo = C_LFGList.GetLfgCategoryInfo(categoryID) or {} --if categoryInfo.searchPromptOverride then e.set(self.SearchBox.Instructions, e.strText[categoryInfo.searchPromptOverride])
         self.SearchBox.Instructions:SetText('过滤器')
         local name = LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, filters, false)
         if name then
             if e.strText[name] then
-                set(self.CategoryName, name)
+                e.set(self.CategoryName, name)
             else
                 local t1, t2 = name:match('(.-) %- (.+)')
                 if t1 and t2 then
@@ -1270,8 +1268,9 @@ local function Init()
     --快捷键
     hooksecurefunc(KeyBindingFrameBindingTemplateMixin,'Init', function(self)
         local label= self.Text or self.Label
-        local text= label and e.strText[label:GetText()]
-        set(label, text)
+        if label then
+            e.set(label, label:GetText())
+        end
     end)
 
 
@@ -1523,7 +1522,7 @@ local function Init()
                 local function InitButton(extended, locked, name, difficulty, difficultyId)
                     name= e.strText[name]
                     if extended or locked then
-                        set(button.name, name)
+                        e.set(button.name, name)
                     else
                         button.reset:SetFormattedText("|cff808080%s|r", '已过期')
                         if name then
@@ -1606,7 +1605,7 @@ local function Init()
     ChatConfigCombatSettings:HookScript('OnShow', function()
         for index, value in ipairs(COMBAT_CONFIG_TABS) do--ChatConfigCombat_OnLoad()
             local tab = _G[CHAT_CONFIG_COMBAT_TAB_NAME..index]
-            set(tab.Text, value.text)
+            e.set(tab.Text, value.text)
             PanelTemplates_TabResize(tab, 0)
         end
     end)
@@ -1617,7 +1616,7 @@ local function Init()
         local text
         local checkBoxFontString
         if ( title ) then
-            set(_G[frame:GetName().."Title"], title)
+            e.set(_G[frame:GetName().."Title"], title)
         end
         for index, value in ipairs(checkBoxTable) do
             checkBoxName = checkBoxNameString..index
@@ -1633,8 +1632,8 @@ local function Init()
             text= e.strText[text]
             if text then
                 checkBoxFontString = _G[checkBoxName.."CheckText"]
-                set(checkBoxFontString, text)
-                set(checkBox.BlankText, text)
+                e.set(checkBoxFontString, text)
+                e.set(checkBox.BlankText, text)
                 check = _G[checkBoxName.."Check"]
                 if value.tooltip and e.strText[value.tooltip] then
                     check.tooltip = e.strText[value.tooltip]
@@ -1686,7 +1685,7 @@ local function Init()
                 else
                     text = _G[value.type]
                 end
-                set(_G[checkBoxName.."Text"], text)
+                e.set(_G[checkBoxName.."Text"], text)
                 if ( value.subTypes ) then
                     local subCheckBoxNameString = checkBoxName.."_"
                     for k, v in ipairs(value.subTypes) do
@@ -1701,7 +1700,7 @@ local function Init()
                         elseif v.type then
                             subText = _G[v.type]
                         end
-                        set(_G[subCheckBoxName.."Text"], subText)
+                        e.set(_G[subCheckBoxName.."Text"], subText)
                     end
                 end
                 if e.strText[value.tooltip] then
@@ -1735,7 +1734,7 @@ local function Init()
 
     hooksecurefunc('FCF_SetWindowName', function(frame, name)--FloatingChatFrame.lua
         local tab = _G[frame:GetName().."Tab"]
-        set(tab, name)
+        e.set(tab, name)
         PanelTemplates_TabResize(tab, tab.sizePadding or 0)
     end)
 
@@ -1748,7 +1747,8 @@ local function Init()
             text= '文本转语音'
         end
         if text then
-        self.Text:SetText(text)
+            self.Text:SetText(text)
+        end
     end)
 
 
@@ -1839,7 +1839,7 @@ local function Init()
         local checkBoxNameString = frame:GetName().."CheckBox"
         for index in ipairs(frame.checkBoxTable or {}) do
             if _G[checkBoxNameString..index] then
-                set(_G[checkBoxNameString..index].text)
+                e.set(_G[checkBoxNameString..index].text)
             end
         end
     end)
@@ -1936,28 +1936,28 @@ local function Init()
         else
             if ( BlocksFrame.currentStage ~= currentStage or BlocksFrame.scenarioName ~= scenarioName or BlocksFrame.stageName ~= stageName) then
                 if ( bit.band(flags, SCENARIO_FLAG_SUPRESS_STAGE_TEXT) == SCENARIO_FLAG_SUPRESS_STAGE_TEXT ) then
-                    set(stageBlock.Stage, stageName)
+                    e.set(stageBlock.Stage, stageName)
                 else
                     if ( currentStage == numStages ) then
                         stageBlock.Stage:SetText('最终阶段')
                     else
                         stageBlock.Stage:SetFormattedText('阶段%d', currentStage)
                     end
-                    set(stageBlock.Name, e.strText[stageName])
+                    e.set(stageBlock.Name, stageName)
                 end
             end
         end
         if ( BlocksFrame.currentBlock ) then
             if ( inChallengeMode ) then-- header
-                set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text, BlocksFrame.scenarioName)
+                e.set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text, BlocksFrame.scenarioName)
             elseif ( inProvingGrounds or ScenarioProvingGroundsBlock.timerID ) then
                 SCENARIO_CONTENT_TRACKER_MODULE.Header.Text:SetText('试炼场')
             elseif( dungeonDisplay ) then
                 SCENARIO_CONTENT_TRACKER_MODULE.Header.Text:SetText('地下城')
             elseif ( shouldShowMawBuffs and not IsInJailersTower() ) then
-                set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text, GetZoneText())
+                e.set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text, GetZoneText())
             else
-                set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text, BlocksFrame.scenarioName)
+                e.set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text, BlocksFrame.scenarioName)
             end
         end
     end)
@@ -2064,7 +2064,7 @@ end)
                 entry.Security.tooltip = text2
             end
             if ( not loadable and reason ) then
-                set(entry.Status, name)
+                e.set(entry.Status, name)
             end
         end
     end)
@@ -2106,7 +2106,7 @@ end)
                     end
                     local expireTime= _G["MailItem"..i.."ExpireTime"]
                     if expireTime then
-                        set(expireTime, daysLeft)
+                        e.set(expireTime, daysLeft)
                         if ( InboxItemCanDelete(index) ) then
                             expireTime.tooltip = '信息保留时间'
                         else
@@ -2236,7 +2236,7 @@ end)
     hooksecurefunc('GuildChallengeAlertFrame_SetUp', function(frame, challengeType)--AlertFrameSystems.lua
         local name= _G["GUILD_CHALLENGE_TYPE"..challengeType]
         if name then
-            set(frame.Type, name)
+            e.set(frame.Type, name)
         end
     end)
 
@@ -2567,9 +2567,7 @@ end)
     --EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.CombatContainer
 
     for _, frame in pairs(EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.BasicOptionsContainer:GetLayoutChildren() or {}) do
-        if frame.labelText then
-            set(frame.Label, frame.labelText)
-        end
+        e.set(frame.Label, frame.labelText)
     end
 
     EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.FramesContainer:HookScript('OnShow', function(self)
@@ -2971,7 +2969,7 @@ end)
     end)
     hooksecurefunc('NavBar_Initialize', function(_, _, homeData, homeButton)
         if homeData.name then
-            set(homeButton.text, homeData.name)
+            e.set(homeButton.text, homeData.name)
         else
             homeButton.text:SetText('首页')
         end        
@@ -3518,9 +3516,9 @@ end)
     StaticPopupDialogs["CONFIRM_LEAVE_INSTANCE_PARTY"].OnShow= function(self)
         local text= self.text:GetText()
         if text== CONFIRM_LEAVE_BATTLEFIELD then
-            set(self.text, '确定要离开战场吗？')
+            self.text:SetText('确定要离开战场吗？')
         elseif text== CONFIRM_LEAVE_INSTANCE_PARTY then
-            set(self.text, '确定要离开副本队伍吗？\n\n一旦离开队伍，你将无法返回该副本。')
+            self.text:SetText('确定要离开副本队伍吗？\n\n一旦离开队伍，你将无法返回该副本。')
         end
     end
 
@@ -3682,9 +3680,9 @@ end)
 
     hooksecurefunc('VoiceTranscriptionFrame_UpdateEditBox', function(self)--VoiceChatTranscriptionFrame.lua
         if  C_VoiceChat.IsMuted() then
-            set(self.editBox.prompt, '禁音 - 目前没有发送语音识别或文字转语音信息')
+            self.editBox.prompt:SetText('禁音 - 目前没有发送语音识别或文字转语音信息')
         elseif C_VoiceChat.IsSpeakForMeActive() then
-            set(self.editBox.prompt, '输入文字后，文字转语音功能会为其他玩家朗读文字。')
+            self.editBox.prompt:SetText('输入文字后，文字转语音功能会为其他玩家朗读文字。')
         end
     end)
 
@@ -3700,36 +3698,36 @@ end)
 
 
     --团队
-    set(CompactRaidFrameManager.displayFrame.label, IsInRaid() and '团员' or '队员')
+    CompactRaidFrameManager.displayFrame.label:SetText(IsInRaid() and '团员' or '队员')
     hooksecurefunc('CompactRaidFrameManager_UpdateLabel', function()
-        set(CompactRaidFrameManager.displayFrame.label, IsInRaid() and '团员' or '队员')
+        CompactRaidFrameManager.displayFrame.label:SetText(IsInRaid() and '团员' or '队员')
     end)
     hooksecurefunc(CompactRaidFrameManagerDisplayFrame.RestrictPingsButton, 'UpdateLabel', function(self)
-        set(self.Text, IsInRaid() and '只限助手发送信号' or '只限领袖发送信号')
+        self.Text:SetText(IsInRaid() and '只限助手发送信号' or '只限领袖发送信号')
     end)
-    set(CompactRaidFrameManagerDisplayFrameEveryoneIsAssistButtonText, '将所有人提升为助理')
+    CompactRaidFrameManagerDisplayFrameEveryoneIsAssistButtonText:SetText('将所有人提升为助理')
 
-    set(CompactRaidFrameManagerDisplayFrameEditMode, '编辑')
-    set(CompactRaidFrameManagerDisplayFrameConvertToRaid, '转团')
+    CompactRaidFrameManagerDisplayFrameEditMode:SetText('编辑')
+    CompactRaidFrameManagerDisplayFrameConvertToRaid:SetText('转团')
     hooksecurefunc('CompactRaidFrameManager_SetSetting', function(settingName, value)
         if ( settingName == "IsShown" ) then
             if EditModeManagerFrame:AreRaidFramesForcedShown() or (value and value ~= "0") then
-                set(CompactRaidFrameManagerDisplayFrameHiddenModeToggle, '隐藏')
+                CompactRaidFrameManagerDisplayFrameHiddenModeToggle:SetText('隐藏')
             else
-                set(CompactRaidFrameManagerDisplayFrameHiddenModeToggle, '显示')
+                CompactRaidFrameManagerDisplayFrameHiddenModeToggle:SetText('显示')
             end
         end
     end)
 
     e.reg(RolePollPopup, '选择你的职责', 1)
-    set(RolePollPopupAcceptButtonText, '接受')
+    RolePollPopupAcceptButtonText:SetText('接受')
 
     --HelpTipTemplateMixin:ApplyText()
     hooksecurefunc(HelpTipTemplateMixin, 'ApplyText', function(frame)
         local text= e.strText[frame.info.text]
         if text then
             frame.info.text= text
-            set(frame.Text, text)
+            frame.Text:SetText(text)
         end
     end)
 
@@ -3737,7 +3735,7 @@ end)
         local text= e.strText[self.toolTipText]
         if text then
             self.toolTipText= text
-            set(HelpPlateTooltip.Text, text)
+            HelpPlateTooltip.Text:SetText(text)
         end
     end)
 
@@ -3748,9 +3746,9 @@ end)
             local name= e.strText[optionInfo.name]
             if name then
                 if (FlagsUtil.IsSet(optionInfo.flags, Enum.GossipOptionRecFlags.QuestLabelPrepend)) then
-                    set(self, foramt('|cnPURE_BLUE_COLOR:（任务）|r%s', name))
+                    self:SetFormattedText('|cnPURE_BLUE_COLOR:（任务）|r%s', name))
                 else
-                    set(self, name)
+                    e.set(self, name)
                 end
             end
         end
@@ -3759,11 +3757,11 @@ end)
         if info and info.title then
             local title= e.cn(info.title)
             if info.isIgnored then
-                set(self, format('|cff000000%s（忽略）|r', title))
+                self:SetFormattedText('|cff000000%s（忽略）|r', title))
             elseif info.isTrivial then
-                set(self, format('|cff000000%s （低等级）|r', title))
+                self:SetFormattedText('|cff000000%s （低等级）|r', title))
             else
-                set(self, e.strText[titleText])
+                e.set(self, titleText)
             end
         end
     end
@@ -3775,11 +3773,11 @@ end)
     end)]]
 
     --试衣间
-    set(DressUpFrameTitleText, '试衣间')
-    set(DressUpFrameOutfitDropDown.SaveButton, '保存')
-    set(DressUpFrame.LinkButton, '外观方案链接')
-    set(DressUpFrameResetButton, '重置')
-    set(DressUpFrameCancelButton, '关闭')
+    DressUpFrameTitleText:SetText('试衣间')
+    DressUpFrameOutfitDropDown.SaveButton:SetText('保存')
+    DressUpFrame.LinkButton:SetText('外观方案链接')
+    DressUpFrameResetButton:SetText('重置')
+    DressUpFrameCancelButton:SetText('关闭')
     DressUpFrame.ToggleOutfitDetailsButton:HookScript('OnEnter', function()
         GameTooltip_SetTitle(GameTooltip, '外观列表')
 		GameTooltip:Show()
@@ -3847,7 +3845,7 @@ end)
             local name= _G[TransmogUtil.GetSlotName(slotID)]
             local slotName = e.strText[name]
             if slotName then
-                set(self.Name, format('(%s)', slotName))
+                self.Name:SetFormattedText('(%s)', slotName)
             end
         end
     end)
@@ -3859,7 +3857,7 @@ end)
         if self.Buttons then
             local btn=self.Buttons[#self.Buttons]
             if btn then
-                set(btn, GREEN_FONT_COLOR_CODE..'新外观方案'..FONT_COLOR_CODE_CLOSE)
+                btn:SetText('|cnGREEN_FONT_COLOR:新外观方案|r')
             end
         end
     end)
@@ -3868,12 +3866,12 @@ end)
     --PlayerCastingBarFrame
     hooksecurefunc(PlayerCastingBarFrame, 'HandleInterruptOrSpellFailed', function(self, _, event, ...)
         if self.barType == "interrupted" and self.Text then
-            set(self.Text, event == "UNIT_SPELLCAST_FAILED" and '失败' or '被打断')
+            self.Text:SetText(event == "UNIT_SPELLCAST_FAILED" and '失败' or '被打断')
         end
     end)
     PlayerCastingBarFrame:HookScript('OnEvent', function(self, event)
         if event== "UNIT_SPELLCAST_START" or event== "UNIT_SPELLCAST_CHANNEL_START" or event== "UNIT_SPELLCAST_EMPOWER_START" then
-            set(self.Text)
+            e.set(self.Text)
         end
     end)
 
@@ -3932,7 +3930,7 @@ end)
                 end
                 text= get_menu_text(text)
                 if text then
-                    set(GetChild(frame, frame:GetName(), "Text"), text)
+                    e.set(GetChild(frame, frame:GetName(), "Text"), text)
                 end
             end
         end)
@@ -3945,7 +3943,7 @@ end)
             local button = _G[listFrameName.."Button"..index]
             local text= get_menu_text(info.text)
             if text then
-                set(button, info.colorCode and info.colorCode..text.."|r" or text)
+                button:SetText(info.colorCode and info.colorCode..text.."|r" or text)
             end
         end)
 
@@ -3956,8 +3954,8 @@ end)
             end
             local button = _G[self:GetName().."Button"..self.numButtons]
             if ( button and text ) then
-                set(button, e.strText[text])
-		        set(_G[button:GetName().."ShortcutText"])
+                e.set(button, text)
+		        e.set(_G[button:GetName().."ShortcutText"])
             end
         end)
 
@@ -3973,10 +3971,10 @@ end)
                 local name= btn and btn:GetText()
                 local text= name and e.strText[name]
                 if text then
-                    set(btn, text)
+                    btn:SetText(text)
                     local shortcutString = _G[btn:GetName().."ShortcutText"]
                     if shortcutString then
-                        set(shortcutString, name)
+                        shortcutString:SetText(name)
                         shortcutString:Show()
                     end
                     btn:SetWidth(w*1.4)
@@ -3991,10 +3989,10 @@ end)
                 local name= btn and btn:GetText()
                 local text= name and e.strText[name]
                 if text then
-                    set(btn, text)
+                    btn:SetText(text)
                     local shortcutString = _G[btn:GetName().."ShortcutText"]
                     if shortcutString then
-                        set(shortcutString, name)
+                        shortcutString:SetText(name)
                         shortcutString:Show()
                     end
                     btn:SetWidth(w*1.4)
@@ -4006,60 +4004,60 @@ end)
     --EventToastManager.lua EventToastManagerFrame
     --没有全部测试
     hooksecurefunc(EventToastScenarioBaseToastMixin, 'Setup', function(self, toastInfo)
-        set(self.Title, e.strText[toastInfo.title])
-        set(self.SubTitle, e.strText[toastInfo.subtitle])
-        set(self.Description, e.strText[toastInfo.instructionText])
+        e.set(self.Title, toastInfo.title)
+        e.set(self.SubTitle, toastInfo.subtitle)
+        e.set(self.Description, toastInfo.instructionText)
     end)
     hooksecurefunc(EventToastScenarioExpandToastMixin, 'Setup', function(self, toastInfo)
-        set(self.Description, '左键点击以查看详情')
+        self.Description:SetText('左键点击以查看详情')
     end)
     hooksecurefunc(EventToastScenarioExpandToastMixin, 'OnAnimFinished', function(self)
-        set(self.Description, '左键点击以查看详情')
+        self.Description:SetText('左键点击以查看详情')
     end)
     hooksecurefunc(EventToastScenarioExpandToastMixin, 'OnClick', function(self, button, ...)
         if (button == "LeftButton") then
             if(not self.expanded) then
-                set(self.Description, '左键点击以查看详情')
+                self.Description:SetText('左键点击以查看详情')
             else
-                set(self.Description, '左键点击以隐藏详情')
+                self.Description:SetText('左键点击以隐藏详情')
             end
         end
     end)
     hooksecurefunc(EventToastWeeklyRewardToastMixin, 'Setup', function(self, toastInfo)
-        set(self.Contents.Title, e.strText[toastInfo.title])
-	    set(self.Contents.SubTitle, e.strText[toastInfo.subtitle])
+        e.set(self.Contents.Title, toastInfo.title)
+	    e.set(self.Contents.SubTitle, e.strText[toastInfo.subtitle])
     end)
     hooksecurefunc(EventToastWithIconBaseMixin, 'Setup', function(self, toastInfo)
-        set(self.Title, e.strText[toastInfo.title])
-        set(self.SubTitle, e.strText[toastInfo.subtitle])
+        e.set(self.Title, toastInfo.title)
+        e.set(self.SubTitle, toastInfo.subtitle)
         if not self.isSideDisplayToast then
-            set(self.InstructionalText, e.strText[toastInfo.instructionText])
+            e.set(self.InstructionalText, toastInfo.instructionText)
         end
     end)
     hooksecurefunc(EventToastWithIconWithRarityMixin, 'Setup', function(self, toastInfo)
         if (toastInfo.qualityString) then
-            set(self.RarityValue, e.strText[toastInfo.qualityString])
+            e.set(self.RarityValue, toastInfo.qualityString)
         end
     end)
     hooksecurefunc(EventToastChallengeModeToastMixin, 'Setup', function(self, toastInfo)
-        set(self.Title, e.strText[toastInfo.title])
+        e.set(self.Title, toastInfo.title)
         if (toastInfo.time) then
             if e.strText[toastInfo.subtitle] then
-                set(self.SubTitle, format(e.strText[toastInfo.subtitle], SecondsToClock(toastInfo.time/1000, true)))
+                self.SubTitle:SetFormattedText(e.strText[toastInfo.subtitle], SecondsToClock(toastInfo.time/1000, true))
             end
         else
-            set(self.SubTitle, e.strText[toastInfo.subtitle])
+            e.set(self.SubTitle, toastInfo.subtitle)
         end
     end)
     hooksecurefunc(EventToastManagerNormalTitleAndSubtitleMixin, 'Setup', function(self, toastInfo)
-        set(self.Title, e.strText[toastInfo.title])
-        set(self.SubTitle, e.strText[toastInfo.subtitle])
+        e.set(self.Title, toastInfo.title)
+        e.set(self.SubTitle, toastInfo.subtitle)
     end)
     hooksecurefunc(EventToastManagerNormalSingleLineMixin, 'Setup', function(self, toastInfo)
-        set(self.Title, e.strText[toastInfo.title])
+        e.set(self.Title, toastInfo.title)
     end)
     hooksecurefunc(EventToastManagerNormalBlockTextMixin, 'Setup', function(self, toastInfo)
-	    set(self.Title, e.strText[toastInfo.title])
+	    e.set(self.Title, toastInfo.title)
     end)
 
 
@@ -4068,7 +4066,7 @@ end)
         local showZoneText = false
         local zoneText = GetZoneText()
         if ( (zoneText ~= self.zoneText) or (event == "ZONE_CHANGED_NEW_AREA") ) then
-            set(ZoneTextString, e.strText[zoneText])
+            e.set(ZoneTextString, zoneText)
             showZoneText = true
         end
         local subzoneText = GetSubZoneText()
@@ -4077,13 +4075,13 @@ end)
         end
         if ( subzoneText == zoneText ) then
             if ( not self:IsShown() ) then
-                set(SubZoneTextString, e.strText[subzoneText])
+                e.set(SubZoneTextString, subzoneText)
             end
         else
-            set(SubZoneTextString, e.strText[subzoneText])
+            e.set(SubZoneTextString, subzoneText)
         end
     end)
-    set(SubZoneTextString, e.strText[GetSubZoneText()])
+    e.set(SubZoneTextString, GetSubZoneText())
     hooksecurefunc('SetZoneText', function()
         local pvpType, isSubZonePvP, factionName = C_PvP.GetZonePVPInfo()
         local pvpTextString = PVPInfoTextString
@@ -4091,25 +4089,25 @@ end)
             pvpTextString = PVPArenaTextString
         end
         if ( pvpType == "sanctuary" ) then
-            set(pvpTextString, '（安全区域）')
+            pvpTextString:SetText('（安全区域）')
         elseif ( pvpType == "arena" ) then
-            set(pvpTextString, '（PvP区域）')
+            pvpTextString:SetText('（PvP区域）')
         elseif ( pvpType == "friendly" or  pvpType == "hostile" ) then
             if (factionName and factionName ~= "") then
-                set(pvpTextString, format('（%s领地）', e.cn(factionName)))
+                pvpTextString:SetFormattedText('（%s领地）', e.cn(factionName))
             end
         elseif ( pvpType == "contested" ) then
-            set(pvpTextString, '（争夺中的领土）')
+            pvpTextString:SetText('（争夺中的领土）')
         elseif ( pvpType == "combat" ) then
-            set(PVPArenaTextString, '（战斗区域）')
+            PVPArenaTextString:SetText('（战斗区域）')
         end
     end)
     hooksecurefunc('AutoFollowStatus_OnEvent', function(self, event, ...)
         if ( event == "AUTOFOLLOW_BEGIN" ) then
-            set(AutoFollowStatusText, format('正在跟随%s', self.unit))
+            AutoFollowStatusText:SetFormattedText('正在跟随%s', self.unit)
         end
         if ( event == "AUTOFOLLOW_END" ) then
-            set(AutoFollowStatusText, format('已停止跟随%s。', self.unit))
+            AutoFollowStatusText:SetFormattedText('已停止跟随%s。', self.unit)
         end
 	end)
 
@@ -4228,45 +4226,45 @@ local function Init_Loaded(arg1)
             self:SetTitle(title)
         end)
         hooksecurefunc('AuctionHouseFilterButton_SetUp', function(btn, info)
-            set(btn, e.strText[info.name])
+            e.set(btn, info.name)
         end)
 
-        set(AuctionHouseFrameBuyTab.Text, '购买')
-            set(AuctionHouseFrame.SearchBar.FilterButton, '过滤器')
-            hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList, 'SetState', function(self, state)
-                if state == 1 then
-                    local searchResultsText = self.searchStartedFunc and select(2, self.searchStartedFunc())
-                    if searchResultsText== AUCTION_HOUSE_BROWSE_FAVORITES_TIP then
-                        set(self.ResultsText, '小窍门：右键点击物品可以设置偏好。偏好的物品会在你打开拍卖行时立即出现。')
-                    end
-                elseif state == 2 then
-                    set(self.ResultsText, '未发现物品')
+        AuctionHouseFrameBuyTab.Text:SetText('购买')
+        AuctionHouseFrame.SearchBar.FilterButton:SetText('过滤器')
+        hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList, 'SetState', function(self, state)
+            if state == 1 then
+                local searchResultsText = self.searchStartedFunc and select(2, self.searchStartedFunc())
+                if searchResultsText== AUCTION_HOUSE_BROWSE_FAVORITES_TIP then
+                    self.ResultsText:SetText('小窍门：右键点击物品可以设置偏好。偏好的物品会在你打开拍卖行时立即出现。')
                 end
-            end)
-
-        set(AuctionHouseFrameSellTab.Text, '出售')
-        set(AuctionHouseFrameAuctionsTab.Text, '拍卖')
-        set(AuctionHouseFrameAuctionsFrame.CancelAuctionButton, '取消拍卖')
-        set(AuctionHouseFrameAuctionsFrameAuctionsTab.Text, '拍卖')
-        set(AuctionHouseFrameAuctionsFrameBidsTab.Text, '竞标')
-        set(AuctionHouseFrameAuctionsFrameBidsTab.Text, '竞标')
-        hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList, 'SetDataProvider', function(self)
-            if self.ResultsText and self.ResultsText:IsShown() then
-                set(self.ResultsText, '小窍门：右键点击物品可以设置偏好。偏好的物品会在你打开拍卖行时立即出现。')
+            elseif state == 2 then
+                self.ResultsText:SetText('未发现物品')
             end
         end)
 
-        set(AuctionHouseFrame.SearchBar.SearchButton, '搜索')
+        AuctionHouseFrameSellTab.Text:SetText('出售')
+        AuctionHouseFrameAuctionsTab.Text:SetText('拍卖')
+        AuctionHouseFrameAuctionsFrame.CancelAuctionButton:SetText('取消拍卖')
+        AuctionHouseFrameAuctionsFrameAuctionsTab.Text:SetText('拍卖')
+        AuctionHouseFrameAuctionsFrameBidsTab.Text:SetText('竞标')
+        AuctionHouseFrameAuctionsFrameBidsTab.Text:SetText('竞标')
+        hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList, 'SetDataProvider', function(self)
+            if self.ResultsText and self.ResultsText:IsShown() then
+                self.ResultsText:SetText('小窍门：右键点击物品可以设置偏好。偏好的物品会在你打开拍卖行时立即出现。')
+            end
+        end)
 
-        set(AuctionHouseFrame.ItemSellFrame.CreateAuctionLabel, '开始拍卖')
-        set(AuctionHouseFrame.ItemSellFrame.PostButton,'创建拍卖')
-        set(AuctionHouseFrame.ItemSellFrame.QuantityInput.Label, '数量')
-        set(AuctionHouseFrame.ItemSellFrame.DurationDropDown.Label, '持续时间')
-        set(AuctionHouseFrame.ItemSellFrame.Deposit.Label, '保证金')
-        set(AuctionHouseFrame.ItemSellFrame.TotalPrice.Label, '总价')
-        set(AuctionHouseFrame.ItemSellFrame.QuantityInput.MaxButton, '最大数量')
-        set(AuctionHouseFrame.ItemSellFrame.PriceInput.PerItemPostfix, '每个物品')
-        set(AuctionHouseFrame.ItemSellFrame.SecondaryPriceInput.Label, '竞标价格')
+        AuctionHouseFrame.SearchBar.SearchButton:SetText('搜索')
+
+        AuctionHouseFrame.ItemSellFrame.CreateAuctionLabel:SetText('开始拍卖')
+        AuctionHouseFrame.ItemSellFrame.PostButton:SetText('创建拍卖')
+        AuctionHouseFrame.ItemSellFrame.QuantityInput.Label:SetText('数量')
+        AuctionHouseFrame.ItemSellFrame.DurationDropDown.Label:SetText('持续时间')
+        AuctionHouseFrame.ItemSellFrame.Deposit.Label:SetText('保证金')
+        AuctionHouseFrame.ItemSellFrame.TotalPrice.Label:SetText('总价')
+        AuctionHouseFrame.ItemSellFrame.QuantityInput.MaxButton:SetText('最大数量')
+        AuctionHouseFrame.ItemSellFrame.PriceInput.PerItemPostfix:SetText('每个物品')
+        AuctionHouseFrame.ItemSellFrame.SecondaryPriceInput.Label:SetText('竞标价格')
 
         --Blizzard_AuctionHouseUI
         hooksecurefunc(AuctionHouseFrame.ItemSellFrame, 'SetSecondaryPriceInputEnabled', function(self, enabled)
@@ -4276,31 +4274,31 @@ local function Init_Loaded(arg1)
             end
         end)
 
-        set(AuctionHouseFrame.CommoditiesSellFrame.CreateAuctionLabel, '开始拍卖')
-        set(AuctionHouseFrame.CommoditiesSellFrame.PostButton,'创建拍卖')
-        set(AuctionHouseFrame.CommoditiesSellFrame.QuantityInput.Label, '数量')
-        set(AuctionHouseFrame.CommoditiesSellFrame.PriceInput.Label, '一口价')
-        set(AuctionHouseFrame.CommoditiesSellFrame.DurationDropDown.Label, '持续时间')
-        set(AuctionHouseFrame.CommoditiesSellFrame.Deposit.Label, '保证金')
-        set(AuctionHouseFrame.CommoditiesSellFrame.TotalPrice.Label, '总价')
-        set(AuctionHouseFrame.CommoditiesSellFrame.QuantityInput.MaxButton, '最大数量')
-        set(AuctionHouseFrame.CommoditiesSellFrame.PriceInput.PerItemPostfix, '每个物品')
-        set(AuctionHouseFrame.ItemSellFrame.BuyoutModeCheckButton.Text, '一口价')
+        AuctionHouseFrame.CommoditiesSellFrame.CreateAuctionLabel:SetText('开始拍卖')
+        AuctionHouseFrame.CommoditiesSellFrame.PostButton:SetText('创建拍卖')
+        AuctionHouseFrame.CommoditiesSellFrame.QuantityInput.Label:SetText('数量')
+        AuctionHouseFrame.CommoditiesSellFrame.PriceInput.Label:SetText('一口价')
+        AuctionHouseFrame.CommoditiesSellFrame.DurationDropDown.Label:SetText('持续时间')
+        AuctionHouseFrame.CommoditiesSellFrame.Deposit.Label:SetText('保证金')
+        AuctionHouseFrame.CommoditiesSellFrame.TotalPrice.Label:SetText('总价')
+        AuctionHouseFrame.CommoditiesSellFrame.QuantityInput.MaxButton:SetText('最大数量')
+        AuctionHouseFrame.CommoditiesSellFrame.PriceInput.PerItemPostfix:SetText('每个物品')
+        AuctionHouseFrame.ItemSellFrame.BuyoutModeCheckButton.Text:SetText('一口价')
         AuctionHouseFrame.ItemSellFrame.BuyoutModeCheckButton:HookScript('OnEnter', function()
             GameTooltip_AddNormalLine(GameTooltip, '取消勾选此项以允许对你的拍卖品进行竞拍。', true)
             GameTooltip:Show()
         end)
 
         --刷新，列表
-        set(AuctionHouseFrame.CommoditiesBuyFrame.BackButton, '返回')
-        set(AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.BuyButton, '一口价')
-        set(AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.QuantityInput.Label, '数量')
-        set(AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.UnitPrice.Label, '单价')
-        set(AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.TotalPrice.Label, '总价')
+        AuctionHouseFrame.CommoditiesBuyFrame.BackButton:SetText('返回')
+        AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.BuyButton:SetText('一口价')
+        AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.QuantityInput.Label:SetText('数量')
+        AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.UnitPrice.Label:SetText('单价')
+        AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.TotalPrice.Label:SetText('总价')
 
-        set(AuctionHouseFrame.ItemBuyFrame.BackButton, '返回')
-        set(AuctionHouseFrame.ItemBuyFrame.BidFrame.BidButton, '竞标')
-        set(AuctionHouseFrame.ItemBuyFrame.BuyoutFrame.BuyoutButton, '一口价')
+        AuctionHouseFrame.ItemBuyFrame.BackButton:SetText('返回')
+        AuctionHouseFrame.ItemBuyFrame.BidFrame.BidButton:SetText('竞标')
+        AuctionHouseFrame.ItemBuyFrame.BuyoutFrame.BuyoutButton:SetText('一口价')
 
         AuctionHouseFrame.CommoditiesSellList.RefreshFrame.RefreshButton:HookScript('OnEnter', function()
             GameTooltip_SetTitle(GameTooltip, '刷新')
@@ -4315,12 +4313,12 @@ local function Init_Loaded(arg1)
         --Blizzard_AuctionHouseSharedTemplates.lua
         hooksecurefunc(AuctionHouseFrame.ItemSellList.RefreshFrame, 'SetQuantity', function(self, totalQuantity)
             if totalQuantity ~= 0 then
-                set(self.TotalQuantity, format('可购买数量：|cnGREEN_FONT_COLOR:%s|r', e.MK(totalQuantity, 0)))
+                self.TotalQuantity:SetFormattedText('可购买数量：|cnGREEN_FONT_COLOR:%s|r', e.MK(totalQuantity, 0))
             end
         end)
         hooksecurefunc(AuctionHouseFrame.CommoditiesSellList.RefreshFrame, 'SetQuantity', function(self, totalQuantity)
             if totalQuantity ~= 0 then
-                set(self.TotalQuantity, format('可购买数量：|cnGREEN_FONT_COLOR:%s|r', e.MK(totalQuantity, 0)))
+                self.TotalQuantity:SetFormattedText('可购买数量：|cnGREEN_FONT_COLOR:%s|r', e.MK(totalQuantity, 0))
             end
         end)
         hooksecurefunc(AuctionHouseFrame.ItemBuyFrame.BidFrame, 'SetPrice', function(self, minBid, isOwnerItem, isPlayerHighBid)
@@ -4364,8 +4362,8 @@ local function Init_Loaded(arg1)
         end)
 
 
-        set(AuctionHouseFrame.WoWTokenResults.Buyout, '一口价')
-        set(AuctionHouseFrame.WoWTokenResults.BuyoutLabel, '一口价')
+        AuctionHouseFrame.WoWTokenResults.Buyout:SetText('一口价')
+        AuctionHouseFrame.WoWTokenResults.BuyoutLabel:SetText('一口价')
         AuctionHouseFrame.WoWTokenResults.HelpButton:HookScript('OnEnter', function()
             GameTooltip:AddLine('关于魔兽世界时光徽章')
             GameTooltip:Show()
@@ -4384,9 +4382,9 @@ local function Init_Loaded(arg1)
         e.hookDia("CANCEL_AUCTION", 'OnShow', function(self)
             local cancelCost = C_AuctionHouse.GetCancelCost(self.data.auctionID)
             if cancelCost > 0 then
-                set(self.text, e.strText['取消拍卖会没收你所有的保证金和：'])
+                self.text:SetText('取消拍卖会没收你所有的保证金和：')
             else
-                set(self.text, e.strText['取消拍卖将使你失去保证金。'])
+                self.text:SetText('取消拍卖将使你失去保证金。')
             end
         end)
 
@@ -4397,8 +4395,8 @@ local function Init_Loaded(arg1)
         e.dia("TOKEN_NONE_FOR_SALE", {text = '目前没有可售的魔兽世界时光徽章。请稍后再来查看。', button1 = '确定'})
         e.dia("TOKEN_AUCTIONABLE_TOKEN_OWNED", {text = '你必须先将从商城购得的魔兽世界时光徽章售出后才能从拍卖行中购买新的徽章。', button1 = '确定'})
 
-        set(AuctionHouseFrame.BuyDialog.BuyNowButton, '立即购买')
-        set(AuctionHouseFrame.BuyDialog.CancelButton, '取消')
+        AuctionHouseFrame.BuyDialog.BuyNowButton:SetText('立即购买')
+        AuctionHouseFrame.BuyDialog.CancelButton:SetText('取消')
 
 
 
@@ -4421,15 +4419,15 @@ local function Init_Loaded(arg1)
          for _, tabID in pairs(ClassTalentFrame:GetTabSet() or {}) do
             local btn= ClassTalentFrame:GetTabButton(tabID)
             if tabID==1 then
-                set(btn, '专精')
+                btn:SetText('专精')
             elseif tabID==2 then
-                set(btn, '天赋')
+                btn:SetText('天赋')
             end
         end
 
         --Blizzard_ClassTalentTalentsTab.lua
-        set(ClassTalentFrame.TalentsTab.ApplyButton, '应用改动')
-        set(ClassTalentFrame.TalentsTab.SearchBox.Instructions, '搜索')
+        ClassTalentFrame.TalentsTab.ApplyButton:SetText('应用改动')
+        ClassTalentFrame.TalentsTab.SearchBox.Instructions:SetText('搜索')
         hooksecurefunc(ClassTalentFrame.TalentsTab.ApplyButton, 'SetDisabledTooltip', function(self, canChangeError)
             if canChangeError then
                 if canChangeError ==  TALENT_FRAME_REFUND_INVALID_ERROR  then
@@ -4442,10 +4440,10 @@ local function Init_Loaded(arg1)
         ClassTalentFrame.TalentsTab.ApplyButton:HookScript('OnEnter', function()
         end)
         hooksecurefunc(ClassTalentFrame.TalentsTab.ClassCurrencyDisplay, 'SetPointTypeText', function(self, text)
-            set(self.CurrencyLabel, format('%s 可用点数', e.strText[ClassTalentFrame.TalentsTab:GetClassName()] or text))
+            self.CurrencyLabel:SetFormattedText('%s 可用点数', e.strText[ClassTalentFrame.TalentsTab:GetClassName()] or text)
         end)
         hooksecurefunc(ClassTalentFrame.TalentsTab.SpecCurrencyDisplay, 'SetPointTypeText', function(self, text)
-            set(self.CurrencyLabel, format('%s 可用点数', e.strText[ClassTalentFrame.TalentsTab:GetSpecName()] or text))
+            self.CurrencyLabel:SetFormattedText('%s 可用点数', e.strText[ClassTalentFrame.TalentsTab:GetSpecName()] or text)
         end)
         ClassTalentFrame.TalentsTab.InspectCopyButton:SetTextToFit('复制配置代码')
 
@@ -4457,19 +4455,19 @@ local function Init_Loaded(arg1)
                 [LE_UNIT_STAT_INTELLECT] = '智力',
             }
             for frame in pairs(ClassTalentFrame.SpecTab.SpecContentFramePool.activeObjects or {}) do
-                set(frame.ActivatedText, '激活')
-                set(frame.ActivateButton, '激活')
+                frame.ActivatedText:SetText('激活')
+                frame.ActivateButton:SetText('激活')
                 if frame.RoleName then
-                    set(frame.RoleName, e.strText[frame.RoleName:GetText()])
+                    e.set(frame.RoleName, frame.RoleName:GetText())
                 end
-                set(frame.SampleAbilityText, '典型技能')
+                frame.SampleAbilityText:SetText('典型技能')
                 if frame.specIndex then
                     local specID, name, description, _, _, primaryStat = GetSpecializationInfo(frame.specIndex, false, false, nil, sex)
                     if specID and primaryStat and primaryStat ~= 0 then
-                        set(frame.Description, (e.cn(description) or '').."|n"..format('主要属性：%s', SPEC_STAT_STRINGS[primaryStat]))
+                        e.set(frame.Description, (e.cn(description) or '').."|n"..format('主要属性：%s', SPEC_STAT_STRINGS[primaryStat]))
                     end
                     if frame.SpecName then
-                        set(frame.SpecName, e.strText[name])
+                        e.set(frame.SpecName, name)
                     end
                 end
 
@@ -4555,27 +4553,27 @@ local function Init_Loaded(arg1)
         end)
 
         --Blizzard_ClassTalentLoadoutImportDialog.xml
-        set(ClassTalentLoadoutImportDialog.Title, '导入配置')
-        set(ClassTalentLoadoutImportDialog.ImportControl.Label, '导入文本')
-        set(ClassTalentLoadoutImportDialog.ImportControl.InputContainer.EditBox.Instructions, '在此粘贴配置代码')
-        set(ClassTalentLoadoutImportDialog.NameControl.Label, '新配置名称')
-        set(ClassTalentLoadoutImportDialog.AcceptButton, '导入')
-        set(ClassTalentLoadoutImportDialog.CancelButton, '取消')
+        ClassTalentLoadoutImportDialog.Title:SetText('导入配置')
+        ClassTalentLoadoutImportDialog.ImportControl.Label:SetText('导入文本')
+        ClassTalentLoadoutImportDialog.ImportControl.InputContainer.EditBox.Instructions:SetText('在此粘贴配置代码')
+        ClassTalentLoadoutImportDialog.NameControl.Label:SetText('新配置名称')
+        ClassTalentLoadoutImportDialog.AcceptButton:SetText('导入')
+        ClassTalentLoadoutImportDialog.CancelButton:SetText('取消')
         ClassTalentLoadoutImportDialog.AcceptButton.disabledTooltip = '输入可用的配置代码'
 
         --Blizzard_ClassTalentLoadoutEditDialog.xml
-        set(ClassTalentLoadoutEditDialog.Title, '配置设定')
-        set(ClassTalentLoadoutEditDialog.NameControl.Label, '名字')
-        set(ClassTalentLoadoutEditDialog.UsesSharedActionBars.Label, '使用共享的动作条')
-        set(ClassTalentLoadoutEditDialog.AcceptButton, '接受')
-        set(ClassTalentLoadoutEditDialog.DeleteButton, '删除')
-        set(ClassTalentLoadoutEditDialog.CancelButton, '取消')
+        ClassTalentLoadoutEditDialog.Title:SetText('配置设定')
+        ClassTalentLoadoutEditDialog.NameControl.Label:SetText('名字')
+        ClassTalentLoadoutEditDialog.UsesSharedActionBars.Label:SetText('使用共享的动作条')
+        ClassTalentLoadoutEditDialog.AcceptButton:SetText('接受')
+        ClassTalentLoadoutEditDialog.DeleteButton:SetText('删除')
+        ClassTalentLoadoutEditDialog.CancelButton:SetText('取消')
 
         --Blizzard_ClassTalentLoadoutCreateDialog.xml
-        set(ClassTalentLoadoutCreateDialog.Title, '新配置')
-        set(ClassTalentLoadoutCreateDialog.NameControl.Label, '名字')
-        set(ClassTalentLoadoutCreateDialog.AcceptButton, '保存')
-        set(ClassTalentLoadoutCreateDialog.CancelButton, '取消')
+        ClassTalentLoadoutCreateDialog.Title:SetText('新配置')
+        ClassTalentLoadoutCreateDialog.NameControl.Label:SetText('名字')
+        ClassTalentLoadoutCreateDialog.AcceptButton:SetText('保存')
+        ClassTalentLoadoutCreateDialog.CancelButton:SetText('取消')
 
 
 
@@ -4601,18 +4599,18 @@ local function Init_Loaded(arg1)
     elseif arg1=='Blizzard_ProfessionsCustomerOrders' then
         hooksecurefunc(ProfessionsCustomerOrdersCategoryButtonMixin, 'Init', function(self, categoryInfo, _, isRecraftCategory)
             if isRecraftCategory then
-                set(self, '开始再造订单')
+                self:SetText('开始再造订单')
             elseif categoryInfo and categoryInfo.categoryName and e.strText[categoryInfo.categoryName] then
-                set(self, e.strText[categoryInfo.categoryName])
+                e.set(self, categoryInfo.categoryName)
             end
         end)
-        set(ProfessionsCustomerOrdersFrameBrowseTab, '发布订单')
-        set(ProfessionsCustomerOrdersFrameOrdersTab, '我的订单')
-        set(ProfessionsCustomerOrdersFrame.BrowseOrders.SearchBar.FilterButton, '过滤器')
+        ProfessionsCustomerOrdersFrameBrowseTab:SetText('发布订单')
+        ProfessionsCustomerOrdersFrameOrdersTab:SetText('我的订单')
+        ProfessionsCustomerOrdersFrame.BrowseOrders.SearchBar.FilterButton:SetText('过滤器')
 
         ProfessionsCustomerOrdersFrame.BrowseOrders:HookScript('OnEvent', function (self, event)
             if event == "CRAFTINGORDERS_CUSTOMER_OPTIONS_PARSED" and not C_CraftingOrders.HasFavoriteCustomerOptions() then
-                set(self.RecipeList.ResultsText, '小窍门：右键点击配方可以设置偏好。偏好的配方会在你打开商盟时立即出现。')
+                self.RecipeList.ResultsText:SetText('小窍门：右键点击配方可以设置偏好。偏好的配方会在你打开商盟时立即出现。')
             end
         end)
         hooksecurefunc(ProfessionsCustomerOrdersFrame.BrowseOrders, 'StartSearch', function (self)
@@ -4620,7 +4618,7 @@ local function Init_Loaded(arg1)
                 self.RecipeList.ResultsText:SetText('未找到配方')
             end
         end)
-        set(ProfessionsCustomerOrdersFrame.BrowseOrders.SearchBar.SearchButton, '搜索')
+        ProfessionsCustomerOrdersFrame.BrowseOrders.SearchBar.SearchButton:SetText('搜索')
         ProfessionsCustomerOrdersFrame.BrowseOrders.SearchBar.FavoritesSearchButton:HookScript("OnEnter", function(frame)
             GameTooltip:SetText('|cffffffff收藏')
             if not C_CraftingOrders.HasFavoriteCustomerOptions() then
@@ -4634,24 +4632,24 @@ local function Init_Loaded(arg1)
 
 
 
-        set(ProfessionsCustomerOrdersFrame.Form.BackButton, '返回' )
-        set(ProfessionsCustomerOrdersFrame.Form.MinimumQuality.Text, '最低品质：')
-        set(ProfessionsCustomerOrdersFrame.Form.ReagentContainer.RecraftInfoText, '再造使你可以改变某些制造装备的附加材料和品质。')
-        set(ProfessionsCustomerOrdersFrame.Form.AllocateBestQualityCheckBox.Text, '使用最高品质材料')
+        ProfessionsCustomerOrdersFrame.Form.BackButton:SetText('返回' )
+        ProfessionsCustomerOrdersFrame.Form.MinimumQuality.Text:SetText('最低品质：')
+        ProfessionsCustomerOrdersFrame.Form.ReagentContainer.RecraftInfoText:SetText('再造使你可以改变某些制造装备的附加材料和品质。')
+        ProfessionsCustomerOrdersFrame.Form.AllocateBestQualityCheckBox.Text:SetText('使用最高品质材料')
 
-        set(ProfessionsCustomerOrdersFrame.Form.OrderRecipientDisplay.Crafter, '制作者：')
+        ProfessionsCustomerOrdersFrame.Form.OrderRecipientDisplay.Crafter:SetText('制作者：')
         hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'SetupDurationDropDown', function(self)
             self.PaymentContainer.Duration:SetText('持续时间')
         end)
 
-        set(ProfessionsCustomerOrdersFrame.Form.PaymentContainer.Tip, '佣金')
-        set(ProfessionsCustomerOrdersFrame.Form.PaymentContainer.NoteEditBox.TitleBox.Title, '给制作者的信息：')
+        ProfessionsCustomerOrdersFrame.Form.PaymentContainer.Tip:SetText('佣金')
+        ProfessionsCustomerOrdersFrame.Form.PaymentContainer.NoteEditBox.TitleBox.Title:SetText('给制作者的信息：')
         ProfessionsCustomerOrdersFrame.Form.PaymentContainer.NoteEditBox.ScrollingEditBox.defaultText= '在此输入消息'
-        set(ProfessionsCustomerOrdersFrame.Form.PaymentContainer.TimeRemaining, '过期时间')
-        set(ProfessionsCustomerOrdersFrame.Form.PaymentContainer.PostingFee, '发布费')
-        set(ProfessionsCustomerOrdersFrame.Form.PaymentContainer.TotalPrice, '总价')
-        set(ProfessionsCustomerOrdersFrame.Form.PaymentContainer.ListOrderButton, '发布订单')
-        set(ProfessionsCustomerOrdersFrame.Form.PaymentContainer.CancelOrderButton, '取消订单')
+        ProfessionsCustomerOrdersFrame.Form.PaymentContainer.TimeRemaining:SetText('过期时间')
+        ProfessionsCustomerOrdersFrame.Form.PaymentContainer.PostingFee:SetText('发布费')
+        ProfessionsCustomerOrdersFrame.Form.PaymentContainer.TotalPrice:SetText('总价')
+        ProfessionsCustomerOrdersFrame.Form.PaymentContainer.ListOrderButton:SetText('发布订单')
+        ProfessionsCustomerOrdersFrame.Form.PaymentContainer.CancelOrderButton:SetText('取消订单')
 
         ProfessionsCustomerOrdersFrame.Form.FavoriteButton:HookScript('OnEnter', function (self)
             local isFavorite = self:GetChecked()
@@ -4736,7 +4734,7 @@ local function Init_Loaded(arg1)
             GameTooltip:Show()
          end)
 
-        set(ProfessionsCustomerOrdersFrame.Form.TrackRecipeCheckBox.Text, LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
+        ProfessionsCustomerOrdersFrame.Form.TrackRecipeCheckBox.Text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
 
         ProfessionsCustomerOrdersFrame.Form.AllocateBestQualityCheckBox:HookScript("OnEnter", function(button)
             local checked = button:GetChecked()
@@ -4752,20 +4750,20 @@ local function Init_Loaded(arg1)
         hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'InitSchematic', function(self)
             local professionName = C_TradeSkillUI.GetProfessionNameForSkillLineAbility(self.order.skillLineAbilityID)
             professionName= e.strText[professionName] or professionName
-	        set(self.ProfessionText, format('%s 配方', professionName))
+	        self.ProfessionText:SetFormattedText('%s 配方', e.cn(professionName))
         end)
 
         hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'Init', function(self, order)
             if not self.committed then
-                set(self.ReagentContainer.Reagents.Label, '提供材料：')
-                set(self.ReagentContainer.OptionalReagents.Label, '提供附加材料：')
+                self.ReagentContainer.Reagents.Label:SetText('提供材料：')
+                self.ReagentContainer.OptionalReagents.Label:SetText('提供附加材料：')
             else
                 if self.order.orderState ~= Enum.CraftingOrderState.Created then
                     local remainingTime = Professions.GetCraftingOrderRemainingTime(order.expirationTime)
                     local seconds = remainingTime >= 60 and remainingTime or 60 -- Never show < 1min
                     local timeRemainingText = Professions.OrderTimeLeftFormatter:Format(seconds)
                     timeRemainingText = format('%s （等待中）', timeRemainingText)
-                    set(self.PaymentContainer.TimeRemainingDisplay.Text, timeRemainingText)
+                    e.set(self.PaymentContainer.TimeRemainingDisplay.Text, timeRemainingText)
                 end
 
                 if not order.crafterName then
@@ -4775,7 +4773,7 @@ local function Init_Loaded(arg1)
                     else
                         crafterText = '未领取'
                     end
-                    set(self.OrderRecipientDisplay.CrafterValue, crafterText)
+                    e.set(self.OrderRecipientDisplay.CrafterValue, crafterText)
                 end
 
                 local orderTypeText
@@ -4786,7 +4784,7 @@ local function Init_Loaded(arg1)
                 elseif self.order.orderType == Enum.CraftingOrderType.Personal then
                     orderTypeText = '个人订单'
                 end
-                set(self.OrderRecipientDisplay.PostedTo, orderTypeText)
+                e.set(self.OrderRecipientDisplay.PostedTo, orderTypeText)
 
                 local orderStateText
                 if self.order.orderState == Enum.CraftingOrderState.Created then
@@ -4802,10 +4800,10 @@ local function Init_Loaded(arg1)
                 else
                     orderStateText = '|cnGREEN_FONT_COLOR:订单完成！|r'
                 end
-                set(self.OrderStateText, orderStateText)
+                e.set(self.OrderStateText, orderStateText)
 
-                set(self.ReagentContainer.Reagents.Label, '提供的材料：')
-                set(self.ReagentContainer.OptionalReagents.Label, '提供的附加材料：')
+                self.ReagentContainer.Reagents.Label:SetText('提供的材料：')
+                self.ReagentContainer.OptionalReagents.Label:SetText('提供的附加材料：')
             end
         end)
 
@@ -4813,11 +4811,11 @@ local function Init_Loaded(arg1)
         hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'DisplayCurrentListings', function(self)
             local orders = C_CraftingOrders.GetCustomerOrders()
             if #orders == 0 then
-                set(self.CurrentListings.OrderList.ResultsText, '没有发现订单')
+                self.CurrentListings.OrderList.ResultsText:SetText('没有发现订单')
             end
         end)
         ProfessionsCustomerOrdersFrame.Form.CurrentListings:SetTitle('当前列表')
-        set(ProfessionsCustomerOrdersFrame.Form.CurrentListings.CloseButton, '关闭')
+        ProfessionsCustomerOrdersFrame.Form.CurrentListings.CloseButton:SetText('关闭')
 
 
         hooksecurefunc(ProfessionsCustomerOrdersFrame, 'SelectMode', function(self, mode)
@@ -4827,7 +4825,7 @@ local function Init_Loaded(arg1)
                 self:SetTitle('我的订单')
             end
         end)
-        set(ProfessionsCustomerOrdersFrame.MyOrdersPage.OrderList.ResultsText, '没有发现订单')
+        ProfessionsCustomerOrdersFrame.MyOrdersPage.OrderList.ResultsText:SetText('没有发现订单')
 
 
 
@@ -4868,22 +4866,25 @@ local function Init_Loaded(arg1)
 
         hooksecurefunc(ProfessionsFrame, 'UpdateTabs', function(self)
             local recipesTab = self:GetTabButton(self.recipesTabID)
-            set(recipesTab.Text, '配方', nil, true)
+            e.font(recipesTab.Text)
+            recipesTab.Text:SetText('配方')
 
             recipesTab = self:GetTabButton(self.specializationsTabID)
-            set(recipesTab.Text, '专精', nil, true)
+            e.font(recipesTab.Text)
+            recipesTab.Text:SetText('专精')
 
             recipesTab = self:GetTabButton(self.craftingOrdersTabID )
-            set(recipesTab.Text, '制造订单', nil, true)
+            e.font(recipesTab.Text)
+            recipesTab.Text:SetText('制造订单')
         end)
 
-        set(ProfessionsFrame.CraftingPage.RecipeList.SearchBox.Instructions, '搜索')
-        set(ProfessionsFrame.CraftingPage.RecipeList.FilterButton, "过滤器")
-        set(ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.SearchBox.Instructions, '搜索')
-        set(ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.FilterButton, '过滤器')
+        ProfessionsFrame.CraftingPage.RecipeList.SearchBox.Instructions:SetText('搜索')
+        ProfessionsFrame.CraftingPage.RecipeList.FilterButton:SetText('过滤器')
+        ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.SearchBox.Instructions:SetText('搜索')
+        ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.FilterButton:SetText('过滤器')
 
         --Blizzard_ProfessionsCrafting.lua
-        set(ProfessionsFrame.CraftingPage.ViewGuildCraftersButton, '查看工匠')
+        ProfessionsFrame.CraftingPage.ViewGuildCraftersButton:SetText('查看工匠')
 
         local FailValidationReason = EnumUtil.MakeEnum("Cooldown", "InsufficientReagents", "PrerequisiteReagents", "Disabled", "Requirement", "LockedReagentSlot", "RecraftOptionalReagentLimit")
         local FailValidationTooltips = {
@@ -4938,11 +4939,11 @@ local function Init_Loaded(arg1)
         end)
 
 
-        set(ProfessionsFrame.CraftingPage.SchematicForm.QualityDialog.AcceptButton, '接受')
-        set(ProfessionsFrame.CraftingPage.SchematicForm.QualityDialog.CancelButton, '取消')
+        ProfessionsFrame.CraftingPage.SchematicForm.QualityDialog.AcceptButton:SetText('接受')
+        ProfessionsFrame.CraftingPage.SchematicForm.QualityDialog.CancelButton:SetText('取消')
         ProfessionsFrame.CraftingPage.SchematicForm.QualityDialog:SetTitle('材料品质')
 
-        set(ProfessionsFrame.CraftingPage.SchematicForm.AllocateBestQualityCheckBox.text, LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
+        ProfessionsFrame.CraftingPage.SchematicForm.AllocateBestQualityCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
         ProfessionsFrame.CraftingPage.SchematicForm.AllocateBestQualityCheckBox:HookScript("OnEnter", function(button)--Blizzard_ProfessionsRecipeSchematicForm.lua
             local checked = button:GetChecked()
             if checked then
@@ -4952,7 +4953,7 @@ local function Init_Loaded(arg1)
             end
             GameTooltip:Show()
         end)
-        set(ProfessionsFrame.CraftingPage.SchematicForm.TrackRecipeCheckBox.text, LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
+        ProfessionsFrame.CraftingPage.SchematicForm.TrackRecipeCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
         ProfessionsFrame.CraftingPage.SchematicForm.FavoriteButton:HookScript("OnEnter", function(button)
             GameTooltip_AddHighlightLine(GameTooltip, button:GetChecked() and '从偏好中移除' or '设置为偏好')
             GameTooltip:Show()
@@ -4969,7 +4970,7 @@ local function Init_Loaded(arg1)
         hooksecurefunc(ProfessionsFrame.CraftingPage, 'Init', function(self)--Blizzard_ProfessionsCrafting.lua
             local minimized = ProfessionsUtil.IsCraftingMinimized()
             if minimized and self.MinimizedSearchBox:IsCurrentTextValidForSearch() then
-                set(self.MinimizedSearchResults:GetTitleText(),  format('搜索结果\"%s\"(%d)', self.MinimizedSearchBox:GetText(), self.searchDataProvider:GetSize()))
+                self.MinimizedSearchResults:GetTitleText():SetFormattedText('搜索结果\"%s\"(%d)', self.MinimizedSearchBox:GetText(), self.searchDataProvider:GetSize())
             end
         end)
 
@@ -5031,16 +5032,16 @@ local function Init_Loaded(arg1)
             end
         end)
 
-        set(ProfessionsFrame.SpecPage.ApplyButton, '应用改动')
-        set(ProfessionsFrame.SpecPage.UnlockTabButton, '解锁专精')
-        set(ProfessionsFrame.SpecPage.ViewTreeButton, '解锁专精')
-        set(ProfessionsFrame.SpecPage.BackToPreviewButton, '后退')
-        set(ProfessionsFrame.SpecPage.ViewPreviewButton, '综述')
-        set(ProfessionsFrame.SpecPage.BackToFullTreeButton, '后退')
+        ProfessionsFrame.SpecPage.ApplyButton:SetText('应用改动')
+        ProfessionsFrame.SpecPage.UnlockTabButton:SetText('解锁专精')
+        ProfessionsFrame.SpecPage.ViewTreeButton:SetText('解锁专精')
+        ProfessionsFrame.SpecPage.BackToPreviewButton:SetText('后退')
+        ProfessionsFrame.SpecPage.ViewPreviewButton:SetText('综述')
+        ProfessionsFrame.SpecPage.BackToFullTreeButton:SetText('后退')
         ProfessionsFrame.SpecPage.UndoButton.tooltipText= '取消待定改动'
-        set(ProfessionsFrame.SpecPage.DetailedView.SpendPointsButton, '运用知识')
-        set(ProfessionsFrame.SpecPage.DetailedView.UnlockPathButton, '学习副专精')
-        set(ProfessionsFrame.SpecPage.TreePreview.HighlightsHeader, '专精特色：')
+        ProfessionsFrame.SpecPage.DetailedView.SpendPointsButton:SetText('运用知识')
+        ProfessionsFrame.SpecPage.DetailedView.UnlockPathButton:SetText('学习副专精')
+        ProfessionsFrame.SpecPage.TreePreview.HighlightsHeader:SetText('专精特色：')
 
         ProfessionsFrame.SpecPage.DetailedView.SpendPointsButton:HookScript("OnEnter", function()
             local self= ProfessionsFrame.SpecPage
@@ -5075,12 +5076,13 @@ local function Init_Loaded(arg1)
         end)
 
 
-        set(ProfessionsFrame.OrdersPage.BrowseFrame.SearchButton, '搜索')
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderInfo.BackButton, '返回')
+        ProfessionsFrame.OrdersPage.BrowseFrame.SearchButton:SetText('搜索')
+        ProfessionsFrame.OrdersPage.OrderView.OrderInfo.BackButton:SetText('返回')
 
-        set(ProfessionsFrame.OrdersPage.BrowseFrame.PublicOrdersButton.Text, '公开', nil, true)
-        set(ProfessionsFrame.OrdersPage.BrowseFrame.PersonalOrdersButton.Text, '个人', nil, true)
-
+        ProfessionsFrame.OrdersPage.BrowseFrame.PublicOrdersButton.Text:SetText('公开')
+        e.font(ProfessionsFrame.OrdersPage.BrowseFrame.PublicOrdersButton.Text)
+        ProfessionsFrame.OrdersPage.BrowseFrame.PersonalOrdersButton.Text:SetText('个人')
+        e.font(ProfessionsFrame.OrdersPage.BrowseFrame.PersonalOrdersButton.Text)
         ProfessionsFrame.OrdersPage.BrowseFrame.OrdersRemainingDisplay:HookScript('OnEnter', function()
             local claimInfo = C_CraftingOrders.GetOrderClaimInfo(ProfessionsFrame.OrdersPage.professionInfo.profession)
             local tooltipText
@@ -5099,11 +5101,11 @@ local function Init_Loaded(arg1)
             [Enum.CraftingOrderType.Personal] = '个人',}
         local function SetTabTitleWithCount(tabButton, type, count)
             local title = orderTypeTabTitles[type]
-            if tabButton and title then
+            if tabButton and e.strText[title] then
                 if type == Enum.CraftingOrderType.Public then
-                    set(tabButton.Text, title)
+                    e.set(tabButton.Text, title)
                 else
-                    set(tabButton.Text, format("%s (%s)", title, count))
+                    tabButton.Text:SetFormattedText("%s (%s)", title, count)
                 end
             end
         end
@@ -5133,34 +5135,34 @@ local function Init_Loaded(arg1)
 
         hooksecurefunc(ProfessionsFrame.OrdersPage, 'StartDefaultSearch', function(self)
             if self.BrowseFrame.OrderList.ResultsText:IsShown() then
-                set(self.BrowseFrame.OrderList.ResultsText, '小窍门：右键点击配方可以设置偏好。偏好的配方会在你打开你的公开订单时立即出现。')
+                self.BrowseFrame.OrderList.ResultsText:SetText('小窍门：右键点击配方可以设置偏好。偏好的配方会在你打开你的公开订单时立即出现。')
             end
         end)
         hooksecurefunc(ProfessionsFrame.OrdersPage, 'UpdateOrdersRemaining', function(self)
             if self.professionInfo then
                 local isPublic = self.orderType == Enum.CraftingOrderType.Public
                 if isPublic and self.professionInfo and self.professionInfo.profession then
-                    set(self.BrowseFrame.OrdersRemainingDisplay.OrdersRemaining, format('剩余订单：%s', C_CraftingOrders.GetOrderClaimInfo(self.professionInfo.profession).claimsRemaining))
+                    e.set(self.BrowseFrame.OrdersRemainingDisplay.OrdersRemaining, format('剩余订单：%s', C_CraftingOrders.GetOrderClaimInfo(self.professionInfo.profession).claimsRemaining))
                 end
             end
         end)
         hooksecurefunc(ProfessionsFrame.OrdersPage, 'ShowGeneric', function(self)
             if self.BrowseFrame.OrderList.ResultsText:IsShown() then
-                set(self.BrowseFrame.OrderList.ResultsText, '没有发现订单')
+                self.BrowseFrame.OrderList.ResultsText:SetText('没有发现订单')
             end
         end)
 
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderInfo.PostedByTitle, '订单发布人：')
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderInfo.CommissionTitle, '佣金：')
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderInfo.ConsortiumCutTitle, '财团分成：')
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderInfo.FinalTipTitle, '你的分成：')
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderInfo.TimeRemainingTitle, '剩余时间：')
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderInfo.NoteBox.NoteTitle, '给制作者的信息：')
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderInfo.StartOrderButton, '开始接单')
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderInfo.DeclineOrderButton, '拒绝订单')
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderInfo.ReleaseOrderButton, '取消订单')
+        ProfessionsFrame.OrdersPage.OrderView.OrderInfo.PostedByTitle:SetText('订单发布人：')
+        ProfessionsFrame.OrdersPage.OrderView.OrderInfo.CommissionTitle:SetText('佣金：')
+        ProfessionsFrame.OrdersPage.OrderView.OrderInfo.ConsortiumCutTitle:SetText('财团分成：')
+        ProfessionsFrame.OrdersPage.OrderView.OrderInfo.FinalTipTitle:SetText('你的分成：')
+        ProfessionsFrame.OrdersPage.OrderView.OrderInfo.TimeRemainingTitle:SetText('剩余时间：')
+        ProfessionsFrame.OrdersPage.OrderView.OrderInfo.NoteBox.NoteTitle:SetText('给制作者的信息：')
+        ProfessionsFrame.OrdersPage.OrderView.OrderInfo.StartOrderButton:SetText('开始接单')
+        ProfessionsFrame.OrdersPage.OrderView.OrderInfo.DeclineOrderButton:SetText('拒绝订单')
+        ProfessionsFrame.OrdersPage.OrderView.OrderInfo.ReleaseOrderButton:SetText('取消订单')
 
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.OptionalReagents.Label, '附加材料：')
+        ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.OptionalReagents.Label:SetText('附加材料：')
         ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.OptionalReagents.labelText= '附加材料：'--Blizzard_ProfessionsRecipeSchematicForm.xml
         ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.AllocateBestQualityCheckBox:HookScript("OnEnter", function(button)
             local checked = button:GetChecked()
@@ -5206,15 +5208,15 @@ local function Init_Loaded(arg1)
 
         ProfessionsFrame.OrdersPage.OrderView.OrderDetails.FulfillmentForm.NoteEditBox.ScrollingEditBox.defaultText= '在此输入消息'
 
-        set(ProfessionsFrame.OrdersPage.OrderView.CompleteOrderButton, '完成订单')
-        set(ProfessionsFrame.OrdersPage.OrderView.StartRecraftButton, '再造')
-        set(ProfessionsFrame.OrdersPage.OrderView.StopRecraftButton, '取消再造')
-        set(ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.ConfirmationText, '你确定想拒绝此订单吗？')
-        set(ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.NoteEditBox.TitleBox.Title, '拒绝原因：')
-        set(ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.CancelButton, '否')
-        set(ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.ConfirmButton, '是')
+        ProfessionsFrame.OrdersPage.OrderView.CompleteOrderButton:SetText('完成订单')
+        ProfessionsFrame.OrdersPage.OrderView.StartRecraftButton:SetText('再造')
+        ProfessionsFrame.OrdersPage.OrderView.StopRecraftButton:SetText('取消再造')
+        ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.ConfirmationText:SetText('你确定想拒绝此订单吗？')
+        ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.NoteEditBox.TitleBox.Title:SetText('拒绝原因：')
+        ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.CancelButton:SetText('否')
+        ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.ConfirmButton:SetText('是')
 
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.AllocateBestQualityCheckBox.text,  LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
+        ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.AllocateBestQualityCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
 
 
 
@@ -5306,25 +5308,27 @@ local function Init_Loaded(arg1)
             elseif self.order.reagentState == Enum.CraftingOrderReagentsType.None then
                 warningText = '将由你来提供全部材料。'
             end
-            set(self.OrderInfo.OrderReagentsWarning.Text, warningText)
+            if warningText then
+                self.OrderInfo.OrderReagentsWarning.Text:SetText(warningText)
+            end
         end)
 
 
 
         ProfessionsFrame.CraftingPage.CraftingOutputLog:SetTitle('制作成果')
 
-        set(ProfessionsFrame.CraftingPage.SchematicForm.Details.FinishingReagentSlotContainer.Label, '成品材料：')
-        set(ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.Details.FinishingReagentSlotContainer.Label, '成品材料：')
+        ProfessionsFrame.CraftingPage.SchematicForm.Details.FinishingReagentSlotContainer.Label:SetText('成品材料：')
+        ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.Details.FinishingReagentSlotContainer.Label:SetText('成品材料：')
         ProfessionsFrame.CraftingPage.SchematicForm.Details:HookScript('OnShow', function(self)
-            set(self.Label, '制作详情')
-            set(self.StatLines.DifficultyStatLine.LeftLabel, '配方难度：')
-            set(self.StatLines.SkillStatLine.LeftLabel, '技能：')
+            self.Label:SetText('制作详情')
+            self.StatLines.DifficultyStatLine.LeftLabel:SetText('配方难度：')
+            self.StatLines.SkillStatLine.LeftLabel:SetText('技能：')
         end)
 
         ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.Details:HookScript('OnShow', function(self)
-            set(self.Label, '制作详情')
-            set(self.StatLines.DifficultyStatLine.LeftLabel, '配方难度：')
-            set(self.StatLines.SkillStatLine.LeftLabel, '技能：')
+            self.Label:SetText('制作详情')
+            self.StatLines.DifficultyStatLine.LeftLabel:SetText('配方难度：')
+            self.StatLines.SkillStatLine.LeftLabel:SetText('技能：')
         end)
 
 
@@ -5335,13 +5339,13 @@ local function Init_Loaded(arg1)
 
         hooksecurefunc(ProfessionsCrafterDetailsStatLineMixin, 'SetLabel', function(self, label)--Blizzard_ProfessionsRecipeCrafterDetails.lua
             if label== PROFESSIONS_CRAFTING_STAT_TT_CRIT_HEADER then
-                set(self.LeftLabel, '灵感')
+                self.LeftLabel:SetText('灵感')
             elseif label== PROFESSIONS_CRAFTING_STAT_TT_RESOURCE_RETURN_HEADER then
-                set(self.LeftLabel, '充裕')
+                self.LeftLabel:SetText('充裕')
             elseif label== ITEM_MOD_CRAFTING_SPEED_SHORT then
-                set(self.LeftLabel, '制作速度')
+                self.LeftLabel:SetText('制作速度')
             elseif label== PROFESSIONS_OUTPUT_MULTICRAFT_TITLE then
-                set(self.LeftLabel, '产能')
+                self.LeftLabel:SetText('产能')
             end
 
         end)
@@ -5402,18 +5406,18 @@ local function Init_Loaded(arg1)
                 self:SetTitle('外观')
             end
         end)
-        set(CollectionsJournalTab1, '坐骑')
-            set(MountJournalSearchBox.Instructions, '搜索')
-            set(MountJournalFilterButtonText, '过滤器')
-            set(MountJournal.MountCount.Label, '坐骑')
-            set(MountJournalSummonRandomFavoriteButton.spellname, "随机召唤\n偏好坐骑")--hooksecurefunc('MountJournalSummonRandomFavoriteButton_OnLoad', function(self)
-            set(MountJournal.MountDisplay.ModelScene.TogglePlayer.TogglePlayerText, '显示角色')
+        CollectionsJournalTab1:SetText('坐骑')
+            MountJournalSearchBox.Instructions:SetText('搜索')
+            MountJournalFilterButtonText:SetText('过滤器')
+            MountJournal.MountCount.Label:SetText('坐骑')
+            MountJournalSummonRandomFavoriteButton.spellname:SetText('随机召唤\n偏好坐骑')--hooksecurefunc('MountJournalSummonRandomFavoriteButton_OnLoad', function(self)
+            MountJournal.MountDisplay.ModelScene.TogglePlayer.TogglePlayerText:SetText('显示角色')
             hooksecurefunc('MountJournal_OnLoad', function(self)
 	            self.SlotRequirementLabel:SetFormattedText('坐骑装备在%s级解锁', C_MountJournal.GetMountEquipmentUnlockLevel())
             end)
             hooksecurefunc('MountJournal_InitializeEquipmentSlot', function(self, item)
                 if not item then
-                    set(self.SlotLabel, '使用坐骑装备来强化你的坐骑。')
+                    self.SlotLabel:SetText('使用坐骑装备来强化你的坐骑。')
                 end
             end)
             hooksecurefunc('MountJournal_UpdateMountDisplay', function(forceSceneChange)
@@ -5421,16 +5425,16 @@ local function Init_Loaded(arg1)
                     local creatureName, spellID= C_MountJournal.GetMountInfoByID(MountJournal.selectedMountID)
                     if ( MountJournal.MountDisplay.lastDisplayed ~= spellID or forceSceneChange ) then
                         local _, descriptionText, sourceText = C_MountJournal.GetMountInfoExtraByID(MountJournal.selectedMountID)
-                        set(MountJournal.MountDisplay.InfoButton.Name, e.strText[creatureName])
-                        set(MountJournal.MountDisplay.InfoButton.Source, e.strText[sourceText])
-                        set(MountJournal.MountDisplay.InfoButton.Lore, e.strText[descriptionText])
+                        e.set(MountJournal.MountDisplay.InfoButton.Name, creatureName)
+                        e.set(MountJournal.MountDisplay.InfoButton.Source, sourceText)
+                        e.set(MountJournal.MountDisplay.InfoButton.Lore, descriptionText)
                     end
                     if C_MountJournal.NeedsFanfare(MountJournal.selectedMountID) then
-                        set(MountJournal.MountButton, '打开')
+                        MountJournal.MountButton:SetText('打开')
                     elseif select(4, C_MountJournal.GetMountInfoByID(MountJournal.selectedMountID)) then
-                        set(MountJournal.MountButton, '解散坐骑')
+                        MountJournal.MountButton:SetText('解散坐骑')
                     else
-                        set(MountJournal.MountButton, '召唤坐骑')
+                        MountJournal.MountButton:SetText('召唤坐骑')
                     end
                 end
             end)
@@ -5445,15 +5449,15 @@ local function Init_Loaded(arg1)
             end)
             hooksecurefunc('MountJournal_InitMountButton', function(button, elementData)
                 local creatureName= C_MountJournal.GetDisplayedMountInfo(elementData.index)
-                set(button.name, e.strText[creatureName])
+                e.set(button.name, creatureName)
                 if button.DragonRidingLabel:IsShown() then
-                    set(button.DragonRidingLabel, '驭空术')
+                    button.DragonRidingLabel:SetText('驭空术')
                 end
             end)
 
-        set(CollectionsJournalTab2, '宠物手册')
-            set(PetJournalSearchBox.Instructions, '搜索')
-            set(PetJournalFilterButtonText, '过滤器')
+        CollectionsJournalTab2:SetText('宠物手册')
+            PetJournalSearchBox.Instructions:SetText('搜索')
+            PetJournalFilterButtonText:SetText('过滤器')
             local function Set_Pet_Button_Name()
                 local petID = PetJournalPetCard.petID
                 local hasPetID = petID ~= nil
@@ -5479,41 +5483,41 @@ local function Init_Loaded(arg1)
             end
             hooksecurefunc('PetJournalFindBattle_Update', set_PetJournalFindBattle)
             set_PetJournalFindBattle()
-            set(PetJournal.PetCount.Label, '宠物')
-            set(PetJournalSummonRandomFavoritePetButtonSpellName, '召唤随机\n偏好战斗宠物')
-            set(PetJournalHealPetButtonSpellName, '复活\n战斗宠物')
-        set(CollectionsJournalTab3, '玩具箱')
-            set(ToyBox.searchBox.Instructions, '搜索')
-            set(ToyBoxFilterButtonText, '过滤器')
+            PetJournal.PetCount.Label:SetText('宠物')
+            PetJournalSummonRandomFavoritePetButtonSpellName:SetText('召唤随机\n偏好战斗宠物')
+            PetJournalHealPetButtonSpellName:SetText('复活\n战斗宠物')
+        CollectionsJournalTab3:SetText('玩具箱')
+            ToyBox.searchBox.Instructions:SetText('搜索')
+            ToyBoxFilterButtonText:SetText('过滤器')
             hooksecurefunc(ToyBox.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
                 self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
             end)
-        set(CollectionsJournalTab4, '传家宝')
-            set(HeirloomsJournalText, '过滤器')
-            set(HeirloomsJournalSearchBox.Instructions, '搜索')
+        CollectionsJournalTab4:SetText('传家宝')
+            HeirloomsJournalText:SetText('过滤器')
+            HeirloomsJournalSearchBox.Instructions:SetText('搜索')
             hooksecurefunc(HeirloomsJournal.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
                 self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
             end)
-        set(CollectionsJournalTab5, '外观')
-            set(WardrobeCollectionFrameSearchBox.Instructions, '搜索')
+        CollectionsJournalTab5:SetText('外观')
+            WardrobeCollectionFrameSearchBox.Instructions:SetText('搜索')
             hooksecurefunc(WardrobeCollectionFrame, 'SetContainer', function(self, parent)
                 if parent == CollectionsJournal then
-                    set(self.FilterButton, '过滤器')
+                    self.FilterButton:SetText('过滤器')
                 elseif parent == WardrobeFrame then
-                    set(self.FilterButton, '来源')
+                    self.FilterButton:SetText('来源')
                 end
             end)
-            set(WardrobeCollectionFrame.FilterButton.text, '过滤器')
-            set(WardrobeCollectionFrameTab1, '物品')
+            WardrobeCollectionFrame.FilterButton.text:SetText('过滤器')
+            WardrobeCollectionFrameTab1:SetText('物品')
                 hooksecurefunc(WardrobeCollectionFrame.ItemsCollectionFrame.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
                     self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
                 end)
-            set(WardrobeCollectionFrameTab2, '套装')
+            WardrobeCollectionFrameTab2:SetText('套装')
                 hooksecurefunc(WardrobeCollectionFrame.SetsTransmogFrame.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
                     self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
                 end)
 
-            set(WardrobeTransmogFrame.ToggleSecondaryAppearanceCheckbox.Label, '两侧肩膀使用不同的幻化外观')
+            WardrobeTransmogFrame.ToggleSecondaryAppearanceCheckbox.Label:SetText('两侧肩膀使用不同的幻化外观')
 
         e.dia("BATTLE_PET_RENAME", {text = '重命名', button1 = '接受', button2 = '取消', button3 = '默认'})
         e.dia("BATTLE_PET_PUT_IN_CAGE", {text = '把这只宠物放入笼中？', button1 = '确定', button2 = '取消'})
@@ -5523,13 +5527,13 @@ local function Init_Loaded(arg1)
         e.dia("DIALOG_REPLACE_MOUNT_EQUIPMENT", {text = '你确定要替换此坐骑装备吗？已有的坐骑装备将被摧毁。', button1 = '是', button2 = '否'})
 
         --试衣间
-        set(WardrobeFrameTitleText, '幻化')
-        set(WardrobeOutfitDropDown.SaveButton, '保存')
-        set(WardrobeTransmogFrame.ApplyButton, '应用')
-        set(WardrobeOutfitEditFrame.Title, '输入外观方案名称：')
-        set(WardrobeOutfitEditFrame.AcceptButton, '接受')
-        set(WardrobeOutfitEditFrame.CancelButton, '取消')
-        set(WardrobeOutfitEditFrame.DeleteButton, '删除外观方案')
+        WardrobeFrameTitleText:SetText('幻化')
+        WardrobeOutfitDropDown.SaveButton:SetText('保存')
+        WardrobeTransmogFrame.ApplyButton:SetText('应用')
+        WardrobeOutfitEditFrame.Title:SetText('输入外观方案名称：')
+        WardrobeOutfitEditFrame.AcceptButton:SetText('接受')
+        WardrobeOutfitEditFrame.CancelButton:SetText('取消')
+        WardrobeOutfitEditFrame.DeleteButton:SetText('删除外观方案')
         WardrobeTransmogFrame.ModelScene.ClearAllPendingButton:HookScript('OnEnter', function()
             GameTooltip:SetText('取消所有的待定改动')
         end)
@@ -5559,10 +5563,10 @@ local function Init_Loaded(arg1)
             e.strText[t]='本赛季'
         end
 
-        set(EncounterJournalTitleText, '冒险指南')
+        e.set(EncounterJournalTitleText, '冒险指南')
 
         if EncounterJournalMonthlyActivitiesTab then
-            set(EncounterJournalMonthlyActivitiesTab, '旅行者日志')
+            e.set(EncounterJournalMonthlyActivitiesTab, '旅行者日志')
                 EncounterJournalMonthlyActivitiesTab:SetScript('OnEnter', function()
                     if not C_PlayerInfo.IsTravelersLogAvailable() then
                         local tradingPostLocation = UnitFactionGroup('player') == "Alliance" and '暴风城' or '奥格瑞玛'
@@ -5578,11 +5582,11 @@ local function Init_Loaded(arg1)
                 end)
             end
 
-        set(EncounterJournalSuggestTab, '推荐玩法')
-        set(EncounterJournalDungeonTab, '地下城')
-        set(EncounterJournalRaidTab, '团队副本')
-        set(EncounterJournalLootJournalTab, '套装物品')
-        set(EncounterJournalSearchBox.Instructions, '搜索')
+        e.set(EncounterJournalSuggestTab, '推荐玩法')
+        e.set(EncounterJournalDungeonTab, '地下城')
+        e.set(EncounterJournalRaidTab, '团队副本')
+        e.set(EncounterJournalLootJournalTab, '套装物品')
+        e.set(EncounterJournalSearchBox.Instructions, '搜索')
 
         hooksecurefunc('EJInstanceSelect_UpdateTitle', function(tabId)
             local text
@@ -5597,17 +5601,17 @@ local function Init_Loaded(arg1)
                 text= '套装物品'
             end
             if text then
-                set(EncounterJournal.instanceSelect.Title, text)
+                e.set(EncounterJournal.instanceSelect.Title, text)
             end
         end)
         if EncounterJournalMonthlyActivitiesFrame and EncounterJournalMonthlyActivitiesFrame.HeaderContainer then
-            set(EncounterJournalMonthlyActivitiesFrame.HeaderContainer.Title, '旅行者日志')
-            set(EncounterJournalMonthlyActivitiesFrame.BarComplete.AllRewardsCollectedText, '你已经收集完了本月的所有奖励')
+            e.set(EncounterJournalMonthlyActivitiesFrame.HeaderContainer.Title, '旅行者日志')
+            e.set(EncounterJournalMonthlyActivitiesFrame.BarComplete.AllRewardsCollectedText, '你已经收集完了本月的所有奖励')
         end
 
-        set(EncounterJournalEncounterFrameInfoFilterToggle.Text, '过滤器')
-        set(EncounterJournalEncounterFrameInstanceFrameMapButtonText, '显示\n地图')
-        set(EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildTitle, '综述')
+        e.set(EncounterJournalEncounterFrameInfoFilterToggle.Text, '过滤器')
+        e.set(EncounterJournalEncounterFrameInstanceFrameMapButtonText, '显示\n地图')
+        e.set(EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildTitle, '综述')
 
         local function EncounterJournal_SetupIconFlags(sectionID, infoHeaderButton, index)--Blizzard_EncounterJournal.lua
             local iconFlags = C_EncounterJournal.GetSectionIconFlags(sectionID)
@@ -5634,11 +5638,11 @@ local function Init_Loaded(arg1)
                         icon.tooltipTitle = tab[iconFlag]--_G["ENCOUNTER_JOURNAL_SECTION_FLAG"..iconFlag]
                         if index then
                             if iconFlag==1 then
-                                set(infoHeaderButton.title, '伤害')
+                                e.set(infoHeaderButton.title, '伤害')
                             elseif iconFlag==2 then
-                                set(infoHeaderButton.title, '治疗者')
+                                e.set(infoHeaderButton.title, '治疗者')
                             elseif iconFlag==0 then
-                                set(infoHeaderButton.title, '坦克')
+                                e.set(infoHeaderButton.title, '坦克')
                             end
                         end
                     end
@@ -5669,9 +5673,9 @@ local function Init_Loaded(arg1)
                 a= e.strText[a] or a
                 b= e.strText[b] or b
                 if a and b then
-                    set(self.NameText, (e.strText[a] or a)..': '..(e.strText[b] or b))
+                    e.set(self.NameText, (e.strText[a] or a)..': '..(e.strText[b] or b))
                 else
-                    set(self.NameText, e.strText[data.name])
+                    e.set(self.NameText, e.strText[data.name])
                 end
             end
         end)
@@ -5703,36 +5707,36 @@ local function Init_Loaded(arg1)
             if ( itemInfo and itemInfo.name ) then
                 local name= e.strText[itemInfo.name]
                 if name then
-                    set(self.name, WrapTextInColorCode(name, itemInfo.itemQuality))
+                    e.set(self.name, WrapTextInColorCode(name, itemInfo.itemQuality))
                 end
                 local slot= e.strText[itemInfo.slot]
                 if slot then
                     if itemInfo.handError then
-                        set(self.slot, INVALID_EQUIPMENT_COLOR:WrapTextInColorCode(slot))
+                        e.set(self.slot, INVALID_EQUIPMENT_COLOR:WrapTextInColorCode(slot))
                     else
-                        set(self.slot, slot)
+                        e.set(self.slot, slot)
                     end
                 end
                 local armorType= e.strText[itemInfo.armorType]
                 if armorType then
                     if itemInfo.weaponTypeError then
-                        set(self.armorType, INVALID_EQUIPMENT_COLOR:WrapTextInColorCode(armorType))
+                        e.set(self.armorType, INVALID_EQUIPMENT_COLOR:WrapTextInColorCode(armorType))
                     else
-                        set(self.armorType, armorType)
+                        e.set(self.armorType, armorType)
                     end
                 end
 
                 local numEncounters = EJ_GetNumEncountersForLootByIndex(self.index)
                 if ( numEncounters == 1 ) then
-                    set(self.boss, format('首领：%s', EJ_GetEncounterInfo(itemInfo.encounterID)))
+                    e.set(self.boss, format('首领：%s', EJ_GetEncounterInfo(itemInfo.encounterID)))
                 elseif ( numEncounters == 2) then
                     local itemInfoSecond = C_EncounterJournal.GetLootInfoByIndex(self.index, 2)
                     local secondEncounterID = itemInfoSecond and itemInfoSecond.encounterID
                     if ( itemInfo.encounterID and secondEncounterID ) then
-                        set(self.boss:SetFormattedText('首领：%s，%s', e.cn(EJ_GetEncounterInfo(itemInfo.encounterID)), e.cn(EJ_GetEncounterInfo(secondEncounterID))))
+                        e.set(self.boss:SetFormattedText('首领：%s，%s', e.cn(EJ_GetEncounterInfo(itemInfo.encounterID)), e.cn(EJ_GetEncounterInfo(secondEncounterID))))
                     end
                 elseif ( numEncounters > 2 ) then
-                    set(self.boss:SetFormattedText('首领：%s及其他', e.cn(EJ_GetEncounterInfo(itemInfo.encounterID))))
+                    e.set(self.boss:SetFormattedText('首领：%s及其他', e.cn(EJ_GetEncounterInfo(itemInfo.encounterID))))
                 end
             else
                 self.name:SetText('正在获取物品信息')
@@ -5740,11 +5744,11 @@ local function Init_Loaded(arg1)
         end)
 
         hooksecurefunc(EncounterJournalItemHeaderMixin, 'Init', function(self, elementData)
-            set(self.name, e.strText[elementData.text])
+            e.set(self.name, e.strText[elementData.text])
         end)
 
         hooksecurefunc(EncounterBossButtonMixin, 'Init', function(self, elementData)
-            set(self, e.strText[elementData.name])
+            e.set(self, e.strText[elementData.name])
         end)
 
         hooksecurefunc('EncounterJournal_UpdateFilterString', function(self)
@@ -5761,7 +5765,7 @@ local function Init_Loaded(arg1)
             end
             name= e.cn(name)
             if name then
-                set(EncounterJournal.encounter.info.LootContainer.classClearFilter.text, format('职业筛选：%s', name))
+                e.set(EncounterJournal.encounter.info.LootContainer.classClearFilter.text, format('职业筛选：%s', name))
             end
         end)
 
@@ -5786,9 +5790,9 @@ local function Init_Loaded(arg1)
         hooksecurefunc('EncounterJournal_DisplayInstance', function()
             local self= EncounterJournal.encounter
             local instanceName, description = EJ_GetInstanceInfo()
-            set(self.instance.title, e.strText[instanceName])
-            set(self.info.instanceTitle, e.strText[instanceName])
-            set(self.instance.LoreScrollingFont, e.strText[description])
+            e.set(self.instance.title, e.strText[instanceName])
+            e.set(self.info.instanceTitle, e.strText[instanceName])
+            e.set(self.instance.LoreScrollingFont, e.strText[description])
             local tooltip= e.strText[self.info['overviewTab'].tooltip]
             if tooltip then
                 self.info['overviewTab'].tooltip= tooltip
@@ -5823,12 +5827,12 @@ local function Init_Loaded(arg1)
 
 
     --[[elseif arg1=='Blizzard_AchievementUI' then--成就
-        set(AchievementFrameTab1, '成就')
-        set(AchievementFrameTab2, '公会')
-        set(AchievementFrameTab3, '统计')
-        set(AchievementFrame.SearchBox.Instructions, '搜索')
-        set(AchievementFrameSummaryAchievementsHeaderTitle, '近期成就')
-        set(AchievementFrameSummaryCategoriesHeaderTitle, '进展总览')
+        e.set(AchievementFrameTab1, '成就')
+        e.set(AchievementFrameTab2, '公会')
+        e.set(AchievementFrameTab3, '统计')
+        e.set(AchievementFrame.SearchBox.Instructions, '搜索')
+        e.set(AchievementFrameSummaryAchievementsHeaderTitle, '近期成就')
+        e.set(AchievementFrameSummaryCategoriesHeaderTitle, '进展总览')
 
         hooksecurefunc('AchievementFrame_RefreshView', function()--Blizzard_AchievementUI.lua
             if AchievementFrame.Header.Title:GetText()==GUILD_ACHIEVEMENTS_TITLE then
@@ -5842,7 +5846,7 @@ local function Init_Loaded(arg1)
         hooksecurefunc('AchievementFrameCategories_UpdateDataProvider', function()
             for _, btn in pairs(AchievementFrameCategories.ScrollBox:GetFrames() or {}) do
                 if btn.Button then
-                    set(btn.Button.Label, e.strText[btn.Button.name])
+                    e.set(btn.Button.Label, e.strText[btn.Button.name])
                 end
             end
         end)]]
@@ -5857,13 +5861,13 @@ local function Init_Loaded(arg1)
 
 
     elseif arg1=='Blizzard_MacroUI' then
-        set(MacroFrameTab1, '通用宏')
-        set(MacroFrameTab2, '专用宏', 0.3)
-        set(MacroSaveButton, '保存')
-        set(MacroCancelButton, '取消')
-        set(MacroDeleteButton, '删除')
-        set(MacroNewButton, '新建')
-        set(MacroExitButton, '退出')
+        MacroFrameTab1:SetText('通用宏')
+        MacroFrameTab2:SetText('专用宏', 0.3)
+        MacroSaveButton:SetText('保存')
+        MacroCancelButton:SetText('取消')
+        MacroDeleteButton:SetText('删除')
+        MacroNewButton:SetText('新建')
+        MacroExitButton:SetText('退出')
 
         e.dia("CONFIRM_DELETE_SELECTED_MACRO", {text= '确定要删除这个宏吗？', button1= '是', button2= '取消'})
 
@@ -5877,11 +5881,11 @@ local function Init_Loaded(arg1)
 
 
     elseif arg1=='Blizzard_Communities' then--公会和社区
-        set(CommunitiesFrameTitleText, '公会与社区')
-        set(CommunitiesFrame.AddToChatButton.Label, '添加至聊天窗口')
-        set(CommunitiesFrame.CommunitiesControlFrame.GuildRecruitmentButton, '公会招募')
-        set(CommunitiesFrame.InviteButton, '邀请成员')
-        set(CommunitiesFrame.CommunitiesControlFrame.GuildControlButton, '公会设置')
+        CommunitiesFrameTitleText:SetText('公会与社区')
+        CommunitiesFrame.AddToChatButton.Label:SetText('添加至聊天窗口')
+        CommunitiesFrame.CommunitiesControlFrame.GuildRecruitmentButton:SetText('公会招募')
+        CommunitiesFrame.InviteButton:SetText('邀请成员')
+        CommunitiesFrame.CommunitiesControlFrame.GuildControlButton:SetText('公会设置')
         hooksecurefunc(CommunitiesFrame.CommunitiesControlFrame, 'Update', function(self)
             if self.CommunitiesSettingsButton:IsShown() then
                 local communitiesFrame = self:GetCommunitiesFrame()
@@ -5893,31 +5897,31 @@ local function Init_Loaded(arg1)
                     end
                 end
             end
-            set(CommunitiesFrame.CommunitiesControlFrame.CommunitiesSettingsButton, '社区设置')
+            CommunitiesFrame.CommunitiesControlFrame.CommunitiesSettingsButton:SetText('社区设置')
         end)
 
-        set(CommunitiesFrame.RecruitmentDialog.DialogLabel, '招募')
-        set(CommunitiesFrame.RecruitmentDialog.ShouldListClub.Label, '在公会查找器里列出我的公会')
-        set(ClubFinderClubFocusDropdown.Label, '活动倾向')
+        CommunitiesFrame.RecruitmentDialog.DialogLabel:SetText('招募')
+        CommunitiesFrame.RecruitmentDialog.ShouldListClub.Label:SetText('在公会查找器里列出我的公会')
+        ClubFinderClubFocusDropdown.Label:SetText('活动倾向')
 
-        set(CommunitiesFrame.RecruitmentDialog.RecruitmentMessageFrame.Label, '招募信息')
-        set(CommunitiesFrame.RecruitmentDialog.RecruitmentMessageFrame.RecruitmentMessageInput.EditBox.Instructions, '在此介绍你的公会以及你们需要什么样的玩家。')
-        set(CommunitiesFrame.RecruitmentDialog.MinIlvlOnly.EditBox.Text, '物品等级')
-        set(CommunitiesFrame.RecruitmentDialog.MaxLevelOnly.Label, '只限满级')
-        set(CommunitiesFrame.RecruitmentDialog.MinIlvlOnly.Label, '最低物品等级')
-        set(CommunitiesFrame.RecruitmentDialog.Accept, '接受')
-        set(CommunitiesFrame.RecruitmentDialog.Cancel, '取消')
+        CommunitiesFrame.RecruitmentDialog.RecruitmentMessageFrame.Label:SetText('招募信息')
+        CommunitiesFrame.RecruitmentDialog.RecruitmentMessageFrame.RecruitmentMessageInput.EditBox.Instructions:SetText('在此介绍你的公会以及你们需要什么样的玩家。')
+        CommunitiesFrame.RecruitmentDialog.MinIlvlOnly.EditBox.Text:SetText('物品等级')
+        CommunitiesFrame.RecruitmentDialog.MaxLevelOnly.Label:SetText('只限满级')
+        CommunitiesFrame.RecruitmentDialog.MinIlvlOnly.Label:SetText('最低物品等级')
+        CommunitiesFrame.RecruitmentDialog.Accept:SetText('接受')
+        CommunitiesFrame.RecruitmentDialog.Cancel:SetText('取消')
 
-        set(CommunitiesFrame.GuildBenefitsFrame.FactionFrame.Label, '公会声望：')
+        CommunitiesFrame.GuildBenefitsFrame.FactionFrame.Label:SetText('公会声望：')
 
-        set(CommunitiesFrame.NotificationSettingsDialog.TitleLabel, '通知设置')--CommunitiesStreams.xml
-        set(CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.SettingsLabel, '通知')
-        set(CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.QuickJoinButton.Text, '快速加入通知')
-        set(CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.NoneButton, '无')
-        set(CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.AllButton, '全部')
+        CommunitiesFrame.NotificationSettingsDialog.TitleLabel:SetText('通知设置')--CommunitiesStreams.xml
+        CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.SettingsLabel:SetText('通知')
+        CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.QuickJoinButton.Text:SetText('快速加入通知')
+        CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.NoneButton:SetText('无')
+        CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.AllButton:SetText('全部')
 
-        set(CommunitiesFrame.NotificationSettingsDialog.Selector.OkayButton, '确定')
-        set(CommunitiesFrame.NotificationSettingsDialog.Selector.CancelButton, '取消')
+        CommunitiesFrame.NotificationSettingsDialog.Selector.OkayButton:SetText('确定')
+        CommunitiesFrame.NotificationSettingsDialog.Selector.CancelButton:SetText('取消')
 
         hooksecurefunc(CommunitiesFrame, 'UpdateCommunitiesButtons', function(self)--CommunitiesFrameMixin
             local clubId = self:GetSelectedClubId()
@@ -6003,8 +6007,8 @@ local function Init_Loaded(arg1)
             self.MemberCount:SetFormattedText('%s/%s人在线', AbbreviateNumbers(numOnlineMembers), AbbreviateNumbers(#self.allMemberList))
         end)
 
-        set(CommunitiesFrame.MemberList.ShowOfflineButton.Text, '显示离线成员')
-        set(CommunitiesFrame.GuildBenefitsFrame.Rewards.TitleText, '公会奖励')
+        CommunitiesFrame.MemberList.ShowOfflineButton.Text:SetText('显示离线成员')
+        CommunitiesFrame.GuildBenefitsFrame.Rewards.TitleText:SetText('公会奖励')
         CommunitiesFrame.GuildBenefitsFrame.GuildRewardsTutorialButton:HookScript('OnEnter', function()--GuildRewards.xml
             GameTooltip:SetText('访问任一主城中的公会商人以购买奖励', nil, nil, nil, nil, true)
             GameTooltip:Show()
@@ -6014,17 +6018,17 @@ local function Init_Loaded(arg1)
 	        GameTooltip:Show()
         end)
 
-        set(CommunitiesFrameGuildDetailsFrameInfo.TitleText, '信息')
+        CommunitiesFrameGuildDetailsFrameInfo.TitleText:SetText('信息')
 
-        set(ClubFinderGuildFinderFrame.InsetFrame.CommunityCards, 'BuildCardList', function(self)--ClubFinderCommunitiesCardsMixin
-            set(self:GetParent().InsetFrame.GuildDescription, '未发现结果。请修改你的搜索条件。')
+        hooksecurefunc(ClubFinderGuildFinderFrame.InsetFrame.CommunityCards, 'BuildCardList', function(self)--ClubFinderCommunitiesCardsMixin
+            self:GetParent().InsetFrame.GuildDescription:SetText('未发现结果。请修改你的搜索条件。')
         end)
-        set(ClubFinderGuildFinderFrame.InsetFrame.PendingCommunityCards, 'BuildCardList', function(self)
-            set(self:GetParent().InsetFrame.GuildDescription, '未发现结果。请修改你的搜索条件。')
+        hooksecurefunc(ClubFinderGuildFinderFrame.InsetFrame.PendingCommunityCards, 'BuildCardList', function(self)
+            self:GetParent().InsetFrame.GuildDescription:SetText('未发现结果。请修改你的搜索条件。')
         end)
         hooksecurefunc(ClubFinderGuildFinderFrame, 'UpdateType', function(self)-- ClubFinderGuildAndCommunityMixin:UpdateType()
             if (self.isGuildType) then
-                set(self.InsetFrame.GuildDescription, '公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。\n\n使用此工具来寻找与你志同道合的公会吧。')
+                self.InsetFrame.GuildDescription:SetText('公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。\n\n使用此工具来寻找与你志同道合的公会吧。')
                 if (#self.PendingGuildCards.CardList > 0) then
                     self.ClubFinderPendingTab.tooltip = format('等待确认中（%d）', #self.PendingGuildCards.CardList)
                 else
@@ -6047,33 +6051,33 @@ local function Init_Loaded(arg1)
                 self.DialogLabel:SetText('创建《魔兽世界》社区')
             end
         end)
-        set(CommunitiesSettingsDialog.NameLabel, '名称')--CommunitiesSettings.xml
-        set(CommunitiesSettingsDialog.ShortNameLabel, '简称')
-        set(CommunitiesSettingsDialog.DescriptionLabel, '介绍')
-        set(CommunitiesSettingsDialog.MessageOfTheDayLabel, '今日信息')
-        set(CommunitiesSettingsDialog.ChangeAvatarButton, '更换')
-        set(CommunitiesSettingsDialog.CrossFactionToggle.Label, '跨阵营')
-        set(CommunitiesSettingsDialog.ShouldListClub.Label, '在社区查找器里列出')
-        set(CommunitiesSettingsDialog.AutoAcceptApplications.Label, '自动接受申请者')
-        set(CommunitiesSettingsDialog.MaxLevelOnly.Label, '只限满级')
-        set(CommunitiesSettingsDialog.MinIlvlOnly.EditBox.Text, '物品等级')
-        set(CommunitiesSettingsDialog.MinIlvlOnly.Label, '最低物品等级')
-        set(CommunitiesSettingsDialog.LookingForDropdown.Label, '寻找：')
-        set(CommunitiesSettingsDialog.LanguageDropdown.Label, '语言')
+        CommunitiesSettingsDialog.NameLabel:SetText('名称')--CommunitiesSettings.xml
+        CommunitiesSettingsDialog.ShortNameLabel:SetText('简称')
+        CommunitiesSettingsDialog.DescriptionLabel:SetText('介绍')
+        CommunitiesSettingsDialog.MessageOfTheDayLabel:SetText('今日信息')
+        CommunitiesSettingsDialog.ChangeAvatarButton:SetText('更换')
+        CommunitiesSettingsDialog.CrossFactionToggle.Label:SetText('跨阵营')
+        CommunitiesSettingsDialog.ShouldListClub.Label:SetText('在社区查找器里列出')
+        CommunitiesSettingsDialog.AutoAcceptApplications.Label:SetText('自动接受申请者')
+        CommunitiesSettingsDialog.MaxLevelOnly.Label:SetText('只限满级')
+        CommunitiesSettingsDialog.MinIlvlOnly.EditBox.Text:SetText('物品等级')
+        CommunitiesSettingsDialog.MinIlvlOnly.Label:SetText('最低物品等级')
+        CommunitiesSettingsDialog.LookingForDropdown.Label:SetText('寻找：')
+        CommunitiesSettingsDialog.LanguageDropdown.Label:SetText('语言')
         CommunitiesSettingsDialog.Description.instructions= '介绍一下你的社区（可选）。'
-        set(CommunitiesSettingsDialog.Delete, '删除')
-        set(CommunitiesSettingsDialog.Accept, '接受')
-        set(CommunitiesSettingsDialog.Cancel, '取消')
+        CommunitiesSettingsDialog.Delete:SetText('删除')
+        CommunitiesSettingsDialog.Accept:SetText('接受')
+        CommunitiesSettingsDialog.Cancel:SetText('取消')
 
 
 
 
-        set(CommunitiesFrame.GuildLogButton, '查看日志')
-        set(CommunitiesGuildLogFrameCloseButton, '关闭')
+        CommunitiesFrame.GuildLogButton:SetText('查看日志')
+        CommunitiesGuildLogFrameCloseButton:SetText('关闭')
 
-        set(CommunitiesFrame.ClubFinderInvitationFrame.AcceptButton, '接受')
-        set(CommunitiesFrame.ClubFinderInvitationFrame.DeclineButton, '拒绝')
-        set(CommunitiesFrame.ClubFinderInvitationFrame.InvitationText, '')
+        CommunitiesFrame.ClubFinderInvitationFrame.AcceptButton:SetText('接受')
+        CommunitiesFrame.ClubFinderInvitationFrame.DeclineButton:SetText('拒绝')
+        CommunitiesFrame.ClubFinderInvitationFrame.InvitationText:SetText('')
 
         hooksecurefunc(CommunitiesFrame.ClubFinderInvitationFrame, 'DisplayInvitation', function(self, clubInfo)--ClubFinderInvitationsFrameMixin
             if clubInfo then
@@ -6091,16 +6095,16 @@ local function Init_Loaded(arg1)
         end)
 
         hooksecurefunc(CommunitiesListEntryMixin, 'SetFindCommunity', function(self)
-            set(self.Name, '寻找社区')
+            self.Name:SetText('寻找社区')
         end)
             --set(ClubFinderFilterDropdown.Label, '过滤器')
             --set(ClubFinderSortByDropdown.Label, '排序')
-            set(ClubFinderSizeDropdown.Label)
-            set(ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search, '搜索')
-            set(ClubFinderGuildFinderFrame.OptionsList.Search, '搜索')
+            e.set(ClubFinderSizeDropdown.Label)
+            ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search:SetText('搜索')
+            ClubFinderGuildFinderFrame.OptionsList.Search:SetText('搜索')
             hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame, 'UpdateType', function(self)-- ClubFinderGuildAndCommunityMixin:UpdateType()
                 if (self.isGuildType) then
-                    set(self.InsetFrame.GuildDescription, '公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。\n\n使用此工具来寻找与你志同道合的公会吧。')
+                    self.InsetFrame.GuildDescription:SetText('公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。\n\n使用此工具来寻找与你志同道合的公会吧。')
                     if (#self.PendingGuildCards.CardList > 0) then
                         self.ClubFinderPendingTab.tooltip = format('等待确认中（%d）', #self.PendingGuildCards.CardList)
                     else
@@ -6118,14 +6122,14 @@ local function Init_Loaded(arg1)
             hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame.CommunityCards, 'BuildCardList', function(self)
                 self:GetParent().InsetFrame.GuildDescription:SetText('未发现结果。请修改你的搜索条件。')
             end)
-            set(ClubFinderCommunityAndGuildFinderFrame.InsetFrame.GuildDescription, '公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。|n|n使用此工具来寻找与你志同道合的公会吧。')
+            ClubFinderCommunityAndGuildFinderFrame.InsetFrame.GuildDescription:SetText('公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。|n|n使用此工具来寻找与你志同道合的公会吧。')
             --set(ClubFinderGuildFinderFrame.InsetFrame.GuildDescription, '公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。|n|n使用此工具来寻找与你志同道合的公会吧。')
 
             hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame, 'GetDisplayModeBasedOnSelectedTab', function(self)
                 if (self.isGuildType) then
-                    set(self.InsetFrame.GuildDescription, '公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。\n\n使用此工具来寻找与你志同道合的公会吧。')
+                    self.InsetFrame.GuildDescription:SetText('公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。\n\n使用此工具来寻找与你志同道合的公会吧。')
                 else
-                    set(self.InsetFrame.GuildDescription, '选择搜索条件，然后按下“搜索”')
+                    self.InsetFrame.GuildDescription:SetText('选择搜索条件，然后按下“搜索”')
                 end
             end)
             ClubFinderGuildFinderFrame.InsetFrame:HookScript('OnShow', function(self)--ClubFinder.xml
@@ -6137,14 +6141,14 @@ local function Init_Loaded(arg1)
                 end
             end)
         hooksecurefunc(CommunitiesListEntryMixin, 'SetAddCommunity', function(self)
-            set(self.Name, '加入或创建社区')
+            self.Name:SetText('加入或创建社区')
         end)
         hooksecurefunc(CommunitiesListEntryMixin, 'SetGuildFinder', function(self)
-            set(self.Name, '公会查找器')
+            self.Name:SetText('公会查找器')
         end)
 
-        set(CommunitiesFrame.ClubFinderInvitationFrame.WarningDialog.Accept, '接受')
-        set(CommunitiesFrame.ClubFinderInvitationFrame.WarningDialog.Cancel, '取消')
+        CommunitiesFrame.ClubFinderInvitationFrame.WarningDialog.Accept:SetText('接受')
+        CommunitiesFrame.ClubFinderInvitationFrame.WarningDialog.Cancel:SetText('取消')
         CommunitiesFrame.ClubFinderInvitationFrame.WarningDialog:HookScript('OnShow', function(self)
             if (IsInGuild()) then
                 self.DialogLabel:SetText('加入此公会时，你会|cnRED_FONT_COLOR:离开当前的公会|r。')
@@ -6185,35 +6189,35 @@ local function Init_Loaded(arg1)
             local isRecruitingAllSpecs = #self.info.recruitingSpecIds == 0 or #self.info.recruitingSpecIds == ClubFinderGetTotalNumSpecializations()
             if(isRecruitingAllSpecs) then
                 if(self.info.isGuild) then
-                    set(self.RecruitingSpecDescriptions, '此公会正在招募所有的专精类型。')
+                    self.RecruitingSpecDescriptions:SetText('此公会正在招募所有的专精类型。')
                 else
-                    set(self.RecruitingSpecDescriptions, '此社区正在招募所有的专精类型。')
+                    self.RecruitingSpecDescriptions:SetText('此社区正在招募所有的专精类型。')
                 end
             elseif (#matchingSpecNames == 1) then
-                set(self.RecruitingSpecDescriptions, format('此公会正在寻找%s %s。你玩的是哪个专精？', matchingSpecNames[1], classDisplayName))
+                self.RecruitingSpecDescriptions:SetFormattedText('此公会正在寻找%s %s。你玩的是哪个专精？', matchingSpecNames[1], classDisplayName)
             elseif (#matchingSpecNames == 2) then
-                set(self.RecruitingSpecDescriptions, format('此公会正在寻找%s和%s %s。你玩的是哪个专精？', matchingSpecNames[1], matchingSpecNames[2], classDisplayName))
+                self.RecruitingSpecDescriptions:SetFormattedText('此公会正在寻找%s和%s %s。你玩的是哪个专精？', matchingSpecNames[1], matchingSpecNames[2], classDisplayName)
             elseif (#matchingSpecNames == 3) then
-                set(self.RecruitingSpecDescriptions, format('此公会正在寻找%s %s和%s %s。你玩的是哪个专精？', matchingSpecNames[1], matchingSpecNames[2], matchingSpecNames[3], classDisplayName))
+                self.RecruitingSpecDescriptions:SetFormattedText('此公会正在寻找%s %s和%s %s。你玩的是哪个专精？', matchingSpecNames[1], matchingSpecNames[2], matchingSpecNames[3], classDisplayName)
             elseif (#matchingSpecNames == 4) then
-                set(self.RecruitingSpecDescriptions, format('此公会正在寻找%s %s %s和%s %s。你玩的是哪个专精？', matchingSpecNames[1], matchingSpecNames[2], matchingSpecNames[3], matchingSpecNames[4], classDisplayName))
+                self.RecruitingSpecDescriptions:SetFormattedText('此公会正在寻找%s %s %s和%s %s。你玩的是哪个专精？', matchingSpecNames[1], matchingSpecNames[2], matchingSpecNames[3], matchingSpecNames[4], classDisplayName)
             end
         end
         hooksecurefunc(ClubFinderGuildFinderFrame.RequestToJoinFrame, 'Initialize', set_ClubFinderRequestToJoin)
         hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame, 'Initialize', set_ClubFinderRequestToJoin)
-        set(ClubFinderGuildFinderFrame.RequestToJoinFrame.Apply, '申请')
-        set(ClubFinderGuildFinderFrame.RequestToJoinFrame.Cancel, '取消')
-        set(ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame.Apply, '申请')
-        set(ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame.Cancel, '取消')
-        set(ClubFinderGuildFinderFrame.RequestToJoinFrame.DialogLabel, '申请加入')
-        set(ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame.DialogLabel, '申请加入')
+        ClubFinderGuildFinderFrame.RequestToJoinFrame.Apply:SetText('申请')
+        ClubFinderGuildFinderFrame.RequestToJoinFrame.Cancel:SetText('取消')
+        ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame.Apply:SetText('申请')
+        ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame.Cancel:SetText('取消')
+        ClubFinderGuildFinderFrame.RequestToJoinFrame.DialogLabel:SetText('申请加入')
+        ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame.DialogLabel:SetText('申请加入')
 
 
         hooksecurefunc(ClubsFinderJoinClubWarningMixin, 'OnShow', function(self)--没测试
             if (IsInGuild()) then
-                set(self.DialogLabel, '加入此公会时，你会离开当前的公会。')
+                self.DialogLabel:SetText('加入此公会时，你会离开当前的公会。')
             else
-                set(self.DialogLabel, '你只能加入一个公会。加入此公会时，其他公会邀请会被移除。')
+                self.DialogLabel:SetText('你只能加入一个公会。加入此公会时，其他公会邀请会被移除。')
             end
         end)
 
@@ -6228,11 +6232,11 @@ local function Init_Loaded(arg1)
 
 
     elseif arg1=="Blizzard_GuildBankUI" then--公会银行
-        set(GuildBankFrameTab1, '公会银行')
-            set(GuildItemSearchBox.Instructions, '搜索')
-            set(GuildBankFrame.WithdrawButton, '提取')
-            set(GuildBankFrame.DepositButton, '存放')
-            set(GuildBankMoneyLimitLabel, '可用数量：')
+        GuildBankFrameTab1:SetText('公会银行')
+            GuildItemSearchBox.Instructions:SetText('搜索')
+            GuildBankFrame.WithdrawButton:SetText('提取')
+            GuildBankFrame.DepositButton:SetText('存放')
+            GuildBankMoneyLimitLabel:SetText('可用数量：')
             hooksecurefunc(GuildBankFrame, 'UpdateTabs', function(self)--Blizzard_GuildBankUI.lua
                 local name, isViewable, canDeposit, numWithdrawals, remainingWithdrawals, disableAll, titleText, withdrawalText
                 local numTabs = GetNumGuildBankTabs()
@@ -6316,10 +6320,10 @@ local function Init_Loaded(arg1)
                     self.LimitLabel:SetText(format('%s的每日提取额度剩余：|cffffffff%s|r', withdrawalText, stackString))
                 end
             end)
-        set(GuildBankFrameTab2, '记录')
-        set(GuildBankFrameTab3, '金币记录')
-        set(GuildBankFrameTab4, '信息')
-            set(GuildBankInfoSaveButton, '保存改变')
+        GuildBankFrameTab2:SetText('记录')
+        GuildBankFrameTab3:SetText('金币记录')
+        GuildBankFrameTab4:SetText('信息')
+            GuildBankInfoSaveButton:SetText('保存改变')
 
 
 
@@ -6335,7 +6339,7 @@ local function Init_Loaded(arg1)
 
 
     elseif arg1=='Blizzard_InspectUI' then--玩家, 观察角色, 界面
-        set(InspectFrameTab1, '角色')
+        InspectFrameTab1:SetText('角色')
         --pvp
             hooksecurefunc('InspectPVPFrame_Update', function()
                 local _, _, _, _, lifetimeHKs, _, honorLevel = GetInspectHonorData()
@@ -6344,7 +6348,7 @@ local function Init_Loaded(arg1)
                     InspectPVPFrame.HonorLevel:SetFormattedText('荣誉等级：%d', honorLevel)
                 end
             end)
-        set(InspectFrameTab3, '公会')
+        InspectFrameTab3:SetText('公会')
 
 
 
@@ -6376,15 +6380,15 @@ local function Init_Loaded(arg1)
                 PVEFrame:SetTitleFormatted('玩家VS玩家 '..(e.strText[expName] or expName)..' 第 %d 赛季', PVPUtil.GetCurrentSeasonNumber())
             end
         end)
-        set(PVPQueueFrameCategoryButton1.Name, '快速比赛')
+        PVPQueueFrameCategoryButton1.Name:SetText('快速比赛')
             hooksecurefunc('HonorFrameBonusFrame_Update', function()--Blizzard_PVPUI.lua
-                set(HonorFrame.BonusFrame.RandomBGButton.Title, '随机战场')
-                set(HonorFrame.BonusFrame.RandomEpicBGButton.Title, '随机史诗战场')
-                set(HonorFrame.BonusFrame.Arena1Button.Title, '竞技场练习赛')
+                HonorFrame.BonusFrame.RandomBGButton.Title:SetText('随机战场')
+                HonorFrame.BonusFrame.RandomEpicBGButton.Title:SetText('随机史诗战场')
+                HonorFrame.BonusFrame.Arena1Button.Title:SetText('竞技场练习赛')
             end)
-        set(PVPQueueFrameCategoryButton2.Name, '评级')
-        set(PVPQueueFrameCategoryButton3.Name, '预创建队伍')
-        set(PVPQueueFrame.NewSeasonPopup.Leave, '关闭')
+        PVPQueueFrameCategoryButton2.Name:SetText('评级')
+        PVPQueueFrameCategoryButton3.Name:SetText('预创建队伍')
+        PVPQueueFrame.NewSeasonPopup.Leave:SetText('关闭')
 
         hooksecurefunc('HonorFrame_UpdateQueueButtons', function()
             local HonorFrame = HonorFrame
@@ -6501,10 +6505,10 @@ local function Init_Loaded(arg1)
 
         PVPQueueFrame.HonorInset.CasualPanel:HookScript('OnShow', function(self)
             if self.HKLabel:IsShown() then
-                set(self.HKLabel, '宏伟宝库')
+                self.HKLabel:SetText('宏伟宝库')
             end
         end)
-        set(PVPQueueFrame.HonorInset.CasualPanel.HKLabel, '宏伟宝库')
+        PVPQueueFrame.HonorInset.CasualPanel.HKLabel:SetText('宏伟宝库')
         PVPQueueFrame.HonorInset.CasualPanel.WeeklyChest:HookScript('OnEnter', function()
             if not ConquestFrame_HasActiveSeason() then
                 GameTooltip_SetTitle(GameTooltip, '宏伟宝库奖励')
@@ -6535,7 +6539,7 @@ local function Init_Loaded(arg1)
 
         hooksecurefunc(PVPQueueFrame.HonorInset.CasualPanel.HonorLevelDisplay, 'Update', function(self)
             local honorLevel = UnitHonorLevel("player")
-	        set(self.LevelLabel, format('荣誉等级 %d', honorLevel))
+	        self.LevelLabel:SetFormattedText('荣誉等级 %d', honorLevel)
         end)
         PVPQueueFrame.HonorInset.CasualPanel.HonorLevelDisplay:HookScript('OnEnter', function()
             GameTooltip_SetTitle(GameTooltip, '生涯荣誉')
@@ -6575,7 +6579,7 @@ local function Init_Loaded(arg1)
         end
 
         --role_tooltips('HonorFrame')
-        set(ConquestJoinButton, '加入战斗')
+        ConquestJoinButton:SetText('加入战斗')
 
 
 
@@ -6596,19 +6600,19 @@ local function Init_Loaded(arg1)
                 end
             end
             local specName= PlayerUtil.GetSpecName()
-            set(tooltip.SpecRank, hasSpecRank and format('%s: 等级 #%d', e.strText[specName] or specName, ranking) or "")
-            set(tooltip.WeeklyBest, '最高等级：'..weeklyBest)
-            set(tooltip.WeeklyWon, isSoloShuffle and ('胜利回合：' .. roundsWeeklyWon) or ('赢得比赛：' .. weeklyWon))
-            set(tooltip.WeeklyPlayed, isSoloShuffle and ('已完成回合：' .. roundsWeeklyPlayed) or ('比赛场次：' .. weeklyPlayed))
-            set(tooltip.SeasonBest, '最高等级：'..seasonBest)
-            set(tooltip.SeasonWon, isSoloShuffle and ('胜利回合：' .. roundsSeasonWon) or ('赢得比赛：' .. seasonWon))
-            set(tooltip.SeasonPlayed, isSoloShuffle and ('已完成回合：' .. roundsSeasonPlayed) or ('比赛场次：' .. seasonPlayed))
+            tooltip.SpecRank:SetFormattedText(hasSpecRank and format('%s: 等级 #%d', e.cn(specName), ranking) or "")
+            tooltip.WeeklyBest:SetText('最高等级：'..weeklyBest)
+            tooltip.WeeklyWon:SetText(isSoloShuffle and ('胜利回合：' .. roundsWeeklyWon) or ('赢得比赛：' .. weeklyWon))
+            tooltip.WeeklyPlayed:SetText(isSoloShuffle and ('已完成回合：' .. roundsWeeklyPlayed) or ('比赛场次：' .. weeklyPlayed))
+            tooltip.SeasonBest:SetText('最高等级：'..seasonBest)
+            tooltip.SeasonWon:SetText(isSoloShuffle and ('胜利回合：' .. roundsSeasonWon) or ('赢得比赛：' .. seasonWon))
+            tooltip.SeasonPlayed:SetText(isSoloShuffle and ('已完成回合：' .. roundsSeasonPlayed) or ('比赛场次：' .. seasonPlayed))
             local specStats = isSoloShuffle and C_PvP.GetPersonalRatedSoloShuffleSpecStats()
             if specStats then
-                set(tooltip.WeeklyMostPlayedSpec, format('使用最多：%s (%d)', PlayerUtil.GetSpecNameBySpecID(specStats.weeklyMostPlayedSpecID), specStats.weeklyMostPlayedSpecRounds))
-                set(tooltip.SeasonMostPlayedSpec, format('使用最多：%s (%d)',PlayerUtil.GetSpecNameBySpecID(specStats.seasonMostPlayedSpecID), specStats.seasonMostPlayedSpecRounds))
+                tooltip.WeeklyMostPlayedSpec:SetFormattedText('使用最多：%s (%d)', PlayerUtil.GetSpecNameBySpecID(specStats.weeklyMostPlayedSpecID), specStats.weeklyMostPlayedSpecRounds)
+                tooltip.SeasonMostPlayedSpec:SetFormattedText('使用最多：%s (%d)',PlayerUtil.GetSpecNameBySpecID(specStats.seasonMostPlayedSpecID), specStats.seasonMostPlayedSpecRounds)
             end
-            set(self.modeDescription, e.strText[self.modeDescription])
+            e.set(self.modeDescription, self.modeDescription)
         end
         if ConquestFrame.Arena2v2 then
             ConquestFrame.Arena2v2:HookScript('OnEnter', conquestFrameButton_OnEnter)
@@ -6713,7 +6717,7 @@ local function Init_Loaded(arg1)
 
     elseif arg1=='Blizzard_PerksProgram' then--Blizzard_PerksProgramElements.lua
         set_GameTooltip_func(PerksProgramTooltip)
-        set(PerksProgramFrame.ProductsFrame.PerksProgramFilter.FilterDropDownButton.ButtonText, '过滤器')
+        PerksProgramFrame.ProductsFrame.PerksProgramFilter.FilterDropDownButton.ButtonText:SetText('过滤器')
 
         e.dia("PERKS_PROGRAM_CONFIRM_PURCHASE", {text= '用%s%s 交易下列物品？', button1 = '购买', button2 = '取消'})
         e.dia("PERKS_PROGRAM_CONFIRM_REFUND", {text= '退还下列物品，获得退款%s%s？', button1 = '退款', button2 = '取消'})
@@ -6722,7 +6726,7 @@ local function Init_Loaded(arg1)
         e.dia("PERKS_PROGRAM_CONFIRM_OVERRIDE_FROZEN_ITEM", {text= '你确定想替换当前的冻结物品吗？现在的冻结物品有可能已经下架了。', button1 = '确认', button2 = '取消'})
         e.dia("PERKS_PROGRAM_SLOW_PURCHASE", {text= '处理您的本次购买所花费的时间比正常情况更长。购买过程会在后台继续进行。', button1= '回到商栈'})
         C_Timer.After(0.3, function()
-            set(PerksProgramFrame.FooterFrame.LeaveButton, format('%s 离开', CreateAtlasMarkup("perks-backarrow", 8, 13, 0, 0)))
+            PerksProgramFrame.FooterFrame.LeaveButton:SetFormattedText('%s 离开', CreateAtlasMarkup("perks-backarrow", 8, 13, 0, 0))
         end)
 
     elseif arg1=='Blizzard_WeeklyRewards' then--Blizzard_WeeklyRewards.lua
@@ -6730,11 +6734,11 @@ local function Init_Loaded(arg1)
         hooksecurefunc(WeeklyRewardsFrame, 'UpdateTitle', function(self)
             local canClaimRewards = C_WeeklyRewards.CanClaimRewards()
             if canClaimRewards then
-                set(self.HeaderFrame.Text, '你只能从宏伟宝库选择一件奖励。')
+                self.HeaderFrame.Text:SetText('你只能从宏伟宝库选择一件奖励。')
             elseif not C_WeeklyRewards.HasInteraction() and C_WeeklyRewards.HasAvailableRewards() then
-                set(self.HeaderFrame.Text, '返回宏伟宝库，获取你的奖励')
+                self.HeaderFrame.Text:SetText('返回宏伟宝库，获取你的奖励')
             else
-                set(self.HeaderFrame.Text, '每周完成活动可以将物品添加到宏伟宝库中。|n你每周可以选择一件奖励。')
+                self.HeaderFrame.Text:SetText('每周完成活动可以将物品添加到宏伟宝库中。|n你每周可以选择一件奖励。')
             end
         end)
 
@@ -6751,9 +6755,9 @@ local function Init_Loaded(arg1)
                 PVEFrame:SetTitle(title)
             end
         end)
-        set(ChallengesFrame.WeeklyInfo.Child.SeasonBest, '赛季最佳')
-        set(ChallengesFrame.WeeklyInfo.Child.ThisWeekLabel, '本周')
-        set(ChallengesFrame.WeeklyInfo.Child.Description, '在史诗难度下，你每完成一个地下城，都会提升下一个地下城的难度和奖励。\n\n每周你都会根据完成的史诗地下城获得一系列奖励。\n\n要想开始挑战，把你的地下城难度设置为史诗，然后前往任意下列地下城吧。')
+        ChallengesFrame.WeeklyInfo.Child.SeasonBest:SetText('赛季最佳')
+        ChallengesFrame.WeeklyInfo.Child.ThisWeekLabel:SetText('本周')
+        ChallengesFrame.WeeklyInfo.Child.Description:SetText('在史诗难度下，你每完成一个地下城，都会提升下一个地下城的难度和奖励。\n\n每周你都会根据完成的史诗地下城获得一系列奖励。\n\n要想开始挑战，把你的地下城难度设置为史诗，然后前往任意下列地下城吧。')
 
         hooksecurefunc(ChallengesFrame.WeeklyInfo.Child.WeeklyChest, 'Update', function(self, bestMapID, dungeonScore)
             if C_WeeklyRewards.HasAvailableRewards() then
@@ -6796,7 +6800,7 @@ local function Init_Loaded(arg1)
             GameTooltip:Show()
         end)
 
-        set(ChallengesFrame.WeeklyInfo.Child.DungeonScoreInfo.Title, '史诗钥石评分')
+        ChallengesFrame.WeeklyInfo.Child.DungeonScoreInfo.Title:SetText('史诗钥石评分')
         ChallengesFrame.WeeklyInfo.Child.DungeonScoreInfo:HookScript('OnEnter', function()
             GameTooltip_SetTitle(GameTooltip, '史诗钥石评分')
             GameTooltip_AddNormalLine(GameTooltip, '基于你在每个地下城的最佳成绩得出的总体评分。你可以通过更迅速地完成地下城或者完成更高难度的地下城来提高你的评分。|n|n提升你的史诗地下城评分后，你就能把你的地下城装备升级到最高等级。|n|cff1eff00<Shift+点击以链接到聊天栏>|r')
@@ -6808,22 +6812,22 @@ local function Init_Loaded(arg1)
         CHALLENGE_MODE_EXTRA_AFFIX_INFO["dmg"].desc = '敌人的伤害值提高%d%%'
         CHALLENGE_MODE_EXTRA_AFFIX_INFO["health"].name= '额外生命值'
         CHALLENGE_MODE_EXTRA_AFFIX_INFO["health"].desc = '敌人的生命值提高%d%%'
-        set(ChallengesKeystoneFrame.StartButton, '激活')
-        set(ChallengesKeystoneFrame.Instructions, '插入史诗钥石')
+        ChallengesKeystoneFrame.StartButton:SetText('激活')
+        ChallengesKeystoneFrame.Instructions:SetText('插入史诗钥石')
             hooksecurefunc(ChallengesKeystoneFrame, 'OnKeystoneSlotted', function(self)
                 local mapID, _, powerLevel= C_ChallengeMode.GetSlottedKeystoneInfo()
                 if mapID ~= nil then
                     local name= C_ChallengeMode.GetMapUIInfo(mapID)
-                    set(self.DungeonName, e.strText[name])
-                    set(self.PowerLevel, format('%d级', powerLevel))
+                    e.set(self.DungeonName, name)
+                    self.PowerLevel:SetFormattedText('%d级', powerLevel)
                 end
             end)
 
-        set(ChallengesFrame.SeasonChangeNoticeFrame.NewSeason, '全新赛季！')
-        set(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription, '地下城奖励的物品等级已经提升！')
-        set(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription2, '史诗地下城的敌人变得更强了！')
+        ChallengesFrame.SeasonChangeNoticeFrame.NewSeason:SetText('全新赛季！')
+        ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription:SetText('地下城奖励的物品等级已经提升！')
+        ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription2:SetText('史诗地下城的敌人变得更强了！')
 
-        set(ChallengesFrame.SeasonChangeNoticeFrame.Leave, '离开')
+        ChallengesFrame.SeasonChangeNoticeFrame.Leave:SetText('离开')
 
 
 
@@ -6840,7 +6844,7 @@ local function Init_Loaded(arg1)
         e.dia("CONFIRM_PLAYER_CHOICE_WITH_CONFIRMATION_STRING", {button1 = '接受', button2 = '拒绝'})
         hooksecurefunc(PlayerChoicePowerChoiceTemplateMixin, 'SetupHeader', function (self)
             if self.Header:IsShown() then
-                set(self.Header.Text, e.strText[self.optionInfo.header])
+                e.set(self.Header.Text,self.optionInfo.header)
             end
         end)
         local rarityToString ={
@@ -6851,7 +6855,7 @@ local function Init_Loaded(arg1)
         }
         hooksecurefunc(PlayerChoiceFrame, 'SetupOptions', function(self)----Blizzard_PlayerChoice.lua
             for optionFrame in self.optionPools:EnumerateActiveByTemplate(self.optionFrameTemplate) do
-                set(optionFrame.OptionText, (rarityToString[optionFrame.optionInfo.rarity] or "")..e.cn(optionFrame.optionInfo.description))
+                optionFrame.OptionText:SetText((rarityToString[optionFrame.optionInfo.rarity] or "")..e.cn(optionFrame.optionInfo.description))
             end
         end)
         hooksecurefunc(PlayerChoicePowerChoiceTemplateMixin, 'OnEnter', function(self)
@@ -6874,7 +6878,7 @@ local function Init_Loaded(arg1)
             if self:IsShown() then
                 local choiceFrameShown = PlayerChoiceFrame:IsShown()
                 local choiceInfo = C_PlayerChoice.GetCurrentPlayerChoiceInfo() or {}
-                set(self.Text, choiceFrameShown and '隐藏' or e.strText[choiceInfo.pendingChoiceText])
+                self.Text:SetText(choiceFrameShown and '隐藏' or e.cn(choiceInfo.pendingChoiceText))
             end
         end)
 
@@ -6945,9 +6949,9 @@ local function Init_Loaded(arg1)
             local a= text:match(e.Magic(RUNEFORGE_LEGENDARY_UPGRADING_CONFIRMATION))
             local b= text:match(e.Magic(RUNEFORGE_LEGENDARY_CRAFTING_CONFIRMATION))
             if a then
-                set(self.text, format('你确定要花费%s给这件传说装备升级吗？', a))
+                self.text:SetFormattedText('你确定要花费%s给这件传说装备升级吗？', a)
             elseif b then
-                set(self.text, format('你确定要花费%s打造这件传说装备吗？', b))
+                self.text:SetFormattedText('你确定要花费%s打造这件传说装备吗？', b)
             end
         end)
         --set_GameTooltip_func(RuneforgeFrameResultTooltip)
@@ -6957,22 +6961,22 @@ local function Init_Loaded(arg1)
         e.dia("CONFIRM_RESET_CLICK_BINDINGS", {text  = '确定将所有点击施法按键绑定重置为默认值吗？\n', button1 = '确定', button2 = '取消'})
 
 
-        set(ClickBindingFrameTitleText, '关于点击施法按键绑定')
+        ClickBindingFrameTitleText:SetText('关于点击施法按键绑定')
         ClickBindingFrame.TutorialFrame:SetTitle('关于点击施法按键绑定')
 
-        set(ClickBindingFrame.SaveButton, '保存')
-        set(ClickBindingFrame.AddBindingButton, '添加绑定')
-        set(ClickBindingFrame.ResetButton, '恢复默认设置')
-        set(ClickBindingFrame.EnableMouseoverCastCheckbox.Label, '鼠标悬停施法')
+        ClickBindingFrame.SaveButton:SetText('保存')
+        ClickBindingFrame.AddBindingButton:SetText('添加绑定')
+        ClickBindingFrame.ResetButton:SetText('恢复默认设置')
+        ClickBindingFrame.EnableMouseoverCastCheckbox.Label:SetText('鼠标悬停施法')
         ClickBindingFrame.EnableMouseoverCastCheckbox:HookScript('OnEnter', function()
             GameTooltip:SetText('启用后，鼠标悬停到一个单位框体并使用一个键盘快捷键施放法术时，会直接对该单位施法，无需将该单位设为目标。', nil, nil, nil, nil, true)
 
         end)
-        set(ClickBindingFrame.MouseoverCastKeyDropDown.Label, '鼠标悬停施法按键')
-        set(ClickBindingFrame.TutorialFrame.SummaryText, '将法术和宏绑定到鼠标点击')
-        set(ClickBindingFrame.TutorialFrame.InfoText, '通过点击单位框体施放绑定的法术和宏')
-        set(ClickBindingFrame.TutorialFrame.AlternateText, '可以使用Shift键、Ctrl键或者Alt键来设定其他的点击绑定')
-        set(ClickBindingFrame.TutorialFrame.ThrallName, '萨尔')
+        ClickBindingFrame.MouseoverCastKeyDropDown.Label:SetText('鼠标悬停施法按键')
+        ClickBindingFrame.TutorialFrame.SummaryText:SetText('将法术和宏绑定到鼠标点击')
+        ClickBindingFrame.TutorialFrame.InfoText:SetText('通过点击单位框体施放绑定的法术和宏')
+        ClickBindingFrame.TutorialFrame.AlternateText:SetText('可以使用Shift键、Ctrl键或者Alt键来设定其他的点击绑定')
+        ClickBindingFrame.TutorialFrame.ThrallName:SetText('萨尔')
         ClickBindingFrame.SpellbookPortrait:HookScript('OnEnter', function()
             GameTooltip_SetTitle(GameTooltip, MicroButtonTooltipText('法术书和专业', "TOGGLESPELLBOOK"))
             GameTooltip:Show()
@@ -7013,7 +7017,7 @@ local function Init_Loaded(arg1)
             end
         end
         hooksecurefunc(ClickBindingFrame, 'SetUnboundText', function(self, elementData)
-            set(self.UnboundText, format('%s 解除绑定', NameAndIconFromElementData(elementData)))
+            self.UnboundText:SetFormattedText('%s 解除绑定', NameAndIconFromElementData(elementData))
         end)
 
         local ButtonStrings = {
@@ -7086,12 +7090,12 @@ local function Init_Loaded(arg1)
             return name
         end
         hooksecurefunc(ClickBindingLineMixin, 'Init', function(self, elementData)
-            set(self.BindingText, BindingTextFromElementData(elementData))
+            e.set(self.BindingText, BindingTextFromElementData(elementData))
 
-            set(self.Name, ColoredNameAndIconFromElementData(elementData))
+            e.set(self.Name, ColoredNameAndIconFromElementData(elementData))
         end)
         hooksecurefunc(ClickBindingHeaderMixin, 'Init', function(self, elementData)
-	        set(self.Name, ColoredNameAndIconFromElementData(elementData))
+	        e.set(self.Name, ColoredNameAndIconFromElementData(elementData))
         end)
 
     elseif arg1=='Blizzard_ProfessionsTemplates' then
@@ -7113,14 +7117,14 @@ local function Init_Loaded(arg1)
                 self.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
             end
         end)
-        set(ClassTrainerTrainButton, '训练')
+        ClassTrainerTrainButton:SetText('训练')
 
     elseif arg1=='Blizzard_DeathRecap' then
-        set(DeathRecapFrame.CloseButton, '关闭')
-        set(DeathRecapFrame.Title, '死亡摘要')
+        DeathRecapFrame.CloseButton:SetText('关闭')
+        DeathRecapFrame.Title:SetText('死亡摘要')
 
     elseif arg1=='Blizzard_ItemSocketingUI' then--镶嵌宝石，界面
-        set(ItemSocketingSocketButton, '应用')
+        ItemSocketingSocketButton:SetText('应用')
         set_GameTooltip_func(ItemSocketingDescription)
 
     elseif arg1=='Blizzard_CombatLog' then--聊天框，战斗记录
@@ -7152,12 +7156,12 @@ local function Init_Loaded(arg1)
         set_filter(Blizzard_CombatLog_Filters.filters )
 
     elseif arg1=='Blizzard_ItemUpgradeUI' then--装备升级,界面
-        set(ItemUpgradeFrameTitleText, '物品升级')
-        set(ItemUpgradeFrame.UpgradeButton, '升级')
-        set(ItemUpgradeFrame.ItemInfo.MissingItemText, '将物品拖曳至此处升级。')
-        set(ItemUpgradeFrame.MissingDescription, '许多可装备的物品都可以进行升级，从而提高其物品等级。不同来源的物品升级所需的货币也各不相同。')
-        set(ItemUpgradeFrame.ItemInfo.UpgradeTo, '升级至：')
-        set(ItemUpgradeFrame.UpgradeCostFrame.Label, '总花费：')
+        ItemUpgradeFrameTitleText:SetText('物品升级')
+        ItemUpgradeFrame.UpgradeButton:SetText('升级')
+        ItemUpgradeFrame.ItemInfo.MissingItemText:SetText('将物品拖曳至此处升级。')
+        ItemUpgradeFrame.MissingDescription:SetText('许多可装备的物品都可以进行升级，从而提高其物品等级。不同来源的物品升级所需的货币也各不相同。')
+        ItemUpgradeFrame.ItemInfo.UpgradeTo:SetText('升级至：')
+        ItemUpgradeFrame.UpgradeCostFrame.Label:SetText('总花费：')
         hooksecurefunc(ItemUpgradeFrame, 'PopulatePreviewFrames', function(self)
             if self.FrameErrorText:IsShown() then
                 e.set(self.FrameErrorText)--该物品已经升到满级了
@@ -7170,25 +7174,25 @@ local function Init_Loaded(arg1)
         label2:SetPoint('RIGHT', SettingsPanel.ClosePanelButton, 'LEFT', -2, 0)
         label2:SetText(id..' 语言翻译 提示：请要不在战斗中修改选项')
 
-        set(SettingsPanel.Container.SettingsList.Header.DefaultsButton, '默认设置')
+        SettingsPanel.Container.SettingsList.Header.DefaultsButton:SetText('默认设置')
         e.dia('GAME_SETTINGS_APPLY_DEFAULTS', {text= '你想要将所有用户界面和插件设置重置为默认状态，还是只重置这个界面或插件的设置？', button1= '所有设置', button2= '取消', button3= '这些设置'})--Blizzard_Dialogs.lua
-        set(SettingsPanel.GameTab.Text, '游戏')
-        set(SettingsPanel.AddOnsTab.Text, '插件')
-        set(SettingsPanel.NineSlice.Text, '选项')
-        set(SettingsPanel.CloseButton, '关闭')
-        set(SettingsPanel.ApplyButton, '应用')
+        SettingsPanel.GameTab.Text:SetText('游戏')
+        SettingsPanel.AddOnsTab.Text:SetText('插件')
+        SettingsPanel.NineSlice.Text:SetText('选项')
+        SettingsPanel.CloseButton:SetText('关闭')
+        SettingsPanel.ApplyButton:SetText('应用')
 
-        set(SettingsPanel.NineSlice.Text, '选项')
-        set(SettingsPanel.SearchBox.Instructions, '搜索')
+        SettingsPanel.NineSlice.Text:SetText('选项')
+        SettingsPanel.SearchBox.Instructions:SetText('搜索')
 
     elseif arg1=='Blizzard_TimeManager' then--小时图，时间
-        set(TimeManagerStopwatchFrameText, '显示秒表')
-        set(TimeManagerAlarmTimeLabel, '提醒时间')
-        set(TimeManagerAlarmMessageLabel, '提醒信息')
-        set(TimeManagerAlarmEnabledButtonText, '开启提醒')
-        set(TimeManagerMilitaryTimeCheckText, '24小时模式')
-        set(TimeManagerLocalTimeCheckText, '使用本地时间')
-        set(StopwatchTitle, '秒表')
+        TimeManagerStopwatchFrameText:SetText('显示秒表')
+        TimeManagerAlarmTimeLabel:SetText('提醒时间')
+        TimeManagerAlarmMessageLabel:SetText('提醒信息')
+        TimeManagerAlarmEnabledButtonText:SetText('开启提醒')
+        TimeManagerMilitaryTimeCheckText:SetText('24小时模式')
+        TimeManagerLocalTimeCheckText:SetText('使用本地时间')
+        StopwatchTitle:SetText('秒表')
 
         hooksecurefunc('GameTime_UpdateTooltip', function()--GameTime.lua
             GameTooltip:SetText('时间信息', HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
@@ -7197,25 +7201,25 @@ local function Init_Loaded(arg1)
         end)
 
     elseif arg1=='Blizzard_ArchaeologyUI' then
-        set(ArchaeologyFrameTitleText, '考古学')
-        set(ArchaeologyFrameSummaryPageTitle, '种族')
-        set(ArchaeologyFrameCompletedPage.infoText, '你还没有完成任何神器。寻找碎片及钥石以完成神器。')
-        set(ArchaeologyFrameCompletedPage.titleBig, '已完成神器')
-        set(ArchaeologyFrameCompletedPage.titleMid, '已完成的普通神器')
+        ArchaeologyFrameTitleText:SetText('考古学')
+        ArchaeologyFrameSummaryPageTitle:SetText('种族')
+        ArchaeologyFrameCompletedPage.infoText:SetText('你还没有完成任何神器。寻找碎片及钥石以完成神器。')
+        ArchaeologyFrameCompletedPage.titleBig:SetText('已完成神器')
+        ArchaeologyFrameCompletedPage.titleMid:SetText('已完成的普通神器')
 
-        set(ArchaeologyFrameCompletedPage.titleTop, '已完成的普通神器')
+        ArchaeologyFrameCompletedPage.titleTop:SetText('已完成的普通神器')
 
-        set(ArchaeologyFrameArtifactPage.historyTitle, '历史')
-        set(ArchaeologyFrameArtifactPage.raceRarity, '种族')
-        set(ArchaeologyFrame.backButton, '后退')
-        set(ArchaeologyFrameArtifactPageSolveFrameSolveButton, '解密')
+        ArchaeologyFrameArtifactPage.historyTitle:SetText('历史')
+        ArchaeologyFrameArtifactPage.raceRarity:SetText('种族')
+        ArchaeologyFrame.backButton:SetText('后退')
+        ArchaeologyFrameArtifactPageSolveFrameSolveButton:SetText('解密')
 
         hooksecurefunc(ArchaeologyFrame.summaryPage, 'UpdateFrame', function(self)
-            set(self.pageText, format('第%d页', self.currentPage))
+            self.pageText:SetFormattedText('第%d页', self.currentPage)
         end)
         hooksecurefunc(ArchaeologyFrame.completedPage, 'UpdateFrame', function(self)
-            set(self.pageText, format('第%d页', self.currentPage))
-            set(self.titleTop, self.currData.onRare and '已完成的精良神器' or '已完成的普通神器')
+            self.pageText:SetFormattedText('第%d页', self.currentPage)
+            self.titleTop:SetText(self.currData.onRare and '已完成的精良神器' or '已完成的普通神器')
         end)
         hooksecurefunc('ArchaeologyFrame_CurrentArtifactUpdate', function(self)
             local RaceName, _, RaceitemID	= GetArchaeologyRaceInfo(self.raceID, true)
@@ -7254,9 +7258,9 @@ local function Init_Loaded(arg1)
             GameTooltip:SetText(format('拼出该神器所需的碎片数量。\n\n每个种族的碎片最多只能保存%d块。', maxCount), HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b, true)
 			GameTooltip:Show()
         end)
-        set(ArchaeologyFrameHelpPageTitle, '考古学')
-        set(ArchaeologyFrameHelpPageHelpScrollHelpText, '你需要搜集散落在世界各处的神器碎片来将它们复原为完整的神器。你能够在挖掘场里找到这些碎片，挖掘场的位置会标记在你的地图上。在挖掘场使用调查技能，你的调查工具就会显示出神器碎片大致的埋藏方向和位置。在前往一个新的挖掘地址前你可以在一个挖掘场中收集六次碎片。当你拥有了足够的碎片之后，你就可以破译隐藏在神器中的秘密，了解更多关于艾泽拉斯昔日的历史和传说。寻宝愉快！')
-        set(ArchaeologyFrameHelpPageDigTitle, '考古学地图位置标记')
+        ArchaeologyFrameHelpPageTitle:SetText('考古学')
+        ArchaeologyFrameHelpPageHelpScrollHelpText:SetText('你需要搜集散落在世界各处的神器碎片来将它们复原为完整的神器。你能够在挖掘场里找到这些碎片，挖掘场的位置会标记在你的地图上。在挖掘场使用调查技能，你的调查工具就会显示出神器碎片大致的埋藏方向和位置。在前往一个新的挖掘地址前你可以在一个挖掘场中收集六次碎片。当你拥有了足够的碎片之后，你就可以破译隐藏在神器中的秘密，了解更多关于艾泽拉斯昔日的历史和传说。寻宝愉快！')
+        ArchaeologyFrameHelpPageDigTitle:SetText('考古学地图位置标记')
 
         ArchaeologyFrameSummarytButton:HookScript('OnEnter', function()
             GameTooltip:SetText('当前神器')
@@ -7266,7 +7270,7 @@ local function Init_Loaded(arg1)
         end)
 
     elseif arg1=='Blizzard_ItemInteractionUI' then--套装, 转换
-        set(ItemInteractionFrame.CurrencyCost.Costs, '花费：')
+        ItemInteractionFrame.CurrencyCost.Costs:SetText('花费：')
         --hooksecurefunc(ItemInteractionFrame, 'LoadInteractionFrameData', function(self, frameData)e.dia("ITEM_INTERACTION_CONFIRMATION", {button2 = '取消'})
         e.dia("ITEM_INTERACTION_CONFIRMATION_DELAYED", {button2 = '取消'})
         e.dia("ITEM_INTERACTION_CONFIRMATION_DELAYED_WITH_CHARGE_INFO", {button2 = '取消'})
@@ -7320,18 +7324,18 @@ local function Init_Loaded(arg1)
         end)
 
         hooksecurefunc(MajorFactionButtonUnlockedStateMixin, 'Refresh', function(self, majorFactionData)--Blizzard_MajorFactionsLandingTemplates.lua
-            set(self.Title, majorFactionData.name and e.strText[majorFactionData.name])
-            set(self.RenownLevel, format('%d级', majorFactionData.renownLevel or 0))
+            e.set(self.Title, majorFactionData.name)
+            self.RenownLevel:SetFormattedText('%d级', majorFactionData.renownLevel or 0)
         end)
         hooksecurefunc(MajorFactionWatchFactionButtonMixin, 'OnLoad', function(self)
-            set(self.Label, '显示为经验条')
+            self.Label:SetText('显示为经验条')
         end)
 
         --Blizzard_MajorFactionRenown.lua
         hooksecurefunc(MajorFactionRenownFrame, 'SetUpMajorFactionData', function(self)
             local majorFactionData = C_MajorFactions.GetMajorFactionData(self.majorFactionID) or {}
             if majorFactionData.name and majorFactionData.currentFactionID ~= self.majorFactionID then
-                set(self.TrackFrame.Title, e.strText[majorFactionData.name])
+                e.set(self.TrackFrame.Title, majorFactionData.name)
             end
         end)
 
@@ -7341,14 +7345,14 @@ local function Init_Loaded(arg1)
         CharCustomizeFrame.RandomizeAppearanceButton.simpleTooltipLine= '随机外观'
 
     elseif arg1=='Blizzard_DebugTools' then--FSTACK
-        set(TableAttributeDisplay.VisibilityButton.Label, '显示')
-        set(TableAttributeDisplay.HighlightButton.Label, '高亮')
-        set(TableAttributeDisplay.DynamicUpdateButton.Label, '动态更新')
+        TableAttributeDisplay.VisibilityButton.Label:SetText('显示')
+        TableAttributeDisplay.HighlightButton.Label:SetText('高亮')
+        TableAttributeDisplay.DynamicUpdateButton.Label:SetText('动态更新')
 
     elseif arg1=='Blizzard_Calendar' then--日历
-        set(CalendarFilterFrameText, '过滤器')
-        set(CalendarEventPickerFrame.Header.Text, '选择一个活动')
-        set(CalendarEventPickerCloseButtonText, '关闭')
+        CalendarFilterFrameText:SetText('过滤器')
+        CalendarEventPickerFrame.Header.Text:SetText('选择一个活动')
+        CalendarEventPickerCloseButtonText:SetText('关闭')
         hooksecurefunc('CalendarFrame_Update', function()
             for i= 1, 7 do
                 e.set(_G['CalendarWeekday'..i..'Name'])
@@ -7398,32 +7402,32 @@ local function Init_Loaded(arg1)
 
 
     elseif arg1=='Blizzard_EventTrace' then--ETRACE
-        set(EventTraceTitleText, '事件记录')
+        EventTraceTitleText:SetText('事件记录')
 
-        set(EventTrace.SubtitleBar.ViewLog.Label, '查看日志')
-        set(EventTrace.SubtitleBar.ViewFilter.Label, '过滤器')
-        set(EventTrace.Log.Bar.Label, '记录')
-        set(EventTrace, 'DisplayEvents', function(self)
-            set(self.Log.Bar.Label, '记录')
+        EventTrace.SubtitleBar.ViewLog.Label:SetText('查看日志')
+        EventTrace.SubtitleBar.ViewFilter.Label:SetText('过滤器')
+        EventTrace.Log.Bar.Label:SetText('记录')
+        hooksecurefunc(EventTrace, 'DisplayEvents', function(self)
+            self.Log.Bar.Label:SetText('记录')
         end)
-        set(EventTrace, 'OnSearchDataProviderChanged', function(self)
-            set(self.Log.Bar.Label, format('结果：%d', self.searchDataProvider:GetSize() or 0))
+        hooksecurefunc(EventTrace, 'OnSearchDataProviderChanged', function(self)
+            self.Log.Bar.Label:SetFormattedText('结果：%d', self.searchDataProvider:GetSize() or 0)
         end)
-        set(EventTrace.Log.Bar.DiscardAllButton.Label, '全部清除')
-        set(EventTrace.Log.Bar.PlaybackButton.Label, EventTrace:IsLoggingPaused() and '|cnRED_FONT_COLOR:开始' or '|cnGREEN_FONT_COLOR:暂停')
+        EventTrace.Log.Bar.DiscardAllButton.Label:SetText('全部清除')
+        EventTrace.Log.Bar.PlaybackButton.Label:SetText(EventTrace:IsLoggingPaused() and '|cnRED_FONT_COLOR:开始' or '|cnGREEN_FONT_COLOR:暂停')
         hooksecurefunc(EventTrace, 'UpdatePlaybackButton', function(self)
-            set(self.Log.Bar.PlaybackButton.Label, self:IsLoggingPaused() and '|cnRED_FONT_COLOR:开始' or '|cnGREEN_FONT_COLOR:暂停')
+            self.Log.Bar.PlaybackButton.Label:SetText(self:IsLoggingPaused() and '|cnRED_FONT_COLOR:开始' or '|cnGREEN_FONT_COLOR:暂停')
         end)
-        set(EventTrace.Log.Bar.MarkButton.Label, '标记')
+        EventTrace.Log.Bar.MarkButton.Label:SetText('标记')
 
-        set(EventTrace.Filter.Bar.Label, '过滤')
-        set(EventTrace.Filter.Bar.DiscardAllButton.Label, '全部删除')
-        set(EventTrace.Filter.Bar.UncheckAllButton.Label, '全部取消')
-        set(EventTrace.Filter.Bar.CheckAllButton.Label, '全部选取')
+        EventTrace.Filter.Bar.Label:SetText('过滤')
+        EventTrace.Filter.Bar.DiscardAllButton.Label:SetText('全部删除')
+        EventTrace.Filter.Bar.UncheckAllButton.Label:SetText('全部取消')
+        EventTrace.Filter.Bar.CheckAllButton.Label:SetText('全部选取')
 
     elseif arg1=='Blizzard_ScrappingMachineUI' then--分解
-        set(ScrappingMachineFrame.ScrapButton, '拆解')
-        C_Timer.After(0.3, function() set(ScrappingMachineFrameTitleText, '拆解大师Mk1型') end)
+        ScrappingMachineFrame.ScrapButton:SetText('拆解')
+        C_Timer.After(0.3, function() ScrappingMachineFrameTitleText:SetText('拆解大师Mk1型') end)
     end
 end
 
