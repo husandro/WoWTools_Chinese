@@ -250,7 +250,14 @@ local function Init()
 
 
     GameMenuFrame.Header.Text:SetText('游戏菜单')
-    GameMenuButtonHelp:SetText('帮助')
+    hooksecurefunc(GameMenuFrame, 'InitButtons', function(self)
+        for _, btn in pairs( self.buttons or {}) do
+            print(btn)
+            e.setButton(btn)
+        end
+    end)
+
+    --[[GameMenuButtonHelp:SetText('帮助')
     GameMenuButtonStore:SetText('商店')
     GameMenuButtonWhatsNew:SetText('新内容')
     GameMenuButtonSettings:SetText('选项')
@@ -259,7 +266,7 @@ local function Init()
     GameMenuButtonAddons:SetText('插件')
     GameMenuButtonLogout:SetText('登出')
     GameMenuButtonQuit:SetText('退出游戏')
-    GameMenuButtonContinue:SetText('返回游戏')
+    GameMenuButtonContinue:SetText('返回游戏')]]
 
 
 
@@ -273,9 +280,11 @@ local function Init()
             CharacterStatsPane.AttributesCategory.Title:SetText('属性')
             CharacterStatsPane.EnhancementsCategory.Title:SetText('强化属性')
             hooksecurefunc('PaperDollFrame_SetLabelAndText', function(statFrame, label)--PaperDollFrame.lua
-                local text= e.strText[label]
-                if text then
-                    statFrame.Label:SetFormattedText('%s：', text)
+                if statFrame.Label then
+                    local text= e.strText[label]
+                    if text then
+                        statFrame.Label:SetFormattedText('%s：', text)
+                    end
                 end
             end)
 
@@ -284,8 +293,10 @@ local function Init()
         PAPERDOLL_SIDEBARS[3].name= '装备管理'
             PaperDollFrameEquipSetText:SetText('装备')
             PaperDollFrameSaveSetText:SetText('保存')
-                GearManagerPopupFrame.BorderBox.EditBoxHeaderTex:SetText('输入方案名称（最多16个字符）：')
-                GearManagerPopupFrame.BorderBox.IconSelectionText:SetText('选择一个图标：')
+                
+                GearManagerPopupFrame.BorderBox.EditBoxHeaderText:SetText('输入方案名称（最多16个字符）：')
+                GearManagerPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconHeader:SetText('选择一个图标：')
+                GearManagerPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconDescription:SetText('点击在列表中浏览')
                 GearManagerPopupFrame.BorderBox.OkayButton:SetText('确认')
                 GearManagerPopupFrame.BorderBox.CancelButton:SetText('取消')
                 hooksecurefunc('PaperDollEquipmentManagerPane_InitButton', function(button, elementData)
@@ -296,66 +307,49 @@ local function Init()
     CharacterFrameTab2:SetText('声望')
     CharacterFrameTab2:HookScript('OnEnter', function()
         GameTooltip:SetText(MicroButtonTooltipText('声望', "TOGGLECHARACTER2"), 1.0,1.0,1.0 )
-    end)
-        ReputationFrameFactionLabel:SetText('阵营')--FACTION
-        ReputationFrameStandingLabel:SetText("关系")--STANDING
-        ReputationDetailViewRenownButton:SetText('浏览名望')--ReputationFrame.xml
-        ReputationDetailMainScreenCheckBoxText:SetText('显示为经验条')
-        ReputationDetailInactiveCheckBoxText:SetText('隐藏')
-        ReputationDetailAtWarCheckBoxText:SetText('交战状态')
-        --11版本
-        if ReputationFrame_InitReputationRow then
-            hooksecurefunc('ReputationFrame_InitReputationRow', function(factionRow, elementData)
-                local factionIndex = elementData.index
-                local name, description, standingID, _, _, _, _, _, _, _, _, _, _, factionID = GetFactionInfo(factionIndex)
-                name= name and e.strText[name]
-                local factionContainer = factionRow.Container
-                e.set(factionContainer.Name, name)
-                if not factionID then
-                    return
-                end
-
-                local factionStandingtext
-                local isMajorFaction = factionID and C_Reputation.IsMajorFaction(factionID)
-                local repInfo = factionID and C_GossipInfo.GetFriendshipReputation(factionID)
-                if (repInfo and repInfo.friendshipFactionID > 0) then
-                    factionStandingtext = e.strText[repInfo.reaction]
-
-                elseif ( isMajorFaction ) then
-                    local majorFactionData = C_MajorFactions.GetMajorFactionData(factionID) or {}
-                    factionStandingtext = '名望'..majorFactionData.renownLevel
-                else
-                    factionStandingtext = e.strText[GetText("FACTION_STANDING_LABEL"..standingID, UnitSex("player"))]
-                end
-                if factionStandingtext then
-                    e.set(factionContainer.ReputationBar.FactionStanding, factionStandingtext)
-                    factionRow.standingText = factionStandingtext
-                end
-                if ( factionIndex == GetSelectedFaction() ) then
-                    if ( ReputationDetailFrame:IsShown() ) then
-                        e.set(ReputationDetailFactionName, name)
-                        e.set(ReputationDetailFactionDescription, description)
-                    end
-                end
-            end)
+    end)        
+    ReputationFrame.ReputationDetailFrame.ViewRenownButton:SetText('浏览名望')--ReputationFrame.xml
+    ReputationFrame.ReputationDetailFrame.WatchFactionCheckbox.Label:SetText('显示为经验条')
+    ReputationFrame.ReputationDetailFrame.MakeInactiveCheckbox.Label:SetText('隐藏')
+    ReputationFrame.ReputationDetailFrame.AtWarCheckbox.Label:SetText('交战状态')
+    hooksecurefunc(ReputationFrame.ScrollBox, 'Update', function(f)
+        for _, frame in pairs(f:GetFrames() or {}) do
+            e.set(frame.Name or frame.Content.Name)
         end
-
+    end)
 
 
 
     CharacterFrameTab3:SetText('货币')
+    hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
+        for _, frame in pairs(f:GetFrames() or {}) do
+            e.set(frame.Name or frame.Content.Name)
+        end
+    end)
     CharacterFrameTab3:HookScript('OnEnter', function()
         GameTooltip:SetText(MicroButtonTooltipText('货币', "TOGGLECURRENCY"), 1.0,1.0,1.0 )
     end)
-        TokenFramePopup.Title:SetText('货币设置')
-        TokenFramePopup.InactiveCheckBox.Text:SetText('未使用')
-        TokenFramePopup.BackpackCheckBox.Text:SetText('在行囊上显示')
-        
-        hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
-            for _, frame in pairs(f:GetFrames() or {}) do
-                e.set(frame.Name or frame.Content.Name)
-            end
-        end)
+    TokenFramePopup.Title:SetText('货币设置')
+    hooksecurefunc(TokenFrame, 'UpdatePopup', function()        
+        e.set(TokenFramePopup.InactiveCheckbox.Text)
+	    e.set(TokenFramePopup.BackpackCheckbox.Text)
+        e.setButton(TokenFramePopup.CurrencyTransferToggleButton)
+    end)
+    
+    CurrencyTransferMenu:SetTitle('转移货币')
+    CurrencyTransferMenu.SourceSelector.SourceLabel:SetText('寄送人')
+    CurrencyTransferMenu.AmountSelector.TransferAmountLabel:SetText('转移量')
+    
+    hooksecurefunc(CurrencyTransferMenu.SourceBalancePreview, 'SetCharacterName', function(self, characterName)
+        self.Label:SetFormattedText('%s |cnRED_FONT_COLOR:的新余额|r' , characterName or "")
+    end)
+    hooksecurefunc(CurrencyTransferMenu.PlayerBalancePreview, 'SetCharacterName', function(self, characterName)
+        self.Label:SetFormattedText('%s |cnGREEN_FONT_COLOR:的新余额|r' , characterName or "")
+    end)
+
+    CurrencyTransferMenu.ConfirmButton:SetText('转移')
+    CurrencyTransferMenu.CancelButton:SetText('取消')
+    
         
 
 
@@ -391,7 +385,7 @@ local function Init()
             end
             SpellBookPageText:SetFormattedText('第%d页', currentPage)
         end)
---[[11版本
+
         hooksecurefunc('UpdateProfessionButton', function(self)
             local parent = self:GetParent()
             if not parent.professionInitialized then
@@ -408,7 +402,7 @@ local function Init()
                 end)
             end
         end)
-        ]]
+
     end
 
 
@@ -443,24 +437,25 @@ local function Init()
 
 
 
-    --set(GroupFinderFrameGroupButton1Name, '地下城查找器')
-    --set(GroupFinderFrameGroupButton2Name, '团队查找器')
-    --set(GroupFinderFrameGroupButton3Name, '预创建队伍')
-    e.hookLable(GroupFinderFrameGroupButton1Name)
-    e.hookLable(GroupFinderFrameGroupButton2Name)
-    e.hookLable(GroupFinderFrameGroupButton3Name)
+    --[[GroupFinderFrameGroupButton1Name:SetText('地下城查找器')
+    --GroupFinderFrameGroupButton2Name:SetText('团队查找器')
+    --GroupFinderFrameGroupButton3Name:SetText('预创建队伍')
+    e.hookButton(GroupFinderFrameGroupButton1)
+    e.hookButton(GroupFinderFrameGroupButton2)
+    e.hookButton(GroupFinderFrameGroupButton3)
+
     e.hookLable(RaidFinderQueueFrameScrollFrameChildFrameTitle)
-    e.hookLable(RaidFinderQueueFrameScrollFrameChildFrameDescription)
+    e.hookLable(RaidFinderQueueFrameScrollFrameChildFrameDescription)]]
 
     PVEFrameTab1:SetText('地下城和团队副本')
     PVEFrameTab2:SetText('PvP')
     PVEFrameTab3:SetText('史诗钥石地下城')
 
     GroupFinderFrame.groupButton1.name:SetText('地下城查找器')
-        LFDQueueFrameTypeDropDownName:SetText('类型：')
-        --LFDQueueFrameRandomScrollFrameChildFrameTitle:SetText(''
-        GroupFinderFrame.groupButton2.name:SetText('团队查找器')
-        RaidFinderQueueFrameSelectionDropDownName:SetText('团队')
+        LFDQueueFrameTypeDropdownName:SetText('类型：')
+        RaidFinderQueueFrameSelectionDropdownName:SetText('团队')
+
+        GroupFinderFrame.groupButton2.name:SetText('团队查找器')        
             hooksecurefunc('RaidFinderFrameFindRaidButton_Update', function()--RaidFinder.lua
                 local mode = GetLFGMode(LE_LFG_CATEGORY_RF, RaidFinderQueueFrame.raid)
 	            --Update the text on the button
@@ -484,13 +479,17 @@ local function Init()
                 return
             end
             local categoryInfo = C_LFGList.GetLfgCategoryInfo(categoryID)
-            local text=LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, filters, true)
-            local button= self.CategoryButtons[btnIndex]
-            if button and button.Label and text then
-                if e.strText[text] then
-                    e.set(button.Label, text, nil, true)
+            local text=LFGListUtil_GetDecoratedCategoryName(e.cn(categoryInfo.name), filters, true)
+            local btn= self.CategoryButtons[btnIndex]
+            if text and btn then
+                e.font(btn:GetFontString())
+                local name= text:match('%- (.+)')
+                local cnName= name and e.strText[name]
+                if cnName then
+                    text= text:gsub(name, cnName)                    
                 end
-            end
+                btn:SetText(text)
+            end            
         end)
         LFGListFrame.CategorySelection.StartGroupButton:SetText('创建队伍')
         LFGListFrame.CategorySelection.FindGroupButton:SetText('寻找队伍')
@@ -1866,11 +1865,11 @@ local function Init()
     CreateChannelPopup.OKButton:SetText('确定')
     CreateChannelPopup.CancelButton:SetText('取消')
 
-    hooksecurefunc(ObjectiveTrackerBlocksFrame.QuestHeader, 'UpdateHeader', function(self)
+    --[[hooksecurefunc(ObjectiveTrackerBlocksFrame.QuestHeader, 'UpdateHeader', function(self)
         self.Text:SetText('任务')
-    end)
+    end)]]
 
-    ScenarioChallengeModeBlock.DeathCount:HookScript('OnEnter', function(self)--ScenarioChallengeDeathCountMixin
+    --[[ScenarioChallengeModeBlock.DeathCount:HookScript('OnEnter', function(self)--ScenarioChallengeDeathCountMixin
         GameTooltip:SetText(format('%d次死亡', self.count), 1, 1, 1)
         GameTooltip:AddLine(format('时间损失：|cffffffff%s|r', SecondsToClock(self.timeLost)))
         GameTooltip:Show()
@@ -1980,18 +1979,18 @@ hooksecurefunc(ACHIEVEMENT_TRACKER_MODULE, 'AddObjective', function(self, block,
         local height = overrideHeight or textHeight
         line:SetHeight(height)
     end
-end)  
+end)  ]]
 
 
     C_Timer.After(2, function()
 
 
-        e.set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text)
-        ObjectiveTrackerFrame.HeaderMenu.Title:SetText('追踪')
+        --e.set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text)
+        --[[ObjectiveTrackerFrame.HeaderMenu.Title:SetText('追踪')
         ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Text:SetText('战役')
         ObjectiveTrackerBlocksFrame.ProfessionHeader.Text:SetText('专业')
         ObjectiveTrackerBlocksFrame.MonthlyActivitiesHeader.Text:SetText('旅行者日志')
-        ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetText('成就')
+        ObjectiveTrackerBlocksFrame.AchievementHeader.Text:SetText('成就')]]
 
         e.reg(CombatConfigSettingsNameEditBox)--过滤名称
     end)

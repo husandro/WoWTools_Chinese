@@ -52,7 +52,7 @@ end
 
 
 function e.hookLable(label, setFont)
-    if label then
+    if label and label.SetText then
         if setFont then
             e.font(label)
         end
@@ -63,15 +63,30 @@ function e.hookLable(label, setFont)
     end
 end
 
-function e.hookButton(btn, setFont)
+function e.setButton(btn, setFont)
     local label= btn and btn:GetFontString()
     if label then
         if setFont then
             e.font(label)
         end
         e.set(label)
-        hooksecurefunc(label, 'SetText', function(self, name)
-            set(self, name)
+    end
+end
+
+function e.hookButton(btn, setFont)    
+    if btn and btn.SetText then
+        if setFont then
+            e.font(btn:GetFontString())
+        end
+        local label= btn:GetFontString()
+        if label then
+            e.set(labe)
+        end
+        hooksecurefunc(btn, 'SetText', function(self, name)
+            name= e.strText[name]
+            if name then
+                self:SetText(name)
+            end
         end)
     end
 end
