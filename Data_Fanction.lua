@@ -4,7 +4,7 @@ local id, e = ...
 
 local tab={
 
-    
+
 [1]= {'人类(玩家)'},
 [2]= {'兽人(玩家)'},
 [3]= {'矮人(玩家)'},
@@ -662,9 +662,29 @@ local tab={
 --###########
 local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, event, arg1)
+panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
         self:UnregisterEvent('ADDON_LOADED')
+
+        hooksecurefunc(ReputationFrame.ScrollBox, 'Update', function(f)
+            for _, frame in pairs(f:GetFrames() or {}) do
+                if frame.Content then
+                    e.set(frame.Content.Name)
+                    local text= e.cn(frame.Content.ReputationBar.BarText:GetText())
+                    if text:find('(.-) %d') then
+                        local name= text:match('(.-) %d')
+                        local cnName= e.strText[name]
+                        if name and cnName then
+                            text=text:gsub(name, cnName)
+                        end
+                    end
+                    frame.Content.ReputationBar.BarText:SetText(text)
+                else
+                    e.set(frame.Name)
+                end
+            end
+        end)
+
         do
             for factionID, info in pairs(tab) do
                 local data= C_Reputation.GetFactionDataByID(factionID) or {}

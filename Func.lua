@@ -311,20 +311,12 @@ local function Init()
     ReputationFrame.ReputationDetailFrame.WatchFactionCheckbox.Label:SetText('显示为经验条')
     ReputationFrame.ReputationDetailFrame.MakeInactiveCheckbox.Label:SetText('隐藏')
     ReputationFrame.ReputationDetailFrame.AtWarCheckbox.Label:SetText('交战状态')
-    hooksecurefunc(ReputationFrame.ScrollBox, 'Update', function(f)
-        for _, frame in pairs(f:GetFrames() or {}) do
-            e.set(frame.Name or frame.Content.Name)
-        end
-    end)
+   
 
 
 
     CharacterFrameTab3:SetText('货币')
-    hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
-        for _, frame in pairs(f:GetFrames() or {}) do
-            e.set(frame.Content and frame.Content.Name or frame.Name)
-        end
-    end)
+
     CharacterFrameTab3:HookScript('OnEnter', function()
         GameTooltip:SetText(MicroButtonTooltipText('货币', "TOGGLECURRENCY"), 1.0,1.0,1.0 )
     end)

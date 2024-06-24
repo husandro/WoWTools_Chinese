@@ -23,6 +23,9 @@ Map_Data_Group.lua
 Map_Data_UiMap.lua
 
 Data_Fanction.lua
-Data_Currency_Type.lua
+Data_Currency.lua
+Data_Currency_Friend.lua
 
-
+EncounterJournal.lua
+EncounterJournal_Data.lua
+EncounterJournal_Encounter.lua
