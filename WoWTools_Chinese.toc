@@ -12,13 +12,13 @@
 WoWTools_Chinese.lua
 
 Func.lua
-Func_Shared.lua
+##Func_Shared.lua
 
 Data_zhCN.lua
 
-##Achievement.lua
-##Achievement_Data.lua
-
+Achievement.lua
+Achievement_Data.lua
+Achievement_Data_Category.lua
 
 Map.lua
 Map_Data_Group.lua

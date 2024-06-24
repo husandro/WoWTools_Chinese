@@ -1,5 +1,5 @@
  
- 
+ local id, e= ...
  
  
  --UIDropDownMenu.lua
@@ -47,28 +47,12 @@ end
 
 
 hooksecurefunc('UIDropDownMenu_SetText', function(frame, text)
-    print(text)
     text= e.strText[text]
     if text then
         GetChild(frame, frameName, "Text"):SetText(text);
     end
-
-    --[[
-    if frame then
-        local text
-        if type(name)=='string' then
-            text= name
-        elseif type(text)=='function' then
-            text= name()
-        end
-        text= get_menu_text(text)
-        if text then
-            e.set(GetChild(frame, frame:GetName(), "Text"), text)
-        end
-    end]]
 end)
 hooksecurefunc('UIDropDownMenu_AddButton', function(info, level)
-    print('UIDropDownMenu_AddButton')
     level = level or 1
     local listFrame = _G["DropDownList"..level]
     listFrame = listFrame or _G["DropDownList"..level]
@@ -82,24 +66,29 @@ hooksecurefunc('UIDropDownMenu_AddButton', function(info, level)
 end)
 
 
-hooksecurefunc('UIMenu_AddButton', function(self, text)--UIMenu.lua
-    if ( self.numButtons > UIMENU_NUMBUTTONS ) then
-        return
-    end
-    local button = _G[self:GetName().."Button"..self.numButtons]
-    if ( button and text ) then
-        e.set(button, text)
-        e.set(_G[button:GetName().."ShortcutText"])
-    end
+hooksecurefunc('UIMenu_AddButton', function(self, text, shortcut)--UIMenu.lua
+    local ID = self.numButtons + 1;
+	if ( ID > UIMENU_NUMBUTTONS ) then
+		return;
+	end
+	local button = _G[self:GetName().."Button"..ID];
+    text= e.strText[text]
+	if  text then
+		button:SetText(text);
+	end
+    shortcut= e.strText[shortcut]
+	if shortcut then
+		local shortcutString = _G[button:GetName().."ShortcutText"];
+		shortcutString:SetText(shortcut);
+	end
 end)
 
 
-
-
-
-
-
-
+hooksecurefunc(MenuUtil, 'CreateTitle', function(self, text)
+    info= self
+    for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
+    print(text)
+end)
 
 
 
@@ -111,11 +100,26 @@ local function GeneratorFunction(owner, rootDescription)
 	rootDescription:CreateTitle("My Title");
 	rootDescription:CreateButton("My Button", function(data)
     	-- Button handling here.
+        print('aaaaaa')
 	end);
+    local submenu = rootDescription:CreateButton("My Submenu", function() print('My Submenu') end);
+    submenu:CreateButton("Enable", function() print('Enable') end, true);
+    submenu:CreateButton("Disable", function() print('Disable') end, false);
+    local subsubmenu= submenu:CreateButton("My Submenu", function() print('My sub Submenu') end);
+
+subsubmenu:CreateButton("sub Enable", function() print('sub Enable') end, true);
+
 end
 
-local dropdown = CreateFrame("DropdownButton", nil, frame, "WowStyle1DropdownTemplate");
-dropdown:SetDefaultText("My Dropdown");
-dropdown:SetupMenu(GeneratorFunction);
+local dropdown = CreateFrame("DropdownButton", nil, frame, "WowStyle1FilterDropdownTemplate");
+--dropdown:SetDefaultText("My Dropdown");
 
-dropdown:SetPoint('CENTER')
+
+dropdown:SetPoint('CENTER', 100, -100)
+
+dropdown:SetupMenu(GeneratorFunction);
+--[[MenuUtil.CreateButtonMenu(dropdown,
+	{"My Button 1", function() print('1') end, 1},
+	{"My Button 2", function() print('2') end, 2},
+	{"My Button 3", function() print('3') end, 3}
+);]]

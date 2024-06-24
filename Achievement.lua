@@ -282,7 +282,6 @@ local function Init_AchievementUI()
         end
     end)
 
-    --ObjectiveTracker.lua 已加载 汉化
 end
 
 
@@ -305,7 +304,8 @@ end
 --###########
 local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, event, arg1)
+panel:SetScript("OnEvent", function(self, _, arg1)
+    print(arg1)
     if arg1=='Blizzard_AchievementUI' then       
         Init_AchievementUI()
         self:UnregisterEvent('ADDON_LOADED')
