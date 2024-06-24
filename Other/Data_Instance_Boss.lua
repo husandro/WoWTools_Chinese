@@ -1700,21 +1700,17 @@ local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
-        if not e.disbledCN then 
-            do
-                for boss, info in pairs(bossTab) do                    
-                    local index= (info[2] or 0)+1
-                    local journalInstanceID= info[1]
-                    local name= select(2, EJ_GetCreatureInfo(index, journalInstanceID))
-                    if name then
-                        e.strText[name]= boss
-                    end
+        self:UnregisterEvent('ADDON_LOADED') 
+        do
+            for boss, info in pairs(bossTab) do                    
+                local index= (info[2] or 0)+1
+                local journalInstanceID= info[1]
+                local name= select(2, EJ_GetCreatureInfo(index, journalInstanceID))
+                if name then
+                    e.strText[name]= boss
                 end
             end
-            bossTab=nil
-        else
-            bossTab=nil
-        end        
-        self:UnregisterEvent('ADDON_LOADED')
+        end
+        bossTab=nil
     end
 end)

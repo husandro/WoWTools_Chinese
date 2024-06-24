@@ -1190,20 +1190,12 @@ panel:RegisterEvent("ADDON_LOADED")
 
 panel:SetScript("OnEvent", function(self, event, arg1, arg2)
     if event=='ADDON_LOADED' then
-        if arg1== id then
-            if not e.disbledCN then
-                C_Timer.After(2, function()
-                    do
-                        Init()
-                    end
-                    rest_all()
-                end)
-                self:RegisterEvent('SPELL_DATA_LOAD_RESULT')
-                
-            else
-                e.HolidayEvent={}
+        if arg1== id then            
+            self:RegisterEvent('SPELL_DATA_LOAD_RESULT')
+                do
+                    Init()
+                end
                 rest_all()
-                spellTab=nil
             end
             self:UnregisterEvent('ADDON_LOADED')
         end

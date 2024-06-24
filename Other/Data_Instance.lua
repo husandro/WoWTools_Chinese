@@ -1598,33 +1598,29 @@ local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
-        if not e.disbledCN then 
-            for journalInstanceID, info in pairs(instanceTab) do
-                local desc= info[2] or nil
-                local name= EJ_GetInstanceInfo(journalInstanceID)
-                if name then
-                    e.strText[name]= info[1]                    
-                end
-                instanceTab[journalInstanceID]= desc
+        for journalInstanceID, info in pairs(instanceTab) do
+            local desc= info[2] or nil
+            local name= EJ_GetInstanceInfo(journalInstanceID)
+            if name then
+                e.strText[name]= info[1]                    
             end
+            instanceTab[journalInstanceID]= desc
+        end
 
+        
+        for journalEncounterID, info in pairs(encounterTab) do
+            local name, desc= EJ_GetEncounterInfo(journalEncounterID)
+            local cnName, cnDesc= info[1], info[2]
             
-            for journalEncounterID, info in pairs(encounterTab) do
-                local name, desc= EJ_GetEncounterInfo(journalEncounterID)
-                local cnName, cnDesc= info[1], info[2]
-                
-                if cnName and cnName~='' and name then
-                    e.strText[name]= cnName
-                end
-
-                if not desc or desc=='' or not cnDesc or cnDesc=='' then
-                    encounterTab[journalEncounterID]= nil
-                else
-                    encounterTab[journalEncounterID]= cnDesc
-                end
+            if cnName and cnName~='' and name then
+                e.strText[name]= cnName
             end
-        else
-            instanceTab=nil
+
+            if not desc or desc=='' or not cnDesc or cnDesc=='' then
+                encounterTab[journalEncounterID]= nil
+            else
+                encounterTab[journalEncounterID]= cnDesc
+            end
         end
     
     elseif arg1=='Blizzard_EncounterJournal' then--冒险指南

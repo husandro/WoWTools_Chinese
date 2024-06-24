@@ -748,21 +748,17 @@ local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
-        if not e.disbledCN then
-            do
-                for cnName, data in pairs(tab) do
-                    for _, member in pairs(C_Map.GetMapGroupMembersInfo(data[1]) or {}) do
-                        if member.mapID==data[2] then
-                            e.strText[cnName]=  member.name
-                            break
-                        end
+        do
+            for cnName, data in pairs(tab) do
+                for _, member in pairs(C_Map.GetMapGroupMembersInfo(data[1]) or {}) do
+                    if member.mapID==data[2] then
+                        e.strText[cnName]=  member.name
+                        break
                     end
                 end
             end
-            tab=nil
-        else
-            tab=nil
         end
+        tab=nil        
         self:UnregisterAllEvents()
     end
 end)

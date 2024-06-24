@@ -10599,13 +10599,7 @@ end
 local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
-    if arg1==id then
-        if e.disbledCN then
-            instanceTab=nil
-            self:UnregisterEvent('ADDON_LOADED')
-        end
-    
-    elseif arg1=='Blizzard_EncounterJournal' then--冒险指南
+    if arg1=='Blizzard_EncounterJournal' then--冒险指南
         Init_EncounterJournal()
         self:UnregisterEvent('ADDON_LOADED')
     end

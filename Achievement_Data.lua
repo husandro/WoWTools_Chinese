@@ -11652,21 +11652,15 @@ end
 --###########
 local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, event, arg1)
-    if arg1==id then
-        if not e.disbledCN then
+panel:SetScript("OnEvent", function(self, _, arg1)
+    if arg1==id then        
+        do
             Add_Text()
-        else
-            tab=nil
-            self:UnregisterEvent('ADDON_LOADED')
         end
-
+        tab=nil
+            
     elseif arg1=='Blizzard_AchievementUI' then
-        C_Timer.After(2, function()
-            if not e.disbledCN then
-                Init_AchievementUI()
-                self:UnregisterEvent('ADDON_LOADED')
-            end
-        end)
+        Init_AchievementUI()
+        self:UnregisterEvent('ADDON_LOADED')
     end
 end)

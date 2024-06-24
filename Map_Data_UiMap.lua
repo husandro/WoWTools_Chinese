@@ -1789,19 +1789,15 @@ local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
-        if not e.disbledCN then
-            do
-                for uiMapID, name in pairs(tab) do
-                    local info = C_Map.GetMapInfo(uiMapID)
-                    if info and info.name and info.name~='' and name~='' then
-                        e.strText[info.name]= name
-                    end
+        self:UnregisterEvent('ADDON_LOADED')
+        do
+            for uiMapID, name in pairs(tab) do
+                local info = C_Map.GetMapInfo(uiMapID)
+                if info and info.name and info.name~='' and name~='' then
+                    e.strText[info.name]= name
                 end
             end
-            tab=nil
-        else
-            tab=nil
         end
-        self:UnregisterAllEvents()
+        tab=nil
     end
 end)

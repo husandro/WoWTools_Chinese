@@ -306,19 +306,8 @@ end
 local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, event, arg1)
-    if arg1==id then
-        if not e.disbledCN then
-            Add_Text()
-        else
-            self:UnregisterEvent('ADDON_LOADED')
-        end
-
-    elseif arg1=='Blizzard_AchievementUI' then
-        C_Timer.After(2, function()
-            if not e.disbledCN then
-                Init_AchievementUI()
-                self:UnregisterEvent('ADDON_LOADED')
-            end
-        end)
+    if arg1=='Blizzard_AchievementUI' then       
+        Init_AchievementUI()
+        self:UnregisterEvent('ADDON_LOADED')
     end
 end)

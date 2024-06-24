@@ -3513,19 +3513,15 @@ local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
-        if not e.disbledCN then
-            do
-                for cnName, transmogSetID in pairs(tab) do
-                    local info= C_TransmogSets.GetSetInfo(transmogSetID) or {}--description label name
-                    if info.name then
-                        e.strText[info.name]= cnName
-                    end
+        self:UnregisterEvent('ADDON_LOADED')
+        do
+            for cnName, transmogSetID in pairs(tab) do
+                local info= C_TransmogSets.GetSetInfo(transmogSetID) or {}--description label name
+                if info.name then
+                    e.strText[info.name]= cnName
                 end
             end
-            tab=nil
-        else
-            tab=nil
         end
-        self:UnregisterAllEvents()
+        tab=nil
     end
 end)
