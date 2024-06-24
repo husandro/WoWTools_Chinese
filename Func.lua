@@ -2397,26 +2397,7 @@ end)  ]]
         GameTooltip:Show()
     end
 
-    --小地图
-    MinimapCluster.ZoneTextButton.tooltipText = MicroButtonTooltipText('世界地图', "TOGGLEWORLDMAP")
-    MinimapCluster.ZoneTextButton:HookScript('OnEvent', function(self)
-        self.tooltipText = MicroButtonTooltipText('世界地图', "TOGGLEWORLDMAP")
-    end)
-    --[[Minimap.ZoomIn:HookScript('OnEnter', function()
-        if GameTooltip:IsShown() then
-            GameTooltip:SetText('放大')
-        end
-    end)
-    Minimap.ZoomOut:HookScript('OnEnter', function()
-        if GameTooltip:IsShown() then
-            GameTooltip:SetText('缩小')
-        end
-    end)
-    MinimapCluster.TrackingFrame.Button:HookScript('OnEnter', function()
-        GameTooltip:SetText('追踪', 1, 1, 1)
-	    GameTooltip:AddLine('点击以开启或关闭追踪类型。', nil, nil, nil, true)
-        GameTooltip:Show()
-    end)]]
+
     hooksecurefunc('MinimapMailFrameUpdate', function()
         local senders = { GetLatestThreeSenders() }
         local headerText = #senders >= 1 and '未读邮件来自：' or '你有未阅读的邮件'

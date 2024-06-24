@@ -92,42 +92,24 @@ end
 
 
 
---[[local function set(label, text)
-    text= e.strText[text]
-    if label and text and text~='' then--CanAccessObject(self) then
-        label:SetText(text)
-    end
-end]]
-local function setLabel(label)
-    local text= label and e.strText[label:GetText()]
-    if text then
-        label:SetText(text)
-    end
-end
-local function setFont(label)
-    if label then
-        local _, size, fontFlag= label:GetFont()
-        label:SetFont('Fonts\\ARHei.ttf', size, fontFlag or 'OUTLINE')
-    end
-end
-
-
 local function Init()
     Init_overlayFrames()
 
+        --小地图
+    MinimapCluster.ZoneTextButton.tooltipText = MicroButtonTooltipText('世界地图', "TOGGLEWORLDMAP")
+    MinimapCluster.ZoneTextButton:HookScript('OnEvent', function(self)
+        self.tooltipText = MicroButtonTooltipText('世界地图', "TOGGLEWORLDMAP")
+    end)
+    
     --飞行地图，地图名称
     hooksecurefunc(ZoneLabelDataProviderMixin, 'EvaluateBestAreaTrigger', function(self)
-        local label= self.ZoneLabel and self.ZoneLabel.Text
-        local name= label and e.strText[label:GetText()]
-        if name then
-            label:SetText(name)
-        end        
+        e.set(self.ZoneLabel and self.ZoneLabel.Text)
     end)
 
-    --QuestMapFrame.DetailsFrame.BackButton:SetText('返回')
-    --QuestMapFrame.DetailsFrame.AbandonButton:SetText('放弃')
+    QuestMapFrame.DetailsFrame.BackFrame.BackButton:SetText('返回')
+    QuestMapFrame.DetailsFrame.AbandonButton:SetText('放弃')
 
-   hooksecurefunc('QuestMapFrame_UpdateQuestDetailsButtons', function()
+    hooksecurefunc('QuestMapFrame_UpdateQuestDetailsButtons', function()
         local questID = C_QuestLog.GetSelectedQuest()
         local isWatched = QuestUtils_IsQuestWatched(questID)
         if isWatched then
@@ -165,15 +147,14 @@ local function Init()
             self.BorderFrame:SetTitle('地图和任务日志')
         end
     end)
-    setFont(WorldMapFrameHomeButtonText)
+    e.font(WorldMapFrameHomeButtonText)
     WorldMapFrameHomeButtonText:SetText('世界')
     
     
 
     --WorldMapBountyBoard.lua
-    hooksecurefunc(WorldMapBountyBoardMixin, 'SetLockedType', function(self)
-        print('hooksecurefunc')
-    end)
+    --hooksecurefunc(WorldMapBountyBoardMixin, 'SetLockedType', function(self)
+      
 end
 
 

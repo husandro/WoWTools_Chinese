@@ -22,6 +22,7 @@ Map.lua
 Map_Data_Group.lua
 Map_Data_UiMap.lua
 
+Data_Fanction.lua
 
 
 
