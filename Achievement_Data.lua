@@ -11119,4 +11119,4 @@ panel:SetScript("OnEvent", function(self, _, arg1)
         end
         tab= nil
     end
-end
+end)

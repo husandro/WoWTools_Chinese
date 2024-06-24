@@ -305,8 +305,13 @@ end
 local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
-    print(arg1)
-    if arg1=='Blizzard_AchievementUI' then       
+    if arg1==id then
+        if C_AddOns.IsAddOnLoaded('Blizzard_AchievementUI') then
+            Init_AchievementUI()
+            self:UnregisterEvent('ADDON_LOADED')
+        end
+
+    elseif arg1=='Blizzard_AchievementUI' then       
         Init_AchievementUI()
         self:UnregisterEvent('ADDON_LOADED')
     end
