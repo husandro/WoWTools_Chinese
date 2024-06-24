@@ -18,9 +18,9 @@ Data_zhCN.lua
 ##Achievement_Data.lua
 
 
-##Map.lua
-##Map_Data_Group.lua
-##Map_Data_UiMap.lua
+Map.lua
+Map_Data_Group.lua
+Map_Data_UiMap.lua
 
 
 

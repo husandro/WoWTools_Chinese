@@ -110,13 +110,7 @@ local function setFont(label)
         label:SetFont('Fonts\\ARHei.ttf', size, fontFlag or 'OUTLINE')
     end
 end
-local function setRegion(frame)
-    for _, region in pairs({frame:GetRegions()}) do
-        if region:GetObjectType()=='FontString' then--reg(QuestMapFrame.DetailsFrame.RewardsFrame, '奖励')
-            setLabel(region)
-        end
-    end
-end
+
 
 local function Init()
     Init_overlayFrames()
@@ -130,8 +124,8 @@ local function Init()
         end        
     end)
 
-    QuestMapFrame.DetailsFrame.BackButton:SetText('返回')
-    QuestMapFrame.DetailsFrame.AbandonButton:SetText('放弃')
+    --QuestMapFrame.DetailsFrame.BackButton:SetText('返回')
+    --QuestMapFrame.DetailsFrame.AbandonButton:SetText('放弃')
 
    hooksecurefunc('QuestMapFrame_UpdateQuestDetailsButtons', function()
         local questID = C_QuestLog.GetSelectedQuest()
@@ -149,7 +143,7 @@ local function Init()
     QuestMapFrame.DetailsFrame.DestinationMapButton.tooltipText= '显示最终目的地'
     QuestMapFrame.DetailsFrame.WaypointMapButton.tooltipText= '显示旅行路径'
 
-    setRegion(QuestMapFrame.DetailsFrame.RewardsFrame)
+    --setRegion(QuestMapFrame.DetailsFrame.RewardsFrame)
      
     
     MapQuestInfoRewardsFrame.ItemChooseText:SetText('你可以从这些奖励品中选择一件：')
@@ -175,6 +169,11 @@ local function Init()
     WorldMapFrameHomeButtonText:SetText('世界')
     
     
+
+    --WorldMapBountyBoard.lua
+    hooksecurefunc(WorldMapBountyBoardMixin, 'SetLockedType', function(self)
+        print('hooksecurefunc')
+    end)
 end
 
 
@@ -190,7 +189,6 @@ panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
         if not e.disbledCN then
             Init()
-        else
         end
         self:UnregisterAllEvents()
     end
