@@ -42,6 +42,18 @@ local function Init()
 end
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 --###########
 --加载保存数据
 --###########
@@ -54,6 +66,7 @@ panel:SetScript("OnEvent", function(self, _, arg1)
             self:UnregisterEvent('ADDON_LOADED')
             Init()
         end
+        
     elseif arg1=='Blizzard_TokenUI' then
         self:UnregisterEvent('ADDON_LOADED')
         Init()

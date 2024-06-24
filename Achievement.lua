@@ -160,7 +160,7 @@ local function Init()
                 local metaCriteria = objectivesFrame:GetMeta(metas)
                 e.set(metaCriteria.Label, achievementName)
 
-            elseif not (bit.band(flags, EVALUATION_TREE_FLAG_PROGRESS_BAR) == EVALUATION_TREE_FLAG_PROGRESS_BAR) then
+            elseif not (flags and bit.band(flags, EVALUATION_TREE_FLAG_PROGRESS_BAR) == EVALUATION_TREE_FLAG_PROGRESS_BAR) then
                 textStrings = textStrings + 1
                 criteriaString= e.strText[criteriaString]
                 if not completed and criteriaString then
