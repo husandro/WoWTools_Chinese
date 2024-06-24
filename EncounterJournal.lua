@@ -1,10 +1,11 @@
 local _, e = ...
-
+local panel= CreateFrame("Frame")
 
 
 
 
 local function Init_EncounterJournal()
+    panel:UnregisterEvent('ADDON_LOADED')
     e.font(EncounterJournalNavBarHomeButtonText)
 
     EncounterJournalTitleText:SetText('冒险指南')
@@ -223,11 +224,16 @@ end
 --###########
 --加载保存数据
 --###########
-local panel= CreateFrame("Frame")
+
 panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if arg1=='Blizzard_EncounterJournal' then--冒险指南
+panel:SetScript("OnEvent", function(_, _, arg1)
+    if id==arg1 then
+        if C_AddOns.IsAddOnLoaded('Blizzard_EncounterJournal') then
+            Init_EncounterJournal()
+        end
+        
+    elseif arg1=='Blizzard_EncounterJournal' then--冒险指南
         Init_EncounterJournal()
-        self:UnregisterEvent('ADDON_LOADED')
+        
     end
 end)

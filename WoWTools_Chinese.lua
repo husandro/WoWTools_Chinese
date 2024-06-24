@@ -56,8 +56,8 @@ function e.hookLable(label, setFont)
         if setFont then
             e.font(label)
         end
-        e.set(lable)
-        hooksecurefunc(lable, 'SetText', function(self, name)
+        e.set(label)
+       hooksecurefunc(label, 'SetText', function(self, name)
             set(self, name)
         end)
     end

@@ -32,4 +32,4 @@ EncounterJournal.lua
 EncounterJournal_Data.lua
 EncounterJournal_Encounter.lua
 
-Item_Data_TransmogSet.lua
+Collection_TransmogSet_Data.lua

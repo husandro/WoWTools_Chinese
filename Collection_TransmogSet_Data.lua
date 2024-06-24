@@ -3451,10 +3451,26 @@ local tab={
 [3351]= '吉尔尼斯贵族礼服',
 [3516]= '露可的面具',
 [3517]= '露可的面具',
-    
-    
+
+
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -3463,18 +3479,13 @@ local tab={
 --###########
 --加载保存数据
 --###########
+
 local panel= CreateFrame("Frame")
+
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
         self:UnregisterEvent('ADDON_LOADED')
-
-        hooksecurefunc(WardrobeSetsScrollFrameButtonMixin, 'Init', function(btn, displayData)
-           e.set(btn.Name)
-        end)
-    
-
-
         do
             for transmogSetID, cnName in pairs(tab) do
                 local info= C_TransmogSets.GetSetInfo(transmogSetID) or {}--description label name
@@ -3483,6 +3494,6 @@ panel:SetScript("OnEvent", function(self, _, arg1)
                 end
             end
         end
-        tab=nil
+        tab=nil        
     end
 end)
