@@ -322,7 +322,7 @@ local function Init()
     CharacterFrameTab3:SetText('货币')
     hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
         for _, frame in pairs(f:GetFrames() or {}) do
-            e.set(frame.Name or frame.Content.Name)
+            e.set(frame.Content and frame.Content.Name or frame.Name)
         end
     end)
     CharacterFrameTab3:HookScript('OnEnter', function()
