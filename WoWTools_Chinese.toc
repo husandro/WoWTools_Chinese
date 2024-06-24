@@ -31,3 +31,5 @@ Data_Currency_Friend.lua
 EncounterJournal.lua
 EncounterJournal_Data.lua
 EncounterJournal_Encounter.lua
+
+Item_Data_TransmogSet.lua
