@@ -48,7 +48,7 @@ local function Init_EncounterJournal()
             text= '套装物品'
         end
         if text then
-            e.set(EncounterJournal.instanceSelect.Title, text)
+            EncounterJournal.instanceSelect.Title:SetText(text)
         end
     end)
     if EncounterJournalMonthlyActivitiesFrame and EncounterJournalMonthlyActivitiesFrame.HeaderContainer then
