@@ -3468,8 +3468,15 @@ panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
         self:UnregisterEvent('ADDON_LOADED')
+
+        hooksecurefunc(WardrobeSetsScrollFrameButtonMixin, 'Init', function(btn, displayData)
+           e.set(btn.Name)
+        end)
+    
+
+
         do
-            for cnName, transmogSetID in pairs(tab) do
+            for transmogSetID, cnName in pairs(tab) do
                 local info= C_TransmogSets.GetSetInfo(transmogSetID) or {}--description label name
                 if info.name and cnName then
                     e.strText[info.name]= cnName
