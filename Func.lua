@@ -315,33 +315,6 @@ local function Init()
 
 
 
-    CharacterFrameTab3:SetText('货币')
-
-    CharacterFrameTab3:HookScript('OnEnter', function()
-        GameTooltip:SetText(MicroButtonTooltipText('货币', "TOGGLECURRENCY"), 1.0,1.0,1.0 )
-    end)
-    TokenFramePopup.Title:SetText('货币设置')
-    hooksecurefunc(TokenFrame, 'UpdatePopup', function()
-        e.set(TokenFramePopup.InactiveCheckbox.Text)
-	    e.set(TokenFramePopup.BackpackCheckbox.Text)
-        e.setButton(TokenFramePopup.CurrencyTransferToggleButton)
-    end)
-
-    CurrencyTransferMenu:SetTitle('转移货币')
-    CurrencyTransferMenu.SourceSelector.SourceLabel:SetText('寄送人')
-    CurrencyTransferMenu.AmountSelector.TransferAmountLabel:SetText('转移量')
-
-    hooksecurefunc(CurrencyTransferMenu.SourceBalancePreview, 'SetCharacterName', function(self, characterName)
-        self.Label:SetFormattedText('%s |cnRED_FONT_COLOR:的新余额|r' , characterName or "")
-    end)
-    hooksecurefunc(CurrencyTransferMenu.PlayerBalancePreview, 'SetCharacterName', function(self, characterName)
-        self.Label:SetFormattedText('%s |cnGREEN_FONT_COLOR:的新余额|r' , characterName or "")
-    end)
-
-    CurrencyTransferMenu.ConfirmButton:SetText('转移')
-    CurrencyTransferMenu.CancelButton:SetText('取消')
-
-
 
 
 
@@ -5266,66 +5239,6 @@ local function Init_Loaded(arg1)
         --Blizzard_ProfessionsFrame.lua
         e.dia("PROFESSIONS_SPECIALIZATION_CONFIRM_CLOSE", {text = '你想在离开前应用改动吗？', button1 = '是', button2 = '否',})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    --elseif arg1=='Blizzard_Collections' then--收藏
-    --[[elseif arg1=='Blizzard_EncounterJournal' then--冒险指南
-       
-
-
-
-
-
-
-
-
-
-
-
-
-    --[[elseif arg1=='Blizzard_AchievementUI' then--成就
-        e.set(AchievementFrameTab1, '成就')
-        e.set(AchievementFrameTab2, '公会')
-        e.set(AchievementFrameTab3, '统计')
-        e.set(AchievementFrame.SearchBox.Instructions, '搜索')
-        e.set(AchievementFrameSummaryAchievementsHeaderTitle, '近期成就')
-        e.set(AchievementFrameSummaryCategoriesHeaderTitle, '进展总览')
-
-        hooksecurefunc('AchievementFrame_RefreshView', function()--Blizzard_AchievementUI.lua
-            if AchievementFrame.Header.Title:GetText()==GUILD_ACHIEVEMENTS_TITLE then
-                AchievementFrame.Header.Title:SetText('公会成就')
-            else
-                AchievementFrame.Header.Title:SetText('成就点数')
-            end
-        end)
-
-
-        hooksecurefunc('AchievementFrameCategories_UpdateDataProvider', function()
-            for _, btn in pairs(AchievementFrameCategories.ScrollBox:GetFrames() or {}) do
-                if btn.Button then
-                    e.set(btn.Button.Label, e.strText[btn.Button.name])
-                end
-            end
-        end)]]
 
 
 

@@ -398,8 +398,6 @@ local tab={
 
 
 
-
-
 --###########
 --加载保存数据
 --###########
@@ -407,14 +405,7 @@ local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
-        self:UnregisterEvent('ADDON_LOADED')
-        
-        hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
-            for _, frame in pairs(f:GetFrames() or {}) do
-                e.set(frame.Content and frame.Content.Name or frame.Name or Frame.Text)
-            end
-        end)
-
+        self:UnregisterEvent('ADDON_LOADED')  
         do
             for currencyID, info in pairs(tab) do
                 local data =C_CurrencyInfo.GetCurrencyInfo(currencyID) or {}

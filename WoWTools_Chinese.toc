@@ -20,16 +20,18 @@ Achievement.lua
 Achievement_Data.lua
 Achievement_Data_Category.lua
 
-Map.lua
-Map_Data_Group.lua
-Map_Data_UiMap.lua
-
-Data_Fanction.lua
-Data_Currency.lua
-Data_Currency_Friend.lua
+Currency.lua
+Currency_Data.lua
+Currency_Data_Friend.lua
 
 EncounterJournal.lua
 EncounterJournal_Data.lua
 EncounterJournal_Encounter.lua
 
-Collection_TransmogSet_Data.lua
+
+Map.lua
+Map_Data_Group.lua
+Map_Data_UiMap.lua
+
+
+Collection_Data_TransmogSet.lua

@@ -21,7 +21,7 @@ end]]
 --hooksecurefunc('AchievementFrameBaseTab_OnClick', set_index)
 --hooksecurefunc('AchievementFrameComparisonTab_OnClick', set_index)
 
-local function Init_AchievementUI()    
+local function Init()    
     AchievementFrameTab1:SetText('成就')
     AchievementFrameTab2:SetText('公会')
     AchievementFrameTab3:SetText('统计')
@@ -307,12 +307,13 @@ panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
         if C_AddOns.IsAddOnLoaded('Blizzard_AchievementUI') then
-            Init_AchievementUI()
             self:UnregisterEvent('ADDON_LOADED')
+            Init()            
         end
 
     elseif arg1=='Blizzard_AchievementUI' then       
-        Init_AchievementUI()
         self:UnregisterEvent('ADDON_LOADED')
+        Init()
+        
     end
 end)
