@@ -293,7 +293,7 @@ local function Init()
         PAPERDOLL_SIDEBARS[3].name= '装备管理'
             PaperDollFrameEquipSetText:SetText('装备')
             PaperDollFrameSaveSetText:SetText('保存')
-                
+
                 GearManagerPopupFrame.BorderBox.EditBoxHeaderText:SetText('输入方案名称（最多16个字符）：')
                 GearManagerPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconHeader:SetText('选择一个图标：')
                 GearManagerPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconDescription:SetText('点击在列表中浏览')
@@ -307,7 +307,7 @@ local function Init()
     CharacterFrameTab2:SetText('声望')
     CharacterFrameTab2:HookScript('OnEnter', function()
         GameTooltip:SetText(MicroButtonTooltipText('声望', "TOGGLECHARACTER2"), 1.0,1.0,1.0 )
-    end)        
+    end)
     ReputationFrame.ReputationDetailFrame.ViewRenownButton:SetText('浏览名望')--ReputationFrame.xml
     ReputationFrame.ReputationDetailFrame.WatchFactionCheckbox.Label:SetText('显示为经验条')
     ReputationFrame.ReputationDetailFrame.MakeInactiveCheckbox.Label:SetText('隐藏')
@@ -330,16 +330,16 @@ local function Init()
         GameTooltip:SetText(MicroButtonTooltipText('货币', "TOGGLECURRENCY"), 1.0,1.0,1.0 )
     end)
     TokenFramePopup.Title:SetText('货币设置')
-    hooksecurefunc(TokenFrame, 'UpdatePopup', function()        
+    hooksecurefunc(TokenFrame, 'UpdatePopup', function()
         e.set(TokenFramePopup.InactiveCheckbox.Text)
 	    e.set(TokenFramePopup.BackpackCheckbox.Text)
         e.setButton(TokenFramePopup.CurrencyTransferToggleButton)
     end)
-    
+
     CurrencyTransferMenu:SetTitle('转移货币')
     CurrencyTransferMenu.SourceSelector.SourceLabel:SetText('寄送人')
     CurrencyTransferMenu.AmountSelector.TransferAmountLabel:SetText('转移量')
-    
+
     hooksecurefunc(CurrencyTransferMenu.SourceBalancePreview, 'SetCharacterName', function(self, characterName)
         self.Label:SetFormattedText('%s |cnRED_FONT_COLOR:的新余额|r' , characterName or "")
     end)
@@ -349,8 +349,8 @@ local function Init()
 
     CurrencyTransferMenu.ConfirmButton:SetText('转移')
     CurrencyTransferMenu.CancelButton:SetText('取消')
-    
-        
+
+
 
 
 
@@ -455,7 +455,7 @@ local function Init()
         LFDQueueFrameTypeDropdownName:SetText('类型：')
         RaidFinderQueueFrameSelectionDropdownName:SetText('团队')
 
-        GroupFinderFrame.groupButton2.name:SetText('团队查找器')        
+        GroupFinderFrame.groupButton2.name:SetText('团队查找器')
             hooksecurefunc('RaidFinderFrameFindRaidButton_Update', function()--RaidFinder.lua
                 local mode = GetLFGMode(LE_LFG_CATEGORY_RF, RaidFinderQueueFrame.raid)
 	            --Update the text on the button
@@ -486,10 +486,10 @@ local function Init()
                 local name= text:match('%- (.+)')
                 local cnName= name and e.strText[name]
                 if cnName then
-                    text= text:gsub(name, cnName)                    
+                    text= text:gsub(name, cnName)
                 end
                 btn:SetText(text)
-            end            
+            end
         end)
         LFGListFrame.CategorySelection.StartGroupButton:SetText('创建队伍')
         LFGListFrame.CategorySelection.FindGroupButton:SetText('寻找队伍')
@@ -2011,7 +2011,7 @@ end)  ]]
     e.dia('CONFIRM_BUY_BANK_TAB', {text='你是否想要购买一个战团银行标签？', button1='是', button2 = '否'})
     e.dia('BANK_MONEY_WITHDRAW', {text='提取数量：', button1='接受', button2 = '取消'})
     e.dia('BANK_MONEY_DEPOSIT', {text='存放数量：', button1='接受', button2 = '取消'})
-    
+
 
     --商人
     MerchantFrameTab1:SetText('商人')
@@ -2631,7 +2631,7 @@ end)  ]]
             end
         end
     end)]]
-    local maxLayoutsErrorText = format('最多允许%d种角色布局和%d种账号布局', Constants.EditModeConsts.EditModeMaxLayoutsPerType, Constants.EditModeConsts.EditModeMaxLayoutsPerType)
+    --[[local maxLayoutsErrorText = format('最多允许%d种角色布局和%d种账号布局', Constants.EditModeConsts.EditModeMaxLayoutsPerType, Constants.EditModeConsts.EditModeMaxLayoutsPerType)
     hooksecurefunc(EditModeDropdownEntryMixin, 'Init', function(self, text, _, disableOnMaxLayouts, disableOnActiveChanges, _, _, _, _, disabledText)
         if disableOnMaxLayouts and EditModeManagerFrame:AreLayoutsFullyMaxed() then
             self.disabledTooltip = maxLayoutsErrorText
@@ -2642,7 +2642,7 @@ end)  ]]
             text = disabledText
         end
         e.set(self.Text, text)
-    end)
+    end)]]
 
     EditModeSystemSettingsDialog.Buttons.RevertChangesButton:SetText('撤销变更')
     hooksecurefunc(EditModeSystemSettingsDialog, 'UpdateExtraButtons', function(self, systemFrame)
@@ -2666,18 +2666,20 @@ end)  ]]
 
 
 
-
-    hooksecurefunc(ButtonTrayUtil, 'TestCheckBoxTraySetup', function(button, labelText, callback, customFont)--ButtonTrayUtil.lua
-        e.set(button, labelText)
+    --ButtonTrayUtil.lua
+    hooksecurefunc(ButtonTrayUtil, 'TestCheckboxTraySetup', function(button, labelText)--ButtonTrayUtil.lua
+        e.set(button.Label, labelText)
     end)
-    hooksecurefunc(ResizeCheckButtonMixin, 'SetLabelText', function(self, labelText)
-        if self.Label ~= nil then
-            e.set(self.Label, labelText)
+
+    hooksecurefunc(ButtonTrayUtil, 'TestButtonTraySetup', function(button, label)
+        label= e.strText[label]
+        if label then
+            button:SetText(label)
         end
     end)
-
-
-
+    hooksecurefunc(ResizeCheckButtonMixin, 'SetLabelText', function(self, labelText)
+        e.set(self.Label, labelText)
+    end)
 
 
     --GameTooltip.lua
@@ -2748,7 +2750,7 @@ end)  ]]
 
 
 
-    StoreFrame.TitleContainer:SetText('商城')
+    --StoreFrame.TitleContainer:SetText('商城')
 
 
 
@@ -2797,6 +2799,8 @@ end)  ]]
 		return MicroButtonTooltipText('聊天频道', "TOGGLECHATTAB")
 	end)
 
+
+
     MainMenuBarVehicleLeaveButton:HookScript('OnEnter', function()
         if UnitOnTaxi("player") then
             GameTooltip_SetTitle(GameTooltip, '请求终止')
@@ -2808,8 +2812,7 @@ end)  ]]
         end
     end)
 
-
-
+    --主菜单，按钮
     CharacterMicroButton.tooltipText = MicroButtonTooltipText('角色信息', "TOGGLECHARACTER0")--MainMenuBarMicroButtons.lua
     CharacterMicroButton:HookScript('OnEvent', function(self, event)
         if ( event == "UPDATE_BINDINGS" ) then
@@ -2817,38 +2820,20 @@ end)  ]]
         end
     end)
 
-    if ProfessionMicroButton then--11版本
-        ProfessionMicroButton.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
-        ProfessionMicroButton:HookScript('OnEvent', function(self, event)
-            if ( event == "UPDATE_BINDINGS" ) then
-                self.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
-            end
-        end)
+    ProfessionMicroButton.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
+    ProfessionMicroButton:HookScript('OnEvent', function(self, event)
+        if ( event == "UPDATE_BINDINGS" ) then
+            self.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
+        end
+    end)
 
 
-        SpellbookMicroButton.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
-        SpellbookMicroButton:HookScript('OnEvent', function(self, event)
-            if ( event == "UPDATE_BINDINGS" ) then
-                self.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
-            end
-        end)
-    else
-        SpellbookMicroButton.tooltipText = MicroButtonTooltipText('法术书和专业', "TOGGLESPELLBOOK")
-        SpellbookMicroButton:HookScript('OnEvent', function(self, event)
-            if ( event == "UPDATE_BINDINGS" ) then
-                self.tooltipText = MicroButtonTooltipText('法术书和专业', "TOGGLESPELLBOOK")
-            end
-        end)
-
-        TalentMicroButton.tooltipText = MicroButtonTooltipText('专精和天赋', "TOGGLETALENTS")
-        TalentMicroButton.newbieText = '天赋的各种组合选择能够强化你的角色，并使你的角色与众不同。'
-        TalentMicroButton:HookScript('OnEvent', function(self, event)
-            if ( event == "UPDATE_BINDINGS" ) then
-                self.tooltipText = MicroButtonTooltipText('专精和天赋', "TOGGLETALENTS")
-            end
-        end)
-    end
-
+    PlayerSpellsMicroButton.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
+    PlayerSpellsMicroButton:HookScript('OnEvent', function(self, event)
+        if ( event == "UPDATE_BINDINGS" ) then
+            self.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
+        end
+    end)
 
     AchievementMicroButton.tooltipText = MicroButtonTooltipText('成就', "TOGGLEACHIEVEMENT")
     AchievementMicroButton.newbieText = '浏览有关你的成就和统计数据的信息。'
@@ -2977,7 +2962,7 @@ end)  ]]
             e.set(homeButton.text, homeData.name)
         else
             homeButton.text:SetText('首页')
-        end        
+        end
     end)
 
 
@@ -3038,9 +3023,9 @@ end)  ]]
             self.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconDescription:SetText('此图标不在列表中')
         end
     end)
-    hooksecurefunc(LabeledEnumDropDownControlMixin, 'SetLabelText', function(self, text)
+    --[[hooksecurefunc(LabeledEnumDropDownControlMixin, 'SetLabelText', function(self, text)
 	    e.set(self.Label, text)
-    end)
+    end)]]
 
 
 
@@ -3058,7 +3043,7 @@ end)  ]]
 
     if e.Player.class=='HUNTER' then
         StableFrame.StabledPetList.FilterBar.SearchBox.Instructions:SetText('查询')
-        StableFrame.StabledPetList.FilterBar.FilterButton:SetText('过滤')
+        StableFrame.StabledPetList.FilterBar.FilterDropdown.Text:SetText('过滤')
         e.hookButton(StableFrame.StableTogglePetButton, true)
         StableFrame.ReleasePetButton:SetText('释放')
         StableFrame.ReleasePetButton.disabledTooltip='你只能释放你当前召唤的宠物。'
@@ -3066,7 +3051,7 @@ end)  ]]
         StableFrame.ActivePetList.ListName:SetText('激活')
         StableFrame.StabledPetList.ListName:SetText('兽栏')
         e.dia('RELEASE_PET', {text ='你确定要|cnRED_FONT_COLOR:永久释放|r你的宠物吗？你将永远无法再召唤此宠物。', button1='|cnRED_FONT_COLOR:确定|r', button2='|cnGREEN_FONT_COLOR:取消|r',})
-        --StableFrameTitleText:SetFormattedText('%s%s%s|r 的宠物', e.Icon.player, e.Player.col, e.Player.name)
+        StableFrameTitleText:SetFormattedText('|cffaad372%s|r 的宠物', UnitName('player'))
         hooksecurefunc(StableFrame.PetModelScene.PetInfo, 'SetPet', function(self, petData)
             if petData.isExotic then
                 self.Exotic:SetText('特殊')
@@ -3707,7 +3692,7 @@ end)  ]]
     hooksecurefunc('CompactRaidFrameManager_UpdateLabel', function()
         CompactRaidFrameManager.displayFrame.label:SetText(IsInRaid() and '团员' or '队员')
     end)
-    hooksecurefunc(CompactRaidFrameManagerDisplayFrame.RestrictPingsButton, 'UpdateLabel', function(self)
+    --[[hooksecurefunc(CompactRaidFrameManagerDisplayFrame.RestrictPingsButton, 'UpdateLabel', function(self)
         self.Text:SetText(IsInRaid() and '只限助手发送信号' or '只限领袖发送信号')
     end)
     CompactRaidFrameManagerDisplayFrameEveryoneIsAssistButtonText:SetText('将所有人提升为助理')
@@ -3722,7 +3707,7 @@ end)  ]]
                 CompactRaidFrameManagerDisplayFrameHiddenModeToggle:SetText('显示')
             end
         end
-    end)
+    end)]]
 
     e.reg(RolePollPopup, '选择你的职责', 1)
     RolePollPopupAcceptButtonText:SetText('接受')
@@ -3779,7 +3764,8 @@ end)  ]]
 
     --试衣间
     DressUpFrameTitleText:SetText('试衣间')
-    DressUpFrameOutfitDropDown.SaveButton:SetText('保存')
+    DressUpFrameOutfitDropdownText:SetText('保存')
+    e.set(DressUpFrameOutfitDropdown.Text)
     DressUpFrame.LinkButton:SetText('外观方案链接')
     DressUpFrameResetButton:SetText('重置')
     DressUpFrameCancelButton:SetText('关闭')
@@ -3858,14 +3844,14 @@ end)  ]]
         GameTooltip_AddColoredLine(GameTooltip, '|cnRED_FONT_COLOR:你尚未收藏过此外观', LIGHTBLUE_FONT_COLOR)
         GameTooltip:Show()
     end)
-    hooksecurefunc(WardrobeOutfitFrame, 'Update', function(self)
+    --[[hooksecurefunc(WardrobeOutfitFrame, 'Update', function(self)
         if self.Buttons then
             local btn=self.Buttons[#self.Buttons]
             if btn then
                 btn:SetText('|cnGREEN_FONT_COLOR:新外观方案|r')
             end
         end
-    end)
+    end)]]
 
 
     --PlayerCastingBarFrame
@@ -7282,7 +7268,7 @@ local function Init_Loaded(arg1)
 
     elseif arg1=='Blizzard_MajorFactions' then
 
-        hooksecurefunc(MajorFactionButtonUnlockedStateMixin, 'SetUpParagonRewardsTooltip', function(self)
+        --[[hooksecurefunc(MajorFactionButtonUnlockedStateMixin, 'SetUpParagonRewardsTooltip', function(self)
             local factionID = self:GetParent().factionID
             local majorFactionData = C_MajorFactions.GetMajorFactionData(factionID) or {}
             local currentValue, threshold, rewardQuestID, hasRewardPending, tooLowLevelForParagon = C_Reputation.GetFactionParagonInfo(factionID)
@@ -7307,7 +7293,7 @@ local function Init_Loaded(arg1)
                     if hasRewardPending then
                         value = value + threshold
                     end
-                    GameTooltip_ShowProgressBar(GameTooltip, 0, threshold, value, REPUTATION_PROGRESS_FORMAT:format(value, threshold))
+                    GameTooltip_ShowProgressBar(GameTooltip, 0, threshold, value, format('%s / %s', value, threshold))
                 end
                 GameTooltip_AddQuestRewardsToTooltip(GameTooltip, rewardQuestID)
             end
@@ -7326,7 +7312,7 @@ local function Init_Loaded(arg1)
                 end
             end
             GameTooltip_AddColoredLine(GameTooltip, '<点击查看名望>', GREEN_FONT_COLOR)
-        end)
+        end)]]
 
         hooksecurefunc(MajorFactionButtonUnlockedStateMixin, 'Refresh', function(self, majorFactionData)--Blizzard_MajorFactionsLandingTemplates.lua
             e.set(self.Title, majorFactionData.name)
@@ -7499,7 +7485,7 @@ panel:SetScript("OnEvent", function(self, event, arg1)
                 })
 
 
-                WoW_Tools_Chinese_CN= e.cn                
+                WoW_Tools_Chinese_CN= e.cn
         elseif arg1 then
             if EnabledTab then
                 table.insert(EnabledTab, arg1)
