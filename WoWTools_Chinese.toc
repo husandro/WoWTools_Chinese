@@ -10,7 +10,9 @@
 ##繁体，简体，不会载加
 ##界面，中文化，主要function
 WoWTools_Chinese.lua
+
 Func.lua
+Func_Shared.lua
 
 Data_zhCN.lua
 

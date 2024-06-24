@@ -2544,17 +2544,17 @@ end)  ]]
     --EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.CombatContainer
 
     for _, frame in pairs(EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.BasicOptionsContainer:GetLayoutChildren() or {}) do
-        e.set(frame.Label, frame.labelText)
+        e.set(frame.Label)
     end
 
     EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.FramesContainer:HookScript('OnShow', function(self)
         for _,frame in pairs(self:GetLayoutChildren() or {}) do
-            e.set(frame, frame.labelText)
+            e.set(frame.Label)
         end
     end)
     EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.CombatContainer:HookScript('OnShow', function(self)
         for _,frame in pairs(self:GetLayoutChildren() or {}) do
-            e.set(frame, frame.labelText)
+            e.set(frame.Label)
         end
     end)
     EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.MiscContainer:HookScript('OnShow', function(self)
@@ -6272,7 +6272,7 @@ local function Init_Loaded(arg1)
             elseif ConquestFrame.seasonState == 1 then--SEASON_STATE_OFFSEASON
                 PVEFrame:SetTitle('玩家VS玩家（休赛期）')
             else
-                local expName = _G["EXPANSION_NAME"..e.ExpansionLevel]
+                local expName = _G["EXPANSION_NAME"..GetExpansionLevel()]
                 PVEFrame:SetTitleFormatted('玩家VS玩家 '..(e.strText[expName] or expName)..' 第 %d 赛季', PVPUtil.GetCurrentSeasonNumber())
             end
         end)
@@ -6646,7 +6646,7 @@ local function Init_Loaded(arg1)
             if ( not currentDisplaySeason ) then
                 PVEFrame:SetTitle('史诗钥石地下城')
             else
-                local expName = _G["EXPANSION_NAME"..e.ExpansionLevel]
+                local expName = _G["EXPANSION_NAME"..GetExpansionLevel()]
                 local title = format('史诗钥石地下城 %s 赛季 %d', e.strText[expName] or expName, currentDisplaySeason)
                 PVEFrame:SetTitle(title)
             end

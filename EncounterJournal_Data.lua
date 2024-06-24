@@ -211,6 +211,40 @@ local instanceTab={
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+local function Init()
+    hooksecurefunc('EncounterJournal_DisplayInstance', function(instanceID)
+        local self= EncounterJournal.encounter
+        local instanceName, description = EJ_GetInstanceInfo()
+        e.set(self.instance.title, instanceName)
+        e.set(self.info.instanceTitle, instanceName)
+        e.set(self.instance.LoreScrollingFont, description)
+        local tooltip= e.strText[self.info['overviewTab'].tooltip]
+        if tooltip then
+            self.info['overviewTab'].tooltip= tooltip
+        end
+        local desc= instanceTab[instanceID]
+        if desc then
+            EncounterJournal.encounter.instance.LoreScrollingFont:SetText(desc)
+        end
+    end)
+
+end
+
+
+
+
+
 --###########
 --加载保存数据
 --###########
@@ -225,28 +259,13 @@ panel:SetScript("OnEvent", function(self, _, arg1)
                 if name then
                     e.strText[name]= info[1]
                 end
-
 ---@diagnostic disable-next-line: assign-type-mismatch
                 instanceTab[journalInstanceID]= desc
             end
         end
 
     elseif arg1=='Blizzard_EncounterJournal' then--冒险指南
-        hooksecurefunc('EncounterJournal_DisplayInstance', function(instanceID)
-            local f= EncounterJournal.encounter
-            local instanceName, description = EJ_GetInstanceInfo()
-            e.set(f.instance.title, instanceName)
-            e.set(f.info.instanceTitle, instanceName)
-            e.set(f.instance.LoreScrollingFont, description)
-            local tooltip= e.strText[f.info['overviewTab'].tooltip]
-            if tooltip then
-                self.info['overviewTab'].tooltip= tooltip
-            end
-            local desc= instanceTab[instanceID]
-            if desc then
-                EncounterJournal.encounter.instance.LoreScrollingFont:SetText(desc)
-            end
-        end)
+        Init()
         self:UnregisterEvent('ADDON_LOADED')
 
     end

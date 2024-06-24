@@ -1,5 +1,9 @@
+ 
+ 
+ 
+ 
  --UIDropDownMenu.lua
- local function GetChild(frame, name, key)
+ --[[local function GetChild(frame, name, key)
     if (frame[key]) then
         return frame[key]
     elseif name then
@@ -7,7 +11,18 @@
     end
 
     return nil
+end]]
+local envTable = GetCurrentEnvironment();
+local function GetChild(frame, name, key)
+	if (frame[key]) then
+		return frame[key];
+	elseif name then
+		return envTable[name..key];
+	end
+	return nil;
 end
+
+
 local function get_menu_text(text)--( ) . % + - * ? [ ^ $
     if text then
         local col, text2= text:match('(|cff......)(.-)|r')
@@ -26,9 +41,19 @@ local function get_menu_text(text)--( ) . % + - * ? [ ^ $
         elseif e.strText[str3] then
             return '('..e.strText[str3]..')'
         end
-    end
+    end    
 end
-hooksecurefunc('UIDropDownMenu_SetText', function(frame, name)
+
+
+
+hooksecurefunc('UIDropDownMenu_SetText', function(frame, text)
+    print(text)
+    text= e.strText[text]
+    if text then
+        GetChild(frame, frameName, "Text"):SetText(text);
+    end
+
+    --[[
     if frame then
         local text
         if type(name)=='string' then
@@ -40,9 +65,10 @@ hooksecurefunc('UIDropDownMenu_SetText', function(frame, name)
         if text then
             e.set(GetChild(frame, frame:GetName(), "Text"), text)
         end
-    end
+    end]]
 end)
 hooksecurefunc('UIDropDownMenu_AddButton', function(info, level)
+    print('UIDropDownMenu_AddButton')
     level = level or 1
     local listFrame = _G["DropDownList"..level]
     listFrame = listFrame or _G["DropDownList"..level]
@@ -66,3 +92,30 @@ hooksecurefunc('UIMenu_AddButton', function(self, text)--UIMenu.lua
         e.set(_G[button:GetName().."ShortcutText"])
     end
 end)
+
+
+
+
+
+
+
+
+
+
+
+local frame= CreateFrame('Frame')
+frame:SetSize(200, 200)
+frame:SetPoint('CENTER')
+
+local function GeneratorFunction(owner, rootDescription)
+	rootDescription:CreateTitle("My Title");
+	rootDescription:CreateButton("My Button", function(data)
+    	-- Button handling here.
+	end);
+end
+
+local dropdown = CreateFrame("DropdownButton", nil, frame, "WowStyle1DropdownTemplate");
+dropdown:SetDefaultText("My Dropdown");
+dropdown:SetupMenu(GeneratorFunction);
+
+dropdown:SetPoint('CENTER')

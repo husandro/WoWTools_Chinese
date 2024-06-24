@@ -1,14 +1,11 @@
 local _, e = ...
 
+
+
+
+
 local function Init_EncounterJournal()
-    local t= EJ_GetTierInfo(2)
-    if t then
-        e.strText[t]='燃烧远征'
-    end
-    t= EJ_GetTierInfo(10)
-    if t then
-        e.strText[t]='本赛季'
-    end
+    e.font(EncounterJournalNavBarHomeButtonText)
 
     EncounterJournalTitleText:SetText('冒险指南')
 
@@ -203,12 +200,15 @@ local function Init_EncounterJournal()
         end
     end)
 
-    e.hookLable(EncounterJournal.LootJournalItems.ItemSetsFrame.ClassButton)
-    e.hookLable(EncounterJournalEncounterFrameInfoSlotFilterToggle)
-    e.hookLable(EncounterJournalEncounterFrameInfoDifficulty)
-    e.hookLable(EncounterJournalInstanceSelect.Title)
 
-
+    local t= EJ_GetTierInfo(2)
+    if t then
+        e.strText[t]='燃烧远征'
+    end
+    t= EJ_GetTierInfo(11)
+    if t then
+        e.strText[t]='本赛季'
+    end
 end
 
 
