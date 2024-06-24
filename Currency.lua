@@ -50,7 +50,7 @@ panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
 
-        if C.AddOns.IsAddOnLoaded('Blizzard_TokenUI') then
+        if C_AddOns.IsAddOnLoaded('Blizzard_TokenUI') then
             self:UnregisterEvent('ADDON_LOADED')
             Init()
         end
