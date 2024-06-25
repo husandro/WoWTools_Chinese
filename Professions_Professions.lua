@@ -40,7 +40,7 @@ local function Init()
     ProfessionsFrame.CraftingPage.RecipeList.SearchBox.Instructions:SetText('搜索')
     ProfessionsFrame.CraftingPage.RecipeList.FilterDropdown.Text:SetText('过滤器')
     ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.SearchBox.Instructions:SetText('搜索')
-    ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.FilterButton:SetText('过滤器')
+    --ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.FilterButton:SetText('过滤器')
 
     --Blizzard_ProfessionsCrafting.lua
     ProfessionsFrame.CraftingPage.ViewGuildCraftersButton:SetText('查看工匠')
