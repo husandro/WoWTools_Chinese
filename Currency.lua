@@ -45,12 +45,12 @@ local function Init()
     CurrencyTransferMenu.SourceSelector.SourceLabel:SetText('寄送人')
     CurrencyTransferMenu.AmountSelector.TransferAmountLabel:SetText('转移量')
 
-    hooksecurefunc(CurrencyTransferMenu.SourceBalancePreview, 'SetCharacterName', function(self, characterName)
+    --[[hooksecurefunc(CurrencyTransferMenu.SourceBalancePreview, 'SetCharacterName', function(self, characterName)
         self.Label:SetFormattedText('%s |cnRED_FONT_COLOR:的新余额|r' , characterName or "")
     end)
     hooksecurefunc(CurrencyTransferMenu.PlayerBalancePreview, 'SetCharacterName', function(self, characterName)
         self.Label:SetFormattedText('%s |cnGREEN_FONT_COLOR:的新余额|r' , characterName or "")
-    end)
+    end)]]
 
     CurrencyTransferMenu.ConfirmButton:SetText('转移')
     CurrencyTransferMenu.CancelButton:SetText('取消')
