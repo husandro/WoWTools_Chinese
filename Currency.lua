@@ -12,29 +12,29 @@ local function Init()
             end
         end
     end)
-    --[[hooksecurefunc(TokenEntryMixin, 'Initialize', function(self)
+    hooksecurefunc(TokenEntryMixin, 'Initialize', function(self)
         if self.elementData.name then
             local name= e.strText[self.elementData.name]
-            if name then
-                self.Content.Name:SetText(name)
+            if not self.Content.Name2 then--点击，不能，弹出对话框，所以加个
+                self.Content.Name2= self.Content:CreateFontString(nil, 'BORDER', 'GameFontHighlightLeft')
+                self.Content.Name2:SetPoint('LEFT', self.Content.AccountWideIcon, 'RIGHT')
+                self.Content.Name2:SetPoint('RIGHT', self.Content.Count, 'LEFT', -10, 0)
             end
+            self.Content.Name2:SetText(name or '')
+            self.Content.Name:SetAlpha(name and 0 or 1)
         end
-    end)]]
+    end)
     hooksecurefunc(TokenSubHeaderMixin, 'Initialize', function(self)
         if self.elementData.name then
             local name= e.strText[self.elementData.name]
             if name then
-                self.Text:SetText(HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(elementData.name))
+                self.Text:SetText(HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(name))
             end
         end
     end)
-    
-    
 
     TokenFramePopup.Title:SetText('货币设置')
 
-
-    
     hooksecurefunc(TokenFrame, 'UpdatePopup', function()
         e.set(TokenFramePopup.InactiveCheckbox.Text)
 	    e.set(TokenFramePopup.BackpackCheckbox.Text)
@@ -54,6 +54,9 @@ local function Init()
 
     CurrencyTransferMenu.ConfirmButton:SetText('转移')
     CurrencyTransferMenu.CancelButton:SetText('取消')
+    
+    e.set(CurrencyTransferLogTitleText)
+    e.set(CurrencyTransferLog.EmptyLogMessage)
 end
 
 
