@@ -247,28 +247,6 @@ local function Init()
 
 
 
-    GameMenuFrame.Header.Text:SetText('游戏菜单')
-    hooksecurefunc(GameMenuFrame, 'InitButtons', function(self)
-        for _, btn in pairs( self.buttons or {}) do
-            e.setButton(btn)
-        end
-    end)
-
-    --[[GameMenuButtonHelp:SetText('帮助')
-    GameMenuButtonStore:SetText('商店')
-    GameMenuButtonWhatsNew:SetText('新内容')
-    GameMenuButtonSettings:SetText('选项')
-    GameMenuButtonEditMode:SetText('编辑模式')
-    GameMenuButtonMacros:SetText('宏')
-    GameMenuButtonAddons:SetText('插件')
-    GameMenuButtonLogout:SetText('登出')
-    GameMenuButtonQuit:SetText('退出游戏')
-    GameMenuButtonContinue:SetText('返回游戏')]]
-
-
-
-
-
 
 
 
@@ -588,7 +566,7 @@ local function Init()
 
     hooksecurefunc('LFGListApplicationViewer_UpdateApplicant', function(button, applicantID)
         local applicantInfo = C_LFGList.GetApplicantInfo(applicantID) or {}
-        if not ( applicantInfo.applicantInfo or applicantInfo.applicationStatus == "applied" ) then
+        if not ( applicantInfo or applicantInfo.applicationStatus == "applied" ) then
             if ( applicantInfo.applicationStatus == "invited" ) then
                 button.Status:SetText('已邀请')
             elseif ( applicantInfo.applicationStatus == "failed" or applicantInfo.applicationStatus == "cancelled" ) then
@@ -2511,6 +2489,18 @@ local function Init()
 		    self.tooltipText = MicroButtonTooltipText('角色信息', "TOGGLECHARACTER0")
         end
     end)
+
+    
+
+
+    GameMenuFrame.Header.Text:SetText('游戏菜单')
+    
+    --[[hooksecurefunc(GameMenuFrame, 'InitButtons', function(self)
+    info=self:EnumerateActive()
+    for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
+end)]]
+   
+
 
     ProfessionMicroButton.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
     ProfessionMicroButton:HookScript('OnEvent', function(self, event)

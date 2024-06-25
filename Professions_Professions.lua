@@ -102,8 +102,8 @@ local function Init()
     ProfessionsFrame.CraftingPage.SchematicForm.QualityDialog.CancelButton:SetText('取消')
     ProfessionsFrame.CraftingPage.SchematicForm.QualityDialog:SetTitle('材料品质')
 
-    ProfessionsFrame.CraftingPage.SchematicForm.AllocateBestQualityCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
-    ProfessionsFrame.CraftingPage.SchematicForm.AllocateBestQualityCheckBox:HookScript("OnEnter", function(button)--Blizzard_ProfessionsRecipeSchematicForm.lua
+    --ProfessionsFrame.CraftingPage.SchematicForm.AllocateBestQualityCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
+    --[[ProfessionsFrame.CraftingPage.SchematicForm.AllocateBestQualityCheckBox:HookScript("OnEnter", function(button)--Blizzard_ProfessionsRecipeSchematicForm.lua
         local checked = button:GetChecked()
         if checked then
             GameTooltip_AddNormalLine(GameTooltip, '取消勾选后，总会使用可用的最低品质的材料。')
@@ -111,8 +111,8 @@ local function Init()
             GameTooltip_AddNormalLine(GameTooltip, '勾选后，总会使用可用的最高品质的材料。')
         end
         GameTooltip:Show()
-    end)
-    ProfessionsFrame.CraftingPage.SchematicForm.TrackRecipeCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
+    end)]]
+    --ProfessionsFrame.CraftingPage.SchematicForm.TrackRecipeCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
     ProfessionsFrame.CraftingPage.SchematicForm.FavoriteButton:HookScript("OnEnter", function(button)
         GameTooltip_AddHighlightLine(GameTooltip, button:GetChecked() and '从偏好中移除' or '设置为偏好')
         GameTooltip:Show()
@@ -323,7 +323,7 @@ local function Init()
 
     ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.OptionalReagents.Label:SetText('附加材料：')
     ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.OptionalReagents.labelText= '附加材料：'--Blizzard_ProfessionsRecipeSchematicForm.xml
-    ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.AllocateBestQualityCheckBox:HookScript("OnEnter", function(button)
+    --[[ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.AllocateBestQualityCheckBox:HookScript("OnEnter", function(button)
         local checked = button:GetChecked()
         if checked then
             GameTooltip:SetText('取消勾选后，总会使用可用的最低品质的材料。')
@@ -331,7 +331,7 @@ local function Init()
             GameTooltip:SetText('勾选后，总会使用可用的最高品质的材料。')
         end
         GameTooltip:Show()
-    end)
+    end)]]
 
 
     hooksecurefunc(ProfessionsFrame.OrdersPage.OrderView, 'UpdateStartOrderButton', function(self)--Blizzard_ProfessionsCrafterOrderView.lua
@@ -375,7 +375,7 @@ local function Init()
     ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.CancelButton:SetText('否')
     ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.ConfirmButton:SetText('是')
 
-    ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.AllocateBestQualityCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
+    --ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.AllocateBestQualityCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
 
 
 
@@ -476,8 +476,8 @@ local function Init()
 
     ProfessionsFrame.CraftingPage.CraftingOutputLog:SetTitle('制作成果')
 
-    ProfessionsFrame.CraftingPage.SchematicForm.Details.FinishingReagentSlotContainer.Label:SetText('成品材料：')
-    ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.Details.FinishingReagentSlotContainer.Label:SetText('成品材料：')
+    --ProfessionsFrame.CraftingPage.SchematicForm.Details.FinishingReagentSlotContainer.Label:SetText('成品材料：')
+    --ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.Details.FinishingReagentSlotContainer.Label:SetText('成品材料：')
     ProfessionsFrame.CraftingPage.SchematicForm.Details:HookScript('OnShow', function(self)
         self.Label:SetText('制作详情')
         self.StatLines.DifficultyStatLine.LeftLabel:SetText('配方难度：')

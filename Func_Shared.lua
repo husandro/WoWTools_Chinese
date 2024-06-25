@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
  
  local id, e= ...
  
@@ -84,11 +85,7 @@ hooksecurefunc('UIMenu_AddButton', function(self, text, shortcut)--UIMenu.lua
 end)
 
 
-hooksecurefunc(MenuUtil, 'CreateTitle', function(self, text)
-    info= self
-    for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
-    print(text)
-end)
+
 
 
 

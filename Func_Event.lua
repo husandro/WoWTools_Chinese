@@ -1840,6 +1840,7 @@ local function Init_Event(arg1)
         --Blizzard_MajorFactionRenown.lua
         hooksecurefunc(MajorFactionRenownFrame, 'SetUpMajorFactionData', function(self)
             local majorFactionData = C_MajorFactions.GetMajorFactionData(self.majorFactionID) or {}
+---@diagnostic disable-next-line: undefined-field
             if majorFactionData.name and majorFactionData.currentFactionID ~= self.majorFactionID then
                 e.set(self.TrackFrame.Title, majorFactionData.name)
             end
