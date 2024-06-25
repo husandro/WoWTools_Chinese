@@ -27,7 +27,7 @@ local function Init()
         if self.elementData.name then
             local cnName= e.strText[self.elementData.name]
             if cnName then
-                self.Name:SetText(cnName);
+                self.Name:SetText(cnName)
             end
         end
     end)
@@ -35,10 +35,15 @@ local function Init()
         if self.elementData.name then
             local cnName= e.strText[self.elementData.name]
             if cnName then
-                self.Content.Name:SetText(cnName);
+                self.Content.Name:SetText(cnName)
             end
         end
     end)
+
+    e.hookLable(ReputationFrame.ReputationDetailFrame.Title)
+    e.hookLable(ReputationFrame.ReputationDetailFrame.Description)
+    --hooksecurefunc(ReputationFrame.ReputationDetailFrame, 'Refresh', function(self)
+       
 end
 
 
