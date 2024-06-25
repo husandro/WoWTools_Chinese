@@ -2,14 +2,17 @@ local id, e= ...
 --e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
 
 e.strText={}--主要，汉化
---WoW_Tools_Chinese_CN(text, notFind_notReturn, tab) = e.cn(...) 全局 Func.lua
+e.Get_HolyDay=function() return{} end--节日，数据 Calendar_Data.lua
+--WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
 
-function e.cn(text, notFind_notReturn, tab)--{gossipOptionID=, questID=}
-    if notFind_notReturn then
-        return e.strText[text]
-    else
+function e.cn(text, tab)--{gossipOptionID=, questID=}
+    if text then
         return e.strText[text] or text
+    elseif tab then
+        if tab.holydayID then
+            return e.Get_HolyDay(tab.holydayID)
+        end
     end
 end
 
@@ -51,7 +54,7 @@ function e.dia(string, tab)
 end
 
 
-function e.hookLable(label, setFont)
+function e.hookLabel(label, setFont)
     if label and label.SetText then
         if setFont then
             e.font(label)
@@ -148,7 +151,7 @@ end
 
 
 
---##############
+--[[##############
 --创建, 添加控制面板
 --##############
 local variableIndex=0
@@ -156,47 +159,28 @@ local function get_variableIndex()
     variableIndex= variableIndex+1
     return variableIndex
 end
-
 --插件名称
 local Category = Settings.RegisterVerticalLayoutCategory('|TInterface\\AddOns\\WoWTools_Chinese\\Sesource\\WoWtools.tga:0|t|cffff00ffWoW|r |cff00ff00Tools|r_|cff28a3ffChinese|r')
 Settings.RegisterAddOnCategory(Category)
+function e.AddPanel_Check(tab)
+    local name = tab.name
+    local tooltip = tab.tooltip
+    local category= tab.category or Category
+    local defaultValue= tab.value and true or false
+    local func= tab.func
 
---添加，Check 11版本
-if Settings.CreateCheckboxWithOptions then
-    function e.AddPanel_Check(tab)
-        local name = tab.name
-        local tooltip = tab.tooltip
-        local category= tab.category or Category
-        local defaultValue= tab.value and true or false
-        local func= tab.func
+    local variable = id..name..(category.order or '')..get_variableIndex()
+    local setting= Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
 
-        local variable = id..name..(category.order or '')..get_variableIndex()
-        local setting= Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
-
-        local initializer= Settings.CreateCheckboxWithOptions(category, setting, nil, tooltip);
-        Settings.SetOnValueChangedCallback(variable, func, initializer)
-        return initializer
-    end
-else
-    function e.AddPanel_Check(tab)
-        local name = tab.name
-        local tooltip = tab.tooltip
-        local category= tab.category or Category
-        local defaultValue= tab.value and true or false
-        local func= tab.func
-
-        local variable = id..name..(category.order or '')..get_variableIndex()
-        local setting= Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
-
-        local initializer= Settings.CreateCheckBox(category, setting, tooltip)
-        Settings.SetOnValueChangedCallback(variable, func, initializer)
-        return initializer
-    end
+    local initializer= Settings.CreateCheckboxWithOptions(category, setting, nil, tooltip);
+    Settings.SetOnValueChangedCallback(variable, func, initializer)
+    return initializer
 end
 
 function e.GetEnabeleDisable(ed)--启用或禁用字符
     return ed and '|cnGREEN_FONT_COLOR:启用|r' or '|cnRED_FONT_COLOR:禁用|r'
 end
+]]
 
 
 

@@ -183,8 +183,8 @@ local function Init_Wardrobe()
         e.set(btn.Name)
     end)
 
-    e.hookLable(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Name)
-    e.hookLable(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Label)
+    e.hookLabel(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Name)
+    e.hookLabel(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Label)
 
 
 end

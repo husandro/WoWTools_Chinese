@@ -40,8 +40,8 @@ local function Init()
         end
     end)
 
-    e.hookLable(ReputationFrame.ReputationDetailFrame.Title)
-    e.hookLable(ReputationFrame.ReputationDetailFrame.Description)
+    e.hookLabel(ReputationFrame.ReputationDetailFrame.Title)
+    e.hookLabel(ReputationFrame.ReputationDetailFrame.Description)
     --hooksecurefunc(ReputationFrame.ReputationDetailFrame, 'Refresh', function(self)
        
 end

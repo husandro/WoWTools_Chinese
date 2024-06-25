@@ -12,6 +12,8 @@
 WoWTools_Chinese.lua
 
 Func.lua
+Func_Event.lua
+Dialogs.lua
 ##Func_Shared.lua
 
 Data_zhCN.lua
@@ -23,6 +25,12 @@ Achievement_Data_Category.lua
 Currency.lua
 Currency_Data.lua
 Currency_Data_Friend.lua
+
+##节日
+Calendar.lua
+Calendar_Data.lua
+
+Character.lua
 
 EncounterJournal.lua
 EncounterJournal_Data.lua

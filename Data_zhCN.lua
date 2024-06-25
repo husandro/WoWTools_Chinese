@@ -21144,11 +21144,12 @@ panel:SetScript("OnEvent", function(self, _, arg1)
         do
             for name, text in pairs(tab) do
                 name= _G[name]
-                if name and name~='' and not text:find('%w') then
+                if name then
                     e.strText[name]= text
                 end
             end
         end
+        
         tab=nil
     end
 end)
