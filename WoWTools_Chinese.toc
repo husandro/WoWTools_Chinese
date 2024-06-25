@@ -36,3 +36,6 @@ Map_Data_UiMap.lua
 Collection.lua
 Collection_Data_TransmogSet.lua
 Collection_Data_Mount.lua
+
+Fanction.lua
+Fanction_Data.lua

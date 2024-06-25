@@ -307,10 +307,7 @@ local function Init()
     CharacterFrameTab2:HookScript('OnEnter', function()
         GameTooltip:SetText(MicroButtonTooltipText('声望', "TOGGLECHARACTER2"), 1.0,1.0,1.0 )
     end)
-    ReputationFrame.ReputationDetailFrame.ViewRenownButton:SetText('浏览名望')--ReputationFrame.xml
-    ReputationFrame.ReputationDetailFrame.WatchFactionCheckbox.Label:SetText('显示为经验条')
-    ReputationFrame.ReputationDetailFrame.MakeInactiveCheckbox.Label:SetText('隐藏')
-    ReputationFrame.ReputationDetailFrame.AtWarCheckbox.Label:SetText('交战状态')
+
    
 
 

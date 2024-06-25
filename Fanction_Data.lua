@@ -657,6 +657,53 @@ local tab={
 
 
 
+
+
+
+
+
+local function Init()
+
+    ReputationFrame.ReputationDetailFrame.ViewRenownButton:SetText('浏览名望')--ReputationFrame.xml
+    ReputationFrame.ReputationDetailFrame.WatchFactionCheckbox.Label:SetText('显示为经验条')
+    ReputationFrame.ReputationDetailFrame.MakeInactiveCheckbox.Label:SetText('隐藏')
+    ReputationFrame.ReputationDetailFrame.AtWarCheckbox.Label:SetText('交战状态')
+
+    hooksecurefunc(ReputationBarMixin, 'TryShowReputationStandingText', function(self)
+        local text= self.reputationStandingText
+        if text then
+            local cnName= e.strText[text]
+            if not cnName and text:find('(.-) %d') then
+                local name= text:match('(.-) %d')
+                local name2= name and e.strText[name]
+                if name and name2 then
+                    cnName=text:gsub(name, name2)
+                end
+            end
+            if cnName then
+                self.BarText:SetText(cnName)
+            end
+        end
+    end)
+    hooksecurefunc(ReputationHeaderMixin, 'Initialize', function(self)
+        if self.elementData.name then
+            local cnName= e.strText[self.elementData.name]
+            if cnName then
+                self.Name:SetText(cnName);
+            end
+        end
+    end)
+    hooksecurefunc(ReputationEntryMixin, 'Initialize', function(self)
+        if self.elementData.name then
+            local cnName= e.strText[self.elementData.name]
+            if cnName then
+                self.Content.Name:SetText(cnName);
+            end
+        end
+    end)
+end
+
+
 --###########
 --加载保存数据
 --###########
@@ -666,25 +713,7 @@ panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
         self:UnregisterEvent('ADDON_LOADED')
 
-        hooksecurefunc(ReputationFrame.ScrollBox, 'Update', function(f)
-            for _, frame in pairs(f:GetFrames() or {}) do
-                if frame.Content then
-                    e.set(frame.Content.Name)
-                    local text= e.cn(frame.Content.ReputationBar.BarText:GetText())
-                    if text:find('(.-) %d') then
-                        local name= text:match('(.-) %d')
-                        local cnName= e.strText[name]
-                        if name and cnName then
-                            text=text:gsub(name, cnName)
-                        end
-                    end
-                    frame.Content.ReputationBar.BarText:SetText(text)
-                else
-                    e.set(frame.Name)
-                end
-            end
-        end)
-
+        Init()
         do
             for factionID, info in pairs(tab) do
                 local data= C_Reputation.GetFactionDataByID(factionID) or {}

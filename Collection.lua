@@ -168,8 +168,8 @@ local function Init_Wardrobe()
 
     --试衣间
     WardrobeFrameTitleText:SetText('幻化')
-    WardrobeOutfitDropDown.SaveButton:SetText('保存')
-    WardrobeTransmogFrame.ApplyButton:SetText('应用')
+    --WardrobeOutfitDropDown.SaveButton:SetText('保存')
+    --WardrobeTransmogFrame.ApplyButton:SetText('应用')
     WardrobeOutfitEditFrame.Title:SetText('输入外观方案名称：')
     WardrobeOutfitEditFrame.AcceptButton:SetText('接受')
     WardrobeOutfitEditFrame.CancelButton:SetText('取消')

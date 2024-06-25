@@ -3,14 +3,14 @@ local id, e = ...
 
 
 
-local function Init()   
+local function Init()
     hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
         for _, frame in pairs(f:GetFrames() or {}) do
-            e.set(frame.Content and frame.Content.Name or frame.Name or Frame.Text)
+            e.set(frame.Text or (frame.Content and frame.Content.Name) or frame.Name)
         end
     end)
 
-    
+
     CharacterFrameTab3:SetText('货币')
 
     CharacterFrameTab3:HookScript('OnEnter', function()
@@ -66,7 +66,7 @@ panel:SetScript("OnEvent", function(self, _, arg1)
             self:UnregisterEvent('ADDON_LOADED')
             Init()
         end
-        
+
     elseif arg1=='Blizzard_TokenUI' then
         self:UnregisterEvent('ADDON_LOADED')
         Init()

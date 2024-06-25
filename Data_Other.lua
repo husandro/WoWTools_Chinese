@@ -6,9 +6,7 @@ specTab=nil
 spellTab=nil
 raceTab=nil
 affixTab=nil
-instanceTab=nil
 itemSubTypeTab=nil
-friendFactionTab=nil
 ]]
 
 
@@ -691,14 +689,6 @@ end
 
 
 local function Init()
- 
-
-    --[[for _, info in pairs(instanceTab) do
-        local name= EJ_GetInstanceInfo(info[1])
-        if name then
-            e.strText[name]= info[2]
-        end
-    end]]
 
     for spellID, info in pairs(spellTab) do
         local name=C_Spell.GetSpellName(spellID)
