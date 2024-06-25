@@ -21126,7 +21126,9 @@ local tab={
 
 
 
-
+local function Init()
+    e.strText[STAT_CRITICAL_STRIKE] = "爆击"
+end
 
 
 
@@ -21147,9 +21149,9 @@ panel:SetScript("OnEvent", function(self, _, arg1)
                 if name then
                     e.strText[name]= text
                 end
-            end
-        end
-        
+            end            
+        end        
         tab=nil
+        Init()
     end
 end)

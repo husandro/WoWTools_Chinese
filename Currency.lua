@@ -4,19 +4,37 @@ local id, e = ...
 
 
 local function Init()
-    hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
-        for _, frame in pairs(f:GetFrames() or {}) do
-            e.set(frame.Text or (frame.Content and frame.Content.Name) or frame.Name)
+    hooksecurefunc(TokenHeaderMixin, 'Initialize', function(self)
+        if self.elementData.name then
+            local name= e.strText[self.elementData.name]
+            if name then
+                self.Name:SetText(name)
+            end
         end
     end)
-
-
-    CharacterFrameTab3:SetText('货币')
-
-    CharacterFrameTab3:HookScript('OnEnter', function()
-        GameTooltip:SetText(MicroButtonTooltipText('货币', "TOGGLECURRENCY"), 1.0,1.0,1.0 )
+    --[[hooksecurefunc(TokenEntryMixin, 'Initialize', function(self)
+        if self.elementData.name then
+            local name= e.strText[self.elementData.name]
+            if name then
+                self.Content.Name:SetText(name)
+            end
+        end
+    end)]]
+    hooksecurefunc(TokenSubHeaderMixin, 'Initialize', function(self)
+        if self.elementData.name then
+            local name= e.strText[self.elementData.name]
+            if name then
+                self.Text:SetText(HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(elementData.name))
+            end
+        end
     end)
+    
+    
+
     TokenFramePopup.Title:SetText('货币设置')
+
+
+    
     hooksecurefunc(TokenFrame, 'UpdatePopup', function()
         e.set(TokenFramePopup.InactiveCheckbox.Text)
 	    e.set(TokenFramePopup.BackpackCheckbox.Text)
@@ -36,9 +54,6 @@ local function Init()
 
     CurrencyTransferMenu.ConfirmButton:SetText('转移')
     CurrencyTransferMenu.CancelButton:SetText('取消')
-
-
-
 end
 
 

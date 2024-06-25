@@ -10,9 +10,9 @@ local id, e = ...
 local function calendar_Uptate()
     local indexInfo = C_Calendar.GetEventIndex()
     local info= indexInfo and C_Calendar.GetDayEvent(indexInfo.offsetMonths, indexInfo.monthDay, indexInfo.eventIndex) or {}
-    
+
     if info.eventID then
-        local data= e.cn(nil, {holydayID= info.eventID}) or {}        
+        local data= e.cn(nil, {holydayID= info.eventID}) or {}
         local head= data[1]
         local desc= data[2]
         if head then
@@ -34,10 +34,10 @@ end
 local function Init()
 
     CalendarFrame.FilterButton.Text:SetText('过滤器')
-   
+
     CalendarEventPickerCloseButtonText:SetText('关闭')
     --星期
-    hooksecurefunc('CalendarFrame_Update', function()    
+    hooksecurefunc('CalendarFrame_Update', function()
         for i= 1, 7 do
             e.set(_G['CalendarWeekday'..i..'Name'])
         end
@@ -111,10 +111,10 @@ panel:SetScript("OnEvent", function(self, _, arg1)
             Init()
             self:UnregisterEvent('ADDON_LOADED')
         end
-        
+
     elseif arg1=='Blizzard_Calendar' then--冒险指南
         Init()
         self:UnregisterEvent('ADDON_LOADED')
-        
+
     end
 end)
