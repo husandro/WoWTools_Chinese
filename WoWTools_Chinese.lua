@@ -53,6 +53,15 @@ function e.dia(string, tab)
     end
 end
 
+function e.hookDia(string, text, func)
+    if StaticPopupDialogs[string] then
+        if StaticPopupDialogs[string][text] then
+            hooksecurefunc(StaticPopupDialogs[string], text, func)
+        else
+            StaticPopupDialogs[string][text]=func
+        end
+    end
+end
 
 function e.hookLabel(label, setFont)
     if label and label.SetText then
@@ -96,15 +105,7 @@ end
 
 
 
-function e.hookDia(string, text, func)
-    if StaticPopupDialogs[string] then
-        if StaticPopupDialogs[string][text] then
-            hooksecurefunc(StaticPopupDialogs[string], text, func)
-        else
-            StaticPopupDialogs[string][text]=func
-        end
-    end
-end
+
 
 function e.reg(self, text, index)
     if self then
