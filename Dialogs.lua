@@ -1,6 +1,105 @@
-local id, e = ...
+local  e = select(2, ...)
 
-local function Init()
+
+--Blizzard_Dialogs.lua
+e.hookDia('GAME_SETTINGS_TIMED_CONFIRMATION', 'OnUpdate', function(self, elapsed)
+    local duration = self.duration - elapsed
+    local time = math.max(duration + 1, 1)
+    self.text:SetFormattedText('接受新选项？\n\n|cnGREEN_FONT_COLOR:%d|r 秒后|cnGREEN_FONT_COLOR:恢复。|r', time)
+    StaticPopup_Resize(self, "GAME_SETTINGS_TIMED_CONFIRMATION")
+end)
+
+
+--StaticPopup.lua
+e.hookDia("GENERIC_CONFIRMATION", 'OnShow', function(self, data)--StaticPopup.lua
+    if data.text==HUD_EDIT_MODE_DELETE_LAYOUT_DIALOG_TITLE then
+        self.text:SetFormattedText('你确定要删除布局|n|cnGREEN_FONT_COLOR:%s|r吗？', data.text_arg1, data.text_arg2)
+
+    elseif data.text==SELL_ALL_JUNK_ITEMS_POPUP then
+        self.text:SetFormattedText('你即将出售所有垃圾物品，而且无法回购。\n你确定要继续吗？', data.text_arg1, data.text_arg2)
+
+    elseif data.text==PROFESSIONS_CRAFTING_ORDER_MAIL_REPORT_WARNING then
+        self.text:SetFormattedText('这名玩家有你还未认领的物品。如果你在认领前举报这名玩家，你会失去所有这些物品。', data.text_arg1, data.text_arg2)
+
+    elseif data.text==SELL_ALL_JUNK_ITEMS_POPUP then
+        self.text:SetFormattedText('你即将出售所有垃圾物品，而且无法回购。\n你确定要继续吗？', data.text_arg1, data.text_arg2)
+
+    elseif data.text==TALENT_FRAME_CONFIRM_CLOSE then
+        self.text:SetFormattedText('如果你继续，会失去所有待定的改动。', data.text_arg1, data.text_arg2)
+
+    elseif data.text==CRAFTING_ORDER_RECRAFT_WARNING2 then
+        self.text:SetFormattedText('再造可能导致你的物品的品质下降。|n|n\n\n你确定要发布此订单吗？', data.text_arg1, data.text_arg2)
+
+    elseif data.text==PROFESSIONS_ORDER_UNUSABLE_WARNING then
+        self.text:SetFormattedText('此物品目前不能使用，而且拾取后就会绑定。确定要下达此订单吗？', data.text_arg1, data.text_arg2)
+
+    elseif data.text==CRAFTING_ORDERS_IGNORE_CONFIRMATION then
+        self.text:SetFormattedText('你确定要屏蔽|cnGREEN_FONT_COLOR:%s|r吗？', data.text_arg1, data.text_arg2)
+
+    elseif data.text==CRAFTING_ORDERS_OWN_REAGENTS_CONFIRMATION then
+        self.text:SetFormattedText('你即将完成一个制造订单，里面包含一些你自己的材料。你确定吗？', data.text_arg1, data.text_arg2)
+
+    elseif data.text==TALENT_FRAME_CONFIRM_LEAVE_DEFAULT_LOADOUT then
+        self.text:SetFormattedText('你如果不先将你当前的天赋配置储存下来，就会永远失去此配置。|n|n你确定要继续吗？', data.text_arg1, data.text_arg2)
+
+    elseif data.text==TALENT_FRAME_CONFIRM_STARTER_DEVIATION then
+        self.text:SetFormattedText('选择此天赋会使你离开入门天赋配置指引。', data.text_arg1, data.text_arg2)
+
+    end
+
+    if not data.acceptText then
+        self.button1:SetText('是')
+
+    elseif data.acceptText==OKAY then
+        self.button1:SetText('确定')
+
+    elseif data.acceptText==SAVE then
+        self.button1:SetText('保存')
+
+    elseif data.acceptText==ACCEPT then
+            self.button1:SetText('接受')
+
+    elseif data.acceptText==CONTINUE then
+        self.button1:SetText('继续')
+    end
+
+    if not data.cancelText then
+        self.button2:SetText('否')
+
+    elseif data.cancelText==CANCEL then
+        self.button2:SetText('取消')
+    end
+
+end)
+
+e.hookDia("GENERIC_INPUT_BOX", 'OnShow', function(self, data)
+    if data.text==HUD_EDIT_MODE_RENAME_LAYOUT_DIALOG_TITLE then
+        self.text:SetFormattedText('为布局|cnGREEN_FONT_COLOR:%s|r输入新名称', data.text_arg1, data.text_arg2)
+    end
+
+    if not data.acceptText then
+        self.button1:SetText('完成')
+
+    elseif data.acceptText==OKAY then
+        self.button1:SetText('确定')
+
+    elseif data.acceptText==SAVE then
+        self.button1:SetText('保存')
+
+    elseif data.acceptText==ACCEPT then
+            self.button1:SetText('接受')
+
+    elseif data.acceptText==CONTINUE then
+        self.button1:SetText('继续')
+    end
+
+    if not data.cancelText then
+        self.button2:SetText('取消')
+    end
+end)
+
+
+
 e.dia('BANK_CONFIRM_CLEANUP', {text='你确定要自动整理你的物品吗？|n该操作会影响所有的战团标签。', button1='接受', button2 = '取消'})
 e.dia('CONFIRM_BUY_BANK_TAB', {text='你是否想要购买一个战团银行标签？', button1='是', button2 = '否'})
 e.dia('BANK_MONEY_WITHDRAW', {text='提取数量：', button1='接受', button2 = '取消'})
@@ -482,32 +581,3 @@ e.dia("TTS_CONFIRM_SAVE_SETTINGS", {text= '你想让这个角色使用已经在�
 
 --Keybindings.lua
 e.dia("CONFIRM_DELETING_CHARACTER_SPECIFIC_BINDINGS", {text = '确定要切换到通用键位设定吗？所有本角色专用的键位设定都将被永久删除。', button1 = '确定', button2 = '取消'})
-
-
-
-
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if arg1==id then
-        Init()
-        self:UnregisterEvent('ADDON_LOADED')
-    end
-end)

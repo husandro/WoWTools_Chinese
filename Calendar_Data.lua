@@ -1,5 +1,5 @@
 local _, e = ...
---e.Get_HolyDay(eventID)
+--e.Get_HoliDay(eventID)
 
 local tab={
 [658]={'烟花庆典', '艾泽拉斯的大庆典！每个种族的主城中都会燃放美丽的烟花，每小时一次，整夜不停！'},
@@ -133,7 +133,7 @@ local tab={
 end]]
 
 
-function e.Get_HolyDay(eventID)
+function e.Get_HoliDay(eventID)
     return tab[eventID] or {}
 end
 

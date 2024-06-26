@@ -2,7 +2,8 @@ local id, e= ...
 --e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
 
 e.strText={}--主要，汉化
-e.Get_HolyDay=function() return{} end--节日，数据 Calendar_Data.lua
+function e.Get_HoliDay() return {} end--节日，数据 Calendar_Data.lua
+function e.get_Toy_Source() end--玩具，来源 Item_Data.Toy.lua
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
 
@@ -11,10 +12,11 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
         return e.strText[text] or text
     elseif tab then
         if tab.holydayID then
-            return e.Get_HolyDay(tab.holydayID)
+            return e.Get_HoliDay(tab.holydayID)
         end
     end
 end
+WoW_Tools_Chinese_CN= e.cn
 
 function e.font(lable)
     if lable then

@@ -54,7 +54,7 @@ local function Init()
         local day = dayButton.day
         local eventIndex = elementData.index
         local event = C_Calendar.GetDayEvent(monthOffset, day, eventIndex) or {}
-        local tab= e.Get_HolyDay(event.eventID)
+        local tab= e.Get_HoliDay(event.eventID)
         if tab[1] then
             btn.Title:SetText(tab[1])
         end
@@ -76,7 +76,7 @@ local function Init()
             local eventButtonText1 = _G[dayButtonName..'EventButton'..eventButtonIndex.."Text1"]
             local event = C_Calendar.GetDayEvent(monthOffset, day, eventIndex)
             if ShouldDisplayEventOnCalendar(event) then
-                local title= e.Get_HolyDay(event.eventID)[1]
+                local title= e.Get_HoliDay(event.eventID)[1]
                 if title then
                     eventButtonText1:SetText(title)
                 end

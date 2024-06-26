@@ -36,6 +36,7 @@ EncounterJournal.lua
 EncounterJournal_Data.lua
 EncounterJournal_Encounter.lua
 
+GameTooltip.lua
 
 Map.lua
 Map_Data_Group.lua
@@ -51,3 +52,6 @@ Fanction_Data.lua
 ##Professions.lua
 Professions_Professions.lua
 Professions_CustomerOrders.lua
+Professions_SkillLine.lua
+
+Item_Data_Toy.lua

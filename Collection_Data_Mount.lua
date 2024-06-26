@@ -1264,26 +1264,41 @@ local tab={
     [2241]= {'霸业枭雄的风霜鳄鱼', '|cFFFFD200商栈|r', nil},
     [2244]= {'钻石机甲', '|cFFFFD200成就：|r“地心之战”钥石大师：第一赛季|n|cFFFFD200分类：|r地下城', '这些水晶驱动的机甲是土灵联邦科技的典范。'},
     [2249]= {'雷什基加尔之手', '|cFFFFD200Trading Post|r', '当她的族人纷纷动手，尝试推翻被流放者，雷什基加尔却只是韬光养晦。她决定在典狱长无暇分身之时发起攻势，但典狱长的探子一直盯着她。他们的警告与援助使典狱长笑到了最后。'},
-    
+
 
 }
+
+
+
+
+
+
+
 --###########
 --加载保存数据
 --###########
-
 local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
         self:UnregisterEvent('ADDON_LOADED')
         do
-            for transmogSetID, cnName in pairs(tab) do
-                local info= C_TransmogSets.GetSetInfo(transmogSetID) or {}--description label name
-                if info.name and cnName then
-                    e.strText[info.name]= cnName
+            for mountID, info in pairs(tab) do
+                local desc, source= select(2, C_MountJournal.GetMountInfoExtraByID(mountID))
+                if desc and info[3] then
+                    e.strText[desc]= info[3]
+                end
+                if source and info[2] then
+                    e.strText[source]= info[2]
+                end
+                if info[1] then
+                    local name= C_MountJournal.GetMountInfoByID(mountID)
+                    if name then
+                        e.strText[name]= info[1]
+                    end
                 end
             end
         end
-        tab=nil        
+        tab=nil
     end
 end)
