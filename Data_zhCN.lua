@@ -1,5 +1,7 @@
 local id, e = ...
 --11.0.0 (54774)
+--https://github.com/Ketho/BlizzardInterfaceResources/blob/11.0.0/Resources/GlobalStrings/zhCN.lua
+
 local tab={
 
     ["101_CutsceneName_Ref"]= "纳兹乌罗",
