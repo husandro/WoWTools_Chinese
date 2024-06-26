@@ -2,21 +2,47 @@ local id, e= ...
 --e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
 
 e.strText={}--主要，汉化
-function e.Get_HoliDay() return {} end--节日，数据 Calendar_Data.lua
-function e.get_Toy_Source() end--玩具，来源 Item_Data.Toy.lua
+function e.Get_HoliDay_Info() end--节日，数据 Calendar_Data.lua
+function e.Get_Toy_Source() end--玩具，来源 Item_Data.Toy.lua
+function e.Get_Vignette_Name() end--Vignette 名称 Vignette_Data.lua
+function e.Get_Instance_Description() end--EncounterJournal_Data_Instance.lua
+function e.Get_Boss_Description() end--EncounterJournal_Data_Boss.lua
+function e.Get_Spell_Name() end
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
 
 function e.cn(text, tab)--{gossipOptionID=, questID=}
-    if text then
-        return e.strText[text] or text
+    local name= text and e.strText[text]
+    if name then
+        return name
     elseif tab then
         if tab.holydayID then
-            return e.Get_HoliDay(tab.holydayID)
+            return e.Get_HoliDay_Info(tab.holydayID)
+
+        elseif tab.vignetteID then
+            return e.Get_Vignette_Name(tab.vignetteID)
+
+        elseif tab.instanceID then
+            return e.Get_Instance_Description(tab.instanceID)
+
+        elseif tab.journalEncounterID then
+            return e.Get_Boss_Description(tab.journalEncounterID)
+
+        elseif tab.toyID then
+            return e.Set_Toy_Source(tab.toyID)
+
+        elseif tab.spellID then
+            return e.Get_Spell_Name(tab.spellID)
         end
     end
+    return text
 end
 WoW_Tools_Chinese_CN= e.cn
+
+
+
+
+
 
 function e.font(lable)
     if lable then

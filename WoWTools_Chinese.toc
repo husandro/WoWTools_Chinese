@@ -11,11 +11,11 @@
 ##界面，中文化，主要function
 WoWTools_Chinese.lua
 
-Func.lua
+Func_Init.lua
 Func_Event.lua
-Dialogs.lua
-##Func_Shared.lua
+Func_Shared.lua
 
+Dialogs.lua
 Data_zhCN.lua
 
 Achievement.lua
@@ -33,8 +33,8 @@ Calendar_Data.lua
 Character.lua
 
 EncounterJournal.lua
-EncounterJournal_Data.lua
-EncounterJournal_Encounter.lua
+EncounterJournal_Data_Boss.lua
+EncounterJournal_Data_Instance.lua
 
 GameTooltip.lua
 
@@ -49,9 +49,16 @@ Collection_Data_Mount.lua
 Fanction.lua
 Fanction_Data.lua
 
+Spell_Data.lua
+Spell_Data_Name.lua
+Spell_Data_Flyout.lua
+
 ##Professions.lua
+Professions_SkillLine.lua
 Professions_Professions.lua
 Professions_CustomerOrders.lua
-Professions_SkillLine.lua
+
 
 Item_Data_Toy.lua
+
+Vignette_Data.lua

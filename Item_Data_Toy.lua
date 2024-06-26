@@ -950,6 +950,6 @@ local tab={
 }
 
 
-function e.Set_Toy_Source(itemID)
+function e.Get_Toy_Source(itemID)
     return tab[itemID]
 end

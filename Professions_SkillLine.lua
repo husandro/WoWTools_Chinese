@@ -391,22 +391,12 @@ local tab={
 
 
 
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if arg1==id then
-        self:UnregisterEvent('ADDON_LOADED')
-        do
-            for skillLineID, info in pairs(tab) do                
-                local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLineID)
-                if name then
-                    e.strText[name]= info
-                end
-            end
+do
+    for skillLineID, info in pairs(tab) do                
+        local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLineID)
+        if name then
+            e.strText[name]= info
         end
-        tab=nil
     end
-end)
+end
+tab=nil

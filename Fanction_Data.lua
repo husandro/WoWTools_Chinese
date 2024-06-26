@@ -661,26 +661,16 @@ local tab={
 
 
 
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if arg1==id then
-        self:UnregisterEvent('ADDON_LOADED')
-        do
-            for factionID, info in pairs(tab) do
-                local data= C_Reputation.GetFactionDataByID(factionID) or {}
-                if data.name and info[1] and info[1]~='' then
-                    e.strText[data.name] = info[1]
-                end
-                if data.description and info[2] and info[2]~='' then
-                    e.strText[data.description]= info[2]
-                end
-            end
-        end
-        tab=nil
-    end
-end)
 
+do
+    for factionID, info in pairs(tab) do
+        local data= C_Reputation.GetFactionDataByID(factionID) or {}
+        if data.name and info[1] and info[1]~='' then
+            e.strText[data.name] = info[1]
+        end
+        if data.description and info[2] and info[2]~='' then
+            e.strText[data.description]= info[2]
+        end
+    end
+end
+tab=nil
