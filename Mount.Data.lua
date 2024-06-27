@@ -1274,31 +1274,20 @@ local tab={
 
 
 
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if arg1==id then
-        self:UnregisterEvent('ADDON_LOADED')
-        do
-            for mountID, info in pairs(tab) do
-                local desc, source= select(2, C_MountJournal.GetMountInfoExtraByID(mountID))
-                if desc and info[3] then
-                    e.strText[desc]= info[3]
-                end
-                if source and info[2] then
-                    e.strText[source]= info[2]
-                end
-                if info[1] then
-                    local name= C_MountJournal.GetMountInfoByID(mountID)
-                    if name then
-                        e.strText[name]= info[1]
-                    end
-                end
+do
+    for mountID, info in pairs(tab) do
+        local desc, source= select(2, C_MountJournal.GetMountInfoExtraByID(mountID))
+        if desc and info[3] then
+            e.strText[desc]= info[3]
+        end
+        if source and info[2] then
+            e.strText[source]= info[2]
+        end
+        if info[1] then
+            local name= C_MountJournal.GetMountInfoByID(mountID)
+            if name then
+                e.strText[name]= info[1]
             end
         end
-        tab=nil
     end
-end)
+end
