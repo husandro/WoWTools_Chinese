@@ -1,6 +1,7 @@
 local _, e = ...
 
 
+
 local function EncounterJournal_SetupIconFlags(sectionID, infoHeaderButton, index)--Blizzard_EncounterJournal.lua
     local iconFlags = C_EncounterJournal.GetSectionIconFlags(sectionID)
     for index2, icon in ipairs(infoHeaderButton.icons or {}) do
@@ -66,7 +67,7 @@ local function Init_Boss()
     hooksecurefunc('EncounterJournal_DisplayInstance', function(instanceID)--副本，数据
         local self= EncounterJournal.encounter
         local instanceName, description = EJ_GetInstanceInfo()
-        
+
         e.set(self.instance.title, instanceName)
         e.set(self.info.instanceTitle, instanceName)
         e.set(self.instance.LoreScrollingFont, description)
@@ -87,7 +88,7 @@ local function Init_Boss()
 
 
     hooksecurefunc('EncounterJournal_DisplayEncounter', function()--BOSS，详细，信息
-    
+
         local f = EncounterJournal.encounter
         e.set(f.info.encounterTitle)
 
@@ -137,58 +138,6 @@ end
 
 
 
-
-local function Init_MonthlyActivities()
-    EncounterJournalMonthlyActivitiesTab:SetText('旅行者日志')
-    EncounterJournalMonthlyActivitiesTab:SetScript('OnEnter', function()
-        if not C_PlayerInfo.IsTravelersLogAvailable() then
-            local tradingPostLocation = UnitFactionGroup('player') == "Alliance" and '暴风城' or '奥格瑞玛'
-            GameTooltip_AddBlankLineToTooltip(GameTooltip)
-            GameTooltip_AddErrorLine(GameTooltip, format('拜访%s的商栈，查看旅行者日志。', tradingPostLocation))
-            if AreMonthlyActivitiesRestricted() then
-                GameTooltip_AddBlankLineToTooltip(GameTooltip)
-                GameTooltip_AddErrorLine(GameTooltip, '需要可用的游戏时间。')
-            end
-
-            GameTooltip:Show()
-        end
-    end)
-
-    EncounterJournalMonthlyActivitiesFrame.HeaderContainer.Title:SetText('旅行者日志')
-    EncounterJournalMonthlyActivitiesFrame.BarComplete.AllRewardsCollectedText:SetText('你已经收集完了本月的所有奖励')
-
-    
-    hooksecurefunc(MonthlyActivitiesButtonTextContainerMixin, 'UpdateText', function(self, data)
-        if data.name then
-            local a,b= data.name:match('(.-): (.+)')
-            a= e.strText[a] or a
-            b= e.strText[b] or b
-            if a and b then
-                e.set(self.NameText, (e.strText[a] or a)..': '..(e.strText[b] or b))
-            else
-                e.set(self.NameText, e.strText[data.name])
-            end
-        end
-    end)
-    hooksecurefunc(EncounterJournalMonthlyActivitiesFrame.FilterList.ScrollBox, 'Update', function(self)
-        if not self:GetView() then
-            return
-        end
-        for _, btn in pairs(self:GetFrames() or {}) do
-            e.set(btn.Label)
-        end
-    end)
-
-    
-    hooksecurefunc(EncounterJournalMonthlyActivitiesFrame.FilterList.ScrollBox, 'Update', function(self)
-        if self:GetView() then
-            for _, btn in pairs(self:GetFrames() or {}) do
-                e.set(btn.Label)
-            end
-        end
-    end)
-
-end
 
 
 
@@ -348,7 +297,6 @@ local function Init_EncounterJournal()
             end
         end
     end)
-    
 
 
 
@@ -357,10 +305,10 @@ local function Init_EncounterJournal()
     if t then
         e.strText[t]='燃烧远征'
     end
-    t= EJ_GetTierInfo(11)
+    --[[t= EJ_GetTierInfo(11)
     if t then
         e.strText[t]='本赛季'
-    end
+    end]]
 end
 
 
@@ -382,14 +330,12 @@ panel:SetScript("OnEvent", function(self, _, arg1)
         if C_AddOns.IsAddOnLoaded('Blizzard_EncounterJournal') then
             Init_Boss()
             Init_EncounterJournal()
-            Init_MonthlyActivities()            
             self:UnregisterEvent('ADDON_LOADED')
         end
-        
+
     elseif arg1=='Blizzard_EncounterJournal' then--冒险指南
         Init_Boss()
         Init_EncounterJournal()
-        Init_MonthlyActivities()            
         self:UnregisterEvent('ADDON_LOADED')
     end
 end)
