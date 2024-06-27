@@ -1,4 +1,4 @@
-local id, e= ...
+local e= select(2, ...)
 --e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
 
 e.strText={}--主要，汉化

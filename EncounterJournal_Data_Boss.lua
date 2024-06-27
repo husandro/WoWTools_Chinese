@@ -1080,7 +1080,7 @@ local encounterTab={
 
 
 local tab={
-
+    --[journalEncounterID]= name
 }
 function e.Get_Boss_Description(journalEncounterID)   
     return tab[journalEncounterID]
@@ -1092,7 +1092,7 @@ do
         if info[1] then
             local name= EJ_GetEncounterInfo(journalEncounterID)
             if name then
-                e.strText[name]= cnName
+                e.strText[name]= info[1]
             end
         end
         if info[2] then
@@ -1101,7 +1101,6 @@ do
     end
 end
 encounterTab=nil
-
 
 
 

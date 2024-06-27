@@ -2736,11 +2736,6 @@ end)
 
 
 C_Timer.After(2, function()
-    model(CharacterModelScene)
-    if WardrobeTransmogFrame then
-        model(WardrobeTransmogFrame.ModelScene)
-    end
-    model(PetStableModelScene)
 
 
     AddonCompartmentFrame:SetScript("OnEnter", function(self)

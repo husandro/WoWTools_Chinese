@@ -1,6 +1,6 @@
 local e= select(2, ...)
 
-
+--[[
 local function set_model_tooltip(self)
     if self then
         local tooltip= self.tooltip and e.strText[self.tooltip]
@@ -34,6 +34,11 @@ local function model(self)
     end
 end
 
+model(CharacterModelScene)
+if WardrobeTransmogFrame then
+    model(WardrobeTransmogFrame.ModelScene)
+end
+model(PetStableModelScene)]]
 
 
 
@@ -189,7 +194,7 @@ set_pettips_func(FloatingBattlePetTooltip)
 
 
 --TooltipDataRules.lua
-TooltipDataProcessor.AddTooltipPostCall(TooltipTypeEnums.Toy, function(tooltip, data)
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tooltip, data)
     if not PlayerHasToy(data.itemID) then
         local source = e.Get_Toy_Source(tooltip, data.itemID)
         if source then

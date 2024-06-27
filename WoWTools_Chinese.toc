@@ -32,11 +32,11 @@ Calendar_Data.lua
 
 Character.lua
 
-##EncounterJournal.lua
+EncounterJournal.lua
 EncounterJournal_Data_Boss.lua
 EncounterJournal_Data_Instance.lua
 
-GameTooltip.lua
+##GameTooltip.lua
 
 ##Map.lua
 Map_Data_Group.lua
