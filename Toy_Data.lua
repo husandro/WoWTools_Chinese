@@ -955,3 +955,16 @@ function e.Get_Toy_Source(itemID)
         return tab[itemID]
     end
 end
+
+--TooltipDataRules.lua
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(tooltip, data)
+    if not data.id or PlayerHasToy(data.id) then
+        return
+    end
+    local source = tab[data.id]
+    --local source = e.Get_Toy_Source(data.id)
+    if source then
+        GameTooltip_AddBlankLineToTooltip(tooltip)
+        tooltip:AddLine('|cffffffff'..source..'|r', nil, nil, nil, true)
+    end
+end)

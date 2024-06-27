@@ -4,20 +4,6 @@ local id, e= ...
 
 
 
---TooltipDataRules.lua
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(tooltip, data)
-
-    if not data.id or PlayerHasToy(data.id) then
-        return
-    end
-
-    local source = e.Get_Toy_Source(data.id)
-    print(source)
-    if source then
-        tooltip:AddLine('|cffffffff'..source..'|r', nil, nil, nil, true)
-        tooltip:Show()
-    end
-end)
 
 
 
@@ -26,6 +12,7 @@ end)
 
 
 
+--[[
 local function Init()
 end
 
@@ -49,4 +36,4 @@ panel:SetScript("OnEvent", function(self, _, arg1)
         self:UnregisterEvent('ADDON_LOADED')
         Init()
     end
-end)
+end)]]
