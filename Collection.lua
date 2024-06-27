@@ -19,7 +19,7 @@ local function Init_Mount()
     e.dia("DIALOG_REPLACE_MOUNT_EQUIPMENT", {text = '你确定要替换此坐骑装备吗？已有的坐骑装备将被摧毁。', button1 = '是', button2 = '否'})
 
     MountJournalSearchBox.Instructions:SetText('搜索')
-    MountJournal.FilterDropdown.Text:SetText('过滤器')
+    --MountJournal.FilterDropdown.Text:SetText('过滤器')
     MountJournal.MountCount.Label:SetText('坐骑')
     MountJournalSummonRandomFavoriteButton.spellname:SetText('随机召唤\n偏好坐骑')--hooksecurefunc('MountJournalSummonRandomFavoriteButton_OnLoad', function(self)
     MountJournal.MountDisplay.ModelScene.TogglePlayer.TogglePlayerText:SetText('显示角色')
@@ -79,7 +79,7 @@ local function Init_Pet()
     e.dia("BATTLE_PET_RELEASE", {text = "\n\n你确定要释放|cffffd200%s|r吗？\n\n", button1 = '确定', button2 = '取消'})
 
     PetJournalSearchBox.Instructions:SetText('搜索')
-    PetJournal.FilterDropdown.Text:SetText('过滤器')
+    --PetJournal.FilterDropdown.Text:SetText('过滤器')
     local function Set_Pet_Button_Name()
         local petID = PetJournalPetCard.petID
         local hasPetID = petID ~= nil
@@ -121,7 +121,7 @@ end
 local function Init_Toy()
     
     --ToyBox.searchBox.Instructions:SetText('搜索')
-    e.set(ToyBox.FilterDropdown.Text)
+    --e.set(ToyBox.FilterDropdown.Text)
     hooksecurefunc(ToyBox.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
         self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
     end)
@@ -134,7 +134,7 @@ end
 
 local function Init_Heirlooms()
     
-    HeirloomsJournal.FilterDropdown.Text:SetText('过滤器')
+    --HeirloomsJournal.FilterDropdown.Text:SetText('过滤器')
     HeirloomsJournalSearchBox.Instructions:SetText('搜索')
     hooksecurefunc(HeirloomsJournal.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
         self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
@@ -145,14 +145,14 @@ end
 
 local function Init_Wardrobe()
     WardrobeCollectionFrameSearchBox.Instructions:SetText('搜索')
-    hooksecurefunc(WardrobeCollectionFrame, 'SetContainer', function(self, parent)
+    --[[hooksecurefunc(WardrobeCollectionFrame, 'SetContainer', function(self, parent)
         if parent == CollectionsJournal then
-            self.FilterButton:SetText('过滤器')
+            --self.FilterButton:SetText('过滤器')
         elseif parent == WardrobeFrame then
             self.FilterButton:SetText('来源')
         end
-    end)
-    WardrobeCollectionFrame.FilterButton.Text:SetText('过滤器')
+    end)]]
+    --WardrobeCollectionFrame.FilterButton.Text:SetText('过滤器')
     WardrobeCollectionFrameTab1:SetText('物品')
         hooksecurefunc(WardrobeCollectionFrame.ItemsCollectionFrame.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
             self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)

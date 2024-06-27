@@ -8,10 +8,16 @@ local id, e = ...
 
 local function Init()
     --列表，名称
-    hooksecurefunc(MountJournal.ScrollBox, 'Updata', function(self)
+    --[[hooksecurefunc(MountJournal.ScrollBox, 'Update', function(self)
         for _, btn in pairs(self:GetFrames() or {}) do
             e.set(btn.name)
+
         end
+    end)]]
+
+    hooksecurefunc('MountJournal_InitMountButton', function(btn)
+        btn.DragonRidingLabel:SetText("驭空术")
+        e.set(btn.name)
     end)
 end
 
