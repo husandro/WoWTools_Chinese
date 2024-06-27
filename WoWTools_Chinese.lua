@@ -7,7 +7,7 @@ function e.Get_Toy_Source() end--玩具，来源 Item_Data.Toy.lua
 function e.Get_Vignette_Name() end--Vignette 名称 Vignette_Data.lua
 function e.Get_Instance_Description() end--EncounterJournal_Data_Instance.lua
 function e.Get_Boss_Description() end--EncounterJournal_Data_Boss.lua
-function e.Get_Spell_Name() end
+--function e.Get_Spell_Name() end
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
 
@@ -31,8 +31,8 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
         elseif tab.toyID then
             return e.Set_Toy_Source(tab.toyID)
 
-        elseif tab.spellID then
-            return e.Get_Spell_Name(tab.spellID)
+        --elseif tab.spellID then
+            --return e.Get_Spell_Name(tab.spellID)
         end
     end
     return text

@@ -392,7 +392,7 @@ local tab={
 
 
 do
-    for skillLineID, info in pairs(tab) do                
+    for skillLineID, info in pairs(tab) do
         local name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLineID)
         if name then
             e.strText[name]= info

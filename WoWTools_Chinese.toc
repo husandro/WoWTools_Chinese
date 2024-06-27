@@ -50,7 +50,7 @@ Fanction.lua
 Fanction_Data.lua
 
 Spell_Data.lua
-Spell_Data_Name.lua
+##Spell_Data_Name.lua
 Spell_Data_Flyout.lua
 
 ##Professions.lua
