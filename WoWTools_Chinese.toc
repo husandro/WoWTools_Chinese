@@ -64,6 +64,7 @@ Professions_CustomerOrders.lua
 PerksActivity.lua
 PerksActivity_Data.lua
 
-Item_Data_Toy.lua
+Toy.lua
+Toy_Data.lua
 
 Vignette_Data.lua

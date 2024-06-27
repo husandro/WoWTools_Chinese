@@ -193,16 +193,7 @@ set_pettips_func(FloatingBattlePetTooltip)
 
 
 
---TooltipDataRules.lua
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tooltip, data)
-    if not PlayerHasToy(data.itemID) then
-        local source = e.Get_Toy_Source(tooltip, data.itemID)
-        if source then
-            tooltip:AddLine(source, nil, nil, nil, true)
-            tooltip:Show()
-        end
-    end
-end)
+
 
 
 --[[TooltipDataRules.lua

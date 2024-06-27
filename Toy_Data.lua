@@ -951,5 +951,7 @@ local tab={
 
 
 function e.Get_Toy_Source(itemID)
-    return tab[itemID]
+    if itemID then
+        return tab[itemID]
+    end
 end
