@@ -1,17 +1,18 @@
-
+local id, e= ...
 
 
 
 
 
 --TooltipDataRules.lua
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tooltip, data)
-    print(data.id)
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(tooltip, data)
+
     if not data.id or PlayerHasToy(data.id) then
         return
     end
 
     local source = e.Get_Toy_Source(data.id)
+    print(source)
     if source then
         tooltip:AddLine('|cffffffff'..source..'|r', nil, nil, nil, true)
         tooltip:Show()
