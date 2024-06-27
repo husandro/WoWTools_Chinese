@@ -11,47 +11,47 @@
 ##界面，中文化，主要function
 WoWTools_Chinese.lua
 
-Func_Init.lua
-Func_Event.lua
-Func_Shared.lua
+##Func_Init.lua
+##Func_Event.lua
+##Func_Shared.lua
 
-Dialogs.lua
+##Dialogs.lua
 Data_zhCN.lua
 
 Achievement.lua
 Achievement_Data.lua
 Achievement_Data_Category.lua
 
-Currency.lua
+##Currency.lua
 Currency_Data.lua
 Currency_Data_Friend.lua
 
 ##节日
-Calendar.lua
+##Calendar.lua
 Calendar_Data.lua
 
 Character.lua
 
-EncounterJournal.lua
+##EncounterJournal.lua
 EncounterJournal_Data_Boss.lua
 EncounterJournal_Data_Instance.lua
 
 GameTooltip.lua
 
-Map.lua
+##Map.lua
 Map_Data_Group.lua
 Map_Data_UiMap.lua
 
-Collection.lua
+##Collection.lua
 Collection_Data_TransmogSet.lua
 Collection_Data_Mount.lua
 
-Fanction.lua
-Fanction_Data.lua
+##Fanction.lua
+##Fanction_Data.lua
 
-Spell_Data.lua
+##Spell_Data.lua
 ##Spell_Data_Name.lua
-Spell_Data_Flyout.lua
+##Spell_Data_Flyout.lua
 
 ##Professions.lua
 Professions_SkillLine.lua
