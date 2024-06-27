@@ -15,7 +15,7 @@ local function Init()
     end)
     ProfessionsCustomerOrdersFrameBrowseTab:SetText('发布订单')
     ProfessionsCustomerOrdersFrameOrdersTab:SetText('我的订单')
-    ProfessionsCustomerOrdersFrame.BrowseOrders.SearchBar.FilterButton:SetText('过滤器')
+    --ProfessionsCustomerOrdersFrame.BrowseOrders.SearchBar.FilterButton:SetText('过滤器')
 
     ProfessionsCustomerOrdersFrame.BrowseOrders:HookScript('OnEvent', function (self, event)
         if event == "CRAFTINGORDERS_CUSTOMER_OPTIONS_PARSED" and not C_CraftingOrders.HasFavoriteCustomerOptions() then

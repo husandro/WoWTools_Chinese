@@ -360,7 +360,7 @@ local itemSubTypeTab={
 
 
 
-    for mapChallengeModeID, info in pairs(e.ChallengesSpellTabs) do
+    --[[for mapChallengeModeID, info in pairs(e.ChallengesSpellTabs) do
         if info.spell then
             if info.spellName then
                 local name= C_Spell.GetSpellName(info.spell)
@@ -390,7 +390,7 @@ local itemSubTypeTab={
                 e.strText[name]= info.name
             end
         end
-    end
+    end]]
 
 
 
