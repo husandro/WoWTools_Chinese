@@ -72,6 +72,7 @@ Wardrobe_Data_TransmogSet.lua
 
 ItemSet_Data.lua
 ItemSubClass_Data.lua
+Item_Data_SearchName.lua
 
 Professions.lua
 Professions_Data_SkillLine.lua
