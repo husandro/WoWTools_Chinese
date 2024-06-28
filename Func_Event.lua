@@ -1247,19 +1247,8 @@ local function Init_Event(arg1)
             end
         end)
 
-    elseif arg1=='Blizzard_PerksProgram' then--Blizzard_PerksProgramElements.lua
-        set_GameTooltip_func(PerksProgramTooltip)
-        PerksProgramFrame.ProductsFrame.PerksProgramFilter.FilterDropDownButton.ButtonText:SetText('过滤器')
 
-        e.dia("PERKS_PROGRAM_CONFIRM_PURCHASE", {text= '用%s%s 交易下列物品？', button1 = '购买', button2 = '取消'})
-        e.dia("PERKS_PROGRAM_CONFIRM_REFUND", {text= '退还下列物品，获得退款%s%s？', button1 = '退款', button2 = '取消'})
-        e.dia("PERKS_PROGRAM_SERVER_ERROR", {text= '商栈与服务器交换数据时出现困难，请稍后再试。', button1 = '确定'})
-        e.dia("PERKS_PROGRAM_ITEM_PROCESSING_ERROR", {text= '正在处理一件物品。请稍后再试。。', button1 = '确定'})
-        e.dia("PERKS_PROGRAM_CONFIRM_OVERRIDE_FROZEN_ITEM", {text= '你确定想替换当前的冻结物品吗？现在的冻结物品有可能已经下架了。', button1 = '确认', button2 = '取消'})
-        e.dia("PERKS_PROGRAM_SLOW_PURCHASE", {text= '处理您的本次购买所花费的时间比正常情况更长。购买过程会在后台继续进行。', button1= '回到商栈'})
-        C_Timer.After(0.3, function()
-            PerksProgramFrame.FooterFrame.LeaveButton:SetFormattedText('%s 离开', CreateAtlasMarkup("perks-backarrow", 8, 13, 0, 0))
-        end)
+
 
     elseif arg1=='Blizzard_WeeklyRewards' then--Blizzard_WeeklyRewards.lua
         e.font(WeeklyRewardsFrame.HeaderFrame.Text)
@@ -1655,9 +1644,6 @@ local function Init_Event(arg1)
         DeathRecapFrame.CloseButton:SetText('关闭')
         DeathRecapFrame.Title:SetText('死亡摘要')
 
-    elseif arg1=='Blizzard_ItemSocketingUI' then--镶嵌宝石，界面
-        ItemSocketingSocketButton:SetText('应用')
-        set_GameTooltip_func(ItemSocketingDescription)
 
     elseif arg1=='Blizzard_CombatLog' then--聊天框，战斗记录
         local function set_filter(self)

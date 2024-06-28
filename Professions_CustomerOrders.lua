@@ -4,8 +4,8 @@ local id, e = ...
 
 
 
-local function Init()    
-   
+local function Init()
+
     hooksecurefunc(ProfessionsCustomerOrdersCategoryButtonMixin, 'Init', function(self, categoryInfo, _, isRecraftCategory)
         if isRecraftCategory then
             self:SetText('开始再造订单')
@@ -262,12 +262,12 @@ panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
         if C_AddOns.IsAddOnLoaded('Blizzard_ProfessionsCustomerOrders') then
             self:UnregisterEvent('ADDON_LOADED')
-            Init()            
+            Init()
         end
 
-    elseif arg1=='Blizzard_ProfessionsCustomerOrders' then       
+    elseif arg1=='Blizzard_ProfessionsCustomerOrders' then
         self:UnregisterEvent('ADDON_LOADED')
         Init()
-        
+
     end
 end)

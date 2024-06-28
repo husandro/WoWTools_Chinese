@@ -2,12 +2,13 @@ local e= select(2, ...)
 --e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
 
 e.strText={}--主要，汉化
-function e.Get_HoliDay_Info() end--节日，数据 Calendar_Data.lua
-function e.Get_Toy_Source() end--玩具，来源 Item_Data.Toy.lua
-function e.Get_Vignette_Name() end--Vignette 名称 Vignette_Data.lua
-function e.Get_Instance_Description() end--EncounterJournal_Data_Instance.lua
-function e.Get_Boss_Description() end--EncounterJournal_Data_Boss.lua
-function e.Get_PerksActivity_Info() end
+function e.Get_HoliDay_Info()end--节日，数据 Calendar_Data.lua
+function e.Get_Toy_Source()end--玩具，来源 Item_Data.Toy.lua
+function e.Get_Vignette_Name()end--Vignette 名称 Vignette_Data.lua
+function e.Get_Instance_Description()end--EncounterJournal_Data_Instance.lua
+function e.Get_Boss_Description()end--EncounterJournal_Data_Boss.lua
+function e.Get_PerksActivity_Info()end
+function e.Get_Pet_Description()end
 --function e.Get_Spell_Name() end
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
@@ -34,7 +35,10 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
 
         elseif tab.perksActivityID then
             return e.Get_PerksActivity_Info(tab.perksActivityID)
-            
+
+        elseif tab.speciesID then
+            return e.Get_Pet_Description(tab.speciesID)
+    
         --elseif tab.spellID then
             --return e.Get_Spell_Name(tab.spellID)
         end

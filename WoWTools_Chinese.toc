@@ -37,17 +37,22 @@ EncounterJournal_Data_Boss.lua
 EncounterJournal_Data_Instance.lua
 
 
-##GameTooltip.lua
+GameTooltip.lua
 
 ##Map.lua
 Map_Data_Group.lua
 Map_Data_UiMap.lua
 
 Collection.lua
-Collection_Data_TransmogSet.lua
 
 Mount.lua
 Mount.Data.lua
+
+Pet.lua
+Pet_Data.lua
+
+Wardrobe.lua
+Wardrobe.Data_Set.lua
 
 ##Fanction.lua
 ##Fanction_Data.lua
@@ -56,11 +61,11 @@ Mount.Data.lua
 ##Spell_Data_Name.lua
 ##Spell_Data_Flyout.lua
 
-##Professions.lua
-Professions_SkillLine.lua
-Professions_Professions.lua
+Professions.lua
+Professions_Data_SkillLine.lua
 Professions_CustomerOrders.lua
 
+PerksProgram.lua
 PerksActivity.lua
 PerksActivity_Data.lua
 
