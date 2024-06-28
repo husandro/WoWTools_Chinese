@@ -61,7 +61,7 @@ Pet.lua
 Pet_Data.lua
 
 Wardrobe.lua
-Wardrobe.Data_Set.lua
+Wardrobe_Data_TransmogSet.lua
 
 ##Fanction.lua
 ##Fanction_Data.lua

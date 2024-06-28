@@ -1,5 +1,13 @@
+local id, e= ...
 
-local function Init_Wardrobe()
+
+
+
+
+
+
+
+local function Init()
     WardrobeCollectionFrameSearchBox.Instructions:SetText('搜索')
     --[[hooksecurefunc(WardrobeCollectionFrame, 'SetContainer', function(self, parent)
         if parent == CollectionsJournal then
@@ -45,3 +53,34 @@ local function Init_Wardrobe()
 
 end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--###########
+--加载保存数据
+--###########
+local panel= CreateFrame("Frame")
+panel:RegisterEvent("ADDON_LOADED")
+panel:SetScript("OnEvent", function(self, _, arg1)
+    if id==arg1 then
+        if C_AddOns.IsAddOnLoaded('Blizzard_EncounterJournal') then
+            Init()
+            self:UnregisterEvent('ADDON_LOADED')
+        end
+
+    elseif arg1=='Blizzard_EncounterJournal' then--冒险指南
+        Init()
+        self:UnregisterEvent('ADDON_LOADED')
+    end
+end)

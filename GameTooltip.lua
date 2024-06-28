@@ -137,7 +137,6 @@ local function get_gameTooltip_text(self)
                     text2= text:gsub(str4, e.strText[str4])
                 end
             elseif str5 then
-                print(str5)
                 if e.strText[str5] then
                     text2= text:gsub(str5, e.strText[str5])
                 end
