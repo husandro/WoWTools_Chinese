@@ -3476,24 +3476,12 @@ local tab={
 
 
 
---###########
---加载保存数据
---###########
-
-local panel= CreateFrame("Frame")
-
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if arg1==id then
-        self:UnregisterEvent('ADDON_LOADED')
-        do
-            for transmogSetID, cnName in pairs(tab) do
-                local info= C_TransmogSets.GetSetInfo(transmogSetID) or {}--description label name
-                if info.name and cnName then
-                    e.strText[info.name]= cnName
-                end
-            end
+do
+    for transmogSetID, cnName in pairs(tab) do
+        local info= C_TransmogSets.GetSetInfo(transmogSetID) or {}--description label name
+        if info.name and cnName then
+            e.strText[info.name]= cnName
         end
-        tab=nil        
     end
-end)
+end
+tab=nil 

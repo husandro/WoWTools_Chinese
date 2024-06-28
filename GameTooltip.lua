@@ -41,7 +41,7 @@ end
 model(PetStableModelScene)]]
 
 
-
+--  ( ) . % + - * ? [ ^ $
 local ITEM_UPGRADE_TOOLTIP_FORMAT_STRING= ITEM_UPGRADE_TOOLTIP_FORMAT_STRING:gsub(': (.+)', '(.+)')
 local ENCHANTED_TOOLTIP_LINE = ENCHANTED_TOOLTIP_LINE:gsub('%%s', '(.+)')--附魔：%s
 local COVENANT_RENOWN_TOAST_REWARD_COMBINER= COVENANT_RENOWN_TOAST_REWARD_COMBINER:gsub('%%s', '(.+)')--%s 和 %s
@@ -58,7 +58,8 @@ local function get_gameTooltip_text(self)
             local str1, str2= text:match('(.-): (.+)')
             local str3= text:match('%d+ (.+)')
             local str4= text:match('|c........(.-)|r')
-
+            local str5= text:match('(.+) %(%d/%d%)')--套装名称 (4/5)
+            
             if up then
                 local t= up:match(': (.-) %d')
                 if t and e.strText[t] then
@@ -131,8 +132,15 @@ local function get_gameTooltip_text(self)
                         text2= text:gsub(str3, t)
                     end
                 end
-            elseif e.strText[str4] then
-                text2= text:gsub(str4, e.strText[str4])
+            elseif str4 then
+                if e.strText[str4] then
+                    text2= text:gsub(str4, e.strText[str4])
+                end
+            elseif str5 then
+                print(str5)
+                if e.strText[str5] then
+                    text2= text:gsub(str5, e.strText[str5])
+                end
             end
         end
         if text2 then

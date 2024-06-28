@@ -11,6 +11,8 @@
 ##界面，中文化，主要function
 WoWTools_Chinese.lua
 
+
+##公用
 ##Func_Init.lua
 ##Func_Event.lua
 ##Func_Shared.lua
@@ -22,10 +24,7 @@ NavBar.lua
 UIDropDownMenu.lua
 
 
-
-
-
-
+##插件
 AuctionHouse.lua
 ##AuctionHouse_Data_Category.lua
 
@@ -47,7 +46,6 @@ EncounterJournal.lua
 EncounterJournal_Data_Boss.lua
 EncounterJournal_Data_Instance.lua
 
-
 GameTooltip.lua
 
 Map.lua
@@ -55,8 +53,6 @@ Map_Data_Group.lua
 Map_Data_UiMap.lua
 
 Collection.lua
-
-
 
 Mount.lua
 Mount.Data.lua
@@ -73,6 +69,8 @@ Wardrobe.Data_Set.lua
 ##Spell_Data.lua
 ##Spell_Data_Name.lua
 ##Spell_Data_Flyout.lua
+
+ItemSet_Data.lua
 
 Professions.lua
 Professions_Data_SkillLine.lua

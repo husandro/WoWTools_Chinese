@@ -309,6 +309,13 @@ local function Init_EncounterJournal()
     if t then
         e.strText[t]='本赛季'
     end]]
+
+
+    hooksecurefunc(EncounterJournal.LootJournalItems.ItemSetsFrame.ScrollBox, 'Update', function(self)
+        for _, btn in pairs(self:GetFrames() or {}) do
+            e.set(btn.SetName)
+        end
+    end)
 end
 
 
