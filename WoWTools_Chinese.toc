@@ -71,6 +71,7 @@ Wardrobe.Data_Set.lua
 ##Spell_Data_Flyout.lua
 
 ItemSet_Data.lua
+ItemSubClass_Data.lua
 
 Professions.lua
 Professions_Data_SkillLine.lua

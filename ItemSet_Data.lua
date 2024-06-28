@@ -1,7 +1,7 @@
 local e= select(2, ...)
 --[[
 [ID]= {'Name_lang', {ItemID_0,ItemID_1,ItemID_2,ItemID_3,ItemID_4,ItemID_5,ItemID_6,ItemID_7,ItemID_8,ItemID_9,ItemID_10,ItemID_11,ItemID_12,ItemID_13,ItemID_14,ItemID_15,ItemID_16}},
-
+https://wago.tools/db2/ItemSet?locale=zhCN&build=11.0.0.55288
 ]]
 local itemSetTab={
 
