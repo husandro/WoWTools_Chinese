@@ -242,25 +242,12 @@ local tab={
 
 
 
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if arg1==id then        
-        self:UnregisterEvent('ADDON_LOADED')
-        do
-            for categoryID, text in pairs(tab) do
-                local name = GetCategoryInfo(categoryID)
-                if name and text then
-                    e.strText[name]= text
-                end
-            end
+do
+    for categoryID, text in pairs(tab) do
+        local name = GetCategoryInfo(categoryID)
+        if name and text then
+            e.strText[name]= text
         end
-        tab= nil
     end
-end)
-
-
-
+end
+tab= nil

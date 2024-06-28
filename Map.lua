@@ -104,7 +104,7 @@ hooksecurefunc(ZoneLabelDataProviderMixin, 'EvaluateBestAreaTrigger', function(s
     e.set(self.ZoneLabel and self.ZoneLabel.Text)
 end)
 
-QuestMapFrame.DetailsFrame.BackFrame.BackButton:SetText('返回')
+--QuestMapFrame.DetailsFrame.BackFrame.BackButton:SetText('返回')
 QuestMapFrame.DetailsFrame.AbandonButton:SetText('放弃')
 
 hooksecurefunc('QuestMapFrame_UpdateQuestDetailsButtons', function()

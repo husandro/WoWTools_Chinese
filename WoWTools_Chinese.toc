@@ -15,8 +15,19 @@ WoWTools_Chinese.lua
 ##Func_Event.lua
 ##Func_Shared.lua
 
-##Dialogs.lua
+
 Data_zhCN.lua
+Dialogs.lua
+NavBar.lua
+UIDropDownMenu.lua
+
+
+
+
+
+
+AuctionHouse.lua
+##AuctionHouse_Data_Category.lua
 
 Achievement.lua
 Achievement_Data.lua
@@ -39,11 +50,13 @@ EncounterJournal_Data_Instance.lua
 
 GameTooltip.lua
 
-##Map.lua
+Map.lua
 Map_Data_Group.lua
 Map_Data_UiMap.lua
 
 Collection.lua
+
+
 
 Mount.lua
 Mount.Data.lua
