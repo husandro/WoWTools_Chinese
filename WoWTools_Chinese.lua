@@ -9,7 +9,8 @@ function e.Get_Instance_Description()end--EncounterJournal_Data_Instance.lua
 function e.Get_Boss_Description()end--EncounterJournal_Data_Boss.lua
 function e.Get_PerksActivity_Info()end
 function e.Get_Pet_Description()end
---function e.Get_Spell_Name() end
+function e.Get_Spell_Name() end--isName
+function e.Get_Spell_Desc() end--isDesc
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
 
@@ -39,8 +40,12 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
         elseif tab.speciesID then
             return e.Get_Pet_Description(tab.speciesID)
     
-        --elseif tab.spellID then
-            --return e.Get_Spell_Name(tab.spellID)
+        elseif tab.spellID then
+            if tab.isName then
+                --return e.Get_Spell_Name(tab.spellID)
+            elseif tab.isDesc then
+                return e.Get_Spell_Desc(tab.spellID)
+            end
         end
     end
     return text
