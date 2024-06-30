@@ -46,6 +46,8 @@ local ITEM_UPGRADE_TOOLTIP_FORMAT_STRING= ITEM_UPGRADE_TOOLTIP_FORMAT_STRING:gsu
 local ENCHANTED_TOOLTIP_LINE = ENCHANTED_TOOLTIP_LINE:gsub('%%s', '(.+)')--附魔：%s
 local COVENANT_RENOWN_TOAST_REWARD_COMBINER= COVENANT_RENOWN_TOAST_REWARD_COMBINER:gsub('%%s', '(.+)')--%s 和 %s
 local EQUIPMENT_SETS= EQUIPMENT_SETS:match('(.-):')--"Set di equipaggiamenti: |cFFFFFFFF%s|r"
+
+
 local function get_gameTooltip_text(self)
     local text= self and self:IsShown() and self:GetText()
     if text and text~='' and not text:find('|') then
@@ -289,3 +291,33 @@ panel:SetScript("OnEvent", function(_, _, arg1)
     end
 end)
 
+  --[[TooltipDataRules.lua 
+    Enum.TooltipDataType = {
+		Item = 0,
+		Spell = 1,
+		Unit = 2,
+		Corpse = 3,
+		Object = 4,
+		Currency = 5,
+		BattlePet = 6,
+		UnitAura = 7,
+		AzeriteEssence = 8,
+		CompanionPet = 9,
+		Mount = 10,
+		PetAction = 11,
+		Achievement = 12,
+		EnhancedConduit = 13,
+		EquipmentSet = 14,
+		InstanceLock = 15,
+		PvPBrawl = 16,
+		RecipeRankInfo = 17,
+		Totem = 18,
+		Toy = 19,
+		CorruptionCleanser = 20,
+		MinimapMouseover = 21,
+		Flyout = 22,
+		Quest = 23,
+		QuestPartyProgress = 24,
+		Macro = 25,
+		Debug = 26,
+	},]]

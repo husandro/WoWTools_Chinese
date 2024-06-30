@@ -1,5 +1,24 @@
 local e = select(2, ...)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 hooksecurefunc(SettingsCategoryListButtonMixin, 'Init', function(self, initializer)--列表 Blizzard_CategoryList.lua
     local category = initializer.data.category
     if category then
