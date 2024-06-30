@@ -4,6 +4,10 @@ local id, e = ...
 
 
 
+function e.Get_Pet_Description(speciesID)
+    return tab[speciesID]
+end
+
 
 
 local function Init()
@@ -42,7 +46,10 @@ local function Init()
     PetJournalSummonRandomFavoritePetButtonSpellName:SetText('召唤随机\n偏好战斗宠物')
     PetJournalHealPetButtonSpellName:SetText('复活\n战斗宠物')
 
-    
+    --列表，名称
+    for _, btn in pairs(PetJournal.ScrollBox:GetFrames() or {}) do
+        e.set(btn.name)
+    end
 
 end
 

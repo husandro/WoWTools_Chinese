@@ -63,11 +63,13 @@ Pet_Data.lua
 Wardrobe.lua
 Wardrobe_Data_TransmogSet.lua
 
+Heirloom.Data.lua
+
 ##Fanction.lua
 ##Fanction_Data.lua
 
 Spell_Data_Other.lua
-#Spell_Data_Name.lua
+##Spell_Data_Name.lua
 Spell_Data_Flyout.lua
 ##Spell_Data_Description.lua
 
@@ -83,7 +85,6 @@ PerksProgram.lua
 PerksActivity.lua
 PerksActivity_Data.lua
 
-##Toy.lua
 Toy_Data.lua
 
 Vignette_Data.lua

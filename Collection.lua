@@ -20,7 +20,6 @@ local id, e= ...
 
 
 local function Init_Toy()
-    
     --ToyBox.searchBox.Instructions:SetText('搜索')
     --e.set(ToyBox.FilterDropdown.Text)
     hooksecurefunc(ToyBox.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
@@ -34,12 +33,20 @@ end
 
 
 local function Init_Heirlooms()
-    
     --HeirloomsJournal.FilterDropdown.Text:SetText('过滤器')
     HeirloomsJournalSearchBox.Instructions:SetText('搜索')
     hooksecurefunc(HeirloomsJournal.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
         self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
     end)
+    hooksecurefunc(HeirloomsJournal, 'UpdateButton', function(_, btn)
+        e.set(btn.name)
+    end)
+    hooksecurefunc(HeirloomsJournal, 'LayoutCurrentPage', function(self)
+        for _, header in pairs(self.heirloomHeaderFrames or {}) do
+            e.set(header.text)
+        end
+    end)
+
 end
 
 
@@ -50,7 +57,7 @@ end
 local function Init()
     Init_Toy()
     Init_Heirlooms()
-    
+
     CollectionsJournalTab1:SetText('坐骑')
     CollectionsJournalTab2:SetText('宠物手册')
     CollectionsJournalTab3:SetText('玩具箱')
@@ -59,24 +66,12 @@ local function Init()
 
     hooksecurefunc('CollectionsJournal_UpdateSelectedTab', function(self)--设置，标题
         e.set(self.Text)
-        --[[local selected = CollectionsJournal_GetTab(self)
-        if selected==1 then
-            self:SetTitle('坐骑')
-        elseif selected==2 then
-            self:SetTitle('宠物手册')
-        elseif selected==3 then
-            self:SetTitle('玩具箱')
-        elseif selected==4 then
-            self:SetTitle('传家宝')
-        elseif selected==5 then
-            self:SetTitle('外观')
-        end]]
     end)
-    
-    
 
 
-    
+
+
+
 
 end
 
