@@ -4,9 +4,16 @@ local id, e = ...
 
 
 
-function e.Get_Pet_Description(speciesID)
-    return tab[speciesID]
-end
+--Blizzard_FrameXML/SharedPetBattleTemplates.lua
+--战斗宠物，技能 SharedPetBattleTemplates.lua
+hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilityInfo, additionalText)
+    local abilityID = abilityInfo:GetAbilityID()
+    local desc = abilityID and e.Get_Pet_Ablity(abilityID)
+    if desc and desc[2] then
+        print(SharedPetAbilityTooltip_ParseExpression(desc[2]))
+    end    
+end)
+
 
 
 
@@ -52,11 +59,6 @@ local function Init()
     end
 
 end
-
-
-
-
-
 
 
 

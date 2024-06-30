@@ -58,7 +58,8 @@ Mount.lua
 Mount.Data.lua
 
 Pet.lua
-Pet_Data.lua
+Pet_Data_Ability.lua
+Pet_Data_Description.lua
 
 Wardrobe.lua
 Wardrobe_Data_TransmogSet.lua
