@@ -8,12 +8,18 @@ local id, e = ...
 --战斗宠物，技能 SharedPetBattleTemplates.lua
 hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilityInfo, additionalText)
     local abilityID = abilityInfo:GetAbilityID()
-    local desc = abilityID and e.Get_Pet_Ablity(abilityID)
-    if desc and desc[2] then
-        print(SharedPetAbilityTooltip_ParseExpression(desc[2]))
-    end    
+    local desc = abilityID and e.Get_Pet_Ablity_Info(abilityID) or {}
+    if desc then
+        local _, name, icon, _, unparsedDescription, _, petType = C_PetBattles.GetAbilityInfoByID(abilityID)
+        local description = SharedPetAbilityTooltip_ParseText(abilityInfo, desc[2])
+        if description then
+            self.Description:SetText(description)
+        end
+        if desc[1] then
+            self.Name:SetText(desc[1])
+        end
+    end
 end)
-
 
 
 

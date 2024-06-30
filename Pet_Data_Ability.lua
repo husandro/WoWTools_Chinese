@@ -1351,6 +1351,6 @@ local tab={
 
 }
 
-function e.Get_Pet_Ablity(abilityID)
+function e.Get_Pet_Ablity_Info(abilityID)
     return tab[abilityID]
 end
