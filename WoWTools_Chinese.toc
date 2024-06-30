@@ -67,9 +67,9 @@ Wardrobe_Data_TransmogSet.lua
 ##Fanction_Data.lua
 
 Spell_Data_Other.lua
-Spell_Data_Name.lua
+#Spell_Data_Name.lua
 Spell_Data_Flyout.lua
-Spell_Data_Description.lua
+##Spell_Data_Description.lua
 
 ItemSet_Data.lua
 ItemSubClass_Data.lua
