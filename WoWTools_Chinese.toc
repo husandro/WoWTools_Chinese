@@ -76,12 +76,10 @@ Professions\Data_SkillLine.lua
 Professions\Data_TradeSkillCategory.lua
 Professions\Professions.lua
 
+##法术
 Spell\Data_Other.lua
 Spell\Data_Name.lua
 Spell\Data_Flyout.lua
 Spell\Data_Description.lua
-
-
-
 
 Vignette_Data.lua
