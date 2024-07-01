@@ -33,7 +33,7 @@ end
 
 local function Init()
 
-    CalendarFrame.FilterButton.Text:SetText('过滤器')
+    --CalendarFrame.FilterButton.Text:SetText('过滤器')
 
     CalendarEventPickerCloseButtonText:SetText('关闭')
     --星期

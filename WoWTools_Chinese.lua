@@ -2,27 +2,18 @@ local e= select(2, ...)
 --e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
 
 e.strText={}--主要，汉化
-function e.Get_HoliDay_Info()end--节日，数据 Calendar_Data.lua
-function e.Get_Toy_Source()end--玩具，来源 Item_Data.Toy.lua
-function e.Get_Vignette_Name()end--Vignette 名称 Vignette_Data.lua
-function e.Get_Instance_Description()end--EncounterJournal_Data_Instance.lua
-function e.Get_Boss_Description()end--EncounterJournal_Data_Boss.lua
-function e.Get_PerksActivity_Info()end--e.Get_PerksActivity_Info(tab.perksActivityID)
-function e.Get_Pet_Description()end
-function e.Get_Pet_Ablity_Info() end--e.Get_Pet_Ablity_Info(tab.petAbilityID)
---function e.Get_Spell_Name() end--isName
-function e.Get_Spell_Desc() end--e.Get_Spell_Desc(tab.spellID)
-function e.Get_TradeSkillCategory_Name()end--e.Get_TradeSkillCategory_Name(skillCategoryID)
-function e.Get_Profession_Source()end--e.Get_Profession_Source(skillLineAbilityID)
+
+
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
-
-
 function e.cn(text, tab)--{gossipOptionID=, questID=}
-    local name= text and e.strText[text]
-    if name then
-        return name
+    if text then
+        return e.strText[text] or text
+
     elseif tab then
         if tab.holydayID then
+            return e.Get_HoliDay_Info(tab.holydayID)--eventID
+        end
+        --[[if tab.holydayID then
             return e.Get_HoliDay_Info(tab.holydayID)
 
         elseif tab.vignetteID then
@@ -52,11 +43,8 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
         elseif tab.skillCategoryID then
             return e.Get_TradeSkillCategory_Name(skillCategoryID)
 
-        elseif tab.skillLineAbilityID then
-            return e.Get_Profession_Source(skillLineAbilityID)
-        end
+        end]]
     end
-    return text
 end
 WoW_Tools_Chinese_CN= e.cn
 

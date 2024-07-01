@@ -581,8 +581,8 @@ local function Init()
         e.tips:SetRecipeResultItem(info.recipeID, {}, nil, info.unlockedRecipeLevel)
         e.tips:AddLine(' ')
 
-        local text2= e.cn(nil, {skillLineAbilityID=info.skillLineAbilityID})
-        print(text2, info.skillLineAbilityID)
+        local text2= e.cn(nil, {skillLineAbilityID=info.skillLineAbilityID, sourceType= info.sourceType})
+        
         if text and text~='' then
             e.tips:AddLine(text, nil, nil, nil, true)
             e.tips:AddLine(text2)

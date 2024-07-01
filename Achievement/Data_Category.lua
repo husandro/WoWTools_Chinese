@@ -1,13 +1,8 @@
-
-local id, e = ...
-
---[[
-https://wago.tools/db2/Achievement_Category?locale=zhCN&build=11.0.0.55185
-[ID]= 'Name_lang',
-]]
-
-
 local tab={
+
+
+
+
 [1]= '属性',
 [21]= 'PvP',
 [81]= '光辉事迹',
@@ -231,17 +226,17 @@ local tab={
 [15531]= '地下堡',
 [15533]= '地下堡',
 [15534]= '地心之战',
-    
-    
+
+
 }
-    
-    
-    
-    
-    
 
 
 
+--[[
+https://wago.tools/db2/Achievement_Category?locale=zhCN&build=11.0.0.55185
+[ID]= 'Name_lang',
+]]
+local e= select(2, ...)
 do
     for categoryID, text in pairs(tab) do
         local name = GetCategoryInfo(categoryID)

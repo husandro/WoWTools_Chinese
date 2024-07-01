@@ -96,9 +96,6 @@ local function Init()
 
     --列表
     hooksecurefunc(AchievementFrameCategories.ScrollBox, 'Update', function(frame)
-        if not frame:GetView() then
-            return
-        end
         for _, btn in pairs(frame:GetFrames() or {}) do
             if btn.Button then
                 e.set(btn.Button.Label, btn.Button.name)

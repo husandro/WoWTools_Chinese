@@ -12,83 +12,80 @@
 WoWTools_Chinese.lua
 
 
-##公用
-##Func_Init.lua
-##Func_Event.lua
-##Func_Shared.lua
-
-
 Data_zhCN.lua
 Dialogs.lua
 NavBar.lua
+GameTooltip.lua
 UIDropDownMenu.lua
 
+##成就
+Achievement\Data_Category.lua
+Achievement\Data_Info.lua
+Achievement\Achievement.lua
 
-##插件
+##拍卖行
 AuctionHouse.lua
-##AuctionHouse_Data_Category.lua
 
-Achievement.lua
-Achievement_Data.lua
-Achievement_Data_Category.lua
+##货币
+Currency\Data.lua
+Currency\Currency.lua
 
-##Currency.lua
-Currency_Data.lua
-Currency_Data_Friend.lua
+##派系
+Faction\Data.lua
+Faction\Data_Friend.lua
+Faction\Faction.lua
 
 ##节日
-##Calendar.lua
-Calendar_Data.lua
+Holiday\Holiday.lua
+Holiday\Data.lua
 
-Character.lua
+##Character.lua
 
-EncounterJournal.lua
-EncounterJournal_Data_Boss.lua
-EncounterJournal_Data_Instance.lua
-
-GameTooltip.lua
-
-Map.lua
-Map_Data_UiMap.lua
-Map_Data_UiMapGroupMember.lua
+##EncounterJournal.lua
+##EncounterJournal_Data_Boss.lua
+##EncounterJournal_Data_Instance.lua
 
 
-Collection.lua
+##Map.lua
+##Map_Data_UiMap.lua
+##Map_Data_UiMapGroupMember.lua
 
-Mount.lua
-Mount.Data.lua
 
-Pet.lua
-Pet_Data_Ability.lua
-Pet_Data_Description.lua
+##Collection.lua
 
-Wardrobe.lua
-Wardrobe_Data_TransmogSet.lua
+##Mount.lua
+##Mount.Data.lua
 
-Heirloom.Data.lua
+##Pet.lua
+##Pet_Data_Ability.lua
+##Pet_Data_Description.lua
+
+##Wardrobe.lua
+##Wardrobe_Data_TransmogSet.lua
+
+##Heirloom.Data.lua
 
 ##Fanction.lua
 ##Fanction_Data.lua
 
-Spell_Data_Other.lua
+##Spell_Data_Other.lua
 ##Spell_Data_Name.lua
-Spell_Data_Flyout.lua
+##Spell_Data_Flyout.lua
 ##Spell_Data_Description.lua
 
-Item_Data_ItemSet.lua
-Item_Data_ItemSubClass.lua
+##Item_Data_ItemSet.lua
+##Item_Data_ItemSubClass.lua
 ##Item_Data_SearchName.lua
 
-Professions.lua
-Professions_Data_SkillLine.lua
-Professions_CustomerOrders.lua
-Professions_Data_SourceInfo.lua
-Professions_Dada_TradeSkillCategory.lua
+##Professions.lua
+##Professions_Data_SkillLine.lua
+##Professions_CustomerOrders.lua
+##Professions_Dada_TradeSkillCategory.lua
 
-PerksProgram.lua
-PerksActivity.lua
-PerksActivity_Data.lua
+##PerksProgram.lua
+##PerksActivity.lua
+##PerksActivity_Data.lua
 
-Toy_Data.lua
+##Toy_Data.lua
 
-Vignette_Data.lua
+##Vignette_Data.lua

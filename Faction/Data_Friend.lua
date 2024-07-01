@@ -36,28 +36,13 @@ local tab={-- []= {[1]='', [2]='', [3]='', [4]='', [5]=''},--
 
 
 
-
-
-
-
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if arg1==id then
-        self:UnregisterEvent('ADDON_LOADED')
-        do
-            for friendshipFactionID, info in pairs(tab) do
-                local rankInfo = C_GossipInfo.GetFriendshipReputation(friendshipFactionID) or {}
-                local rank = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID) or {}
-                if rankInfo.reaction and info[rank.currentLevel] then
-                    e.strText[rankInfo.reaction]= info[rank.currentLevel]
-                end
-            end
+do
+    for friendshipFactionID, info in pairs(tab) do
+        local rankInfo = C_GossipInfo.GetFriendshipReputation(friendshipFactionID) or {}
+        local rank = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID) or {}
+        if rankInfo.reaction and info[rank.currentLevel] then
+            e.strText[rankInfo.reaction]= info[rank.currentLevel]
         end
-        tab=nil
     end
-end)
-
+end
+tab=nil

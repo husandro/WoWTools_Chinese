@@ -1,4 +1,4 @@
-local id, e = ...
+local e = select(2, ...)
 --[[
 [ID]= {'Description_lang', 'Title_lang', 'Reward_lang'},
 https://wago.tools/db2/Achievement?build=11.0.0.55185&locale=zhCN
@@ -11139,57 +11139,11 @@ local tab={
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--[[
+function e.Get_Achievement_Info(achievementID)
+    return tab[achievementID]
+end
+]]
 
 local function is_add(a, b)
     if a and b then        
