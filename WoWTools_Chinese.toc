@@ -82,4 +82,8 @@ Spell\Data_Other.lua
 Spell\Data_Flyout.lua
 ##Spell\Data_Description.lua
 
+##物品
+Item\Data_ItemSet.lua
+Item\Data_ItemSubClass.lua
+
 Vignette_Data.lua
