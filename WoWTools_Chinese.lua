@@ -18,7 +18,7 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
 
         elseif tab.instanceID then
             return e.Get_Instance_Description(tab.instanceID)
-            
+
         elseif tab.perksActivityID then
             return e.Get_PerksActivity_Info(tab.perksActivityID)
 
@@ -33,13 +33,13 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
 
         elseif tab.petAbilityID then
             return e.Get_Pet_Ablity_Info(tab.petAbilityID)
-    
+
         elseif tab.skillCategoryID then
             return e.Get_TradeSkillCategory_Name(skillCategoryID)
-                
+
         elseif tab.spellID then
             if tab.isName then
-                
+
             elseif isDesc then
                 return e.Get_Spell_Desc(tab.spellID, tab.isAura)
             end
@@ -122,7 +122,7 @@ function e.setButton(btn, setFont)
     end
 end
 
-function e.hookButton(btn, setFont)    
+function e.hookButton(btn, setFont)
     if btn and btn.SetText then
         if setFont then
             e.font(btn:GetFontString())
