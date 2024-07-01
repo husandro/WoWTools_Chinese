@@ -37,7 +37,7 @@ end
 
 
 
-local function Init()    
+local function Init()
     hooksecurefunc(ProfessionsFrame, 'SetTitle', function(self, skillLineName)
         if e.strText[skillLineName] then
             skillLineName= e.strText[skillLineName]
@@ -542,19 +542,15 @@ local function Init()
 
     end)
 
-    hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'Init', function(self)
-        e.set(self.Label)
-    end)
-    hooksecurefunc(ProfessionsRecipeListCategoryMixin, 'Init', function(self, node)
-        e.set(self.Label)
-    end)
+
 
     --Blizzard_ProfessionsSpecializations.lua
     e.dia("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", {button1 = '是', button2 = '取消'})
     e.hookDia("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", 'OnShow', function(self, info)
-        local headerText = HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(format('学习%s？', info.specName).."\n\n")
+        local specName= e.cn(info.specName)
+        local headerText = HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(format('学习%s？', e.cn(specName)).."\n\n")
         local bodyKey = info.hasAnyConfigChanges and '所有待定的改动都会在解锁此专精后进行应用。您确定要学习%s副专精吗？' or '您确定想学习%s专精吗？您将来可以在%s专业里更加精进后选择额外的专精。'
-        local bodyText = NORMAL_FONT_COLOR:WrapTextInColorCode(bodyKey:format(info.specName, info.profName))
+        local bodyText = NORMAL_FONT_COLOR:WrapTextInColorCode(bodyKey:format(specName, e.cn(info.profName)))
         self.text:SetText(headerText..bodyText)
         self.text:Show()
     end)
@@ -565,12 +561,60 @@ local function Init()
 
 
 
+
+    
+    --##################
+    --移过，列表，物品提示
+    --Blizzard_ProfessionsRecipeList.lua
+    e.tips=GameTooltip
+    hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'OnEnter', function(self)
+        local elementData = self:GetElementData()
+        local info= elementData and elementData.data and elementData.data.recipeInfo
+        if not info or not info.recipeID then
+            return
+        end
+        
+        local text= C_TradeSkillUI.GetRecipeSourceText(info.recipeID)
+        local tradeSkillID, _, parentTradeSkillID = C_TradeSkillUI.GetTradeSkillLineForRecipe(info.recipeID)
+        e.tips:SetOwner(self, "ANCHOR_LEFT", -18, 0)
+        e.tips:ClearLines()
+        e.tips:SetRecipeResultItem(info.recipeID, {}, nil, info.unlockedRecipeLevel)
+        e.tips:AddLine(' ')
+
+        local text2= e.cn(nil, {skillLineAbilityID=info.skillLineAbilityID})
+        print(text2, info.skillLineAbilityID)
+        if text and text~='' then
+            e.tips:AddLine(text, nil, nil, nil, true)
+            e.tips:AddLine(text2)
+            e.tips:AddLine(' ')
+        end
+        e.tips:AddLine(info.categoryID and 'categoryID '..info.categoryID, tradeSkillID and 'tradeSkillID '..tradeSkillID)
+        e.tips:AddDoubleLine('recipeID '..info.recipeID, parentTradeSkillID and 'parentTradeSkillID '..parentTradeSkillID)
+        if info.itemLevel or info.skillLineAbilityID then
+            e.tips:AddDoubleLine(info.skillLineAbilityID and 'skillLineAbilityID '..info.skillLineAbilityID,  info.itemLevel and info.itemLevel>1 and format(e.onlyChinese and '物品等级%d' or ITEM_LEVEL, info.itemLevel))
+        end
+        --e.tips:AddDoubleLine(e.toolsFrame.addName, e.cn(addName))
+        e.tips:Show()
+    end)
+
+
+  --目录，列表，标题
+    hooksecurefunc(ProfessionsRecipeListCategoryMixin, 'Init', function(self, node)
+        local info= node:GetData().categoryInfo
+        if info then
+            local name= e.Get_TradeSkillCategory_Name(info.categoryID) or e.strText[info.name]
+            if name then
+                self.Label:SetText(name)
+            end
+        end
+    end)
+
+
     --列表，目录
-    hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'Init', function(self, node)
+    hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'Init', function(self)
         e.set(self.Lable)
         --local elementData = node:GetData();
         --local recipeInfo = Professions.GetHighestLearnedRecipe(elementData.recipeInfo) or elementData.recipeInfo
-        
     end)
 
     --专业，技能点 ProfessionsRankBarMixin
@@ -581,6 +625,9 @@ local function Init()
             self.Rank.Text:SetText(rankText)
         end
     end)
+
+    
+
 end
 
 
@@ -607,12 +654,12 @@ panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
         if C_AddOns.IsAddOnLoaded('Blizzard_Professions') then
             self:UnregisterEvent('ADDON_LOADED')
-            Init()            
+            Init()
         end
 
-    elseif arg1=='Blizzard_Professions' then       
+    elseif arg1=='Blizzard_Professions' then
         self:UnregisterEvent('ADDON_LOADED')
         Init()
-        
+
     end
 end)

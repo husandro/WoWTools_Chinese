@@ -49,8 +49,9 @@ EncounterJournal_Data_Instance.lua
 GameTooltip.lua
 
 Map.lua
-Map_Data_Group.lua
 Map_Data_UiMap.lua
+Map_Data_UiMapGroupMember.lua
+
 
 Collection.lua
 
@@ -74,13 +75,15 @@ Spell_Data_Other.lua
 Spell_Data_Flyout.lua
 ##Spell_Data_Description.lua
 
-ItemSet_Data.lua
-ItemSubClass_Data.lua
-Item_Data_SearchName.lua
+Item_Data_ItemSet.lua
+Item_Data_ItemSubClass.lua
+##Item_Data_SearchName.lua
 
 Professions.lua
 Professions_Data_SkillLine.lua
 Professions_CustomerOrders.lua
+Professions_Data_SourceInfo.lua
+Professions_Dada_TradeSkillCategory.lua
 
 PerksProgram.lua
 PerksActivity.lua

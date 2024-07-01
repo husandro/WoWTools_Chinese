@@ -91017,8 +91017,11 @@ local tab={
 }
 
 
+function e.Get_Item_Name(itemID)
+    return tab[itemID]
+end
 
-
+--[[
 for itemID, info in pairs(tab) do
     local name= C_Item.GetItemNameByID(itemID)
     if name then
@@ -91043,4 +91046,4 @@ panel:SetScript("OnEvent", function(self, _, itemID, success)
             tab[itemID]=nil
         end
     end
-end)
+end)]]

@@ -7,11 +7,13 @@ function e.Get_Toy_Source()end--玩具，来源 Item_Data.Toy.lua
 function e.Get_Vignette_Name()end--Vignette 名称 Vignette_Data.lua
 function e.Get_Instance_Description()end--EncounterJournal_Data_Instance.lua
 function e.Get_Boss_Description()end--EncounterJournal_Data_Boss.lua
-function e.Get_PerksActivity_Info()end
+function e.Get_PerksActivity_Info()end--e.Get_PerksActivity_Info(tab.perksActivityID)
 function e.Get_Pet_Description()end
-function e.Get_Pet_Ablity_Info() end
+function e.Get_Pet_Ablity_Info() end--e.Get_Pet_Ablity_Info(tab.petAbilityID)
 --function e.Get_Spell_Name() end--isName
-function e.Get_Spell_Desc() end--isDesc
+function e.Get_Spell_Desc() end--e.Get_Spell_Desc(tab.spellID)
+function e.Get_TradeSkillCategory_Name()end--e.Get_TradeSkillCategory_Name(skillCategoryID)
+function e.Get_Profession_Source()end--e.Get_Profession_Source(skillLineAbilityID)
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
 
@@ -46,6 +48,12 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
 
         elseif tab.petAbilityID then
             return e.Get_Pet_Ablity_Info(tab.petAbilityID)
+            
+        elseif tab.skillCategoryID then
+            return e.Get_TradeSkillCategory_Name(skillCategoryID)
+
+        elseif tab.skillLineAbilityID then
+            return e.Get_Profession_Source(skillLineAbilityID)
         end
     end
     return text
