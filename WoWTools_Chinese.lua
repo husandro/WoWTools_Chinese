@@ -12,38 +12,38 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
     elseif tab then
         if tab.holydayID then
             return e.Get_HoliDay_Info(tab.holydayID)--eventID
-        end
-        --[[if tab.holydayID then
-            return e.Get_HoliDay_Info(tab.holydayID)
-
-        elseif tab.vignetteID then
-            return e.Get_Vignette_Name(tab.vignetteID)
-
-        elseif tab.instanceID then
-            return e.Get_Instance_Description(tab.instanceID)
 
         elseif tab.journalEncounterID then
             return e.Get_Boss_Description(tab.journalEncounterID)
 
-        elseif tab.toyID then
-            return e.Set_Toy_Source(tab.toyID)
-
+        elseif tab.instanceID then
+            return e.Get_Instance_Description(tab.instanceID)
+            
         elseif tab.perksActivityID then
             return e.Get_PerksActivity_Info(tab.perksActivityID)
 
+        elseif tab.vignetteID then
+            return e.Get_Vignette_Name(tab.vignetteID)
+
+        elseif tab.toyID then
+            return e.Set_Toy_Source(tab.toyID)
+
         elseif tab.speciesID then
             return e.Get_Pet_Description(tab.speciesID)
-    
-        elseif tab.spellID then       
-            return e.Get_Spell_Desc(tab.spellID)
 
         elseif tab.petAbilityID then
             return e.Get_Pet_Ablity_Info(tab.petAbilityID)
-            
+    
         elseif tab.skillCategoryID then
             return e.Get_TradeSkillCategory_Name(skillCategoryID)
-
-        end]]
+                
+        elseif tab.spellID then
+            if tab.isName then
+                
+            elseif isDesc then
+                return e.Get_Spell_Desc(tab.spellID, tab.isAura)
+            end
+        end
     end
 end
 WoW_Tools_Chinese_CN= e.cn
