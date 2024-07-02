@@ -44,6 +44,7 @@ Currency\Currency.lua
 
 ##派系
 Faction\Data.lua
+Faction\Data_Race.lua
 Faction\Data_Friend.lua
 Faction\Faction.lua
 
