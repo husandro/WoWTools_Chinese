@@ -208,10 +208,16 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(too
     if not tooltip or not tooltip.TextLeft1 then
         return
     end
+    
     local name= e.Get_Spell_Name(data.id)
     if name then
         tooltip.TextLeft1:SetText(name)
     end
+    --[[local desc= e.Get_Spell_Desc(data.id, false)    
+    if desc then
+        tooltip:AddLine(desc, nil,nil,nil,true)
+        tooltip:Show()
+    end]]
 end)
 
 

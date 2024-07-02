@@ -47,7 +47,7 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
         elseif tab.spellID then
             if tab.isName then
                 data= e.Get_Spell_Name(tab.spellID)
-            elseif isDesc then
+            --elseif isDesc then
                 --data= e.Get_Spell_Desc(tab.spellID, tab.isAura)
             end
 
