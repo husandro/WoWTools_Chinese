@@ -1,5 +1,12 @@
+if C_Reputation.GetNumFactions then--11版本
+	return
+end
+
+
+
 C_Reputation.GetNumFactions= GetNumFactions
 C_Reputation.GetFactionDataByIndex= GetFactionInfo
+C_Reputation.GetFactionDataByID= GetFactionInfoByID
 C_Spell.GetSpellInfo= GetSpellInfo
 C_Spell.IsSpellUsable= IsUsableSpell
 C_Spell.GetSpellName= GetSpellInfo

@@ -105,3 +105,4 @@ LFG\LFG.lua
 
 ##专精
 Specialization\Data_Specialization.lua
+Specialization\Talent.lua

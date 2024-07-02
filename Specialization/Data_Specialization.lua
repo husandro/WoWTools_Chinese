@@ -60,6 +60,7 @@ local tab={
 2	Male
 3	Female
 ]]
+
 local sex= UnitSex('player')
 do
 for specID, data in pairs(tab) do
@@ -67,6 +68,10 @@ for specID, data in pairs(tab) do
     if name then
         e.strText[name]= sex==3 and data[2] or data[1]
     end
+    if description and data[3] then
+        e.strText[description]= data[3]
+    end
 end
 end
 tab=nil
+sex=nil
