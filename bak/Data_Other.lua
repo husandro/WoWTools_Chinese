@@ -164,49 +164,6 @@ local affixTab= {-- {', ''},
 
 
 
-
-
-
-
-
-
-
-
-    --[[for mapChallengeModeID, info in pairs(e.ChallengesSpellTabs) do
-        if info.spell then
-            if info.spellName then
-                local name= C_Spell.GetSpellName(info.spell)
-                if name then
-                    e.strText[name]= info.spellName
-                end
-            end
-            if info.spellDes then
-                local desc = C_Spell.GetSpellDescription(info.spell)
-                if desc and desc~='' then
-                    e.strText[desc]= info.spellDes
-                end
-            end
-        end
-        if info.insName and info.ins then
-            local name, description= EJ_GetInstanceInfo(info.ins)
-            if name then
-                e.strText[name]= info.insName
-            end
-            if info.insDesc and description then
-                e.strText[description]= info.insDesc
-            end
-        end
-        if info.name then
-            local name= C_ChallengeMode.GetMapUIInfo(mapChallengeModeID)
-            if name then
-                e.strText[name]= info.name
-            end
-        end
-    end]]
-
-
-
-
     for _, info in pairs(specTab) do
         local name, desc, _, role= select(2, GetSpecializationInfoByID(info[1]))
         if name and info[2] then
@@ -255,25 +212,27 @@ local affixTab= {-- {', ''},
 
 
 
-    local Covenant={
-        [1]='格里恩',
-        [2]='温西尔',
-        [3]='法夜',
-        [4]='通灵领主',
-    }
-    for covenantID=1, 4 do
-        local data = C_Covenants.GetCovenantData(covenantID) or {}
-        if data.name then
-            e.strText[data.name]= Covenant[covenantID]
-        end
+--[[local Covenant={
+    [1]='格里恩',
+    [2]='温西尔',
+    [3]='法夜',
+    [4]='通灵领主',
+}
+do
+for covenantID=1, 4 do
+    local data = C_Covenants.GetCovenantData(covenantID) or {}
+    if data.name then
+        e.strText[data.name]= Covenant[covenantID]
     end
+end
+end
+Covenant=nil]]
 
 
 
 
 
-
-
+--[[
 --###########
 --加载保存数据
 --###########
@@ -297,3 +256,4 @@ panel:SetScript("OnEvent", function(self, event, arg1, arg2)
         end
     end
 end)
+]]
