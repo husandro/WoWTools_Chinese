@@ -46,7 +46,7 @@ local function Init_Blizzard_ChallengesUI()
             PVEFrame:SetTitle(title)
         end
     end)
-    --ChallengesFrame.WeeklyInfo.Child.SeasonBest:SetText('赛季最佳')
+
     ChallengesFrame.WeeklyInfo.Child.ThisWeekLabel:SetText('本周')
     ChallengesFrame.WeeklyInfo.Child.Description:SetText('在史诗难度下，你每完成一个地下城，都会提升下一个地下城的难度和奖励。\n\n每周你都会根据完成的史诗地下城获得一系列奖励。\n\n要想开始挑战，把你的地下城难度设置为史诗，然后前往任意下列地下城吧。')
 
@@ -119,6 +119,8 @@ local function Init_Blizzard_ChallengesUI()
     ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription2:SetText('史诗地下城的敌人变得更强了！')
 
     ChallengesFrame.SeasonChangeNoticeFrame.Leave:SetText('离开')
+
+    --ChallengesFrame.WeeklyInfo.Child.SeasonBest:SetText('赛季最佳')
 end
 
 
