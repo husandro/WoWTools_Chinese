@@ -204,7 +204,7 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tool
         tooltip.TextLeft1:SetText(name)
     end
 end)
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip, data)
+--[[TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip, data)
     if not tooltip or not tooltip.TextLeft1 then
         return
     end
@@ -212,7 +212,7 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(too
     if name then
         tooltip.TextLeft1:SetText(name)
     end
-end)
+end)]]
 
 
 

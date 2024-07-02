@@ -12,6 +12,8 @@ C_Spell.GetSpellName= GetSpellInfo
 C_Spell.GetSpellTexture= GetSpellTexture
 C_Spell.GetSpellLink= GetSpellLink
 C_Spell.GetSpellDescription= GetSpellDescription
+C_Spell.IsSpellPassive= IsPassiveSpell
+
 C_Spell.GetSpellCooldown= function(spell)
 	local start, duration, enabled, modRate=  GetSpellCooldown(spell)
 	return{
@@ -75,3 +77,4 @@ C_Reputation.GetFactionDataByID= function(faction)
 		canBeLFGBonus=canBeLFGBonus
 	}
 end
+
