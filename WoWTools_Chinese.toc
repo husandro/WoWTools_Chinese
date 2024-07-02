@@ -95,3 +95,4 @@ Item\Data_ItemSubClass.lua
 
 ##挑战
 Challenges\Dada_Affix.lua
+Challenges\Challenges.lua

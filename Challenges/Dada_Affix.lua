@@ -1,8 +1,9 @@
+local e= select(2, ...)
 --[[
 [ID]= {'Name_lang', 'Description_lang'},
 https://wago.tools/db2/KeystoneAffix?locale=zhCN&page=2&build=11.0.0.55288
 ]]
-local tab{
+local tab={
 
 
 
@@ -41,6 +42,8 @@ local tab{
 [144]= {'荆棘', '无法力值的非首领敌人被攻击时会对攻击者造成物理伤害，但受到的神圣和暗影伤害提高10%。'},
 [145]= {'鲁莽', '无法力值的非首领敌人的攻击无视20%的护甲值，但其护甲值降低30%，而且受到的奥术伤害提高10%。'},
 [146]= {'调和', '有法力值的非首领敌人造成的魔法伤害提高20%，但受到的自然伤害提高10%，受到的流血效果的伤害提高30%。'},
+
+
 }
 --[[
 Xal'atath's Guile	Xal'atath betrays players, revoking her bargains and increasing the health and damage of enemies by 20%	147	1723989
@@ -48,3 +51,16 @@ Xal'atath's Bargain: Ascendant	While in combat, Xal'atath rains down orbs of cos
 Challenger's Peril	Dying subtracts 15 seconds from time remaining.	152	1052642
 Xal'atath's Bargain: Frenzied	Non-boss enemies become frenzied at 30% health remaining, increasing their Haste by 40%, but increasing their damage taken by 20%.	153	136224
 ]]
+
+do
+for affixID, info in pairs(tab) do
+    local name, desc = C_ChallengeMode.GetAffixInfo(affixID)
+    if name and info[1] then
+        e.strText[name]= info[1]
+    end
+    if desc and info[2]then
+        e.strText[desc]= info[2]
+    end
+end
+end
+tab=nil
