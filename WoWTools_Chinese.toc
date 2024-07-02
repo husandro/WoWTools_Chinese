@@ -90,6 +90,7 @@ Spell\Data_Other.lua
 Spell\Data_Flyout.lua
 Spell\Data_Name.lua
 Spell\Data_Name2.lua
+Spell\SpellBook.lua
 ##Spell\Data_Description.lua
 
 ##物品

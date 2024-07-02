@@ -10,54 +10,57 @@ e.strText={--主要，汉化
 
 
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
-function e.cn(text, tab)--{gossipOptionID=, questID=}
-    if text then
-        return e.strText[text] or text
-
-    elseif tab then
+function e.cn(text, tab)--{gossipOptionID=, questID=}    
+    local cnName=text and e.strText[text]
+    if cnName then
+        return cnName            
+    end
+    local data
+    if tab then
         if tab.holydayID then
-            return e.Get_HoliDay_Info(tab.holydayID)--eventID
+            data= e.Get_HoliDay_Info(tab.holydayID)--eventID
 
         elseif tab.journalEncounterID then
-            return e.Get_Boss_Description(tab.journalEncounterID)
+            data= e.Get_Boss_Description(tab.journalEncounterID)
 
         elseif tab.instanceID then
-            return e.Get_Instance_Description(tab.instanceID)
+            data= e.Get_Instance_Description(tab.instanceID)
 
         elseif tab.perksActivityID then
-            return e.Get_PerksActivity_Info(tab.perksActivityID)
+            data= e.Get_PerksActivity_Info(tab.perksActivityID)
 
         elseif tab.vignetteID then
-            return e.Get_Vignette_Name(tab.vignetteID)
+            data= e.Get_Vignette_Name(tab.vignetteID)
 
         elseif tab.toyID then            
-            return e.Set_Toy_Source(tab.toyID)--itemID
+            data= e.Set_Toy_Source(tab.toyID)--itemID
 
         elseif tab.speciesID then
-            return e.Get_Pet_Description(tab.speciesID)
+            data= e.Get_Pet_Description(tab.speciesID)
 
         elseif tab.petAbilityID then
-            return e.Get_Pet_Ablity_Info(tab.petAbilityID)
+            data= e.Get_Pet_Ablity_Info(tab.petAbilityID)
 
         elseif tab.skillCategoryID then
-            return e.Get_TradeSkillCategory_Name(skillCategoryID)
+            data= e.Get_TradeSkillCategory_Name(tab.skillCategoryID)
 
         elseif tab.spellID then
             if tab.isName then
-                --return e.Get_Spell_Name(spellID)
+                data= e.Get_Spell_Name(tab.spellID)
             elseif isDesc then
-                --return e.Get_Spell_Desc(tab.spellID, tab.isAura)
+                --data= e.Get_Spell_Desc(tab.spellID, tab.isAura)
             end
 
         elseif tab.itemID then
             if tab.isDesc then
                 
             elseif isName then
-                return e.Get_Item_Search_Name(tab.itemID)
+                data= e.Get_Item_Search_Name(tab.itemID)
             end
             
         end
     end
+    return data or text
 end
 WoW_Tools_Chinese_CN= e.cn
 

@@ -7,7 +7,6 @@ local id, e = ...
 --Blizzard_FrameXML/SharedPetBattleTemplates.lua
 --战斗宠物，技能 SharedPetBattleTemplates.lua
 hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilityInfo, additionalText)
-    print(additionalText)
     local abilityID = abilityInfo:GetAbilityID()
     local info = abilityID and e.Get_Pet_Ablity_Info(abilityID)
     if info then
