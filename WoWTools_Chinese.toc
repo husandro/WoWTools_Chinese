@@ -18,6 +18,15 @@ NavBar.lua
 GameTooltip.lua
 UIDropDownMenu.lua
 
+
+##角色
+Character.lua
+
+##Vigentte
+Vignette_Data.lua
+
+
+
 ##成就
 Achievement\Data_Category.lua
 Achievement\Data_Info.lua
@@ -38,8 +47,6 @@ Faction\Faction.lua
 ##节日
 Holiday\Holiday.lua
 Holiday\Data.lua
-
-Character.lua
 
 ##冒险指南
 EncounterJournal\EncounterJournal.lua
@@ -86,4 +93,5 @@ Spell\Data_Flyout.lua
 Item\Data_ItemSet.lua
 Item\Data_ItemSubClass.lua
 
-Vignette_Data.lua
+##挑战
+Challenges\Dada_Affix.lua
