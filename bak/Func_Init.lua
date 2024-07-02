@@ -2894,14 +2894,7 @@ hooksecurefunc('AutoFollowStatus_OnEvent', function(self, event, ...)
     end
 end)
 
---Constants.lua
--- LFG
-for index, en in pairs(LFG_CATEGORY_NAMES) do
-    local cn= e.strText[en]
-    if cn then
-        LFG_CATEGORY_NAMES[index]= cn
-    end
-end
+
 -- PVP
 for index, en in pairs(CONQUEST_SIZE_STRINGS) do
     local cn= e.strText[en]
