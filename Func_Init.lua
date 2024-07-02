@@ -126,8 +126,8 @@ PVEFrameTab2:SetText('PvP')
 PVEFrameTab3:SetText('史诗钥石地下城')
 
 GroupFinderFrame.groupButton1.name:SetText('地下城查找器')
-    LFDQueueFrameTypeDropdownName:SetText('类型：')
-    RaidFinderQueueFrameSelectionDropdownName:SetText('团队')
+    e.set(LFDQueueFrameTypeDropdownName)
+    e.set(RaidFinderQueueFrameSelectionDropdownName)
 
     GroupFinderFrame.groupButton2.name:SetText('团队查找器')
         hooksecurefunc('RaidFinderFrameFindRaidButton_Update', function()--RaidFinder.lua
@@ -2013,7 +2013,7 @@ EditModeManagerFrame.EnableAdvancedOptionsCheckButton.Label:SetText('高级选�
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.FramesTitle.Title:SetText('框体')
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.CombatTitle.Title:SetText('战斗')
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.MiscTitle.Title:SetText('其它')
-EditModeManagerFrame.LayoutLabel:SetText('布局：')
+e.set(EditModeManagerFrame.LayoutLabel)--布局：
 hooksecurefunc(EditModeManagerFrame.AccountSettings, 'SetExpandedState', function(self, expanded, isUserInput)
     self.Expander.Label:SetText(expanded and '收起选项 |A:editmode-up-arrow:16:11:0:3|a' or '展开选项 |A:editmode-down-arrow:16:11:0:-7|a')
 end)
@@ -2165,9 +2165,11 @@ end)
 
 
 --ButtonTrayUtil.lua
-hooksecurefunc(ButtonTrayUtil, 'TestCheckboxTraySetup', function(button, labelText)--ButtonTrayUtil.lua
-    e.set(button.Label, labelText)
-end)
+if ButtonTrayUtil.TestCheckboxTraySetup then
+    hooksecurefunc(ButtonTrayUtil, 'TestCheckboxTraySetup', function(button, labelText)--ButtonTrayUtil.lua
+        e.set(button.Label, labelText)
+    end)
+end
 
 hooksecurefunc(ButtonTrayUtil, 'TestButtonTraySetup', function(button, label)
     label= e.strText[label]
@@ -2322,28 +2324,52 @@ end)
 
 
 GameMenuFrame.Header.Text:SetText('游戏菜单')
-
---[[hooksecurefunc(GameMenuFrame, 'InitButtons', function(self)
-info=self:EnumerateActive()
-for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
-end)]]
-
-
-
-ProfessionMicroButton.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
-ProfessionMicroButton:HookScript('OnEvent', function(self, event)
-    if ( event == "UPDATE_BINDINGS" ) then
-        self.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
-    end
-end)
+if GameMenuButtonHelp then--11版本
+    GameMenuButtonHelp:SetText('帮助')
+    GameMenuButtonStore:SetText('商店')
+    GameMenuButtonWhatsNew:SetText('新内容')
+    GameMenuButtonSettings:SetText('选项')
+    GameMenuButtonEditMode:SetText('编辑模式')
+    GameMenuButtonMacros:SetText('宏')
+    GameMenuButtonAddons:SetText('插件')
+    GameMenuButtonLogout:SetText('登出')
+    GameMenuButtonQuit:SetText('退出游戏')
+    GameMenuButtonContinue:SetText('返回游戏')
+end
 
 
-PlayerSpellsMicroButton.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
-PlayerSpellsMicroButton:HookScript('OnEvent', function(self, event)
-    if ( event == "UPDATE_BINDINGS" ) then
-        self.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
-    end
-end)
+if ProfessionMicroButton then--11版本
+    ProfessionMicroButton.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
+    ProfessionMicroButton:HookScript('OnEvent', function(self, event)
+        if ( event == "UPDATE_BINDINGS" ) then
+            self.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
+        end
+    end)
+    PlayerSpellsMicroButton.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
+    PlayerSpellsMicroButton:HookScript('OnEvent', function(self, event)
+        if ( event == "UPDATE_BINDINGS" ) then
+            self.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
+        end
+    end)
+
+else
+    SpellbookMicroButton.tooltipText = MicroButtonTooltipText('法术书和专业', "TOGGLESPELLBOOK")
+    SpellbookMicroButton:HookScript('OnEvent', function(self, event)
+        if ( event == "UPDATE_BINDINGS" ) then
+		    self.tooltipText = MicroButtonTooltipText('法术书和专业', "TOGGLESPELLBOOK")
+        end
+    end)
+
+    TalentMicroButton.tooltipText = MicroButtonTooltipText('专精和天赋', "TOGGLETALENTS")
+    TalentMicroButton.newbieText = '天赋的各种组合选择能够强化你的角色，并使你的角色与众不同。'
+    TalentMicroButton:HookScript('OnEvent', function(self, event)
+        if ( event == "UPDATE_BINDINGS" ) then
+		    self.tooltipText = MicroButtonTooltipText('专精和天赋', "TOGGLETALENTS")
+        end
+    end)
+end
+
+
 
 AchievementMicroButton.tooltipText = MicroButtonTooltipText('成就', "TOGGLEACHIEVEMENT")
 AchievementMicroButton.newbieText = '浏览有关你的成就和统计数据的信息。'
@@ -2530,7 +2556,7 @@ ColorPickerFrame.Header.Text:SetText('颜色选择器')
 
 if e.Player.class=='HUNTER' then
     StableFrame.StabledPetList.FilterBar.SearchBox.Instructions:SetText('查询')
-    StableFrame.StabledPetList.FilterBar.FilterDropdown.Text:SetText('过滤')
+    --StableFrame.StabledPetList.FilterBar.FilterDropdown.Text:SetText('过滤')
     e.hookButton(StableFrame.StableTogglePetButton, true)
     StableFrame.ReleasePetButton:SetText('释放')
     StableFrame.ReleasePetButton.disabledTooltip='你只能释放你当前召唤的宠物。'
@@ -2628,8 +2654,10 @@ end)
 
 --试衣间
 DressUpFrameTitleText:SetText('试衣间')
-DressUpFrameOutfitDropdownText:SetText('保存')
-e.set(DressUpFrameOutfitDropdown.Text)
+--DressUpFrameOutfitDropdownText:SetText('保存')--11版本
+if DressUpFrameOutfitDropdown then
+    e.set(DressUpFrameOutfitDropdown.Text)
+end
 DressUpFrame.LinkButton:SetText('外观方案链接')
 DressUpFrameResetButton:SetText('重置')
 DressUpFrameCancelButton:SetText('关闭')

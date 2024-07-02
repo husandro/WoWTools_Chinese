@@ -1,7 +1,12 @@
 local e= select(2, ...)
 --e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
 
-e.strText={}--主要，汉化
+e.strText={--主要，汉化    
+    --[GetClassInfo(13)] = "|cff33937f唤魔师|r",
+    [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_ONLINE, FRIENDS_LIST_AVAILABLE)] = "|TInterface\\FriendsFrame\\StatusIcon-Online:16:16|t 有空",
+    [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_AFK, FRIENDS_LIST_AWAY)] = "|TInterface\\FriendsFrame\\StatusIcon-Away:16:16|t 离开",
+    [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_DND, FRIENDS_LIST_BUSY)] = "|TInterface\\FriendsFrame\\StatusIcon-DnD:16:16|t 忙碌",
+}
 
 
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua

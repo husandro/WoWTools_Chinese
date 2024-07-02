@@ -5,8 +5,7 @@ end
 
 
 C_Reputation.GetNumFactions= GetNumFactions
-C_Reputation.GetFactionDataByIndex= GetFactionInfo
-C_Reputation.GetFactionDataByID= GetFactionInfoByID
+
 C_Spell.GetSpellInfo= GetSpellInfo
 C_Spell.IsSpellUsable= IsUsableSpell
 C_Spell.GetSpellName= GetSpellInfo
@@ -30,5 +29,49 @@ C_Spell.GetSpellCharges= function(spell)
 		cooldownStart= cooldownStart,
 		cooldownDuration= cooldownDuration,
 		chargeModRate= chargeModRate,
+	}
+end
+
+
+C_Reputation.GetFactionDataByIndex= function(index)
+	local name, description, standingID, barMin, barMax, barValue, atWarWith, canToggleAtWar, isHeader, isCollapsed, hasRep, isWatched, isChild, factionID, hasBonusRepGain, canBeLFGBonus = GetFactionInfo(index)
+	return {
+		name=name,
+		description=description,
+		reaction=standingID,
+		currentReactionThreshold=barMin,
+		nextReactionThreshold=barMax,
+		currentStanding=barValue,
+		atWarWith=atWarWith,
+		canToggleAtWar=canToggleAtWar,
+		isHeader=isHeader,
+		isCollapsed=isCollapsed,
+		hasRep=hasRep,
+		isWatched=isWatched,
+		isChild=isChild,
+		factionID=factionID,
+		hasBonusRepGain=hasBonusRepGain,
+		canBeLFGBonus=canBeLFGBonus
+	}
+end
+C_Reputation.GetFactionDataByID= function(faction)
+	local name, description, standingID, barMin, barMax, barValue, atWarWith, canToggleAtWar, isHeader, isCollapsed, hasRep, isWatched, isChild, factionID, hasBonusRepGain, canBeLFGBonus = GetFactionInfoByID(faction)
+	return {
+		name=name,
+		description=description,
+		reaction=standingID,
+		currentReactionThreshold=barMin,
+		nextReactionThreshold=barMax,
+		currentStanding=barValue,
+		atWarWith=atWarWith,
+		canToggleAtWar=canToggleAtWar,
+		isHeader=isHeader,
+		isCollapsed=isCollapsed,
+		hasRep=hasRep,
+		isWatched=isWatched,
+		isChild=isChild,
+		factionID=factionID,
+		hasBonusRepGain=hasBonusRepGain,
+		canBeLFGBonus=canBeLFGBonus
 	}
 end

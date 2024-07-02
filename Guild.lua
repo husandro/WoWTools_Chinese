@@ -1,0 +1,379 @@
+local id, e= ...
+--公会和社区
+
+
+
+
+
+
+
+
+local function Init()
+    CommunitiesFrameTitleText:SetText('公会与社区')
+    CommunitiesFrame.AddToChatButton.Label:SetText('添加至聊天窗口')
+    CommunitiesFrame.CommunitiesControlFrame.GuildRecruitmentButton:SetText('公会招募')
+    CommunitiesFrame.InviteButton:SetText('邀请成员')
+    CommunitiesFrame.CommunitiesControlFrame.GuildControlButton:SetText('公会设置')
+    hooksecurefunc(CommunitiesFrame.CommunitiesControlFrame, 'Update', function(self)
+        if self.CommunitiesSettingsButton:IsShown() then
+            local communitiesFrame = self:GetCommunitiesFrame()
+            local clubId = communitiesFrame:GetSelectedClubId()
+            if clubId then
+                local clubInfo = C_Club.GetClubInfo(clubId)
+                if clubInfo then
+                    self.CommunitiesSettingsButton:SetText(clubInfo.clubType == Enum.ClubType.BattleNet and '群组设置' or '社区设置')
+                end
+            end
+        end
+        CommunitiesFrame.CommunitiesControlFrame.CommunitiesSettingsButton:SetText('社区设置')
+    end)
+
+    CommunitiesFrame.RecruitmentDialog.DialogLabel:SetText('招募')
+    CommunitiesFrame.RecruitmentDialog.ShouldListClub.Label:SetText('在公会查找器里列出我的公会')
+    ClubFinderClubFocusDropdown.Label:SetText('活动倾向')
+
+    CommunitiesFrame.RecruitmentDialog.RecruitmentMessageFrame.Label:SetText('招募信息')
+    CommunitiesFrame.RecruitmentDialog.RecruitmentMessageFrame.RecruitmentMessageInput.EditBox.Instructions:SetText('在此介绍你的公会以及你们需要什么样的玩家。')
+    CommunitiesFrame.RecruitmentDialog.MinIlvlOnly.EditBox.Text:SetText('物品等级')
+    CommunitiesFrame.RecruitmentDialog.MaxLevelOnly.Label:SetText('只限满级')
+    CommunitiesFrame.RecruitmentDialog.MinIlvlOnly.Label:SetText('最低物品等级')
+    CommunitiesFrame.RecruitmentDialog.Accept:SetText('接受')
+    CommunitiesFrame.RecruitmentDialog.Cancel:SetText('取消')
+
+    CommunitiesFrame.GuildBenefitsFrame.FactionFrame.Label:SetText('公会声望：')
+
+    CommunitiesFrame.NotificationSettingsDialog.TitleLabel:SetText('通知设置')--CommunitiesStreams.xml
+    CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.SettingsLabel:SetText('通知')
+    CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.QuickJoinButton.Text:SetText('快速加入通知')
+    CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.NoneButton:SetText('无')
+    CommunitiesFrame.NotificationSettingsDialog.ScrollFrame.Child.AllButton:SetText('全部')
+
+    CommunitiesFrame.NotificationSettingsDialog.Selector.OkayButton:SetText('确定')
+    CommunitiesFrame.NotificationSettingsDialog.Selector.CancelButton:SetText('取消')
+
+    hooksecurefunc(CommunitiesFrame, 'UpdateCommunitiesButtons', function(self)--CommunitiesFrameMixin
+        local clubId = self:GetSelectedClubId()
+        local inviteButton = self.InviteButton
+        if clubId ~= nil then
+            local clubInfo = C_Club.GetClubInfo(clubId)
+            local isClubAtCapacity = clubInfo and clubInfo.memberCount and clubInfo.memberCount >= C_Club.GetClubCapacity()
+            if clubInfo and clubInfo.clubType == Enum.ClubType.Guild then
+                local hasGuildPermissions = CanGuildInvite()
+                local isButtonEnabled = inviteButton:IsEnabled()
+                if(hasGuildPermissions and not isButtonEnabled) then
+                    if(isClubAtCapacity) then
+                        inviteButton.disabledTooltip = '你无法邀请新成员，你的公会已满。'
+                    end
+                elseif(not isButtonEnabled) then
+                    inviteButton.disabledTooltip = '你没有邀请的权限。'
+                end
+            elseif clubInfo and (clubInfo.clubType == Enum.ClubType.Character or clubInfo.clubType == Enum.ClubType.BattleNet) then
+                local privileges = self:GetPrivilegesForClub(clubId)
+                inviteButton:SetEnabled(not isClubAtCapacity and privileges.canSendInvitation)
+                local isButtonEnabled = inviteButton:IsEnabled()
+                if(privileges.canSendInvitation and not isButtonEnabled) then
+                    if(isClubAtCapacity) then
+                        inviteButton.disabledTooltip = '你无法邀请新成员，你的社区已满。'
+                    end
+                elseif(not isButtonEnabled) then
+                    inviteButton.disabledTooltip = '你没有邀请的权限。'
+                end
+            end
+        end
+    end)
+
+    hooksecurefunc(CommunitiesFrame.TicketFrame, 'DisplayTicket', function(self, ticketInfo)--CommunitiesTicketFrameMixin
+        local clubInfo = ticketInfo.clubInfo
+        self.Type:SetText(clubInfo.clubType == Enum.ClubType.Character and '《魔兽世界》社区' or '暴雪群组')
+        self.MemberCount:SetFormattedText('成员：|cffffffff%d|r', clubInfo.memberCount or 1)
+    end)
+    hooksecurefunc(CommunitiesFrame.InvitationFrame, 'DisplayInvitation', function(self)--CommunitiesInvitationFrame.lua
+        local clubInfo = self.invitationInfo.club
+        local inviterInfo = self.invitationInfo.inviter
+        local isCharacterClub = clubInfo.clubType == Enum.ClubType.Character
+        local inviterName = inviterInfo.name or ""
+        local classInfo = inviterInfo.classID and C_CreatureInfo.GetClassInfo(inviterInfo.classID)
+        local inviterText
+        if isCharacterClub and classInfo then
+            local classColorInfo = RAID_CLASS_COLORS[classInfo.classFile]
+            inviterText = GetPlayerLink(inviterName, ("[%s]"):format(WrapTextInColorCode(inviterName, classColorInfo.colorStr)))
+        elseif isCharacterClub then
+            inviterText = GetPlayerLink(inviterName, ("[%s]"):format(inviterName))
+        else
+            inviterText = inviterName
+        end
+        self.InvitationText:SetFormattedText('%s邀请你加入', inviterText)
+        self.Type:SetText(isCharacterClub and '《魔兽世界》社区' or '暴雪群组')
+        local leadersText = ""
+        for i, leader in ipairs(self.invitationInfo.leaders) do
+            if leader.name then
+                leadersText = leadersText..leader.name
+                if i ~= #self.invitationInfo.leaders then
+                    leadersText = leadersText..', '
+                end
+            end
+        end
+        self.Leader:SetFormattedText('管理员：|cffffffff%s|r', leadersText)
+        self.MemberCount:SetFormattedText('成员：|cffffffff%d|r', clubInfo.memberCount or 1)
+    end)
+
+
+    --CommunitiesMemberList.lua
+    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Owner] = '拥有者'
+    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Leader] = '管理员'
+    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Moderator] = '协管员'
+    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Member] = '成员'
+    hooksecurefunc(CommunitiesFrame.MemberList, 'UpdateMemberCount', function(self)
+        local numOnlineMembers = 0
+        for i, memberInfo in ipairs(self.allMemberList) do
+            if memberInfo.presence == Enum.ClubMemberPresence.Online or
+                memberInfo.presence == Enum.ClubMemberPresence.Away or
+                memberInfo.presence == Enum.ClubMemberPresence.Busy then
+                numOnlineMembers = numOnlineMembers + 1
+            end
+        end
+        self.MemberCount:SetFormattedText('%s/%s人在线', AbbreviateNumbers(numOnlineMembers), AbbreviateNumbers(#self.allMemberList))
+    end)
+
+    CommunitiesFrame.MemberList.ShowOfflineButton.Text:SetText('显示离线成员')
+    CommunitiesFrame.GuildBenefitsFrame.Rewards.TitleText:SetText('公会奖励')
+    CommunitiesFrame.GuildBenefitsFrame.GuildRewardsTutorialButton:HookScript('OnEnter', function()--GuildRewards.xml
+        GameTooltip:SetText('访问任一主城中的公会商人以购买奖励', nil, nil, nil, nil, true)
+        GameTooltip:Show()
+    end)
+    CommunitiesFrame.GuildBenefitsFrame.GuildAchievementPointDisplay:HookScript('OnEnter', function()--GuildRewards.lua
+        GameTooltip_SetTitle(GameTooltip, '公会成就')
+        GameTooltip:Show()
+    end)
+
+    CommunitiesFrameGuildDetailsFrameInfo.TitleText:SetText('信息')
+
+
+    if ClubFinderGuildFinderFrame.InsetFrame.CommunityCards then
+        hooksecurefunc(ClubFinderGuildFinderFrame.InsetFrame.CommunityCards, 'BuildCardList', function(self)--ClubFinderCommunitiesCardsMixin
+            e.set(self:GetParent().InsetFrame.GuildDescription)--('未发现结果。请修改你的搜索条件。')
+        end)
+        hooksecurefunc(ClubFinderGuildFinderFrame.InsetFrame.PendingCommunityCards, 'BuildCardList', function(self)
+            e.set(self:GetParent().InsetFrame.GuildDescription)--('未发现结果。请修改你的搜索条件。')
+        end)
+    end
+
+    hooksecurefunc(ClubFinderGuildFinderFrame, 'UpdateType', function(self)-- ClubFinderGuildAndCommunityMixin:UpdateType()
+        if (self.isGuildType) then
+            self.InsetFrame.GuildDescription:SetText('公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。\n\n使用此工具来寻找与你志同道合的公会吧。')
+            if (#self.PendingGuildCards.CardList > 0) then
+                self.ClubFinderPendingTab.tooltip = format('等待确认中（%d）', #self.PendingGuildCards.CardList)
+            else
+                self.ClubFinderPendingTab.tooltip = format('等待确认中（%d）', 0)
+            end
+        else
+            self.InsetFrame.GuildDescription:SetText('选择搜索条件，然后按下“搜索”')
+            if (#self.PendingCommunityCards.CardList > 0) then
+                self.ClubFinderPendingTab.tooltip = format('等待确认中（%d）', #self.PendingCommunityCards.CardList)
+            else
+                self.ClubFinderPendingTab.tooltip = '等待确认中（0）'
+            end
+        end
+    end)
+
+    CommunitiesSettingsDialog:HookScript('OnShow', function(self)
+        if self:GetClubType() == Enum.ClubType.BattleNet then
+            self.DialogLabel:SetText('创建暴雪群组')
+        else
+            self.DialogLabel:SetText('创建《魔兽世界》社区')
+        end
+    end)
+    CommunitiesSettingsDialog.NameLabel:SetText('名称')--CommunitiesSettings.xml
+    CommunitiesSettingsDialog.ShortNameLabel:SetText('简称')
+    CommunitiesSettingsDialog.DescriptionLabel:SetText('介绍')
+    CommunitiesSettingsDialog.MessageOfTheDayLabel:SetText('今日信息')
+    CommunitiesSettingsDialog.ChangeAvatarButton:SetText('更换')
+    CommunitiesSettingsDialog.CrossFactionToggle.Label:SetText('跨阵营')
+    CommunitiesSettingsDialog.ShouldListClub.Label:SetText('在社区查找器里列出')
+    CommunitiesSettingsDialog.AutoAcceptApplications.Label:SetText('自动接受申请者')
+    CommunitiesSettingsDialog.MaxLevelOnly.Label:SetText('只限满级')
+    CommunitiesSettingsDialog.MinIlvlOnly.EditBox.Text:SetText('物品等级')
+    CommunitiesSettingsDialog.MinIlvlOnly.Label:SetText('最低物品等级')
+    CommunitiesSettingsDialog.LookingForDropdown.Label:SetText('寻找：')
+    CommunitiesSettingsDialog.LanguageDropdown.Label:SetText('语言')
+    CommunitiesSettingsDialog.Description.instructions= '介绍一下你的社区（可选）。'
+    CommunitiesSettingsDialog.Delete:SetText('删除')
+    CommunitiesSettingsDialog.Accept:SetText('接受')
+    CommunitiesSettingsDialog.Cancel:SetText('取消')
+
+
+
+
+    CommunitiesFrame.GuildLogButton:SetText('查看日志')
+    CommunitiesGuildLogFrameCloseButton:SetText('关闭')
+
+    CommunitiesFrame.ClubFinderInvitationFrame.AcceptButton:SetText('接受')
+    CommunitiesFrame.ClubFinderInvitationFrame.DeclineButton:SetText('拒绝')
+    CommunitiesFrame.ClubFinderInvitationFrame.InvitationText:SetText('')
+
+    hooksecurefunc(CommunitiesFrame.ClubFinderInvitationFrame, 'DisplayInvitation', function(self, clubInfo)--ClubFinderInvitationsFrameMixin
+        if clubInfo then
+            local isGuild = clubInfo.isGuild
+            --self.isLinkInvitation = isLinkInvitation
+            if	(isGuild) then
+                self.Type:SetText('公会')
+            else
+                self.Type:SetText('社区')
+            end
+            self.Leader:SetFormattedText('管理员：|cffffffff%s|r', clubInfo.guildLeader)
+            self.MemberCount:SetFormattedText('成员：|cffffffff%d|r', clubInfo.numActiveMembers or 1)
+            self.InvitationText:SetFormattedText('%s邀请你加入', clubInfo.guildLeader)
+        end
+    end)
+
+    hooksecurefunc(CommunitiesListEntryMixin, 'SetFindCommunity', function(self)
+        self.Name:SetText('寻找社区')
+    end)
+        --set(ClubFinderFilterDropdown.Label, '过滤器')
+        --set(ClubFinderSortByDropdown.Label, '排序')
+        e.set(ClubFinderSizeDropdown.Label)
+        ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search:SetText('搜索')
+        ClubFinderGuildFinderFrame.OptionsList.Search:SetText('搜索')
+        hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame, 'UpdateType', function(self)-- ClubFinderGuildAndCommunityMixin:UpdateType()
+            if (self.isGuildType) then
+                self.InsetFrame.GuildDescription:SetText('公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。\n\n使用此工具来寻找与你志同道合的公会吧。')
+                if (#self.PendingGuildCards.CardList > 0) then
+                    self.ClubFinderPendingTab.tooltip = format('等待确认中（%d）', #self.PendingGuildCards.CardList)
+                else
+                    self.ClubFinderPendingTab.tooltip = format('等待确认中（%d）', 0)
+                end
+            else
+                self.InsetFrame.GuildDescription:SetText('选择搜索条件，然后按下“搜索”')
+                if (#self.PendingCommunityCards.CardList > 0) then
+                    self.ClubFinderPendingTab.tooltip = format('等待确认中（%d）', #self.PendingCommunityCards.CardList)
+                else
+                    self.ClubFinderPendingTab.tooltip = '等待确认中（0）'
+                end
+            end
+        end)
+        hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame.CommunityCards, 'BuildCardList', function(self)
+            self:GetParent().InsetFrame.GuildDescription:SetText('未发现结果。请修改你的搜索条件。')
+        end)
+        ClubFinderCommunityAndGuildFinderFrame.InsetFrame.GuildDescription:SetText('公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。|n|n使用此工具来寻找与你志同道合的公会吧。')
+        --set(ClubFinderGuildFinderFrame.InsetFrame.GuildDescription, '公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。|n|n使用此工具来寻找与你志同道合的公会吧。')
+
+        hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame, 'GetDisplayModeBasedOnSelectedTab', function(self)
+            if (self.isGuildType) then
+                self.InsetFrame.GuildDescription:SetText('公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。\n\n使用此工具来寻找与你志同道合的公会吧。')
+            else
+                self.InsetFrame.GuildDescription:SetText('选择搜索条件，然后按下“搜索”')
+            end
+        end)
+        ClubFinderGuildFinderFrame.InsetFrame:HookScript('OnShow', function(self)--ClubFinder.xml
+            local disabledReason = C_ClubFinder.GetClubFinderDisableReason()
+            if disabledReason == Enum.ClubFinderDisableReason.Muted then
+                self.ErrorDescription:SetText(RED_FONT_COLOR:WrapTextInColorCode('因为你的战网账号的家长监控设定或者隐私设定，此功能处于关闭状态'))
+            elseif disabledReason == Enum.ClubFinderDisableReason.Silenced then
+                self.ErrorDescription:SetText(RED_FONT_COLOR:WrapTextInColorCode('由于您的角色在游戏中存在发布不当内容的行为，导致您的账号受到了禁言处罚。被禁言期间，您无法使用此功能。'))
+            end
+        end)
+    hooksecurefunc(CommunitiesListEntryMixin, 'SetAddCommunity', function(self)
+        self.Name:SetText('加入或创建社区')
+    end)
+    hooksecurefunc(CommunitiesListEntryMixin, 'SetGuildFinder', function(self)
+        self.Name:SetText('公会查找器')
+    end)
+
+    CommunitiesFrame.ClubFinderInvitationFrame.WarningDialog.Accept:SetText('接受')
+    CommunitiesFrame.ClubFinderInvitationFrame.WarningDialog.Cancel:SetText('取消')
+    CommunitiesFrame.ClubFinderInvitationFrame.WarningDialog:HookScript('OnShow', function(self)
+        if (IsInGuild()) then
+            self.DialogLabel:SetText('加入此公会时，你会|cnRED_FONT_COLOR:离开当前的公会|r。')
+        else
+            self.DialogLabel:SetText('你只能加入一个公会。|n加入此公会时，|cnRED_FONT_COLOR:其他公会邀请会被移除。|r')
+        end
+    end)
+
+    local function ClubFinderGetTotalNumSpecializations()
+        local numClasses = GetNumClasses();
+        local count = 0;
+        for i = 1, numClasses do
+            local _, _, classID = GetClassInfo(i);
+            for i2 = 1, GetNumSpecializationsForClassID(classID) do
+                count = count + 1
+            end
+        end
+        return count;
+    end
+    local function set_ClubFinderRequestToJoin(self)
+        if (not self.info) then
+            return
+        end
+        for check in pairs(self.SpecsPool.activeObjects or {}) do
+            e.set(check.SpecName)
+        end
+
+        local specIds = ClubFinderGetPlayerSpecIds()
+        local matchingSpecNames = { }
+        for i, specId in ipairs(specIds) do
+            local _, name = GetSpecializationInfoForSpecID(specId)
+            if (self.card.recruitingSpecIds[specId]) then
+                table.insert(matchingSpecNames, e.cn(name))
+            end
+        end
+        local classDisplayName = UnitClass("player")
+        classDisplayName= e.cn(classDisplayName)
+        local isRecruitingAllSpecs = #self.info.recruitingSpecIds == 0 or #self.info.recruitingSpecIds == ClubFinderGetTotalNumSpecializations()
+        if(isRecruitingAllSpecs) then
+            if(self.info.isGuild) then
+                self.RecruitingSpecDescriptions:SetText('此公会正在招募所有的专精类型。')
+            else
+                self.RecruitingSpecDescriptions:SetText('此社区正在招募所有的专精类型。')
+            end
+        elseif (#matchingSpecNames == 1) then
+            self.RecruitingSpecDescriptions:SetFormattedText('此公会正在寻找%s %s。你玩的是哪个专精？', matchingSpecNames[1], classDisplayName)
+        elseif (#matchingSpecNames == 2) then
+            self.RecruitingSpecDescriptions:SetFormattedText('此公会正在寻找%s和%s %s。你玩的是哪个专精？', matchingSpecNames[1], matchingSpecNames[2], classDisplayName)
+        elseif (#matchingSpecNames == 3) then
+            self.RecruitingSpecDescriptions:SetFormattedText('此公会正在寻找%s %s和%s %s。你玩的是哪个专精？', matchingSpecNames[1], matchingSpecNames[2], matchingSpecNames[3], classDisplayName)
+        elseif (#matchingSpecNames == 4) then
+            self.RecruitingSpecDescriptions:SetFormattedText('此公会正在寻找%s %s %s和%s %s。你玩的是哪个专精？', matchingSpecNames[1], matchingSpecNames[2], matchingSpecNames[3], matchingSpecNames[4], classDisplayName)
+        end
+    end
+    hooksecurefunc(ClubFinderGuildFinderFrame.RequestToJoinFrame, 'Initialize', set_ClubFinderRequestToJoin)
+    hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame, 'Initialize', set_ClubFinderRequestToJoin)
+    ClubFinderGuildFinderFrame.RequestToJoinFrame.Apply:SetText('申请')
+    ClubFinderGuildFinderFrame.RequestToJoinFrame.Cancel:SetText('取消')
+    ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame.Apply:SetText('申请')
+    ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame.Cancel:SetText('取消')
+    ClubFinderGuildFinderFrame.RequestToJoinFrame.DialogLabel:SetText('申请加入')
+    ClubFinderCommunityAndGuildFinderFrame.RequestToJoinFrame.DialogLabel:SetText('申请加入')
+
+
+    hooksecurefunc(ClubsFinderJoinClubWarningMixin, 'OnShow', function(self)--没测试
+        if (IsInGuild()) then
+            self.DialogLabel:SetText('加入此公会时，你会离开当前的公会。')
+        else
+            self.DialogLabel:SetText('你只能加入一个公会。加入此公会时，其他公会邀请会被移除。')
+        end
+    end)
+
+end
+
+
+
+
+
+--###########
+--加载保存数据
+--###########
+local panel= CreateFrame("Frame")
+panel:RegisterEvent("ADDON_LOADED")
+panel:SetScript("OnEvent", function(self, _, arg1)
+    if id==arg1 then
+        if C_AddOns.IsAddOnLoaded('Blizzard_Communities') then           
+            Init()
+            self:UnregisterEvent('ADDON_LOADED')
+        end
+
+    elseif arg1=='Blizzard_Communities' then--冒险指南
+        Init()
+        self:UnregisterEvent('ADDON_LOADED')
+
+    end
+end)

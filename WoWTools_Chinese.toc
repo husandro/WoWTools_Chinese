@@ -13,18 +13,20 @@
 11API.lua
 
 WoWTools_Chinese.lua
-
-
 Data_zhCN.lua
+
+
 Dialogs.lua
 NavBar.lua
 GameTooltip.lua
 UIDropDownMenu.lua
-
+Func_Init.lua
+Func_Event.lua
 
 ##角色
 Character.lua
-
+##公会
+Guild.lua
 ##Vigentte
 Vignette_Data.lua
 
@@ -68,18 +70,13 @@ Map\Data_UiMapGroupMember.lua
 
 ##收藏
 Collection\Collection.lua
-
 Collection\Mount.lua
 Collection\Mount.Data.lua
-
 Collection\Pet.lua
 Collection\Pet_Data_Ability.lua
 Collection\Pet_Data_Description.lua
-
 Collection\Heirloom.Data.lua
-
 Collection\Wardrobe.lua
-Collection\Wardrobe_Data_TransmogSet.lua
 
 ##专业
 Professions\CustomerOrders.lua
@@ -96,6 +93,7 @@ Spell\Data_Flyout.lua
 ##物品
 Item\Data_ItemSet.lua
 Item\Data_ItemSubClass.lua
+Item\Data_TransmogSet.lua
 
 ##挑战
 Challenges\Dada_Affix.lua

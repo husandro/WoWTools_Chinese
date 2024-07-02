@@ -660,10 +660,10 @@ do
 if C_Reputation.GetFactionDataByID then--11版本
     for factionID, info in pairs(tab) do
         local data= C_Reputation.GetFactionDataByID(factionID) or {}
-        if data.name and info[1] and info[1]~='' then
+        if data.name and info[1] then
             e.strText[data.name] = info[1]
         end
-        if data.description and info[2] and info[2]~='' then
+        if data.description and info[2] then
             e.strText[data.description]= info[2]
         end
     end
