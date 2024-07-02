@@ -187,22 +187,33 @@ local function set_pettips_func(self)--FloatingPetBattleTooltip.xml
 end
 
 
-
-
 set_GameTooltip_func(GameTooltip)
 set_GameTooltip_func(ItemRefTooltip)
 set_GameTooltip_func(EmbeddedItemTooltip)
---set_GameTooltip_func(NamePlateTooltip)
-
-
 set_pettips_func(BattlePetTooltip)
 set_pettips_func(FloatingBattlePetTooltip)
 
---hooksecurefunc(GameTooltip, 'SetText', function(self, text)
 
+--TooltipDataRules.lua
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tooltip, data)
+    if not tooltip or not tooltip.TextLeft1 then
+        return
+    end
+    local name= e.Get_Item_Search_Name(data.id)
+    if name then
+        tooltip.TextLeft1:SetText(name)
+    end
+end)
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip, data)
+    if not tooltip or not tooltip.TextLeft1 then
+        return
+    end
+    local name= e.Get_Spell_Name(data.id)
+    if name then
+        tooltip.TextLeft1:SetText(name)
+    end
+end)
 
-
---TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Object,  function(tooltip, data)end)--TooltipUtil.lua
 
 
 --[[TooltipDataRules.lua
@@ -236,73 +247,7 @@ TooltipDataRules.lua
 		Macro = 25,
 		Debug = 26,
 	},
-
-TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes,  function(tooltip, data)--TooltipUtil.lua
-    if tooltip==ShoppingTooltip1 or ShoppingTooltip2==tooltip then
-        return
-    end
-    if not tooltip.textLeft then
-        func.Set_Init_Item(tooltip)
-        tooltip:HookScript("OnHide", function(frame)--隐藏
-            func.Set_Init_Item(frame, true)
-            if frame.WoWHeadButton then
-                frame.WoWHeadButton:rest()
-            end
-        end)
-    end
-
-
-
-    
-
-
-    --25宏, 11动作条, 4可交互物品, 14装备管理, 0物品 19玩具, 9宠物
-    if data.type==2 then--单位
-        if tooltip== GameTooltip then
-            func.Set_Unit(tooltip)
-        end
-
-    elseif data.id and data.type then
-        if data.type==0 then
-            local itemLink, itemID= select(2, TooltipUtil.GetDisplayedItem(tooltip))--物品
-            itemLink= itemLink or itemID or data.id
-            func.Set_Item(tooltip, itemLink, itemID)
-        elseif data.type==19 then
-            func.Set_Item(tooltip, nil, data.id)--物品
-
-        elseif data.type==1 then
-            func.Set_Spell(tooltip, data.id)--法术
-
-        elseif data.type==5 then
-            func.Set_Currency(tooltip, data.id)--货币
-
-        elseif data.type==7 then--Aura
-            func.set_All_Aura(tooltip, data)
-
-        elseif data.type==8 then--艾泽拉斯之心
-            func.set_Azerite(tooltip, data.id)
-
-        elseif data.type==10 then
-            func.Set_Mount(tooltip, data.id)--坐骑
-
-        elseif data.type==12 then--成就
-            func.Set_Achievement(tooltip, data.id)
-
-        elseif data.type==22 then--法术弹出框
-            func.Set_Flyout(tooltip, data.id)
-
-        elseif data.type==23 then
-            func.Set_Quest(tooltip, data.id)--任务
-
-        elseif data.type==25 then--宏 11版本
-          
-        end
-    end
-end)]]
-
-
-
-
+]]
 
 
 
@@ -318,6 +263,6 @@ panel:SetScript("OnEvent", function(_, _, arg1)
     elseif arg1=='Blizzard_ItemSocketingUI' then--镶嵌宝石，界面
         ItemSocketingSocketButton:SetText('应用')
         set_GameTooltip_func(ItemSocketingDescription)
-
+        
     end
 end)

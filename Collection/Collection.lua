@@ -38,15 +38,23 @@ local function Init_Heirlooms()
     hooksecurefunc(HeirloomsJournal.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
         self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
     end)
-    hooksecurefunc(HeirloomsJournal, 'UpdateButton', function(_, btn)
-        e.set(btn.name)
-    end)
+
     hooksecurefunc(HeirloomsJournal, 'LayoutCurrentPage', function(self)
         for _, header in pairs(self.heirloomHeaderFrames or {}) do
             e.set(header.text)
         end
     end)
 
+    --传家宝，名称
+    hooksecurefunc(HeirloomsJournal, 'UpdateButton', function(_, btn)
+        if not btn.name then
+            return
+        end
+        local name= e.Get_Item_Search_Name(btn.itemID) or e.strText[btn.name:GetText()]
+        if name then
+            btn.name:SetText(name)
+        end
+    end)
 end
 
 

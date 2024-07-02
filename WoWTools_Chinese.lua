@@ -30,8 +30,8 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
         elseif tab.vignetteID then
             return e.Get_Vignette_Name(tab.vignetteID)
 
-        elseif tab.toyID then
-            return e.Set_Toy_Source(tab.toyID)
+        elseif tab.toyID then            
+            return e.Set_Toy_Source(tab.toyID)--itemID
 
         elseif tab.speciesID then
             return e.Get_Pet_Description(tab.speciesID)
@@ -44,10 +44,18 @@ function e.cn(text, tab)--{gossipOptionID=, questID=}
 
         elseif tab.spellID then
             if tab.isName then
-
+                return e.Get_Spell_Name(spellID)
             elseif isDesc then
                 return e.Get_Spell_Desc(tab.spellID, tab.isAura)
             end
+
+        elseif tab.itemID then
+            if tab.isDesc then
+                
+            elseif isName then
+                return e.Get_Item_Search_Name(tab.itemID)
+            end
+            
         end
     end
 end

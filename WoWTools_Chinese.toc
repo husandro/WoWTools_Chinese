@@ -75,6 +75,7 @@ Collection\Mount.Data.lua
 Collection\Pet.lua
 Collection\Pet_Data_Ability.lua
 Collection\Pet_Data_Description.lua
+Collection\Toy_Data.lua
 Collection\Heirloom.Data.lua
 Collection\Wardrobe.lua
 
@@ -86,7 +87,7 @@ Professions\Professions.lua
 
 ##法术
 Spell\Data_Other.lua
-##Spell\Data_Name.lua
+Spell\Data_Name.lua
 Spell\Data_Flyout.lua
 ##Spell\Data_Description.lua
 
@@ -94,6 +95,7 @@ Spell\Data_Flyout.lua
 Item\Data_ItemSet.lua
 Item\Data_ItemSubClass.lua
 Item\Data_TransmogSet.lua
+Item\Data_SearchName.lua
 
 ##挑战
 Challenges\Dada_Affix.lua
