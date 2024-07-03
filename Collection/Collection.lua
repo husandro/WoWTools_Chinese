@@ -62,6 +62,23 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 local function Init()
     Init_Toy()
     Init_Heirlooms()
@@ -75,12 +92,6 @@ local function Init()
     hooksecurefunc('CollectionsJournal_UpdateSelectedTab', function(self)--设置，标题
         e.set(self.Text)
     end)
-
-
-
-
-
-
 end
 
 

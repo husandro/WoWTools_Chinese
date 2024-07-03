@@ -67,7 +67,7 @@ local function Init()
         for _, btn in pairs(frame:GetFrames() or {}) do
             e.set(btn.name)
         end
-    end
+    end)
 
 end
 

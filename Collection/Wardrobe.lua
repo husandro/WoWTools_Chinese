@@ -43,7 +43,7 @@ local function Init()
     end)
 
 
-    hooksecurefunc(WardrobeSetsScrollFrameButtonMixin, 'Init', function(btn)
+    hooksecurefunc(WardrobeSetsScrollFrameButtonMixin, 'Init', function(btn, data)
         e.set(btn.Name)
     end)
 
@@ -61,12 +61,12 @@ local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if id==arg1 then
-        if C_AddOns.IsAddOnLoaded('Blizzard_EncounterJournal') then
+        if C_AddOns.IsAddOnLoaded('Blizzard_Collections') then
             Init()
             self:UnregisterEvent('ADDON_LOADED')
         end
 
-    elseif arg1=='Blizzard_EncounterJournal' then--冒险指南
+    elseif arg1=='Blizzard_Collections' then--冒险指南
         Init()
         self:UnregisterEvent('ADDON_LOADED')
     end
