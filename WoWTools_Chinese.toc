@@ -13,7 +13,7 @@
 11API.lua
 
 WoWTools_Chinese.lua
-Data_zhCN.lua
+
 
 
 Dialogs.lua
@@ -110,3 +110,5 @@ LFG\LFG.lua
 ##专精
 Specialization\Data_Specialization.lua
 Specialization\Talent.lua
+
+Data_zhCN.lua

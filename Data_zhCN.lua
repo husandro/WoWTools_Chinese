@@ -21120,11 +21120,12 @@ local tab={
 }
 
 do
-    for name, text in pairs(tab) do
-        if _G[name] then
-            e.strText[_G[name]]= text
-        end
-    end            
+for name, text in pairs(tab) do
+    name= _G[name]
+    if name then
+        e.strText[name]= text
+    end
+end            
 end        
 tab=nil
 
@@ -21141,3 +21142,6 @@ e.strText[GRAPHICS_HEADER] = "图形"
 e.strText[ADDON_DISABLED] = "禁用"
 e.strText[EMOTE67_CMD1] = "/不"    
 e.strText[GRAPHICS_LABEL] = "图形"
+e.strText[format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_ONLINE, FRIENDS_LIST_AVAILABLE)] = "|TInterface\\FriendsFrame\\StatusIcon-Online:16:16|t 有空"
+e.strText[format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_AFK, FRIENDS_LIST_AWAY)] = "|TInterface\\FriendsFrame\\StatusIcon-Away:16:16|t 离开"
+e.strText[format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_DND, FRIENDS_LIST_BUSY)] = "|TInterface\\FriendsFrame\\StatusIcon-DnD:16:16|t 忙碌"
