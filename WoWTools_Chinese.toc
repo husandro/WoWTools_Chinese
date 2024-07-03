@@ -23,6 +23,7 @@ UIDropDownMenu.lua
 Func_Init.lua
 Func_Event.lua
 
+
 ##角色
 Character.lua
 ##公会
@@ -91,9 +92,6 @@ Spell\Data_Flyout.lua
 Spell\Data_Name2.lua
 Spell\Data_Name.lua
 Spell\SpellBook.lua
-##不完美
-##Spell\Data_Description2.lua
-##Spell\Data_Description.lua
 
 ##物品
 Item\Data_ItemSet.lua

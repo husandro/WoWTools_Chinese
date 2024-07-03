@@ -1,9 +1,12 @@
-
 local e= select(2, ...)
 --[[
+if WoWeuCN_Tooltips_SpellData_0 then--WoWeuCN_Tooltips 插件
+    return
+end
 [ID]= 'Name_lang',
 https://wago.tools/db2/SpellName?build=11.0.0.55288&locale=zhCN
 ]]
+
 local tab= {
 
 

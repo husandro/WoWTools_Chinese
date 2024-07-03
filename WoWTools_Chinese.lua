@@ -7,54 +7,70 @@ e.strText={--主要，汉化
 }
 
 
+function e.Get_HoliDay_Info()end---tab.holydayID eventID
+function e.Get_Boss_Description()end---tab.journalEncounterID
+function e.Get_Instance_Description()end---tab.instanceID
+function e.Get_PerksActivity_Info()end---tab.perksActivityID
+function e.Get_Vignette_Name()end---tab.vignetteID
+function e.Get_Toy_Source()end---tab.toyID)--itemID
+function e.Get_Pet_Description()end---tab.speciesID
+function e.Get_Pet_Ablity_Info()end---tab.petAbilityID
+function e.Get_TradeSkillCategory_Name()end---tab.skillCategoryID
+function e.Get_Spell_Name()end---tab.spellID
+function e.Get_Item_Search_Name()end---tab.itemID
+--function e.Get_NPC_Name()end--npcID是字符
+
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
-function e.cn(text, tab)--{gossipOptionID=, questID=}    
+
+function e.cn(text, tab)
     local cnName=text and e.strText[text]
     if cnName then
         return cnName            
     end
     local data
-    if tab then
+    if tab and type(tab)=='table' then
         if tab.holydayID then
-            data= e.Get_HoliDay_Info(tab.holydayID)--eventID
+            data= e.Get_HoliDay_Info(tab.holydayID)--节日 eventID
 
         elseif tab.journalEncounterID then
-            data= e.Get_Boss_Description(tab.journalEncounterID)
+            data= e.Get_Boss_Description(tab.journalEncounterID)--BOOS
 
         elseif tab.instanceID then
-            data= e.Get_Instance_Description(tab.instanceID)
+            data= e.Get_Instance_Description(tab.instanceID)--副本
 
         elseif tab.perksActivityID then
-            data= e.Get_PerksActivity_Info(tab.perksActivityID)
+            data= e.Get_PerksActivity_Info(tab.perksActivityID)--PERKS
 
         elseif tab.vignetteID then
-            data= e.Get_Vignette_Name(tab.vignetteID)
+            data= e.Get_Vignette_Name(tab.vignetteID)--Vignette
 
         elseif tab.toyID then            
-            data= e.Set_Toy_Source(tab.toyID)--itemID
+            data= e.Get_Toy_Source(tab.toyID)--玩具itemID
 
         elseif tab.speciesID then
-            data= e.Get_Pet_Description(tab.speciesID)
+            data= e.Get_Pet_Description(tab.speciesID)--专精
 
         elseif tab.petAbilityID then
-            data= e.Get_Pet_Ablity_Info(tab.petAbilityID)
+            data= e.Get_Pet_Ablity_Info(tab.petAbilityID)--宠物技能
 
         elseif tab.skillCategoryID then
-            data= e.Get_TradeSkillCategory_Name(tab.skillCategoryID)
+            data= e.Get_TradeSkillCategory_Name(tab.skillCategoryID)--专业目录
 
         elseif tab.spellID then
             if tab.isName then
-                data= e.Get_Spell_Name(tab.spellID)
-            --elseif isDesc then
-                --data= e.Get_Spell_Desc(tab.spellID, tab.isAura)
+                data= e.Get_Spell_Name(tab.spellID)--法术名称
             end
+            --elseif isDesc then
+            --data= e.Get_Spell_Desc(tab.spellID, tab.isAura)
 
         elseif tab.itemID then
-            if tab.isDesc then
-                
-            elseif isName then
-                data= e.Get_Item_Search_Name(tab.itemID)
+            --if tab.isDesc then
+            if isName then
+                data= e.Get_Item_Search_Name(tab.itemID)--物品名称
             end
+
+        --[[elseif tab.npcID then
+            data= e.Get_NPC_Name(tab.npcID)--NPC名称]]
             
         end
     end
