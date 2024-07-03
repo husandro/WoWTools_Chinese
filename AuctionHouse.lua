@@ -63,11 +63,12 @@ local function Init()
     AuctionHouseFrame.ItemSellFrame.SecondaryPriceInput.Label:SetText('竞标价格')
 
     --Blizzard_AuctionHouseUI
-    hooksecurefunc(AuctionHouseFrame.ItemSellFrame, 'SetSecondaryPriceInputEnabled', function(self, enabled)
-        self.PriceInput:set('一口价')--AUCTION_HOUSE_BUYOUT_LABEL)
+    hooksecurefunc(AuctionHouseFrame.ItemSellFrame, 'SetSecondaryPriceInputEnabled', function(self, enabled)        
+        self.PriceInput:SetText('一口价')--AUCTION_HOUSE_BUYOUT_LABEL)
         if enabled then
             self.PriceInput:SetSubtext('|cff777777(可选)|r')--AUCTION_HOUSE_BUYOUT_OPTIONAL_LABEL
         end
+        
     end)
 
     AuctionHouseFrame.CommoditiesSellFrame.CreateAuctionLabel:SetText('开始拍卖')
@@ -198,7 +199,27 @@ local function Init()
     --Blizzard_AuctionHouseWoWTokenFrame.lua
     e.dia("TOKEN_NONE_FOR_SALE", {text = '目前没有可售的魔兽世界时光徽章。请稍后再来查看。', button1 = '确定'})
     e.dia("TOKEN_AUCTIONABLE_TOKEN_OWNED", {text = '你必须先将从商城购得的魔兽世界时光徽章售出后才能从拍卖行中购买新的徽章。', button1 = '确定'})
+   
     
+    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'Update', function(frame)
+        if not frame:GetView() then
+            return
+        end
+        for _, btn in pairs(frame:GetFrames() or {}) do
+            local itemKey= btn.rowData and btn.rowData.itemKey
+            local itemKeyInfo = itemKey and C_AuctionHouse.GetItemKeyInfo(itemKey)--itemID battlePetSpeciesID itemName battlePetLink appearanceLink quality iconFileID isPet isCommodity isEquipment
+            if itemKeyInfo then
+                local name= e.Get_Item_Search_Name(itemKeyInfo.itemID) or e.strText[itemKeyInfo.itemName]
+                if name then
+                    local hex= select(4, C_Item.GetItemQualityColor(itemKeyInfo.quality))
+                    if hex then
+                        name= '|c'..hex..name..'|r'
+                    end
+                    btn.cells[2].Text:SetText(name)
+                end
+            end
+        end
+    end)
 end
 
 

@@ -184,6 +184,9 @@ local function Init()
 
     --任务，列表，名称
     hooksecurefunc(EncounterJournalMonthlyActivitiesFrame.FilterList.ScrollBox, 'Update', function(self)
+        if self frame:GetView() then
+            return
+        end
         for _, btn in pairs(self:GetFrames() or {}) do
             e.set(btn.Label)
         end

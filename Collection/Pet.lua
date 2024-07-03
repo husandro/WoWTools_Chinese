@@ -60,8 +60,13 @@ local function Init()
     PetJournalHealPetButtonSpellName:SetText('复活\n战斗宠物')
 
     --列表，名称
-    for _, btn in pairs(PetJournal.ScrollBox:GetFrames() or {}) do
-        e.set(btn.name)
+    hooksecurefunc(PetJournal.ScrollBox, 'Update', function(frame)
+        if not frame:GetView() then
+            return
+        end
+        for _, btn in pairs(frame:GetFrames() or {}) do
+            e.set(btn.name)
+        end
     end
 
 end

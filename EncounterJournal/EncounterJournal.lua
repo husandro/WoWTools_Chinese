@@ -196,10 +196,11 @@ local function Init_EncounterJournal()
         end
     end)
 
+    --BOSS，掉落
     hooksecurefunc(EncounterJournalItemMixin,'Init', function(self)--Blizzard_EncounterJournal.lua
         local itemInfo = C_EncounterJournal.GetLootInfoByIndex(self.index)
         if ( itemInfo and itemInfo.name ) then
-            local name= e.strText[itemInfo.name]
+            local name= e.Get_Item_Search_Name(itemInfo.itemID) or e.strText[itemInfo.name]
             if name then
                 self.name:SetText(WrapTextInColorCode(name, itemInfo.itemQuality))
             end
@@ -312,6 +313,9 @@ local function Init_EncounterJournal()
 
 
     hooksecurefunc(EncounterJournal.LootJournalItems.ItemSetsFrame.ScrollBox, 'Update', function(self)
+        if not self:GetView() then
+            return
+        end
         for _, btn in pairs(self:GetFrames() or {}) do
             e.set(btn.SetName)
         end

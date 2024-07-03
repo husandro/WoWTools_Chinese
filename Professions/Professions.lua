@@ -574,10 +574,17 @@ local function Init()
 
 
     --列表，目录
-    hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'Init', function(self)
-        e.set(self.Lable)
-        --local elementData = node:GetData();
-        --local recipeInfo = Professions.GetHighestLearnedRecipe(elementData.recipeInfo) or elementData.recipeInfo
+    hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'Init', function(self, node)
+        local elementData = node:GetData();
+        local recipeInfo = Professions.GetHighestLearnedRecipe(elementData.recipeInfo) or elementData.recipeInfo
+        if not recipeInfo then
+            return
+        end
+        local itemID= recipeInfo.hyperlink and C_Item.GetItemInfoInstant(recipeInfo.hyperlink)
+        local name= itemID and e.Get_Item_Search_Name(itemID) or e.strText[recipeInfo.name]
+        if name then
+            self.Label:SetText(name)
+        end
     end)
 
     --专业，技能点 ProfessionsRankBarMixin

@@ -48,7 +48,10 @@ else
     TokenFramePopup.Title:SetText('货币设置')
     TokenFramePopup.InactiveCheckBox.Text:SetText('未使用')
     TokenFramePopup.BackpackCheckBox.Text:SetText('在行囊上显示')
-    hooksecurefunc(ReputationFrame.ScrollBox, 'Update', function(self)        
+    hooksecurefunc(ReputationFrame.ScrollBox, 'Update', function(self)
+        if not self:GetView() then
+            return
+        end
         for _, frame in pairs(self:GetFrames() or {}) do
             e.set(frame.Container.Name)
 

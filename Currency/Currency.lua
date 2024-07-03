@@ -64,6 +64,9 @@ local function Init()
         TokenFramePopup.InactiveCheckBox.Text:SetText('未使用')
         TokenFramePopup.BackpackCheckBox.Text:SetText('在行囊上显示')
         hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(self)
+            if not self:GetView() then
+                return
+            end
 			for _, frame in pairs(self:GetFrames() or {}) do
                 local name= e.strText[frame.Name:GetText()]                
                 if not frame.Name2 then--点击，不能，弹出对话框，所以加个

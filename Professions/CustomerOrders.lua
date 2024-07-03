@@ -239,6 +239,14 @@ local function Init()
     end)
     ProfessionsCustomerOrdersFrame.MyOrdersPage.OrderList.ResultsText:SetText('没有发现订单')
 
+    
+    --商品，目录    ProfessionsCustomerOrdersFrame.BrowseOrders.RecipeList.ScrollBox
+    --[[hooksecurefunc(ProfessionsCustomerOrdersFrame.BrowseOrders.RecipeList.ScrollBox, 'Updata', function(frame)
+        for _, btn in pairs(frame:GetFrames() or {}) do
+            info= btn
+            for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
+        end
+    end)]]
 end
 
 

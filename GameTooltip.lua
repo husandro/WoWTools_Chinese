@@ -42,11 +42,13 @@ model(PetStableModelScene)]]
 
 
 --  ( ) . % + - * ? [ ^ $
-local ITEM_UPGRADE_TOOLTIP_FORMAT_STRING= ITEM_UPGRADE_TOOLTIP_FORMAT_STRING:gsub(': (.+)', '(.+)')
+local ITEM_UPGRADE_TOOLTIP_FORMAT_STRING= ITEM_UPGRADE_TOOLTIP_FORMAT_STRING:gsub(': (.+)', '(.+)')--升级：%s %d/%d
 local ENCHANTED_TOOLTIP_LINE = ENCHANTED_TOOLTIP_LINE:gsub('%%s', '(.+)')--附魔：%s
 local COVENANT_RENOWN_TOAST_REWARD_COMBINER= COVENANT_RENOWN_TOAST_REWARD_COMBINER:gsub('%%s', '(.+)')--%s 和 %s
-local EQUIPMENT_SETS= EQUIPMENT_SETS:match('(.-):')--"Set di equipaggiamenti: |cFFFFFFFF%s|r"
-
+local EQUIPMENT_SETS= EQUIPMENT_SETS:match('(.-)'..HEADER_COLON)--"Set di equipaggiamenti: |cFFFFFFFF%s|r"
+if EQUIPMENT_SETS then
+    EQUIPMENT_SETS= EQUIPMENT_SETS..'(.+)'
+end
 
 local function get_gameTooltip_text(self)
     local text= self and self:IsShown() and self:GetText()
@@ -54,7 +56,7 @@ local function get_gameTooltip_text(self)
         local text2= e.strText[text]
         if not text2 then
             local up= text:match(ITEM_UPGRADE_TOOLTIP_FORMAT_STRING)---"升级：%s %d/%d
-            local set2= EQUIPMENT_SETS and text:match(EQUIPMENT_SETS..'(.+)')--"装备配置方案：|cFFFFFFFF%s|r"
+            local set2= EQUIPMENT_SETS and text:match(EQUIPMENT_SETS)--"装备配置方案：|cFFFFFFFF%s|r"
             local ench= text:match(ENCHANTED_TOOLTIP_LINE)
             local gem1, gem2= text:match(COVENANT_RENOWN_TOAST_REWARD_COMBINER)
             local str1, str2= text:match('(.-): (.+)')

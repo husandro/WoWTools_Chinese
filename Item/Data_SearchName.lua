@@ -91018,5 +91018,22 @@ local tab={
 
 
 function e.Get_Item_Search_Name(itemID)
-    return tab[itemID]
+    local cnName= tab[itemID]
+    if cnName then
+        local name= C_Item.GetItemNameByID(itemID)
+        if name then
+            e.strText[name]= cnName
+            tab[itemID]=nil
+        end
+        return cnName
+    end
 end
+
+
+local panel= CreateFrame('Frame')
+panel:RegisterEvent('ITEM_DATA_LOAD_RESULT')
+panel:SetScript("OnEvent", function(_,_, itemID, success)
+    if success then
+        e.Get_Item_Search_Name(itemID)
+    end
+end)
