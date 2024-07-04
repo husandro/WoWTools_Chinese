@@ -86,6 +86,7 @@ Professions\CustomerOrders.lua
 Professions\Data_SkillLine.lua
 Professions\Data_TradeSkillCategory.lua
 Professions\Professions.lua
+Professions\ClassTrainerFrame.lua
 
 ##法术
 Spell\Data_Other.lua
