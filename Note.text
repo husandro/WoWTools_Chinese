@@ -168,8 +168,8 @@ https://wago.tools/db2/PerksVendorItemUIGroup?locale=zhCN 返场 标准目录 �
 https://wago.tools/db2/PrestigeLevelInfo?locale=zhCN 1 荣誉等级5级 5 1375574 0x0 12893
 
 https://wago.tools/db2/ProfTraitTreeHighlight?locale=zhCN
-https://wago.tools/db2/ProfessionEffectType?locale=zhCN
-https://wago.tools/db2/ProfessionRating?locale=zhCN
+https://wago.tools/db2/ProfessionEffectType?locale=zhCN 制作速度
+https://wago.tools/db2/ProfessionRating?locale=zhCN 灵感	你有$rv%的几率获得灵感，使制作此配方时拥有$csv点技能加成。
 
 https://wago.tools/db2/PvpBrawl?locale=zhCN
 https://wago.tools/db2/PvpTier?locale=zhCN

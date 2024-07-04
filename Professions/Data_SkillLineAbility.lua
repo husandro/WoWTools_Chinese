@@ -15732,7 +15732,7 @@ local tab={
 https://wago.tools/db2/SkillLineAbility?build=11.0.2.55399&locale=zhCN
 ]]
 
-function e.Get_SkillLineAbility_Spell(skillLineAbilityID)
+function e.Get_SkillLineAbility_Name(skillLineAbilityID)
     local spellID= tab[skillLineAbilityID]
     if spellID then
         return e.Get_Spell_Name(spellID)

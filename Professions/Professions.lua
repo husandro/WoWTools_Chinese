@@ -10,19 +10,19 @@ local id, e = ...
 
 --专业，技能点 ProfessionsRankBarMixin
 local function GenerateRankText(professionName, skillLevel, maxSkillLevel, skillModifier)
-    local rankText;
+    local rankText
     if skillModifier > 0  then
-        rankText = format('%s %d (|cff20ff20+%d|r ) /%d', professionName, skillLevel, skillModifier, maxSkillLevel);
+        rankText = format('%s %d (|cff20ff20+%d|r ) /%d', professionName, skillLevel, skillModifier, maxSkillLevel)
     else
-        rankText = format('%s %d/%d', professionName, skillLevel, maxSkillLevel);
+        rankText = format('%s %d/%d', professionName, skillLevel, maxSkillLevel)
     end
     if GameLimitedMode_IsActive() then
-        local professionCap = select(3, GetRestrictedAccountData());
+        local professionCap = select(3, GetRestrictedAccountData())
         if skillLevel >= professionCap and professionCap > 0 then
-            return format("%s %s%s|r", rankText, RED_FONT_COLOR_CODE, '已达免费试玩上限。');
+            return format("%s %s%s|r", rankText, RED_FONT_COLOR_CODE, '已达免费试玩上限。')
         end
     end
-    return rankText;
+    return rankText
 end
 
 
@@ -56,19 +56,7 @@ local function Init()
         end
     end)
 
-    hooksecurefunc(ProfessionsFrame, 'UpdateTabs', function(self)
-        local recipesTab = self:GetTabButton(self.recipesTabID)
-        e.font(recipesTab.Text)
-        recipesTab.Text:SetText('配方')
 
-        recipesTab = self:GetTabButton(self.specializationsTabID)
-        e.font(recipesTab.Text)
-        recipesTab.Text:SetText('专精')
-
-        recipesTab = self:GetTabButton(self.craftingOrdersTabID )
-        e.font(recipesTab.Text)
-        recipesTab.Text:SetText('制造订单')
-    end)
 
     ProfessionsFrame.CraftingPage.RecipeList.SearchBox.Instructions:SetText('搜索')
     --ProfessionsFrame.CraftingPage.RecipeList.FilterDropdown.Text:SetText('过滤器')
@@ -530,7 +518,9 @@ local function Init()
     --set(ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.SkillStatLine.LeftLabel, '技能：')
 
     hooksecurefunc(ProfessionsCrafterDetailsStatLineMixin, 'SetLabel', function(self, label)--Blizzard_ProfessionsRecipeCrafterDetails.lua
-        if label== PROFESSIONS_CRAFTING_STAT_TT_CRIT_HEADER then
+        e.set(self.LeftLabel, label)
+    end)
+        --[[if label== PROFESSIONS_CRAFTING_STAT_TT_CRIT_HEADER then
             self.LeftLabel:SetText('灵感')
         elseif label== PROFESSIONS_CRAFTING_STAT_TT_RESOURCE_RETURN_HEADER then
             self.LeftLabel:SetText('充裕')
@@ -538,9 +528,10 @@ local function Init()
             self.LeftLabel:SetText('制作速度')
         elseif label== PROFESSIONS_OUTPUT_MULTICRAFT_TITLE then
             self.LeftLabel:SetText('产能')
-        end
-
-    end)
+        else
+            print(label)
+        end]]
+    --ProfessionsCrafterDetailsStatLineMixin:OnEnter()
 
 
 
@@ -575,15 +566,13 @@ local function Init()
 
     --列表，目录
     hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'Init', function(self, node)
-        local elementData = node:GetData();
+        local elementData = node:GetData()
         local recipeInfo = Professions.GetHighestLearnedRecipe(elementData.recipeInfo) or elementData.recipeInfo
         if not recipeInfo then
             return
         end
-        info= recipeInfo
-        --for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
         local itemID= recipeInfo.hyperlink and C_Item.GetItemInfoInstant(recipeInfo.hyperlink)
-        local name= itemID and e.Get_Item_Search_Name(itemID) or e.Get_SkillLineAbility_Spell(recipeInfo.skillLineAbilityID) or e.strText[recipeInfo.name]
+        local name= itemID and e.Get_Item_Search_Name(itemID) or e.Get_SkillLineAbility_Name(recipeInfo.skillLineAbilityID) or e.strText[recipeInfo.name]
         if name then
             self.Label:SetText(name)
         end
@@ -593,15 +582,111 @@ local function Init()
     hooksecurefunc(ProfessionsFrame.CraftingPage.RankBar, 'Update', function(self, professionInfo)
         local name= e.strText[professionInfo.professionName]
         if name then
-            local rankText = GenerateRankText(name, professionInfo.skillLevel, professionInfo.maxSkillLevel, professionInfo.skillModifier);
+            local rankText = GenerateRankText(name, professionInfo.skillLevel, professionInfo.maxSkillLevel, professionInfo.skillModifier)
             self.Rank.Text:SetText(rankText)
         end
     end)
 
+    hooksecurefunc(ProfessionsFrame.CraftingPage.SchematicForm, 'Init', function(self, recipeInfo, isRecraftOverride)
+        if not recipeInfo then
+            return
+        end
+        local isEnchant = (self.recipeSchematic.recipeType == Enum.TradeskillRecipeType.Enchant) and not C_TradeSkillUI.IsRuneforging()
+        if isEnchant then
+            self.OptionalReagents:SetText('可选目标：')
+        else
+            self.OptionalReagents:SetText('附加材料：')
+        end
+    end)
     
 
+
+    hooksecurefunc(ProfessionsFrame, 'UpdateTabs', function(self)
+        local recipesTab = self:GetTabButton(self.recipesTabID)
+        e.font(recipesTab.Text)
+        recipesTab.Text:SetText('配方')
+
+        recipesTab = self:GetTabButton(self.specializationsTabID)
+        e.font(recipesTab.Text)
+        recipesTab.Text:SetText('专精')
+
+        recipesTab = self:GetTabButton(self.craftingOrdersTabID )
+        e.font(recipesTab.Text)
+        recipesTab.Text:SetText('制造订单')
+    end)
+    
+    --[[hooksecurefunc(ProfessionSpecTabMixin, 'SetState', function(self, state)
+        local name= e.strText[ self.tabInfo.name]
+        info= self.tabInfo
+        for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
+        print(name, self.tabInfo.name)
+        
+    end)]]
+    --ProfessionsFrame.SpecPage.tabsPool
+    -- ProfessionsSpecFrameMixin
+    --[[hooksecurefunc(ProfessionsFrame.SpecPage, 'InitializeTabs', function(self)
+        local professionID = self:GetProfessionID();
+        print(professionID)
+        local tabTreeIDs = C_ProfSpecs.GetSpecTabIDsForSkillLine(professionID);
+
+        local lastTab;
+        local anyTabUnlocked = false;
+        --info=self.tabsPool:GetActives
+        for _, traitTreeID in ipairs(tabTreeIDs) do
+            
+        end
+
+       
+    end)]]
+    --hooksecurefunc(ProfessionsSpecPathMixin, 'OnEnter',function(self)
+        
+      
 end
 
+
+  --[[
+      local RequirementTypeToString =
+    {
+        [Enum.RecipeRequirementType.SpellFocus] = "SpellFocusRequirement",
+        [Enum.RecipeRequirementType.Totem] = "TotemRequirement",
+        [Enum.RecipeRequirementType.Area] = "AreaRequirement",
+    };
+    local function FormatRequirements(requirements)
+        local formattedRequirements = {};        
+        for index, recipeRequirement in ipairs(requirements) do            
+            table.insert(formattedRequirements, LinkUtil.FormatLink(RequirementTypeToString[recipeRequirement.type], e.cn(recipeRequirement.name)));
+            table.insert(formattedRequirements, recipeRequirement.met);
+        end
+        return formattedRequirements;
+    end
+    local function SetTextToFit(fontString, text, maxWidth, multiline)
+        fontString:SetHeight(200);
+        fontString:SetText(text);    
+        fontString:SetWidth(maxWidth);
+        if not multiline then
+            fontString:SetWidth(fontString:GetStringWidth());
+        end
+        fontString:SetHeight(fontString:GetStringHeight());
+    end
+  local recipeID = recipeInfo.recipeID;
+        local minimized = ProfessionsUtil.IsCraftingMinimized();
+        if not self.isInspection then            
+            if #C_TradeSkillUI.GetRecipeRequirements(recipeID) > 0 then
+                local fontString = isRecraft and self.RecraftingRequiredTools or self.RequiredTools;
+                self.UpdateRequiredTools = function()
+                    local requirements = C_TradeSkillUI.GetRecipeRequirements(recipeID);
+                    if (#requirements > 0) then
+                        local requirementsText = BuildColoredListString(unpack(FormatRequirements(requirements)))
+                        local maxWidth = minimized and 250 or 800;
+                        local multiline = minimized;
+                        SetTextToFit(fontString, format('|cnNORMAL_FONT_COLOR:需要：|r %s', requirementsText), maxWidth, multiline);
+                    else
+                        fontString:SetText("");
+                    end
+                end
+            end
+        end
+]]
 
 
 
