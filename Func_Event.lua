@@ -891,7 +891,9 @@ local function Init_Event(arg1)
 
         ArchaeologyFrameArtifactPage.historyTitle:SetText('历史')
         ArchaeologyFrameArtifactPage.raceRarity:SetText('种族')
-        ArchaeologyFrame.backButton:SetText('后退')
+        if ArchaeologyFrame.backButton then
+            ArchaeologyFrame.backButton:SetText('后退')
+        end
         ArchaeologyFrameArtifactPageSolveFrameSolveButton:SetText('解密')
 
         hooksecurefunc(ArchaeologyFrame.summaryPage, 'UpdateFrame', function(self)

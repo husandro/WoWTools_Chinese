@@ -138258,6 +138258,7 @@ local tab= {
 
 
 }
+
 function e.Get_Spell_Name(spell)
     return tab[spell] or e.Get_Spell_Name2(spell)
 end
