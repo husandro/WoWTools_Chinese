@@ -15,9 +15,10 @@ function e.Get_Vignette_Name()end---tab.vignetteID
 function e.Get_Toy_Source()end---tab.toyID)--itemID
 function e.Get_Pet_Description()end---tab.speciesID
 function e.Get_Pet_Ablity_Info()end---tab.petAbilityID
-function e.Get_TradeSkillCategory_Name()end---tab.skillCategoryID
+function e.Get_TradeSkillCategory_Name()end---tab.skillCategoryID 专业目录，名称
 function e.Get_Spell_Name()end---tab.spellID
 function e.Get_Item_Search_Name()end---tab.itemID
+function e.Get_SkillLineAbility_Spell()end--tab.skillLineAbilityID 专业配方，名称
 --function e.Get_NPC_Name()end--npcID是字符
 
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
@@ -68,7 +69,10 @@ function e.cn(text, tab)
             if isName then
                 data= e.Get_Item_Search_Name(tab.itemID)--物品名称
             end
-
+        
+        elseif tab.skillLineAbilityID then
+            return e.Get_SkillLineAbility_Spell(tab.skillLineAbilityID)--专业配方名称
+        
         --[[elseif tab.npcID then
             data= e.Get_NPC_Name(tab.npcID)--NPC名称]]
             

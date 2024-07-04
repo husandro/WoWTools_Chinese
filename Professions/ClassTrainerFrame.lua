@@ -1,8 +1,19 @@
 local id, e = ...
 
 
-
+--专业，训练师
 local function Init()
+    e.dia("CONFIRM_PROFESSION", {text = format('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', "XXX"), button1 = '接受', button2 = '取消'})
+    e.hookDia("CONFIRM_PROFESSION", 'OnShow', function(self)
+        local prof1, prof2 = GetProfessions()
+        if ( prof1 and not prof2 ) then
+            self.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第二个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
+        elseif ( not prof1 ) then
+            self.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
+        end
+    end)
+    ClassTrainerTrainButton:SetText('训练')
+
     hooksecurefunc('ClassTrainerFrame_InitServiceButton', function(skillButton, elementData)
         local skillIndex = elementData.skillIndex
         local isTradeSkill = elementData.isTradeSkill
@@ -17,9 +28,16 @@ local function Init()
                 local itemID= itemLink and C_Item.GetItemInfoInstant(itemLink)
                 if itemID then
                     local itemName= C_Item.GetItemNameByID(itemLink)
-                    name= e.Get_Item_Search_Name(itemID) or e.strText[itemName]                    
+                    name= e.Get_Item_Search_Name(itemID) or e.strText[itemName]
+                    if not name then
+                        local data= C_TooltipInfo.GetTrainerService(skillIndex)                
+                        if data and not data.isAzeriteItem then
+                            name= e.Get_Spell_Name(data.id)                
+                        end                
+                    end
                 end
             end
+            
             if name then
                 serviceName= name
             end

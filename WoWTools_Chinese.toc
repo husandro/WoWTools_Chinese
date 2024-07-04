@@ -82,10 +82,12 @@ Collection\Heirloom.Data.lua
 Collection\Wardrobe.lua
 
 ##专业
-Professions\CustomerOrders.lua
+
+Professions\Data_SkillLineAbility.lua
 Professions\Data_SkillLine.lua
 Professions\Data_TradeSkillCategory.lua
 Professions\Professions.lua
+Professions\CustomerOrders.lua
 Professions\ClassTrainerFrame.lua
 
 ##法术

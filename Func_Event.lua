@@ -800,17 +800,7 @@ local function Init_Event(arg1)
     elseif arg1=='Blizzard_BlackMarketUI' then
         e.dia("BID_BLACKMARKET", {text = '确定要出价%s竞拍以下物品吗？', button1 = '确定', button2 = '取消'})
 
-    elseif arg1=='Blizzard_TrainerUI' then--专业，训练师
-        e.dia("CONFIRM_PROFESSION", {text = format('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', "XXX"), button1 = '接受', button2 = '取消'})
-        e.hookDia("CONFIRM_PROFESSION", 'OnShow', function(self)
-            local prof1, prof2 = GetProfessions()
-            if ( prof1 and not prof2 ) then
-                self.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第二个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
-            elseif ( not prof1 ) then
-                self.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
-            end
-        end)
-        ClassTrainerTrainButton:SetText('训练')
+   
 
     elseif arg1=='Blizzard_DeathRecap' then
         DeathRecapFrame.CloseButton:SetText('关闭')

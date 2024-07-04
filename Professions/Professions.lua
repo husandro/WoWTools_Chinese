@@ -580,8 +580,10 @@ local function Init()
         if not recipeInfo then
             return
         end
+        info= recipeInfo
+        --for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
         local itemID= recipeInfo.hyperlink and C_Item.GetItemInfoInstant(recipeInfo.hyperlink)
-        local name= itemID and e.Get_Item_Search_Name(itemID) or e.strText[recipeInfo.name]
+        local name= itemID and e.Get_Item_Search_Name(itemID) or e.Get_SkillLineAbility_Spell(recipeInfo.skillLineAbilityID) or e.strText[recipeInfo.name]
         if name then
             self.Label:SetText(name)
         end

@@ -76,7 +76,7 @@ local function get_gameTooltip_text(self)
                 text2= '装备配置方案'..set2
 
             elseif ench then--附魔：%s
-                local col, str5=  ench:match('(|.-:)(.-)|r')
+                local col, str6=  ench:match('(|.-:)(.-)|r')
                 local t= ench:match('(.+) |A') or ench:match(' (.+)')
                 if t then
                     local num= t:match('%d+ (.+)')
@@ -89,8 +89,8 @@ local function get_gameTooltip_text(self)
                         ench= ench:gsub(t, e.strText[t])
                     end
                     text2= '附魔：'..e.cn(ench)
-                elseif col and str5 then
-                    text2='附魔：'..col..e.cn(str5)..'|r'
+                elseif col and str6 then
+                    text2='附魔：'..col..e.cn(str6)..'|r'
                 else
                     text2='附魔：'..e.cn(ench)
                 end
@@ -188,6 +188,19 @@ local function set_pettips_func(self)--FloatingPetBattleTooltip.xml
     self:HookScript('OnShow', set_pet_func)
 end
 
+--[[SharedTooltipTemplate
+local tabs={ GameTooltipTemplate
+    'ItemRefTooltip',
+    'RunforgeFrameTooltipTemplate',
+    'NamePlateTooltip',
+    'PerksProgramTooltip',
+    'ItemSocketingDescription',
+    'UIWidgetBaseItemEmbeddedTooltipTemplate',
+    'EncounterJournalTooltipItem1Tooltip',
+    'GarrisonMissionMechanicTooltip',
+}
+BattlePetTooltipTemplat    
+]]
 
 set_GameTooltip_func(GameTooltip)
 set_GameTooltip_func(ItemRefTooltip)
@@ -210,11 +223,11 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(too
     if not tooltip or not tooltip.TextLeft1 then
         return
     end
-    
     local name= e.Get_Spell_Name(data.id)
     if name then
         tooltip.TextLeft1:SetText(name)
     end
+    
     --[[local desc= e.Get_Spell_Desc(data.id, false)    
     if desc then
         tooltip:AddLine(desc, nil,nil,nil,true)
@@ -224,7 +237,9 @@ end)
 
 
 
---[[TooltipDataRules.lua
+--[[
+TooltipDataRules.lua
+Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua
 TooltipDataRules.lua 
     Enum.TooltipDataType = {
 		Item = 0,
