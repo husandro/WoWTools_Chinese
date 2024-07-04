@@ -17,7 +17,6 @@ local function Init()
     hooksecurefunc('ClassTrainerFrame_InitServiceButton', function(skillButton, elementData)
         local skillIndex = elementData.skillIndex
         local isTradeSkill = elementData.isTradeSkill
-
         local serviceName, serviceType, _, reqLevel = GetTrainerServiceInfo(skillIndex)
         if ( not serviceName ) then
             serviceName = '未知'
@@ -30,14 +29,14 @@ local function Init()
                     local itemName= C_Item.GetItemNameByID(itemLink)
                     name= e.Get_Item_Search_Name(itemID) or e.strText[itemName]
                     if not name then
-                        local data= C_TooltipInfo.GetTrainerService(skillIndex)                
-                        if data and not data.isAzeriteItem then
-                            name= e.Get_Spell_Name(data.id)                
-                        end                
+                        local data= C_TooltipInfo.GetTrainerService(skillIndex)
+                        if data and not data.isAzeriteItem and data.id then
+                            name= e.Get_Spell_Name(data.id)
+                        end
                     end
                 end
             end
-            
+
             if name then
                 serviceName= name
             end
