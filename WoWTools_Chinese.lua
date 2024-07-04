@@ -91,8 +91,15 @@ function e.font(lable)
 end
 
 local function set(label, text)
-    text= text or label:GetText()
-    text= e.strText[text]
+    if not text then
+        if label.GetText then
+            text= label:GetText()
+        elseif label:GetObjectType(labe)=='Button' then
+            local font= label:GetFontString()
+            text= font and font:GetText()
+        end
+    end    
+    text= text and e.strText[text]
     if text then
         label:SetText(text)
     end
@@ -142,7 +149,7 @@ function e.hookLabel(label, setFont)
     end
 end
 
-function e.setButton(btn, setFont)
+--[[function e.setButton(btn, setFont)
     local label= btn and btn:GetFontString()
     if label then
         if setFont then
@@ -150,7 +157,7 @@ function e.setButton(btn, setFont)
         end
         e.set(label)
     end
-end
+end]]
 
 function e.hookButton(btn, setFont)
     if btn and btn.SetText then

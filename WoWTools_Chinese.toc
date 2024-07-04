@@ -23,6 +23,8 @@ UIDropDownMenu.lua
 Func_Init.lua
 Func_Event.lua
 
+MerchantFrame.lua
+BarberShopFrame.lua
 
 ##角色
 Character.lua

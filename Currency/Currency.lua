@@ -39,7 +39,7 @@ local function Init()
         hooksecurefunc(TokenFrame, 'UpdatePopup', function()
             e.set(TokenFramePopup.InactiveCheckbox.Text)
             e.set(TokenFramePopup.BackpackCheckbox.Text)
-            e.setButton(TokenFramePopup.CurrencyTransferToggleButton)
+            e.set(TokenFramePopup.CurrencyTransferToggleButton)
         end)
 
         CurrencyTransferMenu:SetTitle('转移货币')

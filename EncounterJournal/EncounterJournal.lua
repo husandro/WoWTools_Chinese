@@ -312,6 +312,8 @@ local function Init_EncounterJournal()
     end]]
 
 
+
+    --物品，掉落，列表
     hooksecurefunc(EncounterJournal.LootJournalItems.ItemSetsFrame.ScrollBox, 'Update', function(self)
         if not self:GetView() then
             return
@@ -320,6 +322,32 @@ local function Init_EncounterJournal()
             e.set(btn.SetName)
         end
     end)
+     --[[ hooksecurefunc("EncounterJournal_SetDescriptionWithBullets", function(infoHeader, description)
+        
+            info=infoHeader
+        for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
+       print( infoHeader.sectionID)
+    end)
+    --hooksecurefunc("EncounterJournal_DisplayEncounter", function(...) OnEncounterJournalDisplay(...) end);
+    --hooksecurefunc("EncounterJournal_ToggleHeaders", function(...) OnEncounterJournalToggle(...) end);
+    --hooksecurefunc("EncounterJournal_SetDescriptionWithBullets", function(...) OnEncounterJournalOverview(...) end);
+  
+    function OnEncounterJournalOverview(infoHeader, description)
+        local sectionID = infoHeader.sectionID
+        local difficultyID = EJ_GetDifficulty()
+        if WoWeuCN_Tooltips_TranslateEncounterJournal then
+            local sectionTranslation = WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
+            if (sectionTranslation) then
+            infoHeader.button.title:SetText(sectionTranslation["Title"])
+            EncounterJournal_SetBullets(infoHeader.overviewDescription, sectionTranslation["Description"], not infoHeader.expanded);
+            end
+        else
+            local sectionInfo =  C_EncounterJournal.GetSectionInfo(sectionID)
+            infoHeader.button.title:SetText(sectionInfo.title)
+            EncounterJournal_SetBullets(infoHeader.overviewDescription, sectionInfo.description, not infoHeader.expanded);
+        end
+    end
+    ]]
 end
 
 

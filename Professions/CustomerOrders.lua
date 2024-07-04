@@ -239,14 +239,28 @@ local function Init()
     end)
     ProfessionsCustomerOrdersFrame.MyOrdersPage.OrderList.ResultsText:SetText('没有发现订单')
 
-    
-    --商品，目录    ProfessionsCustomerOrdersFrame.BrowseOrders.RecipeList.ScrollBox
-    --[[hooksecurefunc(ProfessionsCustomerOrdersFrame.BrowseOrders.RecipeList.ScrollBox, 'Updata', function(frame)
-        for _, btn in pairs(frame:GetFrames() or {}) do
-            info= btn
-            for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
+    --商品，目录
+    hooksecurefunc(ProfessionsCustomerOrdersFrame.BrowseOrders.RecipeList.ScrollBox, 'Update', function(frame)
+        if not frame:GetView() then
+            return
         end
-    end)]]
+        for _, btn in pairs(frame:GetFrames() or {}) do
+            if btn.cells and btn.cells[1] then
+                local data= btn:GetData()
+                local option= data and data.option
+                if  option then
+                    local name= e.Get_Item_Search_Name(option.itemID) or e.strText[option.itemName]
+                    if name then
+                        local hex= option.quality and select(4, C_Item.GetItemQualityColor(option.quality))
+                        if hex then
+                            name= '|c'..hex..name..'|r'
+                        end
+                        btn.cells[1].Text:SetText(name)
+                    end
+                end
+            end
+        end
+    end)
 end
 
 

@@ -1555,19 +1555,7 @@ BankItemSearchBox.Instructions:SetText('搜索')
 e.reg(BankSlotsFrame)
 
 
---商人
-MerchantFrameTab1:SetText('商人')
-MerchantFrameTab2:SetText('购回')
-MerchantPageText:SetText('')
-hooksecurefunc('MerchantFrame_UpdateBuybackInfo', function ()
-    MerchantFrame:SetTitle('从商人处购回')
-end)
-hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
-    if not MerchantFrame:IsShown() then
-        return
-    end
-    MerchantPageText:SetFormattedText('页数 %s/%s', MerchantFrame.page, math.ceil(GetMerchantNumItems() / MERCHANT_ITEMS_PER_PAGE))
-end)
+
 
 --就绪
 --ReadyCheck.lua
