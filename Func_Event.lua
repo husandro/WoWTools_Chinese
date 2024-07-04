@@ -1043,6 +1043,11 @@ local function Init_Event(arg1)
     elseif arg1=='Blizzard_ScrappingMachineUI' then--分解
         ScrappingMachineFrame.ScrapButton:SetText('拆解')
         C_Timer.After(0.3, function() ScrappingMachineFrameTitleText:SetText('拆解大师Mk1型') end)
+
+    elseif arg1=='Blizzard_BarbershopUI' then--理发店
+        BarberShopFrame.CancelButton:SetText('取消')
+        BarberShopFrame.ResetButton:SetText('重置')
+        BarberShopFrame.AcceptButton:SetText('接受')
     end
 end
 
