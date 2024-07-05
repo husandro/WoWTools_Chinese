@@ -1663,7 +1663,7 @@ hooksecurefunc('MinimapMailFrameUpdate', function()
     GameTooltip:Show()
 end)
 
-e.hookLabel(MinimapZoneText)
+--e.hookLabel(MinimapZoneText)
 
 --背包
 BagItemSearchBox.Instructions:SetText('搜索')
