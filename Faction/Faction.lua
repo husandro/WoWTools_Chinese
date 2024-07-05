@@ -45,10 +45,60 @@ if ReputationHeaderMixin then--11版本
     --hooksecurefunc(ReputationFrame.ReputationDetailFrame, 'Refresh', function(self)
 else
 
-    TokenFramePopup.Title:SetText('货币设置')
-    TokenFramePopup.InactiveCheckBox.Text:SetText('未使用')
-    TokenFramePopup.BackpackCheckBox.Text:SetText('在行囊上显示')
-    hooksecurefunc(ReputationFrame.ScrollBox, 'Update', function(self)
+
+
+
+
+
+
+
+
+        ReputationFrameFactionLabel:SetText('阵营')--FACTION
+        ReputationFrameStandingLabel:SetText("关系")--STANDING
+        ReputationDetailViewRenownButton:SetText('浏览名望')--ReputationFrame.xml
+        ReputationDetailMainScreenCheckBoxText:SetText( '显示为经验条')
+        ReputationDetailInactiveCheckBoxText:SetText('隐藏')
+        ReputationDetailAtWarCheckBoxText:SetText('交战状态')
+        hooksecurefunc('ReputationFrame_InitReputationRow', function(factionRow, elementData)
+            local factionIndex = elementData.index
+            local name, description, standingID, _, _, _, _, _, _, _, _, _, _, factionID = GetFactionInfo(factionIndex)
+            name= name and e.strText[name]
+            if not name then
+                return
+            end
+
+            local factionContainer = factionRow.Container
+            factionContainer.Name:SetText(name)
+            if not factionID then
+                return
+            end
+
+            local factionStandingtext
+            local isMajorFaction = factionID and C_Reputation.IsMajorFaction(factionID)
+            local repInfo = factionID and C_GossipInfo.GetFriendshipReputation(factionID)
+            if (repInfo and repInfo.friendshipFactionID > 0) then
+                factionStandingtext = e.strText[repInfo.reaction]
+
+            elseif ( isMajorFaction ) then
+                local majorFactionData = C_MajorFactions.GetMajorFactionData(factionID) or {}
+                factionStandingtext = '名望'..majorFactionData.renownLevel
+            else
+                factionStandingtext = e.strText[GetText("FACTION_STANDING_LABEL"..standingID, e.Player.sex)]
+            end
+            if factionStandingtext then
+                factionContainer.ReputationBar.FactionStanding:SetText(factionStandingtext)
+                factionRow.standingText = factionStandingtext
+            end
+            if ( factionIndex == GetSelectedFaction() ) then
+                if ( ReputationDetailFrame:IsShown() ) then
+                    ReputationDetailFactionName:SetText(name)
+                    e.set(ReputationDetailFactionDescription, description)
+                end
+            end
+        end)
+end
+
+    --[[hooksecurefunc(ReputationFrame.ScrollBox, 'Update', function(self)
         if not self:GetView() then
             return
         end
@@ -73,5 +123,4 @@ else
                 end
             end
         end			
-    end)
-end
+    end)]]

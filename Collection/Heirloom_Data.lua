@@ -112,17 +112,9 @@ local tab={
 
 
 
-for itemID, source in pairs(tab) do
-    local text= select(6, C_Heirloom.GetHeirloomInfo(itemID))
-    if text then
-        e.strText[text]= source
-end
-
---[[
 function e.Get_Heirloom_Source(itemID)
     return tab[itemID]
 end
-]]
 
 
 
