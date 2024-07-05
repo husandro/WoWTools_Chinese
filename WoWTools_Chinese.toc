@@ -35,7 +35,7 @@ Chat.lua
 
 ##成就
 Achievement\Data_Category.lua
-Achievement\Data_Info.lua
+Achievement\Data.lua
 Achievement\Achievement.lua
 
 ##拍卖行
