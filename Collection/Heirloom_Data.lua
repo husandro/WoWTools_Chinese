@@ -1,4 +1,4 @@
-
+local e= select(2, ...)
 --[[
 [ItemID]= 'SourceText_lang',
 https://wago.tools/db2/Heirloom?locale=zhCN
@@ -112,18 +112,21 @@ local tab={
 
 
 
+for itemID, source in pairs(tab) do
+    local text= select(6, C_Heirloom.GetHeirloomInfo(itemID))
+    if text then
+        e.strText[text]= source
+end
+
+--[[
+function e.Get_Heirloom_Source(itemID)
+    return tab[itemID]
+end
+]]
 
 
 
 
 
 
-
-
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item,  function(tooltip, data)
-    local info= tab[data.id]
-    if info and not C_Heirloom.PlayerHasHeirloom(data.id) then
-        tooltip:AddLine(info, nil, nil, nil, true)
-    end
-end)
 

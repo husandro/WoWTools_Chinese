@@ -63,7 +63,7 @@ local function get_gameTooltip_text(self)
             local str3= text:match('%d+ (.+)')
             local str4= text:match('|c........(.-)|r')
             local str5= text:match('(.+) %(%d/%d%)')--套装名称 (4/5)
-            
+
             if up then
                 local t= up:match(': (.-) %d')
                 if t and e.strText[t] then
@@ -209,31 +209,33 @@ set_pettips_func(BattlePetTooltip)
 set_pettips_func(FloatingBattlePetTooltip)
 
 
+
 --TooltipDataRules.lua
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tooltip, data)
-    if not tooltip or not tooltip.TextLeft1 then
-        return
-    end
-    local name= e.Get_Item_Search_Name(data.id)
-    if name then
-        tooltip.TextLeft1:SetText(name)
+    if tooltip.TextLeft1 then
+        local name= e.Get_Item_Search_Name(data.id)
+        if name then
+            tooltip.TextLeft1:SetText(name)
+        end
+        local source= e.Get_Heirloom_Source(data.id)
+        if source and not C_Heirloom.PlayerHasHeirloom(data.id) then
+            tooltip:AddLine(source, nil,nil,nil, true)
+            tooltip:Show()
+        end
     end
 end)
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip, data)
-    if not tooltip or not tooltip.TextLeft1 then
-        return
+    if tooltip.TextLeft1 then        
+        local name= e.Get_Spell_Name(data.id)
+        if name then
+            tooltip.TextLeft1:SetText(name)
+        end
     end
-    local name= e.Get_Spell_Name(data.id)
-    if name then
-        tooltip.TextLeft1:SetText(name)
-    end
-    
-    --[[local desc= e.Get_Spell_Desc(data.id, false)    
-    if desc then
-        tooltip:AddLine(desc, nil,nil,nil,true)
-        tooltip:Show()
-    end]]
 end)
+
+
+
+
 
 
 
@@ -286,6 +288,6 @@ panel:SetScript("OnEvent", function(_, _, arg1)
     elseif arg1=='Blizzard_ItemSocketingUI' then--镶嵌宝石，界面
         ItemSocketingSocketButton:SetText('应用')
         set_GameTooltip_func(ItemSocketingDescription)
-        
+
     end
 end)

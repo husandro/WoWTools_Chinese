@@ -34,32 +34,31 @@ Vignette_Data.lua
 Chat.lua
 
 ##成就
-Achievement\Data_Category.lua
-Achievement\Data.lua
+Achievement\Achievement_Data_Category.lua
+Achievement\Achievement_Data.lua
 Achievement\Achievement.lua
 
 ##拍卖行
 AuctionHouse.lua
 
 ##货币
-Currency\Data.lua
+Currency\Currency_Data.lua
 Currency\Currency.lua
 
 ##派系
-Faction\Data.lua
-Faction\Data_Race.lua
-Faction\Data_Friend.lua
+Faction\Faction_Data.lua
+Faction\Faction_Data_Race.lua
+Faction\Faction_Data_Friend.lua
 Faction\Faction.lua
 
 ##节日
 Holiday\Holiday.lua
-Holiday\Data.lua
+Holiday\Holiday_Data.lua
 
 ##冒险指南
 EncounterJournal\EncounterJournal.lua
-EncounterJournal\Data_Boss.lua
-EncounterJournal\Data_Instance.lua
-
+EncounterJournal\EncounterJournal_Data_Boss.lua
+EncounterJournal\EncounterJournal_Data_Instance.lua
 EncounterJournal\PerksProgram.lua
 EncounterJournal\PerksActivity.lua
 EncounterJournal\PerksActivity_Data.lua
@@ -77,23 +76,23 @@ Collection\Pet.lua
 Collection\Pet_Data_Ability.lua
 Collection\Pet_Data_Description.lua
 Collection\Toy_Data.lua
-Collection\Heirloom.Data.lua
+Collection\Heirloom_Data.lua
 Collection\Wardrobe.lua
 
 ##专业
-Professions\Data_SkillLineAbility.lua
-Professions\Data_SkillLine.lua
-Professions\Data_SourceInfo.lua
-Professions\Data_TradeSkillCategory.lua
+Professions\Professions_Data_SkillLineAbility.lua
+Professions\Professions_Data_SkillLine.lua
+Professions\Professions_Data_SourceInfo.lua
+Professions\Professions_Data_TradeSkillCategory.lua
 Professions\Professions.lua
 Professions\CustomerOrders.lua
 Professions\ClassTrainerFrame.lua
 
 ##法术
-Spell\Data_Other.lua
-Spell\Data_Flyout.lua
-Spell\Data_Name2.lua
-Spell\Data_Name.lua
+Spell\Spell_Data_Other.lua
+Spell\Spell_Data_Flyout.lua
+Spell\Spell_Data_Name2.lua
+Spell\Spell_Data_Name.lua
 Spell\SpellBook.lua
 
 ##物品
@@ -103,11 +102,11 @@ Item\Data_TransmogSet.lua
 Item\Data_SearchName.lua
 
 ##挑战
-Challenges\Dada_Affix.lua
+Challenges\Challenges_Dada_Affix.lua
 Challenges\Challenges.lua
 
 ##专精
-Specialization\Data_Specialization.lua
+Specialization\Specialization_Data.lua
 Specialization\Talent.lua
 
 Data_zhCN.lua

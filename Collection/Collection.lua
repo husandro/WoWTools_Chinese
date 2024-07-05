@@ -25,6 +25,14 @@ local function Init_Toy()
     hooksecurefunc(ToyBox.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
         self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
     end)
+    hooksecurefunc('ToySpellButton_UpdateButton', function(self)
+        if self:IsVisible() and self.itemID then
+            local name = e.Get_Item_Search_Name(self.itemID) or e.strText[self.name:GetText()]          
+            if name then
+                self.name:SetText(name)
+            end
+        end
+    end)
 end
 
 

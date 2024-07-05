@@ -12,16 +12,18 @@ function e.Get_Boss_Description()end---tab.journalEncounterID
 function e.Get_Instance_Description()end---tab.instanceID
 function e.Get_PerksActivity_Info()end---tab.perksActivityID
 function e.Get_Vignette_Name()end---tab.vignetteID
-function e.Get_Toy_Source()end---tab.toyID)--itemID
 function e.Get_Pet_Description()end---tab.speciesID
 function e.Get_Pet_Ablity_Info()end---tab.petAbilityID
 function e.Get_Spell_Name()end---tab.spellID
-function e.Get_Item_Search_Name()end---tab.itemID
+
+--{itemID, isName, isToy, isHeirloom}
+function e.Get_Item_Search_Name()end--tab.itemID
+function e.Get_Toy_Source()end
+function e.Get_Heirloom_Source()end
 
 function e.Get_SkillLineAbility_Name()end--tab.skillLineAbilityID 专业配方，名称
 function e.Get_TradeSkillCategory_Name()end---tab.skillCategoryID 专业目录，名称
-function e.Get_Recipe_Source()end--
---function e.Get_NPC_Name()end--npcID是字符
+function e.Get_Recipe_Source()end--配方，来源
 
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
@@ -63,22 +65,23 @@ function e.cn(text, tab)
             if tab.isName then
                 data= e.Get_Spell_Name(tab.spellID)--法术名称
             end
-            --elseif isDesc then
-            --data= e.Get_Spell_Desc(tab.spellID, tab.isAura)
 
         elseif tab.itemID then
-            --if tab.isDesc then
-            if isName then
+            if tab.isName then
                 data= e.Get_Item_Search_Name(tab.itemID)--物品名称
+                
+            elseif tab.isToy then
+                data= e.Get_Toy_Source(itemID)
+
+            elseif tab.isHeirloom then
+                data= e.Get_Heirloom_Source(itemID)
             end
 
         elseif tab.skillLineAbilityID then
-            return e.Get_SkillLineAbility_Name(tab.skillLineAbilityID)--专业配方,名称
+            data= e.Get_SkillLineAbility_Name(tab.skillLineAbilityID)--专业配方,名称
 
         elseif tab.recipeID then
-            return e.Get_Recipe_Source(tab.recipeID)--专业配方,来源
-        --[[elseif tab.npcID then
-            data= e.Get_NPC_Name(tab.npcID)--NPC名称]]
+            data= e.Get_Recipe_Source(tab.recipeID)--专业配方,来源
 
         end
     end
