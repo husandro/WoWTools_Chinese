@@ -3,7 +3,7 @@ local e= select(2, ...)
 
 e.strText={--主要，汉化    
     --[GetClassInfo(13)] = "|cff33937f唤魔师|r",
-   
+
 }
 
 
@@ -28,7 +28,7 @@ function e.Get_Recipe_Source()end--
 function e.cn(text, tab)
     local cnName=text and e.strText[text]
     if cnName then
-        return cnName            
+        return cnName
     end
     local data
     if tab and type(tab)=='table' then
@@ -47,7 +47,7 @@ function e.cn(text, tab)
         elseif tab.vignetteID then
             data= e.Get_Vignette_Name(tab.vignetteID)--Vignette
 
-        elseif tab.toyID then            
+        elseif tab.toyID then
             data= e.Get_Toy_Source(tab.toyID)--玩具itemID
 
         elseif tab.speciesID then
@@ -71,15 +71,15 @@ function e.cn(text, tab)
             if isName then
                 data= e.Get_Item_Search_Name(tab.itemID)--物品名称
             end
-        
+
         elseif tab.skillLineAbilityID then
             return e.Get_SkillLineAbility_Name(tab.skillLineAbilityID)--专业配方,名称
-        
+
         elseif tab.recipeID then
             return e.Get_Recipe_Source(tab.recipeID)--专业配方,来源
         --[[elseif tab.npcID then
             data= e.Get_NPC_Name(tab.npcID)--NPC名称]]
-            
+
         end
     end
     return data or text
@@ -99,17 +99,19 @@ function e.font(lable)
 end
 
 local function set(label, text)
-    if not text then
-        if label.GetText then
-            text= label:GetText()
-        elseif label:GetObjectType(labe)=='Button' then
-            local font= label:GetFontString()
-            text= font and font:GetText()
+    if label then
+        if not text then
+            if label.GetText then
+                text= label:GetText()
+            elseif label:GetObjectType(labe)=='Button' then
+                local font= label:GetFontString()
+                text= font and font:GetText()
+            end
         end
-    end    
-    text= text and e.strText[text]
-    if text then
-        label:SetText(text)
+        text= text and e.strText[text]
+        if text then
+            label:SetText(text)
+        end
     end
 end
 function e.set(label, text, affer, setFont)
