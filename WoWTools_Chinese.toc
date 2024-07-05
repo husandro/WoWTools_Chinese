@@ -3,7 +3,6 @@
 ## Author: husandro
 ## Version: 1
 ## Notes: |A:Icon-WoW:0:0|aWoW |cff28a3ff中文化|r|n|cffffd100|A:communities-icon-invitemail:0:0|ahusandro@qq.com|r|n|A:WoWShare-TwitterLogo:0:0|a|cff00ccffhttps://www.curseforge.com/wow/addons/wowtools_chinese|r
-## SavedVariables: WoWToolsSave_Chinese
 ## DefaultState: Enabled
 ## IconTexture: Interface\AddOns\WoWTools_Chinese\Sesource\WoWtools.tga
 
@@ -13,9 +12,6 @@
 11API.lua
 
 WoWTools_Chinese.lua
-
-
-
 Dialogs.lua
 NavBar.lua
 GameTooltip.lua
@@ -24,15 +20,15 @@ Func_Init.lua
 Func_Event.lua
 
 MerchantFrame.lua
-
+LFG\LFG.lua
 ##角色
 Character.lua
 ##公会
 Guild.lua
 ##Vigentte
 Vignette_Data.lua
-
-
+##频道
+Chat.lua
 
 ##成就
 Achievement\Data_Category.lua
@@ -106,8 +102,6 @@ Item\Data_SearchName.lua
 ##挑战
 Challenges\Dada_Affix.lua
 Challenges\Challenges.lua
-
-LFG\LFG.lua
 
 ##专精
 Specialization\Data_Specialization.lua
