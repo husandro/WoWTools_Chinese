@@ -794,7 +794,7 @@ local function Init_Event(arg1)
     elseif arg1=='Blizzard_ProfessionsTemplates' then
         e.dia("PROFESSIONS_RECRAFT_REPLACE_OPTIONAL_REAGENT", {button1 = '接受', button2 = '取消'})
         e.hookDia("PROFESSIONS_RECRAFT_REPLACE_OPTIONAL_REAGENT", 'OnShow', function(self, data)
-            self.text:SetFormattedText('你想替换%s吗？\n它会在再造时被摧毁。', data.itemName)
+            self.text:SetFormattedText('你想替换%s吗？\n它会在再造时被摧毁。', e.cn(data.itemName))
         end)
 
     elseif arg1=='Blizzard_BlackMarketUI' then

@@ -615,7 +615,9 @@ local function Init()
         recipesTab.Text:SetText('制造订单')
     end)
     
-    --[[hooksecurefunc(ProfessionSpecTabMixin, 'SetState', function(self, state)
+      
+end
+ --[[hooksecurefunc(ProfessionSpecTabMixin, 'SetState', function(self, state)
         local name= e.strText[ self.tabInfo.name]
         info= self.tabInfo
         for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
@@ -640,9 +642,6 @@ local function Init()
     end)]]
     --hooksecurefunc(ProfessionsSpecPathMixin, 'OnEnter',function(self)
         
-      
-end
-
 
   --[[
       local RequirementTypeToString =
