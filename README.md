@@ -1,5 +1,10 @@
 WoW UI 中文化
+
+下载
+https://addons.wago.io/addons/wowtools-chinese
 -----------------------
+
+
 
 
 <WoW_Tools> Plus插件
