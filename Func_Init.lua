@@ -1895,26 +1895,6 @@ hooksecurefunc(ResizeCheckButtonMixin, 'SetLabelText', function(self, labelText)
 end)
 
 
---GameTooltip.lua
---替换，原生
-function GameTooltip_OnTooltipAddMoney(self, cost, maxcost)
-    if( not maxcost or maxcost < 1 ) then --We just have 1 price to display
-        SetTooltipMoney(self, cost, nil, string.format("%s:", '卖价'))
-    else
-        GameTooltip_AddColoredLine(self, ("%s:"):format('卖价'), HIGHLIGHT_FONT_COLOR)
-        local indent = string.rep(" ",4)
-        SetTooltipMoney(self, cost, nil, string.format("%s%s:", indent, '最小'))
-        SetTooltipMoney(self, maxcost, nil, string.format("%s%s:", indent, '最大'))
-    end
-end
-
-TOOLTIP_QUEST_REWARDS_STYLE_DEFAULT.headerText = '奖励'
-TOOLTIP_QUEST_REWARDS_STYLE_WORLD_QUEST.headerText = '奖励'
-TOOLTIP_QUEST_REWARDS_STYLE_CONTRIBUTION.headerText = '为该建筑捐献物资会奖励你：'
-TOOLTIP_QUEST_REWARDS_STYLE_PVP_BOUNTY.headerText = '悬赏奖励'
-TOOLTIP_QUEST_REWARDS_STYLE_ISLANDS_QUEUE.headerText = '获胜奖励：'
-TOOLTIP_QUEST_REWARDS_STYLE_EMISSARY_REWARD.headerText = '奖励'
-TOOLTIP_QUEST_REWARDS_PRIORITIZE_CURRENCY_OVER_ITEM.headerText = '奖励'
 
 
 --Ping系统

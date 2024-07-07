@@ -56,7 +56,7 @@ TooltipDataProcessor.AddLinePreCall(Enum.TooltipDataLineType.UnitName, function(
 	if not unitToken or UnitIsPlayer(unitToken) then
         return 
     end
-    local name= e.strText[lineData.leftText] 
+    local cnName= e.strText[lineData.leftText] 
     if not cnName then
         local guid = UnitGUID(unitToken)
         local npc= guid and select(6, strsplit("-", guid))--位面,NPCID
@@ -109,7 +109,9 @@ TooltipDataProcessor.AddLinePostCall(Enum.TooltipDataLineType.GemSocket, functio
             lineData.leftText= gem1..' 和 '..gem2
         end
     end
-
-    info=lineData
-    --for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
 end)
+
+
+
+
+TooltipDataRules.GemSocketEnchantment(tooltip, lineData)
