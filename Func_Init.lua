@@ -2265,23 +2265,7 @@ ColorPickerFrame.Footer.OkayButton:SetText('确定')
 ColorPickerFrame.Footer.CancelButton:SetText('取消')
 ColorPickerFrame.Header.Text:SetText('颜色选择器')
 
-if e.Player.class=='HUNTER' then
-    StableFrame.StabledPetList.FilterBar.SearchBox.Instructions:SetText('查询')
-    --StableFrame.StabledPetList.FilterBar.FilterDropdown.Text:SetText('过滤')
-    e.hookButton(StableFrame.StableTogglePetButton, true)
-    StableFrame.ReleasePetButton:SetText('释放')
-    StableFrame.ReleasePetButton.disabledTooltip='你只能释放你当前召唤的宠物。'
-    StableFrame.PetModelScene.AbilitiesList.ListHeader:SetText('特殊技能')
-    StableFrame.ActivePetList.ListName:SetText('激活')
-    StableFrame.StabledPetList.ListName:SetText('兽栏')
 
-    StableFrameTitleText:SetFormattedText('|cffaad372%s|r 的宠物', UnitName('player'))
-    hooksecurefunc(StableFrame.PetModelScene.PetInfo, 'SetPet', function(self, petData)
-        if petData.isExotic then
-            self.Exotic:SetText('特殊')
-        end
-    end)
-end
 
 
 
