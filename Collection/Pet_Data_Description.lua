@@ -1,8 +1,3 @@
-local e= select(2, ...)
---[[
-[ID]= {'Description_lang', 'SourceText_lang'},
-https://wago.tools/db2/BattlePetSpecies?locale=zhCN
-]]
 local tab={
 
 
@@ -1914,8 +1909,12 @@ local tab={
 
 
 
+--[[
+[ID]= {'Description_lang', 'SourceText_lang'},
+https://wago.tools/db2/BattlePetSpecies?locale=zhCN
+]]
 
-
+local e= select(2, ...)
 function e.Get_Pet_Description(speciesID)
     return tab[speciesID]
 end

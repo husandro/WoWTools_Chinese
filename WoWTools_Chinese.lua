@@ -25,8 +25,8 @@ function e.Get_SkillLineAbility_Name()end--tab.skillLineAbilityID 专业配方�
 function e.Get_TradeSkillCategory_Name()end---tab.skillCategoryID 专业目录，名称
 function e.Get_Recipe_Source()end--配方，来源
 
---NPC
-function e.Get_Creature_Family()end--tab.familyName 类型名称
+
+function e.Get_LFGDungeon_Info() end--tab.lfgDungeonID, isName, isDesc
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
 function e.cn(text, tab)
@@ -85,6 +85,8 @@ function e.cn(text, tab)
         elseif tab.recipeID then
             data= e.Get_Recipe_Source(tab.recipeID)--专业配方,来源
 
+        elseif tab.lfgDungeonID then
+            data= e.Get_LFGDungeon_Info(tab.lfgDungeonID, tab.isName, tab.isDesc)
         end
     end
     return data or text

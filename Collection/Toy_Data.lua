@@ -1,15 +1,7 @@
-local e= select(2, ...)
-
-
---[[
-[ItemID] ='SourceText_lang',
-https://wago.tools/db2/Toy?build=11.0.0.55288&locale=zhCN
-]]
-
-
-
-
 local tab={
+
+
+
 [1973] ='|cFFFFD200掉落：|r世界掉落',
 [13379] ='|cFFFFD200掉落：|r弗雷斯特恩|n|cFFFFD200地区：|r斯坦索姆',
 [17712] ='|cFFFFD200世界事件：|r冬幕节',
@@ -950,6 +942,16 @@ local tab={
 }
 
 
+
+
+
+
+
+--[[
+[ItemID] ='SourceText_lang',
+https://wago.tools/db2/Toy?build=11.0.0.55288&locale=zhCN
+]]
+local e= select(2, ...)
 function e.Get_Toy_Source(itemID)
     return tab[itemID]
 end

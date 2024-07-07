@@ -1,11 +1,6 @@
-
-local e= select(2, ...)
-
---[[
-[ID]= {"Name_lang", "Description_lang"},
-https://wago.tools/db2/BattlePetAbility?locale=zhCN&build=11.0.0.55288
-]]
 local tab={
+
+
 [7]= {"亚历山大之手", "冲向敌人，对其造成伤害。"},
 [70]= {nil, "治疗后排50点，但有2轮的冷却时间。"},
 [73]= {"猛咬目标，立即造成[StandardDamage(1,1)]点伤害，然后在下一轮造成[StandardDamage(2,1)]点伤害。|n|n持续[numTurns()]轮。"},
@@ -1351,6 +1346,16 @@ local tab={
 
 }
 
+
+
+
+
+
+--[[
+[ID]= {"Name_lang", "Description_lang"},
+https://wago.tools/db2/BattlePetAbility?locale=zhCN&build=11.0.0.55288
+]]
+local e= select(2, ...)
 function e.Get_Pet_Ablity_Info(abilityID)
     return tab[abilityID]
 end

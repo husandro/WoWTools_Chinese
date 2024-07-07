@@ -22,9 +22,7 @@ UIDropDownMenu.lua
 Func_Init.lua
 Func_Event.lua
 
-
 MerchantFrame.lua
-LFG\LFG.lua
 StableFrame.lua
 
 ##角色
@@ -112,6 +110,8 @@ Challenges\Challenges.lua
 Specialization\Specialization_Data.lua
 Specialization\Talent.lua
 
-
+##LFG
+LFG\LFG_Data_LFGDungeons.lua
+LFG\LFG.lua
 
 Data_zhCN.lua

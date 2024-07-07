@@ -1,9 +1,7 @@
-local e = select(2, ...)
---[[
-[ID]= {'Description_lang', 'Title_lang', 'Reward_lang'},
-https://wago.tools/db2/Achievement?locale=zhCN&build=11.0.2.55399
-]]
 local tab={
+
+
+
 [6]= {'升到10级。', '10级', nil},
 [7]= {'升到20级。', '20级', nil},
 [8]= {'升到30级。', '30级', nil},
@@ -11157,6 +11155,12 @@ local tab={
 function e.Get_Achievement_Info(achievementID)
     return tab[achievementID]
 end
+]]
+
+local e = select(2, ...)
+--[[
+[ID]= {'Description_lang', 'Title_lang', 'Reward_lang'},
+https://wago.tools/db2/Achievement?locale=zhCN&build=11.0.2.55399
 ]]
 
 local function is_add(a, b)
