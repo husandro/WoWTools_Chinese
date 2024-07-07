@@ -83,7 +83,8 @@ else
                 local majorFactionData = C_MajorFactions.GetMajorFactionData(factionID) or {}
                 factionStandingtext = '名望'..majorFactionData.renownLevel
             else
-                factionStandingtext = e.strText[GetText("FACTION_STANDING_LABEL"..standingID, UnitSext('player'))]
+                local sex= UnitSex('player')
+                factionStandingtext = e.strText[GetText("FACTION_STANDING_LABEL"..standingID, sex)]
             end
             if factionStandingtext then
                 factionContainer.ReputationBar.FactionStanding:SetText(factionStandingtext)
