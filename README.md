@@ -38,7 +38,7 @@
 
 ## 下载
 
-> ### <https://www.curseforge.com/wow/addons/wowtoolschinese>
+> ### <https://legacy.curseforge.com/wow/addons/wowtoolschinese>
 >
 > ### <https://addons.wago.io/addons/wowtools-chinese>
 > ### <https://github.com/husandro/WoWTools_Chinese>
