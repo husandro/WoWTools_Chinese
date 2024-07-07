@@ -217,15 +217,27 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tool
         if name then
             tooltip.TextLeft1:SetText(name)
         end
+    end
+    if C_Heirloom.IsItemHeirloom(data.id) then
         local source= e.Get_Heirloom_Source(data.id)
         if source and not C_Heirloom.PlayerHasHeirloom(data.id) then
             tooltip:AddLine(source, nil,nil,nil, true)
-            tooltip:Show()
+            --tooltip:Show()
+        end
+    end
+
+end)
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(tooltip, data)
+    if not PlayerHasToy(data.id) then
+        local source= e.Get_Toy_Source(data.id)
+        if source then
+            tooltip:AddLine(source, nil,nil,nil, true)
+            --tooltip:Show()
         end
     end
 end)
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip, data)
-    if tooltip.TextLeft1 then        
+    if tooltip.TextLeft1 then
         local name= e.Get_Spell_Name(data.id)
         if name then
             tooltip.TextLeft1:SetText(name)
