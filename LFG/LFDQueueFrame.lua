@@ -1,12 +1,15 @@
 local e= select(2, ...)
 
+--地下城查找器
 
+GroupFinderFrame:HookScript('OnShow', function()
+    PVEFrame:SetTitle('地下城和团队副本')
+end)
 
+LFDQueueFrameFollowerTitle:SetText('追随者地下城')
+LFDQueueFrameFollowerDescription:SetText('与NPC队友一起完成地下城')
 
-
-_G['LFDQueueFrameFollowerTitle']:SetText('追随者地下城')
-_G['LFDQueueFrameFollowerDescription']:SetText('与NPC队友一起完成地下城')
-
+--自定义，地下城，列表
 hooksecurefunc('LFGDungeonListButton_SetDungeon', function(button)
     e.set(button.instanceName)
 end)
@@ -14,8 +17,8 @@ end)
 
 
 
-
-
+--e.set(LFDQueueFrameTypeDropdownName)
+--e.set(RaidFinderQueueFrameSelectionDropdownName)
 
 
 

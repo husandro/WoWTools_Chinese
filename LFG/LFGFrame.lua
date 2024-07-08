@@ -7,23 +7,11 @@ local e= select(2, ...)
 -- LFG
 
 
-for index, name in pairs(LFG_CATEGORY_NAMES) do
-    local cnName= e.strText[name]
-    if cnName then
-        LFG_CATEGORY_NAMES[index]= cnName        
-    end
-end
-
-e.hookLabel(GroupFinderFrameGroupButton1Name)
-e.hookLabel(GroupFinderFrameGroupButton2Name)
-e.hookLabel(GroupFinderFrameGroupButton3Name)
 
 
-
-
-
-
-
+e.hookLabel(GroupFinderFrameGroupButton1Name)--地下城查找器 GroupFinderFrame.groupButton1.name
+e.hookLabel(GroupFinderFrameGroupButton2Name)--团队查找器 GroupFinderFrame.groupButton2.name
+e.hookLabel(GroupFinderFrameGroupButton3Name)--预创建队伍 GroupFinderFrame.groupButton3.name
 
 
 
@@ -37,7 +25,7 @@ PVEFrameTab1:SetText('地下城和团队副本')
 PVEFrameTab2:SetText('PvP')
 PVEFrameTab3:SetText('史诗钥石地下城')
 
-    
+
 hooksecurefunc('LFDQueueFrameFindGroupButton_Update', function()--LFDFrame.lua
     local mode = GetLFGMode(LE_LFG_CATEGORY_LFD)
     if ( mode == "queued" or mode == "rolecheck" or mode == "proposal" or mode == "suspended" ) then
@@ -281,24 +269,6 @@ end)
 
 
 
-hooksecurefunc('LFGListSearchPanel_SetCategory', function(self, categoryID, filters)--LFGList.lua
-    local categoryInfo = C_LFGList.GetLfgCategoryInfo(categoryID) or {} --if categoryInfo.searchPromptOverride then e.set(self.SearchBox.Instructions, e.strText[categoryInfo.searchPromptOverride])
-    self.SearchBox.Instructions:SetText('过滤器')
-    local name = LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, filters, false)
-    if name then
-        if e.strText[name] then
-            e.set(self.CategoryName, name)
-        else
-            local t1, t2 = name:match('(.-) %- (.+)')
-            if t1 and t2 then
-                local a1, b2= e.strText[t1], e.strText[t2]
-                if a1 or b2 then
-                    self.CategoryName:SetText((a1 or t1)..' - '..(b2 or t2))
-                end
-            end
-        end
-    end
-end)
 
 
 hooksecurefunc('LFGInvitePopup_Update', function(inviter, _, _, _, _, isQuestSessionActive)
@@ -358,7 +328,7 @@ hooksecurefunc('RaidFinderFrame_UpdateAvailability', function()
     if not RaidFinderFrame.NoRaidsCover:IsShown() then
         return
     end
-    
+
 	local nextLevel = nil;
 	local level = UnitLevel("player");
 	for i=1, GetNumRFDungeons() do

@@ -1,30 +1,90 @@
 local e= select(2, ...)
 
+--预创建队伍
+
+
+
+
+
+
+
+
+
+
+
+local function LFGListUtil_GetDecoratedCategoryName(categoryName, filter, useColors)
+    categoryName= e.strText[categoryName] or categoryName
+	if ( filter == 0 ) then
+		return categoryName;
+	end
+
+	local colorStart = "";
+	local colorEnd = "";
+	if ( useColors ) then
+		colorStart = "|cffffffff";
+		colorEnd = "|r";
+	end
+
+	local extraName = "";
+	if ( filter == Enum.LFGListFilter.NotRecommended ) then
+		extraName = '经典旧世';
+	elseif ( filter == Enum.LFGListFilter.Recommended ) then
+		local exp = LFGListUtil_GetCurrentExpansion();
+		extraName = e.cn(_G["EXPANSION_NAME"..exp])
+	end
+
+	if(extraName ~= "") then
+		return string.format('%s - %s%s%s', categoryName, colorStart, extraName, colorEnd);
+	else
+		return categoryName;
+	end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 
 LFGListFrame.CategorySelection.Label:SetText('预创建队伍')
-    hooksecurefunc('LFGListCategorySelection_AddButton', function(self, btnIndex, categoryID, filters)--LFGList.lua
-        local baseFilters = self:GetParent().baseFilters
-        local allFilters = bit.bor(baseFilters, filters)
-        if ( filters ~= 0 and #C_LFGList.GetAvailableActivities(categoryID, nil, allFilters) == 0) then
-            return
+
+
+hooksecurefunc('LFGListCategorySelection_AddButton', function(self, btnIndex, categoryID, filters)--LFGList.lua
+    local baseFilters = self:GetParent().baseFilters
+    local allFilters = bit.bor(baseFilters, filters)
+    if ( filters ~= 0 and #C_LFGList.GetAvailableActivities(categoryID, nil, allFilters) == 0) then
+        return
+    end
+    local categoryInfo = C_LFGList.GetLfgCategoryInfo(categoryID)
+    local text=LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, filters, true)
+    
+    local btn= self.CategoryButtons[btnIndex]
+    if text and btn then
+        e.font(btn:GetFontString())
+        local name= text:match('%- (.+)')
+        local cnName= name and e.strText[name]
+        if cnName then
+            text= text:gsub(name, cnName)
         end
-        local categoryInfo = C_LFGList.GetLfgCategoryInfo(categoryID)
-        local text=LFGListUtil_GetDecoratedCategoryName(e.cn(categoryInfo.name), filters, true)
-        local btn= self.CategoryButtons[btnIndex]
-        if text and btn then
-            e.font(btn:GetFontString())
-            local name= text:match('%- (.+)')
-            local cnName= name and e.strText[name]
-            if cnName then
-                text= text:gsub(name, cnName)
-            end
-            btn:SetText(text)
-        end
-    end)
+        btn:SetText(text)
+    end
+end)
+
+    
+
     LFGListFrame.CategorySelection.StartGroupButton:SetText('创建队伍')
     LFGListFrame.CategorySelection.FindGroupButton:SetText('寻找队伍')
     LFGListFrame.CategorySelection.Label:SetText('预创建队伍')
@@ -459,3 +519,25 @@ hooksecurefunc('LFGListEntryCreationActivityFinder_InitButton', function(btn)
 end)
 --LFGListFrame.EntryCreation.ActivityFinder.Dialog.ScrollBox
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--LFGList.lua
+hooksecurefunc('LFGListSearchPanel_SetCategory', function(self)--, categoryID, filters)
+	local categoryInfo = C_LFGList.GetLfgCategoryInfo(self.categoryID);
+	self.SearchBox.Instructions:SetText(e.cn(categoryInfo.searchPromptOverride) or '过滤器');
+	local name = LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, self.filters, false);
+	self.CategoryName:SetText(name)
+end)

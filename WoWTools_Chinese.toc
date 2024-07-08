@@ -32,6 +32,7 @@ AddonList.lua
 FriendsFrame.lua
 QuickKeybindFrame.lua
 MainMicroButton.lua
+Constants.lua
 
 ##角色
 Character.lua
@@ -123,12 +124,16 @@ Specialization\Talent.lua
 
 ##LFG
 LFG\LFG_Data_LFGDungeons.lua
-LFG\GroupFinderFrame.lua
-LFG\LFGListFrame.lua
+##地下城查找器
 LFG\LFDQueueFrame.lua
-LFG\LFG.lua
-LFG\PVPQueueFrame.lua
+##团队查找器
+LFG\RaidFinderQueueFrame.lua
+LFG\LFGListFrame.lua
+LFG\LFGFrame.lua
 
+
+## PvP查找器
+LFG\PVPQueueFrame.lua
 
 
 

@@ -113,8 +113,6 @@ local brawlTab={
 
 --快速比赛
 local function Init_HonorFrame()
-    
-
     --按钮，列表, OnEnter
     BONUS_BUTTON_TOOLTIPS.RandomBG.func= function(self)
         GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -337,6 +335,8 @@ local function Init_HonorFrame()
         end
     end)
 
+
+
     --荣誉等级
     hooksecurefunc(PVPQueueFrame.HonorInset.CasualPanel.HonorLevelDisplay, 'Update', function(self)
         local honorLevel = UnitHonorLevel("player")
@@ -448,6 +448,16 @@ local function conquestFrameButton_OnEnter(self)--hooksecurefunc('ConquestFrameB
 	tooltip:Layout()
 	--tooltip:Show()
 end
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -695,20 +705,9 @@ local function Init()
     end)
     PVPQueueFrameCategoryButton1.Name:SetText('快速比赛')
 
-
-
-
-
-
-
-
-
-
-
     PVPQueueFrameCategoryButton2.Name:SetText('评级')
     PVPQueueFrameCategoryButton3.Name:SetText('预创建队伍')
     PVPQueueFrame.NewSeasonPopup.Leave:SetText('关闭')
-
 
     hooksecurefunc('PVPConquestLockTooltipShow', function()
         GameTooltip:SetText(string.format('该功能将在%d级开启。', GetMaxLevelForLatestExpansion()))
@@ -716,10 +715,18 @@ local function Init()
     end)
 
 
-
     Init_HonorFrame()
     Init_ConquestFrame()
 end
+
+
+
+
+
+
+
+
+
 
 
 

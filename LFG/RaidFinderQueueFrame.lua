@@ -1,18 +1,14 @@
 local e= select(2, ...)
-
-
-GroupFinderFrame:HookScript('OnShow', function()
-    PVEFrame:SetTitle('地下城和团队副本')
-end)
-
-GroupFinderFrame.groupButton1.name:SetText('地下城查找器')
-e.set(LFDQueueFrameTypeDropdownName)
-e.set(RaidFinderQueueFrameSelectionDropdownName)
-GroupFinderFrame.groupButton2.name:SetText('团队查找器')
-GroupFinderFrame.groupButton3.name:SetText('预创建队伍')
-
-
+--团队查找器
 --RaidFinder.lua
+
+
+
+
+
+
+
+--加入，按钮
 hooksecurefunc('RaidFinderFrameFindRaidButton_Update', function()
     local mode = GetLFGMode(LE_LFG_CATEGORY_RF, RaidFinderQueueFrame.raid)
     if ( mode == "queued" or mode == "rolecheck" or mode == "proposal" or mode == "suspended" ) then
@@ -25,3 +21,4 @@ hooksecurefunc('RaidFinderFrameFindRaidButton_Update', function()
         end
     end
 end)
+
