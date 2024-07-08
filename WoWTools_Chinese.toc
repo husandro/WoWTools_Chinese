@@ -127,7 +127,7 @@ LFG\GroupFinderFrame.lua
 LFG\LFGListFrame.lua
 LFG\LFDQueueFrame.lua
 LFG\LFG.lua
-
+LFG\PVPQueueFrame.lua
 
 
 
