@@ -40,10 +40,14 @@ LFGListFrame.CategorySelection.Label:SetText('预创建队伍')
         LFGListFrame.EntryCreation.PrivateGroup.Label:SetText('个人')
         LFGListFrame.EntryCreation.PrivateGroup.tooltip= '仅对已在队伍中的好友和公会成员可见。'
 
+        e.font(LFGListFrame.ApplicationViewer.ItemLevelColumnHeader.Label)
+        e.font(LFGListFrame.ApplicationViewer.RoleColumnHeader.Label)
+        e.font(LFGListFrame.ApplicationViewer.NameColumnHeader.Label)
         LFGListFrame.ApplicationViewer.NameColumnHeader.Label:SetText('名称', nil, true)
         LFGListFrame.ApplicationViewer.RoleColumnHeader.Label:SetText('职责', nil, true)
         LFGListFrame.ApplicationViewer.ItemLevelColumnHeader.Label:SetText('装等', nil, true)
         LFGApplicationViewerRatingColumnHeader.Label:SetText('分数', nil, true)
+
 LFGListApplicationDialog.Label:SetText('选择你的角色')
 LFGListApplicationDialogDescription.EditBox.Instructions:SetText('给队长留言（可选）')
 LFGListApplicationDialog.SignUpButton:SetText('申请')
@@ -210,14 +214,11 @@ hooksecurefunc('LFGListApplicationViewer_UpdateInfo', function(self)
     local activeEntryInfo = C_LFGList.GetActiveEntryInfo()
     assert(activeEntryInfo)
     local activityInfo = C_LFGList.GetActivityInfoTable(activeEntryInfo.activityID)
-    if not activityInfo then
-        return
-    end
-    local categoryInfo = C_LFGList.GetLfgCategoryInfo(activityInfo.categoryID)
-
+    local categoryInfo = activityInfo and C_LFGList.GetLfgCategoryInfo(activityInfo.categoryID)
     if not categoryInfo then
         return
     end
+
     e.set(self.EntryName, activeEntryInfo.name)
 
     local activityName= e.strText[self.DescriptionFrame.activityName]
@@ -420,3 +421,57 @@ LFGListInviteDialog.AcknowledgeButton:SetText('确定')
 
 
 LFGListFrame.ApplicationViewer.ScrollBox.NoApplicants:SetText('你的队伍已经加入列表。|n申请者将出现在此处。')
+
+--自定义，副本，创建，更多...
+LFGListFrame.EntryCreation.ActivityFinder.Dialog.SelectButton:SetText('选取')
+LFGListFrame.EntryCreation.ActivityFinder.Dialog.CancelButton:SetText('取消')
+
+hooksecurefunc('LFGListEntryCreationActivityFinder_InitButton', function(btn)
+	local activityInfo = C_LFGList.GetActivityInfoTable(btn.activityID) or {}
+    if not activityInfo.fullName then
+        return
+    end
+    local name= e.strText[activityInfo.fullName] or e.Get_LFGDungeon_Info(btn.activityID, true, false)
+print( e.Get_LFGDungeon_Info(btn.activityID, true, false))
+    if not name then
+        local str= activityInfo.fullName:match('(.-) %(')
+        local cn= str and e.strText[str]
+        if cn then
+            name= activityInfo.fullName:gsub(str, cn)
+        end
+
+        if not name then
+            local str1, str2= activityInfo.fullName:match('(.-) - (.-) %(')
+            local cn1, cn2= str1 and e.strText[str1], str2 and e.strText[str2]
+            if cn1 or cn2 then
+                name= activityInfo.fullName
+                if cn1 then
+                    name= name:gsub(str1, cn1)
+                end
+                if cn2 then
+                    name= name:gsub(str2, cn2)
+                end
+            end
+        end
+    end
+    local shortName= activityInfo.shortName
+    if name and shortName and name:find(shortName) then
+        local s= e.strText[shortName]
+        if s then
+            name= name:gsub(shortName, s)
+
+        elseif shortName:find(' (.+)') then--(10 英雄)
+            local sh1= shortName:match(' (.+)')
+            local cnSh1= e.strText[sh1]
+            if cnSh1 then
+                name= name:gsub(sh1, cnSh1)
+            end
+        end
+    end
+
+
+    if name then
+        btn:SetText(name)
+    end
+end)
+--LFGListFrame.EntryCreation.ActivityFinder.Dialog.ScrollBox

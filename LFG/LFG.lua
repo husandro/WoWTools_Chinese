@@ -14,8 +14,9 @@ for index, name in pairs(LFG_CATEGORY_NAMES) do
     end
 end
 
-
-
+e.hookLabel(GroupFinderFrameGroupButton1Name)
+e.hookLabel(GroupFinderFrameGroupButton2Name)
+e.hookLabel(GroupFinderFrameGroupButton3Name)
 
 
 
@@ -303,7 +304,10 @@ end)
 
 
 
-
+C_Timer.After(2, function()
+    e.hookLabel(RaidFinderQueueFrameSelectionDropDownName)
+    e.hookLabel(LFGListFrame.ApplicationViewer.DescriptionFrame.Text)
+end)
 
 
 
