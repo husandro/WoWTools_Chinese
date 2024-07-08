@@ -6,7 +6,27 @@ local e= select(2, ...)
 
 _G['LFDQueueFrameFollowerTitle']:SetText('追随者地下城')
 _G['LFDQueueFrameFollowerDescription']:SetText('与NPC队友一起完成地下城')
---set(LFDQueueFrameRandomScrollFrameChildFrameTitle, '')
+
+hooksecurefunc('LFGDungeonListButton_SetDungeon', function(button)
+    e.set(button.instanceName)
+end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 hooksecurefunc('LFGRewardsFrame_UpdateFrame', function(parentFrame, dungeonID)--LFGFrame.lua
     if ( not dungeonID ) then
         return
@@ -56,17 +76,9 @@ hooksecurefunc('LFGRewardsFrame_UpdateFrame', function(parentFrame, dungeonID)--
         end
     end
 
-    if not name then
-        name= e.strText[dungeonName]
-    end
-    if not desc then
-        desc= e.strText[dungeonDescription]
-    end
-    if not name or not desc then
-        local data= e.Get_LFGDungeon_Info(dungeonID) or {}
-        name= name or data[1]
-        desc= desc or data[2]
-    end
+
+    name= name or e.strText[dungeonName]
+    desc= desc or e.strText[dungeonDescription] or e.Get_LFGDungeon_Desc(dungeonID)
 
     if name then
         parentFrame.title:SetText(name)

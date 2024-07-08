@@ -428,50 +428,34 @@ LFGListFrame.EntryCreation.ActivityFinder.Dialog.CancelButton:SetText('取消')
 
 hooksecurefunc('LFGListEntryCreationActivityFinder_InitButton', function(btn)
 	local activityInfo = C_LFGList.GetActivityInfoTable(btn.activityID) or {}
-    if not activityInfo.fullName then
+    local fullName= activityInfo and activityInfo.fullName
+    if not fullName then
         return
     end
-    local name= e.strText[activityInfo.fullName] or e.Get_LFGDungeon_Info(btn.activityID, true, false)
-print( e.Get_LFGDungeon_Info(btn.activityID, true, false))
+    local name= e.strText[fullName]
     if not name then
-        local str= activityInfo.fullName:match('(.-) %(')
+        local str= fullName:match('(.-) %(')
         local cn= str and e.strText[str]
         if cn then
-            name= activityInfo.fullName:gsub(str, cn)
+            name= fullName:gsub(str, cn)
         end
-
-        if not name then
-            local str1, str2= activityInfo.fullName:match('(.-) - (.-) %(')
-            local cn1, cn2= str1 and e.strText[str1], str2 and e.strText[str2]
-            if cn1 or cn2 then
-                name= activityInfo.fullName
-                if cn1 then
-                    name= name:gsub(str1, cn1)
-                end
-                if cn2 then
-                    name= name:gsub(str2, cn2)
+        local shortName= activityInfo.shortName
+        if name and shortName and name:find(shortName) then
+            local s= e.strText[shortName]
+            if s then
+                name= name:gsub(shortName, s)
+            elseif shortName:find(' (.+)') then--(10 英雄)
+                local sh1= shortName:match(' (.+)')
+                local cnSh1= e.strText[sh1]
+                if cnSh1 then
+                    name= name:gsub(sh1, cnSh1)
                 end
             end
         end
     end
-    local shortName= activityInfo.shortName
-    if name and shortName and name:find(shortName) then
-        local s= e.strText[shortName]
-        if s then
-            name= name:gsub(shortName, s)
-
-        elseif shortName:find(' (.+)') then--(10 英雄)
-            local sh1= shortName:match(' (.+)')
-            local cnSh1= e.strText[sh1]
-            if cnSh1 then
-                name= name:gsub(sh1, cnSh1)
-            end
-        end
-    end
-
-
     if name then
         btn:SetText(name)
     end
 end)
 --LFGListFrame.EntryCreation.ActivityFinder.Dialog.ScrollBox
+

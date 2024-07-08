@@ -1,4 +1,4 @@
-tab={
+local tab={
 
 
 
@@ -1441,24 +1441,29 @@ tab={
 }
 
 
-
+local e= select(2, ...)
 --[[
 [ID]= {"Name_lang", "Description_lang"},
 https://wago.tools/db2/LFGDungeons?build=11.0.2.55399&locale=zhCN
 ]]
 
-local e= select(2, ...)
-function e.Get_LFGDungeon_Info(lfgDungeonID, isName, isDesc)
-    local data= tab[lfgDungeonID]
-    if data then
-        if isName then
-            return data[1]
-        elseif isDesc then
-            return data[2]
-        else
-            return data
-        end
+local descTab={}
+do
+for dungeonID, info in pairs(tab) do
+    local name= GetLFGDungeonInfo(dungeonID)
+    if name and info[1] then
+        e.strText[name]=info[1]
     end
+    if info[2] then
+        descTab[dungeonID]= info[2]
+    end
+end
+end
+tab=nil
+
+
+function e.Get_LFGDungeon_Desc(lfgDungeonID)
+    return descTab[lfgDungeonID]
 end
 
 --[[

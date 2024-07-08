@@ -113,8 +113,8 @@ Item\Data_TransmogSet.lua
 Item\Data_SearchName.lua
 
 ##挑战
-Challenges\Challenges_Dada_Affix.lua
 Challenges\Challenges_Data_MapChallengeMode.lua
+Challenges\Challenges_Dada_Affix.lua
 Challenges\Challenges.lua
 
 ##专精
