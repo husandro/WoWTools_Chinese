@@ -47,6 +47,9 @@
 >
 > ### <https://github.com/husandro/WoWTools_Chinese/wiki/>
 
+## BBS
+> ### <https://bbs.nga.cn/read.php?tid=40808191>
+
 ***
 
 ## wago.io 主页
