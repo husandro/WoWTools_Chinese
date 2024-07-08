@@ -122,7 +122,8 @@ Specialization\Talent.lua
 
 ##LFG
 LFG\LFG_Data_LFGDungeons.lua
-LFG\GroupFinderFrame
+LFG\GroupFinderFrame.lua
+LFG\LFGListFrame.lua
 LFG\LFDQueueFrame.lua
 LFG\LFG.lua
 
