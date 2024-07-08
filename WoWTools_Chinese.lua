@@ -186,9 +186,11 @@ function e.hookButton(btn, setFont)
             e.set(labe)
         end
         hooksecurefunc(btn, 'SetText', function(self, name)
-            name= e.strText[name]
-            if name then
-                self:SetText(name)
+            if name and name~='' then
+                local cnName= e.strText[name]                
+                if cnName then
+                    self:SetText(cnName)
+                end
             end
         end)
     end

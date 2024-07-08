@@ -829,7 +829,7 @@ hooksecurefunc('RaidFinderFrame_UpdateAvailability', function()
 	local nextLevel = nil;
 	local level = UnitLevel("player");
 	for i=1, GetNumRFDungeons() do
-		local id, name, typeID, subtype, minLevel, maxLevel = GetRFDungeonInfo(i);
+		local _, _, _, _, minLevel, maxLevel = GetRFDungeonInfo(i);
 		if ( level >= minLevel and level <= maxLevel ) then
 			nextLevel = nil;
 			break;

@@ -15,15 +15,23 @@
 11API.lua
 
 WoWTools_Chinese.lua
-Dialogs.lua
-NavBar.lua
-GameTooltip.lua
-UIDropDownMenu.lua
+
 Func_Init.lua
 Func_Event.lua
 
 MerchantFrame.lua
 StableFrame.lua
+MailFrame.lua
+SettingsPanel.lua
+EditModeManagerFrame.lua
+Dialogs.lua
+NavBar.lua
+GameTooltip.lua
+UIDropDownMenu.lua
+AddonList.lua
+FriendsFrame.lua
+QuickKeybindFrame.lua
+MainMicroButton.lua
 
 ##角色
 Character.lua
@@ -66,6 +74,7 @@ EncounterJournal\PerksActivity_Data.lua
 
 ##地图
 Map\Map.lua
+Map\ZoneText.lua
 Map\Data_UiMap.lua
 Map\Data_UiMapGroupMember.lua
 
@@ -79,6 +88,7 @@ Collection\Pet_Data_Description.lua
 Collection\Toy_Data.lua
 Collection\Heirloom_Data.lua
 Collection\Wardrobe.lua
+Collection\DressUpFrame.lua
 
 ##专业
 Professions\Professions_Data_SkillLineAbility.lua

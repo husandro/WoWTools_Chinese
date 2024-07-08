@@ -67,3 +67,29 @@ hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
         end
     end
 end)
+
+
+
+
+
+
+
+
+--StackSplitFrame.lua
+hooksecurefunc(StackSplitFrame, 'ChooseFrameType', function(self, splitAmount)
+    if splitAmount ~= 1 then
+        self.StackSplitText:SetFormattedText('%d 堆', self.split/self.minSplit)
+        self.StackItemCountText:SetFormattedText('总计%d', self.split)
+    end
+end)
+hooksecurefunc(StackSplitFrame, 'UpdateStackText', function(self)
+    if self.isMultiStack then
+        self.StackSplitText:SetFormattedText('%d 堆', self.split/self.minSplit)
+        self.StackItemCountText:SetFormattedText('总计%d', self.split)
+    end
+end)
+
+
+
+StackSplitFrame.OkayButton:SetText('确定')
+StackSplitFrame.CancelButton:SetText('取消')
