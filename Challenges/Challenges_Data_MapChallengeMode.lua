@@ -91,9 +91,6 @@ for mapChallengeModeID, cnName in pairs(tab) do
     local name= C_ChallengeMode.GetMapUIInfo(mapChallengeModeID)
     if name then
         e.strText[name]= cnName
-        if mapChallengeModeID==463 then
-            print(name, cnName)
-        end
     end
 end
 end
