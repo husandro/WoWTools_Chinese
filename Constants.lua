@@ -16,9 +16,10 @@ end
 
 local function Init()
     local tab={
-        'LFG_CATEGORY_NAMES',
         'SCHOOL_STRINGS',
         'CALENDAR_WEEKDAY_NAMES',
+        'CALENDAR_FULLDATE_MONTH_NAMES',
+        'LFG_CATEGORY_NAMES',
     }
     for _, name in pairs(tab) do
         set_table(name)
