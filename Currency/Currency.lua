@@ -47,7 +47,7 @@ local function Init()
             if self.currencyInfo then
                 name= e.cn(self.currencyInfo.name)
                 if name and self.currencyInfo.iconFileID then
-                    name= '|T'..self.currencyInfo.iconFileID..':0|t'
+                    name= '|T'..self.currencyInfo.iconFileID..':0|t'..name
                 end
             end
             self:SetTitle(format('转移货币 - %s', name or ""));
