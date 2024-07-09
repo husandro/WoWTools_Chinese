@@ -147,6 +147,9 @@ local  tab={-- [', ''},
 }
 
 
+
+
+C_Timer.After(4, function()
 do
 if C_Spell.GetSpellName then
     for spellID, info in pairs(tab) do
@@ -173,3 +176,4 @@ else
 end
 end
 tab=nil
+end)

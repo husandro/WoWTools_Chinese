@@ -31,10 +31,10 @@ hooksecurefunc('SetZoneText', function()
     end
 end)
 
---小地图
+--[[小地图
 C_Timer.After(2, function()
     e.hookLabel(MinimapZoneText)
-end)
+end)]]
 
 
 

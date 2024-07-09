@@ -42,7 +42,10 @@ local function Init()
             e.set(TokenFramePopup.CurrencyTransferToggleButton)
         end)
 
-        CurrencyTransferMenu:SetTitle('转移货币')
+        hooksecurefunc(CurrencyTransferMenu, 'RefreshMenuTitle', function(self)
+            self:SetTitle(format('转移货币 - %s', self.currencyInfo and e.cn(self.currencyInfo.name) or ""));
+        end)
+        --CurrencyTransferMenu:SetTitle('转移货币')
         CurrencyTransferMenu.SourceSelector.SourceLabel:SetText('寄送人')
         CurrencyTransferMenu.AmountSelector.TransferAmountLabel:SetText('转移量')
 
