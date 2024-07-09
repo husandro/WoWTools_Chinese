@@ -35,7 +35,7 @@ function e.cn(text, tab)
         return cnName
     end
     local data
-    if tab and type(tab)=='table' then
+    if type(tab)=='table' then
         if tab.holydayID then
             data= e.Get_HoliDay_Info(tab.holydayID)--节日 eventID
 
@@ -113,6 +113,8 @@ local function set(label, text)
             elseif label:GetObjectType(labe)=='Button' then
                 local font= label:GetFontString()
                 text= font and font:GetText()
+            else
+                return
             end
         end
         text= text and e.strText[text]

@@ -1,3 +1,4 @@
+
 local id, e= ...
 
 
@@ -23,8 +24,7 @@ local function Init()
            end
        end
    end)
-   ClassTalentFrame.TalentsTab.ApplyButton:HookScript('OnEnter', function()
-   end)
+
    hooksecurefunc(ClassTalentFrame.TalentsTab.ClassCurrencyDisplay, 'SetPointTypeText', function(self, text)
        self.CurrencyLabel:SetFormattedText('%s 可用点数', e.strText[ClassTalentFrame.TalentsTab:GetClassName()] or text)
    end)

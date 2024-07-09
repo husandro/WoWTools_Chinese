@@ -9,7 +9,7 @@ local id, e = ...
 local function Init()
     --列表，名称
     hooksecurefunc('MountJournal_InitMountButton', function(btn)
-        btn.DragonRidingLabel:SetText("驭空术")
+        --btn.DragonRidingLabel:SetText("驭空术")
         e.set(btn.name)
     end)
 

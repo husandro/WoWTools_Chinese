@@ -5,23 +5,18 @@ if e.Not_Is_EU then return end
 
 --[[
 1	self:AddOverlayFrame("WorldMapFloorNavigationFrameTemplate", "FRAME", "TOPLEFT", self:GetCanvasContainer(), "TOPLEFT", -15, 2)
-
 	if C_GameModeManager.IsFeatureEnabled(Enum.GameModeFeatureSetting.WorldMapTrackingOptions) then
 2		self:AddOverlayFrame("WorldMapTrackingOptionsButtonTemplate", "DROPDOWNTOGGLEBUTTON", "TOPRIGHT", self:GetCanvasContainer(), "TOPRIGHT", -4, -2)
 	end
-
 	if C_GameModeManager.IsFeatureEnabled(Enum.GameModeFeatureSetting.WorldMapTrackingPin) then
 3		self:AddOverlayFrame("WorldMapTrackingPinButtonTemplate", "BUTTON", "TOPRIGHT", self:GetCanvasContainer(), "TOPRIGHT", -36, -2)
 	end
-
 4	self:AddOverlayFrame("WorldMapBountyBoardTemplate", "FRAME", nil, self:GetCanvasContainer())
 5	self:AddOverlayFrame("WorldMapActionButtonTemplate", "FRAME", nil, self:GetCanvasContainer())
 6	self:AddOverlayFrame("WorldMapZoneTimerTemplate", "FRAME", "BOTTOM", self:GetCanvasContainer(), "BOTTOM", 0, 20)
 7	self:AddOverlayFrame("WorldMapThreatFrameTemplate", "FRAME", "BOTTOMLEFT", self:GetCanvasContainer(), "BOTTOMLEFT", 0, 0)
 8	self:AddOverlayFrame("WorldMapActivityTrackerTemplate", "BUTTON", "BOTTOMLEFT", self:GetCanvasContainer(), "BOTTOMLEFT", 0, 0)--WorldMapBountyBoard.lua
-
 ]]
-
 --WorldMapMixin:AddOverlayFrames()    
 local index=1
 local btn
@@ -58,7 +53,21 @@ if isPin then
     end
 end
 
-index=index+4
+for _, frame in ipairs(WorldMapFrame.overlayFrames or {}) do
+    if frame.ShowMapJumpTooltip then
+        hooksecurefunc(frame, 'ShowMapJumpTooltip', function(self)
+            local factionName = (C_Reputation.GetFactionDataByID(self.selectedBounty.factionID) or {}).name
+            if factionName then
+                GameTooltip_SetTitle(GameTooltip, factionName)
+                GameTooltip_AddInstructionLine(GameTooltip, "<左键点击在可用活动间轮换>|n<右键点击取消追踪阵营>", false)
+                GameTooltip:Show()
+            end
+        end)
+        break
+    end
+end
+
+
 --[[btn=  WorldMapFrame.overlayFrames[index]
 if btn then
     btn:HookScript('OnEnter', function()
@@ -67,19 +76,6 @@ if btn then
         GameTooltip:Show()
     end)
 end]]
-
-index=index+1
-btn= WorldMapFrame.overlayFrames[index]
-if btn then
-    hooksecurefunc(btn, 'ShowMapJumpTooltip', function(self)
-        local factionName = (C_Reputation.GetFactionDataByID(self.selectedBounty.factionID) or {}).name
-        if factionName then
-            GameTooltip_SetTitle(GameTooltip, factionName)                
-            GameTooltip_AddInstructionLine(GameTooltip, "<左键点击在可用活动间轮换>|n<右键点击取消追踪阵营>", false)
-            GameTooltip:Show()
-        end
-    end)
-end
 
 
 
@@ -124,7 +120,7 @@ QuestMapFrame.DetailsFrame.DestinationMapButton.tooltipText= '显示最终目的
 QuestMapFrame.DetailsFrame.WaypointMapButton.tooltipText= '显示旅行路径'
 
 --setRegion(QuestMapFrame.DetailsFrame.RewardsFrame)
-    
+
 
 MapQuestInfoRewardsFrame.ItemChooseText:SetText('你可以从这些奖励品中选择一件：')
 MapQuestInfoRewardsFrame.PlayerTitleText:SetText('新头衔： %s')
@@ -147,8 +143,8 @@ hooksecurefunc(WorldMapFrame, 'SynchronizeDisplayState', function(self)
 end)
 e.font(WorldMapFrameHomeButtonText)
 WorldMapFrameHomeButtonText:SetText('世界')
-    
-    
+
+
 
 --WorldMapBountyBoard.lua
 --hooksecurefunc(WorldMapBountyBoardMixin, 'SetLockedType', function(self)

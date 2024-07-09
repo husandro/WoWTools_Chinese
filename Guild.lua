@@ -30,7 +30,7 @@ local function Init()
 
     CommunitiesFrame.RecruitmentDialog.DialogLabel:SetText('招募')
     CommunitiesFrame.RecruitmentDialog.ShouldListClub.Label:SetText('在公会查找器里列出我的公会')
-    ClubFinderClubFocusDropdown.Label:SetText('活动倾向')
+    --ClubFinderClubFocusDropdown.Label:SetText('活动倾向')
 
     CommunitiesFrame.RecruitmentDialog.RecruitmentMessageFrame.Label:SetText('招募信息')
     CommunitiesFrame.RecruitmentDialog.RecruitmentMessageFrame.RecruitmentMessageInput.EditBox.Instructions:SetText('在此介绍你的公会以及你们需要什么样的玩家。')
@@ -231,7 +231,7 @@ local function Init()
     end)
         --set(ClubFinderFilterDropdown.Label, '过滤器')
         --set(ClubFinderSortByDropdown.Label, '排序')
-        e.set(ClubFinderSizeDropdown.Label)
+        --e.set(ClubFinderSizeDropdown.Label)
         ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search:SetText('搜索')
         ClubFinderGuildFinderFrame.OptionsList.Search:SetText('搜索')
         hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame, 'UpdateType', function(self)-- ClubFinderGuildAndCommunityMixin:UpdateType()
@@ -366,7 +366,7 @@ local panel= CreateFrame("Frame")
 panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if id==arg1 then
-        if C_AddOns.IsAddOnLoaded('Blizzard_Communities') then           
+        if C_AddOns.IsAddOnLoaded('Blizzard_Communities') then
             Init()
             self:UnregisterEvent('ADDON_LOADED')
         end

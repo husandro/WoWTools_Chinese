@@ -1,4 +1,4 @@
-## Interface: 100207
+## Interface: 110000
 ## Title: |cffff00ffWoW|r |cff00ff00Tools|r_|cff28a3ffChinese|r
 ## Author: husandro
 ## Version: @project-version@
@@ -12,7 +12,7 @@
 ##繁体，简体，不会载加
 ##界面，中文化，主要function
 
-11API.lua
+##11API.lua
 
 WoWTools_Chinese.lua
 
@@ -106,6 +106,10 @@ Spell\Spell_Data_Flyout.lua
 Spell\Spell_Data_Name2.lua
 Spell\Spell_Data_Name.lua
 Spell\SpellBook.lua
+Spell\PlayerSpellsFrame.lua
+##专精
+Spell\Spell_Data_Specialization.lua
+##Spell\Talent.lua
 
 ##物品
 Item\Data_ItemSet.lua
@@ -118,9 +122,7 @@ Challenges\Challenges_Data_MapChallengeMode.lua
 Challenges\Challenges_Dada_Affix.lua
 Challenges\Challenges.lua
 
-##专精
-Specialization\Specialization_Data.lua
-Specialization\Talent.lua
+
 
 ##LFG
 LFG\LFG_Data_LFGDungeons.lua
