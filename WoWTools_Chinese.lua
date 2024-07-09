@@ -112,13 +112,17 @@ local function set(label, text)
                 text= label:GetText()
             elseif label:GetObjectType(labe)=='Button' then
                 local font= label:GetFontString()
-                text= font and font:GetText()
-            else
-                return
+                if font then
+                    text= font:GetText()
+                end
             end
         end
-        text= text and e.strText[text]
+        
         if text then
+            text= text:match('|c........(.+)|r') or text
+            text= e.strText[text]
+        end
+        if text and text~='' then
             label:SetText(text)
         end
     end
@@ -341,15 +345,7 @@ end
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+C_Timer.After(6, function()
+    e.strText['']=nil
+end)
 

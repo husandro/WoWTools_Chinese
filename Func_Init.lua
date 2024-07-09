@@ -22,20 +22,23 @@ end)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--页数 Blizzard_PagingControls.lua
+hooksecurefunc(PagingControlsMixin, 'UpdateControls', function(self)
+	local shouldHideControls = self.hideWhenSinglePage and self.maxPages <= 1;
+	if not shouldHideControls then
+		if self.displayMaxPages then
+            local name= e.strText[self.currentPageWithMaxText]
+            if name then
+			    self.PageText:SetFormattedText(name, self.currentPage, self.maxPages);
+            end
+		else
+            local name=self.currentPageOnlyText
+            if name then
+			    self.PageText:SetFormattedText(name, self.currentPage);
+            end
+		end
+	end
+end)
 
 
 
@@ -554,15 +557,43 @@ end)
 
 --PlayerCastingBarFrame
 hooksecurefunc(PlayerCastingBarFrame, 'HandleInterruptOrSpellFailed', function(self, _, event, ...)
-    if self.barType == "interrupted" and self.Text then
-        self.Text:SetText(event == "UNIT_SPELLCAST_FAILED" and '失败' or '被打断')
+    -- self.barType == "interrupted" and self.Text then
+    --    self.Text:SetText(event == "UNIT_SPELLCAST_FAILED" and '失败' or '被打断')
+    e.set(self.Text)
+end)
+
+PlayerCastingBarFrame:HookScript('OnEvent', function(self, event, _, _, spellID)
+    if self:IsShown() then
+        if event== "UNIT_SPELLCAST_START" or event== "UNIT_SPELLCAST_CHANNEL_START" or event== "UNIT_SPELLCAST_EMPOWER_START" then
+            local name= e.cn(self.Text:GetText(), {spellID=spellID, isName=true})
+            if name then
+                self.Text:SetText(name)
+            end
+        else
+            e.set(self.Text)            
+        end
     end
 end)
-PlayerCastingBarFrame:HookScript('OnEvent', function(self, event)
-    if event== "UNIT_SPELLCAST_START" or event== "UNIT_SPELLCAST_CHANNEL_START" or event== "UNIT_SPELLCAST_EMPOWER_START" then
-        e.set(self.Text)
+
+
+hooksecurefunc(OverlayPlayerCastingBarFrame, 'HandleInterruptOrSpellFailed', function(self, _, event, ...)
+    -- self.barType == "interrupted" and self.Text then
+    --    self.Text:SetText(event == "UNIT_SPELLCAST_FAILED" and '失败' or '被打断')
+    e.set(self.Text)
+end)
+OverlayPlayerCastingBarFrame:HookScript('OnEvent', function(self, event, _, _, spellID)
+    if self:IsShown() then
+        if event== "UNIT_SPELLCAST_START" or event== "UNIT_SPELLCAST_CHANNEL_START" or event== "UNIT_SPELLCAST_EMPOWER_START" then
+            local name= e.cn(self.Text:GetText(), {spellID=spellID, isName=true})
+            if name then
+                self.Text:SetText(name)
+            end
+        else
+            e.set(self.Text)            
+        end
     end
 end)
+
 
 
 C_Timer.After(2, function()
