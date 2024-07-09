@@ -43,7 +43,14 @@ local function Init()
         end)
 
         hooksecurefunc(CurrencyTransferMenu, 'RefreshMenuTitle', function(self)
-            self:SetTitle(format('转移货币 - %s', self.currencyInfo and e.cn(self.currencyInfo.name) or ""));
+            local name
+            if self.currencyInfo then
+                name= e.cn(self.currencyInfo.name)
+                if name and self.currencyInfo.iconFileID then
+                    name= '|T'..self.currencyInfo.iconFileID..':0|t'
+                end
+            end
+            self:SetTitle(format('转移货币 - %s', name or ""));
         end)
         --CurrencyTransferMenu:SetTitle('转移货币')
         CurrencyTransferMenu.SourceSelector.SourceLabel:SetText('寄送人')
