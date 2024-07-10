@@ -265,7 +265,8 @@ local function Init_CraftingPage_SchematicForm()
     e.set(frame.SchematicForm.FirstCraftBonus.Text)
     e.hookLabel(frame.SchematicForm.RecipeSourceButton.Text)--未学习的配方
     frame.SchematicForm.RecipeSourceButton:HookScript('OnEnter', function(self)
-        local recipeInfo= self:GetPrent().currentRecipeInfo
+     
+        local recipeInfo= self:GetParent().currentRecipeInfo
         if not recipeInfo or not recipeInfo.recipeID then
             return
         end
@@ -338,6 +339,29 @@ local function Init_CraftingPage_SchematicForm()
             self.OptionalReagents:SetText('可选目标：')
         else
             self.OptionalReagents:SetText('附加材料：')
+        end
+
+        if self.RecipeSourceButton:IsShown() then
+            local sourceText--, sourceTextIsForNextRank;
+            if not recipeInfo.learned then
+                sourceText = e.cn(C_TradeSkillUI.GetRecipeSourceText(recipeID), {recipeID=recipeID})
+            elseif recipeInfo.nextRecipeID then
+                sourceText= e.cn(C_TradeSkillUI.GetRecipeSourceText(nextRecipeID), {recipeID=nextRecipeID})               
+                --sourceTextIsForNextRank = true;
+            end
+            if sourceText then
+                --[[if sourceTextIsForNextRank then
+                    self.RecipeSourceButton.Text:SetText('下一级');
+                else
+                    self.RecipeSourceButton.Text:SetText('未学习的配方');
+                end]]
+                self.RecipeSourceButton:SetScript("OnEnter", function()
+                    GameTooltip:SetOwner(self.RecipeSourceButton.Text, "ANCHOR_RIGHT");
+                    GameTooltip:SetCustomWordWrapMinWidth(350);
+                    GameTooltip_AddHighlightLine(GameTooltip, sourceText);
+                    GameTooltip:Show();
+                end);
+            end
         end
     end)
 
