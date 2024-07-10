@@ -261,7 +261,26 @@ local function Init_CraftingPage_SchematicForm()
 
     e.hookLabel(frame.SchematicForm.RecraftingDescription)
     e.region(frame.SchematicForm.AllocateBestQualityCheckBox)--使用最高品质材料
-
+    e.hookLabel(frame.SchematicForm.Reagents.Label)
+    e.set(frame.SchematicForm.FirstCraftBonus.Text)
+    e.hookLabel(frame.SchematicForm.RecipeSourceButton.Text)--未学习的配方
+    frame.SchematicForm.RecipeSourceButton:HookScript('OnEnter', function(self)
+        local recipeInfo= self:GetPrent().currentRecipeInfo
+        if not recipeInfo or not recipeInfo.recipeID then
+            return
+        end
+        local sourceText
+        if not recipeInfo.learned then
+            sourceText = e.Get_Recipe_Source(recipeInfo.recipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.recipeID)]
+        elseif recipeInfo.nextRecipeID then
+            sourceText =  e.Get_Recipe_Source(recipeInfo.nextRecipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.nextRecipeID)]           
+        end
+        if sourceText then
+            GameTooltip:AddLine(' ')
+            GameTooltip_AddHighlightLine(GameTooltip, sourceText)
+            GameTooltip:Show()
+        end
+    end)
 
 
     frame.SchematicForm.QualityDialog.AcceptButton:SetText('接受')
