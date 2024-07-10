@@ -138,6 +138,7 @@ LFG\LFGFrame.lua
 ## PvP查找器
 LFG\PVPQueueFrame.lua
 
-
+1027\Init.lua
+1027\ClassTalentUI.lua
 
 Data_zhCN.lua
