@@ -23,6 +23,7 @@ end)
 
 
 --页数 Blizzard_PagingControls.lua
+if PagingControlsMixin then
 hooksecurefunc(PagingControlsMixin, 'UpdateControls', function(self)
 	local shouldHideControls = self.hideWhenSinglePage and self.maxPages <= 1;
 	if not shouldHideControls then
