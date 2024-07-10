@@ -284,8 +284,10 @@ CreateChannelPopup.Password.Label:SetText('密码')
 CreateChannelPopup.OKButton:SetText('确定')
 CreateChannelPopup.CancelButton:SetText('取消')
 
-e.reg(CombatConfigSettingsNameEditBox)--过滤名称
 
+C_Timer.After(2, function()
+    e.region(CombatConfigSettingsNameEditBox)--过滤名称
+end)
 
 
 

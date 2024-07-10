@@ -31,7 +31,6 @@ hooksecurefunc('FriendsFrame_Update', function()
 end)
 
 FriendsFrameTab1:SetText('好友')
-    e.reg(FriendsFrameBattlenetFrame.BroadcastFrame, '通告', 1)
     FriendsFrameBattlenetFrame.BroadcastFrame.EditBox.PromptText:SetText('通告')
     FriendsFrameBattlenetFrame.BroadcastFrame.UpdateButton:SetText('更新')
     FriendsFrameBattlenetFrame.BroadcastFrame.CancelButton:SetText('取消')
@@ -214,7 +213,7 @@ FriendsFrameTab1:SetText('好友')
 
 --FriendsFrame.xml
 BattleTagInviteFrame.InfoText:SetText('当他们接受你的好友请求后，就会被加入你的好友名单。')
-e.reg(BattleTagInviteFrame, '发送一个|cff82c5ff战网昵称|r请求给：', 1)
+
 
 
 FriendsFrameTab2:SetText('查询')
@@ -342,4 +341,9 @@ hooksecurefunc(QuickJoinFrame, 'UpdateJoinButtonState', function(self)--QuickJoi
             self.JoinQueueButton:SetText('申请')
         end
     end
+end)
+
+C_Timer.After(2, function()
+    e.region(FriendsFrameBattlenetFrame.BroadcastFrame)--, '通告', 1)
+    e.region(BattleTagInviteFrame)--, '发送一个|cff82c5ff战网昵称|r请求给：', 1)
 end)

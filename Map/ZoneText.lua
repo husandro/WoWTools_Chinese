@@ -31,11 +31,14 @@ hooksecurefunc('SetZoneText', function()
     end
 end)
 
---[[小地图
-C_Timer.After(2, function()
-    e.hookLabel(MinimapZoneText)
-end)]]
 
+--local label = e.Cstr(MinimapCluster.ZoneTextButton, {name='MinimapZoneText2', copyFont= MinimapZoneText})
+hooksecurefunc('Minimap_Update', function()
+    local name= e.strText[GetMinimapZoneText()]
+    if name then
+        MinimapZoneText:SetText(name)
+    end
+end)
 
 
 

@@ -214,17 +214,15 @@ end
 
 
 
-function e.reg(self, text, index)
-    if self then
-        for i, region in pairs({self:GetRegions()}) do
-            if region:GetObjectType()=='FontString' and (index==i or not index) then
-                text= index==i and text or e.strText[region:GetText()]
-                set(region, text)
-                if index then
-                    return
+function e.region(frame, setFont)
+    if frame then
+        C_Timer.After(2, function()
+            for _, region in pairs({frame:GetRegions()}) do            
+                if region:GetObjectType()=='FontString' then                
+                    e.set(region, setFont)
                 end
             end
-        end
+        end)
     end
 end
 

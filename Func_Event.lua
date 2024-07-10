@@ -563,6 +563,8 @@ local function Init_Event(arg1)
         TimeManagerLocalTimeCheckText:SetText('使用本地时间')
         StopwatchTitle:SetText('秒表')
 
+        
+
         hooksecurefunc('GameTime_UpdateTooltip', function()--GameTime.lua
             GameTooltip:SetText('时间信息', HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
             GameTooltip:AddDoubleLine( '服务器时间：', GameTime_GetGameTime(true), NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b, HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)

@@ -56,7 +56,9 @@ if ReagentBankFrame.DespositButton:GetText()~='' then
     ReagentBankFrame.DespositButton:SetText('存放各种材料')
 end
 BankItemSearchBox.Instructions:SetText('搜索')
-e.reg(BankSlotsFrame)
+e.region(BankSlotsFrame)
+e.region(CombatConfigSettingsNameEditBox)--过滤名称
+
 
 
 
@@ -181,7 +183,7 @@ QuestMapFrame.DetailsFrame.ShareButton:SetText('共享')
 QuestMapFrame.DetailsFrame.DestinationMapButton.tooltipText= '显示最终目的地'
 QuestMapFrame.DetailsFrame.WaypointMapButton.tooltipText= '显示旅行路径'
 
-e.reg(QuestMapFrame.DetailsFrame.RewardsFrame, '奖励')
+e.region(QuestMapFrame.DetailsFrame.RewardsFrame)--, '奖励')
 MapQuestInfoRewardsFrame.ItemChooseText:SetText('你可以从这些奖励品中选择一件：')
 MapQuestInfoRewardsFrame.PlayerTitleText:SetText('新头衔： %s')
 MapQuestInfoRewardsFrame.QuestSessionBonusReward:SetText('在小队同步状态下完成此任务有可能获得奖励：')
@@ -417,7 +419,7 @@ end
 
 
 --MovieFrame.xml
-e.reg(MovieFrame.CloseDialog, '你确定想要跳过这段过场动画吗？', 1)
+e.region(MovieFrame.CloseDialog)--, '你确定想要跳过这段过场动画吗？', 1)
 MovieFrame.CloseDialog.ConfirmButton:SetText('是')
 MovieFrame.CloseDialog.ResumeButton:SetText('否')
 
@@ -533,7 +535,7 @@ hooksecurefunc('CompactRaidFrameManager_SetSetting', function(settingName, value
     end
 end)]]
 
-e.reg(RolePollPopup, '选择你的职责', 1)
+e.region(RolePollPopup)--, '选择你的职责', 1)
 RolePollPopupAcceptButtonText:SetText('接受')
 
 --HelpTipTemplateMixin:ApplyText()
@@ -598,9 +600,7 @@ end)
 
 
 
-C_Timer.After(2, function()
-
-
+C_Timer.After(4, function()
     AddonCompartmentFrame:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_LEFT")
         GameTooltip_SetTitle(GameTooltip, '插件')
@@ -649,7 +649,41 @@ C_Timer.After(2, function()
             end
         end
     end
+
+
+
+
+
+    
+    --Blizzard_FrameXMLBase/Constants.lua
+    local function set_table(data)
+        for index, name in pairs(_G[data] or {}) do
+            local cnName= e.strText[name]
+            if cnName then
+                _G[data][index]= cnName
+            end
+        end
+    end
+    local tab={
+        'SCHOOL_STRINGS',
+        'CALENDAR_WEEKDAY_NAMES',
+        'CALENDAR_FULLDATE_MONTH_NAMES',
+        'LFG_CATEGORY_NAMES',
+    }
+    for _, name in pairs(tab) do
+        set_table(name)
+    end
 end)
+
+
+
+
+
+
+
+
+
+
 
 --EventToastManager.lua EventToastManagerFrame
 --没有全部测试
@@ -725,3 +759,6 @@ for index, en in pairs(CONQUEST_TYPE_STRINGS) do
         CONQUEST_TYPE_STRINGS[index]= cn
     end
 end
+
+
+

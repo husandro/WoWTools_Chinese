@@ -32,7 +32,6 @@ AddonList.lua
 FriendsFrame.lua
 QuickKeybindFrame.lua
 MainMicroButton.lua
-Constants.lua
 
 
 ##角色

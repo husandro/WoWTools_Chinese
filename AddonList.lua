@@ -3,7 +3,7 @@ local e= select(2, ...)
 
 --插件
 AddonListTitleText:SetText('插件列表')
-e.reg(AddonListForceLoad, '加载过期插件', 1)
+
 
 AddonListEnableAllButton:SetText('全部启用')
 AddonListDisableAllButton:SetText('全部禁用')
@@ -39,4 +39,8 @@ hooksecurefunc('AddonList_InitButton', function(entry, addonIndex)
             e.set(entry.Status, name)
         end
     end
+end)
+
+C_Timer.After(2, function()
+    e.region(AddonListForceLoad)
 end)
