@@ -6,6 +6,7 @@ local id, e = ...
 
 local function Init_Event(arg1)
     if arg1=='Blizzard_MacroUI' then
+        e.region(MacroFrame)
         MacroFrameTab1:SetText('通用宏')
         MacroFrameTab2:SetText('专用宏', 0.3)
         MacroSaveButton:SetText('保存')

@@ -110,7 +110,6 @@ Spell\SpellBook.lua
 Spell\PlayerSpellsFrame.lua
 ##专精
 Spell\Spell_Data_Specialization.lua
-##Spell\Talent.lua
 
 ##物品
 Item\Data_ItemSet.lua

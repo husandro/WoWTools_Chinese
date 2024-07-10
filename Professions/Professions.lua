@@ -26,126 +26,58 @@ local function GenerateRankText(professionName, skillLevel, maxSkillLevel, skill
 end
 
 
+local FailValidationReason = EnumUtil.MakeEnum("Cooldown", "InsufficientReagents", "PrerequisiteReagents", "Disabled", "Requirement", "LockedReagentSlot", "RecraftOptionalReagentLimit")
+local FailValidationTooltips = {
+    [FailValidationReason.Cooldown] = '配方冷却中。',
+    [FailValidationReason.InsufficientReagents] = '你的材料不足。',
+    [FailValidationReason.PrerequisiteReagents] = '一种或多种附加材料不满足必要条件。',
+    [FailValidationReason.Requirement] = '你不满足一个或更多的条件，不能制作此配方。',
+    [FailValidationReason.LockedReagentSlot] = '你尚未解锁必需的附加材料栏位。',
+    [FailValidationReason.RecraftOptionalReagentLimit] = '你尝试再造的物品有装备唯一限制。需要先脱下该装备后进行再造。',
+}
 
 
-
-
-
-
-
-
-
-
-
-local function Init()
-    hooksecurefunc(ProfessionsFrame, 'SetTitle', function(self, skillLineName)
-        if e.strText[skillLineName] then
-            skillLineName= e.strText[skillLineName]
-            if C_TradeSkillUI.IsTradeSkillGuild() then
-                self:SetTitleFormatted('公会%s"', skillLineName)
-            else
-                local linked, linkedName = C_TradeSkillUI.IsTradeSkillLinked()
-                if linked and linkedName then
-                    self:SetTitleFormatted("%s %s[%s]|r", TRADE_SKILL_TITLE:format(skillLineName), HIGHLIGHT_FONT_COLOR_CODE, linkedName)
-                else
-                    self:SetTitleFormatted(TRADE_SKILL_TITLE, skillLineName)
-                end
-            end
-        elseif C_TradeSkillUI.IsTradeSkillGuild() then
-            self:SetTitleFormatted('公会%s"', skillLineName)
-        end
-    end)
-
-
-
-    ProfessionsFrame.CraftingPage.RecipeList.SearchBox.Instructions:SetText('搜索')
-    --ProfessionsFrame.CraftingPage.RecipeList.FilterDropdown.Text:SetText('过滤器')
-    ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.SearchBox.Instructions:SetText('搜索')
-    --ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.FilterButton:SetText('过滤器')
-
-    --Blizzard_ProfessionsCrafting.lua
-    ProfessionsFrame.CraftingPage.ViewGuildCraftersButton:SetText('查看工匠')
-
-    local FailValidationReason = EnumUtil.MakeEnum("Cooldown", "InsufficientReagents", "PrerequisiteReagents", "Disabled", "Requirement", "LockedReagentSlot", "RecraftOptionalReagentLimit")
-    local FailValidationTooltips = {
-        [FailValidationReason.Cooldown] = '配方冷却中。',
-        [FailValidationReason.InsufficientReagents] = '你的材料不足。',
-        [FailValidationReason.PrerequisiteReagents] = '一种或多种附加材料不满足必要条件。',
-        [FailValidationReason.Requirement] = '你不满足一个或更多的条件，不能制作此配方。',
-        [FailValidationReason.LockedReagentSlot] = '你尚未解锁必需的附加材料栏位。',
-        [FailValidationReason.RecraftOptionalReagentLimit] = '你尝试再造的物品有装备唯一限制。需要先脱下该装备后进行再造。',
-    }
-    hooksecurefunc(ProfessionsFrame.CraftingPage, 'ValidateControls', function(self)
-        local currentRecipeInfo = self.SchematicForm:GetRecipeInfo()
-        local isRuneforging = C_TradeSkillUI.IsRuneforging()
-        if currentRecipeInfo ~= nil and currentRecipeInfo.learned and (Professions.InLocalCraftingMode() or C_TradeSkillUI.IsNPCCrafting() or isRuneforging)
-            and not currentRecipeInfo.isRecraft
-            and not currentRecipeInfo.isDummyRecipe and not currentRecipeInfo.isGatheringRecipe
-        then
-            local transaction = self.SchematicForm:GetTransaction()
-            local isEnchant = transaction:IsRecipeType(Enum.TradeskillRecipeType.Enchant)
-            local countMax = self:GetCraftableCount()
-            if isEnchant then
-                self.CreateButton:SetTextToFit('附魔')
-                local quantity = math.max(1, countMax)
-                self.CreateAllButton:SetTextToFit(format('"%s [%d]', '附魔所有', quantity))
-            elseif not currentRecipeInfo.abilityVerb and not currentRecipeInfo.alternateVerb then
-                if self.SchematicForm.recraftSlot and self.SchematicForm.recraftSlot.InputSlot:IsVisible() then
-                    self.CreateButton:SetTextToFit('再造')
-                else
-                    self.CreateButton:SetTextToFit('制造')
-                end
-                if not currentRecipeInfo.abilityAllVerb then
-                    self.CreateAllButton:SetTextToFit(format('%s [%d]', '全部制造', countMax))
-                end
-            end
-            local enabled = true
-            if PartialPlayTime() then
-                local reasonText = format('你的在线时间已经超过3小时。在目前阶段下，你不能这么做。在下线休息%d小时后，你的防沉迷时间将会清零。请退出游戏下线休息。', REQUIRED_REST_HOURS - math.floor(GetBillingTimeRested() / 60))
-                self:SetCreateButtonTooltipText(reasonText)
-                enabled = false
-            elseif NoPlayTime() then
-                local reasonText = format('你的在线时间已经超过5小时。在目前阶段下，你不能这么做。在下线休息%d小时后，你的防沉迷时间将会清零。请退出游戏，下线休息和运动。', REQUIRED_REST_HOURS - math.floor(GetBillingTimeRested() / 60))
-                self:SetCreateButtonTooltipText(reasonText)
-                enabled = false
-            end
-            if enabled then
-                local failValidationReason = self:ValidateCraftRequirements(currentRecipeInfo, transaction, isRuneforging, countMax)
-                if failValidationReason and FailValidationTooltips[failValidationReason] then
-                    self:SetCreateButtonTooltipText(FailValidationTooltips[failValidationReason])
-                end
-            end
-        end
-    end)
-
-
-    ProfessionsFrame.CraftingPage.SchematicForm.QualityDialog.AcceptButton:SetText('接受')
-    ProfessionsFrame.CraftingPage.SchematicForm.QualityDialog.CancelButton:SetText('取消')
-    ProfessionsFrame.CraftingPage.SchematicForm.QualityDialog:SetTitle('材料品质')
-
-    --ProfessionsFrame.CraftingPage.SchematicForm.AllocateBestQualityCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
-    --[[ProfessionsFrame.CraftingPage.SchematicForm.AllocateBestQualityCheckBox:HookScript("OnEnter", function(button)--Blizzard_ProfessionsRecipeSchematicForm.lua
-        local checked = button:GetChecked()
-        if checked then
-            GameTooltip_AddNormalLine(GameTooltip, '取消勾选后，总会使用可用的最低品质的材料。')
+local orderTypeTabTitles ={
+    [Enum.CraftingOrderType.Public] = '公开',
+    [Enum.CraftingOrderType.Guild] = '公会',
+    [Enum.CraftingOrderType.Personal] = '个人',
+}
+local function SetTabTitleWithCount(tabButton, type, count)
+    local title = orderTypeTabTitles[type]
+    if tabButton and title then
+        if type == Enum.CraftingOrderType.Public then
+            tabButton.Text:SetText(title)
         else
-            GameTooltip_AddNormalLine(GameTooltip, '勾选后，总会使用可用的最高品质的材料。')
+            tabButton.Text:SetFormattedText("%s (%s)", title, count)
         end
-        GameTooltip:Show()
-    end)]]
-    --ProfessionsFrame.CraftingPage.SchematicForm.TrackRecipeCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
-    ProfessionsFrame.CraftingPage.SchematicForm.FavoriteButton:HookScript("OnEnter", function(button)
-        GameTooltip_AddHighlightLine(GameTooltip, button:GetChecked() and '从偏好中移除' or '设置为偏好')
-        GameTooltip:Show()
-    end)
-    ProfessionsFrame.CraftingPage.SchematicForm.FavoriteButton:HookScript("OnClick", function(button)
-        GameTooltip_AddHighlightLine(GameTooltip, button:GetChecked() and '从偏好中移除' or '设置为偏好')
-        GameTooltip:Show()
-    end)
-    ProfessionsFrame.CraftingPage.SchematicForm.FirstCraftBonus:SetScript("OnEnter", function()
-        GameTooltip_AddNormalLine(GameTooltip, '首次制造此配方会教会你某种新东西。')
-        GameTooltip:Show()
-    end)
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local function Init_CraftingPage()
+    ProfessionsFrame.CraftingPage.ViewGuildCraftersButton:SetText('查看工匠')
 
     hooksecurefunc(ProfessionsFrame.CraftingPage, 'Init', function(self)--Blizzard_ProfessionsCrafting.lua
         local minimized = ProfessionsUtil.IsCraftingMinimized()
@@ -212,6 +144,185 @@ local function Init()
         end
     end)
 
+
+
+    hooksecurefunc(ProfessionsCrafterDetailsStatLineMixin, 'SetLabel', function(self, label)--Blizzard_ProfessionsRecipeCrafterDetails.lua
+        e.set(self.LeftLabel, label)
+    end)
+
+    --专业，技能点 ProfessionsRankBarMixin
+    hooksecurefunc(ProfessionsFrame.CraftingPage.RankBar, 'Update', function(self, professionInfo)
+        local name= e.strText[professionInfo.professionName]
+        if name then
+            local rankText = GenerateRankText(name, professionInfo.skillLevel, professionInfo.maxSkillLevel, professionInfo.skillModifier)
+            self.Rank.Text:SetText(rankText)
+        end
+    end)
+
+
+
+
+    hooksecurefunc(ProfessionsFrame.CraftingPage, 'ValidateControls', function(self)
+        local currentRecipeInfo = self.SchematicForm:GetRecipeInfo()
+        local isRuneforging = C_TradeSkillUI.IsRuneforging()
+        if currentRecipeInfo ~= nil and currentRecipeInfo.learned and (Professions.InLocalCraftingMode() or C_TradeSkillUI.IsNPCCrafting() or isRuneforging)
+            and not currentRecipeInfo.isRecraft
+            and not currentRecipeInfo.isDummyRecipe and not currentRecipeInfo.isGatheringRecipe
+        then
+            local transaction = self.SchematicForm:GetTransaction()
+            local isEnchant = transaction:IsRecipeType(Enum.TradeskillRecipeType.Enchant)
+            local countMax = self:GetCraftableCount()
+            if isEnchant then
+                self.CreateButton:SetTextToFit('附魔')
+                local quantity = math.max(1, countMax)
+                self.CreateAllButton:SetTextToFit(format('"%s [%d]', '附魔所有', quantity))
+            elseif not currentRecipeInfo.abilityVerb and not currentRecipeInfo.alternateVerb then
+                if self.SchematicForm.recraftSlot and self.SchematicForm.recraftSlot.InputSlot:IsVisible() then
+                    self.CreateButton:SetTextToFit('再造')
+                else
+                    self.CreateButton:SetTextToFit('制造')
+                end
+                if not currentRecipeInfo.abilityAllVerb then
+                    self.CreateAllButton:SetTextToFit(format('%s [%d]', '全部制造', countMax))
+                end
+            end
+            local enabled = true
+            if PartialPlayTime() then
+                local reasonText = format('你的在线时间已经超过3小时。在目前阶段下，你不能这么做。在下线休息%d小时后，你的防沉迷时间将会清零。请退出游戏下线休息。', REQUIRED_REST_HOURS - math.floor(GetBillingTimeRested() / 60))
+                self:SetCreateButtonTooltipText(reasonText)
+                enabled = false
+            elseif NoPlayTime() then
+                local reasonText = format('你的在线时间已经超过5小时。在目前阶段下，你不能这么做。在下线休息%d小时后，你的防沉迷时间将会清零。请退出游戏，下线休息和运动。', REQUIRED_REST_HOURS - math.floor(GetBillingTimeRested() / 60))
+                self:SetCreateButtonTooltipText(reasonText)
+                enabled = false
+            end
+            if enabled then
+                local failValidationReason = self:ValidateCraftRequirements(currentRecipeInfo, transaction, isRuneforging, countMax)
+                if failValidationReason and FailValidationTooltips[failValidationReason] then
+                    self:SetCreateButtonTooltipText(FailValidationTooltips[failValidationReason])
+                end
+            end
+        end
+    end)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local function Init_CraftingPage_SchematicForm()
+    local frame= ProfessionsFrame.CraftingPage
+
+
+    e.set(ProfessionsFrame.CraftingPage.SchematicForm.OutputText)
+    e.region(ProfessionsFrame.CraftingPage.SchematicForm.AllocateBestQualityCheckBox)
+    e.set(ProfessionsFrame.CraftingPage.SchematicForm.RecraftingDescription)
+
+    frame.SchematicForm.QualityDialog.AcceptButton:SetText('接受')
+    frame.SchematicForm.QualityDialog.CancelButton:SetText('取消')
+    frame.SchematicForm.QualityDialog:SetTitle('材料品质')
+    frame.SchematicForm.TrackRecipeCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
+    frame.SchematicForm.FavoriteButton:HookScript("OnEnter", function(button)
+        GameTooltip_AddHighlightLine(GameTooltip, button:GetChecked() and '从偏好中移除' or '设置为偏好')
+        GameTooltip:Show()
+    end)
+    frame.SchematicForm.FavoriteButton:HookScript("OnClick", function(button)
+        GameTooltip_AddHighlightLine(GameTooltip, button:GetChecked() and '从偏好中移除' or '设置为偏好')
+        GameTooltip:Show()
+    end)
+    frame.SchematicForm.FirstCraftBonus:SetScript("OnEnter", function()
+        GameTooltip_AddNormalLine(GameTooltip, '首次制造此配方会教会你某种新东西。')
+        GameTooltip:Show()
+    end)
+    
+   
+    hooksecurefunc(frame.SchematicForm, 'Init', function(self, recipeInfo, isRecraftOverride)
+        if not recipeInfo then
+            return
+        end
+        local isEnchant = (self.recipeSchematic.recipeType == Enum.TradeskillRecipeType.Enchant) and not C_TradeSkillUI.IsRuneforging()
+        if isEnchant then
+            self.OptionalReagents:SetText('可选目标：')
+        else
+            self.OptionalReagents:SetText('附加材料：')
+        end
+    end)
+
+    --frame.SchematicForm.Details
+    e.hookLabel(frame.SchematicForm.Details.StatLines.DifficultyStatLine.LeftLabel)
+    e.hookLabel(frame.SchematicForm.Details.StatLines.SkillStatLine.LeftLabel)
+    e.hookLabel(frame.SchematicForm.Details.Label)
+    frame.SchematicForm.Details:HookScript('OnShow', function(self)
+        self.Label:SetText('制作详情')
+        self.StatLines.DifficultyStatLine.LeftLabel:SetText('配方难度：')
+        self.StatLines.SkillStatLine.LeftLabel:SetText('技能：')
+    end)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local function Init_SpecPage()
+    --Blizzard_ProfessionsSpecializations.lua
+    e.dia("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", {button1 = '是', button2 = '取消'})
+    e.hookDia("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", 'OnShow', function(self, info)
+        local specName= e.cn(info.specName)
+        local headerText = HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(format('学习%s？', e.cn(specName)).."\n\n")
+        local bodyKey = info.hasAnyConfigChanges and '所有待定的改动都会在解锁此专精后进行应用。您确定要学习%s副专精吗？' or '您确定想学习%s专精吗？您将来可以在%s专业里更加精进后选择额外的专精。'
+        local bodyText = NORMAL_FONT_COLOR:WrapTextInColorCode(bodyKey:format(specName, e.cn(info.profName)))
+        self.text:SetText(headerText..bodyText)
+        self.text:Show()
+    end)
+    --Blizzard_ProfessionsFrame.lua
+    e.dia("PROFESSIONS_SPECIALIZATION_CONFIRM_CLOSE", {text = '你想在离开前应用改动吗？', button1 = '是', button2 = '否',})
+
+
     ProfessionsFrame.SpecPage.ApplyButton:SetText('应用改动')
     ProfessionsFrame.SpecPage.UnlockTabButton:SetText('解锁专精')
     ProfessionsFrame.SpecPage.ViewTreeButton:SetText('解锁专精')
@@ -254,16 +365,47 @@ local function Init()
             end
         end)
     end)
+end
 
 
-    ProfessionsFrame.OrdersPage.BrowseFrame.SearchButton:SetText('搜索')
-    ProfessionsFrame.OrdersPage.OrderView.OrderInfo.BackButton:SetText('返回')
 
-    ProfessionsFrame.OrdersPage.BrowseFrame.PublicOrdersButton.Text:SetText('公开')
-    e.font(ProfessionsFrame.OrdersPage.BrowseFrame.PublicOrdersButton.Text)
-    ProfessionsFrame.OrdersPage.BrowseFrame.PersonalOrdersButton.Text:SetText('个人')
-    e.font(ProfessionsFrame.OrdersPage.BrowseFrame.PersonalOrdersButton.Text)
-    ProfessionsFrame.OrdersPage.BrowseFrame.OrdersRemainingDisplay:HookScript('OnEnter', function()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local function Init_OrdersPage()
+    local frame= ProfessionsFrame.OrdersPage
+    frame.BrowseFrame.SearchButton:SetText('搜索')
+    frame.OrderView.OrderInfo.BackButton:SetText('返回')
+
+    frame.BrowseFrame.PublicOrdersButton.Text:SetText('公开')
+    e.font(frame.BrowseFrame.PublicOrdersButton.Text)
+    frame.BrowseFrame.PersonalOrdersButton.Text:SetText('个人')
+    e.font(frame.BrowseFrame.PersonalOrdersButton.Text)
+
+    ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.SearchBox.Instructions:SetText('搜索')
+    --ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.FilterButton:SetText('过滤器')
+
+    frame.BrowseFrame.OrdersRemainingDisplay:HookScript('OnEnter', function()
         local claimInfo = C_CraftingOrders.GetOrderClaimInfo(ProfessionsFrame.OrdersPage.professionInfo.profession)
         local tooltipText
         if claimInfo.secondsToRecharge then
@@ -275,26 +417,16 @@ local function Init()
         GameTooltip:Show()
     end)
 
-    local orderTypeTabTitles ={
-        [Enum.CraftingOrderType.Public] = '公开',
-        [Enum.CraftingOrderType.Guild] = '公会',
-        [Enum.CraftingOrderType.Personal] = '个人',}
-    local function SetTabTitleWithCount(tabButton, type, count)
-        local title = orderTypeTabTitles[type]
-        if tabButton and e.strText[title] then
-            if type == Enum.CraftingOrderType.Public then
-                e.set(tabButton.Text, title)
-            else
-                tabButton.Text:SetFormattedText("%s (%s)", title, count)
-            end
-        end
-    end
-    hooksecurefunc(ProfessionsFrame.OrdersPage, 'InitOrderTypeTabs', function(self)
+
+
+
+    --ProfessionsCraftingOrderPageMixin
+    hooksecurefunc(frame, 'InitOrderTypeTabs', function(self)
         for _, typeTab in ipairs(self.BrowseFrame.orderTypeTabs) do
             SetTabTitleWithCount(typeTab, typeTab.orderType, 0)
         end
     end)
-    ProfessionsFrame.OrdersPage:HookScript('OnEvent', function(self, event, ...)
+    frame:HookScript('OnEvent', function(self, event, ...)
         if event == "CRAFTINGORDERS_UPDATE_ORDER_COUNT" then
             local type, count = ...
             local tabButton
@@ -313,12 +445,12 @@ local function Init()
         end
     end)
 
-    hooksecurefunc(ProfessionsFrame.OrdersPage, 'StartDefaultSearch', function(self)
+    hooksecurefunc(frame, 'StartDefaultSearch', function(self)
         if self.BrowseFrame.OrderList.ResultsText:IsShown() then
             self.BrowseFrame.OrderList.ResultsText:SetText('小窍门：右键点击配方可以设置偏好。偏好的配方会在你打开你的公开订单时立即出现。')
         end
     end)
-    hooksecurefunc(ProfessionsFrame.OrdersPage, 'UpdateOrdersRemaining', function(self)
+    hooksecurefunc(frame, 'UpdateOrdersRemaining', function(self)
         if self.professionInfo then
             local isPublic = self.orderType == Enum.CraftingOrderType.Public
             if isPublic and self.professionInfo and self.professionInfo.profession then
@@ -326,36 +458,27 @@ local function Init()
             end
         end
     end)
-    hooksecurefunc(ProfessionsFrame.OrdersPage, 'ShowGeneric', function(self)
+    hooksecurefunc(frame, 'ShowGeneric', function(self)
         if self.BrowseFrame.OrderList.ResultsText:IsShown() then
             self.BrowseFrame.OrderList.ResultsText:SetText('没有发现订单')
         end
     end)
 
-    ProfessionsFrame.OrdersPage.OrderView.OrderInfo.PostedByTitle:SetText('订单发布人：')
-    ProfessionsFrame.OrdersPage.OrderView.OrderInfo.CommissionTitle:SetText('佣金：')
-    ProfessionsFrame.OrdersPage.OrderView.OrderInfo.ConsortiumCutTitle:SetText('财团分成：')
-    ProfessionsFrame.OrdersPage.OrderView.OrderInfo.FinalTipTitle:SetText('你的分成：')
-    ProfessionsFrame.OrdersPage.OrderView.OrderInfo.TimeRemainingTitle:SetText('剩余时间：')
-    ProfessionsFrame.OrdersPage.OrderView.OrderInfo.NoteBox.NoteTitle:SetText('给制作者的信息：')
-    ProfessionsFrame.OrdersPage.OrderView.OrderInfo.StartOrderButton:SetText('开始接单')
-    ProfessionsFrame.OrdersPage.OrderView.OrderInfo.DeclineOrderButton:SetText('拒绝订单')
-    ProfessionsFrame.OrdersPage.OrderView.OrderInfo.ReleaseOrderButton:SetText('取消订单')
+    frame.OrderView.OrderInfo.PostedByTitle:SetText('订单发布人：')
+    frame.OrderView.OrderInfo.CommissionTitle:SetText('佣金：')
+    frame.OrderView.OrderInfo.ConsortiumCutTitle:SetText('财团分成：')
+    frame.OrderView.OrderInfo.FinalTipTitle:SetText('你的分成：')
+    frame.OrderView.OrderInfo.TimeRemainingTitle:SetText('剩余时间：')
+    frame.OrderView.OrderInfo.NoteBox.NoteTitle:SetText('给制作者的信息：')
+    frame.OrderView.OrderInfo.StartOrderButton:SetText('开始接单')
+    frame.OrderView.OrderInfo.DeclineOrderButton:SetText('拒绝订单')
+    frame.OrderView.OrderInfo.ReleaseOrderButton:SetText('取消订单')
 
-    ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.OptionalReagents.Label:SetText('附加材料：')
-    ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.OptionalReagents.labelText= '附加材料：'--Blizzard_ProfessionsRecipeSchematicForm.xml
-    --[[ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.AllocateBestQualityCheckBox:HookScript("OnEnter", function(button)
-        local checked = button:GetChecked()
-        if checked then
-            GameTooltip:SetText('取消勾选后，总会使用可用的最低品质的材料。')
-        else
-            GameTooltip:SetText('勾选后，总会使用可用的最高品质的材料。')
-        end
-        GameTooltip:Show()
-    end)]]
+    frame.OrderView.OrderDetails.SchematicForm.OptionalReagents.Label:SetText('附加材料：')
+    frame.OrderView.OrderDetails.SchematicForm.OptionalReagents.labelText= '附加材料：'--Blizzard_ProfessionsRecipeSchematicForm.xml
 
 
-    hooksecurefunc(ProfessionsFrame.OrdersPage.OrderView, 'UpdateStartOrderButton', function(self)--Blizzard_ProfessionsCrafterOrderView.lua
+    hooksecurefunc(frame.OrderView, 'UpdateStartOrderButton', function(self)--Blizzard_ProfessionsCrafterOrderView.lua
         local errorReason
         local recipeInfo = C_TradeSkillUI.GetRecipeInfo(self.order.spellID)
         local profession = C_TradeSkillUI.GetChildProfessionInfo().profession
@@ -386,26 +509,26 @@ local function Init()
     end)
 
 
-    ProfessionsFrame.OrdersPage.OrderView.OrderDetails.FulfillmentForm.NoteEditBox.ScrollingEditBox.defaultText= '在此输入消息'
+    frame.OrderView.OrderDetails.FulfillmentForm.NoteEditBox.ScrollingEditBox.defaultText= '在此输入消息'
 
-    ProfessionsFrame.OrdersPage.OrderView.CompleteOrderButton:SetText('完成订单')
-    ProfessionsFrame.OrdersPage.OrderView.StartRecraftButton:SetText('再造')
-    ProfessionsFrame.OrdersPage.OrderView.StopRecraftButton:SetText('取消再造')
-    ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.ConfirmationText:SetText('你确定想拒绝此订单吗？')
-    ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.NoteEditBox.TitleBox.Title:SetText('拒绝原因：')
-    ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.CancelButton:SetText('否')
-    ProfessionsFrame.OrdersPage.OrderView.DeclineOrderDialog.ConfirmButton:SetText('是')
+    frame.OrderView.CompleteOrderButton:SetText('完成订单')
+    frame.OrderView.StartRecraftButton:SetText('再造')
+    frame.OrderView.StopRecraftButton:SetText('取消再造')
+    frame.OrderView.DeclineOrderDialog.ConfirmationText:SetText('你确定想拒绝此订单吗？')
+    frame.OrderView.DeclineOrderDialog.NoteEditBox.TitleBox.Title:SetText('拒绝原因：')
+    frame.OrderView.DeclineOrderDialog.CancelButton:SetText('否')
+    frame.OrderView.DeclineOrderDialog.ConfirmButton:SetText('是')
 
-    --ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.AllocateBestQualityCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
+    --frame.OrderView.OrderDetails.SchematicForm.AllocateBestQualityCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
 
 
 
-    hooksecurefunc(ProfessionsFrame.OrdersPage.OrderView, 'InitRegions', function(self)
+    hooksecurefunc(frame.OrderView, 'InitRegions', function(self)
         self.OrderDetails.FulfillmentForm.OrderCompleteText:SetText('订单完成！')
         self.DeclineOrderDialog:SetTitle('拒绝订单')
     end)
 
-    ProfessionsFrame.OrdersPage.OrderView:HookScript('OnEvent', function(self, event, ...)
+    frame.OrderView:HookScript('OnEvent', function(self, event, ...)
         if event == "CRAFTINGORDERS_CLAIM_ORDER_RESPONSE" then
             local result, orderID = ...
             if orderID == self.order.orderID then
@@ -441,10 +564,11 @@ local function Init()
         end
     end)
 
-    hooksecurefunc(ProfessionsFrame.OrdersPage.OrderView, 'UpdateCreateButton', function(self)
+    hooksecurefunc(frame.OrderView, 'UpdateCreateButton', function(self)
         local transaction = self.OrderDetails.SchematicForm.transaction
-        local recipeInfo = C_TradeSkillUI.GetRecipeInfo(self.order.spellID)
-        if transaction:IsRecipeType(Enum.TradeskillRecipeType.Enchant) then
+        --local recipeInfo = C_TradeSkillUI.GetRecipeInfo(self.order.spellID)
+        e.set(self.CreateButton)
+        --[[if transaction:IsRecipeType(Enum.TradeskillRecipeType.Enchant) then
             self.CreateButton:SetText('附魔')
         else
             if recipeInfo and recipeInfo.abilityVerb then
@@ -457,7 +581,7 @@ local function Init()
             else
                 self.CreateButton:SetText('制造')
             end
-        end
+        end]]
 
 
         local errorReason
@@ -479,7 +603,7 @@ local function Init()
     end)
 
 
-    hooksecurefunc(ProfessionsFrame.OrdersPage.OrderView, 'SetOrder', function(self)
+    hooksecurefunc(frame.OrderView, 'SetOrder', function(self)
         local warningText
         if self.order.reagentState == Enum.CraftingOrderReagentsType.All then
             warningText = '所有材料都由顾客提供。'
@@ -495,65 +619,156 @@ local function Init()
 
 
 
+    frame.OrderView.OrderDetails.SchematicForm.Details:HookScript('OnShow', function(self)
+        self.Label:SetText('制作详情')
+        self.StatLines.DifficultyStatLine.LeftLabel:SetText('配方难度：')
+        self.StatLines.SkillStatLine.LeftLabel:SetText('技能：')
+    end)
+
+
+
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--Blizzard_ProfessionsCraftingOutputLog.lua
+local function Init_CraftingOutputLog()
     ProfessionsFrame.CraftingPage.CraftingOutputLog:SetTitle('制作成果')
-
-    --ProfessionsFrame.CraftingPage.SchematicForm.Details.FinishingReagentSlotContainer.Label:SetText('成品材料：')
-    --ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.Details.FinishingReagentSlotContainer.Label:SetText('成品材料：')
-    ProfessionsFrame.CraftingPage.SchematicForm.Details:HookScript('OnShow', function(self)
-        self.Label:SetText('制作详情')
-        self.StatLines.DifficultyStatLine.LeftLabel:SetText('配方难度：')
-        self.StatLines.SkillStatLine.LeftLabel:SetText('技能：')
+    hooksecurefunc(ProfessionsCraftingOutputLogElementMixin, 'OnLoad', function(self)
+        self.Multicraft.Text:SetText('"产能！')
+        self.Resources.Text:SetText('节约了材料！')
+        self.BonusCraft.Text:SetText('首次制造！')
     end)
 
-    ProfessionsFrame.OrdersPage.OrderView.OrderDetails.SchematicForm.Details:HookScript('OnShow', function(self)
-        self.Label:SetText('制作详情')
-        self.StatLines.DifficultyStatLine.LeftLabel:SetText('配方难度：')
-        self.StatLines.SkillStatLine.LeftLabel:SetText('技能：')
+    hooksecurefunc(ProfessionsCraftingOutputLogElementMixin, 'Init', function(self)
+        local resultData = self:GetElementData()
+        if not resultData then
+            return
+        end
+
+        e.set(self.ItemContainer.Text)
+
+        if resultData.hasIngenuityProc and resultData.ingenuityRefund > 0 then
+            self.ItemContainer.CritText:SetScript("OnEnter", function(text)
+                GameTooltip:SetOwner(text, "ANCHOR_RIGHT");
+                GameTooltip_AddHighlightLine(GameTooltip, '奇思');
+                GameTooltip_AddNormalLine(GameTooltip, format('你获得了一次奇思突破，此次制造返还了|cnGREEN_FONT_COLOR:%d|r点专注。', resultData.ingenuityRefund))
+                GameTooltip:Show();
+            end);
+        end
+
+        if resultData.multicraft > 0 then
+            self.Multicraft.Text:SetScript("OnEnter", function(text)
+                GameTooltip:SetOwner(text, "ANCHOR_RIGHT");
+                GameTooltip_AddHighlightLine(GameTooltip, '产能');
+                local tooltipText = format('你的产能技能使你额外制作了|cnGREEN_FONT_COLOR:%d|r个物品。', resultData.multicraft);
+                GameTooltip_AddNormalLine(GameTooltip, tooltipText);
+                GameTooltip:Show();
+            end);
+        end
+
+        self.Resources.Text:SetScript("OnEnter", function(text)
+            GameTooltip:SetOwner(text, "ANCHOR_RIGHT");
+            GameTooltip_AddHighlightLine(GameTooltip, '充裕');
+            GameTooltip_AddNormalLine(GameTooltip, '你的充裕属性给了回报，你节约了一些材料。');
+            GameTooltip:Show();
+        end);
+    end)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local function Init()
+    Init_CraftingPage()
+    Init_CraftingPage_SchematicForm()
+    Init_SpecPage()
+    Init_OrdersPage()
+    Init_CraftingOutputLog()
+
+    hooksecurefunc(ProfessionsFrame, 'SetTitle', function(self, skillLineName)
+        if e.strText[skillLineName] then
+            skillLineName= e.strText[skillLineName]
+            if C_TradeSkillUI.IsTradeSkillGuild() then
+                self:SetTitleFormatted('公会%s"', skillLineName)
+            else
+                local linked, linkedName = C_TradeSkillUI.IsTradeSkillLinked()
+                if linked and linkedName then
+                    self:SetTitleFormatted("%s %s[%s]|r", format('%s', skillLineName), HIGHLIGHT_FONT_COLOR_CODE, linkedName)
+                else
+                    self:SetTitleFormatted('%s', skillLineName)
+                end
+            end
+        elseif C_TradeSkillUI.IsTradeSkillGuild() then
+            self:SetTitleFormatted('公会%s"', skillLineName)
+        end
     end)
 
 
 
+    hooksecurefunc(ProfessionsFrame, 'UpdateTabs', function(self)
+        local recipesTab = self:GetTabButton(self.recipesTabID)
+        e.font(recipesTab.Text)
+        recipesTab.Text:SetText('配方')
 
-    --set(ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.DifficultyStatLine.LeftLabel, '配方难度：')
-    --set(ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.SkillStatLine.LeftLabel, '技能：')
+        recipesTab = self:GetTabButton(self.specializationsTabID)
+        e.font(recipesTab.Text)
+        recipesTab.Text:SetText('专精')
 
-    hooksecurefunc(ProfessionsCrafterDetailsStatLineMixin, 'SetLabel', function(self, label)--Blizzard_ProfessionsRecipeCrafterDetails.lua
-        e.set(self.LeftLabel, label)
-    end)
-        --[[if label== PROFESSIONS_CRAFTING_STAT_TT_CRIT_HEADER then
-            self.LeftLabel:SetText('灵感')
-        elseif label== PROFESSIONS_CRAFTING_STAT_TT_RESOURCE_RETURN_HEADER then
-            self.LeftLabel:SetText('充裕')
-        elseif label== ITEM_MOD_CRAFTING_SPEED_SHORT then
-            self.LeftLabel:SetText('制作速度')
-        elseif label== PROFESSIONS_OUTPUT_MULTICRAFT_TITLE then
-            self.LeftLabel:SetText('产能')
-        else
-            print(label)
-        end]]
-    --ProfessionsCrafterDetailsStatLineMixin:OnEnter()
-
-
-
-    --Blizzard_ProfessionsSpecializations.lua
-    e.dia("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", {button1 = '是', button2 = '取消'})
-    e.hookDia("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", 'OnShow', function(self, info)
-        local specName= e.cn(info.specName)
-        local headerText = HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(format('学习%s？', e.cn(specName)).."\n\n")
-        local bodyKey = info.hasAnyConfigChanges and '所有待定的改动都会在解锁此专精后进行应用。您确定要学习%s副专精吗？' or '您确定想学习%s专精吗？您将来可以在%s专业里更加精进后选择额外的专精。'
-        local bodyText = NORMAL_FONT_COLOR:WrapTextInColorCode(bodyKey:format(specName, e.cn(info.profName)))
-        self.text:SetText(headerText..bodyText)
-        self.text:Show()
+        recipesTab = self:GetTabButton(self.craftingOrdersTabID )
+        e.font(recipesTab.Text)
+        recipesTab.Text:SetText('制造订单')
     end)
 
-    --Blizzard_ProfessionsFrame.lua
-    e.dia("PROFESSIONS_SPECIALIZATION_CONFIRM_CLOSE", {text = '你想在离开前应用改动吗？', button1 = '是', button2 = '否',})
 
-
-
-
-  --目录，列表，标题
-    hooksecurefunc(ProfessionsRecipeListCategoryMixin, 'Init', function(self, node)
+     --目录，列表，标题
+     ProfessionsFrame.CraftingPage.RecipeList.SearchBox.Instructions:SetText('搜索')
+     --ProfessionsFrame.CraftingPage.RecipeList.FilterDropdown.Text:SetText('过滤器')
+     hooksecurefunc(ProfessionsRecipeListCategoryMixin, 'Init', function(self, node)
         local info= node:GetData().categoryInfo
         if info then
             local name= e.Get_TradeSkillCategory_Name(info.categoryID) or e.strText[info.name]
@@ -577,123 +792,7 @@ local function Init()
             self.Label:SetText(name)
         end
     end)
-
-    --专业，技能点 ProfessionsRankBarMixin
-    hooksecurefunc(ProfessionsFrame.CraftingPage.RankBar, 'Update', function(self, professionInfo)
-        local name= e.strText[professionInfo.professionName]
-        if name then
-            local rankText = GenerateRankText(name, professionInfo.skillLevel, professionInfo.maxSkillLevel, professionInfo.skillModifier)
-            self.Rank.Text:SetText(rankText)
-        end
-    end)
-
-    hooksecurefunc(ProfessionsFrame.CraftingPage.SchematicForm, 'Init', function(self, recipeInfo, isRecraftOverride)
-        if not recipeInfo then
-            return
-        end
-        local isEnchant = (self.recipeSchematic.recipeType == Enum.TradeskillRecipeType.Enchant) and not C_TradeSkillUI.IsRuneforging()
-        if isEnchant then
-            self.OptionalReagents:SetText('可选目标：')
-        else
-            self.OptionalReagents:SetText('附加材料：')
-        end
-    end)
-    
-
-
-    hooksecurefunc(ProfessionsFrame, 'UpdateTabs', function(self)
-        local recipesTab = self:GetTabButton(self.recipesTabID)
-        e.font(recipesTab.Text)
-        recipesTab.Text:SetText('配方')
-
-        recipesTab = self:GetTabButton(self.specializationsTabID)
-        e.font(recipesTab.Text)
-        recipesTab.Text:SetText('专精')
-
-        recipesTab = self:GetTabButton(self.craftingOrdersTabID )
-        e.font(recipesTab.Text)
-        recipesTab.Text:SetText('制造订单')
-    end)
-    
-      
 end
- --[[hooksecurefunc(ProfessionSpecTabMixin, 'SetState', function(self, state)
-        local name= e.strText[ self.tabInfo.name]
-        info= self.tabInfo
-        for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
-        print(name, self.tabInfo.name)
-        
-    end)]]
-    --ProfessionsFrame.SpecPage.tabsPool
-    -- ProfessionsSpecFrameMixin
-    --[[hooksecurefunc(ProfessionsFrame.SpecPage, 'InitializeTabs', function(self)
-        local professionID = self:GetProfessionID();
-        print(professionID)
-        local tabTreeIDs = C_ProfSpecs.GetSpecTabIDsForSkillLine(professionID);
-
-        local lastTab;
-        local anyTabUnlocked = false;
-        --info=self.tabsPool:GetActives
-        for _, traitTreeID in ipairs(tabTreeIDs) do
-            
-        end
-
-       
-    end)]]
-    --hooksecurefunc(ProfessionsSpecPathMixin, 'OnEnter',function(self)
-        
-
-  --[[
-      local RequirementTypeToString =
-    {
-        [Enum.RecipeRequirementType.SpellFocus] = "SpellFocusRequirement",
-        [Enum.RecipeRequirementType.Totem] = "TotemRequirement",
-        [Enum.RecipeRequirementType.Area] = "AreaRequirement",
-    };
-    local function FormatRequirements(requirements)
-        local formattedRequirements = {};        
-        for index, recipeRequirement in ipairs(requirements) do            
-            table.insert(formattedRequirements, LinkUtil.FormatLink(RequirementTypeToString[recipeRequirement.type], e.cn(recipeRequirement.name)));
-            table.insert(formattedRequirements, recipeRequirement.met);
-        end
-        return formattedRequirements;
-    end
-    local function SetTextToFit(fontString, text, maxWidth, multiline)
-        fontString:SetHeight(200);
-        fontString:SetText(text);    
-        fontString:SetWidth(maxWidth);
-        if not multiline then
-            fontString:SetWidth(fontString:GetStringWidth());
-        end
-        fontString:SetHeight(fontString:GetStringHeight());
-    end
-  local recipeID = recipeInfo.recipeID;
-        local minimized = ProfessionsUtil.IsCraftingMinimized();
-        if not self.isInspection then            
-            if #C_TradeSkillUI.GetRecipeRequirements(recipeID) > 0 then
-                local fontString = isRecraft and self.RecraftingRequiredTools or self.RequiredTools;
-                self.UpdateRequiredTools = function()
-                    local requirements = C_TradeSkillUI.GetRecipeRequirements(recipeID);
-                    if (#requirements > 0) then
-                        local requirementsText = BuildColoredListString(unpack(FormatRequirements(requirements)))
-                        local maxWidth = minimized and 250 or 800;
-                        local multiline = minimized;
-                        SetTextToFit(fontString, format('|cnNORMAL_FONT_COLOR:需要：|r %s', requirementsText), maxWidth, multiline);
-                    else
-                        fontString:SetText("");
-                    end
-                end
-            end
-        end
-]]
-
-
-
-
-
-
-
-
 
 
 

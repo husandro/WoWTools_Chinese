@@ -210,10 +210,6 @@ function e.hookButton(btn, setFont)
     end
 end
 
-
-
-
-
 function e.region(frame, setFont)
     if frame then
         C_Timer.After(2, function()
@@ -224,6 +220,18 @@ function e.region(frame, setFont)
             end
         end)
     end
+end
+
+
+
+function e.tabSet(frame, setFont, padding, minWidth, absoluteSize)
+    for _, tabID in pairs(frame:GetTabSet() or {}) do
+        local btn= frame:GetTabButton(tabID)
+        e.set(btn.Text or btn)
+
+        PanelTemplates_TabResize(frame, padding or 20, absoluteSize, minWidth or 70)
+    end
+    --PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
 end
 
 
