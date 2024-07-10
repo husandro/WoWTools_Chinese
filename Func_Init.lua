@@ -24,22 +24,23 @@ end)
 
 --页数 Blizzard_PagingControls.lua
 if PagingControlsMixin then
-hooksecurefunc(PagingControlsMixin, 'UpdateControls', function(self)
-	local shouldHideControls = self.hideWhenSinglePage and self.maxPages <= 1;
-	if not shouldHideControls then
-		if self.displayMaxPages then
-            local name= e.strText[self.currentPageWithMaxText]
-            if name then
-			    self.PageText:SetFormattedText(name, self.currentPage, self.maxPages);
+    hooksecurefunc(PagingControlsMixin, 'UpdateControls', function(self)
+        local shouldHideControls = self.hideWhenSinglePage and self.maxPages <= 1
+        if not shouldHideControls then
+            if self.displayMaxPages then
+                local name= e.strText[self.currentPageWithMaxText]
+                if name then
+                    self.PageText:SetFormattedText(name, self.currentPage, self.maxPages)
+                end
+            else
+                local name=self.currentPageOnlyText
+                if name then
+                    self.PageText:SetFormattedText(name, self.currentPage)
+                end
             end
-		else
-            local name=self.currentPageOnlyText
-            if name then
-			    self.PageText:SetFormattedText(name, self.currentPage);
-            end
-		end
-	end
-end)
+        end
+    end)
+end
 
 
 

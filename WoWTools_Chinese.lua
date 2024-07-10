@@ -110,19 +110,23 @@ local function set(label, text)
         if not text then
             if label.GetText then
                 text= label:GetText()
-            elseif label:GetObjectType(labe)=='Button' then
+            elseif label:GetObjectType()=='Button' then
                 local font= label:GetFontString()
                 if font then
                     text= font:GetText()
+                    print(text)
                 end
             end
         end
-        
+        local col, name
         if text then
-            text= text:match('|c........(.+)|r') or text
-            text= e.strText[text]
+            col, name=text:match('^(|c........)(.+)|r$')
+            text= e.strText[name or text]
         end
         if text and text~='' then
+            if col then
+                text= col..text..'|r'
+            end
             label:SetText(text)
         end
     end
@@ -193,7 +197,7 @@ function e.hookButton(btn, setFont)
         end
         hooksecurefunc(btn, 'SetText', function(self, name)
             if name and name~='' then
-                local cnName= e.strText[name]                
+                local cnName= e.strText[name]
                 if cnName then
                     self:SetText(cnName)
                 end
