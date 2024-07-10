@@ -107,14 +107,16 @@ end
 
 local function set(label, text)
     if label then
+        local p
         if not text then
             if label.GetText then
                 text= label:GetText()
+                p=text
             elseif label:GetObjectType()=='Button' then
                 local font= label:GetFontString()
                 if font then
                     text= font:GetText()
-                    print(text)
+                    p=text
                 end
             end
         end
@@ -127,7 +129,9 @@ local function set(label, text)
             if col then
                 text= col..text..'|r'
             end
-            label:SetText(text)
+            if p~=text then
+                label:SetText(text)
+            end
         end
     end
 end

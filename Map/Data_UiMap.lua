@@ -1,7 +1,3 @@
-local id, e = ...
-
-
---https://wago.tools/db2/UiMap?build=11.0.0.55120&locale=zhCN
 local tab={
 [1]= '杜隆塔尔',
 [2]= '火刃集会所',
@@ -1780,7 +1776,11 @@ local tab={
 }
 
 
+local e = select(2, ...)
 
+--[[
+    https://wago.tools/db2/UiMap?build=11.0.0.55120&locale=zhCN
+]]
 
 do
     for uiMapID, name in pairs(tab) do

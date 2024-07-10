@@ -43,6 +43,7 @@ local function Init_SpellBookFrame()
         end
         if self.isUnlearned and self.RequiredLevel:IsShown() then
             local levelLearned = C_SpellBook.GetSpellBookItemLevelLearned(self.slotIndex, self.spellBank)
+            local subtext
             if not self.isOffSpec and IsCharacterNewlyBoosted() then
                 subtext = '暂时锁定';
             elseif levelLearned and levelLearned > UnitLevel("player") then
