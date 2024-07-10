@@ -88,6 +88,7 @@ end
 
 
 local function Init()
+    e.hookLabel(CollectionsJournalTitleText)
     Init_Toy()
     Init_Heirlooms()
 
