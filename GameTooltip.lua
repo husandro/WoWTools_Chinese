@@ -252,9 +252,9 @@ local function add_data(tooltip, data, info, isSpell)
     if #data.lines== #info then
         local tipName= tooltip:GetName() or ''
         for index, text in pairs(info) do
-            local line= tooltip['TextLeft'..index] or _G[tipName.."TextLeft"..i]
+            local line= tooltip['TextLeft'..index] or _G[tipName.."TextLeft"..index]
             if line then
-                line:SetText(line)
+                line:SetText(text)
                 --line:SetTextColor(line:GetTextColor())
             end
         end
