@@ -18,7 +18,6 @@ end
 
 
 
-
 if ReplaceText then
     e.ReplaceText= ReplaceText
 else
@@ -50,16 +49,14 @@ else
         ["点流血伤害"] = "Ø"
     }
     function e.ReplaceText(s)
-        for origin,new in pairs(replacement) do
-            s = string.gsub(s, new, origin)
+        if s then
+            for origin,new in pairs(replacement) do
+                s = string.gsub(s, new, origin)
+            end
+            return s
         end
-        return s
     end
 end
-
-
-
-
 
 
 
@@ -117,10 +114,6 @@ else
         return data
     end
 end
-
-
-
-
 
 
 

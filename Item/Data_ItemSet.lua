@@ -948,18 +948,28 @@ local tab={
 
 
 
+C_Timer.After(4, function()
 do
-for setID, info in pairs(tab) do
-    local name= C_Item.GetItemSetInfo(setID)
-    if name then
-        e.strText[name]= info[1]
+    local name
+    for setID, info in pairs(tab) do
+        name= C_Item.GetItemSetInfo(setID)
+        if name then
+            e.strText[name]= info[1]        
+        end
         for i=2, 8 do
             local itemID= info[i]
             if itemID and itemID>0 then
-                e.Get_Item_Name(itemID)
+                name= C_Item.GetItemNameByID(itemID)
+                if name then
+                    local cnName= e.Get_Item_Name(itemID)
+                    if cnName then
+                        cnName= cnName:match('^|c........(.+)|r$') or cnName
+                        e.strText[name]= cnName
+                    end
+                end
             end
         end
     end
 end
-end
 tab= nil
+end)
