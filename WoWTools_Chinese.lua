@@ -36,7 +36,10 @@ function e.Get_Pet_Ablity_Info()end---tab.petAbilityID
 --{itemID, isName, isToy, isHeirloom}
 function e.Get_Toy_Source()end
 function e.Get_Heirloom_Source()end
---e.Get_Item_Data()end
+function e.Get_Item_Data()end
+
+function e.Get_Spell_Data()end
+function e.ReplaceText()end-- WoWeuCN_Tooltips
 
 function e.Get_SkillLineAbility_Name()end--tab.skillLineAbilityID 专业配方，名称
 function e.Get_TradeSkillCategory_Name()end---tab.skillCategoryID 专业目录，名称
@@ -117,6 +120,49 @@ WoW_Tools_Chinese_CN= e.cn
 
 
 
+
+
+
+function e.Get_Item_Name(itemID)
+    if itemID then
+        local data= e.Get_Item_Data(itemID)
+        if data then
+            return data[1]
+        end
+    end
+end
+
+function e.Get_Spell_Name(spellID)
+    if spellID then
+        local data= e.Get_Spell_Data(spellID)
+        if data then
+            return data[1]
+        end
+    end
+end
+
+
+
+
+function e.Get_Recipe_Name(recipeInfo, hyperlink)
+    local name
+    hyperlink= hyperlink or (recipeInfo and recipeInfo.hyperlink)
+
+    local color
+    if hyperlink then
+        local item = Item:CreateFromItemLink(hyperlink)
+        color= (item:GetItemQualityColor() or {}).color
+        name= e.Get_Item_Name(item:GetItemID()) or e.strText[item:GetItemName()]
+    end
+    if not name and recipeInfo then
+        name= e.Get_SkillLineAbility_Name(recipeInfo.skillLineAbilityID)
+    end
+    if name and color then
+        name= WrapTextInColor(name, color)
+    end
+
+    return name
+end
 
 
 
@@ -418,182 +464,6 @@ end
 
 
 
-
-
-
-
-
---数据来源，插件 WoWeuCN_Tooltips
-local function split(s, delimiter)
-    if (s == nil) then
-        return nil
-    end
-    local result = {};
-    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
-        table.insert(result, match);
-    end
-    return result;
-end
-
-if GetItemData then
-    e.Get_Item_Data= GetItemData
-else
-    function e.Get_Item_Data(itemID)
-        if itemID and WoWeuCN_Tooltips_ItemData_0 then
-            local index = nil
-            if (itemID >= 0 and itemID < 100000) then
-                index = WoWeuCN_Tooltips_ItemIndexData_0[itemID]
-            elseif (itemID >= 100000 and itemID < 200000) then
-                index = WoWeuCN_Tooltips_ItemIndexData_100000[itemID - 100000]
-            elseif (itemID >= 200000 and itemID < 300000) then
-                index = WoWeuCN_Tooltips_ItemIndexData_200000[itemID - 200000]
-            end
-            if index then
-                if (itemID >= 0 and itemID < 100000) then
-                    return split(WoWeuCN_Tooltips_ItemData_0[index], '£')
-                elseif (itemID >= 100000 and itemID < 200000) then
-                    return split(WoWeuCN_Tooltips_ItemData_100000[index], '£')
-                elseif (itemID >= 200000 and itemID < 300000) then
-                    return split(WoWeuCN_Tooltips_ItemData_200000[index], '£')
-                end
-            end
-        end
-    end
-end
-
-
-
-
-local replacement = {
-    ["瞬发"] = "À",
-    ["施法时间"] = "Á",
-    ["码射程"] = "Â",
-    ["秒"] = "Ã",
-    ["冷却时间"] = "Ä",
-    ["|cffffd100"] = "Å",
-    ["|r|cff7f7f7f"] = "Æ",
-    ["|r"] = "Ç",
-    ["近战范围"] = "È",
-    ["持续"] = "É",
-    ["造成"] = "Ê",
-
-    ["点伤害"] = "Ë",
-    ["点治疗"] = "Ì",
-    ["点生命值"] = "Í",
-    ["点法力值"] = "Î",
-    ["点物理伤害"] = "Ï",
-    ["点魔法伤害"] = "Ð",
-    ["点火焰伤害"] = "Ñ",
-    ["点冰霜伤害"] = "Ò",
-    ["点暗影伤害"] = "Ó",
-    ["点神圣伤害"] = "Ô",
-    ["点奥术伤害"] = "Õ",
-    ["点混乱伤害"] = "Ö",
-    ["点流血伤害"] = "Ø"
-}
-if ReplaceText then
-    e.ReplaceText= e.ReplaceText
-else
-    function e.ReplaceText(s)
-        for origin,new in pairs(replacement) do
-            s = string.gsub(s, new, origin)
-        end
-        return s
-    end
-end
-
-if GetSpellData then
-    e.Get_Spell_Data= GetSpellData
-else
-    function e.Get_Spell_Data(spellID)
-        local data
-        if spellID and WoWeuCN_Tooltips_SpellIndexData_0 then
-            local index
-            if (spellID >= 0 and spellID < 100000) then
-                index = WoWeuCN_Tooltips_SpellIndexData_0[spellID]
-            elseif (spellID >= 100000 and spellID < 200000) then
-                index = WoWeuCN_Tooltips_SpellIndexData_100000[spellID - 100000]
-            elseif (spellID >= 200000 and spellID < 300000) then
-                index = WoWeuCN_Tooltips_SpellIndexData_200000[spellID - 200000]
-            elseif (spellID >= 300000 and spellID < 400000) then
-                index = WoWeuCN_Tooltips_SpellIndexData_300000[spellID - 300000]
-            elseif (spellID >= 400000 and spellID < 500000) then
-                index = WoWeuCN_Tooltips_SpellIndexData_400000[spellID - 400000]
-            end
-            if index then
-                if (spellID >= 0 and spellID < 100000) then
-                    data = split(WoWeuCN_Tooltips_SpellData_0[index], '£')
-                elseif (spellID >= 100000 and spellID < 200000) then
-                    data = split(WoWeuCN_Tooltips_SpellData_100000[index], '£')
-                elseif (spellID >= 200000 and spellID < 300000) then
-                    data = split(WoWeuCN_Tooltips_SpellData_200000[index], '£')
-                elseif (spellID >= 300000 and spellID < 400000) then
-                    data = split(WoWeuCN_Tooltips_SpellData_300000[index], '£')
-                elseif (spellID >= 400000 and spellID < 500000) then
-                    data = split(WoWeuCN_Tooltips_SpellData_400000[index], '£')
-                end
-                if data then
-                    local newID
-                    while (string.find(data[1], "¿")) do
-                        newID= string.sub(data[1], 3)
-                        newID= newID and tonumber(newID)
-                        data = e.Get_Spell_Data(newID)
-                        if not data then
-                            return
-                        end
-                    end
-                end
-            end
-        end
-        return data
-    end
-end
-
-
-
-
-
-
-function e.Get_Item_Name(itemID)
-    if itemID then
-        local data= e.Get_Item_Data(itemID)
-        if data then
-            return data[1]
-        end
-    end
-end
-
-function e.Get_Spell_Name(spellID)
-    if spellID then
-        local data= e.Get_Spell_Data(spellID)
-        if data then
-            return data[1]
-        end
-    end
-end
-
-
-
-
-function e.Get_Recipe_Name(recipeInfo, hyperlink)
-    local name
-    hyperlink= hyperlink or (recipeInfo and recipeInfo.hyperlink)
-
-    local color
-    if hyperlink then
-        local item = Item:CreateFromItemLink(hyperlink)
-        color= (item:GetItemQualityColor() or {}).color
-        name= e.Get_Item_Name(item:GetItemID()) or e.strText[item:GetItemName()]
-    end
-    if not name and recipeInfo then
-        name= e.Get_SkillLineAbility_Name(recipeInfo.skillLineAbilityID)
-    end
-    if name and color then
-        name= WrapTextInColor(name, color)
-    end
-
-    return name
-end
 
 
 

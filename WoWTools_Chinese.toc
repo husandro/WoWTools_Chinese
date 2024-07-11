@@ -16,6 +16,8 @@
 
 WoWTools_Chinese.lua
 
+
+
 Func_Init.lua
 Func_Event.lua
 
@@ -102,9 +104,7 @@ Professions\ClassTrainerFrame.lua
 Professions\ProfessionsBookFrame.lua
 
 ##法术
-Spell\Spell_Data_Other.lua
 Spell\Spell_Data_Flyout.lua
-Spell\SpellData_cn.lua
 Spell\SpellBook.lua
 Spell\PlayerSpellsFrame.lua
 
@@ -115,7 +115,7 @@ Spell\Spell_Data_Specialization.lua
 Item\Data_ItemSet.lua
 Item\Data_ItemSubClass.lua
 Item\Data_TransmogSet.lua
-Item\ItemData_cn.lua
+
 
 ##挑战
 Challenges\Challenges_Data_MapChallengeMode.lua
@@ -142,3 +142,9 @@ LFG\PVPQueueFrame.lua
 
 Data_zhCN.lua
 
+
+
+
+WoWeuCN_Tooltips\func.lua
+WoWeuCN_Tooltips\SpellData_cn.lua
+WoWeuCN_Tooltips\ItemData_cn.lua

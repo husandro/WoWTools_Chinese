@@ -348,9 +348,10 @@ local function Init_CraftingPage_SchematicForm()
                     end
                 end
             end
+            desc= e.ReplaceText(desc)
             if desc and desc ~= "" then
                 self.Description:SetText(desc);
-                --self.Description:SetHeight(600);
+                self.Description:SetHeight(600);
                 self.Description:SetHeight(self.Description:GetStringHeight() + 1)
             end
         end
