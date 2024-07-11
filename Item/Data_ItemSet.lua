@@ -956,7 +956,7 @@ for setID, info in pairs(tab) do
         for i=2, 8 do
             local itemID= info[i]
             if itemID and itemID>0 then
-                e.Get_Item_Search_Name(itemID)
+                e.Get_Item_Name(itemID)
             end
         end
     end

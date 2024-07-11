@@ -104,10 +104,10 @@ Professions\ProfessionsBookFrame.lua
 ##法术
 Spell\Spell_Data_Other.lua
 Spell\Spell_Data_Flyout.lua
-Spell\Spell_Data_Name2.lua
-Spell\Spell_Data_Name.lua
+Spell\SpellData_cn.lua
 Spell\SpellBook.lua
 Spell\PlayerSpellsFrame.lua
+
 ##专精
 Spell\Spell_Data_Specialization.lua
 
@@ -115,7 +115,7 @@ Spell\Spell_Data_Specialization.lua
 Item\Data_ItemSet.lua
 Item\Data_ItemSubClass.lua
 Item\Data_TransmogSet.lua
-Item\Data_SearchName.lua
+Item\ItemData_cn.lua
 
 ##挑战
 Challenges\Challenges_Data_MapChallengeMode.lua
@@ -141,3 +141,4 @@ LFG\PVPQueueFrame.lua
 1027\ClassTalentUI.lua
 
 Data_zhCN.lua
+

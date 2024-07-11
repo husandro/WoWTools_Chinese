@@ -249,7 +249,7 @@ local function Init()
                 local data= btn:GetData()
                 local option= data and data.option
                 if  option then
-                    local name= e.Get_Item_Search_Name(option.itemID) or e.strText[option.itemName]
+                    local name= e.Get_Item_Name(option.itemID) or e.strText[option.itemName]
                     if name then
                         local hex= option.quality and select(4, C_Item.GetItemQualityColor(option.quality))
                         if hex then

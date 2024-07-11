@@ -152,6 +152,7 @@ local function get_gameTooltip_text(self)
         end
     end
 end
+
 local function set_gameTooltip_text(frame)
     if frame and frame.GetName then
         local name= frame:GetName()-- or 'GameTooltip'
@@ -163,6 +164,8 @@ local function set_gameTooltip_text(frame)
         end
     end
 end
+
+
 local function set_GameTooltip_func(self)
     self:HookScript('OnShow', set_gameTooltip_text)
     self:HookScript('OnUpdate', function(frame, elapsed)
@@ -199,25 +202,127 @@ local tabs={ GameTooltipTemplate
     'EncounterJournalTooltipItem1Tooltip',
     'GarrisonMissionMechanicTooltip',
 }
-BattlePetTooltipTemplat    
+--BattlePetTooltipTemplat    
 ]]
+
+
 
 set_GameTooltip_func(GameTooltip)
 set_GameTooltip_func(ItemRefTooltip)
 set_GameTooltip_func(EmbeddedItemTooltip)
+
 set_pettips_func(BattlePetTooltip)
 set_pettips_func(FloatingBattlePetTooltip)
 
 
 
---TooltipDataRules.lua
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tooltip, data)
-    if tooltip.TextLeft1 then
-        local name= e.Get_Item_Search_Name(data.id)
-        if name then
-            tooltip.TextLeft1:SetText(name)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local replacement = {
+    ["瞬发"] = "À",
+    ["施法时间"] = "Á",
+    ["码射程"] = "Â",
+    ["秒"] = "Ã",
+    ["冷却时间"] = "Ä",
+    ["|cffffd100"] = "Å",
+    ["|r|cff7f7f7f"] = "Æ",
+    ["|r"] = "Ç",
+    ["近战范围"] = "È",
+    ["持续"] = "É",
+    ["造成"] = "Ê",
+
+    ["点伤害"] = "Ë",
+    ["点治疗"] = "Ì",
+    ["点生命值"] = "Í",
+    ["点法力值"] = "Î",
+    ["点物理伤害"] = "Ï",
+    ["点魔法伤害"] = "Ð",
+    ["点火焰伤害"] = "Ñ",
+    ["点冰霜伤害"] = "Ò",
+    ["点暗影伤害"] = "Ó",
+    ["点神圣伤害"] = "Ô",
+    ["点奥术伤害"] = "Õ",
+    ["点混乱伤害"] = "Ö",
+    ["点流血伤害"] = "Ø"
+}
+
+local function ReplaceText(s)
+    for origin,new in pairs(replacement) do
+        s = string.gsub(s, new, origin)
+    end    
+    return s
+end
+
+local function add_data(tooltip, info, isSpell)
+    if not info then
+        return
+    end
+    local add
+    for index, text in pairs(info) do
+        if text~=' ' then
+            if index==1 then
+                tooltip.TextLeft1:SetText(text)
+            else
+                if not add then
+                    tooltip:AddLine(' ')
+                    add=true
+                end
+                tooltip:AddLine(isSpell and ReplaceText(text) or text, nil,nil,nil, true)
+            end
         end
     end
+    if add then
+        tooltip:Show()
+    end
+end
+
+local function set_item(tooltip, data)
+    add_data(tooltip, e.Get_Item_Data(data.id), false)
+end
+
+local function set_spell(tooltip, data)
+    add_data(tooltip, e.Get_Spell_Data(data.id), true)
+end
+
+
+--排除，插件 WoWeuCN_Tooltips
+
+if GetItemData then
+    set_item= function() end
+end
+if GetSpellData then
+    set_spell= function() end
+end
+
+
+
+--TooltipDataRules.lua
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tooltip, data)
+    set_item(tooltip, data)
+
     if C_Heirloom.IsItemHeirloom(data.id) then
         local source= e.Get_Heirloom_Source(data.id)
         if source and not C_Heirloom.PlayerHasHeirloom(data.id) then
@@ -225,9 +330,10 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tool
             --tooltip:Show()
         end
     end
-
 end)
+
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(tooltip, data)
+    set_item(tooltip, data)
     if not PlayerHasToy(data.id) then
         local source= e.Get_Toy_Source(data.id)
         if source then
@@ -236,78 +342,10 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(toolt
         end
     end
 end)
+
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip, data)
-    if tooltip.TextLeft1 then
-        local name= e.Get_Spell_Name(data.id)
-        if name then
-            tooltip.TextLeft1:SetText(name)
-        end
-    end
+    set_spell(tooltip, data)
 end)
-
-
-
-
-
---[[
-TooltipDataRules.lua
-Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua
-TooltipDataRules.lua 
-    Enum.TooltipDataType = {
-		Item = 0,
-		Spell = 1,
-		Unit = 2,
-		Corpse = 3,
-		Object = 4,
-		Currency = 5,
-		BattlePet = 6,
-		UnitAura = 7,
-		AzeriteEssence = 8,
-		CompanionPet = 9,
-		Mount = 10,
-		PetAction = 11,
-		Achievement = 12,
-		EnhancedConduit = 13,
-		EquipmentSet = 14,
-		InstanceLock = 15,
-		PvPBrawl = 16,
-		RecipeRankInfo = 17,
-		Totem = 18,
-		Toy = 19,
-		CorruptionCleanser = 20,
-		MinimapMouseover = 21,
-		Flyout = 22,
-		Quest = 23,
-		QuestPartyProgress = 24,
-		Macro = 25,
-		Debug = 26,
-	},
-]]
-
-
-
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(_, _, arg1)
-    if arg1=='Blizzard_PerksProgram' then--Blizzard_PerksProgramElements.lua
-        set_GameTooltip_func(PerksProgramTooltip)
-
-    elseif arg1=='Blizzard_ItemSocketingUI' then--镶嵌宝石，界面
-        ItemSocketingSocketButton:SetText('应用')
-        set_GameTooltip_func(ItemSocketingDescription)
-
-    end
-end)
-
-
-
-
-
-
-
 
 
 
@@ -348,3 +386,85 @@ function GameTooltip_OnTooltipAddMoney(self, cost, maxcost)
     end
 end
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--###########
+--加载保存数据
+--###########
+local panel= CreateFrame("Frame")
+panel:RegisterEvent("ADDON_LOADED")
+panel:SetScript("OnEvent", function(_, _, arg1)
+    if arg1=='Blizzard_PerksProgram' then--Blizzard_PerksProgramElements.lua
+        set_GameTooltip_func(PerksProgramTooltip)
+
+    elseif arg1=='Blizzard_ItemSocketingUI' then--镶嵌宝石，界面
+        ItemSocketingSocketButton:SetText('应用')
+        set_GameTooltip_func(ItemSocketingDescription)
+
+    end
+end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+--[[不要删除了，还要用
+TooltipDataRules.lua
+Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua
+TooltipDataRules.lua 
+    Enum.TooltipDataType = {
+		Item = 0,
+		Spell = 1,
+		Unit = 2,
+		Corpse = 3,
+		Object = 4,
+		Currency = 5,
+		BattlePet = 6,
+		UnitAura = 7,
+		AzeriteEssence = 8,
+		CompanionPet = 9,
+		Mount = 10,
+		PetAction = 11,
+		Achievement = 12,
+		EnhancedConduit = 13,
+		EquipmentSet = 14,
+		InstanceLock = 15,
+		PvPBrawl = 16,
+		RecipeRankInfo = 17,
+		Totem = 18,
+		Toy = 19,
+		CorruptionCleanser = 20,
+		MinimapMouseover = 21,
+		Flyout = 22,
+		Quest = 23,
+		QuestPartyProgress = 24,
+		Macro = 25,
+		Debug = 26,
+	},
+]]

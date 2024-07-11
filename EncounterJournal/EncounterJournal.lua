@@ -200,7 +200,7 @@ local function Init_EncounterJournal()
     hooksecurefunc(EncounterJournalItemMixin,'Init', function(self)--Blizzard_EncounterJournal.lua
         local itemInfo = C_EncounterJournal.GetLootInfoByIndex(self.index)
         if ( itemInfo and itemInfo.name ) then
-            local name= e.Get_Item_Search_Name(itemInfo.itemID) or e.strText[itemInfo.name]
+            local name= e.Get_Item_Name(itemInfo.itemID) or e.strText[itemInfo.name]
             if name then
                 self.name:SetText(WrapTextInColorCode(name, itemInfo.itemQuality))
             end

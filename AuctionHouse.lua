@@ -209,7 +209,7 @@ local function Init()
             local itemKey= btn.rowData and btn.rowData.itemKey
             local itemKeyInfo = itemKey and C_AuctionHouse.GetItemKeyInfo(itemKey)--itemID battlePetSpeciesID itemName battlePetLink appearanceLink quality iconFileID isPet isCommodity isEquipment
             if itemKeyInfo then
-                local name= e.Get_Item_Search_Name(itemKeyInfo.itemID) or e.strText[itemKeyInfo.itemName]
+                local name= e.Get_Item_Name(itemKeyInfo.itemID) or e.strText[itemKeyInfo.itemName]
                 if name then
                     local hex= select(4, C_Item.GetItemQualityColor(itemKeyInfo.quality))
                     if hex then

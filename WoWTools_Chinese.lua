@@ -7,6 +7,23 @@ e.strText={--主要，汉化
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function e.Get_HoliDay_Info()end---tab.holydayID eventID
 function e.Get_Boss_Description()end---tab.journalEncounterID
 function e.Get_Instance_Description()end---tab.instanceID
@@ -14,12 +31,12 @@ function e.Get_PerksActivity_Info()end---tab.perksActivityID
 function e.Get_Vignette_Name()end---tab.vignetteID
 function e.Get_Pet_Description()end---tab.speciesID
 function e.Get_Pet_Ablity_Info()end---tab.petAbilityID
-function e.Get_Spell_Name()end---tab.spellID
+
 
 --{itemID, isName, isToy, isHeirloom}
-function e.Get_Item_Search_Name()end--tab.itemID
 function e.Get_Toy_Source()end
 function e.Get_Heirloom_Source()end
+--e.Get_Item_Data()end
 
 function e.Get_SkillLineAbility_Name()end--tab.skillLineAbilityID 专业配方，名称
 function e.Get_TradeSkillCategory_Name()end---tab.skillCategoryID 专业目录，名称
@@ -66,11 +83,13 @@ function e.cn(text, tab)
         elseif tab.spellID then
             if tab.isName then
                 data= e.Get_Spell_Name(tab.spellID)--法术名称
+            else
+                data= e.Get_Spell_Data(tab.spellID)
             end
 
         elseif tab.itemID then
             if tab.isName then
-                data= e.Get_Item_Search_Name(tab.itemID)--物品名称
+                data= e.Get_Item_Name(tab.itemID)--物品名称
 
             elseif tab.isToy then
                 data= e.Get_Toy_Source(itemID)
@@ -92,6 +111,160 @@ function e.cn(text, tab)
     return data or text
 end
 WoW_Tools_Chinese_CN= e.cn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--数据来源，插件 WoWeuCN_Tooltips
+local function split(s, delimiter)
+    if (s == nil) then
+        return nil
+    end        
+    local result = {};
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
+end
+
+if GetItemData then
+    e.Get_Item_Data= GetItemData
+else
+    function e.Get_Item_Data(itemID)
+        if itemID and WoWeuCN_Tooltips_ItemData_0 then
+            local index = nil
+            if (itemID >= 0 and itemID < 100000) then
+                index = WoWeuCN_Tooltips_ItemIndexData_0[itemID]
+            elseif (itemID >= 100000 and itemID < 200000) then
+                index = WoWeuCN_Tooltips_ItemIndexData_100000[itemID - 100000]
+            elseif (itemID >= 200000 and itemID < 300000) then
+                index = WoWeuCN_Tooltips_ItemIndexData_200000[itemID - 200000]
+            end
+            if index then
+                if (itemID >= 0 and itemID < 100000) then
+                    return split(WoWeuCN_Tooltips_ItemData_0[index], '£')
+                elseif (itemID >= 100000 and itemID < 200000) then
+                    return split(WoWeuCN_Tooltips_ItemData_100000[index], '£')
+                elseif (itemID >= 200000 and itemID < 300000) then
+                    return split(WoWeuCN_Tooltips_ItemData_200000[index], '£')
+                end
+            end
+        end
+    end
+end
+
+
+if GetSpellData then
+    e.Get_Spell_Data= GetSpellData
+else
+    function e.Get_Spell_Data(spellID)
+        local data
+        if spellID and WoWeuCN_Tooltips_SpellIndexData_0 then
+            local index
+            if (spellID >= 0 and spellID < 100000) then
+                index = WoWeuCN_Tooltips_SpellIndexData_0[spellID]
+            elseif (spellID >= 100000 and spellID < 200000) then
+                index = WoWeuCN_Tooltips_SpellIndexData_100000[spellID - 100000]
+            elseif (spellID >= 200000 and spellID < 300000) then
+                index = WoWeuCN_Tooltips_SpellIndexData_200000[spellID - 200000]
+            elseif (spellID >= 300000 and spellID < 400000) then
+                index = WoWeuCN_Tooltips_SpellIndexData_300000[spellID - 300000]
+            elseif (spellID >= 400000 and spellID < 500000) then
+                index = WoWeuCN_Tooltips_SpellIndexData_400000[spellID - 400000]
+            end
+            if index then
+                if (spellID >= 0 and spellID < 100000) then
+                    data = split(WoWeuCN_Tooltips_SpellData_0[index], '£')
+                elseif (spellID >= 100000 and spellID < 200000) then
+                    data = split(WoWeuCN_Tooltips_SpellData_100000[index], '£')
+                elseif (spellID >= 200000 and spellID < 300000) then
+                    data = split(WoWeuCN_Tooltips_SpellData_200000[index], '£')
+                elseif (spellID >= 300000 and spellID < 400000) then
+                    data = split(WoWeuCN_Tooltips_SpellData_300000[index], '£')
+                elseif (spellID >= 400000 and spellID < 500000) then
+                    data = split(WoWeuCN_Tooltips_SpellData_400000[index], '£')
+                end
+                if data then
+                    local newID
+                    while (string.find(data[1], "¿")) do
+                        newID= string.sub(data[1], 3)
+                        newID= newID and tonumber(newID)
+                        data = e.Get_Spell_Data(newID)
+                        if not data then
+                            return
+                        end
+                    end
+                end
+            end
+        end
+        return data
+    end
+end
+
+
+
+
+
+
+function e.Get_Item_Name(itemID)
+    if itemID then
+        local data= e.Get_Item_Data(itemID)
+        if data then
+            return data[1]
+        end
+    end
+end
+
+function e.Get_Spell_Name(spellID)
+    if spellID then
+        local data= e.Get_Spell_Data(spellID)
+        if data then
+            return data[1]
+        end
+    end
+end
+
+
+
+
+function e.Get_Recipe_Name(recipeInfo, hyperlink)
+    local name
+    hyperlink= hyperlink or (recipeInfo and recipeInfo.hyperlink)
+
+    local color
+    if hyperlink then
+        local item = Item:CreateFromItemLink(hyperlink)
+        color= (item:GetItemQualityColor() or {}).color
+        name= e.Get_Item_Name(item:GetItemID()) or e.strText[item:GetItemName()]
+    end
+    if not name and recipeInfo then
+        name= e.Get_SkillLineAbility_Name(recipeInfo.skillLineAbilityID)
+    end
+    if name and color then
+        name= WrapTextInColor(name, color)
+    end
+  
+    return name
+end
+
+
+
+
+
+
+
 
 
 

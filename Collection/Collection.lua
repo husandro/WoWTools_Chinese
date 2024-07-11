@@ -27,7 +27,7 @@ local function Init_Toy()
     end)
     hooksecurefunc('ToySpellButton_UpdateButton', function(self)
         if self:IsVisible() and self.itemID then
-            local name = e.Get_Item_Search_Name(self.itemID) or e.strText[self.name:GetText()]          
+            local name = e.Get_Item_Name(self.itemID) or e.strText[self.name:GetText()]          
             if name then
                 self.name:SetText(name)
             end
@@ -58,7 +58,7 @@ local function Init_Heirlooms()
         if not btn.name then
             return
         end
-        local name= e.Get_Item_Search_Name(btn.itemID) or e.strText[btn.name:GetText()]
+        local name= e.Get_Item_Name(btn.itemID) or e.strText[btn.name:GetText()]
         if name then
             btn.name:SetText(name)
         end
