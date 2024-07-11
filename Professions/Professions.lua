@@ -21,6 +21,15 @@ local FailValidationTooltips = {
 }
 
 
+local function SetTextToFit(fontString, text, maxWidth, multiline)
+	fontString:SetHeight(200)
+	fontString:SetText(text)
+	fontString:SetWidth(maxWidth)
+	if not multiline then
+		fontString:SetWidth(fontString:GetStringWidth())
+	end
+	fontString:SetHeight(fontString:GetStringHeight())
+end
 
 
 
@@ -209,27 +218,18 @@ end
 
 
 
-local function SetTextToFit(fontString, text, maxWidth, multiline)
-	fontString:SetHeight(200)
-	fontString:SetText(text)
-	fontString:SetWidth(maxWidth)
-	if not multiline then
-		fontString:SetWidth(fontString:GetStringWidth())
-	end
-	fontString:SetHeight(fontString:GetStringHeight())
-end
 
 
 local function Init_CraftingPage_SchematicForm()
-    local frame= ProfessionsFrame.CraftingPage
+    local frame= ProfessionsFrame.CraftingPage.SchematicForm
     --ProfessionsFrame.CraftingPage.SchematicForm.RecipeSourceButton
 
-    e.hookLabel(frame.SchematicForm.RecraftingDescription)
-    e.region(frame.SchematicForm.AllocateBestQualityCheckBox)--使用最高品质材料
-    e.hookLabel(frame.SchematicForm.Reagents.Label)
-    e.set(frame.SchematicForm.FirstCraftBonus.Text)
-    e.hookLabel(frame.SchematicForm.RecipeSourceButton.Text)--未学习的配方
-    frame.SchematicForm.RecipeSourceButton:HookScript('OnEnter', function(self)
+    e.hookLabel(frame.RecraftingDescription)
+    e.region(frame.AllocateBestQualityCheckBox)--使用最高品质材料
+    e.hookLabel(frame.Reagents.Label)
+    e.set(frame.FirstCraftBonus.Text)
+    e.hookLabel(frame.RecipeSourceButton.Text)--未学习的配方
+    frame.RecipeSourceButton:HookScript('OnEnter', function(self)
 
         local recipeInfo= self:GetParent().currentRecipeInfo
         if not recipeInfo or not recipeInfo.recipeID then
@@ -249,25 +249,25 @@ local function Init_CraftingPage_SchematicForm()
     end)
 
 
-    frame.SchematicForm.QualityDialog.AcceptButton:SetText('接受')
-    frame.SchematicForm.QualityDialog.CancelButton:SetText('取消')
-    frame.SchematicForm.QualityDialog:SetTitle('材料品质')
-    frame.SchematicForm.TrackRecipeCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
-    frame.SchematicForm.FavoriteButton:HookScript("OnEnter", function(button)
+    frame.QualityDialog.AcceptButton:SetText('接受')
+    frame.QualityDialog.CancelButton:SetText('取消')
+    frame.QualityDialog:SetTitle('材料品质')
+    frame.TrackRecipeCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
+    frame.FavoriteButton:HookScript("OnEnter", function(button)
         GameTooltip_AddHighlightLine(GameTooltip, button:GetChecked() and '从偏好中移除' or '设置为偏好')
         GameTooltip:Show()
     end)
-    frame.SchematicForm.FavoriteButton:HookScript("OnClick", function(button)
+    frame.FavoriteButton:HookScript("OnClick", function(button)
         GameTooltip_AddHighlightLine(GameTooltip, button:GetChecked() and '从偏好中移除' or '设置为偏好')
         GameTooltip:Show()
     end)
-    frame.SchematicForm.FirstCraftBonus:SetScript("OnEnter", function()
+    frame.FirstCraftBonus:SetScript("OnEnter", function()
         GameTooltip_AddNormalLine(GameTooltip, '首次制造此配方会教会你某种新东西。')
         GameTooltip:Show()
     end)
 
 
-    hooksecurefunc(frame.SchematicForm, 'Init', function(self, recipeInfo)
+    hooksecurefunc(frame, 'Init', function(self, recipeInfo)
         if not recipeInfo then
             return
         end
@@ -329,7 +329,45 @@ local function Init_CraftingPage_SchematicForm()
             end
         end
     end)
+
+
+
+
+    hooksecurefunc(frame, 'UpdateRecipeDescription', function(self)
+        if not self.Description:IsShown() then
+            return
+        end
+        local spell = Spell:CreateFromSpellID(self.currentRecipeInfo.recipeID);
+        local spellID= spell:GetSpellID()
+        if spellID then
+            local desc
+            for i, text in pairs(e.Get_Spell_Data(spellID) or {}) do
+                if i>1 then
+                    if not desc or #text> #desc then
+                        desc= text
+                    end
+                end
+            end
+            if desc and desc ~= "" then
+                self.Description:SetText(desc);
+                --self.Description:SetHeight(600);
+                self.Description:SetHeight(self.Description:GetStringHeight() + 1)
+            end
+        end
+    end)
 end
+            --[[local reagents = self.transaction:CreateCraftingReagentInfoTbl();
+            --local description = C_TradeSkillUI.GetRecipeDescription(spell:GetSpellID(), reagents, self.transaction:GetAllocationItemGUID());
+    
+            -- If an embedded icon is present, substitute a small vertical offset so the icon is centered with the adjacent text.
+            local textureID, height = string.match(description, "|T(%d+):(%d+)|t");
+            if textureID then
+                local size = height or 24;
+                local xOffset, yOffset = 0, 3;
+                description = string.gsub(description, "|T.*|t", CreateSimpleTextureMarkup(textureID, size, size, xOffset, yOffset));
+            end]]
+    
+          
 
 
 

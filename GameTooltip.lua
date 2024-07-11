@@ -241,40 +241,6 @@ set_pettips_func(FloatingBattlePetTooltip)
 
 
 
-local replacement = {
-    ["瞬发"] = "À",
-    ["施法时间"] = "Á",
-    ["码射程"] = "Â",
-    ["秒"] = "Ã",
-    ["冷却时间"] = "Ä",
-    ["|cffffd100"] = "Å",
-    ["|r|cff7f7f7f"] = "Æ",
-    ["|r"] = "Ç",
-    ["近战范围"] = "È",
-    ["持续"] = "É",
-    ["造成"] = "Ê",
-
-    ["点伤害"] = "Ë",
-    ["点治疗"] = "Ì",
-    ["点生命值"] = "Í",
-    ["点法力值"] = "Î",
-    ["点物理伤害"] = "Ï",
-    ["点魔法伤害"] = "Ð",
-    ["点火焰伤害"] = "Ñ",
-    ["点冰霜伤害"] = "Ò",
-    ["点暗影伤害"] = "Ó",
-    ["点神圣伤害"] = "Ô",
-    ["点奥术伤害"] = "Õ",
-    ["点混乱伤害"] = "Ö",
-    ["点流血伤害"] = "Ø"
-}
-
-local function ReplaceText(s)
-    for origin,new in pairs(replacement) do
-        s = string.gsub(s, new, origin)
-    end    
-    return s
-end
 
 local function add_data(tooltip, info, isSpell)
     if not info then
@@ -290,7 +256,7 @@ local function add_data(tooltip, info, isSpell)
                     tooltip:AddLine(' ')
                     add=true
                 end
-                tooltip:AddLine(isSpell and ReplaceText(text) or text, nil,nil,nil, true)
+                tooltip:AddLine(isSpell and e.ReplaceText(text) or text, nil,nil,nil, true)
             end
         end
     end
