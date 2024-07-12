@@ -465,17 +465,47 @@ local function Init_SpecPage()
             if data[1] then
                 GameTooltipTextLeft1:SetText(data[1])
             end
-            if data[2] then
-                GameTooltip:AddLine(' ')
-                GameTooltip:AddLine('|cff00ff00'..data[2]..'|r')
-                GameTooltip:Show()
+            local currRank, maxRank = self:GetRanks();
+            if currRank and maxRank then
+                GameTooltipTextLeft5:SetText('等级 '..currRank..'/'..maxRank)
             end
+            if data[2] then
+                GameTooltipTextLeft5:SetText(data[2])
+            end
+            GameTooltip:Show()
         end
     end
+    --[[GameTooltip:AddLine(' ')
+    GameTooltip:AddLine('|cff00ff00'..data[2]..'|r', nil,nil,nil,  true)
+    GameTooltip:Show()]]
     ProfessionsFrame.SpecPage.DetailedView.Path:HookScript('OnEnter', on_enter)
     hooksecurefunc(ProfessionsSpecPathMixin, 'OnEnter', on_enter)
 
+
     
+    hooksecurefunc(ProfessionSpecTabMixin, 'OnLoad', function(self)
+        self.StateIcon:SetScript("OnEnter", function(frame)
+            GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
+            local name= e.cn(self:GetParent().professionInfo.professionName)
+            GameTooltip_AddNormalLine(GameTooltip, format('你可以选择一个新的专精|n|cnGREEN_FONT_COLOR:%s|r', name))
+            GameTooltip:Show();
+        end)       
+    end)
+
+    hooksecurefunc(ProfessionSpecTabMixin, 'SetState', function(self, state)
+        
+        
+--info= self.tabInfo
+--for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
+
+        local name= e.strText[self.tabInfo.name]
+        if name then
+            name = (state ~= Enum.ProfessionsSpecTabState.Locked) and name or DISABLED_FONT_COLOR:WrapTextInColorCode(name);
+            self.Text:SetText(name);
+        end
+    end)
+
+
 end
 
 

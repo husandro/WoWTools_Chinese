@@ -9,7 +9,7 @@ local id, e = ...
 local function Set_UpdateButton(self)
     e.set(self.spellString)
     e.set(self.subSpellString)
-    e.set(self.subSpellString)   
+    e.set(self.subSpellString)
 end
 
 
@@ -36,7 +36,7 @@ local function Init()
 
     for _, name in pairs(tab) do
         local frame= _G[name]
-        if frame then            
+        if frame then
             hooksecurefunc(_G[name].SpellButton1, 'UpdateButton', Set_UpdateButton)
             hooksecurefunc(_G[name].SpellButton2, 'UpdateButton', Set_UpdateButton)
         end
