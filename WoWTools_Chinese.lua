@@ -44,6 +44,7 @@ function e.ReplaceText()end-- WoWeuCN_Tooltips
 function e.Get_SkillLineAbility_Name()end--tab.skillLineAbilityID 专业配方，名称
 function e.Get_TradeSkillCategory_Name()end---tab.skillCategoryID 专业目录，名称
 function e.Get_Recipe_Source()end--配方，来源
+function e.Get_Profession_Node_Desc()end--tab.nodeID
 
 
 function e.Get_LFGDungeon_Desc() end--tab.lfgDungeonID
@@ -106,6 +107,9 @@ function e.cn(text, tab)
 
         elseif tab.recipeID then
             data= e.Get_Recipe_Source(tab.recipeID)--专业配方,来源
+
+        elseif tab.ProfessionNodeID then
+            data= e.Get_Profession_Node_Desc(tab.ProfessionNodeID)
 
         elseif tab.lfgDungeonID then
             data= e.Get_LFGDungeon_Desc(tab.lfgDungeonID)

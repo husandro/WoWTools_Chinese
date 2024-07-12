@@ -367,8 +367,8 @@ end
                 local xOffset, yOffset = 0, 3;
                 description = string.gsub(description, "|T.*|t", CreateSimpleTextureMarkup(textureID, size, size, xOffset, yOffset));
             end]]
-    
-          
+
+
 
 
 
@@ -425,37 +425,69 @@ local function Init_SpecPage()
     ProfessionsFrame.SpecPage.DetailedView.UnlockPathButton:SetText('学习副专精')
     ProfessionsFrame.SpecPage.TreePreview.HighlightsHeader:SetText('专精特色：')
 
-    ProfessionsFrame.SpecPage.DetailedView.SpendPointsButton:HookScript("OnEnter", function()
+    e.hookLabel(ProfessionsFrame.SpecPage.DetailedView.PathName)
+    ProfessionsFrame.SpecPage.DetailedView.SpendPointsButton:HookScript("OnEnter", function(frame)
         local self= ProfessionsFrame.SpecPage
         local spendCurrency = C_ProfSpecs.GetSpendCurrencyForPath(self:GetDetailedPanelNodeID())
-        if spendCurrency ~= nil then
-            local currencyTypesID = self:GetSpendCurrencyTypesID()
-            if currencyTypesID then
-                local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyTypesID)
-                if self.treeCurrencyInfoMap[spendCurrency] ~= nil and self.treeCurrencyInfoMap[spendCurrency].quantity == 0 then
-                    GameTooltip:SetText(format('|cnRED_FONT_COLOR:你没有可以消耗的|r|n|cffffffff%s|r|r', currencyInfo.name), nil, nil, nil, nil, true)
-                    GameTooltip:Show()
-                end
-            end
+        if not spendCurrency then
+            return
+        end
+        local currencyTypesID = self:GetSpendCurrencyTypesID()
+        if not currencyTypesID then
+            return
+        end
+        local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyTypesID)
+        if self.treeCurrencyInfoMap[spendCurrency] ~= nil and self.treeCurrencyInfoMap[spendCurrency].quantity == 0 and currencyInfo.name then
+            local name= '|T'..(currencyInfo.iconFileID or 0)..':0|t'..e.cn(currencyInfo.name)
+            GameTooltip:SetOwner(frame, "ANCHOR_RIGHT", 0, 0)
+            GameTooltip_AddErrorLine(GameTooltip, format('你没有可以消耗的|n%s', name))
+            GameTooltip:Show()
         end
     end)
-    hooksecurefunc(ProfessionsFrame.SpecPage, 'ConfigureButtons', function(self)
-        self.DetailedView.SpendPointsButton:SetScript("OnEnter", function()
-            local spendCurrency = C_ProfSpecs.GetSpendCurrencyForPath(self:GetDetailedPanelNodeID())
-            if spendCurrency ~= nil then
-                local currencyTypesID = self:GetSpendCurrencyTypesID()
-                if currencyTypesID then
-                    local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyTypesID)
-                    if self.treeCurrencyInfoMap[spendCurrency] ~= nil and self.treeCurrencyInfoMap[spendCurrency].quantity == 0 then
-                        GameTooltip:SetOwner(self.DetailedView.SpendPointsButton, "ANCHOR_RIGHT", 0, 0)
-                        GameTooltip_AddErrorLine(GameTooltip, format('你没有可以消耗的%s。', currencyInfo.name))
 
-                        GameTooltip:Show()
-                    end
+    --ProfessionsSpecFrameMixin
+    hooksecurefunc(ProfessionsFrame.SpecPage, 'UpdateDetailedPanel', function(self)
+        local data= e.Get_Profession_Node_Desc(self:GetDetailedPanelNodeID())
+        local name= data and data[1]
+        if not name then
+            local detailedViewPath = self:GetDetailedPanelPath();
+            name= e.strText[detailedViewPath:GetName()]
+        end
+        if name then
+            self.DetailedView.PathName:SetText(name)
+        end
+    end)
+
+
+    --专精，技能，提示
+    local function on_enter(self)
+        local data= e.Get_Profession_Node_Desc(self.nodeID)
+        if not data then
+            return
+        end
+        if GameTooltipTextLeft1 and GameTooltipTextLeft5 and data[1] and data[2] then
+            GameTooltipTextLeft1:SetText(data[1])
+            if GameTooltipTextLeft3 then
+                local text= GameTooltipTextLeft3:GetText()
+                if text and text:find('%d+/%d+') then
+                    GameTooltipTextLeft3:SetFormattedText('级别 %s', text:match('(%d+/%d+)'))
                 end
             end
-        end)
-    end)
+            GameTooltipTextLeft5:SetText(data[2])
+        else
+            GameTooltip:AddLine(' ')
+            if data[1] then
+                GameTooltip:AddLine('|cffff00ff'..data[1]..'|r')
+            end
+            if data[2] then
+                GameTooltip:AddLine('|cff00ff00'..data[2]..'|r')
+            end
+            GameTooltip:Show()
+        end
+    end
+    ProfessionsFrame.SpecPage.DetailedView.Path:HookScript('OnEnter', on_enter)
+    hooksecurefunc(ProfessionsSpecPathMixin, 'OnEnter', on_enter)
+
 end
 
 
@@ -882,14 +914,14 @@ local function Init_ReagentSlot()
                     return Professions.CraftingReagentMatches(reagent, allocation.reagent)
                 end)
             end
-            
+
             if foundIndex == nil then
                 return
             end
         else
              foundIndex = select(2, self:GetAllocationDetails())
         end
-        
+
         local reagent = reagentSlotSchematic.reagents[foundIndex or 1]
         local reagentName
         if reagent.currencyID then
@@ -909,7 +941,7 @@ local function Init_ReagentSlot()
                     reagentName= e.strText[itemName]
                 else
                     reagentName= '未知'
-                end                   
+                end
             end
         end
 

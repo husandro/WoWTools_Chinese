@@ -274,7 +274,7 @@ local function add_data(tooltip, data, info, isSpell)
             end
         end
         if add then
-            tooltip:Show()
+            --tooltip:Show()
         end
     end
 end

@@ -49,9 +49,18 @@ local function Init()
 
     e.hookLabel(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Name)
     e.hookLabel(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Label)
-
-
 end
+
+
+
+
+
+
+
+
+
+
+
 
 
 --###########

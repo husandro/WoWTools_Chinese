@@ -98,6 +98,7 @@ Professions\Professions_Data_SkillLineAbility.lua
 Professions\Professions_Data_SkillLine.lua
 Professions\Professions_Data_SourceInfo.lua
 Professions\Professions_Data_TradeSkillCategory.lua
+Professions\Professions_Data_ProfTraitPathNode.lua
 Professions\Professions.lua
 Professions\CustomerOrders.lua
 Professions\ClassTrainerFrame.lua

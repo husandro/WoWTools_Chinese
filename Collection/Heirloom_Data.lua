@@ -1,3 +1,9 @@
+if PlayerGetTimerunningSeasonID() then
+    return
+end
+
+
+
 local e= select(2, ...)
 --[[
 [ItemID]= 'SourceText_lang',
