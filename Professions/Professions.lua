@@ -425,7 +425,6 @@ local function Init_SpecPage()
     ProfessionsFrame.SpecPage.DetailedView.UnlockPathButton:SetText('学习副专精')
     ProfessionsFrame.SpecPage.TreePreview.HighlightsHeader:SetText('专精特色：')
 
-    e.hookLabel(ProfessionsFrame.SpecPage.DetailedView.PathName)
     ProfessionsFrame.SpecPage.DetailedView.SpendPointsButton:HookScript("OnEnter", function(frame)
         local self= ProfessionsFrame.SpecPage
         local spendCurrency = C_ProfSpecs.GetSpendCurrencyForPath(self:GetDetailedPanelNodeID())
@@ -462,32 +461,21 @@ local function Init_SpecPage()
     --专精，技能，提示
     local function on_enter(self)
         local data= e.Get_Profession_Node_Desc(self.nodeID)
-        if not data then
-            return
-        end
-        if GameTooltipTextLeft1 and GameTooltipTextLeft5 and data[1] and data[2] then
-            GameTooltipTextLeft1:SetText(data[1])
-            if GameTooltipTextLeft3 then
-                local text= GameTooltipTextLeft3:GetText()
-                if text and text:find('%d+/%d+') then
-                    GameTooltipTextLeft3:SetFormattedText('级别 %s', text:match('(%d+/%d+)'))
-                end
-            end
-            GameTooltipTextLeft5:SetText(data[2])
-        else
-            GameTooltip:AddLine(' ')
+        if data then
             if data[1] then
-                GameTooltip:AddLine('|cffff00ff'..data[1]..'|r')
+                GameTooltipTextLeft1:SetText(data[1])
             end
             if data[2] then
+                GameTooltip:AddLine(' ')
                 GameTooltip:AddLine('|cff00ff00'..data[2]..'|r')
+                GameTooltip:Show()
             end
-            GameTooltip:Show()
         end
     end
     ProfessionsFrame.SpecPage.DetailedView.Path:HookScript('OnEnter', on_enter)
     hooksecurefunc(ProfessionsSpecPathMixin, 'OnEnter', on_enter)
 
+    
 end
 
 
