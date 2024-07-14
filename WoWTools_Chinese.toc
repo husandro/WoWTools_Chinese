@@ -134,19 +134,23 @@ LFG\LFDQueueFrame.lua
 LFG\RaidFinderQueueFrame.lua
 LFG\LFGListFrame.lua
 LFG\LFGFrame.lua
-
-
 ## PvP查找器
 LFG\PVPQueueFrame.lua
 
-1027\Init.lua
-1027\ClassTalentUI.lua
+WoWeuCN_Tooltips\func.lua
+WoWeuCN_Tooltips\SpellData_cn.lua
+WoWeuCN_Tooltips\ItemData_cn.lua
 
 Data_zhCN.lua
 
 
 
 
-WoWeuCN_Tooltips\func.lua
-WoWeuCN_Tooltips\SpellData_cn.lua
-WoWeuCN_Tooltips\ItemData_cn.lua
+
+
+
+
+
+
+1027\Init.lua
+1027\ClassTalentUI.lua

@@ -36,8 +36,6 @@ hooksecurefunc(DropdownTextMixin, 'UpdateText', function(self)
 end)
 
 hooksecurefunc(MenuVariants, 'CreateFontString', function(frame)
-    local type= frame:GetObjectType()--=='Button'
-
     for _, region in pairs({frame:GetRegions()}) do       
         if region:GetObjectType()=='FontString' then
             e.hookLabel(region)
@@ -46,20 +44,6 @@ hooksecurefunc(MenuVariants, 'CreateFontString', function(frame)
 end)
 
 
-
-
-
-
-
-local function GeneratorFunction(owner, rootDescription)
-	rootDescription:CreateTitle("My Title");
-	rootDescription:CreateButton("My Button", function(data)
-    	-- Button handling here.
-	end);
-end);
-local submenu = rootDescription:CreateButton("My Submenu");
-submenu:CreateButton("Enable", SetEnabledFunction, true);
-submenu:CreateButton("Disable", SetEnabledFunction, false);
 
 
 

@@ -288,7 +288,7 @@ end]]
 local function set_item(tooltip, data)
     local info= e.Get_Item_Data(data.id)
 
-    if not info and not tooltip:IsVisible() then
+    if not info or not tooltip:IsVisible() then
         return
     end
 
@@ -320,7 +320,7 @@ end
 
 local function set_spell(tooltip, data)
     local info = e.Get_Spell_Data(data.id)
-    if not tooltip:IsVisible() or not info then
+    if not info or not tooltip:IsVisible() then
         return
     end
 
