@@ -55,7 +55,8 @@ local function Init()
     AuctionHouseFrame.ItemSellFrame.CreateAuctionLabel:SetText('开始拍卖')
     AuctionHouseFrame.ItemSellFrame.PostButton:SetText('创建拍卖')
     AuctionHouseFrame.ItemSellFrame.QuantityInput.Label:SetText('数量')
-    AuctionHouseFrame.ItemSellFrame.DurationDropDown.Label:SetText('持续时间')
+    --AuctionHouseFrame.ItemSellFrame.DurationDropDown.Label:SetText('持续时间')
+    e.set(AuctionHouseFrame.ItemSellFrame.Duration.Label)
     AuctionHouseFrame.ItemSellFrame.Deposit.Label:SetText('保证金')
     AuctionHouseFrame.ItemSellFrame.TotalPrice.Label:SetText('总价')
     AuctionHouseFrame.ItemSellFrame.QuantityInput.MaxButton:SetText('最大数量')
@@ -63,19 +64,20 @@ local function Init()
     AuctionHouseFrame.ItemSellFrame.SecondaryPriceInput.Label:SetText('竞标价格')
 
     --Blizzard_AuctionHouseUI
+    e.hookLabel(AuctionHouseFrame.ItemSellFrame.PriceInput.Label)--一口价
+
     hooksecurefunc(AuctionHouseFrame.ItemSellFrame, 'SetSecondaryPriceInputEnabled', function(self, enabled)        
-        self.PriceInput:SetText('一口价')--AUCTION_HOUSE_BUYOUT_LABEL)
         if enabled then
             self.PriceInput:SetSubtext('|cff777777(可选)|r')--AUCTION_HOUSE_BUYOUT_OPTIONAL_LABEL
         end
-        
     end)
 
     AuctionHouseFrame.CommoditiesSellFrame.CreateAuctionLabel:SetText('开始拍卖')
     AuctionHouseFrame.CommoditiesSellFrame.PostButton:SetText('创建拍卖')
     AuctionHouseFrame.CommoditiesSellFrame.QuantityInput.Label:SetText('数量')
     AuctionHouseFrame.CommoditiesSellFrame.PriceInput.Label:SetText('一口价')
-    AuctionHouseFrame.CommoditiesSellFrame.DurationDropDown.Label:SetText('持续时间')
+    --AuctionHouseFrame.CommoditiesSellFrame.DurationDropDown.Label:SetText('持续时间')
+    e.set(AuctionHouseFrame.CommoditiesSellFrame.Duration.Label)
     AuctionHouseFrame.CommoditiesSellFrame.Deposit.Label:SetText('保证金')
     AuctionHouseFrame.CommoditiesSellFrame.TotalPrice.Label:SetText('总价')
     AuctionHouseFrame.CommoditiesSellFrame.QuantityInput.MaxButton:SetText('最大数量')

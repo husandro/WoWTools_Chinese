@@ -47,12 +47,12 @@ local function Init()
     ProfessionsCustomerOrdersFrame.Form.BackButton:SetText('返回' )
     ProfessionsCustomerOrdersFrame.Form.MinimumQuality.Text:SetText('最低品质：')
     ProfessionsCustomerOrdersFrame.Form.ReagentContainer.RecraftInfoText:SetText('再造使你可以改变某些制造装备的附加材料和品质。')
-    ProfessionsCustomerOrdersFrame.Form.AllocateBestQualityCheckBox.Text:SetText('使用最高品质材料')
+    --ProfessionsCustomerOrdersFrame.Form.AllocateBestQualityCheckBox.Text:SetText('使用最高品质材料')
 
     ProfessionsCustomerOrdersFrame.Form.OrderRecipientDisplay.Crafter:SetText('制作者：')
-    hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'SetupDurationDropDown', function(self)
+    --[[hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'SetupDurationDropDown', function(self)
         self.PaymentContainer.Duration:SetText('持续时间')
-    end)
+    end)]]
 
     ProfessionsCustomerOrdersFrame.Form.PaymentContainer.Tip:SetText('佣金')
     ProfessionsCustomerOrdersFrame.Form.PaymentContainer.NoteEditBox.TitleBox.Title:SetText('给制作者的信息：')
@@ -146,9 +146,9 @@ local function Init()
         GameTooltip:Show()
      end)
 
-    ProfessionsCustomerOrdersFrame.Form.TrackRecipeCheckBox.Text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
+    --ProfessionsCustomerOrdersFrame.Form.TrackRecipeCheckBox.Text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
 
-    ProfessionsCustomerOrdersFrame.Form.AllocateBestQualityCheckBox:HookScript("OnEnter", function(button)
+    --[[ProfessionsCustomerOrdersFrame.Form.AllocateBestQualityCheckBox:HookScript("OnEnter", function(button)
         local checked = button:GetChecked()
         if checked then
             GameTooltip_AddNormalLine(GameTooltip, '取消勾选后，总会使用可用的最低品质的材料。')
@@ -156,7 +156,7 @@ local function Init()
             GameTooltip_AddNormalLine(GameTooltip, '勾选后，总会使用可用的最高品质的材料。')
         end
         GameTooltip:Show()
-    end)
+    end)]]
 
 
     hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'InitSchematic', function(self)
