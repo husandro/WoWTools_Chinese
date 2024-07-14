@@ -304,7 +304,7 @@ local function set_item(tooltip, data)
         local add
         for index, text in pairs(info) do
             if text~=' ' then
-                if index==1 then
+                if index==1 and tooltip.TextLeft1 then
                     tooltip.TextLeft1:SetText(text)
                 else
                     if not add then
@@ -327,7 +327,7 @@ local function set_spell(tooltip, data)
     local add
     for index, text in pairs(info) do
         if text~=' ' then
-            if index==1 then
+            if index==1 and tooltip.TextLeft1 then
                 tooltip.TextLeft1:SetText(e.ReplaceText(text))
             else
                 if not add then
