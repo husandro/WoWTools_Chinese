@@ -30,6 +30,7 @@ Dialogs.lua
 NavBar.lua
 GameTooltip.lua
 UIDropDownMenu.lua
+Blizzard_Menu.lua
 AddonList.lua
 FriendsFrame.lua
 QuickKeybindFrame.lua

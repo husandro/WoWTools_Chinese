@@ -140,7 +140,7 @@ function e.Get_Spell_Name(spellID)
     if spellID then
         local data= e.Get_Spell_Data(spellID)
         if data then
-            return data[1]
+            return e.ReplaceText(data[1])
         end
     end
 end
@@ -274,9 +274,12 @@ function e.hookLabel(label, setFont)
             e.font(label)
         end
         e.set(label)
-       hooksecurefunc(label, 'SetText', function(self, name)
-            set(self, name)
-        end)
+        if not label.hook_chines then
+            hooksecurefunc(label, 'SetText', function(self, name)
+                set(self, name)
+            end)
+            label.hook_chines=true
+        end
     end
 end
 
@@ -299,14 +302,17 @@ function e.hookButton(btn, setFont)
         if label then
             e.set(labe)
         end
-        hooksecurefunc(btn, 'SetText', function(self, name)
-            if name and name~='' then
-                local cnName= e.strText[name]
-                if cnName then
-                    self:SetText(cnName)
+        if not btn.hook_chines then
+            hooksecurefunc(btn, 'SetText', function(self, name)
+                if name and name~='' then
+                    local cnName= e.strText[name]
+                    if cnName then
+                        self:SetText(cnName)
+                    end
                 end
-            end
-        end)
+            end)
+            btn.hook_chines=true
+        end
     end
 end
 
