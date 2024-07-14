@@ -244,17 +244,17 @@ set_pettips_func(FloatingBattlePetTooltip)
 
 
 
-local function add_data(tooltip, data, info, isSpell)
+--[[local function add_data(tooltip, data, info, isSpell)
     if not tooltip:IsVisible() or not info then
         return
     end
 
-    if #data.lines== #info then
+    if #data.lines== #info  then
         local tipName= tooltip:GetName() or ''
         for index, text in pairs(info) do
             local line= tooltip['TextLeft'..index] or _G[tipName.."TextLeft"..index]
             if line then
-                line:SetText(text)
+                line:SetText(isSpell and e.ReplaceText(text) or text)
                 --line:SetTextColor(line:GetTextColor())
             end
         end
@@ -277,7 +277,7 @@ local function add_data(tooltip, data, info, isSpell)
             --tooltip:Show()
         end
     end
-end
+end]]
 
 
 
@@ -286,11 +286,58 @@ end
 
 
 local function set_item(tooltip, data)
-    add_data(tooltip, data, e.Get_Item_Data(data.id), false)
+    local info= e.Get_Item_Data(data.id)
+
+    if not info and not tooltip:IsVisible() then
+        return
+    end
+
+    if #data.lines== #info  then
+        local tipName= tooltip:GetName() or ''
+        for index, text in pairs(info) do
+            local line= tooltip['TextLeft'..index] or _G[tipName.."TextLeft"..index]
+            if line then
+                line:SetText(text)
+            end
+        end
+    else
+        local add
+        for index, text in pairs(info) do
+            if text~=' ' then
+                if index==1 then
+                    tooltip.TextLeft1:SetText(text)
+                else
+                    if not add then
+                        tooltip:AddLine(' ')
+                        add=true
+                    end
+                    tooltip:AddLine(text, nil,nil,nil, true)
+                end
+            end
+        end
+    end
 end
 
 local function set_spell(tooltip, data)
-    add_data(tooltip, data, e.Get_Spell_Data(data.id), true)
+    local info = e.Get_Spell_Data(data.id)
+    if not tooltip:IsVisible() or not info then
+        return
+    end
+
+    local add
+    for index, text in pairs(info) do
+        if text~=' ' then
+            if index==1 then
+                tooltip.TextLeft1:SetText(e.ReplaceText(text))
+            else
+                if not add then
+                    tooltip:AddLine(' ')
+                    add=true
+                end
+                tooltip:AddLine(e.ReplaceText(text), nil,nil,nil, true)
+            end
+        end
+    end
 end
 
 

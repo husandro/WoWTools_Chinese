@@ -191,36 +191,50 @@ function e.font(lable)
     end
 end
 
-local function set(label, text)
-    if label then
-        local p
-        if not text then
-            if label.GetText then
-                text= label:GetText()
+local function set(frame, text)
+    if not frame then
+        return
+    end
+    local p
+    if not text then
+        if frame.GetText then
+            text= frame:GetText()
+            p=text
+        elseif frame:GetObjectType()=='Button' then
+            local font= frame:GetFontString()
+            if font then
+                text= font:GetText()
                 p=text
-            elseif label:GetObjectType()=='Button' then
-                local font= label:GetFontString()
-                if font then
-                    text= font:GetText()
-                    p=text
+            end
+        elseif frame.Text or frame.text or frame.Label then
+            local label= frame.Text or frame.text or frame.Label
+            text= label:GetText()
+            frame= label
+        else
+            for _, region in pairs({frame:GetRegions()}) do
+                if region:GetObjectType()=='FontString' then
+                    text= region:GetText()
+                    frame= region
+                    break
                 end
             end
         end
-        local col, name
-        if text then
-            col, name=text:match('^(|c........)(.+)|r$')
-            text= e.strText[name or text]
-        end
-        if text and text~='' then
-            if col then
-                text= col..text..'|r'
-            end
-            if p~=text then
-                label:SetText(text)
-            end
-        end
     end
+    local col, name
+    if text then
+        col, name=text:match('^(|c........)(.+)|r$')
+        text= e.strText[name or text]
+    end
+    if text and text~='' then
+        if col then
+            text= col..text..'|r'
+        end
+        if p~=text then
+            frame:SetText(text)
+        end
+    end    
 end
+
 function e.set(label, text, affer, setFont)
     if label then
         if setFont then

@@ -222,13 +222,22 @@ end
 
 local function Init_CraftingPage_SchematicForm()
     local frame= ProfessionsFrame.CraftingPage.SchematicForm
-    --ProfessionsFrame.CraftingPage.SchematicForm.RecipeSourceButton
 
     e.hookLabel(frame.RecraftingDescription)
-    e.region(frame.AllocateBestQualityCheckBox)--使用最高品质材料
+    frame:HookScript('OnShow', function(self)
+        self.AllocateBestQualityCheckbox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'));
+        self.TrackRecipeCheckbox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'));
+    end)
+
     e.hookLabel(frame.Reagents.Label)
     e.set(frame.FirstCraftBonus.Text)
     e.hookLabel(frame.RecipeSourceButton.Text)--未学习的配方
+
+    frame.QualityDialog.AcceptButton:SetText('接受')
+    frame.QualityDialog.CancelButton:SetText('取消')
+    frame.QualityDialog:SetTitle('材料品质')
+
+
     frame.RecipeSourceButton:HookScript('OnEnter', function(self)
 
         local recipeInfo= self:GetParent().currentRecipeInfo
@@ -248,11 +257,6 @@ local function Init_CraftingPage_SchematicForm()
         end
     end)
 
-
-    frame.QualityDialog.AcceptButton:SetText('接受')
-    frame.QualityDialog.CancelButton:SetText('取消')
-    frame.QualityDialog:SetTitle('材料品质')
-    frame.TrackRecipeCheckBox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
     frame.FavoriteButton:HookScript("OnEnter", function(button)
         GameTooltip_AddHighlightLine(GameTooltip, button:GetChecked() and '从偏好中移除' or '设置为偏好')
         GameTooltip:Show()
@@ -861,7 +865,7 @@ local function Init_Details_Stat()
     hooksecurefunc(ProfessionsCrafterDetailsStatLineMixin, 'SetLabel', function(self, label)
         e.set(self.LeftLabel, label)
     end)
-    e.hookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.FinishingReagentSlotContainer.Label)--成品材料：
+    --e.hookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.FinishingReagentSlotContainer.Label)--成品材料：
 
     --预期品质
     ProfessionsFrame.CraftingPage.SchematicForm.Details.QualityMeter.Center:SetScript("OnEnter", function(fill)
