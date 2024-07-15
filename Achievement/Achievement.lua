@@ -21,14 +21,14 @@ end]]
 --hooksecurefunc('AchievementFrameBaseTab_OnClick', set_index)
 --hooksecurefunc('AchievementFrameComparisonTab_OnClick', set_index)
 
-local function Init()    
+local function Init()
     AchievementFrameTab1:SetText('成就')
     AchievementFrameTab2:SetText('公会')
     AchievementFrameTab3:SetText('统计')
     AchievementFrame.SearchBox.Instructions:SetText('搜索')
     AchievementFrameSummaryAchievementsHeaderTitle:SetText('近期成就')
     AchievementFrameSummaryCategoriesHeaderTitle:SetText('进展总览')
-    e.set(AchievementFrameSummaryCategoriesStatusBarTitle)  
+    e.set(AchievementFrameSummaryCategoriesStatusBarTitle)
     e.set(AchievementFrameFilterDropDownText)--全部，已获得，未完成
 
     --标题
@@ -40,10 +40,10 @@ local function Init()
     --近期成就
     hooksecurefunc('AchievementFrameSummary_UpdateAchievements', function(...)
         local numAchievements = select("#", ...)
-        if not AchievementFrameSummaryAchievements.buttons or not numAchievements then 
+        if not AchievementFrameSummaryAchievements.buttons or not numAchievements then
             return
         end
-        
+
         local name, completed, description, achievementID
         local defaultAchievementCount = 1
         for i=1, ACHIEVEMENTUI_MAX_SUMMARY_ACHIEVEMENTS do--4
@@ -127,18 +127,18 @@ local function Init()
         local _, name, description,rewardText
         if self.index then
             _, name, _, _, _, _, _, description, _, _, rewardText = GetAchievementInfo(elementData.category, self.index)
-        else            
+        else
             _, name, _, _, _, _, _, description, _, _, rewardText = GetAchievementInfo(self.id)--Social
         end
         e.set(self.Label, name)
         e.set(self.Description, description)
         e.set(self.HiddenDescription, description)
-        e.set(self.Reward, rewardText)        
+        e.set(self.Reward, rewardText)
     end)
     hooksecurefunc('AchievementObjectives_DisplayCriteria', function(objectivesFrame, ID)--条件
         if not objectivesFrame or not ID then
             return
-        end        
+        end
         local requiresRep, repLevel, _
         if ( not objectivesFrame.completed ) then
             requiresRep, _, repLevel = GetAchievementGuildRep(ID)
@@ -170,15 +170,15 @@ local function Init()
                     end
                 end
             end
-        end 
+        end
     end)
 
-   
+
 
     --搜索
     hooksecurefunc('AchievementFrame_ShowSearchPreviewResults', function()
         local numResults = GetNumFilteredAchievements() or 0
-        if numResults == 0 then 
+        if numResults == 0 then
             return
         end
         local searchPreviewContainer = AchievementFrame.SearchPreviewContainer
@@ -205,10 +205,10 @@ local function Init()
         else
             self.ResultType:SetText('未完成')
         end
-        
+
         local categoryID = GetAchievementCategory(self.achievementID)
         local categoryName, parentCategoryID = GetCategoryInfo(categoryID)
-        
+
         local path = e.cn(categoryName)
         while ( not (parentCategoryID == -1) ) do
             categoryName, parentCategoryID = GetCategoryInfo(parentCategoryID)
@@ -242,18 +242,18 @@ local function Init()
             end
         end
     end)
-    
-    
+
+
 
 
     --比较
     hooksecurefunc(AchievementComparisonTemplateMixin, 'Init', function(self, elementData)
         local _, name, _, _, _, _, _, description = GetAchievementInfo(elementData.category, elementData.index)
         e.set(self.Player.Label, name)
-        e.set(self.Player.Description, description)    
+        e.set(self.Player.Description, description)
         if not GetAchievementComparisonInfo(self.id) then
             self.Friend.Status:SetText('未完成')
-        end        
+        end
     end)
     hooksecurefunc('AchievementFrameComparison_UpdateStatusBars', function(ID)
         local name
@@ -275,9 +275,9 @@ local function Init()
             if title then
                 self.Title:SetText(title)
             end
-            
+
         else
-            local name= select(2, GetAchievementInfo(category))            
+            local name= select(2, GetAchievementInfo(category))
             e.set(self.Text, name)
         end
     end)
@@ -308,12 +308,12 @@ panel:SetScript("OnEvent", function(self, _, arg1)
     if arg1==id then
         if C_AddOns.IsAddOnLoaded('Blizzard_AchievementUI') then
             self:UnregisterEvent('ADDON_LOADED')
-            Init()            
+            Init()
         end
 
-    elseif arg1=='Blizzard_AchievementUI' then       
+    elseif arg1=='Blizzard_AchievementUI' then
         self:UnregisterEvent('ADDON_LOADED')
         Init()
-        
+
     end
 end)
