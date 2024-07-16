@@ -48,7 +48,7 @@ function e.ReplaceText()end-- WoWeuCN_Tooltips
 function e.Get_Item_Data()end--物品数据
 function e.Get_Spell_Data()end--法术数据，{'名称', '1', '2', ...}
 function e.Get_Quest_Info()end--e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc) {['Title']='标题', ['Objectives']='目标描述', ['Description']='描述'}
-function e.Get_Unit_Name()end--e.Get_Unit_Name(unit, npcID)
+function e.Get_Unit_Name()end--e.Get_Unit_Name(tab.unit, tab.npcID) NPC return 名称，头衔
 
 
 
@@ -129,7 +129,7 @@ function e.cn(text, tab)
             data= e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc)
         
         elseif tab.npcID or tab.unit then
-            e.Get_Unit_Name(tab.unit, tab.npcID)
+            data= e.Get_Unit_Name(tab.unit, tab.npcID)
         end
     end
     return data or text

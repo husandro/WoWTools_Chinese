@@ -89,11 +89,10 @@ hooksecurefunc('QuestInfo_ShowRewards', set_Detail)
 
 
 hooksecurefunc('QuestFrame_SetPortrait', function()
-   local name= e.Get_Unit_Name('questnpc')
+   local name= e.Get_Unit_Name('questnpc', nil, true)
    if name then
       QuestFrame:SetTitle(name)
    end
-   print(name)
 end)
 
 

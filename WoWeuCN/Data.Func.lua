@@ -29,13 +29,12 @@ e.ReplaceText(string)
 
 local function split(s, delimiter)
     if s then
-        return
+        local result = {};
+        for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+            table.insert(result, match);
+        end
+        return result
     end
-    local result = {};
-    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
-        table.insert(result, match);
-    end
-    return result;
 end
 
 
@@ -207,7 +206,7 @@ end
 
 
 
---单位 e.Get_Unit_Name(unit, npcID)
+--单位 e.Get_Unit_Name(tab.unit, tab.npcID)
 local function Get_NPC_ID(unit)--NPC ID
     if UnitExists(unit) then
         local guid=UnitGUID(unit)
@@ -236,18 +235,26 @@ local Get_Unit_Data= GetUnitData or function(npcID)
         return
     end
 
-    if (num_id >= 0 and num_id < 100000) then
+    if (num_id >= 0 and num_id < 100000) then        
         return split(WoWeuCN_Tooltips_UnitData_0[dataIndex], '£')
+
     elseif (num_id >= 100000 and num_id < 200000) then
         return split(WoWeuCN_Tooltips_UnitData_100000[dataIndex], '£')
+
     elseif (num_id >= 200000 and num_id < 300000) then
         return split(WoWeuCN_Tooltips_UnitData_200000[dataIndex], '£')
     end
 end
 
+
+
+
 function e.Get_Unit_Name(unit, npcID)
-    npcID= Get_NPC_ID(unit) or Get_NPC_ID(unit)
-    return Get_Unit_Data(npcID)
+    npcID= npcID or Get_NPC_ID(unit)   
+    local data= Get_Unit_Data(npcID)
+    if data then
+        return data[1], data[2]
+    end
 end
 
 
