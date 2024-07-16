@@ -24,32 +24,35 @@ e.strText={--主要，汉化
 
 
 
-function e.Get_HoliDay_Info()end---tab.holydayID eventID
+function e.Get_HoliDay_Info()end---tab.holydayID eventID {'名称', '描述}
 function e.Get_Boss_Description()end---tab.journalEncounterID
 function e.Get_Instance_Description()end---tab.instanceID
-function e.Get_PerksActivity_Info()end---tab.perksActivityID
+function e.Get_PerksActivity_Info()end---tab.perksActivityID {'名称', '描述}
 function e.Get_Vignette_Name()end---tab.vignetteID
 function e.Get_Pet_Description()end---tab.speciesID
-function e.Get_Pet_Ablity_Info()end---tab.petAbilityID
-
+function e.Get_Pet_Ablity_Info()end---tab.petAbilityID {'名称', '描述}
 
 --{itemID, isName, isToy, isHeirloom}
 function e.Get_Toy_Source()end
 function e.Get_Heirloom_Source()end
-function e.Get_Item_Data()end
-
-function e.Get_Spell_Data()end
-function e.ReplaceText()end-- WoWeuCN_Tooltips
 
 function e.Get_SkillLineAbility_Name()end--tab.skillLineAbilityID 专业配方，名称
 function e.Get_TradeSkillCategory_Name()end---tab.skillCategoryID 专业目录，名称
 function e.Get_Recipe_Source()end--配方，来源
 function e.Get_Profession_Node_Desc()end--tab.nodeID
 
-function e.Get_LFGDungeon_Desc() end--tab.lfgDungeonID
+function e.Get_LFGDungeon_Desc()end--tab.lfgDungeonID
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
-function e.Get_Quest_Info() end--e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc)
+function e.ReplaceText()end-- WoWeuCN_Tooltips
+function e.Get_Item_Data()end--物品数据
+function e.Get_Spell_Data()end--法术数据，{'名称', '1', '2', ...}
+function e.Get_Quest_Info()end--e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc) {['Title']='标题', ['Objectives']='目标描述', ['Description']='描述'}
+function e.Get_Unit_Name()end--e.Get_Unit_Name(unit, npcID)
+
+
+
+
 
 
 
@@ -124,7 +127,9 @@ function e.cn(text, tab)
 
         elseif tab.questID then
             data= e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc)
-
+        
+        elseif tab.npcID or tab.unit then
+            e.Get_Unit_Name(tab.unit, tab.npcID)
         end
     end
     return data or text

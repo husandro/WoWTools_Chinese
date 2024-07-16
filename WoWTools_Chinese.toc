@@ -139,16 +139,6 @@ LFG\LFGFrame.lua
 ## PvP查找器
 LFG\PVPQueueFrame.lua
 
-##调用其它插件，数据
-WoWeuCN_Tooltips\func.lua
-WoWeuCN_Tooltips\SpellData_cn.lua
-WoWeuCN_Tooltips\ItemData_cn.lua
-
-##调用其它插件，数据
-WoWeuCN_Quests\QuestData_cn.lua
-WoWeuCN_Quests\func.lua
-
-
 ##字符, 常用
 GlobalStrings.lua
 
@@ -156,6 +146,13 @@ GlobalStrings.lua
 
 
 
+##调用其它插件，数据
+WoWeuCN\ItemData_cn.lua
+WoWeuCN\SpellData_cn.lua
+WoWeuCN\QuestData_cn.lua
+WoWeuCN\UnitData_cn.lua
+WoWeuCN\Data.Func.lua
+WoWeuCN\func.lua
 
 
 
