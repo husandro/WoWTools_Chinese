@@ -89,14 +89,14 @@ hooksecurefunc('QuestInfo_ShowRewards', set_Detail)
 
 
 hooksecurefunc('QuestFrame_SetPortrait', function()
-   local name= e.Get_Unit_Name('questnpc', nil, true)
+   local name, name2= e.Get_Unit_Name('questnpc', nil, true)
    if name then
-      QuestFrame:SetTitle(name)
+      QuestFrame:SetTitle(name..(name2 and ' - '..name2 or ''))
    end
 end)
 
 
-
+--[[
 hooksecurefunc('QuestInfo_ShowRewardText', function()
    print('QuestInfo_ShowRewardText')
 end)
@@ -133,3 +133,4 @@ if QuestInfoRewardItemMixin then
       print('QuestInfoReputationRewardButtonMixin QuestInfoReputationRewardButtonMixin')
    end)
 end
+]]
