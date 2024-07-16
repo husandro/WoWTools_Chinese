@@ -37,6 +37,8 @@ QuickKeybindFrame.lua
 MainMicroButton.lua
 ObjectiveTrackerFrame.lua
 
+
+
 ##角色
 Character.lua
 ##公会
@@ -141,9 +143,14 @@ LFG\PVPQueueFrame.lua
 WoWeuCN_Tooltips\func.lua
 WoWeuCN_Tooltips\SpellData_cn.lua
 WoWeuCN_Tooltips\ItemData_cn.lua
+
+##调用其它插件，数据
+WoWeuCN_Quests\QuestData_cn.lua
 WoWeuCN_Quests\func.lua
 
-Data_zhCN.lua
+
+##字符, 常用
+GlobalStrings.lua
 
 
 
@@ -156,3 +163,4 @@ Data_zhCN.lua
 
 1027\Init.lua
 1027\ClassTalentUI.lua
+1027\ObjectiveTrackerFrame1027.lua

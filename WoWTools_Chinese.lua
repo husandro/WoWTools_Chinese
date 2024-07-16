@@ -124,7 +124,7 @@ function e.cn(text, tab)
 
         elseif tab.questID then
             data= e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc)
-            
+
         end
     end
     return data or text
@@ -244,7 +244,7 @@ local function set(frame, text)
         if p~=text then
             frame:SetText(text)
         end
-    end    
+    end
 end
 
 function e.set(label, text, affer, setFont)

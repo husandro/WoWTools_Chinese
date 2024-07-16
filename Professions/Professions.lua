@@ -224,10 +224,12 @@ local function Init_CraftingPage_SchematicForm()
     local frame= ProfessionsFrame.CraftingPage.SchematicForm
 
     e.hookLabel(frame.RecraftingDescription)
-    frame:HookScript('OnShow', function(self)
-        self.AllocateBestQualityCheckbox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'));
-        self.TrackRecipeCheckbox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'));
-    end)
+    if frame.AllocateBestQualityCheckbox then
+        frame:HookScript('OnShow', function(self)
+            self.AllocateBestQualityCheckbox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'));
+            self.TrackRecipeCheckbox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'));
+        end)
+    end
 
     e.hookLabel(frame.Reagents.Label)
     e.set(frame.FirstCraftBonus.Text)
