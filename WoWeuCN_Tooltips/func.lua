@@ -1,3 +1,10 @@
+--数据来源，插件 WoWeuCN_Tooltips, 如果已加载，不载加载数据
+--https://www.curseforge.com/wow/addons/tooltips-translator-chinese
+--10.2.7
+if WoWeuCN_Tooltips_ItemData_0 then
+    return
+end
+
 local e= select(2, ...)
 
 
@@ -12,8 +19,6 @@ local function split(s, delimiter)
     end
     return result;
 end
-
-
 
 
 
