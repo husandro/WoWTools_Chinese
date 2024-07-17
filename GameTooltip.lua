@@ -193,7 +193,8 @@ local function set_pettips_func(self)--FloatingPetBattleTooltip.xml
     self:HookScript('OnShow', set_pet_func)
 end
 
---[[SharedTooltipTemplate
+--[[
+SharedTooltipTemplate
 local tabs={ GameTooltipTemplate
     'ItemRefTooltip',
     'RunforgeFrameTooltipTemplate',
@@ -204,7 +205,7 @@ local tabs={ GameTooltipTemplate
     'EncounterJournalTooltipItem1Tooltip',
     'GarrisonMissionMechanicTooltip',
 }
---BattlePetTooltipTemplat    
+BattlePetTooltipTemplat    
 ]]
 
 
