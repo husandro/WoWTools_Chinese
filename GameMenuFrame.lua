@@ -16,9 +16,10 @@ if GameMenuButtonHelp then--11版本
     return
 end
 
---MainMenuFrameMixin
+--MainMenuFrameMixin MainMenuFrameMixin:AddButton
 hooksecurefunc(GameMenuFrame, 'InitButtons', function(self)
     for btn in self.buttonPool:EnumerateActive() do
         e.set(btn)
     end
 end)
+
