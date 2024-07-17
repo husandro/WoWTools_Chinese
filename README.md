@@ -37,7 +37,7 @@
 > ## WoW UI 中文化 (不完整)
 
 ## 下载
-> ### <https://curseforge.com/wow/addons/wowtoolschinese>>
+> ### <https://www.curseforge.com/wow/addons/wowtoolschinese>>
 > ### <https://addons.wago.io/addons/wowtools-chinese>
 > ### <https://github.com/husandro/WoWTools_Chinese>
 
