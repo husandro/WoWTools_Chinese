@@ -247,11 +247,13 @@ local Get_Unit_Data= GetUnitData or function(npcID)
 end
 
 
-
+function e.Get_Unit_Info(unit, npcID)
+    npcID= npcID or Get_NPC_ID(unit)   
+    return Get_Unit_Data(npcID)
+end
 
 function e.Get_Unit_Name(unit, npcID)
-    npcID= npcID or Get_NPC_ID(unit)   
-    local data= Get_Unit_Data(npcID)
+    local data= e.Get_Unit_Info(unit, npcID)
     if data then
         return data[1], data[2]
     end

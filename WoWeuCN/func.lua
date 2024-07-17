@@ -96,7 +96,7 @@ hooksecurefunc('QuestFrame_SetPortrait', function()
 end)
 
 
---[[
+
 hooksecurefunc('QuestInfo_ShowRewardText', function()
    print('QuestInfo_ShowRewardText')
 end)
@@ -133,4 +133,3 @@ if QuestInfoRewardItemMixin then
       print('QuestInfoReputationRewardButtonMixin QuestInfoReputationRewardButtonMixin')
    end)
 end
-]]
