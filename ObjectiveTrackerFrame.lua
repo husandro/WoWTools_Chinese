@@ -23,8 +23,6 @@ end
 
 
 
---ObjectiveTrackerFrame
-hooksecurefunc(ObjectiveTrackerFrame, 'Init', set_objective_header)
 
 
 
@@ -35,6 +33,29 @@ hooksecurefunc(ObjectiveTrackerFrame, 'Init', set_objective_header)
 
 
 
+local function set_quest(_, block)
+    local name= e.Get_Quest_Info(block.id, true, false, false)
+    if name then
+        block:SetHeader(name)
+    end
+end
+
+
+
+
+--[[
+hooksecurefunc(QuestObjectiveTracker, 'UpdateSingle', set_quest)
+local questID = quest:GetID();
+local block = Get_Block(self, questID);    
+local name= e.Get_Quest_Info(questID, true, false, false)
+if block and name then
+    block:SetHeader(name)
+end
+]]
+
+--任务 QuestObjectiveTracker QuestObjectiveTrackerMixin
+QuestObjectiveTracker:HookScript('OnShow', set_objective_header)
+hooksecurefunc(QuestObjectiveTracker, 'AddBlock', set_quest)
 
 
 
@@ -45,10 +66,37 @@ hooksecurefunc(ObjectiveTrackerFrame, 'Init', set_objective_header)
 
 
 
+--战役，任务 CampaignQuestObjectiveTracker
+CampaignQuestObjectiveTracker:HookScript('OnShow', set_objective_header)
+--hooksecurefunc(CampaignQuestObjectiveTracker, 'UpdateSingle', set_quest)
+hooksecurefunc(CampaignQuestObjectiveTracker, 'AddBlock', set_quest)
 
 
 
 
+
+
+
+--世界，任务 WorldQuestObjectiveTracker
+WorldQuestObjectiveTracker:HookScript('OnShow', set_objective_header)
+hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', set_quest)
+
+
+
+
+
+
+
+
+--旅行者日志 MonthlyActivitiesObjectiveTracker
+MonthlyActivitiesObjectiveTracker:HookScript('OnShow', set_objective_header)
+
+hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'AddBlock', function(_, block)
+    local data= e.Get_PerksActivity_Info(block.id)
+    if data and data[1] then
+        block:SetHeader(data[1])
+    end
+end)
 
 
 
@@ -136,10 +184,9 @@ end)
 
 
 
-
+--专业技能 ProfessionsRecipeTracker
+ProfessionsRecipeTracker:HookScript('OnShow', set_objective_header)
 hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, isRecraft)
-    set_objective_header(self)
-
     local blockID = NegateIf(recipeID, isRecraft);
     local block = Get_Block(self, blockID)
     local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, isRecraft)
@@ -196,3 +243,21 @@ hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, is
         end
     end
 end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+--ObjectiveTrackerFrame
+hooksecurefunc(ObjectiveTrackerFrame, 'Init', set_objective_header)
+
+
+

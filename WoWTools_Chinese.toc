@@ -30,14 +30,14 @@ Dialogs.lua
 NavBar.lua
 GameTooltip.lua
 UIDropDownMenu.lua
-Blizzard_Menu.lua
+Menu.lua
 AddonList.lua
 FriendsFrame.lua
 QuickKeybindFrame.lua
 MainMicroButton.lua
 ObjectiveTrackerFrame.lua
 GameMenuFrame.lua
-
+WorldMapFrame.lua
 
 ##角色
 Character.lua

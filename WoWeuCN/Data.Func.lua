@@ -280,12 +280,12 @@ end
 
 
 --任务 e.Get_Quest_Info(questID, isName, isObject, isDesc)
-local baseClass= UnitClassBase('player')
-local Player_Col= '|c'..select(4, GetClassColor(baseClass))..'%s'
+--local baseClass= UnitClassBase('player')
+--local Player_Col= '|c'..select(4, GetClassColor(baseClass))..'%s|r'
 local Player_Sex= UnitSex("player")
-local Player_Name= format(Player_Col, UnitName('player'))
-local Player_Race= format(Player_Col, e.cn(UnitRace('player')))
-local Player_Class= format(Player_Col, e.cn(UnitClass('player')))
+local Player_Name=  UnitName('player')
+local Player_Race=  e.cn(UnitRace('player'))
+local Player_Class=  e.cn(UnitClass('player'))
 
 local function expand_text(msg)-- function WoWeuCN_Quests_ExpandUnitInfo(desc)
    if not msg and msg=='' then
@@ -295,7 +295,7 @@ local function expand_text(msg)-- function WoWeuCN_Quests_ExpandUnitInfo(desc)
    msg= msg:gsub('YOUR_GENDER%(.-;.-%)', function(s)--YOUR_GENDER(兄弟;小姐)
       local a,b= s:match('%((.-);(.-)%)')
       if a and b then
-         return format(Player_Col, Player_Sex==3 and a or b)--3	Female
+         return Player_Sex==3 and a or b--3	Female
       end
    end)
    msg= msg:gsub("{name}", Player_Name)
@@ -306,38 +306,49 @@ end
 
 
 function e.Get_Quest_Info(questID, isName, isObject, isDesc)
-   if not questID then
-      return
-   end
+    if not questID then
+        return
+    end
 
-   local str_ID= tostring(questID)
-   local data= WoWeuCN_Quests_QuestData[str_ID]
-   if not data then
-      return
-   end
+    local str_ID= tostring(questID)
+    local data= WoWeuCN_Quests_QuestData[str_ID]
+    if not data then
+        return
+    end
 
-   local name= data["Title"]
-   if name =='' then
-      name= nil
-   end
-   if isName then
-      return name
-   else
-      local object= expand_text(data["Objectives"])
-      if isObject then
-         return object
-      end
-      local desc= expand_text(data["Description"])
-      if isDesc then
-         return desc
-      else
-         return {
-            ["Title"]= name,
-            ["Objectives"]= object,
-            ["Description"]= desc,
-         }
-      end
-   end
+    local name= data["Title"]
+    if name =='' then
+        name= nil
+    end
+
+    if isName then
+        return name
+
+    else
+        local object= expand_text(data["Objectives"])
+        if object =='' then
+            object= nil
+        end
+
+        if isObject then
+            return object
+        end
+        
+        local desc= expand_text(data["Description"])
+        if desc =='' then
+            desc= nil
+        end
+
+        if isDesc then
+            return desc
+        else
+            return {
+                ["Title"]= name,
+                ["Objectives"]= object,
+                ["Description"]= desc,
+            }
+        end
+    end
 end
 
 

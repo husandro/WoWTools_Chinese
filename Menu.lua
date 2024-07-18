@@ -1,0 +1,44 @@
+--Blizzard_Menu
+
+local e= select(2, ...)
+if not DropdownTextMixin then
+    return
+end
+
+
+
+hooksecurefunc(DropdownTextMixin, 'OnLoad', function(self)
+    e.set(self.text)
+end)
+
+hooksecurefunc(DropdownTextMixin, 'UpdateText', function(self)
+    local text= e.strText[self:GetUpdateText()]
+    if not text then
+        return
+    end
+	self.Text:SetText(text)
+	if self.resizeToText then
+        local newWidth = self.Text:GetUnboundedStringWidth();
+        if self.resizeToTextPadding then
+            newWidth = newWidth + self.resizeToTextPadding;
+        end
+        if self.resizeToTextMaxWidth then
+            newWidth = math.min(self.resizeToTextMaxWidth, newWidth);
+        end
+        if self.resizeToTextMinWidth then
+            newWidth = math.max(self.resizeToTextMinWidth, newWidth);
+        end
+        self:SetWidth(newWidth);
+    end
+end)
+
+hooksecurefunc(MenuVariants, 'CreateFontString', function(frame)
+    for _, region in pairs({frame:GetRegions()}) do
+        e.hookLabel(region)
+    end
+end)
+
+
+
+
+

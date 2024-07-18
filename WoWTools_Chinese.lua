@@ -338,15 +338,20 @@ function e.hookButton(btn, setFont)
     end
 end
 
-function e.region(frame, setFont)
+function e.region(frame, setFont, isHook)
     if frame then
-        C_Timer.After(2, function()
-            for _, region in pairs({frame:GetRegions()}) do
-                if region:GetObjectType()=='FontString' then
-                    e.set(region, setFont)
+        if isHook then
+            e.hookLabel(label, setFont)
+        else
+            C_Timer.After(2, function()
+                for _, region in pairs({frame:GetRegions()}) do
+                    if region:GetObjectType()=='FontString' then
+                        e.set(region, setFont)
+                        
+                    end
                 end
-            end
-        end)
+            end)
+        end
     end
 end
 
