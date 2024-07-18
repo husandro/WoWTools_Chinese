@@ -2,6 +2,9 @@ local e= select(2, ...)
 
 
 
+e.set(QuestScrollFrame.SearchBox.Instructions)
+
+
 --[[
 QuestScrollFrame.headerFramePool,
 QuestScrollFrame.campaignHeaderFramePool,
