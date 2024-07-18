@@ -60,6 +60,10 @@ AuctionHouse.lua
 Currency\Currency_Data.lua
 Currency\Currency.lua
 
+##头衔
+Title\Title_Data.lua
+Title\Title.lua
+
 ##派系
 Faction\Faction_Data.lua
 Faction\Faction_Data_Race.lua

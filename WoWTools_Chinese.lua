@@ -28,7 +28,9 @@ function e.Get_HoliDay_Info()end---tab.holydayID eventID {'名称', '描述}
 function e.Get_Boss_Description()end---tab.journalEncounterID
 function e.Get_Instance_Description()end---tab.instanceID
 function e.Get_PerksActivity_Info()end---tab.perksActivityID {'名称', '描述}
-function e.Get_Vignette_Name()end---tab.vignetteID
+function e.Get_Vignette_Name()end--tab.vignetteID
+function e.Get_Title_Name()end--e.Get_Title_Name(titleID) 头衔
+
 function e.Get_Pet_Description()end---tab.speciesID
 function e.Get_Pet_Ablity_Info()end---tab.petAbilityID {'名称', '描述}
 
@@ -130,6 +132,9 @@ function e.cn(text, tab)
 
         elseif tab.npcID or tab.unit then
             data= e.Get_Unit_Info(tab.unit, tab.npcID)
+
+        elseif tab.titleID then
+            data= e.Get_Title_Name(tab.titleID)
         end
     end
     return data or text
