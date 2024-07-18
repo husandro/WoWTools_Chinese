@@ -69,7 +69,7 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
 	    block:SetHeader(achievementName)
     end
 
-
+    
     --local height= block.height--HeaderText:GetHeight()
     local numCriteria = GetAchievementNumCriteria(achievementID);
     if numCriteria>0 then
