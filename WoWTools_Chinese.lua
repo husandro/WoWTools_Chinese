@@ -492,7 +492,13 @@ end
 
 
 
-
+function e.Get_QuestID()
+    if QuestInfoFrame.questLog then
+       return C_QuestLog.GetSelectedQuest()
+    else
+       return GetQuestID()
+    end
+ end
 
 
 

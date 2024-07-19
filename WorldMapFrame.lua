@@ -1,7 +1,12 @@
 local e= select(2, ...)
+if not QuestScrollFrame.SearchBox then--11版本
+    return
+end
 
 
 
+e.set(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
+e.set(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
 e.set(QuestScrollFrame.SearchBox.Instructions)
 e.set(QuestMapFrame.MapLegend.TitleText)
 e.set(QuestMapFrame.MapLegend.BackButton)
