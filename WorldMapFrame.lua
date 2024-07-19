@@ -3,6 +3,8 @@ local e= select(2, ...)
 
 
 e.set(QuestScrollFrame.SearchBox.Instructions)
+e.set(QuestMapFrame.MapLegend.TitleText)
+e.set(QuestMapFrame.MapLegend.BackButton)
 
 
 --[[
