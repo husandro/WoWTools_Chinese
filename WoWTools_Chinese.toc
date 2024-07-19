@@ -39,7 +39,7 @@ ObjectiveTrackerFrame.lua
 GameMenuFrame.lua
 WorldMapFrame.lua
 Quest.lua
-PlayerChoiceFrame.lua
+##PlayerChoiceFrame.lua
 
 
 ##角色
