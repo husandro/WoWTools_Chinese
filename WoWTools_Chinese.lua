@@ -291,17 +291,15 @@ function e.hookDia(string, text, func)
 end
 
 function e.hookLabel(label, setFont)
-    if label and label.SetText then
+    if label and not label.hook_chines and label.SetText then
         if setFont then
             e.font(label)
         end
         e.set(label)
-        if not label.hook_chines then
-            hooksecurefunc(label, 'SetText', function(self, name)
-                set(self, name)
-            end)
-            label.hook_chines=true
-        end
+        hooksecurefunc(label, 'SetText', function(self, name)
+            set(self, name)
+        end)
+        label.hook_chines=true
     end
 end
 
@@ -341,13 +339,18 @@ end
 function e.region(frame, setFont, isHook)
     if frame then
         if isHook then
-            e.hookLabel(label, setFont)
+            for _, region in pairs({frame:GetRegions()}) do
+                if region:GetObjectType()=='FontString' then
+                    e.hookLabel(region, setFont)
+                end
+            end
+
         else
             C_Timer.After(2, function()
                 for _, region in pairs({frame:GetRegions()}) do
                     if region:GetObjectType()=='FontString' then
                         e.set(region, setFont)
-                        
+
                     end
                 end
             end)

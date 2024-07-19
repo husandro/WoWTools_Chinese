@@ -1,34 +1,26 @@
 local e= select(2, ...)
 
-QuestFrameAcceptButton:SetText('接受')
-QuestFrameGreetingGoodbyeButton:SetText('再见')
-QuestFrameCompleteQuestButton:SetText('完成任务')
-QuestFrameCompleteButton:SetText('继续')
-QuestFrameGoodbyeButton:SetText('再见')
-QuestFrameDeclineButton:SetText('拒绝')
-QuestLogPopupDetailFrameAbandonButton:SetText('放弃')
-QuestLogPopupDetailFrameShareButton:SetText('共享')
-QuestLogPopupDetailFrame.ShowMapButton.Text:SetText('显示地图')
-
-e.hookLabel(QuestInfoObjectivesHeader)
-e.hookLabel(QuestInfoRewardsFrame.Header)
-e.hookLabel(QuestInfoRewardsFrame.ItemReceiveText)
+e.set(QuestFrameAcceptButton)--:SetText('接受')
+e.set(QuestFrameGreetingGoodbyeButton)--:SetText('再见')
+e.set(QuestFrameCompleteQuestButton)--:SetText('完成任务')
+e.set(QuestFrameCompleteButton)--:SetText('继续')
+e.set(QuestFrameGoodbyeButton)--:SetText('再见')
+e.set(QuestFrameDeclineButton)--:SetText('拒绝')
+e.set(QuestLogPopupDetailFrameAbandonButton)--:SetText('放弃')
+e.set(QuestLogPopupDetailFrameShareButton)--:SetText('共享')
+e.set(QuestLogPopupDetailFrame.ShowMapButton.Text)--:SetText('显示地图')
 
 e.set(QuestMapFrame.DetailsFrame.BackButton)--:SetText('返回')
 e.set(QuestMapFrame.DetailsFrame.AbandonButton)--:SetText('放弃')]]
-
 QuestMapFrame.DetailsFrame.ShareButton:SetText('共享')
 QuestMapFrame.DetailsFrame.DestinationMapButton.tooltipText= '显示最终目的地'
 QuestMapFrame.DetailsFrame.WaypointMapButton.tooltipText= '显示旅行路径'
 
 e.region(QuestMapFrame.DetailsFrame.RewardsFrame)--, '奖励')
-e.hookLabel(MapQuestInfoRewardsFrame.ItemChooseText)--:SetText('你可以从这些奖励品中选择一件：')
-MapQuestInfoRewardsFrame.PlayerTitleText:SetText('新头衔： %s')
-e.hookLabel(MapQuestInfoRewardsFrame.QuestSessionBonusReward)--'在小队同步状态下完成此任务有可能获得奖励：')
-
-
-
-
+e.region(MapQuestInfoRewardsFrame, false, true)
+e.region(QuestInfoRewardsFrame, false, true)
+e.hookLabel(QuestInfoObjectivesHeader)
+e.hookLabel(QuestInfoDescriptionHeader)
 
 
 
