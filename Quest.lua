@@ -77,8 +77,7 @@ end)
 
 
 
-
-
+--任务，目标
 local function set_objectives(questID)
 	questID= questID or e.Get_QuestID()
 	if not questID then
@@ -106,15 +105,16 @@ local function set_objectives(questID)
 			numVisibleObjectives = numVisibleObjectives+1
 			objective = objectivesTable[numVisibleObjectives]
 			if objective then
-				local name, atlas
+				local text2, objectiveType, finished2, fulfilled, required = GetQuestObjectiveInfo(questID, i, true)
+				
+print(text2, objectiveType, finished2, fulfilled, required)
+				local name
 				if ( not text or strlen(text) == 0 ) then
 					name= e.cn(type)
 					text= type
 				else
 					name= e.cn(text)
 				end
-				
-
 				if ( finished ) then
 					name = name.." （完成）"
 				end

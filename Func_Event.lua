@@ -222,49 +222,6 @@ local function Init_Event(arg1)
 
 
 
-    elseif arg1=='Blizzard_PlayerChoice' then
-        e.dia("CONFIRM_PLAYER_CHOICE", {button1 = '确定', button2 = '取消'})
-        e.dia("CONFIRM_PLAYER_CHOICE_WITH_CONFIRMATION_STRING", {button1 = '接受', button2 = '拒绝'})
-        hooksecurefunc(PlayerChoicePowerChoiceTemplateMixin, 'SetupHeader', function (self)
-            if self.Header:IsShown() then
-                e.set(self.Header.Text,self.optionInfo.header)
-            end
-        end)
-        local rarityToString ={
-            [Enum.PlayerChoiceRarity.Common] = "|cffffffff普通|r|n|n",
-            [Enum.PlayerChoiceRarity.Uncommon] = "|cff1eff00优秀|r|n|n",
-            [Enum.PlayerChoiceRarity.Rare] = "|cff0070dd精良|r|n|n",
-            [Enum.PlayerChoiceRarity.Epic] = "|cffa335ee史诗|r|n|n",
-        }
-        hooksecurefunc(PlayerChoiceFrame, 'SetupOptions', function(self)----Blizzard_PlayerChoice.lua
-            for optionFrame in self.optionPools:EnumerateActiveByTemplate(self.optionFrameTemplate) do
-                optionFrame.OptionText:SetText((rarityToString[optionFrame.optionInfo.rarity] or "")..e.cn(optionFrame.optionInfo.description))
-            end
-        end)
-        hooksecurefunc(PlayerChoicePowerChoiceTemplateMixin, 'OnEnter', function(self)
-            if self.optionInfo and not self.optionInfo.spellID then
-                local header= e.cn(self.optionInfo.header)
-                if self.optionInfo.rarityColor then
-                    header= self.optionInfo.rarityColor:WrapTextInColorCode(header)
-                end
-                GameTooltip_SetTitle(GameTooltip, header)
-                if self.optionInfo.rarity and self.optionInfo.rarityColor then
-                    local rarityStringIndex = self.optionInfo.rarity + 1
-                    GameTooltip_AddColoredLine(GameTooltip, e.cn(_G["ITEM_QUALITY"..rarityStringIndex.."_DESC"]), self.optionInfo.rarityColor)
-                end
-                GameTooltip_AddNormalLine(GameTooltip, e.cn(self.optionInfo.description))
-                GameTooltip:Show()
-            end
-        end)
-
-        hooksecurefunc(GenericPlayerChoiceToggleButton, 'UpdateButtonState', function(self)--PlayerChoiceToggleButtonMixin
-            if self:IsShown() then
-                local choiceFrameShown = PlayerChoiceFrame:IsShown()
-                local choiceInfo = C_PlayerChoice.GetCurrentPlayerChoiceInfo() or {}
-                self.Text:SetText(choiceFrameShown and '隐藏' or e.cn(choiceInfo.pendingChoiceText))
-            end
-        end)
-
 
 
 
