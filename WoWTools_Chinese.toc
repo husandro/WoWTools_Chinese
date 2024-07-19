@@ -38,7 +38,10 @@ MainMicroButton.lua
 ObjectiveTrackerFrame.lua
 GameMenuFrame.lua
 WorldMapFrame.lua
-QuestInfo.lua
+Quest.lua
+
+
+PlayerChoiceFrame.lua
 
 ##角色
 Character.lua
@@ -143,8 +146,6 @@ LFG\LFGListFrame.lua
 LFG\LFGFrame.lua
 ## PvP查找器
 LFG\PVPQueueFrame.lua
-
-
 
 
 
