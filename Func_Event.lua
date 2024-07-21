@@ -449,9 +449,6 @@ local function Init_Event(arg1)
 
    
 
-    elseif arg1=='Blizzard_DeathRecap' then
-        DeathRecapFrame.CloseButton:SetText('关闭')
-        DeathRecapFrame.Title:SetText('死亡摘要')
 
 
     elseif arg1=='Blizzard_CombatLog' then--聊天框，战斗记录

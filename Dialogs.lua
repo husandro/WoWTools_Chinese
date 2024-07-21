@@ -194,67 +194,6 @@ e.dia("NAME_CHAT", {text = '输入对话窗口名称', button1 = '接受', butto
 e.dia("RESET_CHAT", {text = '"将你的聊天窗口重置为默认设置。\n你会失去所有自定义设置。', button1 = '接受', button2 = '取消'})
 e.dia("PETRENAMECONFIRM", {text = '你确定要将宠物命名为\'%s\'吗？', button1 = '是', button2 = '否'})
 
-e.dia("DEATH", {text = '%d%s后释放灵魂', button1 = '释放灵魂', button2 = '复活', button3 = '复活', button4 = '摘要'})
-e.hookDia("DEATH", 'OnShow', function(self)
-    if ( IsActiveBattlefieldArena() and not C_PvP.IsInBrawl() ) then
-        self.text:SetText('你死亡了。释放灵魂后将进入观察模式。')
-    elseif ( self.timeleft == -1 ) then
-        self.text:SetText('你死亡了。要释放灵魂到最近的墓地吗？')
-    end
-end)
-
-e.hookDia("DEATH", 'OnUpdate', function(self)
-    if ( IsFalling() and not IsOutOfBounds()) then
-        return
-    end
-    local b1_enabled = self.button1:IsEnabled()
-    local encounterSupressRelease = IsEncounterSuppressingRelease()
-    if ( encounterSupressRelease ) then
-        self.button1:SetText('释放灵魂')
-    else
-        local hasNoReleaseAura, _, hasUntilCancelledDuration = HasNoReleaseAura()
-        if ( hasNoReleaseAura ) then
-            if hasUntilCancelledDuration then
-                self.button1:SetText('释放灵魂')
-            end
-        else
-            self.button1:SetText('释放灵魂')
-        end
-    end
-    if ( b1_enabled ~= self.button1:IsEnabled() ) then
-        if ( b1_enabled ) then
-            if ( encounterSupressRelease ) then
-                self.text:SetText('你队伍中有一名成员正在战斗中。')
-            else
-                self.text:SetText('现在无法释放。')
-            end
-        end
-    end
-    local option1, option2
-    local resOptions = GetSortedSelfResurrectOptions()
-    if ( resOptions ) then
-        if ( IsEncounterLimitingResurrections() ) then
-            option1, option2= resOptions[1], resOptions[2]
-        else
-            option1=resOptions[1]
-        end
-    end
-    if ( option1 ) then
-        if ( option1.name ) then
-            e.set(self.button2, option1.name)
-        end
-    end
-    if ( option2 ) then
-        if ( option2.name ) then
-            e.set(self.button3, option2.name)
-        end
-    end
-end)
-
-
-e.dia("RESURRECT", {text = '%s想要复活你。一旦这样复活，你将会进入复活虚弱状态', delayText = '%s要复活你，%d%s内生效。一旦这样复活，你将会进入复活虚弱状态。', button1 = '接受', button2 = '拒绝'})
-e.dia("RESURRECT_NO_SICKNESS", {text = '%s想要复活你', delayText = '%s要复活你，%d%s内生效', button1 = '接受', button2 = '拒绝'})
-e.dia("RESURRECT_NO_TIMER", {text = '%s想要复活你', button1 = '接受', button2 = '拒绝'})
 e.dia("SKINNED", {text = '徽记被取走 - 你只能在墓地复活', button1 = '接受'})
 e.dia("SKINNED_REPOP", {text = '徽记被取走 - 你只能在墓地复活', button1 = '释放灵魂', button2 = '拒绝'})
 e.dia("TRADE", {text = '和%s交易吗？', button1 = '是', button2 = '否'})

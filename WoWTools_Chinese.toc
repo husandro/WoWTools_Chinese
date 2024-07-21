@@ -40,7 +40,7 @@ GameMenuFrame.lua
 WorldMapFrame.lua
 Quest.lua
 PlayerChoiceFrame.lua
-
+DeathRecapFrame.lua
 
 ##角色
 Character.lua
