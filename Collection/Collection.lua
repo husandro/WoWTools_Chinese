@@ -25,14 +25,30 @@ local function Init_Toy()
     hooksecurefunc(ToyBox.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
         self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
     end)
+   
     hooksecurefunc('ToySpellButton_UpdateButton', function(self)
-        if self:IsVisible() and self.itemID then
+        if self.name:IsShown() and self.itemID then
             local name = e.Get_Item_Name(self.itemID) or e.strText[self.name:GetText()]          
             if name then
+                name= name:match('|c........(.-)|r') or name
                 self.name:SetText(name)
             end
         end
     end)
+    
+    hooksecurefunc("ToyBox_UpdateButtons", function()
+        for i = 1, 18 do
+            local self = _G['ToyBox.iconsFrame.spellButton'..i]
+            if self and self.name:IsShown() then
+                local name = e.Get_Item_Name(self.itemID) or e.strText[self.name:GetText()]          
+                if name then
+                    name= name:match('|c........(.-)|r') or name
+                    self.name:SetText(name)
+                end
+            end
+        end
+    end)
+    
 end
 
 
@@ -60,6 +76,7 @@ local function Init_Heirlooms()
         end
         local name= e.Get_Item_Name(btn.itemID) or e.strText[btn.name:GetText()]
         if name then
+            name= name:match('|c........(.-)|r') or name
             btn.name:SetText(name)
         end
     end)

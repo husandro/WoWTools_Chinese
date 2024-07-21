@@ -120,7 +120,7 @@ Spell\Spell_Data_Specialization.lua
 Item\Data_ItemSet.lua
 Item\Data_ItemSubClass.lua
 Item\Data_TransmogSet.lua
-
+Item\Item_func.lua
 
 ##挑战
 Challenges\Challenges_Data_MapChallengeMode.lua

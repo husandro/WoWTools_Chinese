@@ -353,14 +353,6 @@ MovieFrame.CloseDialog.ResumeButton:SetText('否')
 
 
 
---LootFrame.lua
-LootFrameTitleText:SetText('物品')
-hooksecurefunc(LootFrameItemElementMixin, 'Init', function(self)
-    local elementData = self:GetElementData() or {}
-    if elementData.quality then
-        e.set(self.QualityText, _G[format("ITEM_QUALITY%s_DESC", elementData.quality)])
-    end
-end)
 
 
 
