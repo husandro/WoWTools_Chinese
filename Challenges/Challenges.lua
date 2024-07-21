@@ -21,10 +21,9 @@ local function Init_Blizzard_WeeklyRewards()
         end
     end)
 
-    
 
-    hooksecurefunc(WeeklyRewardsActivityMixin, 'SetProgressText', function(self, text)
-        print('SetProgressText')
+
+    --[[hooksecurefunc(WeeklyRewardsActivityMixin, 'SetProgressText', function(self, text)
         local activityInfo = self.info;
         local name
         if text then
@@ -50,7 +49,7 @@ local function Init_Blizzard_WeeklyRewards()
         if name then
             self.Progress:SetText(name);
         end
-    end)
+    end)]]
     
 end
 

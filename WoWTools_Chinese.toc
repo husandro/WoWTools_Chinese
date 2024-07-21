@@ -77,13 +77,7 @@ Faction\Faction.lua
 Holiday\Holiday.lua
 Holiday\Holiday_Data.lua
 
-##冒险指南
-EncounterJournal\EncounterJournal.lua
-EncounterJournal\EncounterJournal_Data_Boss.lua
-EncounterJournal\EncounterJournal_Data_Instance.lua
-EncounterJournal\PerksProgram.lua
-EncounterJournal\PerksActivity.lua
-EncounterJournal\PerksActivity_Data.lua
+
 
 ##地图
 Map\Map.lua
@@ -156,9 +150,18 @@ WoWeuCN\SpellData_cn.lua
 WoWeuCN\QuestData_cn.lua
 WoWeuCN\UnitData_cn.lua
 WoWeuCN\Data.Func.lua
+WoWeuCN\EncounterData_cn.lua
+WoWeuCN\EncounterData_Func.lua
 
 
-
+##冒险指南
+EncounterJournal\EncounterJournal.lua
+##放在 EncounterData_cn.lua 前
+EncounterJournal\EncounterJournal_Data_Boss.lua
+EncounterJournal\EncounterJournal_Data_Instance.lua
+EncounterJournal\PerksProgram.lua
+EncounterJournal\PerksActivity.lua
+EncounterJournal\PerksActivity_Data.lua
 
 
 
