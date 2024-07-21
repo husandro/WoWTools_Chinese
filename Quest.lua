@@ -105,9 +105,6 @@ local function set_objectives(questID)
 			numVisibleObjectives = numVisibleObjectives+1
 			objective = objectivesTable[numVisibleObjectives]
 			if objective then
-				local text2, objectiveType, finished2, fulfilled, required = GetQuestObjectiveInfo(questID, i, true)
-				
-print(text2, objectiveType, finished2, fulfilled, required)
 				local name
 				if ( not text or strlen(text) == 0 ) then
 					name= e.cn(type)

@@ -11,13 +11,44 @@ local rarityToString ={
 
 
 
+local function set_optionText(self)
+    local data= self.optionInfo
+    if not data or not self.OptionText:IsShown() then
+        return
+    end
+    local desc= e.strText[data.description] or e.Get_Spell_Desc(data.spellID)
+    local quality= rarityToString[data.rarity]
+    if desc or quality then
+        desc= (quality or '')..(desc or '')
+        self.OptionText:SetText(desc)
+    end
+end
+
+local function set_header(self)
+    local data= self.optionInfo
+    if not data then
+        return
+    end
+    local name= e.strText[data.header] or e.Get_Spell_Name(data.spellID)
+    if name then
+        self.Header.Text:SetText(name)
+    end
+end
+
+
+
+
+
+
+
+
+
 
 
 
 
 
 local function Init()
-
     e.dia("CONFIRM_PLAYER_CHOICE", {button1 = '确定', button2 = '取消'})
     e.dia("CONFIRM_PLAYER_CHOICE_WITH_CONFIRMATION_STRING", {button1 = '接受', button2 = '拒绝'})
 
@@ -31,42 +62,52 @@ local function Init()
         end
     end)
 
+
+
+    hooksecurefunc(PlayerChoicePowerChoiceTemplateMixin, 'SetupHeader', set_header)
+    hooksecurefunc(PlayerChoiceNormalOptionTemplateMixin, 'SetupHeader', function(self)
+        if self.optionInfo.header and self.optionInfo.header ~= "" then
+            local name= e.strText[self.optionInfo.header]
+            if name then
+                self.Header.Contents.Text:SetText(name)
+            end
+        end
+
+    end)
+
+
+    hooksecurefunc(PlayerChoiceNormalOptionTemplateMixin, 'SetupSubHeader', function(self)
+        if self.optionInfo.subHeader then
+            local name= e.strText[self.optionInfo.subHeader]
+            if name then
+                self.SubHeader.Text:SetText(name)
+            end
+        end
+    end)
+
     hooksecurefunc(PlayerChoiceFrame, 'SetupOptions', function(self)
         for frame in self.optionPools:EnumerateActiveByTemplate(self.optionFrameTemplate) do
-            local data= frame.optionInfo
-            local desc
-            if data then
-                desc= e.strText[data.description] or e.Get_Spell_Desc(data.spellID)
-                local quality= rarityToString[data.rarity]
-                if desc or quality then
-                    desc= (quality or '')..(desc or '')
-                end
-            end
-            if desc then
-                frame.OptionText:SetText(desc)
-            end
-           
+            set_optionText(frame)
         end
     end)
+    hooksecurefunc(PlayerChoiceNormalOptionTemplateMixin, 'SetupOptionText', set_optionText)
+    hooksecurefunc(PlayerChoiceGenericPowerChoiceOptionTemplateMixin, 'SetupOptionText', set_optionText)
 
 
 
-    --标题, Power
-    hooksecurefunc(PlayerChoicePowerChoiceTemplateMixin, 'SetupHeader', function (self)
-        local data= self.optionInfo
-        if not data then
-            return
-        end
-        local name= e.cn(data.header, {spellID= data.spellID, isName=true})
-        if name then
-            self.Header.Text:SetText(name)
-        end
-        e.set(self.Header.Text, self.optionInfo.header)
-    end)
 
 
-    --Button
-    hooksecurefunc(PlayerChoiceBaseOptionButtonTemplateMixin, 'Setup', function(self, buttonInfo, optionInfo)
+
+    
+
+
+
+
+
+
+
+
+    hooksecurefunc(PlayerChoiceBaseOptionButtonTemplateMixin, 'Setup', function(self, buttonInfo)
         e.set(self, buttonInfo.text)
         local tooltip= e.strText[buttonInfo.tooltip]
         if tooltip then
@@ -76,9 +117,8 @@ local function Init()
 
     --隐藏，显示，按钮
     e.hookLabel(TorghastPlayerChoiceToggleButton.Text)
-    e.hookLabel(CypherPlayerChoiceToggleButton.Text)
+    e.hookLabel(CypherPlayerChoiceToggleButton.Text)    
     e.hookLabel(GenericPlayerChoiceToggleButton.Text)
-
 
     --剩余时间 Blizzard_PlayerChoiceTimer.lua PlayerChoiceTimeRemainingMixin
     hooksecurefunc(PlayerChoiceTimeRemaining, 'OnUpdate', function(self)
