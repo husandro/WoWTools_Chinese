@@ -1,33 +1,71 @@
 local e= select(2, ...)
 
+
+local rarityToString ={
+    [Enum.PlayerChoiceRarity.Common] = "|cffffffff普通|r|n|n",
+    [Enum.PlayerChoiceRarity.Uncommon] = "|cff1eff00优秀|r|n|n",
+    [Enum.PlayerChoiceRarity.Rare] = "|cff0070dd精良|r|n|n",
+    [Enum.PlayerChoiceRarity.Epic] = "|cffa335ee史诗|r|n|n",
+}
+
 local function Init()
 
     e.dia("CONFIRM_PLAYER_CHOICE", {button1 = '确定', button2 = '取消'})
     e.dia("CONFIRM_PLAYER_CHOICE_WITH_CONFIRMATION_STRING", {button1 = '接受', button2 = '拒绝'})
 
 
-
-    hooksecurefunc(PlayerChoicePowerChoiceTemplateMixin, 'SetupHeader', function (self)
-        if self.Header:IsShown() then
-            e.set(self.Header.Text,self.optionInfo.header)
+    --Blizzard_PlayerChoice.lua
+    hooksecurefunc(PlayerChoiceFrame, 'TryShow', function(self)
+        local choiceInfo = self.choiceInfo--C_PlayerChoice.GetCurrentPlayerChoiceInfo();
+        local name= choiceInfo and e.strText[choiceInfo.questionText]
+        if name then
+            self.Title.Text:SetText(name)
         end
     end)
 
-
-
-    local rarityToString ={
-        [Enum.PlayerChoiceRarity.Common] = "|cffffffff普通|r|n|n",
-        [Enum.PlayerChoiceRarity.Uncommon] = "|cff1eff00优秀|r|n|n",
-        [Enum.PlayerChoiceRarity.Rare] = "|cff0070dd精良|r|n|n",
-        [Enum.PlayerChoiceRarity.Epic] = "|cffa335ee史诗|r|n|n",
-    }
-
-
-    hooksecurefunc(PlayerChoiceFrame, 'SetupOptions', function(self)----Blizzard_PlayerChoice.lua
+    hooksecurefunc(PlayerChoiceFrame, 'SetupOptions', function(self)
         for frame in self.optionPools:EnumerateActiveByTemplate(self.optionFrameTemplate) do
-            frame.OptionText:SetText((rarityToString[frame.optionInfo.rarity] or "")..e.cn(frame.optionInfo.description))
+            local data= frame.optionInfo
+            local desc
+            if data then
+                desc= e.strText[data.description] or e.Get_Spell_Desc(data.spellID)
+                local quality= rarityToString[data.rarity]
+                if desc or quality then
+                    desc= (quality or '')..(desc or '')
+                end
+            end
+            if desc then
+                frame.OptionText:SetText(desc)
+            end
         end
     end)
+
+
+
+    --标题, Power
+    hooksecurefunc(PlayerChoicePowerChoiceTemplateMixin, 'SetupHeader', function (self)
+        local data= self.optionInfo
+        if not data then
+            return
+        end
+        local name= e.cn(data.header, {spellID= data.spellID, isName=true})
+        if name then
+            self.Header.Text:SetText(name)
+        end
+        e.set(self.Header.Text, self.optionInfo.header)
+        
+    end)
+
+    
+
+
+
+
+    hooksecurefunc(PlayerChoiceBaseOptionButtonTemplateMixin, 'Setup', function(self, buttonInfo, optionInfo)
+        e.set(self, buttonInfo.text)
+    end)
+
+
 
 
     hooksecurefunc(PlayerChoicePowerChoiceTemplateMixin, 'OnEnter', function(self)
@@ -46,7 +84,9 @@ local function Init()
         end
     end)
 
-    e.hookButton(GenericPlayerChoiceToggleButton)
+    e.hookLabel(TorghastPlayerChoiceToggleButton.Text)
+    e.hookLabel(CypherPlayerChoiceToggleButton.Text)
+    e.hookLabel(GenericPlayerChoiceToggleButton.Text)
     --[[hooksecurefunc(GenericPlayerChoiceToggleButton, 'UpdateButtonState', function(self)--PlayerChoiceToggleButtonMixin
         if self:IsShown() then
             local choiceFrameShown = PlayerChoiceFrame:IsShown()
@@ -60,14 +100,12 @@ local function Init()
 
 
 
-
-
     hooksecurefunc(PlayerChoiceBaseOptionTemplateMixin, 'Setup', function(self, optionInfo, frameTextureKit, soloOption)
         print('PlayerChoiceBaseOptionTemplateMixin')
     end)
 
     hooksecurefunc(PlayerChoiceBaseOptionCurrencyRewardMixin, 'Setup', function(self, currencyRewardInfo)
-        local name= e.strTexts[currencyRewardInfo.name]
+        local name= e.strText[currencyRewardInfo.name]
         if name then
             self.Name:SetText(name)
         end
@@ -78,12 +116,12 @@ local function Init()
         print('PlayerChoiceBaseOptionItemRewardMixin', ...)
     end)
 
-    hooksecurefunc(PlayerChoiceBaseOptionButtonTemplateMixin, 'Setup', function(self, buttonInfo, optionInfo)
-        e.set(self, buttonInfo.text)
-    end)
+
+   
 
 
-    --[[hooksecurefunc(PlayerChoiceBaseOptionButtonsContainerMixin, 'Setup', function(self, optionInfo, numColumns)
+ --[[hooksecurefunc(PlayerChoiceBaseOptionButtonsContainerMixin, 'Setup', function(self, optionInfo, numColumns)
+    print('PlayerChoiceBaseOptionButtonsContainerMixin')
         for btn in self.buttonPool:EnumerateActiveByTemplate(self.buttonTemplate) do
             e.set(btn)
         end

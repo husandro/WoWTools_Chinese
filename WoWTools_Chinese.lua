@@ -47,12 +47,39 @@ function e.Get_LFGDungeon_Desc()end--tab.lfgDungeonID
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
 function e.ReplaceText()end-- WoWeuCN_Tooltips
-function e.Get_Item_Data()end--物品数据
-function e.Get_Spell_Data()end--法术数据，{'名称', '1', '2', ...}
+
 function e.Get_Quest_Info()end--e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc) {['Title']='标题', ['Objectives']='目标描述', ['Description']='描述'}
 function e.Get_Unit_Name()end--e.Get_Unit_Name(tab.unit, tab.npcID) NPC return 名称，头衔
 function e.Get_Unit_Info()end--e.Get_Unit_Name(tab.unit, tab.npcID) NPC return {'名称', '头衔'}
 
+
+function e.Get_Item_Data()end--物品数据
+function e.Get_Item_Name(itemID)
+    if itemID then
+        local data= e.Get_Item_Data(itemID)
+        if data then
+            return data[1]
+        end
+    end
+end
+
+function e.Get_Spell_Data()end--法术数据，{'名称', '1', '2', ...}
+function e.Get_Spell_Name(spellID)
+    if spellID then
+        local data= e.Get_Spell_Data(spellID)
+        if data then
+            return e.ReplaceText(data[1])
+        end
+    end
+end
+function e.Get_Spell_Desc(spellID)
+    if spellID then
+        local data= e.Get_Spell_Data(spellID)
+        if data then
+            return e.ReplaceText(data[2])
+        end 
+    end
+end
 
 
 
@@ -100,7 +127,9 @@ function e.cn(text, tab)
         elseif tab.spellID then
             if tab.isName then
                 data= e.Get_Spell_Name(tab.spellID)--法术名称
-            else
+            elseif tab.isDesc then
+                data= e.Get_Spell_Desc(tab.spellID)
+            end
                 data= e.Get_Spell_Data(tab.spellID)
             end
 
@@ -148,24 +177,6 @@ WoW_Tools_Chinese_CN= e.cn
 
 
 
-
-function e.Get_Item_Name(itemID)
-    if itemID then
-        local data= e.Get_Item_Data(itemID)
-        if data then
-            return data[1]
-        end
-    end
-end
-
-function e.Get_Spell_Name(spellID)
-    if spellID then
-        local data= e.Get_Spell_Data(spellID)
-        if data then
-            return e.ReplaceText(data[1])
-        end
-    end
-end
 
 
 
