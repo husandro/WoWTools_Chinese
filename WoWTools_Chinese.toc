@@ -142,8 +142,6 @@ LFG\PVPQueueFrame.lua
 
 
 
-
-
 ##调用其它插件，数据
 WoWeuCN\ItemData_cn.lua
 WoWeuCN\SpellData_cn.lua
@@ -156,13 +154,12 @@ WoWeuCN\EncounterData_Func.lua
 
 ##冒险指南
 EncounterJournal\EncounterJournal.lua
-##放在 EncounterData_cn.lua 前
-EncounterJournal\EncounterJournal_Data_Boss.lua
-EncounterJournal\EncounterJournal_Data_Instance.lua
 EncounterJournal\PerksProgram.lua
 EncounterJournal\PerksActivity.lua
 EncounterJournal\PerksActivity_Data.lua
-
+## EncounterJournal_Data_Boss.lua 放在 EncounterData_cn.lua 后
+EncounterJournal\EncounterJournal_Data_Boss.lua
+EncounterJournal\EncounterJournal_Data_Instance.lua
 
 
 1027\Init.lua
