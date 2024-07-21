@@ -3,14 +3,21 @@ local e= select(2, ...)
 MerchantFrameTab1:SetText('商人')
 MerchantFrameTab2:SetText('购回')
 MerchantPageText:SetText('')
-e.hookLabel(MerchantFrameTitleText)
+
 
 --卖
 hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
     if not MerchantFrame:IsShown() then
         return
     end
+
+    local npc= e.Get_Unit_Name('npc')
+    if npc then
+        MerchantFrame:SetTitle(npc)
+    end
+
     MerchantPageText:SetFormattedText('页数 %s/%s', MerchantFrame.page, math.ceil(GetMerchantNumItems() / MERCHANT_ITEMS_PER_PAGE))
+
     for i = 1, MERCHANT_ITEMS_PER_PAGE do
         local btn= _G['MerchantItem'..i]
         local label= _G['MerchantItem'..i..'Name']
@@ -23,6 +30,14 @@ hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
             end
         end
     end
+
+    
+    local itemID= C_MerchantFrame.GetBuybackItemID(GetNumBuybackItems() or 0)
+    local itemName= e.Get_Item_Name(itemID)
+    if itemName then
+        itemName= itemName:match('^|c........(.+)|r$') or itemName
+        MerchantBuyBackItemName:SetText(itemName)
+    end
 end)
 
 --回购
@@ -30,6 +45,9 @@ hooksecurefunc('MerchantFrame_UpdateBuybackInfo', function()
     if not MerchantFrame:IsShown() then
         return
     end
+
+    MerchantFrame:SetTitle('从商人处购回');
+
     for i = 1, BUYBACK_ITEMS_PER_PAGE do
         local btn= _G['MerchantItem'..i]
         local label= _G['MerchantItem'..i..'Name']
