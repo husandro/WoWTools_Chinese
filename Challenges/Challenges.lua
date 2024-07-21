@@ -4,6 +4,11 @@ local id, e= ...
 
 
 local function Init_Blizzard_WeeklyRewards()
+    e.dia("CONFIRM_SELECT_WEEKLY_REWARD", {text = '你一旦选好奖励就不能变更了。|n|n你确定要选择这件物品吗？', button1 = '是', button2 = '取消'})
+
+    e.hookLabel(WeeklyRewardsFrame.RaidFrame.Name)
+    e.hookLabel(WeeklyRewardsFrame.MythicFrame.Name)
+
     e.font(WeeklyRewardsFrame.HeaderFrame.Text)
     hooksecurefunc(WeeklyRewardsFrame, 'UpdateTitle', function(self)
         local canClaimRewards = C_WeeklyRewards.CanClaimRewards()
@@ -16,7 +21,37 @@ local function Init_Blizzard_WeeklyRewards()
         end
     end)
 
-    e.dia("CONFIRM_SELECT_WEEKLY_REWARD", {text = '你一旦选好奖励就不能变更了。|n|n你确定要选择这件物品吗？', button1 = '是', button2 = '取消'})
+    
+
+    hooksecurefunc(WeeklyRewardsActivityMixin, 'SetProgressText', function(self, text)
+        print('SetProgressText')
+        local activityInfo = self.info;
+        local name
+        if text then
+            name= e.strText[text]
+        elseif self.hasRewards then
+            
+        elseif self.unlocked then
+            if activityInfo.type == Enum.WeeklyRewardChestThresholdType.Raid then
+                name = e.strText[DifficultyUtil.GetDifficultyName(activityInfo.level)]
+                
+            elseif activityInfo.type == Enum.WeeklyRewardChestThresholdType.Activities then
+                if self:IsCompletedAtHeroicLevel() then
+                    name= '英雄'
+                else
+                    name= format('史诗 %d', activityInfo.level);
+                end
+            elseif activityInfo.type == Enum.WeeklyRewardChestThresholdType.RankedPvP then
+                name= e.strText[PVPUtil.GetTierName(activityInfo.level)]
+            elseif activityInfo.type == Enum.WeeklyRewardChestThresholdType.World then
+                name= format('难度 %s', activityInfo.level)
+            end
+        end
+        if name then
+            self.Progress:SetText(name);
+        end
+    end)
+    
 end
 
 
