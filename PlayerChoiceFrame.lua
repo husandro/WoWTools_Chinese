@@ -11,6 +11,31 @@ local rarityToString ={
 
 
 
+
+local function set_header(self)
+    local data= self.optionInfo
+    if not data and data.header and data.header~='' then
+        return
+    end
+    local header= e.strText[data.header] or e.Get_Spell_Name(data.spellID)
+    if header then
+        local label= self.Header.Contents and self.Header.Contents.Text or  self.Header.Text
+        if label then
+            label:SetText(header)
+        end
+    end
+end
+
+local function set_sub_header(self)
+    if not self.SubHeader:IsShown() then
+        return
+    end
+    local name= e.strText[self.optionInfo.subHeader]
+    if name then
+        self.SubHeader.Text:SetText(name)
+    end
+end
+
 local function set_optionText(self)
     local data= self.optionInfo
     if not data or not self.OptionText:IsShown() then
@@ -23,22 +48,6 @@ local function set_optionText(self)
         self.OptionText:SetText(desc)
     end
 end
-
-local function set_header(self)
-    local data= self.optionInfo
-    if not data then
-        return
-    end
-    local name= e.strText[data.header] or e.Get_Spell_Name(data.spellID)
-    if name then
-        self.Header.Text:SetText(name)
-    end
-end
-
-
-
-
-
 
 
 
@@ -65,42 +74,19 @@ local function Init()
 
 
     hooksecurefunc(PlayerChoicePowerChoiceTemplateMixin, 'SetupHeader', set_header)
-    hooksecurefunc(PlayerChoiceNormalOptionTemplateMixin, 'SetupHeader', function(self)
-        if self.optionInfo.header and self.optionInfo.header ~= "" then
-            local name= e.strText[self.optionInfo.header]
-            if name then
-                self.Header.Contents.Text:SetText(name)
-            end
-        end
-
-    end)
+    hooksecurefunc(PlayerChoiceNormalOptionTemplateMixin, 'SetupHeader', set_header)
 
 
-    hooksecurefunc(PlayerChoiceNormalOptionTemplateMixin, 'SetupSubHeader', function(self)
-        if self.optionInfo.subHeader then
-            local name= e.strText[self.optionInfo.subHeader]
-            if name then
-                self.SubHeader.Text:SetText(name)
-            end
-        end
-    end)
+    hooksecurefunc(PlayerChoiceNormalOptionTemplateMixin, 'SetupSubHeader', set_sub_header)
 
     hooksecurefunc(PlayerChoiceFrame, 'SetupOptions', function(self)
         for frame in self.optionPools:EnumerateActiveByTemplate(self.optionFrameTemplate) do
             set_optionText(frame)
         end
     end)
+
     hooksecurefunc(PlayerChoiceNormalOptionTemplateMixin, 'SetupOptionText', set_optionText)
     hooksecurefunc(PlayerChoiceGenericPowerChoiceOptionTemplateMixin, 'SetupOptionText', set_optionText)
-
-
-
-
-
-
-    
-
-
 
 
 
@@ -117,7 +103,7 @@ local function Init()
 
     --隐藏，显示，按钮
     e.hookLabel(TorghastPlayerChoiceToggleButton.Text)
-    e.hookLabel(CypherPlayerChoiceToggleButton.Text)    
+    e.hookLabel(CypherPlayerChoiceToggleButton.Text)
     e.hookLabel(GenericPlayerChoiceToggleButton.Text)
 
     --剩余时间 Blizzard_PlayerChoiceTimer.lua PlayerChoiceTimeRemainingMixin
