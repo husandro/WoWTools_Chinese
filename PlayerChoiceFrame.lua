@@ -8,6 +8,14 @@ local rarityToString ={
     [Enum.PlayerChoiceRarity.Epic] = "|cffa335ee史诗|r|n|n",
 }
 
+
+
+
+
+
+
+
+
 local function Init()
 
     e.dia("CONFIRM_PLAYER_CHOICE", {button1 = '确定', button2 = '取消'})
@@ -37,6 +45,7 @@ local function Init()
             if desc then
                 frame.OptionText:SetText(desc)
             end
+           
         end
     end)
 
@@ -53,90 +62,31 @@ local function Init()
             self.Header.Text:SetText(name)
         end
         e.set(self.Header.Text, self.optionInfo.header)
-        
     end)
 
-    
 
-
-
-
+    --Button
     hooksecurefunc(PlayerChoiceBaseOptionButtonTemplateMixin, 'Setup', function(self, buttonInfo, optionInfo)
         e.set(self, buttonInfo.text)
-    end)
-
-
-
-
-    hooksecurefunc(PlayerChoicePowerChoiceTemplateMixin, 'OnEnter', function(self)
-        if self.optionInfo and not self.optionInfo.spellID then
-            local header= e.cn(self.optionInfo.header)
-            if self.optionInfo.rarityColor then
-                header= self.optionInfo.rarityColor:WrapTextInColorCode(header)
-            end
-            GameTooltip_SetTitle(GameTooltip, header)
-            if self.optionInfo.rarity and self.optionInfo.rarityColor then
-                local rarityStringIndex = self.optionInfo.rarity + 1
-                GameTooltip_AddColoredLine(GameTooltip, e.cn(_G["ITEM_QUALITY"..rarityStringIndex.."_DESC"]), self.optionInfo.rarityColor)
-            end
-            GameTooltip_AddNormalLine(GameTooltip, e.cn(self.optionInfo.description))
-            GameTooltip:Show()
+        local tooltip= e.strText[buttonInfo.tooltip]
+        if tooltip then
+            self.tooltip = tooltip
         end
     end)
 
+    --隐藏，显示，按钮
     e.hookLabel(TorghastPlayerChoiceToggleButton.Text)
     e.hookLabel(CypherPlayerChoiceToggleButton.Text)
     e.hookLabel(GenericPlayerChoiceToggleButton.Text)
-    --[[hooksecurefunc(GenericPlayerChoiceToggleButton, 'UpdateButtonState', function(self)--PlayerChoiceToggleButtonMixin
-        if self:IsShown() then
-            local choiceFrameShown = PlayerChoiceFrame:IsShown()
-            local choiceInfo = C_PlayerChoice.GetCurrentPlayerChoiceInfo() or {}
-            self.Text:SetText(choiceFrameShown and '隐藏' or e.cn(choiceInfo.pendingChoiceText))
-            
+
+
+    --剩余时间 Blizzard_PlayerChoiceTimer.lua PlayerChoiceTimeRemainingMixin
+    hooksecurefunc(PlayerChoiceTimeRemaining, 'OnUpdate', function(self)
+        local remainingTime = C_PlayerChoice.GetRemainingTime();
+        if remainingTime ~= nil then
+            self.TimerText:SetText("剩余时间："..SecondsToClock(remainingTime))
         end
-    end)]]
-
-
-
-
-
-    hooksecurefunc(PlayerChoiceBaseOptionTemplateMixin, 'Setup', function(self, optionInfo, frameTextureKit, soloOption)
-        print('PlayerChoiceBaseOptionTemplateMixin')
     end)
-
-    hooksecurefunc(PlayerChoiceBaseOptionCurrencyRewardMixin, 'Setup', function(self, currencyRewardInfo)
-        local name= e.strText[currencyRewardInfo.name]
-        if name then
-            self.Name:SetText(name)
-        end
-        print('PlayerChoiceBaseOptionCurrencyRewardMixin')
-    end)
-
-    hooksecurefunc(PlayerChoiceBaseOptionItemRewardMixin, 'Setup', function(self, ...)
-        print('PlayerChoiceBaseOptionItemRewardMixin', ...)
-    end)
-
-
-   
-
-
- --[[hooksecurefunc(PlayerChoiceBaseOptionButtonsContainerMixin, 'Setup', function(self, optionInfo, numColumns)
-    print('PlayerChoiceBaseOptionButtonsContainerMixin')
-        for btn in self.buttonPool:EnumerateActiveByTemplate(self.buttonTemplate) do
-            e.set(btn)
-        end
-    end)]]
-
-
-
-    hooksecurefunc(PlayerChoiceBaseOptionCurrencyContainerRewardMixin, 'Setup', function(self, ...)
-        print('PlayerChoiceBaseOptionCurrencyContainerRewardMixin',...)
-    end)
-    hooksecurefunc(PlayerChoiceBaseOptionReputationRewardMixin, 'Setup', function(self, ...)
-        print('PlayerChoiceBaseOptionReputationRewardMixin',...)
-    end)
-
-
 end
 
 

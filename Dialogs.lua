@@ -241,12 +241,12 @@ e.hookDia("DEATH", 'OnUpdate', function(self)
     end
     if ( option1 ) then
         if ( option1.name ) then
-            set(self.button2, option1.name)
+            e.set(self.button2, option1.name)
         end
     end
     if ( option2 ) then
         if ( option2.name ) then
-            set(self.button3, option2.name)
+            e.set(self.button3, option2.name)
         end
     end
 end)

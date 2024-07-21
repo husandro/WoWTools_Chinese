@@ -76,8 +76,8 @@ function e.Get_Spell_Desc(spellID)
     if spellID then
         local data= e.Get_Spell_Data(spellID)
         if data then
-            return e.ReplaceText(data[2])
-        end 
+            return e.ReplaceText(data[#data])
+        end
     end
 end
 
@@ -129,7 +129,7 @@ function e.cn(text, tab)
                 data= e.Get_Spell_Name(tab.spellID)--法术名称
             elseif tab.isDesc then
                 data= e.Get_Spell_Desc(tab.spellID)
-            end
+            else
                 data= e.Get_Spell_Data(tab.spellID)
             end
 
@@ -501,7 +501,6 @@ function e.Cstr(self, tab)
     end
     return font
 end
-
 
 
 

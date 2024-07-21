@@ -148,8 +148,8 @@ hooksecurefunc('UIMenu_AddButton', function(self, text)--UIMenu.lua
     end
     local button = _G[self:GetName().."Button"..self.numButtons]
     if ( button and text ) then
-        set(button, e.strText[text])
-        set(_G[button:GetName().."ShortcutText"])
+        e.set(button, text)
+        e.set(_G[button:GetName().."ShortcutText"])
     end
 end)
 
