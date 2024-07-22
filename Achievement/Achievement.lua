@@ -134,7 +134,16 @@ local function Init()
         e.set(self.Description, description)
         e.set(self.HiddenDescription, description)
         e.set(self.Reward, rewardText)
+        if self.Tracked:IsShown() and not self.Tracked.is_set then
+            for _, region in pairs({self.Tracked:GetRegions()}) do
+                if region:GetObjectType()=='FontString' then
+                    e.set(region)
+                end
+            end
+            self.Tracked.is_set= true
+        end
     end)
+
     hooksecurefunc('AchievementObjectives_DisplayCriteria', function(objectivesFrame, ID)--条件
         if not objectivesFrame or not ID then
             return
@@ -148,22 +157,24 @@ local function Init()
             end
         end
         local numCriteria = GetAchievementNumCriteria(ID) or 0
-        if ( numCriteria == 0 and not requiresRep ) then
+        if numCriteria==0 and not requiresRep then
             return
         end
         local textStrings, metas = 0, 0
         for i = 1, numCriteria do
-            local criteriaString, criteriaType, completed, _, _, _, flags, assetID, _ = GetAchievementCriteriaInfo(ID, i)
+            local criteriaString, criteriaType, completed, _, _, _, flags, assetID = GetAchievementCriteriaInfo(ID, i)
             if ( criteriaType == CRITERIA_TYPE_ACHIEVEMENT and assetID ) then
                 metas = metas + 1
-                local achievementName = select(2, GetAchievementInfo(assetID))
+                local achievementName = e.strText[select(2, GetAchievementInfo(assetID))]
                 local metaCriteria = objectivesFrame:GetMeta(metas)
-                e.set(metaCriteria.Label, achievementName)
+                if achievementName and metaCriteria then
+                    metaCriteria.Label:SetText(achievementName)
+                end
 
             elseif not (flags and bit.band(flags, EVALUATION_TREE_FLAG_PROGRESS_BAR) == EVALUATION_TREE_FLAG_PROGRESS_BAR) then
                 textStrings = textStrings + 1
                 criteriaString= e.strText[criteriaString]
-                if not completed and criteriaString then
+                if criteriaString then
                     local criteria = objectivesFrame:GetCriteria(textStrings)
                     if criteria then
                         criteria.Name:SetText("- "..criteriaString)

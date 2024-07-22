@@ -84,6 +84,9 @@ ScenarioChallengeModeBlock.TimesUpLootStatus:HookScript('OnEnter', function(self
     GameTooltip:AddLine(line, nil, nil, nil, true)
     GameTooltip:Show()
 end)
+
+
+
 hooksecurefunc('ScenarioBlocksFrame_SetupStageBlock', function(scenarioCompleted)
     if not ScenarioStageBlock.WidgetContainer:IsShown() then
         if ( scenarioCompleted ) then
@@ -109,55 +112,96 @@ end)
 --出现Bug SCENARIO_CONTENT_TRACKER_MODULE:SetHeader(ObjectiveTrackerFrame.BlocksFrame.ScenarioHeader, '场景战役', nil)
 --Blizzard_ScenarioObjectiveTracker.lua
 hooksecurefunc(SCENARIO_CONTENT_TRACKER_MODULE, 'Update', function()
-    local scenarioName, currentStage, numStages, flags, _, _, _, _, _, scenarioType= C_Scenario.GetInfo()
+    local scenarioName, currentStage, numStages, flags, _, _, _, _, _, scenarioType, _, _, scenarioID= C_Scenario.GetInfo()
+
     local shouldShowMawBuffs = ShouldShowMawBuffs()
     local isInScenario = numStages > 0
     if ( not isInScenario and (not shouldShowMawBuffs or IsOnGroundFloorInJailersTower()) ) then
         return
     end
+
     local BlocksFrame = SCENARIO_TRACKER_MODULE.BlocksFrame
+
     local stageBlock = ScenarioStageBlock
     local stageName = C_Scenario.GetStepInfo()
+
     local inChallengeMode = (scenarioType == LE_SCENARIO_TYPE_CHALLENGE_MODE)
     local inProvingGrounds = (scenarioType == LE_SCENARIO_TYPE_PROVING_GROUNDS)
     local dungeonDisplay = (scenarioType == LE_SCENARIO_TYPE_USE_DUNGEON_DISPLAY)
     local scenariocompleted = currentStage > numStages
+    
+
+
     if ( not isInScenario ) then
     elseif ( scenariocompleted ) then
     elseif ( inChallengeMode ) then
     elseif ( ScenarioProvingGroundsBlock.timerID ) then
+        
     else
-        if ( BlocksFrame.currentStage ~= currentStage or BlocksFrame.scenarioName ~= scenarioName or BlocksFrame.stageName ~= stageName) then
+        --if ( BlocksFrame.currentStage ~= currentStage or BlocksFrame.scenarioName ~= scenarioName or BlocksFrame.stageName ~= stageName) then
+            local data= e.Get_Scenario_Step_Info(scenarioID, currentStage) or {}
             if ( bit.band(flags, SCENARIO_FLAG_SUPRESS_STAGE_TEXT) == SCENARIO_FLAG_SUPRESS_STAGE_TEXT ) then
-                set(stageBlock.Stage, e.strText[stageName])
+                
+                local name= data[2] or e.strText[stageName]
+                if name then
+                    stageBlock.Stage:SetText(name)
+                end
+                
             else
                 if ( currentStage == numStages ) then
-                    set(stageBlock.Stage, '最终阶段')
+                    set(stageBlock.Stage, '|cnGREEN_FONT_COLOR:最终阶段|r')
                 else
                     set(stageBlock.Stage, format('阶段%d', currentStage))
                 end
-                set(stageBlock.Name, e.strText[stageName])
+                local name= data[1] or e.strText[stageName]
+                if name then
+                    stageBlock.Name:SetText(name)
+                end
             end
-        end
+            
     end
+
     if ( BlocksFrame.currentBlock ) then
         if ( inChallengeMode ) then-- header
-            set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text, e.strText[BlocksFrame.scenarioName])
+            local name= e.strText[BlocksFrame.scenarioName]
+            if name then
+                SCENARIO_CONTENT_TRACKER_MODULE.Header.Text:SetText(name)
+            end
         elseif ( inProvingGrounds or ScenarioProvingGroundsBlock.timerID ) then
             set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text, '试炼场')
+
         elseif( dungeonDisplay ) then
             set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text, '地下城')
+
         elseif ( shouldShowMawBuffs and not IsInJailersTower() ) then
             set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text, e.strText[GetZoneText()])
         else
-            set(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text, e.strText[BlocksFrame.scenarioName])
+            local name= e.Get_Scenario_Name(scenarioID) or e.strText[BlocksFrame.scenarioName]
+            if name then
+                SCENARIO_CONTENT_TRACKER_MODULE.Header.Text:SetText(name)
+            end
         end
     end
 end)
+
+ScenarioStageBlock:HookScript('OnEnter', function(self)
+    local _, currentStage, _, _, _, _, _, _, _, _, _, _, scenarioID= C_Scenario.GetInfo()
+    
+    local data= e.Get_Scenario_Step_Info(scenarioID, currentStage)
+    if data then
+        GameTooltip:AddLine(' ')
+        GameTooltip:AddLine(data[2], 1,1,1, true)
+        GameTooltip:AddLine(data[1], nil,1,nil, true)
+        GameTooltip:Show()
+    end
+
+    
+end)
+
 C_Timer.After(2, function()
 
 
-    setLabel(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text)
+   -- setLabel(SCENARIO_CONTENT_TRACKER_MODULE.Header.Text)
     set(ObjectiveTrackerFrame.HeaderMenu.Title, '追踪')
     set(ObjectiveTrackerBlocksFrame.CampaignQuestHeader.Text, '战役')
     set(ObjectiveTrackerBlocksFrame.ProfessionHeader.Text, '专业')

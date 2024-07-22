@@ -35,12 +35,18 @@ AddonList.lua
 FriendsFrame.lua
 QuickKeybindFrame.lua
 MainMicroButton.lua
-ObjectiveTrackerFrame.lua
+
+
 GameMenuFrame.lua
 WorldMapFrame.lua
-Quest.lua
+
 PlayerChoiceFrame.lua
 DeathRecapFrame.lua
+GossipFrame.lua
+
+##任务
+Quest\Quest_Func.lua
+##Quest\Quest_Objective.lua
 
 ##角色
 Character.lua
@@ -139,6 +145,13 @@ LFG\LFGListFrame.lua
 LFG\LFGFrame.lua
 ## PvP查找器
 LFG\PVPQueueFrame.lua
+
+
+##目标追踪
+Scenario\Scenario_StageBlock_Data.lua
+Scenario\Scenario_StageStep_Data.lua
+Scenario\Scenario_StageBlock_Func.lua
+ObjectiveTrackerFrame.lua
 
 
 ##冒险指南

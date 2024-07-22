@@ -27,7 +27,7 @@ local function Init_Toy()
     end)
    
     hooksecurefunc('ToySpellButton_UpdateButton', function(self)
-        if self.name:IsShown() and self.itemID then
+        if self:IsShown() and self.itemID then
             local name = e.Get_Item_Name(self.itemID) or e.strText[self.name:GetText()]          
             if name then
                 name= name:match('|c........(.-)|r') or name
@@ -36,18 +36,6 @@ local function Init_Toy()
         end
     end)
     
-    hooksecurefunc("ToyBox_UpdateButtons", function()
-        for i = 1, 18 do
-            local self = _G['ToyBox.iconsFrame.spellButton'..i]
-            if self and self.name:IsShown() then
-                local name = e.Get_Item_Name(self.itemID) or e.strText[self.name:GetText()]          
-                if name then
-                    name= name:match('|c........(.-)|r') or name
-                    self.name:SetText(name)
-                end
-            end
-        end
-    end)
     
 end
 

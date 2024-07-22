@@ -1444,7 +1444,7 @@ local tab={
 local e= select(2, ...)
 --[[
 [ID]= {"Name_lang", "Description_lang"},
-https://wago.tools/db2/LFGDungeons?locale=zhCN&build=11.0.2.55399
+https://wago.tools/db2/LFGDungeons?locale=zhCN&build=11.0.2.55763
 ]]
 
 local descTab={}

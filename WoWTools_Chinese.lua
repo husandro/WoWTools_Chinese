@@ -43,6 +43,8 @@ function e.Get_Profession_Node_Desc()end--tab.nodeID
 
 function e.Get_LFGDungeon_Desc()end--tab.lfgDungeonID
 function e.Get_Instance_Desc()end---tab.instanceID
+function e.Get_Scenario_Name()end--{scenarioID, isName}
+function e.Get_Scenario_Step_Info()end--{tab.scenarioID, tab.stepIndex}
 
 function e.Get_Boss_Name()end--tab.journalEncounterID
 function e.Get_Boss_Desc()end
@@ -57,6 +59,7 @@ function e.Get_Boos_Section_Desc()end--(sectionID, difficultyID)
 function e.ReplaceText()end-- WoWeuCN_Tooltips
 
 function e.Get_Quest_Info()end--e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc) {['Title']='标题', ['Objectives']='目标描述', ['Description']='描述'}
+function e.Get_Quest_Object()end--{questID=1, index=1, isObject=true}
 function e.Get_Unit_Name()end--e.Get_Unit_Name(tab.unit, tab.npcID) NPC return 名称，头衔
 function e.Get_Unit_Info()end--e.Get_Unit_Name(tab.unit, tab.npcID) NPC return {'名称', '头衔'}
 
@@ -180,10 +183,19 @@ function e.cn(text, tab)
         elseif tab.instanceID then
             data= e.Get_Instance_Desc(tab.instanceID)--副本
 
-
+        elseif tab.scenarioID then
+            if tab.isName then
+                data= e.Get_Scenario_Name(tab.scenarioID)
+            else
+                e.Get_Scenario_Step_Info(tab.scenarioID, tab.stepIndex)
+            end
 
         elseif tab.questID then
-            data= e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc)
+            if tab.isObject then
+                e.Get_Quest_Object(tab.questID, tab.index)
+            else
+                data= e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc)
+            end
 
         elseif tab.npcID or tab.unit then
             data= e.Get_Unit_Info(tab.unit, tab.npcID)
@@ -387,7 +399,6 @@ function e.region(frame, setFont, isHook)
                 for _, region in pairs({frame:GetRegions()}) do
                     if region:GetObjectType()=='FontString' then
                         e.set(region, setFont)
-
                     end
                 end
             end)

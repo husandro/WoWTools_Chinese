@@ -152,8 +152,6 @@ if PetBattleFrame then
     PetBattleFrame.BottomFrame.TurnTimer.SkipButton:SetText('待命')
 end
 
---任务对话框
-GossipFrame.GreetingPanel.GoodbyeButton:SetText('再见')
 
 QuestInfoRequiredMoneyText:SetText('需要金钱：')
 QuestInfoRewardsFrame.ItemChooseText:SetText('你可以从这些奖励品中选择一件：')

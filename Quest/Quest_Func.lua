@@ -91,14 +91,14 @@ local function set_objectives(questID)
 	local numVisibleObjectives = 0
 
 	local waypointText = C_QuestLog.GetNextWaypointText(questID)
-	if ( waypointText ) then
+	if waypointText then
 		numVisibleObjectives = numVisibleObjectives + 1
 		objective = objectivesTable[numVisibleObjectives]
 		if objective then
 			objective:SetFormattedText('0/1 %s （可选）', e.cn(waypointText))
 		end
 	end
-
+	
 	for i = 1, numObjectives do
 		text, type, finished = GetQuestLogLeaderBoard(i)
 		if (type ~= "spell" and type ~= "log" and numVisibleObjectives < MAX_OBJECTIVES) then
@@ -110,7 +110,11 @@ local function set_objectives(questID)
 					name= e.cn(type)
 					text= type
 				else
-					name= e.cn(text)
+					local new= e.Get_Quest_Object(questID, i)--无法找到
+					if new then
+						name= text:gsub('%d+/%d+ (.+)', new)
+					end
+					name= name or e.cn(text)
 				end
 				if ( finished ) then
 					name = name.." （完成）"
