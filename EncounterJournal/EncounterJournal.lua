@@ -42,83 +42,39 @@ end
 
 
 
-
-
-
-
-local function Init_Boss()
-    hooksecurefunc('EncounterJournal_SetUpOverview', function(self, overviewSectionID, index)
-        local infoHeader= self.overviews[index]
-        --local sectionInfo = C_EncounterJournal.GetSectionInfo(overviewSectionID)
-        if infoHeader and infoHeader.button and overviewSectionID then
-            EncounterJournal_SetupIconFlags(overviewSectionID, infoHeader.button, index)
-        end
-    end)
-    hooksecurefunc('EncounterJournal_ToggleHeaders', function()
-        for _, infoHeader in pairs(EncounterJournal.encounter.usedHeaders or {}) do
-            if infoHeader.myID and  infoHeader.button then
-                EncounterJournal_SetupIconFlags(infoHeader.myID, infoHeader.button)
-            end
-        end
-    end)
-
-
-
-    hooksecurefunc('EncounterJournal_DisplayInstance', function(instanceID)--副本，数据
-        local self= EncounterJournal.encounter
-        local instanceName, description = EJ_GetInstanceInfo()
-
-        e.set(self.instance.title, instanceName)
-        e.set(self.info.instanceTitle, instanceName)
-        e.set(self.instance.LoreScrollingFont, description)
-
-        local tooltip= e.strText[self.info['overviewTab'].tooltip]
-        if tooltip then
-            self.info['overviewTab'].tooltip= tooltip
-        end
-        local desc= e.Get_Instance_Description(instanceID)
-        if desc then
-            EncounterJournal.encounter.instance.LoreScrollingFont:SetText(desc)
-        end
-    end)
-
-    e.hookButton(EncounterJournalEncounterFrameInfoSlotFilterToggle)
-    e.hookButton(EncounterJournalEncounterFrameInfoDifficulty)
-
-
-
-    hooksecurefunc('EncounterJournal_DisplayEncounter', function()--BOSS，详细，信息
-
-        local f = EncounterJournal.encounter
-        e.set(f.info.encounterTitle)
-
-        local desc= e.Get_Boss_Description(journalEncounterID)
-        if desc then
-            local rootSectionID = select(4, EJ_GetEncounterInfo(journalEncounterID))
-            if rootSectionID then
-                local sectionInfo = C_EncounterJournal.GetSectionInfo(rootSectionID);
-                if sectionInfo and sectionInfo.headerType==3 then
-                    f.overviewFrame.loreDescription:SetText(desc)
-                    if (f.overviewFrame.Bullets and #self.overviewFrame.Bullets > 0) then--更新，高度
-                        local bulletHeight = 0;
-                        for i = 1, #f.overviewFrame.Bullets do
-                            bulletHeight = bulletHeight + f.overviewFrame.Bullets[i]:GetHeight();
-                        end
-                        f.overviewFrame.descriptionHeight = f.overviewFrame.loreDescription:GetHeight() + f.overviewFrame.overviewDescription:GetHeight() + bulletHeight + 42;
+local function UpdateEncounterJournalHeaders()        
+    for index, infoHeader in pairs(EncounterJournal.encounter.usedHeaders or {}) do
+        if infoHeader.myID and infoHeader.button then
+            if infoHeader.description then                
+                local difficultyID = EJ_GetDifficulty()
+                local data = e.Get_Boos_Section_Info(infoHeader.myID, difficultyID)--difficultyID and WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
+                if data then
+                    local title= data["Title"]
+                    local desc= data["Description"]
+                    if title then
+                        infoHeader.button.title:SetText(data["Title"])
                     end
+                    if desc then
+                        infoHeader.description:SetText(data["Description"])
+                    end
+                    EncounterJournal_ShiftHeaders(index)
                 end
             end
-            f.infoFrame.description:SetText(desc)
-            f.infoFrame.descriptionHeight = f.infoFrame.description:GetHeight()
+            
+            EncounterJournal_SetupIconFlags(infoHeader.myID, infoHeader.button)
         end
-    end)
+    end
+end
 
 
-    --[[hooksecurefunc(EncounterJournalEncounterFrameInfo.BossesScrollBox, 'Update', function(self)
-        for _, btn in pairs(self:GetFrames() or {}) do
-            e.set(btn.text)
-        end
-    end)]]
+
+
+
+
+local function get_encounter_name(encounterID)
+    if encounterID then
+        return e.Get_Boss_Name(encounterID) or e.cn(EJ_GetEncounterInfo(itemInfo.encounterID))
+    end
 end
 
 
@@ -150,8 +106,14 @@ end
 
 
 
+
+
+
+
+
+
 local function Init_EncounterJournal()
-    e.font(EncounterJournalNavBarHomeButtonText)
+
     EncounterJournalTitleText:SetText('冒险指南')
     EncounterJournalSuggestTab:SetText('推荐玩法')
     EncounterJournalDungeonTab:SetText('地下城')
@@ -222,16 +184,26 @@ local function Init_EncounterJournal()
             end
 
             local numEncounters = EJ_GetNumEncountersForLootByIndex(self.index)
+            
             if ( numEncounters == 1 ) then
-                self.boss:SetFormattedText('首领：%s', e.cn(EJ_GetEncounterInfo(itemInfo.encounterID)) or '')
+                local name= get_encounter_name(itemInfo.encounterID)
+                if name then
+                    self.boss:SetFormattedText('首领：%s', name)
+                end
+
             elseif ( numEncounters == 2) then
                 local itemInfoSecond = C_EncounterJournal.GetLootInfoByIndex(self.index, 2)
                 local secondEncounterID = itemInfoSecond and itemInfoSecond.encounterID
-                if ( itemInfo.encounterID and secondEncounterID ) then
-                    self.boss:SetFormattedText('首领：%s，%s', e.cn(EJ_GetEncounterInfo(itemInfo.encounterID)) or '', e.cn(EJ_GetEncounterInfo(secondEncounterID)) or '')
+                local name1, name2= get_encounter_name(itemInfo.encounterID), get_encounter_name(secondEncounterID)
+                if name1 and name2 then
+                    self.boss:SetFormattedText('首领：%s，%s', name1 or '', name2)
                 end
+
             elseif ( numEncounters > 2 ) then
-                self.boss:SetFormattedText('首领：%s及其他', e.cn(EJ_GetEncounterInfo(itemInfo.encounterID)))
+                local name= get_encounter_name(itemInfo.encounterID)
+                if name then
+                    self.boss:SetFormattedText('首领：%s及其他', name)
+                end
             end
         else
             self.name:SetText('正在获取物品信息')
@@ -291,10 +263,15 @@ local function Init_EncounterJournal()
 
 
 
-    hooksecurefunc(EncounterJournal.encounter.info.BossesScrollBox, 'Update', function(frame)
-        if frame:GetView() then
-            for _, btn in pairs(frame:GetFrames()) do
-                e.set(btn.text)
+    hooksecurefunc(EncounterJournal.encounter.info.BossesScrollBox, 'Update', function(self)
+        if not self:GetView() then
+            return
+        end
+        for _, btn in pairs(self:GetFrames()) do
+            local data= btn:GetData()
+            local name= data and e.Get_Boss_Name(data.bossID)
+            if name then
+                btn.text:SetText(name)
             end
         end
     end)
@@ -306,10 +283,6 @@ local function Init_EncounterJournal()
     if t then
         e.strText[t]='燃烧远征'
     end
-    --[[t= EJ_GetTierInfo(11)
-    if t then
-        e.strText[t]='本赛季'
-    end]]
 
 
 
@@ -322,33 +295,168 @@ local function Init_EncounterJournal()
             e.set(btn.SetName)
         end
     end)
-     --[[ hooksecurefunc("EncounterJournal_SetDescriptionWithBullets", function(infoHeader, description)
-        
-            info=infoHeader
-        for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
-       print( infoHeader.sectionID)
-    end)
-    --hooksecurefunc("EncounterJournal_DisplayEncounter", function(...) OnEncounterJournalDisplay(...) end);
-    --hooksecurefunc("EncounterJournal_ToggleHeaders", function(...) OnEncounterJournalToggle(...) end);
-    --hooksecurefunc("EncounterJournal_SetDescriptionWithBullets", function(...) OnEncounterJournalOverview(...) end);
-  
-    function OnEncounterJournalOverview(infoHeader, description)
-        local sectionID = infoHeader.sectionID
-        local difficultyID = EJ_GetDifficulty()
-        if WoWeuCN_Tooltips_TranslateEncounterJournal then
-            local sectionTranslation = WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
-            if (sectionTranslation) then
-            infoHeader.button.title:SetText(sectionTranslation["Title"])
-            EncounterJournal_SetBullets(infoHeader.overviewDescription, sectionTranslation["Description"], not infoHeader.expanded);
-            end
-        else
-            local sectionInfo =  C_EncounterJournal.GetSectionInfo(sectionID)
-            infoHeader.button.title:SetText(sectionInfo.title)
-            EncounterJournal_SetBullets(infoHeader.overviewDescription, sectionInfo.description, not infoHeader.expanded);
+
+
+
+    hooksecurefunc('EncounterJournal_SetUpOverview', function(self, overviewSectionID, index)
+        local infoHeader= self.overviews[index]
+        if infoHeader and infoHeader.button and overviewSectionID then
+            EncounterJournal_SetupIconFlags(overviewSectionID, infoHeader.button, index)
         end
-    end
-    ]]
+    end)
+    
+    --副本，数据
+    hooksecurefunc('EncounterJournal_DisplayInstance', function(instanceID)
+        local self= EncounterJournal.encounter
+        local instanceName, description = EJ_GetInstanceInfo()
+
+        e.set(self.instance.title, instanceName)
+        e.set(self.info.instanceTitle, instanceName)
+        e.set(self.instance.LoreScrollingFont, description)
+
+        local tooltip= e.strText[self.info['overviewTab'].tooltip]
+        if tooltip then
+            self.info['overviewTab'].tooltip= tooltip
+        end
+        local desc= e.Get_Instance_Desc(instanceID)
+        if desc then
+            EncounterJournal.encounter.instance.LoreScrollingFont:SetText(desc)
+        end
+    end)
+
+    e.hookButton(EncounterJournalEncounterFrameInfoSlotFilterToggle)
+    e.hookButton(EncounterJournalEncounterFrameInfoDifficulty)
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--导航条
+local function set_navButton(navBar, text)
+    if not navBar or not navBar.navList then
+        return
+    end
+    local navButton = navBar.navList[#navBar.navList]
+    if navButton then
+        e.font(navButton.text)
+        navButton:SetText(text)
+        local buttonExtraWidth
+        if navButton.listFunc  and not navBar.oldStyle then
+            buttonExtraWidth = 53
+        else
+            buttonExtraWidth = 30
+        end
+        navButton:SetWidth(navButton.text:GetStringWidth() + buttonExtraWidth)
+    end
+end
+
+
+
+
+
+
+
+
+
+local function Init_WoWeuCN()
+    if loadEncounterData then
+        return
+    end
+
+
+    hooksecurefunc("EncounterJournal_DisplayEncounter", function(encounterID)
+        local self = EncounterJournal.encounter
+        local info= e.Get_Boss_Info(encounterID)
+        if info then
+            local title= info["Title"]
+            local desc= info["Description"]
+            if title then
+                self.info.encounterTitle:SetText(title)
+                set_navButton(EncounterJournal.navBar, title)--导航条
+                
+            end
+            if desc then
+                self.overviewFrame.loreDescription:SetText(desc)
+                self.infoFrame.description:SetText(desc)
+                self.infoFrame.descriptionHeight = self.infoFrame.description:GetHeight()
+                if self.usedHeaders[1] then
+                    self.usedHeaders[1]:SetPoint("TOPRIGHT", 0 , -8 - EncounterJournal.encounter.infoFrame.descriptionHeight - 6)
+                end
+            end
+        end 
+
+        local desc= e.Get_Boos_Section_Desc(self.overviewFrame.rootOverviewSectionID)            
+        if desc then
+            self.overviewFrame.overviewDescription.Text:SetText(desc)
+            self.overviewFrame.overviewDescription.descriptionHeight = self.overviewFrame.overviewDescription:GetHeight()
+        end
+        if des or info then
+            UpdateEncounterJournalHeaders()
+        end
+    end)
+
+    hooksecurefunc("EncounterJournal_ToggleHeaders", function(object)
+        if (object == EncounterJournal.encounter.overviewFrame) then
+            return
+        end
+        UpdateEncounterJournalHeaders()
+    end)
+
+    hooksecurefunc("EncounterJournal_SetDescriptionWithBullets", function(infoHeader)
+        local data = infoHeader and e.Get_Boos_Section_Info(infoHeader.sectionID)
+        if data then
+            local title= data["Title"]
+            local desc= data["Description"]
+            if title then
+                infoHeader.button.title:SetText(title)
+            end
+            if desc then
+                EncounterJournal_SetBullets(infoHeader.overviewDescription, desc, not infoHeader.expanded)
+            end
+        end
+    end)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local function Init()
+    Init_EncounterJournal()
+    Init_WoWeuCN()
+end
+
+
+
+
+
+
+
+
 
 
 
@@ -367,14 +475,12 @@ panel:RegisterEvent("ADDON_LOADED")
 panel:SetScript("OnEvent", function(self, _, arg1)
     if id==arg1 then
         if C_AddOns.IsAddOnLoaded('Blizzard_EncounterJournal') then
-            Init_Boss()
-            Init_EncounterJournal()
+            Init()
             self:UnregisterEvent('ADDON_LOADED')
         end
 
     elseif arg1=='Blizzard_EncounterJournal' then--冒险指南
-        Init_Boss()
-        Init_EncounterJournal()
+        Init()
         self:UnregisterEvent('ADDON_LOADED')
     end
 end)

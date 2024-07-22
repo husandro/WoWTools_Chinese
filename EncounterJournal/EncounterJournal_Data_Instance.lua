@@ -3,7 +3,7 @@ local e = select(2, ...)
 
 
 
---https://wago.tools/db2/JournalInstance?locale=zhCN&build=11.0.0.55120
+
 local instanceTab={
     [63]= {'死亡矿井', '曾经有人称死亡矿井的黄金乃是暴风城国库储备的三分之一。在第一次大战的混乱中，矿井遭到了遗弃，闹鬼不断、无人问津，直到迪菲亚兄弟会的到来——他们曾经是一群工人，如今却成了强盗，他们将这迷宫变成了自己的行动基地，来实施对暴风城的破坏活动。'},
     [64]= {'影牙城堡', '在银松森林南部悬崖的焚木村上，影牙城堡犹如一道黑影矗立。从前这里是疯狂大法师阿鲁高狼人们的居所，如今它的废墟被罪恶的力量所占据。席瓦莱恩男爵阴魂不散，高弗雷勋爵和他的幕僚，往昔的吉尔尼斯贵族阴谋对付他们的敌人，无论对方是生者还是亡灵。'},
@@ -213,9 +213,10 @@ local instanceTab={
 
 local tab={
     --[ID]= Description
+    --https://wago.tools/db2/JournalInstance?locale=zhCN&build=11.0.0.55120
 }
 
-function e.Get_Instance_Description(instanceID)
+function e.Get_Instance_Desc(instanceID)
     return tab[instanceID]
 end
 

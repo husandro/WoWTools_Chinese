@@ -78,7 +78,9 @@ end)]]
 
 
 
-
+if not UIDropDownMenu_AddButton then
+    return
+end
 
 --UIDropDownMenu.lua
 local function GetChild(frame, name, key)

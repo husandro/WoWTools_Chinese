@@ -141,25 +141,24 @@ LFG\LFGFrame.lua
 LFG\PVPQueueFrame.lua
 
 
+##冒险指南
+EncounterJournal\EncounterJournal.lua
+EncounterJournal\PerksProgram.lua
+EncounterJournal\PerksActivity.lua
+EncounterJournal\PerksActivity_Data.lua
+EncounterJournal\EncounterJournal_Data_Instance.lua
+
 
 ##调用其它插件，数据
 WoWeuCN\ItemData_cn.lua
 WoWeuCN\SpellData_cn.lua
 WoWeuCN\QuestData_cn.lua
 WoWeuCN\UnitData_cn.lua
-WoWeuCN\Data.Func.lua
 WoWeuCN\EncounterData_cn.lua
-WoWeuCN\EncounterData_Func.lua
+WoWeuCN\EncounterData_Add.lua
+WoWeuCN\WoWeuCN_Data_Func.lua
 
 
-##冒险指南
-EncounterJournal\EncounterJournal.lua
-EncounterJournal\PerksProgram.lua
-EncounterJournal\PerksActivity.lua
-EncounterJournal\PerksActivity_Data.lua
-## EncounterJournal_Data_Boss.lua 放在 EncounterData_cn.lua 后
-EncounterJournal\EncounterJournal_Data_Boss.lua
-EncounterJournal\EncounterJournal_Data_Instance.lua
 
 
 1027\Init.lua

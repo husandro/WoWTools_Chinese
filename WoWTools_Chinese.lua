@@ -22,11 +22,9 @@ e.strText={--主要，汉化
 
 
 
-
-
 function e.Get_HoliDay_Info()end---tab.holydayID eventID {'名称', '描述}
-function e.Get_Boss_Description()end---tab.journalEncounterID
-function e.Get_Instance_Description()end---tab.instanceID
+
+
 function e.Get_PerksActivity_Info()end---tab.perksActivityID {'名称', '描述}
 function e.Get_Vignette_Name()end--tab.vignetteID
 function e.Get_Title_Name()end--e.Get_Title_Name(titleID) 头衔
@@ -44,6 +42,16 @@ function e.Get_Recipe_Source()end--配方，来源
 function e.Get_Profession_Node_Desc()end--tab.nodeID
 
 function e.Get_LFGDungeon_Desc()end--tab.lfgDungeonID
+function e.Get_Instance_Desc()end---tab.instanceID
+
+function e.Get_Boss_Name()end--tab.journalEncounterID
+function e.Get_Boss_Desc()end
+function e.Get_Boss_Info()end
+function e.Get_Boos_Section_Info()end--(sectionID, difficultyID)
+function e.Get_Boos_Section_Name()end--(sectionID, difficultyID)
+function e.Get_Boos_Section_Desc()end--(sectionID, difficultyID)
+
+
 --WoW_Tools_Chinese_CN(text, tab) = e.cn(...) 全局 Func.lua
 
 function e.ReplaceText()end-- WoWeuCN_Tooltips
@@ -100,12 +108,6 @@ function e.cn(text, tab)
         if tab.holydayID then
             data= e.Get_HoliDay_Info(tab.holydayID)--节日 eventID
 
-        elseif tab.journalEncounterID then
-            data= e.Get_Boss_Description(tab.journalEncounterID)--BOOS
-
-        elseif tab.instanceID then
-            data= e.Get_Instance_Description(tab.instanceID)--副本
-
         elseif tab.perksActivityID then
             data= e.Get_PerksActivity_Info(tab.perksActivityID)--PERKS
 
@@ -153,8 +155,32 @@ function e.cn(text, tab)
         elseif tab.ProfessionNodeID then
             data= e.Get_Profession_Node_Desc(tab.ProfessionNodeID)
 
+
         elseif tab.lfgDungeonID then
             data= e.Get_LFGDungeon_Desc(tab.lfgDungeonID)
+
+        elseif tab.sectionID then
+            if tab.isName then
+                data= e.Get_Boos_Section_Name(tab.sectionID, tab.difficultyID)
+            elseif tab.isDesc then
+                data= e.Get_Boos_Section_Desc(tab.sectionID, tab.difficultyID)
+            else
+                data= e.Get_Boos_Section_Info(tab.sectionID, tab.difficultyID)
+            end
+
+        elseif tab.journalEncounterID then
+            if tab.isName then
+               data= e.Get_Boss_Name(journalEncounterID)
+            elseif tab.isDesc then
+                data= e.Get_Boss_Desc(tab.journalEncounterID)--BOOS
+            else
+                data= e.Get_Boss_Info(tab.journalEncounterID)
+            end
+
+        elseif tab.instanceID then
+            data= e.Get_Instance_Desc(tab.instanceID)--副本
+
+
 
         elseif tab.questID then
             data= e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc)

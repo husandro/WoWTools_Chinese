@@ -1,6 +1,16 @@
 local e= select(2, ...)
 
---NavigationBar.lua
+--[[
+导航条
+NavigationBar.lua
+navButton= self.navList[#self.navList]
+local navButton = self.freeButtons[#self.freeButtons];
+navButton.myclick = buttonData.OnClick;
+navButton.listFunc = buttonData.listFunc;
+navButton.id = buttonData.id;
+navButton.data = buttonData
+]]
+
 hooksecurefunc('NavBar_AddButton', function(self, buttonData)
     local navButton = self.navList[#self.navList]
     local name= e.strText[buttonData.name]
@@ -14,15 +24,11 @@ hooksecurefunc('NavBar_AddButton', function(self, buttonData)
             buttonExtraWidth = 30
         end
         navButton:SetWidth(navButton.text:GetStringWidth() + buttonExtraWidth)
-    end
+    end    
 end)
 
 
 hooksecurefunc('NavBar_Initialize', function(_, _, homeData, homeButton)
-    if homeData.name then
-        e.set(homeButton.text, homeData.name)
-    else
-        e.font(navButton.text)
-        homeButton.text:SetText('首页')
-    end
+    e.font(homeButton.text)
+    e.set(homeButton.text)
 end)
