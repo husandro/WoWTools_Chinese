@@ -17,6 +17,13 @@ e.ReplaceText(string)
 法术 e.Get_Spell_Data(spellID)
 物品 e.Get_Item_Data(itemID)
 任务 e.Get_Quest_Info(questID, isName, isObject, isDesc)
+
+e.Get_Unit_Info(unit, npcID)
+e.Get_Unit_Name(unit, npcID)
+
+e.Get_Boss_Info(journalEncounterID)
+e.Get_Boss_Desc(journalEncounterID)
+e.Get_Boss_Name(journalEncounterID)
 ]]
 
 
