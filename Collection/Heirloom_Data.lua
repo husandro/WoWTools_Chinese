@@ -5,10 +5,6 @@ end
 
 
 local e= select(2, ...)
---[[
-[ItemID]= 'SourceText_lang',
-https://wago.tools/db2/Heirloom?locale=zhCN
-]]
 local tab={
 
 
@@ -112,12 +108,15 @@ local tab={
 [166754]= '|cFFFFD200商人出售：|r供给商穆克拉|n|cFFFFD200地区：|r祖达萨',
 [166768]= '|cFFFFD200商人出售：|r供应商烈炉|n|cFFFFD200地区：|r伯拉勒斯',
 [199686]= '|cFFFFD200世界事件：|r原始风暴|n把朦胧的始源火焰 、流水、风暴和大地|n收集并组合起来。',
-[219325]= '|cFFFFD200世界事件：|rRadiant Echoes',
+[219325]= '|cFFFFD200世界事件：|r光耀回响',
 }
 
 
 
-
+--[[
+[ItemID]= 'SourceText_lang',
+https://wago.tools/db2/Heirloom?locale=zhCN&build=11.0.2.5576
+]]
 function e.Get_Heirloom_Source(itemID)
     return tab[itemID]
 end

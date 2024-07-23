@@ -395,8 +395,6 @@ end)
 
 
 
-
-
 --GameTooltip.lua
 
 TOOLTIP_QUEST_REWARDS_STYLE_DEFAULT.headerText = '奖励'

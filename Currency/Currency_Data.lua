@@ -1,9 +1,3 @@
-local id, e = ...
---[[
-[ID]= {'Name_lang', 'Description_lang'},
-https://wago.tools/db2/CurrencyTypes?locale=zhCN
-]]
-    
 local tab={
 
 
@@ -396,7 +390,13 @@ local tab={
 
 
 
-
+--[[
+[ID]= {'Name_lang', 'Description_lang'},
+https://wago.tools/db2/CurrencyTypes?locale=zhCN
+11.0.2.55763
+]]
+    
+local e = select(2, ...)
 do
     for currencyID, info in pairs(tab) do
         local data =C_CurrencyInfo.GetCurrencyInfo(currencyID) or {}

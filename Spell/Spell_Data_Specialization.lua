@@ -1,8 +1,3 @@
-local id, e= ...
---[[
-[ID]= {'Name_lang', 'FemaleName_lang', 'Description_lang'},
-https://wago.tools/db2/ChrSpecialization?locale=zhCN&build=11.0.0.55288
-]]
 local tab={
 
 
@@ -56,9 +51,9 @@ local tab={
 }
 
 --[[
-1	Neutrum / Unknown
-2	Male
-3	Female
+[ID]= {'Name_lang', 'FemaleName_lang', 'Description_lang'},
+https://wago.tools/db2/ChrSpecialization?locale=zhCN
+11.0.2.55763
 ]]
 
 local sex= UnitSex('player')

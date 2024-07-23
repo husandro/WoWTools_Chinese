@@ -41,14 +41,14 @@ local tab={
 [148]= {"萨拉塔斯的交易：扬升", "在战斗中，萨拉塔斯会召唤宇宙能量宝珠从天而降，强化敌人或玩家。"},
 [152]= {"挑战者的骄傲", "死亡会从剩余时间里扣除15秒。"},
 [153]= {"萨拉塔斯的交易：狂暴", "非首领敌人在生命值还剩30%时会进入狂暴状态，急速提升40%，但受到的伤害提升20%。"},
-    
+[158]= {"萨拉塔斯的交易：虚缚", "战斗中，萨拉塔斯会召唤虚空大使。虚空大使会强化附近的敌人。"},
 
 
 }
 local e= select(2, ...)
 --[[
 [ID]= {'Name_lang', 'Description_lang'},
-https://wago.tools/db2/KeystoneAffix?locale=zhCN&build=11.0.0.55419
+https://wago.tools/db2/KeystoneAffix?locale=zhCN&build=11.0.2.55763
 ]]
 do
 for affixID, info in pairs(tab) do

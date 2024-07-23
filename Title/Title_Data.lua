@@ -563,7 +563,9 @@ local tab={
 
 
 --[[
-https://wago.tools/db2/CharTitles?locale=zhCN&build=11.0.2.55522
+[Mask_ID]= 名称
+https://wago.tools/db2/CharTitles?locale=zhCN
+11.0.2.55522
 
 ]]
 

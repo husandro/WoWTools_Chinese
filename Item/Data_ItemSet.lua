@@ -1,8 +1,3 @@
-local e= select(2, ...)
---[[
-https://wago.tools/db2/ItemSet?locale=zhCN&build=11.0.0.55288
-[ID] = {"Name_lang", ItemID_0,ItemID_1,ItemID_2,ItemID_3,ItemID_4,ItemID_5,ItemID_6,ItemID_7},
-]]
 local tab={
 
 [1] = {"角斗士", 11729,11726,11728,11731,11730,0,0,0},
@@ -947,6 +942,12 @@ local tab={
 
 
 
+local e= select(2, ...)
+--[[
+[ID] = {"Name_lang", ItemID_0,ItemID_1,ItemID_2,ItemID_3,ItemID_4,ItemID_5,ItemID_6,ItemID_7},
+https://wago.tools/db2/ItemSet?locale=zhCN
+11.0.2.55763
+]]
 
 C_Timer.After(4, function()
 do

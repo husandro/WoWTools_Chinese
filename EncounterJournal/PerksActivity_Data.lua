@@ -1,9 +1,3 @@
-local e= select(2, ...)
---[[
-https://wago.tools/db2/PerksActivity?build=11.0.0.55288&locale=zhCN
-[ID]= {'ActivityName_lang', 'Description_lang'},
-]]
-
 local tab={
     
 [3]= {'完成30个任务', '完成可提供经验值的任务。'},
@@ -654,6 +648,17 @@ local tab={
 
 }
 
+
+
+--[[
+[ID]= {'ActivityName_lang', 'Description_lang'},
+https://wago.tools/db2/PerksActivity?locale=zhCN
+11.0.2.55763
+]]
+
+
+
+local e= select(2, ...)
 function e.Get_PerksActivity_Info(perksActivityID)
     return tab[perksActivityID]--{'ActivityName_lang', 'Description_lang'},
 end

@@ -1,9 +1,4 @@
 ---@diagnostic disable: undefined-field
-local e= select(2, ...)
---[[
-[ID]= {'Name_lang', 'Name_female_lang'},
-https://wago.tools/db2/ChrRaces?build=11.0.0.55288&locale=zhCN
-]]
 local tab= {
 
 
@@ -57,7 +52,7 @@ local tab= {
 [83]= {'繁盛奇想幼龙', nil},
 [84]= {'土灵', '土灵'},
 [85]= {'土灵', '土灵'},
-[86]= {'Haranir', nil},
+[86]= {'哈籁尼尔', nil},
 [87]= {'飞艇', nil},
 [82]= {'阿加驭雷者', nil},
 
@@ -76,6 +71,11 @@ description string
 C_CreatureInfo.GetRaceInfo
 raceName	string	localized name, e.g. "Night Elf"
 clientFileString	string	non-localized name, e.g. "NightElf"
+local e= select(2, ...)
+
+[ID]= {'Name_lang', 'Name_female_lang'},
+https://wago.tools/db2/ChrRaces?locale=zhCN
+11.0.2.55763
 ]]
 do
 for raceID, data in pairs(tab) do

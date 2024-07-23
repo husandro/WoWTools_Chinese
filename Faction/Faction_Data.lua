@@ -1,10 +1,4 @@
-local id, e = ...
---[ID]= {'Name_lang', 'Description_lang'},
---https://wago.tools/db2/Faction?build=11.0.0.55185&locale=zhCN
-
 local tab={
-
-
 [1]= {'人类(玩家)'},
 [2]= {'兽人(玩家)'},
 [3]= {'矮人(玩家)'},
@@ -653,9 +647,18 @@ local tab={
 [2640]= {'布莱恩·铜须', '值得信赖的地下堡伙伴'},
 [2644]= {'地下堡：第1赛季'},
 [2645]= {'土灵'},
+[2647]= {'宰相（典范）', '深入狼穴的执行官尼兹雷克随侍在安苏雷克女王左右，担任她最忠心耿耿的顾问。幸好安苏雷克尚未发现，在剩下的时间里，尼兹雷克都在为了终结她的统治而奔走。'},
+[2648]= {'纺丝者（典范）', '曾经的皇家纺织者寡妇阿拉克奈，如今正以敏锐的目光监视着自己过去的家园。她编织了一张由纺崽和间谍组成的网络，鲜有动静能够逃过她的目光。'},
+[2649]= {'将军（典范）', '阿努巴扎尔曾经是艾基-卡赫特声威显赫的军事领袖，安苏雷克却将其冷落，只宠幸自己的扬升者。这等轻慢岂能容忍？'},
 }
 
 
+--[[
+[ID]= {'Name_lang', 'Description_lang'},
+https://wago.tools/db2/Faction?locale=zhCN
+11.0.2.55763
+]]
+local id, e = ...
 do
     for factionID, info in pairs(tab) do
         local data= C_Reputation.GetFactionDataByID(factionID) or {}

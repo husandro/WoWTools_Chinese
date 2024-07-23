@@ -211,11 +211,15 @@ local instanceTab={
 }
 
 
-local tab={
-    --[ID]= Description
-    --https://wago.tools/db2/JournalInstance?locale=zhCN&build=11.0.0.55120
-}
+--[[
+--[ID]= Description
+--https://wago.tools/db2/JournalInstance?locale=zhCN
+11.0.2.55763
+]]
 
+
+
+local tab={}
 function e.Get_Instance_Desc(instanceID)
     return tab[instanceID]
 end

@@ -15729,7 +15729,8 @@ local tab={
 
 --[[
 [ID]= Spell,
-https://wago.tools/db2/SkillLineAbility?build=11.0.2.55399&locale=zhCN
+https://wago.tools/db2/SkillLineAbility?locale=zhCN
+11.0.2.55763
 ]]
 
 function e.Get_SkillLineAbility_Name(skillLineAbilityID)
