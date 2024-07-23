@@ -5,36 +5,20 @@ local e= select(2, ...)
 
 
 
-if ProfessionMicroButton then--11版本
-    ProfessionMicroButton.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
-    ProfessionMicroButton:HookScript('OnEvent', function(self, event)
-        if ( event == "UPDATE_BINDINGS" ) then
-            self.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
-        end
-    end)
-    PlayerSpellsMicroButton.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
-    PlayerSpellsMicroButton:HookScript('OnEvent', function(self, event)
-        if ( event == "UPDATE_BINDINGS" ) then
-            self.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
-        end
-    end)
 
-else
-    SpellbookMicroButton.tooltipText = MicroButtonTooltipText('法术书和专业', "TOGGLESPELLBOOK")
-    SpellbookMicroButton:HookScript('OnEvent', function(self, event)
-        if ( event == "UPDATE_BINDINGS" ) then
-		    self.tooltipText = MicroButtonTooltipText('法术书和专业', "TOGGLESPELLBOOK")
-        end
-    end)
+ProfessionMicroButton.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
+ProfessionMicroButton:HookScript('OnEvent', function(self, event)
+    if ( event == "UPDATE_BINDINGS" ) then
+        self.tooltipText = MicroButtonTooltipText('专业', "TOGGLEPROFESSIONBOOK")
+    end
+end)
+PlayerSpellsMicroButton.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
+PlayerSpellsMicroButton:HookScript('OnEvent', function(self, event)
+    if ( event == "UPDATE_BINDINGS" ) then
+        self.tooltipText = MicroButtonTooltipText('天赋和法术书', "TOGGLETALENTS")
+    end
+end)
 
-    TalentMicroButton.tooltipText = MicroButtonTooltipText('专精和天赋', "TOGGLETALENTS")
-    TalentMicroButton.newbieText = '天赋的各种组合选择能够强化你的角色，并使你的角色与众不同。'
-    TalentMicroButton:HookScript('OnEvent', function(self, event)
-        if ( event == "UPDATE_BINDINGS" ) then
-		    self.tooltipText = MicroButtonTooltipText('专精和天赋', "TOGGLETALENTS")
-        end
-    end)
-end
 
 
 

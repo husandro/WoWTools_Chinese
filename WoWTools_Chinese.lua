@@ -263,7 +263,7 @@ function e.font(lable)
 end
 
 local function set(frame, text)
-    if not frame then
+    if not frame or not frame.GetObjectType then
         return
     end
     local p
@@ -385,7 +385,7 @@ function e.hookButton(btn, setFont)
     end
 end
 
-function e.region(frame, setFont, isHook)
+function e.region(frame, setFont, isHook, notAfter)
     if frame then
         if isHook then
             for _, region in pairs({frame:GetRegions()}) do
@@ -395,13 +395,21 @@ function e.region(frame, setFont, isHook)
             end
 
         else
-            C_Timer.After(2, function()
+            if notAfter then
                 for _, region in pairs({frame:GetRegions()}) do
                     if region:GetObjectType()=='FontString' then
                         e.set(region, setFont)
                     end
                 end
-            end)
+            else
+                C_Timer.After(2, function()
+                    for _, region in pairs({frame:GetRegions()}) do
+                        if region:GetObjectType()=='FontString' then
+                            e.set(region, setFont)
+                        end
+                    end
+                end)
+            end
         end
     end
 end
@@ -411,7 +419,7 @@ end
 function e.tabSet(frame, setFont, padding, minWidth, absoluteSize)
     for _, tabID in pairs(frame:GetTabSet() or {}) do
         local btn= frame:GetTabButton(tabID)
-        e.set(btn.Text or btn)
+        e.set(btn.Text or btn, nil, nil, setFont)
 
         PanelTemplates_TabResize(frame, padding or 20, absoluteSize, minWidth or 70)
     end

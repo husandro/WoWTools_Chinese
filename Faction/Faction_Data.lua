@@ -657,7 +657,6 @@ local tab={
 
 
 do
-if C_Reputation.GetFactionDataByID then--11版本
     for factionID, info in pairs(tab) do
         local data= C_Reputation.GetFactionDataByID(factionID) or {}
         if data.name and info[1] then
@@ -667,16 +666,5 @@ if C_Reputation.GetFactionDataByID then--11版本
             e.strText[data.description]= info[2]
         end
     end
-else
-    for factionID, info in pairs(tab) do
-        local name, description = GetFactionInfoByID(factionID)
-        if name and info[1] then
-            e.strText[name] = info[1]
-        end
-        if description and info[2] then
-            e.strText[description]= info[2]
-        end
-    end
-end
 end
 tab=nil

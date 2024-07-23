@@ -1,6 +1,3 @@
-if SpellBookFrame then--11版本
-    return
-end
 local id, e= ...
 
 

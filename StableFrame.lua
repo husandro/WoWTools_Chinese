@@ -1,4 +1,4 @@
-if not StableFrame or UnitClassBase('player')~= 'HUNTER' then
+if UnitClassBase('player')~= 'HUNTER' then
     return
 end
 

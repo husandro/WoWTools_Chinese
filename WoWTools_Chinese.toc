@@ -35,7 +35,7 @@ AddonList.lua
 FriendsFrame.lua
 QuickKeybindFrame.lua
 MainMicroButton.lua
-
+ArtifactFrame.lua
 
 GameMenuFrame.lua
 WorldMapFrame.lua
@@ -43,10 +43,7 @@ WorldMapFrame.lua
 PlayerChoiceFrame.lua
 DeathRecapFrame.lua
 GossipFrame.lua
-
-##任务
-Quest\Quest_Func.lua
-##Quest\Quest_Objective.lua
+ObjectiveTrackerFrame.lua
 
 ##角色
 Character.lua
@@ -116,7 +113,6 @@ Professions\ProfessionsBookFrame.lua
 
 ##法术
 Spell\Spell_Data_Flyout.lua
-Spell\SpellBook.lua
 Spell\PlayerSpellsFrame.lua
 
 ##专精
@@ -147,11 +143,11 @@ LFG\LFGFrame.lua
 LFG\PVPQueueFrame.lua
 
 
-##目标追踪
-Scenario\Scenario_StageBlock_Data.lua
-Scenario\Scenario_StageStep_Data.lua
-Scenario\Scenario_StageBlock_Func.lua
-ObjectiveTrackerFrame.lua
+##任务
+Quest\Quest_Func.lua
+Quest\Scenario_StageBlock_Data.lua
+Quest\Scenario_StageStep_Data.lua
+
 
 
 ##冒险指南
@@ -173,7 +169,3 @@ WoWeuCN\WoWeuCN_Data_Func.lua
 
 
 
-
-1027\Init.lua
-1027\ClassTalentUI.lua
-1027\ObjectiveTrackerFrame1027.lua

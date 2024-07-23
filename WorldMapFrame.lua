@@ -1,12 +1,11 @@
 local e= select(2, ...)
 
-if QuestScrollFrame.SearchBox then--11版本
-    e.set(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
-    e.set(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
-    e.set(QuestScrollFrame.SearchBox.Instructions)
-    e.set(QuestMapFrame.MapLegend.TitleText)
-    e.set(QuestMapFrame.MapLegend.BackButton)
-end
+e.set(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
+e.set(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
+e.set(QuestScrollFrame.SearchBox.Instructions)
+e.set(QuestMapFrame.MapLegend.TitleText)
+e.set(QuestMapFrame.MapLegend.BackButton)
+
 
 hooksecurefunc(WorldMapFrame, 'SetupTitle', function(self)
     self.BorderFrame:SetTitle('地图和任务日志')

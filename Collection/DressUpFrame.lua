@@ -9,7 +9,7 @@ local e= select(2, ...)
 
 --试衣间
 DressUpFrameTitleText:SetText('试衣间')
---DressUpFrameOutfitDropdownText:SetText('保存')--11版本
+e.set(WardrobeTransmogFrame.OutfitDropdown.SaveButton)
 if DressUpFrameOutfitDropdown then
     e.set(DressUpFrameOutfitDropdown.Text)
 end

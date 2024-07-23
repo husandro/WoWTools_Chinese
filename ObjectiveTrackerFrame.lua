@@ -1,7 +1,3 @@
-if not ObjectiveTrackerContainerMixin then--11版本
-    return
-end
-
 local e= select(2, ...)
 
 
@@ -54,7 +50,8 @@ end
 ]]
 
 --任务 QuestObjectiveTracker QuestObjectiveTrackerMixin
-QuestObjectiveTracker:HookScript('OnShow', set_objective_header)
+hooksecurefunc(QuestObjectiveTracker, 'LayoutContents', set_objective_header)
+--QuestObjectiveTracker:HookScript('OnShow', set_objective_header)
 hooksecurefunc(QuestObjectiveTracker, 'AddBlock', set_quest)
 
 
@@ -67,8 +64,9 @@ hooksecurefunc(QuestObjectiveTracker, 'AddBlock', set_quest)
 
 
 --战役，任务 CampaignQuestObjectiveTracker
-CampaignQuestObjectiveTracker:HookScript('OnShow', set_objective_header)
+--CampaignQuestObjectiveTracker:HookScript('OnShow', set_objective_header)
 --hooksecurefunc(CampaignQuestObjectiveTracker, 'UpdateSingle', set_quest)
+hooksecurefunc(CampaignQuestObjectiveTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(CampaignQuestObjectiveTracker, 'AddBlock', set_quest)
 
 
@@ -78,7 +76,8 @@ hooksecurefunc(CampaignQuestObjectiveTracker, 'AddBlock', set_quest)
 
 
 --世界，任务 WorldQuestObjectiveTracker
-WorldQuestObjectiveTracker:HookScript('OnShow', set_objective_header)
+--WorldQuestObjectiveTracker:HookScript('OnShow', set_objective_header)
+hooksecurefunc(WorldQuestObjectiveTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', set_quest)
 
 
@@ -89,8 +88,8 @@ hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', set_quest)
 
 
 --旅行者日志 MonthlyActivitiesObjectiveTracker
-MonthlyActivitiesObjectiveTracker:HookScript('OnShow', set_objective_header)
-
+--MonthlyActivitiesObjectiveTracker:HookScript('OnShow', set_objective_header)
+hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'AddBlock', function(_, block)
     local data= e.Get_PerksActivity_Info(block.id)
     if data and data[1] then
@@ -103,11 +102,11 @@ end)
 --成就
 --AchievementObjectiveTracker
 --AchievementObjectiveTrackerMixin
-AchievementObjectiveTracker:HookScript('OnShow', set_objective_header)
-
+--AchievementObjectiveTracker:HookScript('OnShow', set_objective_header)
+hooksecurefunc(AchievementObjectiveTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, achievementID, achievementName, description)
     local block = self.usedBlocks[self.blockTemplate] and self.usedBlocks[self.blockTemplate][achievementID]
-    
+
     if not block then
          return
     end
@@ -117,7 +116,7 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
 	    block:SetHeader(achievementName)
     end
 
-    
+
     --local height= block.height--HeaderText:GetHeight()
     local numCriteria = GetAchievementNumCriteria(achievementID);
     if numCriteria>0 then
@@ -138,30 +137,20 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
                 else
                     if ( criteriaType == CRITERIA_TYPE_ACHIEVEMENT and assetID ) then--for meta criteria look up the achievement name
                         text = e.strText[select(2, GetAchievementInfo(assetID))]
-                    --else
-                        --text= e.strText[description]
                     end
                 end
                 if text then
-                    --find=true
                     block:SetStringText(line.Text, text, nil, colorStyle, block.isHighlighted)
-                    --local textHeight = block:SetStringText(line.Text, text, nil, colorStyle, block.isHighlighted)
-                    --line:SetHeight(textHeight)
                 end
             end
-            --block.height= block.height+ line:GetHeight()
         end
-        --if find then
-            --block.height = block.height+ block.parentModule.lineSpacing*2
-            --block:SetHeight(block.height)
-        --end
     else
         local desc= e.strText[description]
         if desc then
             local colorStyle = (not timerFailed and IsAchievementEligible(achievementID)) and OBJECTIVE_TRACKER_COLOR["Normal"] or OBJECTIVE_TRACKER_COLOR["Failed"];
             local line= block.usedLines[1]
             if line then
-                block:SetStringText(line.Text, desc, nil, colorStyle, block.isHighlighted)            
+                block:SetStringText(line.Text, desc, nil, colorStyle, block.isHighlighted)
                 --local textHeight = block:SetStringText(line.Text, desc, nil, colorStyle, block.isHighlighted)            
                 --line:SetHeight(textHeight)
                -- block.height = block.height+ textHeight + block.parentModule.lineSpacing*2
@@ -184,15 +173,149 @@ end)
 
 
 
+
+
+
+
+--场景
+--标题
+hooksecurefunc(ScenarioObjectiveTracker, 'LayoutContents', function(self)
+    if not self.scenarioID or not self.currentStage then
+        return
+    end
+    
+	local scenarioName, _, _, _, _, _, _, _, _, scenarioType, _, _, scenarioID = C_Scenario.GetInfo()
+    local name
+	if scenarioType == LE_SCENARIO_TYPE_CHALLENGE_MODE then
+        name= e.Get_Scenario_Name(scenarioID) or e.strText[scenarioName]
+		
+	elseif scenarioType == LE_SCENARIO_TYPE_PROVING_GROUNDS or self.ProvingGroundsBlock:IsActive() then
+		name= '试炼场'
+	elseif scenarioType == LE_SCENARIO_TYPE_USE_DUNGEON_DISPLAY then
+		name= '地下城'
+	elseif ShouldShowMawBuffs() and not IsInJailersTower() then
+		name= e.strText[GetZoneText()]
+	else
+		name= e.Get_Scenario_Name(scenarioID) or e.strText[scenarioName]
+	end	
+    if name then
+        self.Header.Text:SetText(name)
+    end
+end)
+
+--ScenarioObjectiveTrackerStageMixin
+--内容
+ScenarioObjectiveTracker.StageBlock.Name:SetPoint('RIGHT', -20, 0)
+hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function(self, scenarioID, scenarioType, widgetSetID, textureKit, flags, currentStage, stageName, numStages)
+    if bit.band(flags, SCENARIO_FLAG_SUPRESS_STAGE_TEXT) == SCENARIO_FLAG_SUPRESS_STAGE_TEXT then
+        local data= e.Get_Scenario_Step_Info(scenarioID, currentStage) or {}
+        local name= data[2] or e.strText[stageName]
+        if name then
+		    self.Stage:SetText(name)
+        end
+	else
+		if currentStage == numStages then
+			self.Stage:SetText('|cnGREEN_FONT_COLOR:最终阶段|r');
+		else
+			self.Stage:SetFormattedText('阶段 %d', currentStage);
+		end
+        local data= e.Get_Scenario_Step_Info(scenarioID, currentStage) or {}
+        local name= data[2] or e.strText[stageName]
+        if name then
+		    self.Name:SetText(name)
+        end
+	end
+	
+end)
+hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'SetupStageTransition', function(self, hasNewStage, scenarioCompleted)
+    if self.WidgetContainer:IsShown() then
+        return
+    end
+    if scenarioCompleted then
+        local scenarioType = select(10, C_Scenario.GetInfo());
+        local dungeonDisplay = (scenarioType == LE_SCENARIO_TYPE_USE_DUNGEON_DISPLAY);
+        if dungeonDisplay then
+            self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:地下城完成！|r');
+        else
+            self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:完成！|r');
+        end
+    else
+        self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:阶段完成|r');
+    end
+
+end)
+
+
+ScenarioObjectiveTracker.StageBlock:HookScript('OnEnter', function()
+    local _, currentStage, numStages, _, _, _, _, _, _, _, _, _, scenarioID = C_Scenario.GetInfo()
+    local data= e.Get_Scenario_Step_Info(scenarioID, currentStage) or {}
+    local desc, name= data[1], data[2]
+    if name or desc then
+        GameTooltip:AddLine(' ')
+        if name then
+            GameTooltip:AddLine('|cffffffff'..currentStage..') '..name..'|r', nil,nil,nil, true)
+        end
+        if desc then
+            GameTooltip:AddLine('|cnGREEN_FONT_COLOR:'..desc..'|r', nil,nil,nil, true)
+        end
+        if numStages and currentStage< numStages then
+            for index= currentStage+1, numStages, 1 do
+                data= e.Get_Scenario_Step_Info(scenarioID, index) or {}
+                desc, name= data[1], data[2]
+                if name then
+                    GameTooltip:AddLine('|cffffffff'..index..') '..name..'|r', nil,nil,nil, true)
+                end
+                if desc then
+                    GameTooltip:AddLine('|cnGREEN_FONT_COLOR:'..desc..'|r', nil,nil,nil, true)
+                end
+                
+            end
+        end
+        GameTooltip:Show()
+    end
+end)
+
+
+
+
+
+
+--奖励目标
+hooksecurefunc(BonusObjectiveTracker, 'LayoutContents', set_objective_header)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --专业技能 ProfessionsRecipeTracker
-ProfessionsRecipeTracker:HookScript('OnShow', set_objective_header)
+--ProfessionsRecipeTracker:HookScript('OnShow', set_objective_header)
+hooksecurefunc(ProfessionsRecipeTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, isRecraft)
     local blockID = NegateIf(recipeID, isRecraft);
     local block = Get_Block(self, blockID)
     local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, isRecraft)
     if not block then
         return
-    end   
+    end
 
     if not recipeSchematic then
         return
@@ -205,12 +328,12 @@ hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, is
         blockName = isRecraft and format('再造：%s', blockName) or blockName;
         block:SetHeader(blockName);
     end
-	
+
 
     if not recipeSchematic.reagentSlotSchematics then
         return
-    end    
-   
+    end
+
     for index, line in pairs(block.usedLines or {}) do
         local name
         if type(index)=='number' then
@@ -234,9 +357,9 @@ hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, is
 			        local quantity = ProfessionsUtil.AccumulateReagentsInPossession(reagentSlotSchematic.reagents);
                     local text = format('%s %s', format('%s/%d', quantity, quantityRequired), name)
 
-                    local metQuantity = quantity >= quantityRequired;                    
+                    local metQuantity = quantity >= quantityRequired;
                     local colorStyle = OBJECTIVE_TRACKER_COLOR[metQuantity and "Complete" or "Normal"]
-                
+
                     block:SetStringText(line.Text, text, nil, colorStyle, block.isHighlighted)
                 end
             end
@@ -248,6 +371,15 @@ end)
 
 
 
+
+
+
+
+
+
+
+
+hooksecurefunc(AdventureObjectiveTracker, 'LayoutContents', set_objective_header)
 
 
 

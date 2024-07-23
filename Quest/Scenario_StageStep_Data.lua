@@ -3632,8 +3632,6 @@ local tab={
 
 
 
-
-
 local e= select(2, ...)
 --[[
 [ScenarioID.. x .. OrderIndex]= {Description_lang, Title_lang}
@@ -3644,6 +3642,15 @@ https://wago.tools/db2/ScenarioStep?build=11.0.2.55763&locale=zhCN
 function e.Get_Scenario_Step_Info(scenarioID, stepIndex)
     stepIndex= stepIndex or 1
     stepIndex= stepIndex-1
-    return tab[scenarioID..'x'..stepIndex]
+    local data= tab[scenarioID..'x'..stepIndex]
+    if data then
+        if data[1]=='' then
+            data[1]=nil
+        end
+        if data[2]=='' then
+            data[2]=nil
+        end
+        return data
+    end
 end
    
