@@ -27,40 +27,16 @@ ChatConfigCombatSettings:HookScript('OnShow', function()
 end)
 
 hooksecurefunc('ChatConfig_CreateCheckboxes', function(frame, checkBoxTable, _, title)
-    local checkBoxNameString = frame:GetName().."CheckBox"
-    local checkBoxName, checkBox, check
-    local text
-    local checkBoxFontString
     if ( title ) then
         e.set(_G[frame:GetName().."Title"], title)
     end
-    for index, value in pairs(checkBoxTable) do
-        checkBoxName = checkBoxNameString..index
-        checkBox = _G[checkBoxName]
+    local checkBoxNameString = frame:GetName().."CheckBox"
+    for index, _ in pairs(checkBoxTable) do
+        local checkBoxName = checkBoxNameString..index
+        local checkBox = _G[checkBoxName]
         if checkBox then
-            if ( value.text ) then
-                text = value.text
-                if type(text) == "function" then
-                    text = text()
-                end
-            else
-                text = _G[value.type]
-            end
-            --text= e.strText[text]
-            if text then
-                checkBoxFontString = _G[checkBoxName.."CheckText"]
-                e.set(checkBoxFontString, text)
-                e.set(checkBox.BlankText, text)
-                check = _G[checkBoxName.."Check"]
-                if value.tooltip and e.strText[value.tooltip] then
-                    check.tooltip = e.strText[value.tooltip]
-                end
-                if ( value.maxWidth ) then
-                    if ( checkBoxFontString:GetWidth() > value.maxWidth ) then
-                        check.tooltip = text
-                    end
-                end
-            end
+            e.set(_G[checkBoxName.."CheckText"])
+            e.set(checkBox.BlankText)
         end
     end
 end)
@@ -69,21 +45,9 @@ hooksecurefunc('ChatConfig_UpdateCheckboxes', function(frame)
     if ( not FCF_GetCurrentChatFrame() ) then
         return
     end
-    local checkBoxTable = frame.checkBoxTable
     local checkBoxNameString = frame:GetName().."CheckBox"
-    local checkBox, baseName
-    for index, value in pairs(checkBoxTable) do
-        baseName = checkBoxNameString..index
-        checkBox = _G[baseName.."Check"]
-        if ( checkBox ) then
-            if value.tooltip and e.strText[value.tooltip] then
-                checkBox.tooltip =  e.strText[value.tooltip]
-            end
-            if ( type(value.text) == "function" ) then	--Dynamic text, we should update it
-                local text= value.text()
-                e.set(_G[checkBoxNameString..index.."CheckText"], text)
-            end
-        end
+    for index, _ in pairs(frame.checkBoxTable or {}) do
+        e.set(_G[checkBoxNameString..index.."CheckText"])
     end
 end)
 
@@ -93,59 +57,23 @@ COMBAT_CONFIG_MESSAGESOURCES_TO[1].text = function () return ( UsesGUID("SOURCE"
 
 hooksecurefunc('ChatConfig_CreateTieredCheckboxes', function(frame, checkBoxTable)
     local checkBoxNameString = frame:GetName().."CheckBox"
-    for index, value in pairs(checkBoxTable) do
-        local checkBoxName = checkBoxNameString..index
-        local checkBox = _G[checkBoxNameString..index]
-        if checkBox  then
-            local text
-            if ( value.text ) then
-                text = value.text
-            else
-                text = _G[value.type]
-            end
-            e.set(_G[checkBoxName.."Text"], text)
-            if ( value.subTypes ) then
-                local subCheckBoxNameString = checkBoxName.."_"
-                for k, v in pairs(value.subTypes) do
-                    local subCheckBoxName = subCheckBoxNameString..k
-                    local subCheckBox=_G[subCheckBoxNameString..k]
-                    if e.strText[v.tooltip] then
-                        subCheckBox.tooltip = e.strText[v.tooltip]
-                    end
-                    local subText
-                    if (v.text ) then
-                        subText = v.text
-                    elseif v.type then
-                        subText = _G[v.type]
-                    end
-                    e.set(_G[subCheckBoxName.."Text"], subText)
-                end
-            end
-            if e.strText[value.tooltip] then
-                checkBox.tooltip = e.strText[value.tooltip]
+    for index, value in pairs(checkBoxTable or {}) do
+        e.set(_G[checkBoxNameString..index.."Text"])
+        if ( value.subTypes ) then
+            for k, _ in pairs(value.subTypes) do
+                e.set(_G[checkBoxNameString..index.."_"..k.."Text"])
             end
         end
     end
 end)
 
 hooksecurefunc('ChatConfig_CreateColorSwatches', function(frame, swatchTable, _, title)
-    local nameString = frame:GetName().."Swatch"
-    local swatchName
-    local text
-    frame.swatchTable = swatchTable
     if ( title ) then
         e.set(_G[frame:GetName().."Title"], title)
     end
-    for index, value in pairs(swatchTable) do
-        swatchName = nameString..index
-        if ( _G[swatchName] ) then
-            if ( value.text ) then
-                text = value.text
-            else
-                text = _G[value.type]
-            end
-            e.set(_G[swatchName.."Text"], text)
-        end
+    local nameString = frame:GetName().."Swatch"
+    for index, _ in pairs(swatchTable) do
+        e.set(_G[nameString..index.."Text"])
     end
 end)
 
@@ -256,8 +184,9 @@ end)
 hooksecurefunc('TextToSpeechFrame_UpdateMessageCheckboxes', function(frame)--TextToSpeechFrame.lua
     local checkBoxNameString = frame:GetName().."CheckBox"
     for index in pairs(frame.checkBoxTable or {}) do
-        if _G[checkBoxNameString..index] then
-            e.set(_G[checkBoxNameString..index].text)
+        local check= _G[checkBoxNameString..index]
+        if check then
+            e.set(check.text)
         end
     end
 end)

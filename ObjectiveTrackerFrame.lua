@@ -183,12 +183,12 @@ hooksecurefunc(ScenarioObjectiveTracker, 'LayoutContents', function(self)
     if not self.scenarioID or not self.currentStage then
         return
     end
-    
+
 	local scenarioName, _, _, _, _, _, _, _, _, scenarioType, _, _, scenarioID = C_Scenario.GetInfo()
     local name
 	if scenarioType == LE_SCENARIO_TYPE_CHALLENGE_MODE then
         name= e.Get_Scenario_Name(scenarioID) or e.strText[scenarioName]
-		
+
 	elseif scenarioType == LE_SCENARIO_TYPE_PROVING_GROUNDS or self.ProvingGroundsBlock:IsActive() then
 		name= '试炼场'
 	elseif scenarioType == LE_SCENARIO_TYPE_USE_DUNGEON_DISPLAY then
@@ -197,7 +197,7 @@ hooksecurefunc(ScenarioObjectiveTracker, 'LayoutContents', function(self)
 		name= e.strText[GetZoneText()]
 	else
 		name= e.Get_Scenario_Name(scenarioID) or e.strText[scenarioName]
-	end	
+	end
     if name then
         self.Header.Text:SetText(name)
     end
@@ -225,7 +225,6 @@ hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function
 		    self.Name:SetText(name)
         end
 	end
-	
 end)
 hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'SetupStageTransition', function(self, hasNewStage, scenarioCompleted)
     if self.WidgetContainer:IsShown() then
@@ -268,7 +267,7 @@ ScenarioObjectiveTracker.StageBlock:HookScript('OnEnter', function()
                 if desc then
                     GameTooltip:AddLine('|cnGREEN_FONT_COLOR:'..desc..'|r', nil,nil,nil, true)
                 end
-                
+
             end
         end
         GameTooltip:Show()
