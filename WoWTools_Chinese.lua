@@ -74,7 +74,8 @@ function e.Get_Item_Name(itemID)
     end
 end
 
-function e.Get_Spell_Data()end--法术数据，{'名称', '1', '2', ...}
+function e.Get_Spell_Data()end -- 初始func, 法术数据，{'名称', '1', '2', ...}
+
 function e.Get_Spell_Name(spellID)
     if spellID then
         local data= e.Get_Spell_Data(spellID)
@@ -250,8 +251,133 @@ end
 
 
 
+--  ( ) . % + - * ? [ ^ $
+local ITEM_UPGRADE_TOOLTIP_FORMAT_STRING= ITEM_UPGRADE_TOOLTIP_FORMAT_STRING:gsub(': (.+)', '(.+)')--升级：%s %d/%d
+local ENCHANTED_TOOLTIP_LINE = ENCHANTED_TOOLTIP_LINE:gsub('%%s', '(.+)')--附魔：%s
+local COVENANT_RENOWN_TOAST_REWARD_COMBINER= COVENANT_RENOWN_TOAST_REWARD_COMBINER:gsub('%%s', '(.+)')--%s 和 %s
+local EQUIPMENT_SETS= EQUIPMENT_SETS:match('(.-)'..HEADER_COLON)--"Set di equipaggiamenti: |cFFFFFFFF%s|r"
+if EQUIPMENT_SETS then
+    EQUIPMENT_SETS= EQUIPMENT_SETS..'(.+)'
+end
 
 
+
+
+
+function e.set_text(text)
+    if not text or text==' ' then-- and not text:find('|') then
+        return
+    end
+    text= text:gsub('^  ', '')
+    local text2= e.strText[text]
+    if not text2 then
+
+        local up= text:match(ITEM_UPGRADE_TOOLTIP_FORMAT_STRING)---"升级：%s %d/%d
+        local set2= EQUIPMENT_SETS and text:match(EQUIPMENT_SETS)--"装备配置方案：|cFFFFFFFF%s|r"
+        local ench= text:match(ENCHANTED_TOOLTIP_LINE)
+        local gem1, gem2= text:match(COVENANT_RENOWN_TOAST_REWARD_COMBINER)
+        local str1, str2= text:match('(.-): (.+)')
+        local str3= text:match('%d+ (.+)')
+        local str4= text:match('|c........(.-)|r')
+        local str5= text:match('(.+) %(%d/%d%)')--套装名称 (4/5)
+
+        if text:find('^|c.-|r %(.-%)$') then
+            local a, b= text:match('^|c........(.-)|r %((.-)%)$')
+            local a1=e.strText[a]
+            local b1= e.strText[b]
+            text2= text
+            if a1 then
+                text2= text2:gsub(a, a1)
+            end
+            if b1 then
+                text2= text2:gsub(b, b1)
+            end
+        elseif up then
+            local t= up:match(': (.-) %d')
+            if t and e.strText[t] then
+                text2= '升级'..up:gsub(t, e.strText[t])
+            else
+                text2= '升级'..up
+            end
+
+        elseif set2 then
+            text2= '装备配置方案'..set2
+
+        elseif ench then--附魔：%s
+            local col, str6=  ench:match('(|.-:)(.-)|r')
+            local t= ench:match('(.+) |A') or ench:match(' (.+)')
+            if t then
+                local num= t:match('%d+ (.+)')
+                if num then
+                    t= e.strText[num] or e.strText[num:match(".+ (.+)")]
+                    if t then
+                        ench= ench:gsub(num, t)
+                    end
+                elseif e.strText[t] then
+                    ench= ench:gsub(t, e.strText[t])
+                end
+                text2= '附魔：'..e.cn(ench)
+            elseif col and str6 then
+                text2='附魔：'..col..e.cn(str6)..'|r'
+            else
+                text2='附魔：'..e.cn(ench)
+            end
+        elseif gem1 and gem2 then
+            local find
+            local t1= gem1:match('%d+ (.+)')
+            if t1 then
+                local s1= e.strText[t1:match(".+ (.+)")] or e.strText[t1]
+                if s1 and gem1 then
+                    gem1= gem1:gsub(t1, s1)
+                    find=true
+                end
+            end
+            local t2= gem2:match('%d+ (.+) |A') or gem2:match('%d+ (.+)')--无法找到
+            if t2 then
+                local s1= e.strText[t2] or e.strText[t2:match(".+ (.+)")]
+                if s1 then
+                    gem2= gem2:gsub(t2, s1)
+                    find=true
+                end
+            end
+            if find then
+                text2= gem1..' 和 '..gem2
+            end
+
+        elseif e.strText[str1] then
+            if str2 then
+                str2= e.strText[str2] or str2
+                local t= str2:match(' (.-) %d')
+                if t and e.strText[t] then
+                    str2= str2:gsub(t, e.strText[t])
+                end
+            end
+            text2= e.strText[str1]..': '..(str2 or '')
+
+        elseif str3 then
+            if e.strText[str3] then--+75 Maestria
+                text2= text:gsub(str3, e.strText[str3])
+            else
+
+                local t= e.strText[str3:match(".+ (.+) |A")] or e.strText[str3:match(".+ (.+)")]--+75 Indice di Maestria(大写m)
+                if t then
+                    text2= text:gsub(str3, t)
+                end
+            end
+        elseif str4 then
+            if e.strText[str4] then
+                text2= text:gsub(str4, e.strText[str4])
+            end
+        elseif str5 then
+            if e.strText[str5] then
+                text2= text:gsub(str5, e.strText[str5])
+            end
+        end
+    end
+    if text ~= text2 then
+        return text2
+    end
+end
 
 
 
@@ -270,12 +396,10 @@ local function set(frame, text)
     if not text then
         if frame.GetText then
             text= frame:GetText()
-            p=text
         elseif frame:GetObjectType()=='Button' then
-            local font= frame:GetFontString()
-            if font then
+            frame= frame:GetFontString()
+            if frame then
                 text= font:GetText()
-                p=text
             end
         elseif frame.Text or frame.text or frame.Label then
             local label= frame.Text or frame.text or frame.Label
@@ -291,26 +415,33 @@ local function set(frame, text)
             end
         end
     end
-    local col, name
-    if text then
-        local a, b= text:match('(.-: )(.+)')
-        local c, d= text:match('(.-) %((.+)%)')
-        local num, numName= text:match('(%d+.)(.+)')
-        col, name=text:match('^(|c........)(.+)|r$')
-        text= e.strText[name or text]
-        if not text then
-            if a and b then
-                text= e.cn(a)..e.cn(b)
-            elseif c and d then
-                text= e.cn(c)..' ('..e.cn(d)..')'
-            elseif num and numName then
-                numName= e.strText[numName]
-                if numName then
-                    text= num.. numName
-                end
+
+    text= e.set_text(text)
+    if frame and text then
+        frame:SetText(text)
+    end
+end
+--[[
+    p= text
+    local col, name    
+    local a, b= text:match('(.-: )(.+)')
+    local c, d= text:match('(.-) %((.+)%)')
+    local num, numName= text:match('(%d+.)(.+)')
+    col, name=text:match('^(|c........)(.+)|r$')
+    text= e.strText[name or text]
+    if not text then
+        if a and b then
+            text= e.cn(a)..e.cn(b)
+        elseif c and d then
+            text= e.cn(c)..' ('..e.cn(d)..')'
+        elseif num and numName then
+            numName= e.strText[numName]
+            if numName then
+                text= num.. numName
             end
         end
     end
+    
     if text and text~='' then
         if icon then
             text= icon..text
@@ -323,7 +454,7 @@ local function set(frame, text)
             frame:SetText(text)
         end
     end
-end
+    ]]
 
 function e.set(label, text, affer, setFont)
     if label then

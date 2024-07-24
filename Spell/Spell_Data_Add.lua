@@ -22,6 +22,7 @@ local  tab={-- [', ''},
 [8613]= {'剥皮', '从动物身上获取皮革和毛皮以用于制皮。'},
 [194174]= {'剥皮日志', '可以访问有关剥皮技能、可剥皮的生物类型和专精的信息。还可以管理你的剥皮装备。'},
 [3908]= {'裁缝', '使裁缝可以制造普通的衬衣和布甲。需要从人型生物身上获得的布料。'},
+
 [392396]= {'巨龙群岛布料拾取', '你特别擅长从人型生物身上拾取布料。'},--被动
 [381870]= {'驭龙者之育', '收集到草药或矿石后，使你的精力充能速率提高400%，持续3秒。'},
 [381871]= {'巨龙捕猎', '击败一名敌人后，使你的精力充能速率提高10%，持续3秒。|n|n此效果每10秒只能触发一次。'},
@@ -35,6 +36,8 @@ local  tab={-- [', ''},
 [374990]= {'青铜时光之锁', '在你的位置时间线上标记一个寻路点。使用青铜回溯来回溯到此位置。'},
 [403092]= {'空中急停', '向后扇动飞翼，降低前进速度。'},
 [425782]= {'复苏之风', '发掘尚未使用的潜力，立即恢复1点精力。'},
+[436854]= {'切换飞行模式', '|cff00adef[稳定飞行][驭空术]|r|n切换飞行坐骑的驭空术和稳定飞行模式。如果激活驭空术，不支持驭空术的坐骑将作为地面坐骑。'},
+
 [432257]= {'苦涩传承之路', '传送到|cff00ccff亚贝鲁斯，焰影熔炉|r的入口。'},--Dragonflight https://wago.io/meD8JMW3C
 [432258]= {'熏火梦境之路', '传送到|cff00ccff阿梅达希尔，梦境之愿|r的入口。'},
 [432254]= {'原始囚龙之路', '传送到|cff00ccff化身巨龙牢窟|r的入口。'},
@@ -144,36 +147,24 @@ local  tab={-- [', ''},
 [441749]= {'死亡脚步', '你的移动速度提高35%，且无法被降低到正常速度的100%以下，同时对强制移动效果及击退效果免疫，持续10 秒。'},
 [441759]= {'灵魂变形', '变形为一只仙狐，持续12 秒，向前传送15码距离，且移动速度提高50%。你可以每隔几秒重新激活一次灵魂变形，以便再次传送。'},
 [150544]= {'随机召唤偏好的坐骑', '召唤或解散一个设置为偏好的坐骑，需要能够在当前区域使用。如果你没有任何偏好坐骑，就会从你的所有坐骑中进行选择。'},
+
 }
 
 
 
 
 C_Timer.After(4, function()
-do
-if C_Spell.GetSpellName then
-    for spellID, info in pairs(tab) do
-        local name=info[1] and C_Spell.GetSpellName(spellID)
-        if name then
-            e.strText[name]= info[1]
-        end
-        local desc= info[2] and C_Spell.GetSpellDescription(spellID)
-        if desc then
-            e.strText[desc]= info[2]
-        end
-    end
-else
-    for spellID, info in pairs(tab) do
-        local name=info[1] and GetSpellInfo(spellID)
-        if name then
-            e.strText[name]= info[1]
-        end
-        local desc= info[2] and GetSpellDescription(spellID)
-        if desc then
-            e.strText[desc]= info[2]
+    do
+        for spellID, info in pairs(tab) do
+            local name=info[1] and C_Spell.GetSpellName(spellID)
+            if name then
+                e.strText[name]= info[1]
+            end
+            local desc= info[2] and C_Spell.GetSpellDescription(spellID)
+            if desc then
+                e.strText[desc]= info[2]
+            end
         end
     end
-end
-end
-tab=nil
+    tab=nil
 end)

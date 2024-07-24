@@ -41,116 +41,11 @@ end
 model(PetStableModelScene)]]
 
 
---  ( ) . % + - * ? [ ^ $
-local ITEM_UPGRADE_TOOLTIP_FORMAT_STRING= ITEM_UPGRADE_TOOLTIP_FORMAT_STRING:gsub(': (.+)', '(.+)')--升级：%s %d/%d
-local ENCHANTED_TOOLTIP_LINE = ENCHANTED_TOOLTIP_LINE:gsub('%%s', '(.+)')--附魔：%s
-local COVENANT_RENOWN_TOAST_REWARD_COMBINER= COVENANT_RENOWN_TOAST_REWARD_COMBINER:gsub('%%s', '(.+)')--%s 和 %s
-local EQUIPMENT_SETS= EQUIPMENT_SETS:match('(.-)'..HEADER_COLON)--"Set di equipaggiamenti: |cFFFFFFFF%s|r"
-if EQUIPMENT_SETS then
-    EQUIPMENT_SETS= EQUIPMENT_SETS..'(.+)'
-end
 
 local function get_gameTooltip_text(self)
-    local text= self and self:GetText()
-    if not text or text==' ' then-- and not text:find('|') then
-        return
-    end
-    text= text:gsub('^  ', '')
-    local text2= e.strText[text]
-    if not text2 then
-        local up= text:match(ITEM_UPGRADE_TOOLTIP_FORMAT_STRING)---"升级：%s %d/%d
-        local set2= EQUIPMENT_SETS and text:match(EQUIPMENT_SETS)--"装备配置方案：|cFFFFFFFF%s|r"
-        local ench= text:match(ENCHANTED_TOOLTIP_LINE)
-        local gem1, gem2= text:match(COVENANT_RENOWN_TOAST_REWARD_COMBINER)
-        local str1, str2= text:match('(.-): (.+)')
-        local str3= text:match('%d+ (.+)')
-        local str4= text:match('|c........(.-)|r')
-        local str5= text:match('(.+) %(%d/%d%)')--套装名称 (4/5)
-
-        if up then
-            local t= up:match(': (.-) %d')
-            if t and e.strText[t] then
-                text2= '升级'..up:gsub(t, e.strText[t])
-            else
-                text2= '升级'..up
-            end
-
-        elseif set2 then
-            text2= '装备配置方案'..set2
-
-        elseif ench then--附魔：%s
-            local col, str6=  ench:match('(|.-:)(.-)|r')
-            local t= ench:match('(.+) |A') or ench:match(' (.+)')
-            if t then
-                local num= t:match('%d+ (.+)')
-                if num then
-                    t= e.strText[num] or e.strText[num:match(".+ (.+)")]
-                    if t then
-                        ench= ench:gsub(num, t)
-                    end
-                elseif e.strText[t] then
-                    ench= ench:gsub(t, e.strText[t])
-                end
-                text2= '附魔：'..e.cn(ench)
-            elseif col and str6 then
-                text2='附魔：'..col..e.cn(str6)..'|r'
-            else
-                text2='附魔：'..e.cn(ench)
-            end
-        elseif gem1 and gem2 then
-            local find
-            local t1= gem1:match('%d+ (.+)')
-            if t1 then
-                local s1= e.strText[t1:match(".+ (.+)")] or e.strText[t1]
-                if s1 and gem1 then
-                    gem1= gem1:gsub(t1, s1)
-                    find=true
-                end
-            end
-            local t2= gem2:match('%d+ (.+) |A') or gem2:match('%d+ (.+)')--无法找到
-            if t2 then
-                local s1= e.strText[t2] or e.strText[t2:match(".+ (.+)")]
-                if s1 then
-                    gem2= gem2:gsub(t2, s1)
-                    find=true
-                end
-            end
-            if find then
-                text2= gem1..' 和 '..gem2
-            end
-
-        elseif e.strText[str1] then
-            if str2 then
-                str2= e.strText[str2] or str2
-                local t= str2:match(' (.-) %d')
-                if t and e.strText[t] then
-                    str2= str2:gsub(t, e.strText[t])
-                end
-            end
-            text2= e.strText[str1]..': '..(str2 or '')
-
-        elseif str3 then
-            if e.strText[str3] then--+75 Maestria
-                text2= text:gsub(str3, e.strText[str3])
-            else
-
-                local t= e.strText[str3:match(".+ (.+) |A")] or e.strText[str3:match(".+ (.+)")]--+75 Indice di Maestria(大写m)
-                if t then
-                    text2= text:gsub(str3, t)
-                end
-            end
-        elseif str4 then
-            if e.strText[str4] then
-                text2= text:gsub(str4, e.strText[str4])
-            end
-        elseif str5 then
-            if e.strText[str5] then
-                text2= text:gsub(str5, e.strText[str5])
-            end
-        end
-    end
-    if text2 then
-        self:SetText(text2)
+    local text= self and e.set_text(self:GetText())    
+    if text then
+        self:SetText(text)
         self:SetTextColor(self:GetTextColor())
     end
 end
@@ -289,7 +184,7 @@ end]]
 local function set_item(tooltip, data)
     local info= e.Get_Item_Data(data.id)
 
-    if not info or not tooltip:IsVisible() then
+    if not info then
         return
     end
 
@@ -302,16 +197,11 @@ local function set_item(tooltip, data)
             end
         end
     else
-        local add
         for index, text in pairs(info) do
-            if text~=' ' then
+            if text~='' then
                 if index==1 and tooltip.TextLeft1 then
                     tooltip.TextLeft1:SetText(text)
                 else
-                    if not add then
-                        tooltip:AddLine(' ')
-                        add=true
-                    end
                     tooltip:AddLine(text, nil,nil,nil, true)
                 end
             end
@@ -321,49 +211,41 @@ end
 
 local function set_spell(tooltip, data)
     local info = e.Get_Spell_Data(data.id)
-    if not info or not tooltip:IsVisible() then
+    if not info then
         return
     end
+    
+    local name = e.ReplaceText(info[1])
+    if name then
+        tooltip.TextLeft1:SetText(info[1])
+    end
 
-    local add
-    for index, text in pairs(info) do
-        if text~=' ' then
-            if index==1 and tooltip.TextLeft1 then
-                tooltip.TextLeft1:SetText(e.ReplaceText(text))
-            else
-                if not add then
-                    tooltip:AddLine(' ')
-                    add=true
-                end
-                tooltip:AddLine(e.ReplaceText(text), nil,nil,nil, true)
-            end
+    local num= #info
+    if num>1 then
+        local desc= e.ReplaceText(info[num])
+        if desc then
+            tooltip:AddLine(' ')
+            tooltip:AddLine(desc, nil,nil,nil, true)
         end
     end
 end
 
 
 --排除，插件 WoWeuCN_Tooltips
-if GetItemData then
-    set_item= function() end
-end
-if GetSpellData then
-    set_spell= function() end
-end
+if not GetItemData then
+    TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tooltip, data)
+        set_item(tooltip, data)
 
-
-
---TooltipDataRules.lua
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tooltip, data)
-    set_item(tooltip, data)
-
-    if C_Heirloom.IsItemHeirloom(data.id) then
-        local source= e.Get_Heirloom_Source(data.id)
-        if source and not C_Heirloom.PlayerHasHeirloom(data.id) then
-            tooltip:AddLine(source, nil,nil,nil, true)
-            --tooltip:Show()
+        if C_Heirloom.IsItemHeirloom(data.id) then
+            local source= e.Get_Heirloom_Source(data.id)
+            if source and not C_Heirloom.PlayerHasHeirloom(data.id) then
+                tooltip:AddLine(source, nil,nil,nil, true)
+                --tooltip:Show()
+            end
         end
-    end
-end)
+    end)
+end
+
 
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(tooltip, data)
     set_item(tooltip, data)
@@ -376,9 +258,12 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(toolt
     end
 end)
 
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip, data)
-    set_spell(tooltip, data)
-end)
+
+if not GetSpellData then
+    TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip, data)
+        set_spell(tooltip, data)
+    end)
+end
 
 
 

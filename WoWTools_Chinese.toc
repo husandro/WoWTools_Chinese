@@ -90,14 +90,11 @@ Map\Data_UiMapGroupMember.lua
 
 ##收藏
 Collection\Collection.lua
-Collection\Mount.lua
 Collection\Mount.Data.lua
-Collection\Pet.lua
 Collection\Pet_Data_Ability.lua
 Collection\Pet_Data_Description.lua
 Collection\Toy_Data.lua
 Collection\Heirloom_Data.lua
-Collection\Wardrobe.lua
 Collection\DressUpFrame.lua
 
 ##专业
@@ -114,8 +111,7 @@ Professions\ProfessionsBookFrame.lua
 ##法术
 Spell\Spell_Data_Flyout.lua
 Spell\PlayerSpellsFrame.lua
-
-##专精
+Spell\Spell_Data_Add.lua
 Spell\Spell_Data_Specialization.lua
 
 ##物品
@@ -140,7 +136,7 @@ LFG\RaidFinderQueueFrame.lua
 LFG\LFGListFrame.lua
 LFG\LFGFrame.lua
 ## PvP查找器
-LFG\PVPQueueFrame.lua
+LFG\PVP.lua
 
 
 ##任务

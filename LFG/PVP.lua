@@ -351,6 +351,28 @@ local function Init_HonorFrame()
         GameTooltip_AddColoredLine(GameTooltip, string.format('%d / %d', currentHonor, maxHonor), HIGHLIGHT_FONT_COLOR)
         GameTooltip:Show()
     end)
+
+    --随机战场，指定
+    hooksecurefunc('HonorFrame_InitSpecificButton', function(self, data)
+        e.set(self.NameText, data.localizedName)
+        e.set(self.InfoText, data.gameType)
+        if self.set_enter then
+            return
+        end
+        self.set_enter=true
+        self:HookScript('OnEnter', function(frame)
+            local info= brawlTab[frame.bgID] or {}
+            if info[2] or info[3] then
+                GameTooltip:AddLine(' ')
+                GameTooltip:AddLine(info[2])
+                GameTooltip:AddLine(info[3])
+                GameTooltip:Show()
+            end
+        end)
+    end)
+    hooksecurefunc(PVPSpecialEventButtonMixin, 'OnEnter', function()
+        print('PVPSpecialEventButtonMixin:OnEnter()')
+    end)
 end
 
 

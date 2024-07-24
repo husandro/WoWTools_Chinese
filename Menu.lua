@@ -1,22 +1,18 @@
---Blizzard_Menu
 
 local e= select(2, ...)
-if not DropdownTextMixin then
-    return
-end
+--Blizzard_Menu
 
 
 
 hooksecurefunc(DropdownTextMixin, 'OnLoad', function(self)
-    e.set(self.text)
+    e.hookLabel(self.Text)
 end)
 
+hooksecurefunc(DropdownSelectionTextMixin, 'OverrideText', function(self, text)
+    e.set(self.Text, text)
+end)
 hooksecurefunc(DropdownTextMixin, 'UpdateText', function(self)
-    local text= e.strText[self:GetUpdateText()]
-    if not text then
-        return
-    end
-	self.Text:SetText(text)
+	e.set(self.Text)
 	if self.resizeToText then
         local newWidth = self.Text:GetUnboundedStringWidth();
         if self.resizeToTextPadding then
@@ -34,7 +30,7 @@ end)
 
 
 local function set_fontString(frame)
-    C_Timer.After(0.05, function()
+    C_Timer.After(0.01, function()
         e.set(frame.fontString)
     end)
 end
@@ -48,3 +44,11 @@ hooksecurefunc(MenuVariants, 'CreateRadio', function(_, frame)
 end)
 
 
+hooksecurefunc('GetWowStyle1ArrowButtonState', function(btn)
+    e.hookLabel(btn.Text)
+end)
+hooksecurefunc(DropdownSelectionTextMixin, 'OnShow', function(btn)
+    print('DropdownSelectionTextMixin')
+end)
+
+--GenerateMenu

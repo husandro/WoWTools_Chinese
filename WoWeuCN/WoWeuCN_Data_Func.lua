@@ -55,7 +55,7 @@ else
         ["码射程"] = "Â",
         ["秒"] = "Ã",
         ["冷却时间"] = "Ä",
-        ["|cffffd100"] = "Å",
+        ["|cffff00ff"] = "Å",
         ["|r|cff7f7f7f"] = "Æ",
         ["|r"] = "Ç",
         ["近战范围"] = "È",
@@ -77,7 +77,7 @@ else
         ["点流血伤害"] = "Ø"
     }
     function e.ReplaceText(s)
-        if s then
+        if s and s~='' then
             for origin,new in pairs(replacement) do
                 s = string.gsub(s, new, origin)
             end

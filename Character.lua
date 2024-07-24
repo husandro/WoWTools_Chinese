@@ -37,6 +37,8 @@ hooksecurefunc('PaperDollEquipmentManagerPane_InitButton', function(button, elem
 end)
 
 
+e.hookLabel(CharacterFrameTitleText)
+
 CharacterFrameTab1:SetText('角色')
 CharacterFrameTab1:HookScript('OnEnter', function()
     GameTooltip:SetText(MicroButtonTooltipText('角色信息', "TOGGLECHARACTER0"), 1.0,1.0,1.0 )
