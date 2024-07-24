@@ -293,8 +293,12 @@ local function set(frame, text)
     end
     local col, name
     if text then
+        local a, b= text:match('(.-: )(.+)')
         col, name=text:match('^(|c........)(.+)|r$')
         text= e.strText[name or text]
+        if not text and a and b then
+            text= e.cn(a)..e.cn(b)
+        end
     end
     if text and text~='' then
         if col then
@@ -363,7 +367,7 @@ end
 end]]
 
 function e.hookButton(btn, setFont)
-    if btn and btn.SetText then
+    if btn and btn.SetText and not btn.hook_chines then
         if setFont then
             e.font(btn:GetFontString())
         end
@@ -371,22 +375,20 @@ function e.hookButton(btn, setFont)
         if label then
             e.set(labe)
         end
-        if not btn.hook_chines then
-            hooksecurefunc(btn, 'SetText', function(self, name)
-                if name and name~='' then
-                    local cnName= e.strText[name]
-                    if cnName then
-                        self:SetText(cnName)
-                    end
+        hooksecurefunc(btn, 'SetText', function(self, name)
+            if name and name~='' then
+                local cnName= e.strText[name]
+                if cnName then
+                    self:SetText(cnName)
                 end
-            end)
-            btn.hook_chines=true
-        end
+            end
+        end)
+        btn.hook_chines=true
     end
 end
 
 function e.region(frame, setFont, isHook, notAfter)
-    if frame then
+    if frame and not frame.region_chinese then
         if isHook then
             for _, region in pairs({frame:GetRegions()}) do
                 if region:GetObjectType()=='FontString' then
@@ -411,6 +413,7 @@ function e.region(frame, setFont, isHook, notAfter)
                 end)
             end
         end
+        frame.region_chinese=true
     end
 end
 

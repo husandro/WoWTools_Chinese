@@ -32,13 +32,19 @@ hooksecurefunc(DropdownTextMixin, 'UpdateText', function(self)
     end
 end)
 
-hooksecurefunc(MenuVariants, 'CreateFontString', function(frame)
-    for _, region in pairs({frame:GetRegions()}) do
-        e.hookLabel(region)
-    end
+
+local function set_fontString(frame)
+    C_Timer.After(0.05, function()
+        e.set(frame.fontString)
+    end)
+end
+
+hooksecurefunc(MenuVariants, 'CreateFontString', set_fontString)
+hooksecurefunc(MenuVariants, 'CreateCheckbox', function(_, frame)
+    set_fontString(frame)
 end)
-
-
-
+hooksecurefunc(MenuVariants, 'CreateRadio', function(_, frame)
+    set_fontString(frame)
+end)
 
 

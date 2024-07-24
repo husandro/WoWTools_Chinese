@@ -18,27 +18,12 @@ hooksecurefunc('AddonList_Update', function()--AddonList.lua
 end)
 AddonListCancelButton:SetText('取消')
 hooksecurefunc('AddonList_InitButton', function(entry, addonIndex)
-    local security = select(6, C_AddOns.GetAddOnInfo(addonIndex))
-    -- Get the character from the current list (nil is all characters)
-    local character = UIDropDownMenu_GetSelectedValue(AddonCharacterDropDown)
-    if ( character == true ) then
-        character = nil
+    if not entry then
+        return
     end
-    local loadable, reason = C_AddOns.IsAddOnLoadable(addonIndex, character)
-    local checkboxState = C_AddOns.GetAddOnEnableState(addonIndex, character)
-    if (checkboxState == Enum.AddOnEnableState.Some ) then
-        entry.Enabled.tooltip = '该插件只对某些角色启用。'
-    end
-    local name= _G["ADDON_"..security]
-    if name then
-        local text2= e.strText[name]
-        if text2 then
-            entry.Security.tooltip = text2
-        end
-        if ( not loadable and reason ) then
-            e.set(entry.Status, name)
-        end
-    end
+    entry.Enabled.tooltip= e.cn(entry.Enabled.tooltip)
+    e.hookLabel(entry.Status)
+    entry.Security.tooltip= e.cn(entry.Security.tooltip)
 end)
 
 C_Timer.After(2, function()

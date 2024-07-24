@@ -20988,25 +20988,6 @@ for name, text in pairs(tab) do
         e.strText[name]= text
     end
 end
-
-
-e.strText[STAT_CRITICAL_STRIKE] = "爆击"
-e.strText[SPEED] = "速度"
-e.strText[SPLASH_BATTLEFORAZEROTH_8_1_0_2_RIGHT_TITLE] = "达萨罗之战"
-e.strText[EXPANSION_NAME2] = "巫妖王之怒"
-e.strText[GLYPHS] = "雕文"
-e.strText[AUCTION_HOUSE_DROPDOWN_REMOVE_FAVORITE] = "从偏好中移除"
-e.strText[AUCTION_HOUSE_DROPDOWN_SET_FAVORITE] = "设置为偏好"
-e.strText[TOOLTIP_BATTLE_PET] = "战斗宠物"
-e.strText[COMBAT_LOG] = "战斗记录"
-e.strText[GRAPHICS_HEADER] = "图形"
-e.strText[ADDON_DISABLED] = "禁用"
-e.strText[EMOTE67_CMD1] = "/不"    
-e.strText[GRAPHICS_LABEL] = "图形"
-e.strText[SPELLBOOK]= "法术书"
-e.strText[format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_ONLINE, FRIENDS_LIST_AVAILABLE)] = "|TInterface\\FriendsFrame\\StatusIcon-Online:16:16|t 有空"
-e.strText[format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_AFK, FRIENDS_LIST_AWAY)] = "|TInterface\\FriendsFrame\\StatusIcon-Away:16:16|t 离开"
-e.strText[format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_DND, FRIENDS_LIST_BUSY)] = "|TInterface\\FriendsFrame\\StatusIcon-DnD:16:16|t 忙碌"
-
 end        
 tab=nil
+

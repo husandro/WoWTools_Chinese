@@ -168,4 +168,6 @@ WoWeuCN\EncounterData_Add.lua
 WoWeuCN\WoWeuCN_Data_Func.lua
 
 
+##放最后
+GlobalStrings_Add.lua
 

@@ -1,4 +1,4 @@
-local id, e= ...
+local e= select(2, ...)
 
 --UIDropDownMenu.lua
 --[[
