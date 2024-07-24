@@ -120,6 +120,7 @@ end
 
 
 local function Init()
+    e.set(EncounterJournalMonthlyActivitiesFrame.RestrictedText)
     EncounterJournalMonthlyActivitiesTab:SetText('旅行者日志')
     EncounterJournalMonthlyActivitiesTab:SetScript('OnEnter', function()
         if not C_PlayerInfo.IsTravelersLogAvailable() then

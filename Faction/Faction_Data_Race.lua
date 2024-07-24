@@ -1,4 +1,3 @@
----@diagnostic disable: undefined-field
 local tab= {
 
 
@@ -77,6 +76,7 @@ local e= select(2, ...)
 https://wago.tools/db2/ChrRaces?locale=zhCN
 11.0.2.55763
 ]]
+local e= select(2, ...)
 do
 for raceID, data in pairs(tab) do
     local info= C_AlliedRaces.GetRaceInfoByID(raceID) or C_CreatureInfo.GetRaceInfo(raceID)

@@ -56,6 +56,7 @@ https://wago.tools/db2/ChrSpecialization?locale=zhCN
 11.0.2.55763
 ]]
 
+local e= select(2, ...)
 local sex= UnitSex('player')
 do
 for specID, data in pairs(tab) do
