@@ -294,16 +294,31 @@ local function set(frame, text)
     local col, name
     if text then
         local a, b= text:match('(.-: )(.+)')
+        local c, d= text:match('(.-) %((.+)%)')
+        local num, numName= text:match('(%d+.)(.+)')
         col, name=text:match('^(|c........)(.+)|r$')
         text= e.strText[name or text]
-        if not text and a and b then
-            text= e.cn(a)..e.cn(b)
+        if not text then
+            if a and b then
+                text= e.cn(a)..e.cn(b)
+            elseif c and d then
+                text= e.cn(c)..' ('..e.cn(d)..')'
+            elseif num and numName then
+                numName= e.strText[numName]
+                if numName then
+                    text= num.. numName
+                end
+            end
         end
     end
     if text and text~='' then
+        if icon then
+            text= icon..text
+        end
         if col then
             text= col..text..'|r'
         end
+
         if p~=text then
             frame:SetText(text)
         end

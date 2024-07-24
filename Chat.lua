@@ -1,20 +1,6 @@
 local e= select(2, ...)
 
 
-
-
-
-
-
-ChatConfigChannelSettingsLeftColorHeader:SetText('颜色')
-
---[[COMBAT_CONFIG_TABS[1].text= '信息来源'--ChatConfigFrame.lua
-COMBAT_CONFIG_TABS[2].text= '信息类型'
-COMBAT_CONFIG_TABS[3].text= '颜色'
-COMBAT_CONFIG_TABS[4].text= '格式'
-COMBAT_CONFIG_TABS[5].text= '设置']]
-
-
 ChatConfigCombatSettings:HookScript('OnShow', function()
     for index, value in pairs(COMBAT_CONFIG_TABS) do--ChatConfigCombat_OnLoad()
         local tab = _G[CHAT_CONFIG_COMBAT_TAB_NAME..index]
@@ -22,32 +8,7 @@ ChatConfigCombatSettings:HookScript('OnShow', function()
             e.set(tab.Text, value.text)
             PanelTemplates_TabResize(tab, 0)
         end
-        
-    end
-end)
 
-hooksecurefunc('ChatConfig_CreateCheckboxes', function(frame, checkBoxTable, _, title)
-    if ( title ) then
-        e.set(_G[frame:GetName().."Title"], title)
-    end
-    local checkBoxNameString = frame:GetName().."CheckBox"
-    for index, _ in pairs(checkBoxTable) do
-        local checkBoxName = checkBoxNameString..index
-        local checkBox = _G[checkBoxName]
-        if checkBox then
-            e.set(_G[checkBoxName.."CheckText"])
-            e.set(checkBox.BlankText)
-        end
-    end
-end)
-
-hooksecurefunc('ChatConfig_UpdateCheckboxes', function(frame)
-    if ( not FCF_GetCurrentChatFrame() ) then
-        return
-    end
-    local checkBoxNameString = frame:GetName().."CheckBox"
-    for index, _ in pairs(frame.checkBoxTable or {}) do
-        e.set(_G[checkBoxNameString..index.."CheckText"])
     end
 end)
 
@@ -55,33 +16,78 @@ COMBAT_CONFIG_MESSAGESOURCES_BY[1].text = function () return ( UsesGUID("SOURCE"
 COMBAT_CONFIG_MESSAGESOURCES_TO[1].text = function () return ( UsesGUID("SOURCE") and '自定义单位' or '我') end
 
 
-hooksecurefunc('ChatConfig_CreateTieredCheckboxes', function(frame, checkBoxTable)
-    local checkBoxNameString = frame:GetName().."CheckBox"
-    for index, value in pairs(checkBoxTable or {}) do
-        e.set(_G[checkBoxNameString..index.."Text"])
+local function set_Checkboxes(frame)
+    if not FCF_GetCurrentChatFrame() then
+        return
+    end
+    local name= frame:GetName()
+    e.set(_G[name.."Title"])
+    e.set(_G[name.."ColorHeader"])
+    
+    local check = name.."Checkbox"
+	for index in pairs(frame.checkBoxTable or {}) do
+		local checkBoxName = check..index
+        e.set(_G[checkBoxName.."CheckText"])
+        if _G[checkBoxName] then
+		    e.set(_G[checkBoxName].BlankText)
+        end
+	end
+end
+hooksecurefunc('ChatConfig_CreateCheckboxes', set_Checkboxes)
+hooksecurefunc('ChatConfig_UpdateCheckboxes', set_Checkboxes)
+
+
+local function set_TieredCheckboxes(frame)
+    if not FCF_GetCurrentChatFrame() then
+        return
+    end
+    local checkBoxNameString = frame:GetName().."Checkbox"
+	local checkBoxName, subCheckboxName, subCheckboxNameString
+	for index, value in ipairs(frame.checkBoxTable or {}) do
+		checkBoxName = checkBoxNameString..index
+        e.set(_G[checkBoxName.."Text"])
         if ( value.subTypes ) then
-            for k, _ in pairs(value.subTypes) do
-                e.set(_G[checkBoxNameString..index.."_"..k.."Text"])
+            subCheckboxNameString = checkBoxName.."_"
+            for k, v in ipairs(value.subTypes) do
+                subCheckboxName = subCheckboxNameString..k
+                e.set(_G[subCheckboxName.."Text"])
             end
         end
-    end
-end)
 
-hooksecurefunc('ChatConfig_CreateColorSwatches', function(frame, swatchTable, _, title)
-    if ( title ) then
-        e.set(_G[frame:GetName().."Title"], title)
+	end
+end
+hooksecurefunc('ChatConfig_CreateTieredCheckboxes', set_TieredCheckboxes)
+hooksecurefunc('ChatConfig_UpdateTieredCheckboxes', set_TieredCheckboxes)
+
+local function set_ColorSwatches(frame)
+    if not frame or not frame:IsVisible() then
+        return
     end
-    local nameString = frame:GetName().."Swatch"
-    for index, _ in pairs(swatchTable) do
+    local frameName= frame:GetName()
+    e.set(_G[frameName.."Title"])
+    local nameString = frameName.."Swatch"
+    for index, _ in pairs(frame.swatchTable or {}) do
         e.set(_G[nameString..index.."Text"])
     end
+end
+hooksecurefunc('ChatConfig_CreateColorSwatches', set_ColorSwatches)
+hooksecurefunc('ChatConfig_UpdateSwatches', set_ColorSwatches)
+
+
+hooksecurefunc('CombatConfig_Colorize_Update', function()
+    if ( not CHATCONFIG_SELECTED_FILTER.settings ) then
+		return
+	end
+    e.set(CombatConfigColorsExampleString1)    
+    e.set(CombatConfigColorsExampleString2)
+end)
+hooksecurefunc('CombatConfig_Formatting_Update', function()
+    e.set(CombatConfigFormattingExampleString1)
+	e.set(CombatConfigFormattingExampleString2)
 end)
 
-
-hooksecurefunc('FCF_SetWindowName', function(frame, name)--FloatingChatFrame.lua
-    local tab = _G[frame:GetName().."Tab"]
-    e.set(tab, name)
-    PanelTemplates_TabResize(tab, tab.sizePadding or 0)
+hooksecurefunc('ChatConfigCombat_InitButton', function(button)
+    e.set(button.NormalText)
 end)
 
 hooksecurefunc(ChatWindowTabMixin, 'SetChatWindowIndex', function(self, chatWindowIndex)
@@ -96,6 +102,61 @@ hooksecurefunc(ChatWindowTabMixin, 'SetChatWindowIndex', function(self, chatWind
         self.Text:SetText(text)
     end
 end)
+
+
+
+
+
+hooksecurefunc('TextToSpeechFrame_UpdateMessageCheckboxes', function(frame)--TextToSpeechFrame.lua
+    local checkBoxNameString = frame:GetName().."CheckBox"
+    for index in pairs(frame.checkBoxTable or {}) do
+        local check= _G[checkBoxNameString..index]
+        if check then
+            e.set(check.text)
+        end
+    end
+end)
+TextToSpeechCharacterSpecificButtonText:SetText('角色专用设置')
+
+
+hooksecurefunc('ChatConfigCategoryFrame_Refresh', function()--ChatConfigFrame.lua
+    local currentChatFrame = FCF_GetCurrentChatFrame()
+    if  CURRENT_CHAT_FRAME_ID == VOICE_WINDOW_ID then
+        ChatConfigFrame.Header:Setup('文字转语音选项')
+    else
+        ChatConfigFrame.Header:Setup(currentChatFrame ~= nil and format('%s设置', e.strText[currentChatFrame.name] or currentChatFrame.name) or "")
+    end
+end)
+
+hooksecurefunc('FCF_SetWindowName', function(frame, name)--FloatingChatFrame.lua
+    local tab = _G[frame:GetName().."Tab"]
+    e.set(tab, name)
+    PanelTemplates_TabResize(tab, tab.sizePadding or 0)
+end)
+
+
+
+for i=1, 7 do
+    e.set(_G['ChatConfigCategoryFrameButton'..i])
+end
+
+local channelsWithTtsName =
+{
+	LOOT = true,
+	MONEY = true,
+}
+hooksecurefunc('TextToSpeechFrame_CreateCheckboxes', function(frame)
+    local checkBoxNameString = frame:GetName().."Checkbox"
+	local checkBoxName, checkBox
+	local checkBoxFontString
+	for index, value in pairs(frame.checkBoxTable or {}) do
+		checkBoxName = checkBoxNameString..index
+		checkBox = _G[checkBoxName]
+        checkBoxFontString = checkBox.text;
+        checkBoxFontString:SetText((channelsWithTtsName[value] and e.cn(_G[value.."_TTS_LABEL"]) or e.cn(_G[value])) or value)
+	end
+end)
+
 
 
 CombatConfigColorsExampleTitle:SetText('范例文字：')
@@ -113,41 +174,11 @@ CombatConfigFormattingItemNamesText:SetText('物品名')
 CombatConfigFormattingItemNames.tooltip= '在物品名称外显示括号。'
 CombatConfigFormattingFullTextText:SetText('使用详细模式')
 CombatConfigFormattingItemNames.tooltip= '整句显示战斗记录信息。'
-
-
-
-
-
-
 CombatConfigSettingsShowQuickButtonText:SetText('显示快捷按钮')
 CombatConfigSettingsShowQuickButton.tooltip= '在聊天窗口中放置一个该过滤条件的快捷方式。'
 CombatConfigSettingsSoloText:SetText('独身')
 CombatConfigSettingsPartyText:SetText('小队')
 CombatConfigSettingsRaidText:SetText('团队')
-
-for i=1, 7 do
-    local btn=_G['ChatConfigCategoryFrameButton'..i]
-    if btn then
-        local text2= btn:GetText()
-        if text2==CHAT then
-            btn:SetText('聊天')
-        elseif text2==CHANNELS then
-            btn:SetText('频道')
-        elseif text2==OTHER then
-            btn:SetText('其它')
-        elseif text2==COMBAT then
-            btn:SetText('战斗')
-        elseif text2==SETTINGS then
-            btn:SetText('设置')
-        elseif text2== UNIT_COLORS then
-            btn:SetText('"单位颜色：')
-        elseif text2== COLORIZE then
-            btn:SetText('彩色标记：')
-        elseif text2== HIGHLIGHTING then
-            btn:SetText('高亮显示：')
-        end
-    end
-end
 
 ChatConfigFrameDefaultButton:SetText('聊天默认')
 ChatConfigFrameRedockButton:SetText('重置聊天窗口位置')
@@ -181,28 +212,6 @@ TextToSpeechButton:HookScript('OnEnter', function()--TextToSpeech.lua
     GameTooltip:Show()
 end)
 
-hooksecurefunc('TextToSpeechFrame_UpdateMessageCheckboxes', function(frame)--TextToSpeechFrame.lua
-    local checkBoxNameString = frame:GetName().."CheckBox"
-    for index in pairs(frame.checkBoxTable or {}) do
-        local check= _G[checkBoxNameString..index]
-        if check then
-            e.set(check.text)
-        end
-    end
-end)
-TextToSpeechCharacterSpecificButtonText:SetText('角色专用设置')
-
-hooksecurefunc('ChatConfigCategoryFrame_Refresh', function()--ChatConfigFrame.lua
-    local currentChatFrame = FCF_GetCurrentChatFrame()
-    if  CURRENT_CHAT_FRAME_ID == VOICE_WINDOW_ID then
-        ChatConfigFrame.Header:Setup('文字转语音选项')
-    else
-        ChatConfigFrame.Header:Setup(currentChatFrame ~= nil and format('%s设置', e.strText[currentChatFrame.name] or currentChatFrame.name) or "")
-    end
-end)
-
-
-
 ChannelFrameTitleText:SetText('聊天频道')
 ChannelFrame.NewButton:SetText('添加')
 ChannelFrame.SettingsButton:SetText('设置')
@@ -214,9 +223,6 @@ CreateChannelPopup.OKButton:SetText('确定')
 CreateChannelPopup.CancelButton:SetText('取消')
 
 
-C_Timer.After(2, function()
-    e.region(CombatConfigSettingsNameEditBox)--过滤名称
-end)
 
 
 
@@ -229,3 +235,19 @@ end)
 ChatFrameChannelButton:SetTooltipFunction(function()--ChannelFrameButtonMixin.lua
     return MicroButtonTooltipText('聊天频道', "TOGGLECHATTAB")
 end)
+
+e.set(CombatConfigColorsColorizeUnitNameCheckText)
+e.set(CombatConfigColorsColorizeSpellNamesCheckText)
+e.set(CombatConfigColorsColorizeSpellNamesSchoolColoringText)
+e.set(CombatConfigColorsColorizeDamageNumberCheckText)
+e.set(CombatConfigColorsColorizeDamageNumberSchoolColoringText)
+e.set(CombatConfigColorsColorizeDamageSchoolCheckText)
+e.set(CombatConfigColorsColorizeEntireLineCheckText)
+e.set(CombatConfigColorsColorizeEntireLineBySourceText)
+e.set(CombatConfigColorsColorizeEntireLineByTargetText)
+
+e.set(CombatConfigColorsHighlightingTitle)
+e.set(CombatConfigColorsHighlightingLineText)
+e.set(CombatConfigColorsHighlightingAbilityText)
+e.set(CombatConfigColorsHighlightingDamageText)
+e.set(CombatConfigColorsHighlightingSchoolText)
