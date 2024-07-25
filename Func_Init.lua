@@ -57,6 +57,7 @@ e.set(ReagentBankFrameUnlockInfoPurchaseButton)
 e.set(ReagentBankFrameUnlockInfoTitle)
 e.set(ReagentBankFrameUnlockInfoText)
 e.set(AccountBankPanel.LockPrompt.PromptText)
+e.set(ReagentBankFrameUnlockInfoTabCost)
 
 BANK_PANELS[2].SetTitle=function() BankFrame:SetTitle('材料银行') end
 if ReagentBankFrame.DespositButton:GetText()~='' then
