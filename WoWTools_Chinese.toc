@@ -17,7 +17,7 @@ WoWTools_Chinese.lua
 ##字符, 常用
 GlobalStrings.lua
 
-
+Menu.lua
 Func_Init.lua
 Func_Event.lua
 
@@ -30,7 +30,6 @@ Dialogs.lua
 NavBar.lua
 GameTooltip.lua
 UIDropDownMenu.lua
-Menu.lua
 AddonList.lua
 FriendsFrame.lua
 QuickKeybindFrame.lua
@@ -95,7 +94,7 @@ Collection\Pet_Data_Ability.lua
 Collection\Pet_Data_Description.lua
 Collection\Toy_Data.lua
 Collection\Heirloom_Data.lua
-Collection\DressUpFrame.lua
+
 
 ##专业
 Professions\Professions_Data_SkillLineAbility.lua

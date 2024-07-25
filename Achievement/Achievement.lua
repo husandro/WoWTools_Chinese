@@ -29,7 +29,6 @@ local function Init()
     AchievementFrameSummaryAchievementsHeaderTitle:SetText('近期成就')
     AchievementFrameSummaryCategoriesHeaderTitle:SetText('进展总览')
     e.set(AchievementFrameSummaryCategoriesStatusBarTitle)
-    e.set(AchievementFrameFilterDropDownText)--全部，已获得，未完成
 
     --标题
     AchievementFrame.Header.Title:SetText('成就点数')

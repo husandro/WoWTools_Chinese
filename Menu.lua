@@ -5,11 +5,7 @@ local e= select(2, ...)
 
 
 hooksecurefunc(DropdownTextMixin, 'OnLoad', function(self)
-    e.hookLabel(self.Text)
-end)
-
-hooksecurefunc(DropdownSelectionTextMixin, 'OverrideText', function(self, text)
-    e.set(self.Text, text)
+    e.set(self.Text)
 end)
 hooksecurefunc(DropdownTextMixin, 'UpdateText', function(self)
 	e.set(self.Text)
@@ -29,6 +25,19 @@ hooksecurefunc(DropdownTextMixin, 'UpdateText', function(self)
 end)
 
 
+hooksecurefunc(DropdownSelectionTextMixin, 'OverrideText', function(self)
+    e.set(self.Text)
+end)
+hooksecurefunc(DropdownSelectionTextMixin, 'UpdateToMenuSelections', function(self)
+    e.set(self.Text)
+end)
+
+hooksecurefunc(DropdownButtonMixin, 'SetupMenu', function(self)
+    e.hookLabel(self.Text)
+end)
+
+
+
 local function set_fontString(frame)
     C_Timer.After(0.01, function()
         e.set(frame.fontString)
@@ -44,11 +53,7 @@ hooksecurefunc(MenuVariants, 'CreateRadio', function(_, frame)
 end)
 
 
-hooksecurefunc('GetWowStyle1ArrowButtonState', function(btn)
-    e.hookLabel(btn.Text)
-end)
-hooksecurefunc(DropdownSelectionTextMixin, 'OnShow', function(btn)
-    print('DropdownSelectionTextMixin')
+hooksecurefunc('GetWowStyle1ArrowButtonState', function(self)
+    e.set(self.Text)
 end)
 
---GenerateMenu
