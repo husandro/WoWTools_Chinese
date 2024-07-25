@@ -17,8 +17,8 @@ end)
 
 
 
---e.set(LFDQueueFrameTypeDropdownName)
---e.set(RaidFinderQueueFrameSelectionDropdownName)
+e.set(LFDQueueFrameTypeDropdownName)
+e.set(RaidFinderQueueFrameSelectionDropdownName)
 
 
 

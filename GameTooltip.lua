@@ -308,6 +308,26 @@ end
 
 
 
+--Blizzard_FrameXML/SharedPetBattleTemplates.lua
+--战斗宠物，技能 SharedPetBattleTemplates.lua
+hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilityInfo, additionalText)
+    local abilityID = abilityInfo:GetAbilityID()
+    local info = abilityID and e.Get_Pet_Ablity_Info(abilityID)
+    if info then
+        --local _, name, icon, _, unparsedDescription, _, petType = C_PetBattles.GetAbilityInfoByID(abilityID)
+        local description = info[2] and SharedPetAbilityTooltip_ParseText(abilityInfo, info[2])
+        if description then
+            self.Description:SetText(description)
+        end        
+        if info[1] then
+            self.Name:SetText(info[1])
+        end
+    end
+end)
+
+
+
+
 
 
 

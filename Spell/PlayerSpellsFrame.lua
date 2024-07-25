@@ -128,6 +128,20 @@ local function Init_TalentsFrame()
         end       
     end)
 
+    PlayerSpellsFrame.TalentsFrame.WarmodeButton:HookScript('OnEnter', function(self)   
+        local wrap = true;
+        local warModeRewardBonus = C_PvP.GetWarModeRewardBonus();
+        GameTooltip:AddLine(' ')
+        GameTooltip_AddNormalLine(GameTooltip, format('加入战争模式即可激活世界PvP，使任务的奖励和经验值提高%1$d%%，并可以在野外使用PvP天赋。', warModeRewardBonus), wrap);
+        local canToggleWarmode = C_PvP.CanToggleWarMode(true);
+        local canToggleWarmodeOFF = C_PvP.CanToggleWarMode(false);    
+        if(not canToggleWarmode or not canToggleWarmodeOFF) then
+                if (not C_PvP.ArePvpTalentsUnlocked()) then
+                GameTooltip_AddErrorLine(GameTooltip, format('在%d级解锁', C_PvP.GetPvpTalentsUnlockedLevel()), wrap);
+            end
+        end
+        GameTooltip:Show();
+    end)
 
 end
 

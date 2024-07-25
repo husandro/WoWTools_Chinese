@@ -223,33 +223,25 @@ end
 
 
 
+--幻化
 local function Init_Wardrobe()
+    e.set(WardrobeTransmogFrame.OutfitDropdown.SaveButton)
     WardrobeCollectionFrameSearchBox.Instructions:SetText('搜索')
-    --[[hooksecurefunc(WardrobeCollectionFrame, 'SetContainer', function(self, parent)
-        if parent == CollectionsJournal then
-            --self.FilterButton:SetText('过滤器')
-        elseif parent == WardrobeFrame then
-            self.FilterButton:SetText('来源')
-        end
-    end)]]
-    --WardrobeCollectionFrame.FilterButton.Text:SetText('过滤器')
     WardrobeCollectionFrameTab1:SetText('物品')
-        hooksecurefunc(WardrobeCollectionFrame.ItemsCollectionFrame.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
-            self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
-        end)
+    hooksecurefunc(WardrobeCollectionFrame.ItemsCollectionFrame.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
+        self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
+    end)
     WardrobeCollectionFrameTab2:SetText('套装')
-        hooksecurefunc(WardrobeCollectionFrame.SetsTransmogFrame.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
-            self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
-        end)
+    hooksecurefunc(WardrobeCollectionFrame.SetsTransmogFrame.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
+        self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
+    end)
 
     WardrobeTransmogFrame.ToggleSecondaryAppearanceCheckbox.Label:SetText('两侧肩膀使用不同的幻化外观')
 
 
-
-    --试衣间
     WardrobeFrameTitleText:SetText('幻化')
     --WardrobeOutfitDropDown.SaveButton:SetText('保存')
-    --WardrobeTransmogFrame.ApplyButton:SetText('应用')
+    WardrobeTransmogFrame.ApplyButton:SetText('应用')
     WardrobeOutfitEditFrame.Title:SetText('输入外观方案名称：')
     WardrobeOutfitEditFrame.AcceptButton:SetText('接受')
     WardrobeOutfitEditFrame.CancelButton:SetText('取消')
@@ -257,7 +249,6 @@ local function Init_Wardrobe()
     WardrobeTransmogFrame.ModelScene.ClearAllPendingButton:HookScript('OnEnter', function()
         GameTooltip:SetText('取消所有的待定改动')
     end)
-
 
     hooksecurefunc(WardrobeSetsScrollFrameButtonMixin, 'Init', function(btn, data)
         e.set(btn.Name)
@@ -267,41 +258,6 @@ local function Init_Wardrobe()
     e.hookLabel(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Label)
     e.set(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.LimitedSet.Text)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---Blizzard_FrameXML/SharedPetBattleTemplates.lua
---战斗宠物，技能 SharedPetBattleTemplates.lua
-hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilityInfo, additionalText)
-    local abilityID = abilityInfo:GetAbilityID()
-    local info = abilityID and e.Get_Pet_Ablity_Info(abilityID)
-    if info then
-        --local _, name, icon, _, unparsedDescription, _, petType = C_PetBattles.GetAbilityInfoByID(abilityID)
-        local description = info[2] and SharedPetAbilityTooltip_ParseText(abilityInfo, info[2])
-        if description then
-            self.Description:SetText(description)
-        end        
-        if info[1] then
-            self.Name:SetText(info[1])
-        end
-    end
-end)
-
-
 
 
 
@@ -403,6 +359,23 @@ end)
 
 
 
+--试衣间
+local function Init_DressUpFrame()
+    DressUpFrameTitleText:SetText('试衣间')
+    DressUpFrame.LinkButton:SetText('外观方案链接')
+    DressUpFrameResetButton:SetText('重置')
+    DressUpFrameCancelButton:SetText('关闭')
+    DressUpFrame.ToggleOutfitDetailsButton:HookScript('OnEnter', function()
+        GameTooltip_SetTitle(GameTooltip, '外观列表')
+        GameTooltip:Show()
+    end)
+    e.set(DressUpFrameOutfitDropdown.SaveButton)
+end
+
+
+
+
+
 
 
 
@@ -419,6 +392,8 @@ local function Init()
     Init_Toy()
     Init_Heirlooms()
     Init_Wardrobe()
+    Init_DressUpFrame()
+
     hooksecurefunc('CollectionsJournal_UpdateSelectedTab', function(self)--设置，标题
         e.set(self.Text)
     end)
@@ -430,21 +405,30 @@ local function Init()
     CollectionsJournalTab5:SetText('外观')
 
 
-    --试衣间
-    DressUpFrameTitleText:SetText('试衣间')
-    e.set(WardrobeTransmogFrame.OutfitDropdown.SaveButton)
-    if DressUpFrameOutfitDropdown then
-        e.set(DressUpFrameOutfitDropdown.Text)
-    end
-    DressUpFrame.LinkButton:SetText('外观方案链接')
-    DressUpFrameResetButton:SetText('重置')
-    DressUpFrameCancelButton:SetText('关闭')
-    DressUpFrame.ToggleOutfitDetailsButton:HookScript('OnEnter', function()
-        GameTooltip_SetTitle(GameTooltip, '外观列表')
-        GameTooltip:Show()
-    end)
-    e.set(WardrobeTransmogFrame.ApplyButton)
+    
+
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
