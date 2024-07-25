@@ -43,11 +43,8 @@ model(PetStableModelScene)]]
 
 
 local function get_gameTooltip_text(self)
-    local text= self and e.set_text(self:GetText())    
-    if text then
-        self:SetText(text)
-        self:SetTextColor(self:GetTextColor())
-    end
+    e.set(self) 
+    self:SetTextColor(self:GetTextColor())
 end
 
 local function set_gameTooltip_text(frame)

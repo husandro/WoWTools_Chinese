@@ -261,37 +261,63 @@ if EQUIPMENT_SETS then
 end
 
 
+local function set_match(text, a, b)
+    local a1= a and e.strText[a]
+    local b1= b and e.strText[b]
 
+    local r= a1 and text:gsub(a, a1) or text
+    r= b1 and r:gsub(b, b1) or r
+
+    if text~= r then
+        return r
+    end    
+end
 
 
 function e.set_text(text)
-    if not text or text==' ' then-- and not text:find('|') then
-        return
+    
+    local text2= text and e.strText[text]
+    if not text or text2 then
+        return text2
     end
-    text= text:gsub('^  ', '')
-    local text2= e.strText[text]
-    if not text2 then
 
-        local up= text:match(ITEM_UPGRADE_TOOLTIP_FORMAT_STRING)---"升级：%s %d/%d
-        local set2= EQUIPMENT_SETS and text:match(EQUIPMENT_SETS)--"装备配置方案：|cFFFFFFFF%s|r"
-        local ench= text:match(ENCHANTED_TOOLTIP_LINE)
+
+
+        --local up= text:match(ITEM_UPGRADE_TOOLTIP_FORMAT_STRING)---"升级：%s %d/%d
+        --local set2= EQUIPMENT_SETS and text:match(EQUIPMENT_SETS)--"装备配置方案：|cFFFFFFFF%s|r"
+        --[[local ench= text:match(ENCHANTED_TOOLTIP_LINE)
         local gem1, gem2= text:match(COVENANT_RENOWN_TOAST_REWARD_COMBINER)
         local str1, str2= text:match('(.-): (.+)')
         local str3= text:match('%d+ (.+)')
         local str4= text:match('|c........(.-)|r')
-        local str5= text:match('(.+) %(%d/%d%)')--套装名称 (4/5)
+        local str5= text:match('(.+) %(%d/%d%)')--套装名称 (4/5)]]
 
-        if text:find('^|c.-|r %(.-%)$') then
+        text2= text:gsub('|c.-|r', function(s)--颜色
+            return set_match(s, s:match('|c........(.-)|r'))
+        end)
+        text2= text2:gsub('%(.-%)', function(s)-- ()
+            return set_match(s, s:match('%((.-)%)'))
+        end)
+        text2= text2:gsub('  .+', function(s)--双空格
+            return set_match(s, s:match('  (.+)'))
+        end)
+        text2= text2:gsub('.-:', function(s)--内容：
+            return set_match(s, s:match('^(.-):'), s:match('^(.-:)'))
+        end)
+        text2= text2:gsub(': .+', function(s)-- :内容
+            return set_match(s, s:match(': (.+)'))
+        end)
+        text2= text2:gsub('%d+ .+', function(s)--数字 内容
+            return set_match(s, s:match('%d+ (.+)'))
+        end)
+        text2= text2:gsub('^.- %(', function(s)--内容 (
+            return set_match(s, s:match('^(.-) %('))
+        end)
+
+        --[[if text:find('^|c.-|r %(.-%)$') then
             local a, b= text:match('^|c........(.-)|r %((.-)%)$')
-            local a1=e.strText[a]
-            local b1= e.strText[b]
-            text2= text
-            if a1 then
-                text2= text2:gsub(a, a1)
-            end
-            if b1 then
-                text2= text2:gsub(b, b1)
-            end
+            
+
         elseif up then
             local t= up:match(': (.-) %d')
             if t and e.strText[t] then
@@ -372,8 +398,8 @@ function e.set_text(text)
             if e.strText[str5] then
                 text2= text:gsub(str5, e.strText[str5])
             end
-        end
-    end
+        end]]
+
     if text ~= text2 then
         return text2
     end
@@ -392,7 +418,6 @@ local function set(frame, text)
     if not frame or not frame.GetObjectType then
         return
     end
-    local p
     if not text then
         if frame.GetText then
             text= frame:GetText()
@@ -416,9 +441,14 @@ local function set(frame, text)
         end
     end
 
-    text= e.set_text(text)
-    if frame and text then
-        frame:SetText(text)
+    if not text or not frame then
+        return
+    end
+
+    local text2= e.set_text(text)
+    if text2 and text2~=text then
+        frame:SetText(text2)
+        return true
     end
 end
 --[[
