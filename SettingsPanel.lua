@@ -48,6 +48,7 @@ hooksecurefunc('BindingButtonTemplate_SetupBindingButton', function(_, button)--
         e.set(button, text)
     end
 end)
+
 hooksecurefunc(KeyBindingFrameBindingTemplateMixin, 'Init', function(self, initializer)
     e.set(self.Label)
 end)

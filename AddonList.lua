@@ -17,13 +17,13 @@ hooksecurefunc('AddonList_Update', function()--AddonList.lua
     end
 end)
 AddonListCancelButton:SetText('取消')
-hooksecurefunc('AddonList_InitButton', function(entry, addonIndex)
+hooksecurefunc('AddonList_InitButton', function(entry)
     if not entry then
         return
     end
-    entry.Enabled.tooltip= e.cn(entry.Enabled.tooltip)
+    --entry.Enabled.tooltip= e.cn(entry.Enabled.tooltip)
     e.hookLabel(entry.Status)
-    entry.Security.tooltip= e.cn(entry.Security.tooltip)
+    --entry.Security.tooltip= e.cn(entry.Security.tooltip)
 end)
 
 C_Timer.After(2, function()

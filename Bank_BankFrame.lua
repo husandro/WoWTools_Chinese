@@ -13,12 +13,11 @@ e.set(ReagentBankFrameUnlockInfoText)
 e.set(AccountBankPanel.LockPrompt.PromptText)
 e.set(ReagentBankFrameUnlockInfoTabCost)
 
-BANK_PANELS[2].SetTitle=function() BankFrame:SetTitle('材料银行') end
-if ReagentBankFrame.DespositButton:GetText()~='' then
-    ReagentBankFrame.DespositButton:SetText('存放各种材料')
-end
+e.hookLabel(BankFrameTitleText)
+--BANK_PANELS[2].SetTitle=function() BankFrame:SetTitle('材料银行') end
+e.set(ReagentBankFrame.DespositButton)--:SetText('存放各种材料')
 e.region(BankFramePurchaseInfo)
-BankItemSearchBox.Instructions:SetText('搜索')
+--BankItemSearchBox.Instructions:SetText('搜索')
 e.region(BankSlotsFrame)
 e.region(CombatConfigSettingsNameEditBox)--过滤名称
 

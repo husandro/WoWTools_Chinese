@@ -82,6 +82,8 @@ Data\LFG_Data_LFGDungeons.lua
 Data\Vignette_Data.lua
 
 Menu.lua
+Menu_UIDropDownMenu.lua
+
 Func_Init.lua
 Func_Event.lua
 
@@ -93,7 +95,7 @@ EditModeManagerFrame.lua
 Dialogs.lua
 NavBar.lua
 GameTooltip.lua
-UIDropDownMenu.lua
+
 AddonList.lua
 FriendsFrame.lua
 QuickKeybindFrame.lua

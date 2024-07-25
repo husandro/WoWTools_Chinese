@@ -32,7 +32,7 @@ local function Init()
 
     --标题
     AchievementFrame.Header.Title:SetText('成就点数')
-    hooksecurefunc('AchievementFrame_RefreshView', function(self)--Blizzard_AchievementUI.lua
+    hooksecurefunc('AchievementFrame_RefreshView', function()--Blizzard_AchievementUI.lua
         e.set(AchievementFrame.Header.Title)
     end)
 
