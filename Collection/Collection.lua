@@ -266,6 +266,7 @@ local function Init_Wardrobe()
 
     e.hookLabel(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Name)
     e.hookLabel(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Label)
+    e.set(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.LimitedSet.Text)
 end
 
 
