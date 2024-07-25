@@ -28,11 +28,11 @@ local function Init()
                 if itemID then
                     local itemName= C_Item.GetItemNameByID(itemLink)
                     name= e.Get_Item_Name(itemID) or e.strText[itemName]
-                    if not name then
-                        local data= C_TooltipInfo.GetTrainerService(skillIndex)
-                        if data and not data.isAzeriteItem and data.id then
-                            name= e.Get_Spell_Name(data.id)
-                        end
+                end
+                if not name then
+                    local data= C_TooltipInfo.GetTrainerService(skillIndex)
+                    if data and not data.isAzeriteItem and data.id then
+                        name= e.Get_Spell_Name(data.id)
                     end
                 end
             end
