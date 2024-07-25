@@ -30,15 +30,7 @@ e.Get_Boss_Name(journalEncounterID)
 
 
 
-if not WoWeuCN_Tooltips_EncounterData then
-    loadEncounterData()
-end
-if not WoWeuCN_Tooltips_ItemData_0 then
-    loadItemData0()
-end
-if not WoWeuCN_Tooltips_UnitData_0 then
-    loadUnitData0()
-end
+
 
 
 local function split(s, delimiter)
