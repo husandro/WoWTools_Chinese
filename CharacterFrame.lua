@@ -44,7 +44,7 @@ hooksecurefunc(CharacterFrame, 'SetTitle', function(self)
         if titleID and titleID>0 then
             local title= e.Get_Title_Name(titleID)
             if title then
-                local name= HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(UnitName("player"))
+                local name= NORMAL_FONT_COLOR:WrapTextInColorCode(UnitName("player"))
                 name= format(title, name)
                 CharacterFrameTitleText:SetText(name)
             end

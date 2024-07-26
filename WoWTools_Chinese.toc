@@ -13,6 +13,7 @@
 ##界面，中文化，主要function
 
 ##11API.lua
+WoWTools_Chinese_SetText.lua
 WoWTools_Chinese.lua
 
 
