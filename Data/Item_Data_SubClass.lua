@@ -1,7 +1,8 @@
 local e= select(2, ...)
 --[[
 {'DisplayName_lang', 'VerboseName_lang',ClassID,SubClassID},
-https://wago.tools/db2/ItemSubClass?build=11.0.0.55288&locale=zhCN
+https://wago.tools/db2/ItemSubClass?locale=zhCN
+11.0.2.55789
 ]]
 
 local tab={

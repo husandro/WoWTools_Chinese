@@ -20965,11 +20965,28 @@ local tab={
 ["WOW_ERROR_500"]= "你的战团的数据转化失败。请重新登录你的账号，再次尝试。",
 ["ERR_GUILD_NEW_LEADER_WRONG_REALM"]= "其他服务器的玩家无法被提拔为公会会长。",
 ["PROFESSIONS_CRAFTING_ORDER_REWARDS"]= "奖励：",
+
 ["KIOSK_SESSION_STARTED_BODY"]= "新的世界之树在梦境中盛放。|n菲莱克需要圣泉的力量|n才能夺取巨树之心，|n并将他的烈焰散播到整个艾泽拉斯。",
 ["KIOSK_SESSION_EXPIRED_SUBTITLE"]= "梦境守护者",
 ["SPELL_FAILED_CUSTOM_ERROR_1005"]= "重置冷却时间",
 
-
+["GENERIC_TRAIT_FRAME_THE_WEAVER_TITLE"]= "契约：纺丝者",
+["GENERIC_TRAIT_FRAME_THE_GENERAL_TITLE"]= "契约：将军",
+["GENERIC_TRAIT_FRAME_THE_VIZIER_TITLE"]= "契约：宰相",
+["QUEST_REWARDS_CONTAINS_ONE_TIME_REP_BONUS"]= "提供一次性的战团声望加成",
+["QUEST_REWARDS_IS_ONE_TIME_REP_BONUS"]= "这是一次性的战团声望加成",
+["CRAFTING_ORDER_FAILED_ACCOUNT_ITEMS"]= "你不能使用战团银行里的材料来完成制造订单。",
+["ACCOUNT_REACTIVATE_ERR_NOT_ENOUGH_GOLD_TOOLTIP"]= "你在本服务器上没有足够的金币",
+["TRIVIAL_QUESTS_FILTER_DESCRIPTION"]= "此类任务显著低于你的当前等级，不会提供经验值。",
+["ERR_CANT_TRADE_ACCOUNT_ITEM"]= "你不能交易一件存放在战团银行的物品。",
+["MAP_LEGEND_DELVE"]= "地下堡",
+["MAP_LEGEND_DELVE_TOOLTIP"]= "此类内容是为最多五人的冒险者小队设计的，任何战斗职责均可，可以提供战利品",
+["DIFFICULTY_LOCKED_REASON_STORY_RAID"]= "在剧情模式不可用",
+["DELVES_WEEKLY_REWARDS_UNCLAIMED_TEXT"]= "你还有尚未领取的奖励！返回多恩诺嘉尔的宏伟宝库进行选择。",
+["DELVES_WARNING_PARTY_MEMBER_INELIGIBLE_FOR_TIER"]= "|Hplayer:%s|h[%s]|h无法加入你的难度%d的地下堡（难度%d已解锁）。",
+["DELVES_WARNING_INELIGIBLE_FOR_PARTY_TIER"]= "你无法加入你的小队的难度%d的地下堡（难度%d已解锁）。",
+["SPELL_FAILED_CUSTOM_ERROR_2224"]= "不能在剧情模式使用凡图斯符文。",
+--52459
 
 
 
@@ -20979,7 +20996,8 @@ local tab={
 }
 --[[
 ["BaseTag"]= "TagText_lang",
-https://wago.tools/db2/GlobalStrings?build=11.0.2.55522&locale=zhCN
+https://wago.tools/db2/GlobalStrings?&locale=zhCN
+11.0.2.55789
 ]]
 do
 for name, text in pairs(tab) do

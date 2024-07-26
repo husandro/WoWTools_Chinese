@@ -1,3 +1,10 @@
+
+--[[
+https://wago.tools/db2/UiMap?&locale=zhCN
+11.0.2.55789
+]]
+
+
 local tab={
 [1]= '杜隆塔尔',
 [2]= '火刃集会所',
@@ -1764,7 +1771,11 @@ local tab={
 [2345]= '御渊溪谷',
 [2347]= '螺旋织纹',
 [2348]= '泽克维尔的巢穴',
-
+[2357]= '回响之城',
+[2358]= '回响之城',
+[2359]= '破晨号',
+[2367]= '记忆宝地',
+[2368]= '觉醒大厅',
 
 
 
@@ -1777,10 +1788,6 @@ local tab={
 
 
 local e = select(2, ...)
-
---[[
-    https://wago.tools/db2/UiMap?build=11.0.0.55120&locale=zhCN
-]]
 
 do
     for uiMapID, name in pairs(tab) do

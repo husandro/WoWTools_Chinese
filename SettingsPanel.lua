@@ -52,3 +52,61 @@ end)
 hooksecurefunc(KeyBindingFrameBindingTemplateMixin, 'Init', function(self, initializer)
     e.set(self.Label)
 end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local function Init()
+    local label2= e.Cstr(SettingsPanel.CategoryList)
+    label2:SetPoint('RIGHT', SettingsPanel.ClosePanelButton, 'LEFT', -2, 0)
+    label2:SetText(id..' 语言翻译 提示：请要不在战斗中修改选项')
+
+    SettingsPanel.Container.SettingsList.Header.DefaultsButton:SetText('默认设置')
+    e.dia('GAME_SETTINGS_APPLY_DEFAULTS', {text= '你想要将所有用户界面和插件设置重置为默认状态，还是只重置这个界面或插件的设置？', button1= '所有设置', button2= '取消', button3= '这些设置'})--Blizzard_Dialogs.lua
+    SettingsPanel.GameTab.Text:SetText('游戏')
+    SettingsPanel.AddOnsTab.Text:SetText('插件')
+    SettingsPanel.NineSlice.Text:SetText('选项')
+    SettingsPanel.CloseButton:SetText('关闭')
+    SettingsPanel.ApplyButton:SetText('应用')
+
+    SettingsPanel.NineSlice.Text:SetText('选项')
+    SettingsPanel.SearchBox.Instructions:SetText('搜索')
+
+end
+
+
+
+
+
+
+--###########
+--加载保存数据
+--###########
+local panel= CreateFrame("Frame")
+panel:RegisterEvent("ADDON_LOADED")
+panel:SetScript("OnEvent", function(self, _, arg1)
+    if arg1==id then
+        if C_AddOns.IsAddOnLoaded('Blizzard_Settings') then
+            self:UnregisterEvent('ADDON_LOADED')
+            Init()
+        end
+
+    elseif arg1=='Blizzard_Settings' then
+        self:UnregisterEvent('ADDON_LOADED')
+        Init()
+
+    end
+end)

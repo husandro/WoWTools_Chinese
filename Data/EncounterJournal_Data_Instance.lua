@@ -1,5 +1,12 @@
 
-local e = select(2, ...)
+
+
+
+--[[
+--[ID]= Description
+--https://wago.tools/db2/JournalInstance?locale=zhCN
+11.0.2.55763
+]]
 
 
 
@@ -211,12 +218,7 @@ local instanceTab={
 }
 
 
---[[
---[ID]= Description
---https://wago.tools/db2/JournalInstance?locale=zhCN
-11.0.2.55763
-]]
-
+local e = select(2, ...)
 
 
 local tab={}

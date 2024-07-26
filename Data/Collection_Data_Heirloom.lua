@@ -115,7 +115,8 @@ local tab={
 
 --[[
 [ItemID]= 'SourceText_lang',
-https://wago.tools/db2/Heirloom?locale=zhCN&build=11.0.2.5576
+https://wago.tools/db2/Heirloom?locale=zhCN
+11.0.2.55789
 ]]
 function e.Get_Heirloom_Source(itemID)
     return tab[itemID]

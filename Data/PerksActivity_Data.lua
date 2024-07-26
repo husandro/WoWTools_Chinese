@@ -1,3 +1,10 @@
+--[[
+[ID]= {'ActivityName_lang', 'Description_lang'},
+https://wago.tools/db2/PerksActivity?locale=zhCN
+11.0.2.55763
+]]
+
+
 local tab={
     
 [3]= {'完成30个任务', '完成可提供经验值的任务。'},
@@ -650,11 +657,6 @@ local tab={
 
 
 
---[[
-[ID]= {'ActivityName_lang', 'Description_lang'},
-https://wago.tools/db2/PerksActivity?locale=zhCN
-11.0.2.55763
-]]
 
 
 

@@ -1,6 +1,11 @@
+
+--[[
+[ID]= {'Name_lang', 'Name_female_lang'},
+https://wago.tools/db2/ChrRaces?locale=zhCN
+11.0.2.55763
+]]
+
 local tab= {
-
-
 [1]= {'人类', '人类'},
 [2]= {'兽人', '兽人'},
 [3]= {'矮人', '矮人'},
@@ -61,22 +66,12 @@ local tab= {
 
 }
 
---[[
-C_AlliedRaces.GetRaceInfoByID
-maleName	string	
-femaleName	string	
-description string
 
-C_CreatureInfo.GetRaceInfo
-raceName	string	localized name, e.g. "Night Elf"
-clientFileString	string	non-localized name, e.g. "NightElf"
+
 local e= select(2, ...)
 
-[ID]= {'Name_lang', 'Name_female_lang'},
-https://wago.tools/db2/ChrRaces?locale=zhCN
-11.0.2.55763
-]]
-local e= select(2, ...)
+
+
 do
 for raceID, data in pairs(tab) do
     local info= C_AlliedRaces.GetRaceInfoByID(raceID) or C_CreatureInfo.GetRaceInfo(raceID)

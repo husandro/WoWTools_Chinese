@@ -1,3 +1,10 @@
+--[[
+[ID]= {'Name_lang', 'Description_lang'},
+https://wago.tools/db2/Faction?locale=zhCN
+11.0.2.55763
+]]
+
+
 local tab={
 [1]= {'人类(玩家)'},
 [2]= {'兽人(玩家)'},
@@ -653,11 +660,7 @@ local tab={
 }
 
 
---[[
-[ID]= {'Name_lang', 'Description_lang'},
-https://wago.tools/db2/Faction?locale=zhCN
-11.0.2.55763
-]]
+
 local id, e = ...
 do
     for factionID, info in pairs(tab) do

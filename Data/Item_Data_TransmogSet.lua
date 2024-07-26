@@ -2,7 +2,8 @@ local id, e = ...
 
 --[[
 [ID]= 'Name_lang',
-https://wago.tools/db2/TransmogSet?build=11.0.0.55185&locale=zhCN
+https://wago.tools/db2/TransmogSet?locale=zhCN
+11.0.2.55789
 ]]
 
 local tab={

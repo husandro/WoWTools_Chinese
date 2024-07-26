@@ -56,12 +56,14 @@ end)
 hooksecurefunc('GetWowStyle1ArrowButtonState', function(self)
     e.set(self.Text)
 end)
---[[
+
 hooksecurefunc(MenuUtil, 'SetElementText', function(elementDescription, text)
     local name= e.strText[text]
     if name then
-        elementDescription.text= name
+    elementDescription.text = text
+        elementDescription:AddInitializer(function(button, description)
+            print(description.text)
+            e.set(button.Text, description.text)
+        end)
     end
-    print(name, text)
 end)
-]]

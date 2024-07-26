@@ -492,23 +492,6 @@ local function Init_Event(arg1)
             end
         end)
 
-
-    elseif arg1=='Blizzard_Settings' then--Blizzard_SettingsPanel.lua 
-        local label2= e.Cstr(SettingsPanel.CategoryList)
-        label2:SetPoint('RIGHT', SettingsPanel.ClosePanelButton, 'LEFT', -2, 0)
-        label2:SetText(id..' 语言翻译 提示：请要不在战斗中修改选项')
-
-        SettingsPanel.Container.SettingsList.Header.DefaultsButton:SetText('默认设置')
-        e.dia('GAME_SETTINGS_APPLY_DEFAULTS', {text= '你想要将所有用户界面和插件设置重置为默认状态，还是只重置这个界面或插件的设置？', button1= '所有设置', button2= '取消', button3= '这些设置'})--Blizzard_Dialogs.lua
-        SettingsPanel.GameTab.Text:SetText('游戏')
-        SettingsPanel.AddOnsTab.Text:SetText('插件')
-        SettingsPanel.NineSlice.Text:SetText('选项')
-        SettingsPanel.CloseButton:SetText('关闭')
-        SettingsPanel.ApplyButton:SetText('应用')
-
-        SettingsPanel.NineSlice.Text:SetText('选项')
-        SettingsPanel.SearchBox.Instructions:SetText('搜索')
-
     elseif arg1=='Blizzard_TimeManager' then--小时图，时间
         TimeManagerStopwatchFrameText:SetText('显示秒表')
         TimeManagerAlarmTimeLabel:SetText('提醒时间')

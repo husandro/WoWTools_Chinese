@@ -47,7 +47,7 @@ Data\Title_Data.lua
 Data\Holiday_Data.lua
 
 ##字符, 常用
-GlobalStrings.lua
+zhCN.lua
 
 ##专业
 Data\Professions_Data_SkillLineAbility.lua

@@ -233,8 +233,9 @@ local tab={
 
 
 --[[
-https://wago.tools/db2/Achievement_Category?locale=zhCN&build=11.0.0.55185
 [ID]= 'Name_lang',
+https://wago.tools/db2/Achievement_Category?locale=zhCN
+11.0.2.55789
 ]]
 local e= select(2, ...)
 do

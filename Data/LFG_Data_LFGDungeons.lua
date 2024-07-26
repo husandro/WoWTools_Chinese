@@ -1,9 +1,10 @@
+--[[
+[ID]= {"Name_lang", "Description_lang"},
+https://wago.tools/db2/LFGDungeons?locale=zhCN
+11.0.2.55763
+]]
+
 local tab={
-
-
-
-
-
 [1]= {"哀嚎洞穴", nil},
 [2]= {"通灵学院", nil},
 [4]= {"怒焰裂谷", nil},
@@ -1442,10 +1443,7 @@ local tab={
 
 
 local e= select(2, ...)
---[[
-[ID]= {"Name_lang", "Description_lang"},
-https://wago.tools/db2/LFGDungeons?locale=zhCN&build=11.0.2.55763
-]]
+
 
 local descTab={}
 do
