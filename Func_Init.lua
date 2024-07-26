@@ -544,7 +544,7 @@ C_Timer.After(4, function()
 
 
     
-    --Blizzard_FrameXMLBase/Constants.lua
+    --[[Blizzard_FrameXMLBase/Constants.lua
     local function set_table(data)
         for index, name in pairs(_G[data] or {}) do
             local cnName= e.strText[name]
@@ -561,7 +561,7 @@ C_Timer.After(4, function()
     }
     for _, name in pairs(tab) do
         set_table(name)
-    end
+    end]]
 end)
 
 

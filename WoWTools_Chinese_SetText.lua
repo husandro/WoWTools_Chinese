@@ -11,15 +11,20 @@ local function set_match(text, a, b)
 
     if text~= r then
         return r
-    end    
+    end
 end
 
 
 function e.set_text(text)
-    local text2= text and e.strText[text]
-    if not text or text2 then
+    if not text and text=='' then
+        return
+    end
+
+    local text2= e.strText[text]
+    if text2 then
         return text2
     end
+
     text2= text:gsub('|c.-|r', function(s)--颜色
         return set_match(s, s:match('|c........(.-)|r'))
     end)
@@ -57,19 +62,17 @@ function e.font(lable)
 end
 
 local function set(self, text)
-    if not frame then
-        return
-    end
     local label= self
-
-    if not text then
+    if self and not text then
         if self.GetText then
             text= self:GetText()
         elseif self.GetObjectType and self:GetObjectType()=='Button' then
             label= self:GetFontString()
             if label then
                 text= label:GetText()
-            end      
+            end
+        else
+            return
         end
     end
 
@@ -77,7 +80,6 @@ local function set(self, text)
         local text2= e.set_text(text)
         if text2 and text2~=text then
             label:SetText(text2)
-            return true
         end
     end
 end

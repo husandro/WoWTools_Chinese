@@ -2,28 +2,9 @@ local id, e = ...
 
 
 --[[
-[ID]= 'DisplayName_lang',
-https://warcraft.wiki.gg/wiki/API_C_PerksProgram.GetCategoryInfo
-]]
-for categoryID, name in pairs({
-[1]= '幻化',
-[2]= '坐骑',
-[3]= '宠物',
-[5]= '玩具',
-[6]= '自定义选项',
-[8]= '幻化套装',
-}) do
-    local data= C_PerksProgram.GetCategoryInfo(categoryID) or {}
-    if data.displayName then
-        e.strText[data.displayName]= name
-    end
-end
-
-
-
---[[
 [Field_10_0_5_47118_002]= 'Name_lang',
---https://wago.tools/db2/PerksActivityThresholdGroup?build=11.0.0.55288&locale=zhCN
+https://wago.tools/db2/PerksActivityThresholdGroup?locale=zhCN
+11.0.2.55789
 ]]
 local PerksActivityThresholdGroup={
 [1]= '一月：重新启程',
@@ -66,61 +47,29 @@ local PerksActivityThresholdGroup={
 
 
 
---[[
-https://wago.tools/db2/PerksActivityTag?build=11.0.0.55288&locale=zhCN
-[ID]= 'TagName_lang',
-]]
-local PerksActivityTag={
-[1]= '任务',
-[2]= 'PvP',
-[3]= '地下城和团队副本',
-[4]= '巨龙时代',
-[5]= '专业',
-[6]= '宠物对战',
-[7]= '节日和事件',
-[8]= '特殊',
-[9]= '德拉诺之王',
-[10]= '军团再临',
-[11]= '收集品',
-[12]= '熊猫人之谜',
-[13]= '燃烧的远征',
-[14]= '巫妖王之怒',
-[15]= '大地的裂变',
-[16]= '世界',
-[17]= '争霸艾泽拉斯',
-[18]= '暗影国度',
-[19]= '地心之战',
-[20]= '潘达利亚：幻境新生',
-}
-local tags= C_PerksActivities.GetAllPerksActivityTags() or {}
-for index, name in pairs(tags.tagName or {}) do
-    local cnName= PerksActivityTag[index]
-    if name and cnName then
-        e.strText[name]= cnName
+local function set_desc_event(desc, data)
+    if desc and data then
+        if data.eventStartTime and desc:find('{EventStartDate}') then
+            local eventStartTimeUnits = date("*t", data.eventStartTime)
+            local eventStartDate = FormatShortDate(eventStartTimeUnits.day, eventStartTimeUnits.month)
+            if eventStartDate then
+                desc= desc:gsub('{EventStartDate}', '|cnGREEN_FONT_COLOR:'..eventStartDate..'|r')
+            end
+        end
+        if data.eventEndTime and desc:find('{EventEndDate}') then
+            local eventEndTimeUnits = date("*t", data.eventEndTime)
+            local eventEndDate = FormatShortDate(eventEndTimeUnits.day, eventEndTimeUnits.month)
+            if eventEndDate then
+                desc= desc:gsub('{EventEndDate}', '|cnRED_FONT_COLOR:'..eventEndDate..'|r')
+            end
+        end
     end
+    return desc
 end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 local function Init()
-    e.set(EncounterJournalMonthlyActivitiesFrame.RestrictedText)
+    EncounterJournalMonthlyActivitiesFrame.RestrictedText:SetText('你必须有可用的订阅或游戏时间|n才能完成活动并在商栈赢取奖励')
     EncounterJournalMonthlyActivitiesTab:SetText('旅行者日志')
     EncounterJournalMonthlyActivitiesTab:SetScript('OnEnter', function()
         if not C_PlayerInfo.IsTravelersLogAvailable() then
@@ -140,19 +89,38 @@ local function Init()
     EncounterJournalMonthlyActivitiesFrame.BarComplete.AllRewardsCollectedText:SetText('你已经收集完了本月的所有奖励')
 
 
+
+
+
+
     --任务，名称
     hooksecurefunc(MonthlyActivitiesButtonTextContainerMixin, 'UpdateText', function(self, data)
-        local info= e.Get_PerksActivity_Info(data.ID) or {}
-        if info[1] then
-            self.NameText:SetText(info[1])
+        local info= e.Get_PerksActivity_Info(data.ID)
+        if not info then
+            return
+        end
+        local name= info[1]
+        if name then
+            self.NameText:SetText(name)
+        end
+        local desc= set_desc_event(info[2], data)
+        if desc then
+            self.ConditionsText:SetText(desc)
+            self.ConditionsText:SetPoint('RIGHT', -30,0)
+            self:SetPoint('RIGHT', -30)
         end
     end)
 
     --任务，提示
     hooksecurefunc( MonthlyActivitiesButtonMixin, 'ShowTooltip', function(self)
         local data = self:GetData() or {}
-        local info= data.ID and e.Get_PerksActivity_Info(data.ID) or {}
-        local name, desc= info[1], info[2]
+        local info= e.Get_PerksActivity_Info(data.ID)
+        if not info then
+            return
+        end
+        GameTooltip_AddBlankLineToTooltip(GameTooltip)
+        local name= info[1]
+        local desc= set_desc_event(info[2], data)
         if name or desc then
             GameTooltip_AddBlankLineToTooltip(GameTooltip)
             if name then
@@ -161,20 +129,6 @@ local function Init()
             if desc then
                 if name then
                     GameTooltip_AddBlankLineToTooltip(GameTooltip)
-                end
-                if data.eventStartTime and desc:find('{EventStartDate}') then
-                    local eventStartTimeUnits = date("*t", data.eventStartTime)
-                    local eventStartDate = FormatShortDate(eventStartTimeUnits.day, eventStartTimeUnits.month)
-                    if eventStartDate then
-                        desc= desc:gsub('{EventStartDate}', '|cnGREEN_FONT_COLOR:'..eventStartDate..'|r')
-                    end
-                end
-                if data.eventEndTime and desc:find('{EventEndDate}') then
-                    local eventEndTimeUnits = date("*t", data.eventEndTime)
-                    local eventEndDate = FormatShortDate(eventEndTimeUnits.day, eventEndTimeUnits.month)
-                    if eventEndDate then
-                        desc= desc:gsub('{EventEndDate}', '|cnRED_FONT_COLOR:'..eventEndDate..'|r')
-                    end
                 end
                 GameTooltip:AddLine('|cffffffff'..desc..'|r', nil,nil,nil, true)
             end
@@ -206,7 +160,6 @@ local function Init()
             e.set(self.HeaderContainer.Month)
         end
     end)
-
 
 end
 

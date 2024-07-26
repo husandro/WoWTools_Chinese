@@ -2,6 +2,10 @@
 local e= select(2, ...)
 --Blizzard_Menu
 
+hooksecurefunc('GetWowStyle1ArrowButtonState', function(self)
+    e.set(self.Text)
+end)
+
 
 
 hooksecurefunc(DropdownTextMixin, 'OnLoad', function(self)
@@ -33,7 +37,7 @@ hooksecurefunc(DropdownSelectionTextMixin, 'UpdateToMenuSelections', function(se
 end)
 
 hooksecurefunc(DropdownButtonMixin, 'SetupMenu', function(self)
-    e.hookLabel(self.Text)
+    e.set(self.Text)
 end)
 
 
@@ -53,9 +57,7 @@ hooksecurefunc(MenuVariants, 'CreateRadio', function(_, frame)
 end)
 
 
-hooksecurefunc('GetWowStyle1ArrowButtonState', function(self)
-    e.set(self.Text)
-end)
+
 
 hooksecurefunc(MenuUtil, 'SetElementText', function(elementDescription, text)
     local name= e.strText[text]

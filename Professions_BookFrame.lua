@@ -26,6 +26,20 @@ end
 local function Init()
     e.set(ProfessionsBookFrameTitleText)
 
+    e.set(PrimaryProfession1Missing)
+    e.set(PrimaryProfession1.missingText)
+    e.set(PrimaryProfession2Missing)
+    e.set(PrimaryProfession2.missingText)
+
+    e.set(SecondaryProfession1Missing)
+    e.set(SecondaryProfession2Missing)
+    e.set(SecondaryProfession3Missing)
+
+    e.set(SecondaryProfession1.missingText)
+    e.set(SecondaryProfession2.missingText)
+    e.set(SecondaryProfession3.missingText)
+
+
     local tab={
         "PrimaryProfession1",
         "PrimaryProfession2",
@@ -42,9 +56,9 @@ local function Init()
         end
     end
 
-    hooksecurefunc('FormatProfession', function(frame, index)
+    hooksecurefunc('FormatProfession', function(frame)
         e.set(frame.rank)
-        e.set(frame.professionName, frame.skillName)
+        e.hookLabel(frame.professionName, frame.skillName)
     end)
 end
 

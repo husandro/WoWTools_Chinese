@@ -1,10 +1,6 @@
 local e= select(2, ...)
 --e.Not_Is_EU= (GetCurrentRegion()~=3 and not IsPublicBuild()) or LOCALE_zhCN or LOCALE_zhTW
 
-e.strText={--主要，汉化    
-    --[GetClassInfo(13)] = "|cff33937f唤魔师|r",
-
-}
 
 
 
@@ -360,14 +356,39 @@ function e.Get_QuestID()
     else
        return GetQuestID()
     end
- end
+end
 
 
 
 
 
 
-
+function e.Magic(text)
+    local tab= {'%.', '%(','%)','%+', '%-', '%*', '%?', '%[', '%^'}
+    for _,v in pairs(tab) do
+        text= text:gsub(v,'%%'..v)
+    end
+    tab={
+        ['%%%d%$s']= '%(%.%-%)',
+        ['%%s']= '%(%.%-%)',
+        ['%%%d%$d']= '%(%%d%+%)',
+        ['%%d']= '%(%%d%+%)',
+    }
+    local find
+    for k,v in pairs(tab) do
+        text= text:gsub(k,v)
+        find=true
+    end
+    if find then
+        tab={'%$'}
+    else
+        tab={'%%','%$'}
+    end
+    for _, v in pairs(tab) do
+        text= text:gsub(v,'%%'..v)
+    end
+    return text
+end
 
 
 

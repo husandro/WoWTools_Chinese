@@ -12,9 +12,13 @@
 ##繁体，简体，不会载加
 ##界面，中文化，主要function
 
-##11API.lua
-WoWTools_Chinese_SetText.lua
+##字符, 常用
+zhCN.lua
+
 WoWTools_Chinese.lua
+WoWTools_Chinese_SetText.lua
+
+
 
 
 ##法术
@@ -26,8 +30,9 @@ Data\Achievement_Data_Category.lua
 Data\Achievement_Data.lua
 
 ##冒险指南
-Data\PerksActivity_Data.lua
 Data\EncounterJournal_Data_Instance.lua
+Data\EncounterJournal_Data_PerksActivity.lua
+Data\EncounterJournal_Data_PerksActivity_Tag.lua
 
 ##派系
 Data\Faction_Data.lua
@@ -47,8 +52,6 @@ Data\Title_Data.lua
 ##节日
 Data\Holiday_Data.lua
 
-##字符, 常用
-zhCN.lua
 
 ##专业
 Data\Professions_Data_SkillLineAbility.lua

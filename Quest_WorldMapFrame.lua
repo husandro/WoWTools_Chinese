@@ -4,7 +4,7 @@ e.set(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
 e.set(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
 e.set(QuestScrollFrame.SearchBox.Instructions)
 e.set(QuestMapFrame.MapLegend.TitleText)
-e.set(QuestMapFrame.MapLegend.BackButton)
+QuestMapFrame.MapLegend.BackButton:SetText('返回')
 
 
 hooksecurefunc(WorldMapFrame, 'SetupTitle', function(self)
@@ -88,3 +88,97 @@ hooksecurefunc("QuestLogQuests_Update", function()
         set_text(line)
     end
  end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+--MapLegendMixin
+local QuestsCategoryData = {
+{Name = MAP_LEGEND_CAMPAIGN,   Tooltip = MAP_LEGEND_CAMPAIGN_TOOLTIP},
+{Name = MAP_LEGEND_IMPORTANT,  Tooltip = MAP_LEGEND_IMPORTANT_TOOLTIP},
+{Name = MAP_LEGEND_LEGENDARY,  Tooltip = MAP_LEGEND_LEGENDARY_TOOLTIP},
+{Name = MAP_LEGEND_META,       Tooltip = MAP_LEGEND_META_TOOLTIP},
+{Name = MAP_LEGEND_REPEATABLE, Tooltip = MAP_LEGEND_REPEATABLE_TOOLTIP},
+{Name = MAP_LEGEND_LOCALSTORY, Tooltip = MAP_LEGEND_LOCALSTORY_TOOLTIP},
+{Name = MAP_LEGEND_INPROGRESS, Tooltip = MAP_LEGEND_INPROGRESS_TOOLTIP},
+{Name = MAP_LEGEND_TURNIN,     Tooltip = MAP_LEGEND_TURNIN_TOOLTIP}
+}
+local LimitedCategoryData = {
+{Name = MAP_LEGEND_WORLDQUEST,     Tooltip = MAP_LEGEND_WORLDQUEST_TOOLTIP},
+{Name = MAP_LEGEND_WORLDBOSS,      Tooltip = MAP_LEGEND_WORLDBOSS_TOOLTIP},
+{Name = MAP_LEGEND_BONUSOBJECTIVE, Tooltip = MAP_LEGEND_BONUSOBJECTIVE_TOOLTIP},
+{Name = MAP_LEGEND_EVENT,          Tooltip = MAP_LEGEND_EVENT_TOOLTIP},
+{Name = MAP_LEGEND_RARE,           Tooltip = MAP_LEGEND_RARE_TOOLTIP},
+{Name = MAP_LEGEND_RAREELITE,      Tooltip = MAP_LEGEND_RAREELITE_TOOLTIP},
+}
+local ActivitiesCategoryData = {
+{Name = MAP_LEGEND_DUNGEON,   Tooltip = MAP_LEGEND_DUNGEON_TOOLTIP},
+{Name = MAP_LEGEND_RAID,      Tooltip = MAP_LEGEND_RAID_TOOLTIP},
+{Name = MAP_LEGEND_HUB,       Tooltip = MAP_LEGEND_HUB_TOOLTIP},
+{Name = MAP_LEGEND_DIGSITE,   Tooltip = MAP_LEGEND_DIGSITE_TOOLTIP},
+{Name = MAP_LEGEND_PETBATTLE, Tooltip = MAP_LEGEND_PETBATTLE_TOOLTIP},
+{Name = MAP_LEGEND_DELVE,		Tooltip = MAP_LEGEND_DELVE_TOOLTIP},
+}
+local MovementCategoryData = {
+{Name = MAP_LEGEND_TELEPORT,     Tooltip = MAP_LEGEND_TELEPORT_TOOLTIP,},
+{Name = MAP_LEGEND_CAVE,         Tooltip = MAP_LEGEND_CAVE_TOOLTIP},
+{Name = MAP_LEGEND_FLIGHTPOINT,  Tooltip = MAP_LEGEND_FLIGHTPOINT_TOOLTIP},
+}
+local MapLegendData = {
+{CategoryTitle = MAP_LEGEND_CATEGORY_QUESTS,      CategoryData = QuestsCategoryData},
+{CategoryTitle = MAP_LEGEND_CATEGORY_LTA,         CategoryData = LimitedCategoryData},
+{CategoryTitle = MAP_LEGEND_CATEGORY_ACTIVITIES,  CategoryData = ActivitiesCategoryData},
+{CategoryTitle = MAP_LEGEND_CATEGORY_MOVEMENT,    CategoryData = MovementCategoryData},
+}
+
+
+
+
+
+
+
+do
+for _, data in ipairs(MapLegendData) do
+    local frame=_G[data.CategoryTitle]
+    if frame then
+        e.set(frame.TitleText, data.CategoryTitle)
+    end
+    for _, categoryData in ipairs(data.CategoryData) do
+        local btn=_G[categoryData.Name]
+        if btn then
+            e.set(btn, categoryData.Name)
+            local tooltip= e.strText[categoryData.Tooltip]
+            if tooltip then
+                btn.tooltipText= tooltip
+            end
+        end
+    end
+end
+end
+QuestsCategoryData = nil
+LimitedCategoryData = nil
+ActivitiesCategoryData = nil
+MovementCategoryData = nil
+MapLegendData = nil
