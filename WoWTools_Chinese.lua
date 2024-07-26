@@ -20,9 +20,9 @@ e.strText={--主要，汉化
 
 
 
-
-
-function e.Get_HoliDay_Info()end---tab.holydayID eventID {'名称', '描述}
+function e.Get_HoliDay_Desc()end--{holydayID=eventID} {'名称', '描述}
+function e.Get_HoliDay_Name()end--{holydayID, isName}
+function e.Get_HoliDay_Info()end--{holydayID, isDesc}
 
 
 function e.Get_PerksActivity_Info()end---tab.perksActivityID {'名称', '描述}
@@ -95,7 +95,14 @@ function e.cn(text, tab)
     local data
     if type(tab)=='table' then
         if tab.holydayID then
-            data= e.Get_HoliDay_Info(tab.holydayID)--节日 eventID
+            if tab.isName then
+                data= e.Get_HoliDay_Name(tab.holydayID)
+            elseif isDesc then
+                data= e.Get_HoliDay_Desc(tab.holydayID)
+            else
+                data= e.Get_HoliDay_Info(tab.holydayID)--节日 eventID
+            end
+            
 
         elseif tab.perksActivityID then
             data= e.Get_PerksActivity_Info(tab.perksActivityID)--PERKS

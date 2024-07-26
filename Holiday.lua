@@ -54,9 +54,9 @@ local function Init()
         local day = dayButton.day
         local eventIndex = elementData.index
         local event = C_Calendar.GetDayEvent(monthOffset, day, eventIndex) or {}
-        local tab= e.Get_HoliDay_Info(event.eventID)
-        if tab and tab[1] then
-            btn.Title:SetText(tab[1])
+        local title= e.Get_HoliDay_Name(event.eventID)
+        if title then
+            btn.Title:SetText(title)
         end
     end)
 
@@ -76,9 +76,9 @@ local function Init()
             local eventButtonText1 = _G[dayButtonName..'EventButton'..eventButtonIndex.."Text1"]
             local event = C_Calendar.GetDayEvent(monthOffset, day, eventIndex)
             if ShouldDisplayEventOnCalendar(event) then
-                local data= e.Get_HoliDay_Info(event.eventID)
-                if data and data[1] then
-                    eventButtonText1:SetText(data[1])
+                local title= e.Get_HoliDay_Name(event.eventID)
+                if title then
+                    eventButtonText1:SetText(title)
                 end
                 eventButtonIndex = eventButtonIndex + 1
             end
@@ -89,6 +89,19 @@ local function Init()
 
     hooksecurefunc(CalendarViewHolidayFrame, 'update', calendar_Uptate)--提示节目ID    
     hooksecurefunc('CalendarViewHolidayFrame_Update', calendar_Uptate)
+
+
+    e.hookLabel(CalendarTexturePickerFrame.Header.Text)
+    e.set(CalendarTexturePickerAcceptButton)
+    e.set(CalendarTexturePickerCancelButton)
+    hooksecurefunc(CalendarTexturePickerFrame.ScrollBox, 'Update', function(frame)
+        if not frame:GetView() then
+            return
+        end
+        for _, btn in pairs(frame:GetFrames() or {}) do
+            e.set(btn.Title)
+        end
+    end)
 end
 
 

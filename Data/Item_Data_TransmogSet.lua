@@ -1,5 +1,3 @@
-local id, e = ...
-
 --[[
 [ID]= 'Name_lang',
 https://wago.tools/db2/TransmogSet?locale=zhCN
@@ -3456,6 +3454,8 @@ local tab={
 
 
 }
+
+local id, e = ...
 do
     for transmogSetID, cnName in pairs(tab) do
         local info= C_TransmogSets.GetSetInfo(transmogSetID) or {}--description label name

@@ -34,12 +34,10 @@ local function Init()
     end)
 
     TokenFramePopup.Title:SetText('货币设置')
-
-    hooksecurefunc(TokenFrame, 'UpdatePopup', function()
-        e.set(TokenFramePopup.InactiveCheckbox.Text)
-        e.set(TokenFramePopup.BackpackCheckbox.Text)
-        e.set(TokenFramePopup.CurrencyTransferToggleButton)
-    end)
+    TokenFramePopup.InactiveCheckbox.Text:SetText('未使用')
+    TokenFramePopup.BackpackCheckbox.Text:SetText("在行囊上显示")
+    TokenFramePopup.CurrencyTransferToggleButton:SetText('转移')
+    --hooksecurefunc(TokenFrame, 'UpdatePopup', function()
 
     hooksecurefunc(CurrencyTransferMenu, 'RefreshMenuTitle', function(self)
         local name

@@ -465,3 +465,16 @@ end
 
 
 
+
+
+
+for journalEncounterID, info in pairs(WoWeuCN_Tooltips_EncounterData or {}) do
+    local title= info['Title']
+    if title and title~='' then
+        local name= EJ_GetEncounterInfo(journalEncounterID)
+        if name then
+            e.strText[name]= title
+        end
+    end
+end
+

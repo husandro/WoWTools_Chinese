@@ -1,3 +1,9 @@
+--[[
+[ScenarioID.. x .. OrderIndex]= {Description_lang, Title_lang}
+https://wago.tools/db2/ScenarioStep?locale=zhCN
+11.0.2.55763
+]]
+
 local tab={
 ["15x0"]= {"护送珀酒仙去盎迦猴岛的酿酒大锅。", "护送珀酒仙"} ,
 ["15x1"]= {"带上200桶盎迦丛林酒去酿酒大锅。", "装满酿酒大锅"} ,
@@ -3633,11 +3639,6 @@ local tab={
 
 
 local e= select(2, ...)
---[[
-[ScenarioID.. x .. OrderIndex]= {Description_lang, Title_lang}
-https://wago.tools/db2/ScenarioStep?build=11.0.2.55763&locale=zhCN
-]]
-
 
 function e.Get_Scenario_Step_Info(scenarioID, stepIndex)
     stepIndex= stepIndex or 1
