@@ -1,7 +1,8 @@
 local e= select(2, ...)
 --[[
 [ID] ={'Name_lang', 'Description_lang'},
-https://wago.tools/db2/SpellFlyout?build=11.0.0.55288&locale=zhCN
+https://wago.tools/db2/SpellFlyout?locale=zhCN
+11.0.2.55789
 ]]
 
 local tab={

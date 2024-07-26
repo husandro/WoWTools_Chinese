@@ -37,7 +37,22 @@ hooksecurefunc('PaperDollEquipmentManagerPane_InitButton', function(button, elem
 end)
 
 
-e.hookLabel(CharacterFrameTitleText)
+    
+hooksecurefunc(CharacterFrame, 'SetTitle', function(self)
+    if self.activeSubframe== 'PaperDollFrame' then
+        local titleID = GetCurrentTitle()
+        if titleID and titleID>0 then
+            local title= e.Get_Title_Name(titleID)
+            if title then
+                local name= HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(UnitName("player"))
+                name= format(title, name)
+                CharacterFrameTitleText:SetText(name)
+            end
+        end
+    else
+        --e.set(CharacterFrameTitleText)
+    end
+end)
 
 CharacterFrameTab1:SetText('角色')
 CharacterFrameTab1:HookScript('OnEnter', function()
@@ -52,4 +67,38 @@ end)
 CharacterFrameTab3:SetText('货币')
 CharacterFrameTab3:HookScript('OnEnter', function()
     GameTooltip:SetText(MicroButtonTooltipText('货币', "TOGGLECURRENCY"), 1.0,1.0,1.0 )
+end)
+
+
+
+--
+hooksecurefunc(PaperDollFrame.TitleManagerPane.ScrollBox, 'Update', function(frame)
+    for _, btn in pairs(frame:GetFrames() or {}) do
+        if not btn.get_name then
+            function btn:get_name()
+                local name= self.titleId==-1 and '无头衔' or e.Get_Title_Name(self.titleId)                
+                return name
+            end
+            e.font(btn:GetFontString())
+            btn:HookScript('OnLeave', GameTooltip_Hide)
+            btn:HookScript('OnEnter', function(self)
+                if self.titleId==-1 then
+                    return
+                end
+                local name= self:get_name()
+                if not name then
+                    return
+                end
+                GameTooltip:SetOwner(self, "ANCHOR_LEFT")     
+                local title= format(name, UnitName('player'))
+                GameTooltip_SetTitle(GameTooltip, title)
+                GameTooltip_AddNormalLine(GameTooltip, (GetTitleName(self.titleId) or '')..' ')
+                GameTooltip:Show()
+            end)
+        end
+        local name= btn:get_name()
+        if name then
+            btn:SetText(name:gsub('%%s', ''))
+        end
+    end
 end)

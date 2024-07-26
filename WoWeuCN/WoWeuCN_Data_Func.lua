@@ -146,13 +146,31 @@ e.Get_Spell_Data= GetSpellData or function(spellID)
             end
         end
     end
+  
+    
     return data
 end
 
 
 
 
+function e.Get_Spell_Name(spellID)
+    if spellID then
+        local data= e.Get_Spell_Data(spellID)
+        if data then
+            return e.ReplaceText(data[1])
+        end
+    end
+end
 
+function e.Get_Spell_Desc(spellID)
+    if spellID then
+        local data= e.Get_Spell_Data(spellID)
+        if data then
+            return e.ReplaceText(data[#data])
+        end
+    end
+end
 
 
 

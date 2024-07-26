@@ -114,7 +114,6 @@ Challenges.lua
 Holiday.lua
 
 CharacterFrame.lua
-CharacterFrame_Title.lua
 CharacterFrame_Faction.lua
 CharacterFrame_Currency.lua
 
@@ -159,5 +158,5 @@ WoWeuCN\EncounterData_Add.lua
 WoWeuCN\WoWeuCN_Data_Func.lua
 
 ##放最后
-Data\GlobalStrings_Add.lua
+Data\zhCN_Add.lua
 

@@ -180,7 +180,6 @@ end]]
 
 local function set_item(tooltip, data)
     local info= e.Get_Item_Data(data.id)
-
     if not info then
         return
     end
@@ -206,20 +205,12 @@ local function set_item(tooltip, data)
     end
 end
 
-local function set_spell(tooltip, data)
-    local info = e.Get_Spell_Data(data.id)
-    if not info then
-        return
-    end
-    
-    local name = e.ReplaceText(info[1])
-    if name then
-        tooltip.TextLeft1:SetText(info[1])
-    end
 
-    local num= #info
-    if num>1 then
-        local desc= e.ReplaceText(info[num])
+local function set_spell(tooltip, data)
+    local name = e.Get_Spell_Name(data.id)
+    if name then
+        tooltip.TextLeft1:SetText(name)
+        local desc= e.Get_Spell_Desc(data.id)
         if desc then
             tooltip:AddLine(' ')
             tooltip:AddLine(desc, nil,nil,nil, true)

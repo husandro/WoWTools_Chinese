@@ -1,4 +1,4 @@
-local e= select(2, ...)
+local id, e= ...
 
 
 hooksecurefunc(SettingsCategoryListButtonMixin, 'Init', function(self, initializer)--列表 Blizzard_CategoryList.lua
@@ -53,6 +53,7 @@ hooksecurefunc(KeyBindingFrameBindingTemplateMixin, 'Init', function(self, initi
     e.set(self.Label)
 end)
 
+e.hookLabel(SettingsPanel.OutputText)
 
 
 

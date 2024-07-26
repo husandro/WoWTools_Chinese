@@ -60,10 +60,9 @@ end)
 hooksecurefunc(MenuUtil, 'SetElementText', function(elementDescription, text)
     local name= e.strText[text]
     if name then
-    elementDescription.text = text
-        elementDescription:AddInitializer(function(button, description)
-            print(description.text)
-            e.set(button.Text, description.text)
+        elementDescription.text = name
+        elementDescription:AddInitializer(function(button)
+            button.Text:SetText(name)
         end)
     end
 end)

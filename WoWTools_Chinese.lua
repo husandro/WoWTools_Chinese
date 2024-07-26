@@ -69,29 +69,14 @@ function e.Get_Item_Name(itemID)
     if itemID then
         local data= e.Get_Item_Data(itemID)
         if data then
-            return data[1]
+            return e.ReplaceText(data[1])
         end
     end
 end
 
 function e.Get_Spell_Data()end -- 初始func, 法术数据，{'名称', '1', '2', ...}
-
-function e.Get_Spell_Name(spellID)
-    if spellID then
-        local data= e.Get_Spell_Data(spellID)
-        if data then
-            return e.ReplaceText(data[1])
-        end
-    end
-end
-function e.Get_Spell_Desc(spellID)
-    if spellID then
-        local data= e.Get_Spell_Data(spellID)
-        if data then
-            return e.ReplaceText(data[#data])
-        end
-    end
-end
+function e.Get_Spell_Name(spellID)end
+function e.Get_Spell_Desc(spellID)end
 
 
 
@@ -131,12 +116,18 @@ function e.cn(text, tab)
             data= e.Get_TradeSkillCategory_Name(tab.skillCategoryID)--专业目录
 
         elseif tab.spellID then
+            local name= e.Get_Spell_Name(tab.spellID)--法术名称
             if tab.isName then
-                data= e.Get_Spell_Name(tab.spellID)--法术名称
+                data= name
             elseif tab.isDesc then
                 data= e.Get_Spell_Desc(tab.spellID)
             else
                 data= e.Get_Spell_Data(tab.spellID)
+                if data then
+                    for index, name in pairs(data) do
+                        data[index]= e.ReplaceText(name)
+                    end
+                end
             end
 
         elseif tab.itemID then
