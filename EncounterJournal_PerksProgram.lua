@@ -1,15 +1,7 @@
 local id, e= ...
 
 
-local function set_item(self)
-    if not self.itemInfo then
-        return
-    end
-    local itemName= e.Get_Item_Name(self.itemInfo.itemID)
-    if itemName then
-        self.ContentsContainer.Label:SetText(itemName)
-    end
-end
+
 
 
 
@@ -158,11 +150,21 @@ end
 local function Init()
     Init_Blizzard_PerksProgramElements()
 
-    e.set(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.NameSortButton.Label)
-    e.set(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.PriceSortButton.Label)
+
+
+    local function set_item(self)
+        if not self.itemInfo then
+            return
+        end
+        local itemName= e.Get_Item_Name(self.itemInfo.itemID)
+        if itemName then
+            self.ContentsContainer.Label:SetText(itemName)
+        end
+    end
     hooksecurefunc(PerksProgramProductButtonMixin, 'SetItemInfo', set_item)
     hooksecurefunc(PerksProgramFrozenProductButtonMixin, 'SetItemInfo', set_item)
-
+    e.set(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.NameSortButton.Label)
+    e.set(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.PriceSortButton.Label)
 
 
 
@@ -185,8 +187,23 @@ local function Init()
             self.PurchasedHistoryFrame.RefundText:SetText(refundTimeLeft);
         end
     end)
-
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 --###########
 --加载保存数据
 --###########
