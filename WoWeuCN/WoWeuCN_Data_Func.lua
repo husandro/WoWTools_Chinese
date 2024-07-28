@@ -15,7 +15,7 @@ https://www.curseforge.com/wow/addons/quest-chinese-translator
 
 e.ReplaceText(string)
 法术 e.Get_Spell_Data(spellID)
-物品 e.Get_Item_Data(itemID)
+物品 e.Get_Item_Info(itemID)
 任务 e.Get_Quest_Info(questID, isName, isObject, isDesc)
 
 e.Get_Unit_Info(unit, npcID)
@@ -167,7 +167,7 @@ function e.Get_Spell_Desc(spellID)
     if spellID then
         local data= e.Get_Spell_Data(spellID)
         if data then
-            return e.ReplaceText(data[#data])
+            return e.ReplaceText(#data)
         end
     end
 end
@@ -186,28 +186,43 @@ end
 
 
 
---物品 e.Get_Item_Data(itemID)
-e.Get_Item_Data= GetItemData or function(itemID)
-    if itemID and WoWeuCN_Tooltips_ItemData_0 then
-        local index = nil
-        if (itemID >= 0 and itemID < 100000) then
-            index = WoWeuCN_Tooltips_ItemIndexData_0[itemID]
-        elseif (itemID >= 100000 and itemID < 200000) then
-            index = WoWeuCN_Tooltips_ItemIndexData_100000[itemID - 100000]
-        elseif (itemID >= 200000 and itemID < 300000) then
-            index = WoWeuCN_Tooltips_ItemIndexData_200000[itemID - 200000]
-        end
-        if index then
+--物品 e.Get_Item_Info(itemID)
+if GetItemData then
+    e.Get_Item_Info= GetItemData
+else
+    function e.Get_Item_Info(itemID)
+        if itemID and WoWeuCN_Tooltips_ItemData_0 then
+            local index = nil
             if (itemID >= 0 and itemID < 100000) then
-                return split(WoWeuCN_Tooltips_ItemData_0[index], '£')
+                index = WoWeuCN_Tooltips_ItemIndexData_0[itemID]
             elseif (itemID >= 100000 and itemID < 200000) then
-                return split(WoWeuCN_Tooltips_ItemData_100000[index], '£')
+                index = WoWeuCN_Tooltips_ItemIndexData_100000[itemID - 100000]
             elseif (itemID >= 200000 and itemID < 300000) then
-                return split(WoWeuCN_Tooltips_ItemData_200000[index], '£')
+                index = WoWeuCN_Tooltips_ItemIndexData_200000[itemID - 200000]
+            end
+            if index then
+                if (itemID >= 0 and itemID < 100000) then
+                    return split(WoWeuCN_Tooltips_ItemData_0[index], '£')
+                elseif (itemID >= 100000 and itemID < 200000) then
+                    return split(WoWeuCN_Tooltips_ItemData_100000[index], '£')
+                elseif (itemID >= 200000 and itemID < 300000) then
+                    return split(WoWeuCN_Tooltips_ItemData_200000[index], '£')
+                end
             end
         end
     end
 end
+
+
+function e.Get_Item_Name(itemID)
+    if itemID then
+        local data= e.Get_Item_Info(itemID)
+        if data then
+            return e.ReplaceText(data[1])
+        end
+    end
+end
+
 
 
 

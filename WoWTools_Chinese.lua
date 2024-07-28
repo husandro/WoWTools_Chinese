@@ -60,19 +60,13 @@ function e.Get_Unit_Name()end--e.Get_Unit_Name(tab.unit, tab.npcID) NPC return �
 function e.Get_Unit_Info()end--e.Get_Unit_Name(tab.unit, tab.npcID) NPC return {'名称', '头衔'}
 
 
-function e.Get_Item_Data()end--物品数据
-function e.Get_Item_Name(itemID)
-    if itemID then
-        local data= e.Get_Item_Data(itemID)
-        if data then
-            return e.ReplaceText(data[1])
-        end
-    end
-end
+function e.Get_Item_Info()end--物品数据
+function e.Get_Item_Name()end
+function e.Get_Item_Desc()end--{itemID, index}
 
 function e.Get_Spell_Data()end -- 初始func, 法术数据，{'名称', '1', '2', ...}
-function e.Get_Spell_Name(spellID)end
-function e.Get_Spell_Desc(spellID)end
+function e.Get_Spell_Name()end --{spellID, isName}
+function e.Get_Spell_Desc()end-- {spellID, isDesc}
 
 
 
@@ -123,25 +117,32 @@ function e.cn(text, tab)
             if tab.isName then
                 data= name
             elseif tab.isDesc then
-                data= e.Get_Spell_Desc(tab.spellID)
+                data= e.Get_Spell_Desc(tab.spellID, tab.index)
             else
                 data= e.Get_Spell_Data(tab.spellID)
                 if data then
-                    for index, name in pairs(data) do
-                        data[index]= e.ReplaceText(name)
+                    for index, name2 in pairs(data) do
+                        data[index]= e.ReplaceText(name2)
                     end
                 end
             end
 
         elseif tab.itemID then
-            if tab.isName then
-                data= e.Get_Item_Name(tab.itemID)--物品名称
-
-            elseif tab.isToy then
+            if tab.isToy then
                 data= e.Get_Toy_Source(itemID)
-
             elseif tab.isHeirloom then
-                data= e.Get_Heirloom_Source(itemID)
+                data= e.Get_Heirloom_Source(itemID)            
+            elseif tab.isName then
+                data= e.Get_Item_Name(tab.itemID)--物品名称
+            elseif tab.isDesc then
+                data= e.Get_Item_Desc(tab.itemID)--物品名称
+            else
+                data= e.Get_Item_Info(tab.itemID)--物品名称
+                if data then
+                    for index, name2 in pairs(data) do
+                        data[index]= e.ReplaceText(name2)
+                    end
+                end
             end
 
         elseif tab.skillLineAbilityID then

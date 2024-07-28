@@ -179,7 +179,7 @@ end]]
 
 
 local function set_item(tooltip, data)
-    local info= e.Get_Item_Data(data.id)
+    local info= e.Get_Item_Info(data.id)
     if not info then
         return
     end
