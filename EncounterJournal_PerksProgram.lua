@@ -43,6 +43,7 @@ local function Init_Blizzard_PerksProgramElements()
 
     --PerksProgramProductDetailsFrameMixin
     --PerksProgramFrame.ProductsFrame.PerksProgramProductDetailsContainerFrame.DetailsFrame.CategoryText
+    e.region(PerksProgramFrame.ProductsFrame.PerksProgramProductDetailsContainerFrame.SetDetailsScrollBoxContainer)
     hooksecurefunc(PerksProgramFrame.ProductsFrame.PerksProgramProductDetailsContainerFrame.DetailsFrame, 'Refresh', function(self)
         if not self.data then
             return;
@@ -118,6 +119,13 @@ local function Init_Blizzard_PerksProgramElements()
                 rightText = rightColor:WrapTextInColorCode(rightText);
             end
             self.ItemSlotRight:SetText(rightText)
+        end
+    end)
+
+    hooksecurefunc(PerksProgramSetDetailsItemMixin, 'Refresh', function(self)
+        local name= e.strText[self.elementData.itemName] or e.Get_Item_Name(self.elementData.itemID)
+        if name then
+            self.ItemName:SetText(name)
         end
     end)
 end
