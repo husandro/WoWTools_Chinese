@@ -234,6 +234,17 @@ if not GetItemData then
     end)
 end
 
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Macro, function(tooltip, data)
+    local frame= tooltip:GetOwner()--宏 11版本
+    if frame and frame.action then
+        local type, macroID, subType= GetActionInfo(frame.action)
+        if type=='macro' and macroID and subType=='spell' then
+            data.id= macroID
+            set_spell(tooltip, data)
+        end
+    end
+end)
+
 
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(tooltip, data)
     set_item(tooltip, data)
@@ -241,12 +252,13 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(toolt
         local source= e.Get_Toy_Source(data.id)
         if source then
             tooltip:AddLine(source, nil,nil,nil, true)
-            --tooltip:Show()
         end
     end
 end)
 
-
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.UnitAura, function(tooltip, data)
+    set_spell(tooltip, data)
+end)
 if not GetSpellData then
     TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip, data)
         set_spell(tooltip, data)

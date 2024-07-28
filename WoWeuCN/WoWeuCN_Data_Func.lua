@@ -167,7 +167,7 @@ function e.Get_Spell_Desc(spellID)
     if spellID then
         local data= e.Get_Spell_Data(spellID)
         if data then
-            return e.ReplaceText(#data)
+            return e.ReplaceText(data[#data])
         end
     end
 end

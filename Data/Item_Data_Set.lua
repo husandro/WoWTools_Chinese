@@ -951,7 +951,7 @@ local tab={
 
 local e= select(2, ...)
 
-C_Timer.After(2, function()
+C_Timer.After(4, function()
 do
     local name
     for setID, info in pairs(tab) do

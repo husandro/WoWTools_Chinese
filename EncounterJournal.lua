@@ -449,6 +449,62 @@ local function Init()
     Init_EncounterJournal()
     Init_WoWeuCN()
 end
+--[[
+    hooksecurefunc('EJSuggestFrame_RefreshDisplay', function()
+        local instanceSelect = EncounterJournal.instanceSelect;
+        local tab = EncounterJournal.suggestTab;
+        local tierData = GetEJTierData(EJSuggestTab_GetPlayerTierIndex());
+        instanceSelect.bg:SetAtlas(tierData.backgroundAtlas, true);
+
+        local self = EncounterJournal.suggestFrame;
+       
+     
+
+        -- setup the primary suggestion display
+        if ( #self.suggestions > 0 ) then
+            local suggestion = self.Suggestion1;
+            local data = self.suggestions[1];
+
+            local centerDisplay = suggestion.centerDisplay;
+            info= data
+            for k, v in pairs(info) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
+            local titleText = centerDisplay.title.text;
+            local descText = centerDisplay.description.text;
+    
+            local title= e.strText[data.title]
+            local desc= e.strText[data.title]
+            if title then
+                titleText:SetText(title);
+            end
+            if desc then
+                descText:SetText(desc);
+            end
+        
+
+
+            e.hookLable(suggestion.button.Text)
+        end
+
+        -- setup secondary suggestions display
+        if ( #self.suggestions > 1 ) then
+            for i = 2, #self.suggestions do
+                local suggestion = self["Suggestion"..i];
+                if ( not suggestion ) then
+                    break;
+                end
+
+                local data = self.suggestions[i];
+                local title= e.strText[data.title]
+                local desc= e.strText[data.descriptio]
+                if title then
+                    suggestion.centerDisplay.title.text:SetText(title);
+                end
+                if desc then
+                    suggestion.centerDisplay.description.text:SetText(desc);
+                end
+            end
+        end
+    end)]]
 
 
 

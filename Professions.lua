@@ -273,7 +273,7 @@ local function Init_CraftingPage_SchematicForm()
     end)
 
 
-    hooksecurefunc(frame, 'Init', function(self, recipeInfo)
+    hooksecurefunc(frame, 'Init', function(self, recipeInfo)--ProfessionsRecipeSchematicFormMixin
         if not recipeInfo then
             return
         end
@@ -993,6 +993,45 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local function Init_InspectRecipe()
+    
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 local function Init()
     Init_CraftingPage()
     Init_CraftingPage_SchematicForm()
@@ -1001,8 +1040,6 @@ local function Init()
     Init_CraftingOutputLog()
     Init_Details_Stat()
     Init_ReagentSlot()
-
-
     hooksecurefunc(ProfessionsFrame, 'SetTitle', function(self, skillLineName)
         if e.strText[skillLineName] then
             skillLineName= e.strText[skillLineName]
@@ -1061,6 +1098,22 @@ local function Init()
             self.Label:SetText(name)
         end
     end)
+
+
+    --Blizzard_ProfessionsInspectRecipe.lua InspectRecipeMixin
+    e.set(InspectRecipeFrame.SchematicForm.Reagents.Label)
+    hooksecurefunc(InspectRecipeFrame, 'Open', function(self, recipeID)
+        local data = C_TradeSkillUI.GetProfessionInfoByRecipeID(recipeID) or {}
+        local name
+        if data.professionName then
+            name= e.Get_TradeSkillCategory_Name(data.professionID) or e.strText[data.professionName]
+        elseif data.parentProfessionName then
+            name= e.Get_TradeSkillCategory_Name(data.parentProfessionID) or e.strText[data.parentProfessionName]
+        end
+        if name then
+            self:SetTitle(name)
+        end
+    end)
 end
 
 
@@ -1106,342 +1159,3 @@ panel:SetScript("OnEvent", function(self, _, arg1)
     end
 end)
 
-
-
---[[
-try = EnumUtil.MakeEnum("Cooldown", "Description", "Source", "FirstCraftBonus")
-    
-local function CreateVerticalLayoutOrganizer(anchor, xPadding, yPadding)
-    local OrganizerMixin = {entries = {}}
-
-    xPadding = xPadding or 0
-    yPadding = yPadding or 0
-
-    function OrganizerMixin:Add(frame, order, xPadding, yPadding)
-        table.insert(self.entries, {
-            frame = frame, 
-            order = order, 
-            xPadding = xPadding or 0,
-            yPadding = yPadding or 0,
-        })
-    end
-
-    function OrganizerMixin:Layout()
-        table.sort(self.entries, function(lhs, rhs)
-            return lhs.order < rhs.order
-        end)
-
-        local relative = nil
-        for index, entry in ipairs(self.entries) do
-            entry.frame:ClearAllPoints()
-
-            if relative then
-                local x = xPadding + entry.xPadding
-                local y = -(yPadding + entry.yPadding)
-                entry.frame:SetPoint("TOPLEFT", relative, "BOTTOMLEFT", x, y)
-            else
-                entry.frame:SetPoint(anchor:Get())
-            end
-            relative = entry.frame
-        end
-    end
-
-    return CreateFromMixins(OrganizerMixin)
-end
-
-
-local cooldownFormatter = CreateFromMixins(SecondsFormatterMixin)
-cooldownFormatter:Init(
-    SecondsFormatterConstants.ZeroApproximationThreshold, 
-    SecondsFormatter.Abbreviation.None,
-    SecondsFormatterConstants.DontRoundUpLastUnit, 
-    SecondsFormatterConstants.DontConvertToLower)
-cooldownFormatter:SetDesiredUnitCount(2)
-
-hooksecurefunc(ProfessionsFrame.CraftingPage.SchematicForm, 'Init', function(self, recipeInfo, isRecraftOverride)
-    local hasRecipe = recipeInfo ~= nil
-    if not hasRecipe then
-        return
-    end
-    local xPadding = 0
-    local yPadding = 4
-    local anchor = AnchorUtil.CreateAnchor("TOPLEFT", self.OutputIcon, "BOTTOMLEFT", -1, -12)
-    local organizer = CreateVerticalLayoutOrganizer(anchor, xPadding, yPadding)
-
-    local recipeID = recipeInfo.recipeID
-    local isCooldownOrganized = false
-    local function UpdateCooldown()
-        local function UpdateText(fontString)
-            if recipeInfo.disabled then
-                fontString:SetTextColor(RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b)
-                fontString:SetText(recipeInfo.disabledReason)
-                return true
-            end
-
-            cooldownFormatter:SetMinInterval(SecondsFormatter.Interval.Seconds)
-
-            local cooldown, isDayCooldown, charges, maxCharges = C_TradeSkillUI.GetRecipeCooldown(recipeID)
-            if maxCharges and charges and maxCharges > 0 and (charges > 0 or not cooldown) then
-                if charges < maxCharges and cooldown then
-                    cooldownFormatter:SetConvertToLower(true)
-                    fontString:SetFormattedText('可用制造次数：%i/%i，距离获得下个制造次数还有%s。', charges, maxCharges, cooldownFormatter:Format(cooldown))
-                else
-                    fontString:SetFormattedText('可用制造次数：%i/%i', charges, maxCharges)
-                end
-                fontString:SetTextColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
-                return true
-            end
-            
-            if cooldown then
-                local function SetCooldownRemaining(cooldown)
-                    fontString:SetText('剩余冷却时间：'.." "..cooldownFormatter:Format(cooldown))
-                end
-
-                if not isDayCooldown then
-                    cooldownFormatter:SetConvertToLower(false)
-                    SetCooldownRemaining(cooldown)
-                elseif cooldown > SECONDS_PER_DAY then
-                    cooldownFormatter:SetConvertToLower(false)
-                    cooldownFormatter:SetMinInterval(SecondsFormatter.Interval.Hours)
-                    SetCooldownRemaining(cooldown)
-                else
-                    fontString:SetText('冷却时间会每日重置')
-                end
-
-                fontString:SetTextColor(RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b)
-                return true
-            end
-
-            fontString:SetText("")
-            return false
-        end
-            
-        local cooldownFontString
-        if minimized then
-            cooldownFontString = self.MinimizedCooldown
-        else
-            cooldownFontString = self.Cooldown
-        end
-
-        local shown = UpdateText(cooldownFontString)
-        cooldownFontString:SetShown(shown)
-        if shown then
-            if minimized then
-                local anchorTo
-                if #C_TradeSkillUI.GetRecipeRequirements(recipeID) > 0 then
-                    anchorTo = isRecraft and self.RecraftingRequiredTools or self.RequiredTools
-                elseif self.RecraftingOutputText:IsShown() then
-                    anchorTo = self.RecraftingOutputText
-                else
-                    anchorTo = self.OutputText
-                end
-
-                self.MinimizedCooldown:SetPoint("TOPLEFT", anchorTo, "BOTTOMLEFT", 0, -5)
-            else
-                if not isCooldownOrganized then
-                    isCooldownOrganized = true
-                    organizer:Add(self.Cooldown, LayoutEntry.Cooldown)
-                    organizer:Layout()
-                end
-            end
-        end
-    end
-
-    if not self.isInspection then
-        self.UpdateCooldown = UpdateCooldown
-        UpdateCooldown()
-    end
-
-    local sourceText, sourceTextIsForNextRank
-    if not recipeInfo.learned then
-        sourceText = e.Get_Recipe_Source(recipeID) or C_TradeSkillUI.GetRecipeSourceText(recipeID)
-    elseif recipeInfo.nextRecipeID then
-        sourceText = e.Get_Recipe_Source(recipeInfo.nextRecipeID) or C_TradeSkillUI.GetRecipeSourceText(recipeInfo.nextRecipeID)
-        sourceTextIsForNextRank = true
-    end
-    if (not (minimized or self.isInspection or isRecraft)) and sourceText then
-        if sourceTextIsForNextRank then
-            self.RecipeSourceButton.Text:SetText('下一级')
-        else
-            self.RecipeSourceButton.Text:SetText('未学习的配方')
-        end
-        self.RecipeSourceButton:SetScript("OnEnter", function()
-            GameTooltip:SetOwner(self.RecipeSourceButton.Text, "ANCHOR_RIGHT")
-            GameTooltip:SetCustomWordWrapMinWidth(350)
-            GameTooltip_AddHighlightLine(GameTooltip, sourceText)
-            GameTooltip:Show()
-        end)
-    end
-
-
-
-    if self.loader then
-        self.loader:Cancel()
-    end
-    self.loader = CreateProfessionsRecipeLoader(self.recipeSchematic, function()
-        local reagents = self.transaction:CreateCraftingReagentInfoTbl()
-
-        if not (minimized or self.isInspection or isRecraft) then
-            self:UpdateRecipeDescription()
-        end
-        
-        -- Description needs to be included in layout since other frames are anchored to it.
-        organizer:Add(self.Description, LayoutEntry.Description, 0, 5)
-        organizer:Layout()
-
-        local outputItemInfo = C_TradeSkillUI.GetRecipeOutputItemData(recipeID, reagents, self.transaction:GetAllocationItemGUID())
-        local text
-        if outputItemInfo.hyperlink then
-            local item = Item:CreateFromItemLink(outputItemInfo.hyperlink)
-            text = WrapTextInColor(item:GetItemName(), item:GetItemQualityColor().color)
-        else
-            text = WrapTextInColor(self.recipeSchematic.name, NORMAL_FONT_COLOR)
-        end
-        
-        local maxWidth = minimized and 250 or 800
-        local multiline = minimized
-        if isRecipeInfoRecraft then
-            SetTextToFit(self.RecraftingOutputText, '再造', maxWidth, multiline)
-        elseif isRecraft then
-            SetTextToFit(self.RecraftingOutputText, format('再造：%s', text), maxWidth, multiline)
-        else
-            SetTextToFit(self.OutputText, text, maxWidth, multiline)
-        end
-
-        Professions.SetupOutputIcon(self.OutputIcon, self.transaction, outputItemInfo)
-    end)
-
-
-
-
-    
-
-    if not self.isInspection then
-        if #C_TradeSkillUI.GetRecipeRequirements(recipeID) > 0 then
-            local fontString = isRecraft and self.RecraftingRequiredTools or self.RequiredTools
-            self.UpdateRequiredTools = function()                  
-                local requirements = C_TradeSkillUI.GetRecipeRequirements(recipeID)
-                if (#requirements > 0) then
-                    local requirementsText = BuildColoredListString(unpack(FormatRequirements(requirements)))
-                    local maxWidth = minimized and 250 or 800
-                    local multiline = minimized
-                    SetTextToFit(fontString, format('|cnNORMAL_FONT_COLOR:需要：|r %s', requirementsText), maxWidth, multiline)
-                end
-            end
-            self.UpdateRequiredTools()
-        end
-
-
-    end
-
-
-
-    if isRecraft then
-        self.recraftSlot.InputSlot:SetScript("OnMouseDown", function(button, buttonName, down)
-            if buttonName == "LeftButton" then
-                local flyout = ToggleProfessionsItemFlyout(self.recraftSlot.InputSlot, self)
-                if flyout then
-                    flyout.OnElementEnterImplementation = function(elementData, tooltip)
-                        tooltip:SetItemByGUID(elementData.itemGUID)
-                        local learned = C_TradeSkillUI.IsOriginalCraftRecipeLearned(elementData.itemGUID)
-                        if not learned then
-                            GameTooltip_AddBlankLineToTooltip(tooltip)
-                            GameTooltip_AddErrorLine(tooltip, '你必须学会了一件物品的配方才能对其进行再造')
-                        end
-                    end
-                end
-            end
-        end)
-
-        self.recraftSlot.InputSlot:SetScript("OnEnter", function()
-            GameTooltip:SetOwner(self.recraftSlot.InputSlot, "ANCHOR_RIGHT")
-            local itemGUID = self.transaction:GetRecraftAllocation()
-            if itemGUID then
-                GameTooltip:SetItemByGUID(itemGUID)
-                GameTooltip_AddBlankLineToTooltip(GameTooltip)
-                GameTooltip_AddInstructionLine(GameTooltip, '|cnDISABLED_FONT_COLOR:左键点击替换此装备|r')
-            else
-                GameTooltip_AddInstructionLine(GameTooltip, '左键点击选择一件可用的装备来再造')
-            end
-            GameTooltip:Show()
-        end)
-    end
-
-
-    for slotIndex, reagentSlotSchematic in ipairs(self.recipeSchematic.reagentSlotSchematics) do
-        local reagentType = reagentSlotSchematic.reagentType
-        if reagentType == Enum.CraftingReagentType.Basic then
-           
-        elseif not (self.isInspection and reagentType == Enum.CraftingReagentType.Finishing) then
-            local locked, lockedReason
-            if not self.isInspection then
-                locked, lockedReason = Professions.GetReagentSlotStatus(reagentSlotSchematic, recipeInfo)
-            end
-            slot.Button:SetScript("OnEnter", function()
-                local slotInfo = reagentSlotSchematic.slotInfo
-                if not slotInfo then
-                    return
-                end
-                GameTooltip:SetOwner(slot.Button, "ANCHOR_RIGHT")                    
-                if locked then
-                    local title
-                    if reagentType == Enum.CraftingReagentType.Finishing then
-                        title = format('成品材料：%s', e.cn(slotInfo.slotText))
-                    else
-                        title = e.cn(slotInfo.slotText) or '添加附加材料'
-                    end
-
-                    GameTooltip_SetTitle(GameTooltip, title)
-                    GameTooltip_AddErrorLine(GameTooltip, e.cn(lockedReason))
-                else
-                    local exchangeOnly = self.transaction:HasModification(reagentSlotSchematic.dataSlotIndex)
-                    Professions.SetupOptionalReagentTooltip(slot, recipeID, reagentSlotSchematic, exchangeOnly, 
-                        self.transaction:GetAllocationItemGUID(), slot:IsUnallocatable(), self.transaction)
-
-                    if slot.Button.InputOverlay.AddIcon:IsShown() then
-                        slot.Button.InputOverlay.AddIconHighlight:SetShown(not slot:IsUnallocatable())
-                    end
-                end
-                GameTooltip:Show()
-            end)
-        end
-    end
-    
-    if isSalvage then
-        self.salvageSlot.Button:SetScript("OnEnter", function()
-            GameTooltip:SetOwner(self.salvageSlot.Button, "ANCHOR_RIGHT")
-            local salvageItem = self.transaction:GetSalvageAllocation()
-            if salvageItem then
-                local itemID = salvageItem:GetItemID()
-                if itemID then
-                    GameTooltip:SetItemByID(itemID)
-                    GameTooltip_AddBlankLineToTooltip(GameTooltip)
-                    GameTooltip_AddInstructionLine(GameTooltip, '|cnDISABLED_FONT_COLOR:右键点击移除此材料|r')
-                end
-            else
-                GameTooltip_AddInstructionLine(GameTooltip, '左键点击选择一种材料来消耗')
-            end
-            GameTooltip:Show()
-        end)
-    end
-
-    local isEnchant = (self.recipeSchematic.recipeType == Enum.TradeskillRecipeType.Enchant) and not C_TradeSkillUI.IsRuneforging()
-    if isEnchant then
-        self.enchantSlot.Button:SetScript("OnEnter", function(button)
-            GameTooltip:SetOwner(button, "ANCHOR_RIGHT")
-
-            local item = self.transaction:GetEnchantAllocation()
-            if item then
-                GameTooltip:SetItemByGUID(item:GetItemGUID())
-                GameTooltip_AddBlankLineToTooltip(GameTooltip)
-                GameTooltip_AddInstructionLine(GameTooltip, '|cnDISABLED_FONT_COLOR:左键点击替换此物品|')
-            else
-                GameTooltip_AddInstructionLine(GameTooltip, '左键点击选择一件物品来附魔')
-            end
-            GameTooltip:Show()
-        end)
-    end
---self:UpdateDetailsStats(operationInfo)
---self:UpdateRecraftSlot(operationInfo)
-end)
-]]

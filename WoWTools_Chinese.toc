@@ -87,6 +87,7 @@ Data\Vignette_Data.lua
 
 Menu.lua
 Menu_UIDropDownMenu.lua
+StaticPopup.lua
 
 Func_Init.lua
 Func_Event.lua
@@ -96,7 +97,6 @@ StableFrame.lua
 MailFrame.lua
 SettingsPanel.lua
 EditModeManagerFrame.lua
-Dialogs.lua
 NavBar.lua
 GameTooltip.lua
 
@@ -112,7 +112,6 @@ DeathRecapFrame.lua
 ObjectiveTrackerFrame.lua
 PlayerSpellsFrame.lua
 Achievement.lua
-ChatConfigFrame.lua
 Collection.lua
 Challenges.lua
 Holiday.lua
@@ -123,6 +122,9 @@ CharacterFrame_Currency.lua
 
 Bank_BankFrame.lua
 Bank_AuctionHouse.lua
+
+Chat.lua
+Chat_ConfigFrame.lua
 
 Quest.lua
 Quest_GossipFrame.lua

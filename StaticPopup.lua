@@ -1,5 +1,35 @@
 local  e = select(2, ...)
 
+--StaticPopup.lua
+--StaticPopupItemFrameMixin:DisplayInfo(link, name, color, texture, count, tooltip)
+for _, frame in pairs({'StaticPopup1ItemFrameText', 'StaticPopup2ItemFrameText', 'StaticPopup3ItemFrameText', 'StaticPopup4ItemFrameText'}) do
+    hooksecurefunc(_G[frame], 'SetText', function(self, name)
+        local itemName= e.strText[name]
+        if not itemName then
+            local link= self:GetParent().link
+            if link then
+                local itemID= C_Item.GetItemInfoInstant(link)
+                itemName= e.Get_Item_Name(itemID)
+            end
+        end
+        if itemName then
+            itemName= itemName:match('|c........(.-)|r') or itemName
+            if name ~= itemName  then
+                self:SetText(itemName)
+            end
+        end
+    end)
+end
+
+
+
+
+
+
+
+
+
+
 
 --Blizzard_Dialogs.lua
 e.hookDia('GAME_SETTINGS_TIMED_CONFIRMATION', 'OnUpdate', function(self, elapsed)

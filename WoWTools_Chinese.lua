@@ -117,7 +117,7 @@ function e.cn(text, tab)
             if tab.isName then
                 data= name
             elseif tab.isDesc then
-                data= e.Get_Spell_Desc(tab.spellID, tab.index)
+                data= e.Get_Spell_Desc(tab.spellID)
             else
                 data= e.Get_Spell_Data(tab.spellID)
                 if data then
