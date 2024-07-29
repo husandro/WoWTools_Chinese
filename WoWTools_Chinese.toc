@@ -123,7 +123,6 @@ CharacterFrame_Currency.lua
 Bank_BankFrame.lua
 Bank_AuctionHouse.lua
 
-Chat.lua
 Chat_ConfigFrame.lua
 
 Quest.lua

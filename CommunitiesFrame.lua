@@ -1,4 +1,4 @@
-local id, e= ...
+local e= select(2, ...)
 --公会和社区
 
 
@@ -8,7 +8,7 @@ local id, e= ...
 
 
 
-local function Init()
+
     CommunitiesFrameTitleText:SetText('公会与社区')
     CommunitiesFrame.AddToChatButton.Label:SetText('添加至聊天窗口')
     CommunitiesFrame.CommunitiesControlFrame.GuildRecruitmentButton:SetText('公会招募')
@@ -146,7 +146,7 @@ local function Init()
         GameTooltip:Show()
     end)
 
-    CommunitiesFrameGuildDetailsFrameInfo.TitleText:SetText('信息')
+
 
 
     if ClubFinderGuildFinderFrame.InsetFrame.CommunityCards then
@@ -229,6 +229,9 @@ local function Init()
     hooksecurefunc(CommunitiesListEntryMixin, 'SetFindCommunity', function(self)
         self.Name:SetText('寻找社区')
     end)
+
+
+
         --set(ClubFinderFilterDropdown.Label, '过滤器')
         --set(ClubFinderSortByDropdown.Label, '排序')
         --e.set(ClubFinderSizeDropdown.Label)
@@ -255,7 +258,9 @@ local function Init()
             self:GetParent().InsetFrame.GuildDescription:SetText('未发现结果。请修改你的搜索条件。')
         end)
         ClubFinderCommunityAndGuildFinderFrame.InsetFrame.GuildDescription:SetText('公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。|n|n使用此工具来寻找与你志同道合的公会吧。')
-        --set(ClubFinderGuildFinderFrame.InsetFrame.GuildDescription, '公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。|n|n使用此工具来寻找与你志同道合的公会吧。')
+        e.set(ClubFinderGuildFinderFrame.InsetFrame.GuildDescription, '公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。|n|n使用此工具来寻找与你志同道合的公会吧。')
+        e.set(ClubFinderGuildFinderFrame.OptionsList.ClubFilterDropdown.Label)
+        ClubFinderGuildFinderFrame.OptionsList.ClubSizeDropdown.Label:SetText('规模')
 
         hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame, 'GetDisplayModeBasedOnSelectedTab', function(self)
             if (self.isGuildType) then
@@ -272,6 +277,11 @@ local function Init()
                 self.ErrorDescription:SetText(RED_FONT_COLOR:WrapTextInColorCode('由于您的角色在游戏中存在发布不当内容的行为，导致您的账号受到了禁言处罚。被禁言期间，您无法使用此功能。'))
             end
         end)
+
+
+
+
+        
     hooksecurefunc(CommunitiesListEntryMixin, 'SetAddCommunity', function(self)
         self.Name:SetText('加入或创建社区')
     end)
@@ -353,13 +363,98 @@ local function Init()
         end
     end)
 
-end
 
 
 
 
 
---###########
+
+
+
+
+    --奖励, 物品，GuildRewards.lua
+    hooksecurefunc(CommunitiesGuildRewardsButtonMixin, 'Init', function(self, data)
+        local achievementID, itemID, itemName, _, repLevel = GetGuildRewardInfo(self.index)
+        local name= e.Get_Item_Name(itemID) or e.strText[itemName]
+        if name then
+            self.Name:SetText(name);
+        end
+
+        if ( achievementID and achievementID > 0 ) then
+            local name = select(2, GetAchievementInfo(achievementID))
+            name= e.strText[name]
+            if name then
+                self.SubText:SetText('需要：'..COMMUNITIES_GUILD_REWARDS_ACHIEVEMENT_ICON..YELLOW_FONT_COLOR_CODE..name..FONT_COLOR_CODE_CLOSE);
+            end
+        else
+            local guildFactionData = C_Reputation.GetGuildFactionData()
+            if guildFactionData and repLevel and repLevel > guildFactionData.reaction then
+                local factionStandingtext = GetText("FACTION_STANDING_LABEL"..repLevel, gender)
+                self.SubText:SetFormattedText('需要：|cffff0000%s|r', e.cn(factionStandingtext))
+            end
+        end
+    end)
+
+    --奖励, 法术，GuildPerks.lua
+    hooksecurefunc(CommunitiesGuildPerksButtonMixin, 'Init', function(self, data)
+        local name= e.Get_Spell_Name(self.spellID) or e.strText[GetGuildPerkInfo(data.index)]
+        if name then
+            self.Name:SetText('|cff00adef'..name..'|r')
+        end
+    end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+    --信息 GuildNews.lua
+    --GuildUtil.lua
+    CommunitiesFrameGuildDetailsFrameInfo.TitleText:SetText('信息')
+    e.set(CommunitiesFrameGuildDetailsFrameInfoHeader1Label)
+    e.set(CommunitiesFrameGuildDetailsFrameInfo.Header2Label)
+    
+    for i=1, 4 do
+        local btn= _G['CommunitiesFrameGuildDetailsFrameInfoChallenge'..i]
+        e.hookLabel(btn and btn.label)
+    end
+
+    e.set(CommunitiesFrameGuildDetailsFrameNews.TitleText)--公会新闻
+    e.set(CommunitiesFrameGuildDetailsFrameNews.SetFiltersButton)
+
+    --公会新闻过滤
+    if CommunitiesGuildNewsFiltersFrame then--CommunitiesGuildNewsFiltersFrame_OnLoad
+        e.set(CommunitiesGuildNewsFiltersFrame.Title)
+        for _, filterButton in pairs(CommunitiesGuildNewsFiltersFrame.GuildNewsFilterButtons) do
+            local name= e.strText[_G["GUILD_NEWS_FILTER"..filterButton:GetID()]]
+            if name then
+                filterButton.Text:SetText(name);
+            end
+        end
+    end
+
+    --查看日志
+    e.set(CommunitiesGuildLogFrameTitle)
+    e.set(CommunitiesGuildLogFrameCloseButtonText)
+
+
+
+
+--没测试
+hooksecurefunc('GuildNewsButton_SetText', function(button, _, text, a, b, c, ...)
+    button.text:SetFormattedText(e.cn(text), e.cn(a), e.cn(b), e.cn(c), ...)
+end)
+
+
+
+--[[###########
 --加载保存数据
 --###########
 local panel= CreateFrame("Frame")
@@ -377,3 +472,4 @@ panel:SetScript("OnEvent", function(self, _, arg1)
 
     end
 end)
+]]
