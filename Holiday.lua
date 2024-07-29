@@ -32,7 +32,8 @@ end
 
 
 local function Init()
-
+    e.dia("CALENDAR_DELETE_EVENT", {button1 = '确定', button2 = '取消',})
+    e.dia('CALENDAR_ERROR', {button1 = '确定'})
     --CalendarFrame.FilterButton.Text:SetText('过滤器')
 
     CalendarEventPickerCloseButtonText:SetText('关闭')
@@ -102,6 +103,19 @@ local function Init()
             e.set(btn.Title)
         end
     end)
+
+
+    --创建，活动
+    e.hookLabel(CalendarCreateEventFrame.Header.Text)
+    e.set(CalendarCreateEventLockEventCheckText)
+    e.set(CalendarCreateEventInviteListNameSortButton)
+    e.set(CalendarCreateEventInviteListClassSortButton)
+    e.set(CalendarCreateEventInviteListStatusSortButton)
+    e.set(CalendarCreateEventInviteButtonText)
+    e.set(CalendarCreateEventMassInviteButtonText)
+    e.hookLabel(CalendarCreateEventCreateButton)
+    e.region(CalendarMassInviteFrame)
+    e.set(CalendarMassInviteFrame.Header.Text)
 end
 
 

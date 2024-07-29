@@ -21,7 +21,8 @@ for _, frame in pairs({'StaticPopup1ItemFrameText', 'StaticPopup2ItemFrameText',
     end)
 end
 
-
+hooksecurefunc('StaticPopup_Show', function()
+end)
 
 
 
