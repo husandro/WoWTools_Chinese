@@ -52,9 +52,6 @@ function e.set_text(text)
     end)
     
 
-    
-    
-
     if text ~= text2 then
         return text2
     end
@@ -94,7 +91,7 @@ end
 
 
 function e.set(label, text, affer, setFont)
-    if label then
+    if label and not label.hook_chines then
         if setFont then
             e.font(lable)
         end

@@ -6,7 +6,7 @@ https://wago.tools/db2/PerksActivity?locale=zhCN
 
 
 local tab={
-    [685]= {"万圣节：找到卡兹阿加的糖罐", "{EventStartDate}到{EventEndDate}期间，从卡兹阿加的糖罐收集糖果。"},
+[685]= {"万圣节：找到卡兹阿加的糖罐", "{EventStartDate}到{EventEndDate}期间，从卡兹阿加的糖罐收集糖果。"},
 [684]= {"完成每周采集任务", "与多恩诺嘉尔铸炉园的采集专业技能训练师交谈。"},
 [683]= {"使用神勇石升级物品", nil},
 [682]= {"获得神勇石", nil},

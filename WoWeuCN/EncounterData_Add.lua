@@ -75,7 +75,7 @@ https://wago.tools/db2/JournalEncounter?build=11.0.2.55763&locale=zhCN
 
 
 
-do
+--[[do
 if WoWeuCN_Tooltips_EncounterData then
     for journalEncounterID, info in pairs(JournalEncounterTab) do
         if not WoWeuCN_Tooltips_EncounterData[journalEncounterID] then
@@ -88,7 +88,7 @@ if WoWeuCN_Tooltips_EncounterData then
     end
 end
 end
-JournalEncounterTab=nil
+JournalEncounterTab=nil]]
 
 
 
