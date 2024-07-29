@@ -40,12 +40,20 @@ function e.set_text(text)
     text2= text2:gsub(': .+', function(s)-- :内容
         return set_match(s, s:match(': (.+)'))
     end)
-    text2= text2:gsub('%d+ .+', function(s)--数字 内容
-        return set_match(s, s:match('%d+ (.+)'))
-    end)
     text2= text2:gsub('^.- %(', function(s)--内容 (
         return set_match(s, s:match('^(.-) %('))
     end)
+
+    text2= text2:gsub('%d+ .+', function(s)--数字 内容
+        return set_match(s, s:match('%d+ (.+)'))
+    end)
+    text2= text2:gsub('%(%d+%) .+', function(s)--(数字) 内容
+        return set_match(s, s:match('%(%d+%) (.+)'))
+    end)
+    
+
+    
+    
 
     if text ~= text2 then
         return text2
