@@ -43,7 +43,7 @@ model(PetStableModelScene)]]
 
 
 local function get_gameTooltip_text(self)
-    e.set(self) 
+    e.set(self)
     self:SetTextColor(self:GetTextColor())
 end
 
@@ -102,6 +102,7 @@ BattlePetTooltipTemplat
 
 
 
+set_GameTooltip_func(SettingsTooltip)
 set_GameTooltip_func(GameTooltip)
 set_GameTooltip_func(ItemRefTooltip)
 set_GameTooltip_func(EmbeddedItemTooltip)
@@ -321,7 +322,7 @@ hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilit
         local description = info[2] and SharedPetAbilityTooltip_ParseText(abilityInfo, info[2])
         if description then
             self.Description:SetText(description)
-        end        
+        end
         if info[1] then
             self.Name:SetText(info[1])
         end

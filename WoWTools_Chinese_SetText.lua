@@ -16,7 +16,7 @@ end
 
 
 function e.set_text(text)
-    if not text and text=='' then
+    if type(text)~='string' or text=='' or text=='%s' then
         return
     end
 

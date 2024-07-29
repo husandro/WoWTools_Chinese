@@ -21,8 +21,165 @@ for _, frame in pairs({'StaticPopup1ItemFrameText', 'StaticPopup2ItemFrameText',
     end)
 end
 
-hooksecurefunc('StaticPopup_Show', function()
+
+
+
+
+
+
+
+
+hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
+    local info = StaticPopupDialogs[which];
+    if not info then
+        return
+    end
+
+    local dialog = nil	
+	dialog = StaticPopup_FindVisible(which, data);
+
+	if ( not dialog ) then
+		local index = 1;
+		if ( info.preferredIndex ) then
+			index = info.preferredIndex;
+		end
+		for i = index, STATICPOPUP_NUMDIALOGS do
+			local frame = StaticPopup_GetDialog(i);
+			if ( frame and not frame:IsShown() ) then
+				dialog = frame;
+				break;
+			end
+		end
+
+		if ( not dialog and info.preferredIndex ) then
+			for i = 1, info.preferredIndex do
+				local frame = _G["StaticPopup"..i];
+				if ( not frame:IsShown() ) then
+					dialog = frame;
+					break;
+				end
+			end
+		end
+	end
+
+	if not dialog or not dialog:IsShown() then
+		return
+	end
+
+	local text = _G[dialog:GetName().."Text"];
+
+    if ( (which == "DEATH") or
+	     (which == "CAMP") or
+		 (which == "QUIT") or
+		 (which == "DUEL_OUTOFBOUNDS") or
+		 (which == "RECOVER_CORPSE") or
+		 (which == "RESURRECT") or
+		 (which == "RESURRECT_NO_SICKNESS") or
+		 (which == "INSTANCE_BOOT") or
+		 (which == "GARRISON_BOOT") or
+		 (which == "INSTANCE_LOCK") or
+		 (which == "CONFIRM_SUMMON") or
+		 (which == "CONFIRM_SUMMON_SCENARIO") or
+		 (which == "CONFIRM_SUMMON_STARTING_AREA") or
+		 (which == "BFMGR_INVITED_TO_ENTER") or
+		 (which == "AREA_SPIRIT_HEAL") or
+		 (which == "CONFIRM_REMOVE_COMMUNITY_MEMBER") or
+		 (which == "CONFIRM_DESTROY_COMMUNITY_STREAM") or
+		 (which == "CONFIRM_RUNEFORGE_LEGENDARY_CRAFT") or
+		 (which == "ANIMA_DIVERSION_CONFIRM_CHANNEL")) then
+        local a, b= e.set_text(text_arg1), e.set_text(text_arg2)
+        if a then
+            text.text_arg1 = a
+        end
+        if b then
+            text.text_arg2 = b
+        end
+
+	elseif (which == "PREMADE_GROUP_LEADER_CHANGE_DELIST_WARNING") then
+        local a, b= e.set_text(text_arg1), e.set_text(text_arg2)
+        if a then
+		    dialog.SubText.text_arg1 = a
+        end
+        if b then
+		    dialog.SubText.text_arg2 = b
+        end
+
+	elseif ( which == "BILLING_NAG" ) then
+		text:SetFormattedText(e.cn(info.text), e.cn(text_arg1), '|4分钟:分钟;');
+
+	elseif ( which == "SPELL_CONFIRMATION_PROMPT" or which == "SPELL_CONFIRMATION_WARNING" or which == "SPELL_CONFIRMATION_PROMPT_ALERT" or which == "SPELL_CONFIRMATION_WARNING_ALERT" ) then
+        local a= e.set_text(text_arg1)
+        if a then
+            text:SetText(a)
+            info.text = a
+        end
+
+	elseif ( which == "CONFIRM_AZERITE_EMPOWERED_RESPEC_EXPENSIVE" ) then
+		local goldDisplay = GetMoneyString(data.respecCost, true);
+		text:SetFormattedText(e.cn(info.text), goldDisplay, e.cn(text_arg1), '重铸');
+
+	elseif  ( which == "BUYOUT_AUCTION_EXPENSIVE" ) then
+		local goldDisplay = GetMoneyString(text_arg1, true);
+		text:SetFormattedText(e.cn(info.text), goldDisplay, '一口价');
+
+	else
+        local a, b= e.set_text(text_arg1), e.set_text(text_arg2)
+        local s= e.set_text(info.text)
+        if a or b or s then
+		    text:SetFormattedText(s or info.text, a or text_arg1, b or text_arg2)
+        end
+        if a then
+		    text.text_arg1 = a
+        end
+        if b then
+		    text.text_arg2 = b
+        end
+	end
+
+
+
+
+
+	
+
+
+
+	if info.subText then
+        local subText= e.strText[info.subText]
+        if subText then
+            dialog.SubText:SetText(subText)
+        end
+	end
+
+	local buttons = {_G[dialog:GetName().."Button1"], _G[dialog:GetName().."Button2"], _G[dialog:GetName().."Button3"], _G[dialog:GetName().."Button4"]};
+	for index, button in ipairs_reverse(buttons) do
+        if info["button"..index] then
+            local buttonText= e.strText[info["button"..index]]
+            if buttonText then
+                button:SetText(buttonText)
+            end
+        end
+	end
+
+	if info.extraButton then
+        local extraText= e.strText[info.extraButton]
+        if extraText then
+            local extraButton = dialog.extraButton;
+            extraButton:SetText(extraText);
+            local width = 128
+            local padding = 40;
+            local textWidth = extraButton:GetTextWidth() + padding;
+            width = math.max(width, textWidth);
+            extraButton:SetWidth(width);
+        end
+	end
+
+	StaticPopup_Resize(dialog, which)
 end)
+
+
+
+
 
 
 

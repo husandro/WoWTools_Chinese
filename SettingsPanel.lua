@@ -16,8 +16,8 @@ hooksecurefunc(SettingsPanel.Container.SettingsList.ScrollBox, 'Update', functio
     if not frame:GetView() or not frame:IsVisible() then
         return
     end
-    --标提
-    e.set(SettingsPanel.Container.SettingsList.Header.Title)
+
+    e.set(SettingsPanel.Container.SettingsList.Header.Title)--标提
     for _, btn in pairs(frame:GetFrames() or {}) do
         local lable
         if btn.Button then--按钮
@@ -37,6 +37,9 @@ hooksecurefunc(SettingsPanel.Container.SettingsList.ScrollBox, 'Update', functio
             e.set(lable)
         elseif btn.Text and btn.data and btn.data.name and btn.data.name then
             e.set(btn.Text, btn.data.name)
+        end
+        if btn.SubTextContainer then
+            e.set(btn.SubTextContainer.SubText)
         end
     end
 end)
@@ -58,12 +61,82 @@ e.hookLabel(SettingsPanel.OutputText)
 
 
 
+--[[
+
+local function InitControlDropdown(containerFrame, _, name, tooltip)
+    if not containerFrame:IsShown() then
+        return
+    end
+    e.set(containerFrame.Text, name)
+
+    local tooltipFunc = GenerateClosure(Settings.InitTooltip, e.cn(name), e.cn(tooltip))
+    containerFrame:SetTooltipFunc(tooltipFunc)
+end
+
+local function InitControlSlider(containerFrame, _, name, tooltip)
+    if not containerFrame:IsShown() then
+        return
+    end
+    e.set(containerFrame.Text, name)
+    local sliderWithSteppers = containerFrame.SliderWithSteppers
+    local initTooltip = GenerateClosure(Settings.InitTooltip, e.cn(name), e.cn(tooltip))
+    sliderWithSteppers.Slider:SetTooltipFunc(initTooltip)
+    containerFrame:SetTooltipFunc(initTooltip)
+end
+    if raid then
+		e.set(self.GraphicsQuality.Text, SETTINGS_RAID_GRAPHICS_QUALITY)
+	else
+        e.set(self.GraphicsQuality.Text, BASE_GRAPHICS_QUALITY)
+	end
+    InitControlDropdown(self.ShadowQuality, nil, SHADOW_QUALITY, OPTION_TOOLTIP_SHADOW_QUALITY)
+	InitControlDropdown(self.LiquidDetail, nil, LIQUID_DETAIL, OPTION_TOOLTIP_LIQUID_DETAIL)
+	InitControlDropdown(self.ParticleDensity, nil, PARTICLE_DENSITY, OPTION_TOOLTIP_PARTICLE_DENSITY)
+	InitControlDropdown(self.SSAO, nil,	SSAO_LABEL, OPTION_TOOLTIP_SSAO)
+	InitControlDropdown(self.DepthEffects, nil, DEPTH_EFFECTS, OPTION_TOOLTIP_DEPTH_EFFECTS)
+	InitControlDropdown(self.ComputeEffects, nil, COMPUTE_EFFECTS, OPTION_TOOLTIP_COMPUTE_EFFECTS)
+	InitControlDropdown(self.OutlineMode, nil, OUTLINE_MODE, OPTION_TOOLTIP_OUTLINE_MODE)
+	InitControlDropdown(self.TextureResolution, nil, TEXTURE_DETAIL, OPTION_TOOLTIP_TEXTURE_DETAIL)
+	InitControlDropdown(self.SpellDensity, nil, SPELL_DENSITY, OPTION_TOOLTIP_SPELL_DENSITY)
+	InitControlDropdown(self.ProjectedTextures, nil, PROJECTED_TEXTURES, OPTION_TOOLTIP_PROJECTED_TEXTURES)
+	InitControlSlider(	self.ViewDistance, nil, FARCLIP, OPTION_TOOLTIP_FARCLIP)
+	InitControlSlider(	self.EnvironmentDetail, nil,	ENVIRONMENT_DETAIL, OPTION_TOOLTIP_ENVIRONMENT_DETAILs)
+	InitControlSlider(	self.GroundClutter, nil,	GROUND_CLUTTER, OPTION_TOOLTIP_GROUND_CLUTTER)
+
+]]
+
+hooksecurefunc(SettingsAdvancedQualityControlsMixin, 'Init', function(self, settings, raid, cbrHandles)
+    if raid then
+		e.set(self.GraphicsQuality.Text, SETTINGS_RAID_GRAPHICS_QUALITY)
+	else
+        e.set(self.GraphicsQuality.Text, BASE_GRAPHICS_QUALITY)
+	end
+    e.set(self.ShadowQuality, SHADOW_QUALITY)
+	e.set(self.LiquidDetail, LIQUID_DETAIL)
+	e.set(self.ParticleDensity, PARTICLE_DENSITY)
+	e.set(self.SSAO, SSAO_LABEL)
+	e.set(self.DepthEffects, DEPTH_EFFECTS)
+	e.set(self.ComputeEffects, COMPUTE_EFFECTS)
+	e.set(self.OutlineMode, OUTLINE_MODE)
+	e.set(self.TextureResolution, TEXTURE_DETAIL)
+	e.set(self.SpellDensity, SPELL_DENSITY)
+	e.set(self.ProjectedTextures, PROJECTED_TEXTURES)
+	e.set(self.ViewDistance, FARCLIP)
+	e.set(self.EnvironmentDetail, ENVIRONMENT_DETAIL)
+	e.set(self.GroundClutter, GROUND_CLUTTER)
+
+end)
 
 
-
-
-
-
+hooksecurefunc(Settings, 'InitTooltip', function(name, tooltip)
+    GameTooltip_SetTitle(SettingsTooltip, e.cn(name))
+	if tooltip then
+		if type(tooltip) == "function" then
+			GameTooltip_AddNormalLine(SettingsTooltip, e.cn(tooltip()))
+		else
+			GameTooltip_AddNormalLine(SettingsTooltip, e.cn(tooltip))
+		end
+	end
+end)
 
 
 
