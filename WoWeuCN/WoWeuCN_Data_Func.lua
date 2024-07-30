@@ -167,7 +167,17 @@ function e.Get_Spell_Desc(spellID)
     if spellID then
         local data= e.Get_Spell_Data(spellID)
         if data then
-            return e.ReplaceText(data[#data])
+            local index= #data
+            if index>1 then
+                local desc
+                for i=2, index do
+                    local desc2= e.ReplaceText(data[i])
+                    if desc2 then
+                        desc= (desc and desc..'|n' or '').. desc2
+                    end
+                end
+                return desc
+            end
         end
     end
 end

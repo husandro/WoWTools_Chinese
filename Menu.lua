@@ -1,13 +1,17 @@
-
 local e= select(2, ...)
 --Blizzard_Menu
 
+
+
+
+
+
+
+
+--MenuTemplates.lua
 hooksecurefunc('GetWowStyle1ArrowButtonState', function(self)
     e.set(self.Text)
 end)
-
-
-
 hooksecurefunc(DropdownTextMixin, 'OnLoad', function(self)
     e.set(self.Text)
 end)
@@ -27,14 +31,22 @@ hooksecurefunc(DropdownTextMixin, 'UpdateText', function(self)
         self:SetWidth(newWidth);
     end
 end)
-
-
 hooksecurefunc(DropdownSelectionTextMixin, 'OverrideText', function(self)
     e.set(self.Text)
 end)
 hooksecurefunc(DropdownSelectionTextMixin, 'UpdateToMenuSelections', function(self)
     e.set(self.Text)
 end)
+
+
+
+
+
+
+
+
+
+
 
 hooksecurefunc(DropdownButtonMixin, 'SetupMenu', function(self)
     e.set(self.Text)
@@ -47,7 +59,6 @@ local function set_fontString(frame)
         e.set(frame.fontString)
     end)
 end
-
 hooksecurefunc(MenuVariants, 'CreateFontString', set_fontString)
 hooksecurefunc(MenuVariants, 'CreateCheckbox', function(_, frame)
     set_fontString(frame)
@@ -59,12 +70,16 @@ end)
 
 
 
+
 hooksecurefunc(MenuUtil, 'SetElementText', function(elementDescription, text)
     local name= e.strText[text]
     if name and name~=text then
         elementDescription.text = name
+
+        
         elementDescription:AddInitializer(function(button)
             button.Text:SetText(name)
+            print(name, text)
         end)
     end
 end)

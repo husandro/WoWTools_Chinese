@@ -22,7 +22,8 @@ e.region(QuestInfoRewardsFrame, false, true)
 e.hookLabel(QuestInfoObjectivesHeader)
 e.hookLabel(QuestInfoDescriptionHeader)
 
-
+e.set(QuestInfoXPFrame.ReceiveText)
+e.hookLabel(QuestInfoAccountCompletedNotice)
 
 
 

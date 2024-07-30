@@ -78,11 +78,11 @@ function e.Get_Spell_Desc()end-- {spellID, isDesc}
 
 
 function e.cn(text, tab)
-    local cnName=text and e.strText[text]
-    if cnName then
-        return cnName
+    local data= e.set_text(text)
+    if data then
+        return data
     end
-    local data
+
     if type(tab)=='table' then
         if tab.holydayID then
             if tab.isName then
@@ -92,7 +92,6 @@ function e.cn(text, tab)
             else
                 data= e.Get_HoliDay_Info(tab.holydayID)--节日 eventID
             end
-            
 
         elseif tab.perksActivityID then
             data= e.Get_PerksActivity_Info(tab.perksActivityID)--PERKS
@@ -131,7 +130,7 @@ function e.cn(text, tab)
             if tab.isToy then
                 data= e.Get_Toy_Source(itemID)
             elseif tab.isHeirloom then
-                data= e.Get_Heirloom_Source(itemID)            
+                data= e.Get_Heirloom_Source(itemID)
             elseif tab.isName then
                 data= e.Get_Item_Name(tab.itemID)--物品名称
             elseif tab.isDesc then
@@ -194,7 +193,12 @@ function e.cn(text, tab)
             end
 
         elseif tab.npcID or tab.unit then
-            data= e.Get_Unit_Info(tab.unit, tab.npcID)
+            if tab.isName then
+                data= e.Get_Unit_Name(tab.unit, tab.npcID)
+            else
+                data= e.Get_Unit_Info(tab.unit, tab.npcID)
+            end
+
 
         elseif tab.titleID then
             data= e.Get_Title_Name(tab.titleID)

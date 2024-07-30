@@ -25,7 +25,7 @@ PVEFrameTab1:SetText('地下城和团队副本')
 PVEFrameTab2:SetText('PvP')
 PVEFrameTab3:SetText('史诗钥石地下城')
 
-
+e.set(LFDQueueFrameRandomScrollFrameChildFrameXPLabel)
 hooksecurefunc('LFDQueueFrameFindGroupButton_Update', function()--LFDFrame.lua
     local mode = GetLFGMode(LE_LFG_CATEGORY_LFD)
     if ( mode == "queued" or mode == "rolecheck" or mode == "proposal" or mode == "suspended" ) then

@@ -122,15 +122,32 @@ local function Init_Pet()
     PetJournalSummonRandomFavoritePetButtonSpellName:SetText('召唤随机\n偏好战斗宠物')
     PetJournalHealPetButtonSpellName:SetText('复活\n战斗宠物')
 
-    --列表，名称
-    hooksecurefunc(PetJournal.ScrollBox, 'Update', function(frame)
-        if not frame:GetView() then
-            return
-        end
-        for _, btn in pairs(frame:GetFrames() or {}) do
-            e.set(btn.name)
-        end
-    end)
+
+--[[
+    列表，名称
+    pet.petID = petID;
+    pet.speciesID = speciesID;
+    pet.index = index;
+    pet.owned = isOwned;
+]]
+
+
+    if not _G['OnPetJournalButtonInit'] then
+        hooksecurefunc('PetJournal_InitPetButton', function(pet)
+            if not pet:IsVisible() then
+                return
+            end
+            local _, _, _, customName, _, _, _, _, _, _, companionID= C_PetJournal.GetPetInfoByIndex(pet.index);
+            local npcName= e.Get_Unit_Name(nil, companionID)
+            if npcName then
+                if customName then
+                    pet.subName:SetText(npcName)
+                else
+                    pet.name:SetText(npcName)
+                end
+            end
+        end)
+    end
 end
 
 
@@ -143,8 +160,7 @@ end
 
 
 
-
-
+--WowStyle1FilterDropdownMixin.SetButton
 
 
 local function Init_Toy()
@@ -153,16 +169,46 @@ local function Init_Toy()
     hooksecurefunc(ToyBox.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
         self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
     end)
-   
-    hooksecurefunc('ToySpellButton_UpdateButton', function(self)
-        if self:IsShown() and self.itemID then
-            local name = e.Get_Item_Name(self.itemID) or e.strText[self.name:GetText()]          
+
+    if not _G['OnToyBoxButtonUpdate'] then
+        for i = 1, 18 do--TOYS_PER_PAGE
+            local button = ToyBox.iconsFrame["spellButton"..i];
+            if button and button.name then
+                hooksecurefunc(button.name, 'SetText', function(self, text)
+                    if not self:IsVisible() then
+                        return
+                    end
+                    local name = e.strText[text] or  e.Get_Item_Name(self:GetParent().itemID)
+                    if name then
+                        name= name:match('|c........(.-)|r') or name
+                        if name ~=text then
+                            self:SetText(name)
+                        end
+                    end
+                end)
+            end
+        end
+    end
+
+    --[[if not _G['OnToyBoxButtonUpdate'] then
+        local function set_toy_name(self)
+            local name = e.Get_Item_Name(self.itemID) or e.strText[self.name:GetText()]
             if name then
                 name= name:match('|c........(.-)|r') or name
                 self.name:SetText(name)
             end
         end
-    end)
+        hooksecurefunc('ToySpellButton_UpdateButton', set_toy_name)
+
+        hooksecurefunc('ToyBox_UpdateButtons', function()
+            for i = 1, 18 do--TOYS_PER_PAGE
+                local button = ToyBox.iconsFrame["spellButton"..i];
+                if button then
+                    set_toy_name(button)
+                end
+            end
+        end)
+    end]]
 end
 
 
@@ -405,7 +451,7 @@ local function Init()
     CollectionsJournalTab5:SetText('外观')
 
 
-    
+
 
 end
 

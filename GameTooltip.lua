@@ -211,9 +211,12 @@ local function set_spell(tooltip, data)
     local name = e.Get_Spell_Name(data.id)
     if name then
         tooltip.TextLeft1:SetText(name)
-        local desc= e.Get_Spell_Desc(data.id)
+        local desc, desc2= e.Get_Spell_Desc(data.id)
         if desc then
             tooltip:AddLine(' ')
+            if desc2 then
+                tooltip:AddLine(desc2, nil,nil,nil, true)
+            end
             tooltip:AddLine(desc, nil,nil,nil, true)
         end
     end
@@ -229,10 +232,10 @@ if not GetItemData then
             local source= e.Get_Heirloom_Source(data.id)
             if source and not C_Heirloom.PlayerHasHeirloom(data.id) then
                 tooltip:AddLine(source, nil,nil,nil, true)
-                --tooltip:Show()
             end
         end
     end)
+
 end
 
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Macro, function(tooltip, data)
@@ -260,6 +263,7 @@ end)
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.UnitAura, function(tooltip, data)
     set_spell(tooltip, data)
 end)
+
 if not GetSpellData then
     TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip, data)
         set_spell(tooltip, data)
