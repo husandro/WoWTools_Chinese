@@ -30,9 +30,12 @@ end
 
 
 local function set_quest(_, block)
-    local name= e.Get_Quest_Info(block.id, true, false, false)
-    if name then
-        block:SetHeader(name)
+    local questID= block.id and tonumber(block.id)
+    if questID then
+        local name= e.Get_Quest_Info(questID, true, false, false)
+        if name then
+            block:SetHeader(name)
+        end
     end
 end
 
@@ -41,8 +44,8 @@ end
 
 --[[
 hooksecurefunc(QuestObjectiveTracker, 'UpdateSingle', set_quest)
-local questID = quest:GetID();
-local block = Get_Block(self, questID);    
+local questID = quest:GetID()
+local block = Get_Block(self, questID)    
 local name= e.Get_Quest_Info(questID, true, false, false)
 if block and name then
     block:SetHeader(name)
@@ -55,7 +58,23 @@ hooksecurefunc(QuestObjectiveTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(QuestObjectiveTracker, 'AddBlock', set_quest)
 
 
-
+hooksecurefunc(AutoQuestPopupBlockMixin, 'Update', function(self, questTitle, questID, popUpType)
+    local contents = self.Contents
+    if self.popUpType == "COMPLETE" then
+        if C_QuestLog.IsQuestTask(questID) then
+            contents.TopText:SetText('点击完成')
+        else
+            contents.TopText:SetText('点击以完成任务')
+        end
+    elseif popUpType == "OFFER" then
+        contents.TopText:SetText('发现任务！')
+        contents.BottomText:SetText('点击以查看任务')
+    end
+    local title= e.Get_Quest_Info(questID, true, false, false) or e.strText[questTitle]
+    if title then
+        contents.QuestName:SetText(title)
+    end
+end)
 
 
 
@@ -118,7 +137,7 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
 
 
     --local height= block.height--HeaderText:GetHeight()
-    local numCriteria = GetAchievementNumCriteria(achievementID);
+    local numCriteria = GetAchievementNumCriteria(achievementID)
     if numCriteria>0 then
         --local find
         for criteriaIndex, line in pairs(block.usedLines or {}) do
@@ -147,7 +166,7 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
     else
         local desc= e.strText[description]
         if desc then
-            local colorStyle = (not timerFailed and IsAchievementEligible(achievementID)) and OBJECTIVE_TRACKER_COLOR["Normal"] or OBJECTIVE_TRACKER_COLOR["Failed"];
+            local colorStyle = (not timerFailed and IsAchievementEligible(achievementID)) and OBJECTIVE_TRACKER_COLOR["Normal"] or OBJECTIVE_TRACKER_COLOR["Failed"]
             local line= block.usedLines[1]
             if line then
                 block:SetStringText(line.Text, desc, nil, colorStyle, block.isHighlighted)
@@ -215,9 +234,9 @@ hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function
         end
 	else
 		if currentStage == numStages then
-			self.Stage:SetText('|cnGREEN_FONT_COLOR:最终阶段|r');
+			self.Stage:SetText('|cnGREEN_FONT_COLOR:最终阶段|r')
 		else
-			self.Stage:SetFormattedText('阶段 %d', currentStage);
+			self.Stage:SetFormattedText('阶段 %d', currentStage)
 		end
         local data= e.Get_Scenario_Step_Info(scenarioID, currentStage) or {}
         local name= data[2] or e.strText[stageName]
@@ -231,15 +250,15 @@ hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'SetupStageTransition', func
         return
     end
     if scenarioCompleted then
-        local scenarioType = select(10, C_Scenario.GetInfo());
-        local dungeonDisplay = (scenarioType == LE_SCENARIO_TYPE_USE_DUNGEON_DISPLAY);
+        local scenarioType = select(10, C_Scenario.GetInfo())
+        local dungeonDisplay = (scenarioType == LE_SCENARIO_TYPE_USE_DUNGEON_DISPLAY)
         if dungeonDisplay then
-            self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:地下城完成！|r');
+            self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:地下城完成！|r')
         else
-            self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:完成！|r');
+            self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:完成！|r')
         end
     else
-        self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:阶段完成|r');
+        self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:阶段完成|r')
     end
 
 end)
@@ -309,7 +328,7 @@ hooksecurefunc(BonusObjectiveTracker, 'LayoutContents', set_objective_header)
 --ProfessionsRecipeTracker:HookScript('OnShow', set_objective_header)
 hooksecurefunc(ProfessionsRecipeTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, isRecraft)
-    local blockID = NegateIf(recipeID, isRecraft);
+    local blockID = NegateIf(recipeID, isRecraft)
     local block = Get_Block(self, blockID)
     local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, isRecraft)
     if not block then
@@ -324,8 +343,8 @@ hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, is
     local blockName= e.Get_Recipe_Name(C_TradeSkillUI.GetRecipeInfo(recipeID), nil) or e.strText[recipeSchematic.name]
 
     if blockName then
-        blockName = isRecraft and format('再造：%s', blockName) or blockName;
-        block:SetHeader(blockName);
+        blockName = isRecraft and format('再造：%s', blockName) or blockName
+        block:SetHeader(blockName)
     end
 
 
@@ -346,17 +365,17 @@ hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, is
                         name= e.strText[item:GetItemName()]
                     end
                 elseif reagent.currencyID then
-                    local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(reagent.currencyID);
+                    local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(reagent.currencyID)
                     if currencyInfo then
                         name= e.strText[currencyInfo.name]
                     end
                 end
                 if name then
-                    local quantityRequired = reagentSlotSchematic.quantityRequired;
-			        local quantity = ProfessionsUtil.AccumulateReagentsInPossession(reagentSlotSchematic.reagents);
+                    local quantityRequired = reagentSlotSchematic.quantityRequired
+			        local quantity = ProfessionsUtil.AccumulateReagentsInPossession(reagentSlotSchematic.reagents)
                     local text = format('%s %s', format('%s/%d', quantity, quantityRequired), name)
 
-                    local metQuantity = quantity >= quantityRequired;
+                    local metQuantity = quantity >= quantityRequired
                     local colorStyle = OBJECTIVE_TRACKER_COLOR[metQuantity and "Complete" or "Normal"]
 
                     block:SetStringText(line.Text, text, nil, colorStyle, block.isHighlighted)

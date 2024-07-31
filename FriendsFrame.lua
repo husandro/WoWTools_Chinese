@@ -136,7 +136,10 @@ FriendsFrameTab1:SetText('好友')
                 GameTooltip:Show()
             end)
 
+
+
             RecruitAFriendRewardsFrame.Title:SetText('战友招募奖励')
+            e.set(RecruitAFriendRewardsFrame.Description)
             hooksecurefunc(RecruitAFriendRewardsFrame, 'UpdateDescription', function(self, selectedRAFVersionInfo)
                 self.Description:SetText((selectedRAFVersionInfo.rafVersion == self:GetRecruitAFriendFrame():GetLatestRAFVersion()) and '每名拥有可用的游戏时间的被招募者|n每30天可以为你提供一份月度奖励。' or '不能再为旧版招募活动再招募新的战友，但是旧版现有的被招募的战友还会继续提供战友招募奖励。')
             end)
@@ -206,8 +209,9 @@ FriendsFrameTab1:SetText('好友')
             end
         end)
 
-
-
+        e.set(FriendsFriendsFrame.SendRequestButton)
+        e.set(FriendsFriendsFrame.CloseButton)
+        
 
         
 
