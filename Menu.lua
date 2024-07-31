@@ -79,7 +79,6 @@ hooksecurefunc(MenuUtil, 'SetElementText', function(elementDescription, text)
         
         elementDescription:AddInitializer(function(button)
             button.Text:SetText(name)
-            print(name, text)
         end)
     end
 end)
