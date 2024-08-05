@@ -186,9 +186,9 @@ local function Init_EncounterJournal()
             local numEncounters = EJ_GetNumEncountersForLootByIndex(self.index)
             
             if ( numEncounters == 1 ) then
-                local name= get_encounter_name(itemInfo.encounterID)
-                if name then
-                    self.boss:SetFormattedText('首领：%s', name)
+                local name2= get_encounter_name(itemInfo.encounterID)
+                if name2 then
+                    self.boss:SetFormattedText('首领：%s', name2)
                 end
 
             elseif ( numEncounters == 2) then
@@ -200,8 +200,8 @@ local function Init_EncounterJournal()
                 end
 
             elseif ( numEncounters > 2 ) then
-                local name= get_encounter_name(itemInfo.encounterID)
-                if name then
+                local name2= get_encounter_name(itemInfo.encounterID)
+                if name2 then
                     self.boss:SetFormattedText('首领：%s及其他', name)
                 end
             end
