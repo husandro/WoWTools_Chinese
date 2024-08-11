@@ -455,9 +455,14 @@ end)
 
 
 
-e.hookLabel(GuildMemberDetailFrameCommunitiesFrame.GuildMemberDetailFrame.RemoveButton)
-e.hookLabel(CommunitiesFrame.GuildMemberDetailFrame.GroupInviteButton)
-
+e.set(CommunitiesFrame.GuildMemberDetailFrame.RemoveButton)
+e.set(CommunitiesFrame.GuildMemberDetailFrame.GroupInviteButton)
+e.set(CommunitiesFrame.GuildMemberDetailFrame.ZoneLabel)
+e.hookLabel(CommunitiesFrame.GuildMemberDetailFrame.ZoneText)
+e.set(CommunitiesFrame.GuildMemberDetailFrame.RankLabel)
+e.set(CommunitiesFrame.GuildMemberDetailFrame.OnlineLabel)
+e.set(CommunitiesFrame.GuildMemberDetailFrame.NoteLabel)
+e.hookLabel(CommunitiesFrame.GuildMemberDetailFrame.NoteBackground.PersonalNoteText)
 --[[###########
 --加载保存数据
 --###########
