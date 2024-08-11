@@ -454,6 +454,10 @@ end)
 
 
 
+
+e.hookLabel(GuildMemberDetailFrameCommunitiesFrame.GuildMemberDetailFrame.RemoveButton)
+e.hookLabel(CommunitiesFrame.GuildMemberDetailFrame.GroupInviteButton)
+
 --[[###########
 --加载保存数据
 --###########
