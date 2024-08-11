@@ -22,7 +22,9 @@ function e.set_text(text)
 
     local text2= e.strText[text]
     if text2 then
-        return text2
+        if text2:find('%W') then
+            return text2
+        end
     end
 
     text2= text:gsub('|c.-|r', function(s)--颜色
@@ -55,7 +57,7 @@ function e.set_text(text)
          return set_match(s, s:match(': (.-) %('))
     end)
 
-    if text ~= text2 then
+    if text ~= text2 and text2:find('%W') then
         return text2
     end
 end
