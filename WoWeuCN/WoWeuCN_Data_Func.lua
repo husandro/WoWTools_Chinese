@@ -1,4 +1,5 @@
 local e= select(2, ...)
+
 --[[
 因无法找到数据来源，
 只能导入别的插件数据，
@@ -25,11 +26,6 @@ e.Get_Boss_Info(journalEncounterID)
 e.Get_Boss_Desc(journalEncounterID)
 e.Get_Boss_Name(journalEncounterID)
 ]]
-
-
-
-
-
 
 
 
@@ -60,7 +56,7 @@ else
         ["近战范围"] = "È",
         ["持续"] = "É",
         ["造成"] = "Ê",
-      
+
         ["点伤害"] = "Ë",
         ["点治疗"] = "Ì",
         ["点生命值"] = "Í",
@@ -146,8 +142,8 @@ e.Get_Spell_Data= GetSpellData or function(spellID)
             end
         end
     end
-  
-    
+
+
     return data
 end
 
@@ -270,7 +266,7 @@ local Get_Unit_Data= GetUnitData or function(npcID)
     if not num_id then
         return
     end
-    
+
     local dataIndex
     if (num_id >= 0 and num_id < 100000) then
         dataIndex = WoWeuCN_Tooltips_UnitIndexData_0[num_id]
@@ -284,7 +280,7 @@ local Get_Unit_Data= GetUnitData or function(npcID)
         return
     end
 
-    if (num_id >= 0 and num_id < 100000) then        
+    if (num_id >= 0 and num_id < 100000) then
         return split(WoWeuCN_Tooltips_UnitData_0[dataIndex], '£')
 
     elseif (num_id >= 100000 and num_id < 200000) then
@@ -297,7 +293,7 @@ end
 
 
 function e.Get_Unit_Info(unit, npcID)
-    npcID= npcID or Get_NPC_ID(unit)   
+    npcID= npcID or Get_NPC_ID(unit)
     return Get_Unit_Data(npcID)
 end
 
@@ -390,7 +386,7 @@ function e.Get_Quest_Info(questID, isName, isObject, isDesc)
         if isObject then
             return object
         end
-        
+
         local desc= expand_text(data["Description"])
         if desc =='' then
             desc= nil
@@ -430,7 +426,7 @@ end
 
 
 function e.Get_Boss_Info(journalEncounterID)
-    local data= WoWeuCN_Tooltips_EncounterData[journalEncounterID]    
+    local data= WoWeuCN_Tooltips_EncounterData[journalEncounterID]
     if data then
         local title, desc= true, true
         if not data.Title or data.Title=='' then

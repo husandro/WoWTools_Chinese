@@ -159,7 +159,7 @@ WoWeuCN\SpellData_cn.lua
 WoWeuCN\QuestData_cn.lua
 WoWeuCN\UnitData_cn.lua
 WoWeuCN\EncounterData_cn.lua
-WoWeuCN\EncounterData_Add.lua
+##WoWeuCN\EncounterData_Add.lua
 WoWeuCN\WoWeuCN_Data_Func.lua
 
 ##放最后
