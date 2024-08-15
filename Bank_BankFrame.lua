@@ -22,3 +22,11 @@ e.region(BankSlotsFrame)
 e.region(CombatConfigSettingsNameEditBox)--过滤名称
 
 
+
+
+--战团
+e.region( AccountBankPanel.PurchasePrompt)
+e.set(AccountBankPanel.PurchasePrompt.TabCostFrame.TabCost)
+e.set(AccountBankPanel.PurchasePrompt.TabCostFrame.PurchaseButton)
+e.set(AccountBankPanel.MoneyFrame.WithdrawButton)
+e.set(AccountBankPanel.MoneyFrame.DepositButton)
