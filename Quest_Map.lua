@@ -17,7 +17,8 @@ if e.Not_Is_EU then return end
 7	self:AddOverlayFrame("WorldMapThreatFrameTemplate", "FRAME", "BOTTOMLEFT", self:GetCanvasContainer(), "BOTTOMLEFT", 0, 0)
 8	self:AddOverlayFrame("WorldMapActivityTrackerTemplate", "BUTTON", "BOTTOMLEFT", self:GetCanvasContainer(), "BOTTOMLEFT", 0, 0)--WorldMapBountyBoard.lua
 ]]
---WorldMapMixin:AddOverlayFrames()    
+--WorldMapMixin:AddOverlayFrames()  
+--[[  
 local index=1
 local btn
 local isTracking= C_GameModeManager.IsFeatureEnabled(Enum.GameModeFeatureSetting.WorldMapTrackingOptions)
@@ -67,7 +68,7 @@ for _, frame in ipairs(WorldMapFrame.overlayFrames or {}) do
     end
 end
 
-
+]]
 --[[btn=  WorldMapFrame.overlayFrames[index]
 if btn then
     btn:HookScript('OnEnter', function()
