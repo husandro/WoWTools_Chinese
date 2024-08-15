@@ -955,7 +955,6 @@ local function Init_ReagentSlot()
             if not reagentName then
                 local item = Item:CreateFromItemID(reagent.itemID)
                 local itemName= item:GetItemName()
-                print(itemName)
                 if itemName then
                     reagentName= e.strText[itemName]
                 else

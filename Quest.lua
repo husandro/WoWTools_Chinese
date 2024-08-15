@@ -348,7 +348,6 @@ hooksecurefunc('QuestInfo_ShowTitle', function()
 
 
  hooksecurefunc('QuestInfo_ShowObjectives', function()
-	print('QuestInfo_ShowObjectives')
 	 set_objectives()
  end)
 

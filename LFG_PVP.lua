@@ -370,9 +370,6 @@ local function Init_HonorFrame()
             end
         end)
     end)
-    hooksecurefunc(PVPSpecialEventButtonMixin, 'OnEnter', function()
-        print('PVPSpecialEventButtonMixin:OnEnter()')
-    end)
 end
 
 
