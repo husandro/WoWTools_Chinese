@@ -307,6 +307,7 @@ local function Init_HonorFrame()
 
     --宏伟宝库
     e.hookLabel(PVPQueueFrame.HonorInset.CasualPanel.HKLabel)
+if PVPQueueFrame.HonorInset.CasualPanel.WeeklyChest then
     PVPQueueFrame.HonorInset.CasualPanel.WeeklyChest:HookScript('OnEnter', function()
         if not ConquestFrame_HasActiveSeason() then
             GameTooltip_SetTitle(GameTooltip, '宏伟宝库奖励')
@@ -334,7 +335,7 @@ local function Init_HonorFrame()
             GameTooltip:Show()
         end
     end)
-
+end
 
 
     --荣誉等级
