@@ -20,8 +20,7 @@ local function Init_Blizzard_WeeklyRewards()
             self.HeaderFrame.Text:SetText('每周完成活动可以将物品添加到宏伟宝库中。|n你每周可以选择一件奖励。')
         end
     end)
-
-
+end
 
     --[[hooksecurefunc(WeeklyRewardsActivityMixin, 'SetProgressText', function(self, text)
         local activityInfo = self.info;
@@ -50,8 +49,6 @@ local function Init_Blizzard_WeeklyRewards()
             self.Progress:SetText(name);
         end
     end)]]
-    
-end
 
 
 
