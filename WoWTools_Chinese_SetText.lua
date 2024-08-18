@@ -6,8 +6,8 @@ local function set_match(text, a, b)
     local a1= a and e.strText[a]
     local b1= b and e.strText[b]
 
-    local r= a1 and text:gsub(a, a1) or text
-    r= b1 and r:gsub(b, b1) or r
+    local r= a1 and a1:find('%W') and text:gsub(a, a1) or text
+    r= b1 and b1:find('%W') and r:gsub(b, b1) or r
 
     if text~= r then
         return r
