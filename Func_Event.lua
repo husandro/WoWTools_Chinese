@@ -312,20 +312,20 @@ local function Init_Event(arg1)
             GameTooltip:SetText('启用后，鼠标悬停到一个单位框体并使用一个键盘快捷键施放法术时，会直接对该单位施法，无需将该单位设为目标。', nil, nil, nil, nil, true)
 
         end)
-        ClickBindingFrame.MouseoverCastKeyDropDown.Label:SetText('鼠标悬停施法按键')
+        --ClickBindingFrame.MouseoverCastKeyDropDown.Label:SetText('鼠标悬停施法按键')
         ClickBindingFrame.TutorialFrame.SummaryText:SetText('将法术和宏绑定到鼠标点击')
         ClickBindingFrame.TutorialFrame.InfoText:SetText('通过点击单位框体施放绑定的法术和宏')
         ClickBindingFrame.TutorialFrame.AlternateText:SetText('可以使用Shift键、Ctrl键或者Alt键来设定其他的点击绑定')
         ClickBindingFrame.TutorialFrame.ThrallName:SetText('萨尔')
-        ClickBindingFrame.SpellbookPortrait:HookScript('OnEnter', function()
+        --[[ClickBindingFrame.SpellbookPortrait:HookScript('OnEnter', function()
             GameTooltip_SetTitle(GameTooltip, MicroButtonTooltipText('法术书和专业', "TOGGLESPELLBOOK"))
             GameTooltip:Show()
-        end)
+        end)]]
         ClickBindingFrame.MacrosPortrait:HookScript('OnEnter', function()
             GameTooltip_SetTitle(GameTooltip, '宏')
             GameTooltip:Show()
         end)
-
+        
         local function NameAndIconFromElementData(elementData)
             if elementData.bindingInfo then
                 local bindingInfo = elementData.bindingInfo
@@ -356,6 +356,7 @@ local function Init_Event(arg1)
                 return '空'
             end
         end
+        --ClickBindingFrame.ScrollBox
         hooksecurefunc(ClickBindingFrame, 'SetUnboundText', function(self, elementData)
             self.UnboundText:SetFormattedText('%s 解除绑定', NameAndIconFromElementData(elementData))
         end)
@@ -430,12 +431,24 @@ local function Init_Event(arg1)
             return name
         end
         hooksecurefunc(ClickBindingLineMixin, 'Init', function(self, elementData)
-            e.set(self.BindingText, BindingTextFromElementData(elementData))
+            local name= BindingTextFromElementData(elementData)
+            --e.set(self.BindingText)--, BindingTextFromElementData(elementData))
+            if name then
+                self.BindingText:SetText(name)
+            end
 
-            e.set(self.Name, ColoredNameAndIconFromElementData(elementData))
+            name= ColoredNameAndIconFromElementData(elementData)
+            if name then
+                self.Name:SetText(name)
+            end
+            --e.set(self.Name)--, ColoredNameAndIconFromElementData(elementData))
         end)
         hooksecurefunc(ClickBindingHeaderMixin, 'Init', function(self, elementData)
-	        e.set(self.Name, ColoredNameAndIconFromElementData(elementData))
+            local name= ColoredNameAndIconFromElementData(elementData)
+            if name then
+                self.Name:SetText(name)
+            end
+	        --e.set(self.Name)--, ColoredNameAndIconFromElementData(elementData))
         end)
 
     elseif arg1=='Blizzard_ProfessionsTemplates' then
