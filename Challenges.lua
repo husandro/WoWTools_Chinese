@@ -17,6 +17,7 @@ local function Init_Blizzard_WeeklyRewards()
         e.set(self.Overlay.Title)
     end)
 
+    
     hooksecurefunc(WeeklyRewardsFrame, 'UpdateTitle', function(self)
         local canClaimRewards = C_WeeklyRewards.CanClaimRewards()
         if canClaimRewards then
