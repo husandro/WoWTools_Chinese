@@ -145,9 +145,9 @@ local function Init_Blizzard_ChallengesUI()
             end
         end)
 
-    ChallengesFrame.SeasonChangeNoticeFrame.NewSeason:SetText('全新赛季！')
-    ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription:SetText('地下城奖励的物品等级已经提升！')
-    ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription2:SetText('史诗地下城的敌人变得更强了！')
+    e.set(ChallengesFrame.SeasonChangeNoticeFrame.NewSeason)--:SetText('全新赛季！')
+    e.hookLabel(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription)--:SetText('地下城奖励的物品等级已经提升！')
+    e.hookLabel(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription2)--:SetText('史诗地下城的敌人变得更强了！')
 
     ChallengesFrame.SeasonChangeNoticeFrame.Leave:SetText('离开')
 
