@@ -10,14 +10,14 @@ local function Init_Blizzard_WeeklyRewards()
     e.hookLabel(WeeklyRewardsFrame.MythicFrame.Name)
 
     e.font(WeeklyRewardsFrame.HeaderFrame.Text)
-    
+
 
     hooksecurefunc(WeeklyRewardsFrame, 'UpdateOverlay', function(self)--Blizzard_WeeklyRewards.lua
         e.set(self.Overlay.Text)
         e.set(self.Overlay.Title)
     end)
 
-    
+
     hooksecurefunc(WeeklyRewardsFrame, 'UpdateTitle', function(self)
         local canClaimRewards = C_WeeklyRewards.CanClaimRewards()
         if canClaimRewards then
