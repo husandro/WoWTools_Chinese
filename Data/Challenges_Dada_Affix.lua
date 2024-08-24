@@ -1,3 +1,9 @@
+--[[
+[ID]= {'Name_lang', 'Description_lang'},
+https://wago.tools/db2/KeystoneAffix?locale=zhCN
+11.0.2.55763
+]]
+
 local tab={
 
 
@@ -42,14 +48,12 @@ local tab={
 [152]= {"挑战者的骄傲", "死亡会从剩余时间里扣除15秒。"},
 [153]= {"萨拉塔斯的交易：狂暴", "非首领敌人在生命值还剩30%时会进入狂暴状态，急速提升40%，但受到的伤害提升20%。"},
 [158]= {"萨拉塔斯的交易：虚缚", "战斗中，萨拉塔斯会召唤虚空大使。虚空大使会强化附近的敌人。"},
-
+[159]= {"萨拉塔斯的交易：湮灭", "在战斗中，萨拉塔斯会让水晶从虚空中显形，敌人或玩家都可以吸收这些水晶。"},
+[160]= {"萨拉塔斯的交易：吞噬", "在战斗中，萨拉塔斯会撕开裂隙，吞噬玩家的精华。"},
 
 }
 local e= select(2, ...)
---[[
-[ID]= {'Name_lang', 'Description_lang'},
-https://wago.tools/db2/KeystoneAffix?locale=zhCN&build=11.0.2.55763
-]]
+
 do
 for affixID, info in pairs(tab) do
     local name, desc = C_ChallengeMode.GetAffixInfo(affixID)

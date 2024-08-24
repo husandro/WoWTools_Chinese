@@ -1,6 +1,12 @@
+--[[
+[ItemID] ='SourceText_lang',
+https://wago.tools/db2/Toy?locale=zhCN
+11.0.2.56311
+]]
+
 local tab={
 
-
+[228914]= '|cFFFFD200商人出售：|r阿尔弗斯·瓦拉乌鲁|n|cFFFFD200地区：|r千丝之城|n|cFFFFD200价格：|r1500|Hcurrency:3056|h|TInterface\\ICONS\\INV_10_Tailoring_SilkRare_Color3.BLP:0|t|h',
 
 [1973] ='|cFFFFD200掉落：|r世界掉落',
 [13379] ='|cFFFFD200掉落：|r弗雷斯特恩|n|cFFFFD200地区：|r斯坦索姆',
@@ -940,10 +946,11 @@ local tab={
 [227538] ='|cFFFFD200成就：|r单排轮斗医疗兵：地心之战|n|cFFFFD200分类：|r竞技场',
 [227539]= '|cFFFFD200成就：|r战场闪电战医疗兵：地心之战|n|cFFFFD200分类：|r战场',
 [228413]= '|cFFFFD200商人出售：|r芬利·莫格顿爵士|n|cFFFFD200地区：|r多恩诺嘉尔|n|cFFFFD200价格：|r500|Hcurrency:2803|h|TInterface\\ICONS\\INV_Misc_ElvenCoins.blp:0|t|h',
-[228706]= '|cFFFFD200商人出售：|r审计员巴乌尔兹|n|cFFFFD200地区：|r多恩诺嘉尔|n|cFFFFD200价格：|r5000|Hcurrency:2815|h|TInterface\\ICONS\\SPELL_AZERITE_ESSENCE14.BLP:0|t|h',
 [228698]= '|cFFFFD200商人出售：|r蜡贩斯奎克|n|cFFFFD200地区：|r喧鸣深窟|n|cFFFFD200价格：|r5000|Hcurrency:2815|h|TInterface\\ICONS\\SPELL_AZERITE_ESSENCE14.BLP:0|t|h',
-[228707]= '|cFFFFD200商人出售：|r奥拉莉亚·斯蒂泰克|n|cFFFFD200地区：|r陨圣峪|n|cFFFFD200价格：|r5000|Hcurrency:2815|h|TInterface\\ICONS\\SPELL_AZERITE_ESSENCE14.BLP:0|t|h',
 [228705]= '|cFFFFD200商人出售：|r维娜基安女士|n|cFFFFD200地区：|r艾基-卡赫特|n|cFFFFD200价格：|r1750|Hcurrency:3056|h|TInterface\\ICONS\\INV_10_Tailoring_SilkRare_Color3.BLP:0|t|h|n|n|cFFFFD200商人出售：|r伊泰基|n|cFFFFD200地区：|r艾基-卡赫特|n|cFFFFD200价格：|r1750|Hcurrency:3056|h|TInterface\\ICONS\\INV_10_Tailoring_SilkRare_Color3.BLP:0|t|h',
+[228706]= '|cFFFFD200商人出售：|r审计员巴乌尔兹|n|cFFFFD200地区：|r多恩诺嘉尔|n|cFFFFD200价格：|r5000|Hcurrency:2815|h|TInterface\\ICONS\\SPELL_AZERITE_ESSENCE14.BLP:0|t|h',
+[228707]= '|cFFFFD200商人出售：|r奥拉莉亚·斯蒂泰克|n|cFFFFD200地区：|r陨圣峪|n|cFFFFD200价格：|r5000|Hcurrency:2815|h|TInterface\\ICONS\\SPELL_AZERITE_ESSENCE14.BLP:0|t|h',
+
 }
 
 
@@ -952,11 +959,7 @@ local tab={
 
 
 
---[[
-[ItemID] ='SourceText_lang',
-https://wago.tools/db2/Toy?locale=zhCN
-11.0.2.55763
-]]
+
 
 local e= select(2, ...)
 function e.Get_Toy_Source(itemID)

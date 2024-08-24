@@ -1,4 +1,9 @@
 
+--[[
+[ID]= {'Description_lang', 'SourceText_lang'},
+https://wago.tools/db2/BattlePetSpecies?locale=zhCN
+11.0.2.56311
+]]
 
 
 
@@ -1901,6 +1906,7 @@ local tab={
 [4615]= {'帕尔洛克是古代高里亚食人魔的血脉，众所周知，比起实现他的帝国宏愿，他更热衷于享受美食以及和朋友闲聊。', '|cFFFFD200商栈|r'},
 [4264]= {'有了菲尔恩在你身边，你就不会再被人说是“叶”公好龙了。', nil},
 [4568]= {'送货也要送出风姿。', '|cFFFFD200游戏商城|r'},
+[4616]= {'谷米珠蜒口感清甜，肉质弹牙，也因此有许多天敌。', '|cFFFFD200特殊|r'},
 }
 
 
@@ -1914,11 +1920,6 @@ local tab={
 
 
 
---[[
-[ID]= {'Description_lang', 'SourceText_lang'},
-https://wago.tools/db2/BattlePetSpecies?locale=zhCN
-11.0.2.55763
-]]
 
 --给 WoWTools 调用
 local e= select(2, ...)

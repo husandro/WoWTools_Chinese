@@ -1,3 +1,9 @@
+--[[
+[ID]= {"Name_lang", "Description_lang"},
+https://wago.tools/db2/BattlePetAbility?locale=zhCN
+11.0.2.55763
+]]
+
 local tab={
 
 
@@ -1351,11 +1357,7 @@ local tab={
 
 
 
---[[
-[ID]= {"Name_lang", "Description_lang"},
-https://wago.tools/db2/BattlePetAbility?locale=zhCN
-11.0.2.55763
-]]
+
 local e= select(2, ...)
 function e.Get_Pet_Ablity_Info(abilityID)
     return tab[abilityID]

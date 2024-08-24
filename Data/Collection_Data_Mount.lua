@@ -1,3 +1,9 @@
+--[[
+[ID]= {'Name_lang', 'SourceText_lang', 'Description_lang'},
+https://wago.tools/db2/Mount?&locale=zhCN
+11.0.2.56311
+]]
+
 local tab={
 
     [6]= {'棕马', '|cFFFFD200商人出售：|r安格尔·斯塔特弗斯|n|cFFFFD200地区：|r湿地|n|cFFFFD200价格： |r1|TINTERFACE\\MONEYFRAME\\UI-GOLDICON.BLP:0|t', '因其耐心和坚韧而成为暴风城守卫的最爱。'},
@@ -1258,18 +1264,15 @@ local tab={
     [2241]= {'霸业枭雄的风霜鳄鱼', '|cFFFFD200商栈|r', nil},
     [2244]= {'钻石机甲', '|cFFFFD200成就：|r“地心之战”钥石大师：第一赛季|n|cFFFFD200分类：|r地下城', '这些水晶驱动的机甲是土灵联邦科技的典范。'},
     [2249]= {'雷什基加尔之手', '|cFFFFD200Trading Post|r', '当她的族人纷纷动手，尝试推翻被流放者，雷什基加尔却只是韬光养晦。她决定在典狱长无暇分身之时发起攻势，但典狱长的探子一直盯着她。他们的警告与援助使典狱长笑到了最后。'},
-
+    [2259]= {'奔波尔鲛', '|cFFFFD200游戏商城|r|n,你这辈子见过的第三大的鱼人！'},
+    [2262]= {'迎福巨熊,"|cFFFFD200特殊|r |n",骑上它，你心里充满了宁静与祥和，这一点在你跟鱼人和熊打交道时很罕见。'},
 
 }
 
 
 
 
---[[
-[ID]= {'Name_lang', 'SourceText_lang', 'Description_lang'},
-https://wago.tools/db2/Mount?&locale=zhCN
-11.0.2.55763
-]]
+
 
 
 local id, e= ...

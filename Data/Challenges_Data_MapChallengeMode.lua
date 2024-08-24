@@ -1,3 +1,9 @@
+--[[
+[ID]= "Name_lang"
+https://wago.tools/db2/MapChallengeMode?locale=zhCN
+11.0.2.55399
+]]
+
 local tab={
    
 [2]= "青龙寺",
@@ -81,10 +87,7 @@ local tab={
 
 
 
---[[
-[ID]= "Name_lang"
-https://wago.tools/db2/MapChallengeMode?locale=zhCN&build=11.0.2.55399
-]]
+
 local e= select(2, ...)
 do
 for mapChallengeModeID, cnName in pairs(tab) do
