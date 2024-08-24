@@ -13,8 +13,10 @@ local function Init_Blizzard_WeeklyRewards()
 
 
     hooksecurefunc(WeeklyRewardsFrame, 'UpdateOverlay', function(self)--Blizzard_WeeklyRewards.lua
-        e.set(self.Overlay.Text)
-        e.set(self.Overlay.Title)
+        if self.Overlay then
+            e.set(self.Overlay.Text)
+            e.set(self.Overlay.Title)
+        end
     end)
 
 
