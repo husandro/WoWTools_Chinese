@@ -20985,7 +20985,12 @@ local tab={
 ["DELVES_WARNING_PARTY_MEMBER_INELIGIBLE_FOR_TIER"]= "|Hplayer:%s|h[%s]|h无法加入你的难度%d的地下堡（难度%d已解锁）。",
 ["DELVES_WARNING_INELIGIBLE_FOR_PARTY_TIER"]= "你无法加入你的小队的难度%d的地下堡（难度%d已解锁）。",
 ["SPELL_FAILED_CUSTOM_ERROR_2224"]= "不能在剧情模式使用凡图斯符文。",
---52459
+["ERR_GUILD_BANK_WARBANDS_BANK_SOURCE"]= "你不能把物品直接从战团银行放入公会银行。",
+["WARWITHIN_TITLE2"]= "地心之战：地心之影",
+["SPELL_FAILED_CUSTOM_ERROR_2425"]= "土灵无法享受传统的食物和饮料。",
+["DELVES_PARTY_MEMBER_INELIGIBLE_FOR_TIER_TOOLTIP"]= "%s尚未解锁此难度",
+
+--11.0.2.56313
 
 
 
