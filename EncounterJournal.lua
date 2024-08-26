@@ -73,7 +73,7 @@ end
 
 local function get_encounter_name(encounterID)
     if encounterID then
-        return e.Get_Boss_Name(encounterID) or e.cn(EJ_GetEncounterInfo(itemInfo.encounterID))
+        return e.Get_Boss_Name(encounterID) or e.cn(EJ_GetEncounterInfo(encounterID))
     end
 end
 

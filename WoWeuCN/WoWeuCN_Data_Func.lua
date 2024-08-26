@@ -1,28 +1,24 @@
 local e= select(2, ...)
-
-if not WoWeuCN_Tooltips_EncounterData then
+--[[do
+if select(4, C_AddOns.GetAddOnInfo('WoWeuCN_Tooltips')) then
+    
+    
     loadEncounterData()
-end
-
-if not WoWeuCN_Tooltips_ItemData_0 then
     loadItemData0()
     loadItemData100000()
     loadItemData200000()
-end
-
-if not WoWeuCN_Tooltips_SpellData_0 then
     loadSpellData0()
     loadSpellData100000()
     loadSpellData200000()
     loadSpellData300000()
     loadSpellData400000()
-end
-
-if not WoWeuCN_Tooltips_UnitData_0 then
     loadUnitData0()
     loadUnitData100000()
     loadUnitData200000()
+  
+    print(id, '加载插件 Tooltips Translator 数据')
 end
+end]]
 --[[
 因无法找到数据来源，
 只能导入别的插件数据，
@@ -285,6 +281,9 @@ local function Get_NPC_ID(unit)--NPC ID
 end
 
 local Get_Unit_Data= GetUnitData or function(npcID)
+    if not WoWeuCN_Tooltips_UnitIndexData_0 then
+        return
+    end
     local num_id = npcID and tonumber(npcID)
     if not num_id then
         return
@@ -387,7 +386,7 @@ function e.Get_Quest_Info(questID, isName, isObject, isDesc)
     end
 
     local str_ID= tostring(questID)
-    local data= WoWeuCN_Quests_QuestData[str_ID]
+    local data= WoWeuCN_Quests_QuestData and WoWeuCN_Quests_QuestData[str_ID]
     if not data then
         return
     end
@@ -449,6 +448,9 @@ end
 
 
 function e.Get_Boss_Info(journalEncounterID)
+    if not WoWeuCN_Tooltips_EncounterData then
+        return
+    end
     local data= WoWeuCN_Tooltips_EncounterData[journalEncounterID]
     if data then
         local title, desc= true, true
@@ -484,9 +486,11 @@ end
 
 
 function e.Get_Boos_Section_Info(sectionID, difficultyID)
-    difficultyID = difficultyID or EJ_GetDifficulty()
-    if difficultyID and sectionID then
-        return WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
+    if WoWeuCN_Tooltips_EncounterSectionData then
+        difficultyID = difficultyID or EJ_GetDifficulty()
+        if difficultyID and sectionID then
+            return WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
+        end
     end
 end
 
