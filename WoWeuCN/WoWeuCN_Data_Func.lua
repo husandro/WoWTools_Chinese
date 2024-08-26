@@ -1,5 +1,28 @@
 local e= select(2, ...)
 
+if not WoWeuCN_Tooltips_EncounterData then
+    loadEncounterData()
+end
+
+if not WoWeuCN_Tooltips_ItemData_0 then
+    loadItemData0()
+    loadItemData100000()
+    loadItemData200000()
+end
+
+if not WoWeuCN_Tooltips_SpellData_0 then
+    loadSpellData0()
+    loadSpellData100000()
+    loadSpellData200000()
+    loadSpellData300000()
+    loadSpellData400000()
+end
+
+if not WoWeuCN_Tooltips_UnitData_0 then
+    loadUnitData0()
+    loadUnitData100000()
+    loadUnitData200000()
+end
 --[[
 因无法找到数据来源，
 只能导入别的插件数据，
