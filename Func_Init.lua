@@ -395,9 +395,9 @@ end)
 
 --UIErrorsFrame
 hooksecurefunc(UIErrorsFrame, 'AddMessage', function(self, msg, ...)
-    msg= e.strText[msg]
-    if msg then
-        self:AddMessage(msg, ...)
+    local text= e.strText[msg]
+    if text and msg~=text then
+        self:AddMessage(text, ...)
     end
 end)
 
