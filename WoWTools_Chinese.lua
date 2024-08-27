@@ -147,7 +147,7 @@ function e.cn(text, tab)
                     if name then
                         name= name:match('|c........(.+)|r') or name
                         if link:find('|h%[.-]|h') then
-                            data= link:gsub('|h%[.-]|h', '|h['..name..'1111]|h')
+                            data= link:gsub('|h%[.-]|h', '|h['..name..']|h')
                         end
                     end
                 end
