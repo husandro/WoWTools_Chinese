@@ -112,14 +112,20 @@ function e.cn(text, tab)
             data= e.Get_TradeSkillCategory_Name(tab.skillCategoryID)--专业目录
 
         elseif tab.spellID or tab.spellLink then
-            local spellID= spellID or Get
-            local name= e.Get_Spell_Name(tab.spellID)--法术名称
+            local spellID= select(7, tab.spellLink)
+            
             if tab.isName then
-                data= name
+                local name= e.Get_Spell_Name(spellID)--法术名称
+                if name then
+                    if tab.spellLink and tab.spellLink:find('|h%[.-]|h') then
+                        data= tab.spellLink:gsub('|h%[.-]|h', '|h['..name..']|h')
+                    end
+                    data= data or name
+                end
             elseif tab.isDesc then
-                data= e.Get_Spell_Desc(tab.spellID)
+                data= e.Get_Spell_Desc(spellID)
             else
-                data= e.Get_Spell_Data(tab.spellID)
+                data= e.Get_Spell_Data(spellID)
                 if data then
                     for index, name2 in pairs(data) do
                         data[index]= e.ReplaceText(name2)
@@ -133,8 +139,20 @@ function e.cn(text, tab)
                 data= e.Get_Toy_Source(itemID)
             elseif tab.isHeirloom then
                 data= e.Get_Heirloom_Source(itemID)
+
             elseif tab.isName then
-                data= e.Get_Item_Name(itemID)--物品名称
+                local link= tab.itemLink
+                if link then
+                    local name= e.Get_Item_Name(itemID)--物品名称
+                    if name then
+                        name= name:match('|c........(.+)|r') or name
+                        if link:find('|h%[.-]|h') then
+                            data= link:gsub('|h%[.-]|h', '|h['..name..'1111]|h')
+                        end
+                    end
+                end
+                data= data or e.Get_Item_Name(itemID)--物品名称
+
             elseif tab.isDesc then
                 data= e.Get_Item_Desc(itemID)--物品名称
             else
