@@ -111,7 +111,8 @@ function e.cn(text, tab)
         elseif tab.skillCategoryID then
             data= e.Get_TradeSkillCategory_Name(tab.skillCategoryID)--专业目录
 
-        elseif tab.spellID then
+        elseif tab.spellID or tab.spellLink then
+            local spellID= spellID or Get
             local name= e.Get_Spell_Name(tab.spellID)--法术名称
             if tab.isName then
                 data= name
@@ -126,17 +127,18 @@ function e.cn(text, tab)
                 end
             end
 
-        elseif tab.itemID then
+        elseif tab.itemID or tab.itemLink then
+            local itemID= tab.itemID or C_Item.GetItemIDForItemInfo(tab.itemLink)
             if tab.isToy then
                 data= e.Get_Toy_Source(itemID)
             elseif tab.isHeirloom then
                 data= e.Get_Heirloom_Source(itemID)
             elseif tab.isName then
-                data= e.Get_Item_Name(tab.itemID)--物品名称
+                data= e.Get_Item_Name(itemID)--物品名称
             elseif tab.isDesc then
-                data= e.Get_Item_Desc(tab.itemID)--物品名称
+                data= e.Get_Item_Desc(itemID)--物品名称
             else
-                data= e.Get_Item_Info(tab.itemID)--物品名称
+                data= e.Get_Item_Info(itemID)--物品名称
                 if data then
                     for index, name2 in pairs(data) do
                         data[index]= e.ReplaceText(name2)
