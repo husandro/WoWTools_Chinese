@@ -273,6 +273,36 @@ end
 
 
 
+function e.MK(number, bit)
+    if not number then
+        return
+    end
+    bit = bit or 1
+
+    local text= ''
+    if number>=1e6 then
+        number= number/1e6
+        text= 'm'
+    elseif number>= 1e4 and e.onlyChinese then
+        number= number/1e4
+        text='w'
+    elseif number>=1e3 then
+        number= number/1e3
+        text= 'k'
+    end
+    if bit==0 then
+        number= math.modf(number)
+        number= number==0 and 0 or number
+        return number..text--format('%i', number)..text
+    else
+        local num, point= math.modf(number)
+        if point==0 then
+            return num..text
+        else---0.5/10^bit
+            return format('%0.'..bit..'f', number)..text
+        end
+    end
+end
 
 
 
