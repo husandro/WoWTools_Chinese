@@ -6,6 +6,7 @@ local tab= {
     [6948]= '炉石',
 }
 
+
 C_Timer.After(4, function()
     do
         for itemID, text in pairs(tab) do
