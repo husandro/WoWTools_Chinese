@@ -1,3 +1,5 @@
+local e= select(2, ...)
+
 WoWTools_Chinese_Mixin={}
 
 
