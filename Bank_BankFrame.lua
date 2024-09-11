@@ -36,6 +36,7 @@ e.set(AccountBankPanel.ItemDepositFrame.DepositButton)
 AccountBankPanel.ItemDepositFrame:HookScript('OnShow', function(self)
     e.set(self.IncludeReagentsCheckbox.Text)
 end)
+e.set(BankItemSearchBox.Instructions)
 
 
 e.set(AccountBankPanel.TabSettingsMenu.BorderBox.EditBoxHeaderText)
