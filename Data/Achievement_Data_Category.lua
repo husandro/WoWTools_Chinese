@@ -1,7 +1,12 @@
+--[[
+[ID]= 'Name_lang',
+https://wago.tools/db2/Achievement_Category?locale=zhCN
+11.0.2.55789
+]]
+
+
+
 local tab={
-
-
-
 
 [1]= '属性',
 [21]= 'PvP',
@@ -232,11 +237,7 @@ local tab={
 
 
 
---[[
-[ID]= 'Name_lang',
-https://wago.tools/db2/Achievement_Category?locale=zhCN
-11.0.2.55789
-]]
+
 local e= select(2, ...)
 do
     for categoryID, text in pairs(tab) do

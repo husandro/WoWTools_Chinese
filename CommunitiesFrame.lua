@@ -463,6 +463,9 @@ e.set(CommunitiesFrame.GuildMemberDetailFrame.RankLabel)
 e.set(CommunitiesFrame.GuildMemberDetailFrame.OnlineLabel)
 e.set(CommunitiesFrame.GuildMemberDetailFrame.NoteLabel)
 e.hookLabel(CommunitiesFrame.GuildMemberDetailFrame.NoteBackground.PersonalNoteText)
+
+e.hookLabel(CommunitiesFrame.PostingExpirationText.ExpiredText)
+
 --[[###########
 --加载保存数据
 --###########

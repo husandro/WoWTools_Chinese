@@ -84,7 +84,8 @@ local function Init()
             GameTooltip:Show()
         end
     end)
-    e.set(EncounterJournalMonthlyActivitiesFrame.ThresholdBar.TextContainer.Points)
+    
+    e.set(EncounterJournalMonthlyActivitiesFrame.ThresholdContainer.TextContainer.Points)
     EncounterJournalMonthlyActivitiesFrame.HeaderContainer.Title:SetText('旅行者日志')
     EncounterJournalMonthlyActivitiesFrame.BarComplete.AllRewardsCollectedText:SetText('你已经收集完了本月的所有奖励')
 

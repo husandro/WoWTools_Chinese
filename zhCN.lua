@@ -1,3 +1,9 @@
+--[[
+["BaseTag"]= "TagText_lang",
+https://wago.tools/db2/GlobalStrings?&locale=zhCN
+11.0.5.56646
+]]
+
 local e = select(2, ...)
 e.strText={}--主要，汉化
 local tab={
@@ -20990,7 +20996,23 @@ local tab={
 ["SPELL_FAILED_CUSTOM_ERROR_2425"]= "土灵无法享受传统的食物和饮料。",
 ["DELVES_PARTY_MEMBER_INELIGIBLE_FOR_TIER_TOOLTIP"]= "%s尚未解锁此难度",
 
---11.0.2.56313
+--["CHARACTER_SELECT_LEVEL_TOOLTIP"]= "Level %d",
+--["SPELL_FAILED_CUSTOM_ERROR_1058"]= "This Shadowforge Brazier is already burning.",
+--["SPELL_FAILED_CUSTOM_ERROR_1057"]= "Lighting the Shadowforge Brazier requires a Shadowforge Torch.",
+["TOKEN_REMOVE_FROM_BACKPACK_INSTRUCTION"]= "<按住Shift点击取消追踪>",
+["MAP_TOOLTIP_TIME_LEFT"]= "剩余时间：%s",
+["ERR_GUILD_BANK_REALM_MISMATCH"]= "不能存放/取出，或者组合/分开其他服务器的堆叠物品。",
+["TOGGLE_VISIBILITY_TOOLTIP"]= "切换用户界面可见度",
+["ERR_CURRENCY_TRANSFER_TRANSACTION_IN_PROGRESS"]= "该角色已有正在进行的交易。",
+["CURRENCY_TRANSFER_MAX_QUANTITY_BUTTON"]= "最大数量",
+["CONFIRM_POPUP_DONT_SHOW_AGAIN"]= "不再显示",
+["SPELL_FAILED_CUSTOM_ERROR_1056"]= "你还不能使用这个物品。",
+["SPELL_FAILED_HEARTHSTONE"]= "你还不能使用这个物品。",
+["ACCOUNT_BANK_DEPOSIT_ALL_NO_REFUND_CONFIRM"]= "你即将把可退还的物品存放入银行。|n|n|cnRED_FONT_COLOR:所有战团绑定物品的退还倒计时都将被移除。|r|n|n你想要继续吗？",
+["ERR_WARBAND_HEARTHSTONE"]= "你还不能使用这个物品。",
+["OPTION_TOOLTIP_DISABLE_CHAT_ACCOUNT_MUTE"]= "如果想更改此项，您必须先在前往您的战网账号的设置，确保：|n\n- 隐私  -> “文字聊天”已开启",
+["SPELL_FAILED_CUSTOM_ERROR_1054"]= "无法在这里使用。",
+
 
 
 
@@ -20998,11 +21020,7 @@ local tab={
 
 
 }
---[[
-["BaseTag"]= "TagText_lang",
-https://wago.tools/db2/GlobalStrings?&locale=zhCN
-11.0.2.55789
-]]
+
 do
 for name, text in pairs(tab) do
     name= _G[name]

@@ -7,7 +7,7 @@ https://wago.tools/db2/UiMapGroupMember?locale=zhCN
 ]]
 
 local tab={
-
+--['暗炉城']= {455, 2362},
 
 ['法戈第矿洞']= {139,38},
 ['矿洞下层']= {139,39},

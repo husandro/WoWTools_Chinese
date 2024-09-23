@@ -1,7 +1,7 @@
 --[[
 [ID]= {'Name_lang', 'SourceText_lang', 'Description_lang'},
 https://wago.tools/db2/Mount?&locale=zhCN
-11.0.2.56311
+11.0.5.56646
 ]]
 
 local tab={
@@ -1266,7 +1266,7 @@ local tab={
     [2249]= {'雷什基加尔之手', '|cFFFFD200Trading Post|r', '当她的族人纷纷动手，尝试推翻被流放者，雷什基加尔却只是韬光养晦。她决定在典狱长无暇分身之时发起攻势，但典狱长的探子一直盯着她。他们的警告与援助使典狱长笑到了最后。'},
     [2259]= {'奔波尔鲛', '|cFFFFD200游戏商城|r|n,你这辈子见过的第三大的鱼人！'},
     [2262]= {'迎福巨熊,"|cFFFFD200特殊|r |n",骑上它，你心里充满了宁静与祥和，这一点在你跟鱼人和熊打交道时很罕见。'},
-
+    [2317]= {'魔化法纹飞毯', '|cFFFFD200商人出售：|r奥金|n|cFFFFD200地区：|r达拉然|n|cFFFFD200价格：|r5000|Hcurrency:1166|h|TInterface\\ICONS\\PVECurrency-Justice.blp:0|t|h', '为了搭配这种飞毯，达拉然的法师开发出了优雅的法纹布与自动缝纫光环，使每一个人都能处理线头、飞出风采。'}
 }
 
 

@@ -6,6 +6,8 @@ https://wago.tools/db2/UiMap?&locale=zhCN
 
 
 local tab={
+[2373]= '战争育幼所',
+
 [1]= '杜隆塔尔',
 [2]= '火刃集会所',
 [3]= '提拉加德城堡',

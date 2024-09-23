@@ -1,10 +1,17 @@
 --[[
 [ID]= {"Name_lang", "Description_lang"},
 https://wago.tools/db2/LFGDungeons?locale=zhCN
-11.0.2.55763
+11.0.5.56646
 ]]
 
 local tab={
+
+[2754]= {"黑石深渊", nil},
+[2753]= {"黑石深渊", nil},
+[2752]= {"帝王之座", nil},
+[2751]= {"暗炉城", nil},
+[2750]= {"元素领主", nil},
+
 [1]= {"哀嚎洞穴", nil},
 [2]= {"通灵学院", nil},
 [4]= {"怒焰裂谷", nil},

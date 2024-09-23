@@ -2,7 +2,7 @@
 --[[
 [ID]= {'Description_lang', 'SourceText_lang'},
 https://wago.tools/db2/BattlePetSpecies?locale=zhCN
-11.0.2.56311
+11.0.5.56646
 ]]
 
 
@@ -1907,6 +1907,11 @@ local tab={
 [4264]= {'有了菲尔恩在你身边，你就不会再被人说是“叶”公好龙了。', nil},
 [4568]= {'送货也要送出风姿。', '|cFFFFD200游戏商城|r'},
 [4616]= {'谷米珠蜒口感清甜，肉质弹牙，也因此有许多天敌。', '|cFFFFD200特殊|r'},
+[4669]= {nil, '蓝度精通魔法和针灸绝活，是休闲放松的不二选择。', '|cFFFFD200商栈|r|n'},
+[4678]= {nil, '|cFFFFD200商人出售：|r历史学家玛蒂|n|cFFFFD200地区：|r塔纳利斯|n|cFFFFD200价格：|r20|Hcurrency:3100|h|TInterface\\ICONS\\INV_10_DungeonJewelry_Dragon_Necklace_1_Bronze.BLP:0|t|h'},
+[4679]= {nil, '|cFFFFD200掉落：|r卡扎克|n|cFFFFD200地区：|r诅咒之地'},
+[4686]= {'幽灵刚刚降生不久就被牦牛人所收养，后来成长为了忠心不二的猛兽。如今他迈向大千世界，开始真正变得名符其实。', '|cFFFFD200商人出售：|r奥金|n|cFFFFD200地区：|r达拉然|n|cFFFFD200价格：|r2200|Hcurrency:1166|h|TInterface\\ICONS\\PVECurrency-Justice.blp:0|t|h'},
+[4689]= {'虹吸者很少能被捕获，它们是法力浮龙之中最危险的品种之一。这一只原本在卡拉赞的图书馆里畅享美味的法术书，不巧在那一刻分了神。', '|cFFFFD200商人出售：|r凯普丽|n|cFFFFD200地区：|r沙塔斯城|n|cFFFFD200价格：|r2200|Hcurrency:1166|h|TInterface\\ICONS\\PVECurrency-Justice.blp:0|t|h'},
 }
 
 

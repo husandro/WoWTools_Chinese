@@ -1,7 +1,7 @@
 --[[
 [ID]= {"Name_lang", "Description_lang"},
 https://wago.tools/db2/BattlePetAbility?locale=zhCN
-11.0.2.55763
+11.0.5.56646
 ]]
 
 local tab={
@@ -1349,7 +1349,8 @@ local tab={
 [1392]= {"激怒", "使你造成的伤害提高[abilityStateMod(23, 1391)]%，受到的伤害提高[abilityStateMod(24, 1391)]%。"},
 [2231]= {"音波引爆器", "[StandardAccuracy(1,1)] |cffffffff命中几率|r|n|n向你的目标投掷一个音波引爆器，对你的敌人造成[StandardDamage(1,1)]点[School()]伤害，并对其引爆的其他所有敌人造成[StandardDamage(1,2)]点[School()]伤害。"},
 [2395]= {"心灵游戏", "阿迪乌斯诅咒了你的宠物队伍。选择你希望你的队伍受到哪种伤害！"},
-
+[2522]= {"灾变之刃", "StandardAccuracy(1,1)]|cffffffff命中几率|r 挥舞迷你版灾变之刃宰割目标，造成[StandardDamage(1, 1)]点[School()]伤害。"},
+[2523]= {"暗影箭雨", "[StandardAccuracy(1,1)]|cffffffff命中几率|r 向敌人队伍射出暗影箭雨，对敌方队伍造成[StandardDamage(1, 1)]点[School()]伤害。"},
 }
 
 
