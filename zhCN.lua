@@ -6,6 +6,12 @@ https://wago.tools/db2/GlobalStrings?&locale=zhCN
 
 local e = select(2, ...)
 e.strText={}--主要，汉化
+
+if LOCALE_zhCN then
+    return
+end
+
+
 local tab={
 
 

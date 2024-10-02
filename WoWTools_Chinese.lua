@@ -345,4 +345,3 @@ end
 C_Timer.After(6, function()
     e.strText['']=nil
 end)
-

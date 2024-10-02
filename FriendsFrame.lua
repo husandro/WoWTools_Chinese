@@ -294,8 +294,10 @@ hooksecurefunc('RaidInfoFrame_InitButton', function(button, elementData)--RaidFr
             end
         end
 
-        local difficultyText= difficultyId and e.GetDifficultyColor(difficulty, difficultyId) or e.strText[difficulty]
-        button.difficulty:SetText(difficultyText)
+        local difficultyText = difficultyId and WoWTools_MapMixin and WoWTools_MapMixin:GetDifficultyColor(difficulty, difficultyId) or e.strText[difficulty]
+        if difficultyText then
+            button.difficulty:SetText(difficultyText)
+        end
 
         if button.extended:IsShown() then
             button.extended:SetText('|cff00ff00已延长|r')
