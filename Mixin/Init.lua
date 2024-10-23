@@ -42,23 +42,30 @@ function WoWTools_Chinese_Mixin:Setup(text, tab)
             data= e.Get_TradeSkillCategory_Name(tab.skillCategoryID)--专业目录
 
         elseif tab.spellID or tab.spellLink then
-            local spellID= select(7, tab.spellLink)
-
-            if tab.isName then
-                local name= e.Get_Spell_Name(spellID)--法术名称
-                if name then
-                    if tab.spellLink and tab.spellLink:find('|h%[.-]|h') then
-                        data= tab.spellLink:gsub('|h%[.-]|h', '|h['..name..']|h')
-                    end
-                    data= data or name
+            local spellID= tab.spellID
+            if not spellID and tab.spellLink then
+                local spellInfo = C_Spell.GetSpellInfo(tab.spellLink)
+                if spellInfo then
+                    spellID= spellInfo.spellID
                 end
-            elseif tab.isDesc then
-                data= e.Get_Spell_Desc(spellID)
-            else
-                data= e.Get_Spell_Data(spellID)
-                if data then
-                    for index, name2 in pairs(data) do
-                        data[index]= e.ReplaceText(name2)
+            end
+            if spellID then
+                if tab.isName then
+                    local name= e.Get_Spell_Name(spellID)--法术名称
+                    if name then
+                        if tab.spellLink and tab.spellLink:find('|h%[.-]|h') then
+                            data= tab.spellLink:gsub('|h%[.-]|h', '|h['..name..']|h')
+                        end
+                        data= data or name
+                    end
+                elseif tab.isDesc then
+                    data= e.Get_Spell_Desc(spellID)
+                else
+                    data= e.Get_Spell_Data(spellID)
+                    if data then
+                        for index, name2 in pairs(data) do
+                            data[index]= e.ReplaceText(name2)
+                        end
                     end
                 end
             end
