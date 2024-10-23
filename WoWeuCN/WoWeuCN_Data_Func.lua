@@ -31,7 +31,7 @@ end]]
 https://www.curseforge.com/wow/addons/quest-chinese-translator
 
 如果已加 载WoWeuCN_Tooltips, 不会再次加载数据
-10.2.7
+
 
 e.ReplaceText(string)
 法术 e.Get_Spell_Data(spellID)
