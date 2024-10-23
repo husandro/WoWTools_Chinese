@@ -92,6 +92,7 @@ function WoWTools_Chinese_Mixin:Setup(text, tab)
 
             elseif tab.isDesc then
                 data= e.Get_Item_Desc(itemID)--物品名称
+                
             else
                 data= e.Get_Item_Info(itemID)--物品名称
                 if data then
