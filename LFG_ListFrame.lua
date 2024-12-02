@@ -270,9 +270,13 @@ hooksecurefunc('LFGListEntryCreation_SetEditMode', function(self)--LFGList.lua
     end
 end)
 
+
 hooksecurefunc('LFGListApplicationViewer_UpdateInfo', function(self)
     local activeEntryInfo = C_LFGList.GetActiveEntryInfo()
     assert(activeEntryInfo)
+    if not activeEntryInfo or not activeEntryInfo.activityID then
+        return
+    end
     local activityInfo = C_LFGList.GetActivityInfoTable(activeEntryInfo.activityID)
     local categoryInfo = activityInfo and C_LFGList.GetLfgCategoryInfo(activityInfo.categoryID)
     if not categoryInfo then
@@ -303,6 +307,7 @@ hooksecurefunc('LFGListApplicationViewer_UpdateInfo', function(self)
         self.PrivateGroup:SetText('个人')
     end
 end)
+
 LFGListFrame.ApplicationViewer.RefreshButton:HookScript('OnEnter', function()
     GameTooltip:SetText('刷新', HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
 end)
