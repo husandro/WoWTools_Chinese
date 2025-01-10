@@ -4,7 +4,7 @@ e.set(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
 e.set(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
 e.set(QuestScrollFrame.SearchBox.Instructions)
 e.set(QuestMapFrame.MapLegend.TitleText)
-QuestMapFrame.MapLegend.BackButton:SetText('返回')
+--QuestMapFrame.MapLegend.BackButton:SetText('返回')
 
 
 hooksecurefunc(WorldMapFrame, 'SetupTitle', function(self)

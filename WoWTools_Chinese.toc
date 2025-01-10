@@ -1,5 +1,5 @@
-## Interface: 110007
-## Title: |cffff00ffWoW|r |cff00ff00Tools|r_|cff28a3ffChinese|r
+## Interface: 110100
+## Title: |cffff00ffWoW|r|cff00ff00Tools|r_|cff28a3ffChinese|r
 ## Author: husandro
 ## Version: @project-version@
 ## X-Curse-Project-ID: 1057668

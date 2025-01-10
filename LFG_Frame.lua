@@ -24,6 +24,7 @@ e.hookLabel(GroupFinderFrameGroupButton3Name)--预创建队伍 GroupFinderFrame.
 PVEFrameTab1:SetText('地下城和团队副本')
 PVEFrameTab2:SetText('PvP')
 PVEFrameTab3:SetText('史诗钥石地下城')
+PVEFrameTab4:SetText('地下堡')
 
 e.set(LFDQueueFrameRandomScrollFrameChildFrameXPLabel)
 hooksecurefunc('LFDQueueFrameFindGroupButton_Update', function()--LFDFrame.lua

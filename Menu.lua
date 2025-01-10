@@ -75,10 +75,10 @@ hooksecurefunc(MenuUtil, 'SetElementText', function(elementDescription, text)
     local name= e.strText[text]
     if name and name~=text then
         elementDescription.text = name
-
-        
-        elementDescription:AddInitializer(function(button)
-            button.Text:SetText(name)
-        end)
     end
 end)
+
+--[[elementDescription:AddInitializer(function(button)
+    button.Text:SetText(name)
+end)]]
+
