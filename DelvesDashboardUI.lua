@@ -1,10 +1,9 @@
 local e= select(2, ...)
---地下堡
+--地下堡, 没加载
 
 
 local function Init()
-    --e.set(DelvesDashboardFrame.ButtonPanelLayoutFrame.CompanionConfigButtonPanel.CompanionConfigButton.ButtonText)
-    DelvesDashboardFrame.ButtonPanelLayoutFrame.CompanionConfigButtonPanel.CompanionConfigButton.ButtonText:SetText('配置')
+    e.set(DelvesDashboardFrame.ButtonPanelLayoutFrame.CompanionConfigButtonPanel.CompanionConfigButton.ButtonText)
 end
 
 
