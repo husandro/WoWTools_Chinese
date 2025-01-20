@@ -37,4 +37,3 @@ hooksecurefunc(StableFrame.StabledPetList.ScrollBox, 'Update', function(frame)
         e.set(btn.Label)       
     end
 end)
-e.set(StableFrame.StabledPetList.FilterBar.FilterDropdown.Text)
