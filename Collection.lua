@@ -469,7 +469,9 @@ local function Init()
     CollectionsJournalTab3:SetText('玩具箱')
     CollectionsJournalTab4:SetText('传家宝')
     CollectionsJournalTab5:SetText('外观')
-
+    if CollectionsJournalTab6 then--11.1
+        CollectionsJournalTab6:SetText('营地')
+    end
 
 
 

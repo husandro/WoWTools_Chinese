@@ -3,9 +3,21 @@ local e= select(2, ...)
 e.set(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
 e.set(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
 e.set(QuestScrollFrame.SearchBox.Instructions)
-e.set(QuestMapFrame.MapLegend.TitleText)
---QuestMapFrame.MapLegend.BackButton:SetText('返回')
+if QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice then
+    e.set(QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text)
+    QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text:SetTextColor(0,1,0)
+end
 
+--地图图例
+e.set(QuestMapFrame.MapLegend.TitleText)
+if MapLegendScrollFrame then
+    for _, layout in pairs(MapLegendScrollFrame.ScrollChild:GetLayoutChildren() or {}) do
+        e.set(layout.TitleText)
+        for _, text in pairs(layout:GetLayoutChildren() or {}) do
+            e.set(text, text.nameText)
+        end
+    end
+end
 
 hooksecurefunc(WorldMapFrame, 'SetupTitle', function(self)
     self.BorderFrame:SetTitle('地图和任务日志')
