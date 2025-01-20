@@ -125,10 +125,10 @@ local function Init_Pet()
 
 --[[
     列表，名称
-    pet.petID = petID;
-    pet.speciesID = speciesID;
-    pet.index = index;
-    pet.owned = isOwned;
+    pet.petID = petID
+    pet.speciesID = speciesID
+    pet.index = index
+    pet.owned = isOwned
 ]]
 
 
@@ -137,7 +137,7 @@ local function Init_Pet()
             if not pet:IsVisible() then
                 return
             end
-            local _, _, _, customName, _, _, _, _, _, _, companionID= C_PetJournal.GetPetInfoByIndex(pet.index);
+            local _, _, _, customName, _, _, _, _, _, _, companionID= C_PetJournal.GetPetInfoByIndex(pet.index)
             local npcName= e.Get_Unit_Name(nil, companionID)
             if npcName then
                 if customName then
@@ -172,7 +172,7 @@ local function Init_Toy()
 
     if not _G['OnToyBoxButtonUpdate'] then
         for i = 1, 18 do--TOYS_PER_PAGE
-            local button = ToyBox.iconsFrame["spellButton"..i];
+            local button = ToyBox.iconsFrame["spellButton"..i]
             if button and button.name then
                 hooksecurefunc(button.name, 'SetText', function(self, text)
                     if not self:IsVisible() then
@@ -202,7 +202,7 @@ local function Init_Toy()
 
         hooksecurefunc('ToyBox_UpdateButtons', function()
             for i = 1, 18 do--TOYS_PER_PAGE
-                local button = ToyBox.iconsFrame["spellButton"..i];
+                local button = ToyBox.iconsFrame["spellButton"..i]
                 if button then
                     set_toy_name(button)
                 end
@@ -426,7 +426,26 @@ end
 
 
 
-
+local function Init_WarbandSceneJournal()
+    if not WarbandSceneJournal then
+        return
+    end
+    WarbandSceneJournal.IconsFrame.Icons.Controls.ShowOwned.Text:SetText('只显示已获得的')
+    hooksecurefunc(WarbandSceneEntryMixin, 'UpdateWarbandSceneData', function(self)
+        if not self.elementData then
+            return
+        end
+        --self.warbandSceneInfo = C_WarbandScene.GetWarbandSceneEntry(self.elementData.warbandSceneID)
+        if self.warbandSceneInfo then
+            local name= e.cn(self.warbandSceneInfo.name)
+            if name and name~=self.warbandSceneInfo.name then
+                self.Name:SetText(name)
+            end
+            self.Icon:SetAtlas(self.warbandSceneInfo.textureKit, TextureKitConstants.UseAtlasSize)
+        end
+    end)
+    --e.set(WarbandSceneJournal.IconsFrame.Icons.Controls.ShowOwned.Text)
+end
 
 
 
@@ -439,6 +458,7 @@ local function Init()
     Init_Heirlooms()
     Init_Wardrobe()
     Init_DressUpFrame()
+    Init_WarbandSceneJournal()
 
     hooksecurefunc('CollectionsJournal_UpdateSelectedTab', function(self)--设置，标题
         e.set(self.Text)
