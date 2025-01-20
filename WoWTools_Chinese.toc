@@ -94,14 +94,13 @@ StaticPopup.lua
 Func_Init.lua
 Func_Event.lua
 
-
+AccountStoreFrame.lua
 StableFrame.lua
 MailFrame.lua
 SettingsPanel.lua
 EditModeManagerFrame.lua
 NavBar.lua
 GameTooltip.lua
-
 AddonList.lua
 FriendsFrame.lua
 QuickKeybindFrame.lua
