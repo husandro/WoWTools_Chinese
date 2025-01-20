@@ -105,11 +105,11 @@ local function Init_TalentsFrame()
         local className = e.strText[self:GetClassName()]
         if className then
             self.ClassCurrencyDisplay:SetPointTypeText(className)
-        end            
+        end
         local specName= e.strText[self:GetSpecName()]
         if specName then
             self.SpecCurrencyDisplay:SetPointTypeText(specName)
-        end        
+        end
     end)
 
     PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer.ChooseSpecLabel1:SetText('选择你的')
@@ -117,24 +117,24 @@ local function Init_TalentsFrame()
     PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer.LockedLabel1:SetText('英雄天赋')
     PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer.LockedLabel2:SetText('达到%d级后解锁')
 
-    hooksecurefunc(PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer, 'UpdateHeroSpecButton', function(self)     
+    hooksecurefunc(PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer, 'UpdateHeroSpecButton', function(self)
         if self:IsDisplayingActiveHeroSpec() then
             local name= e.strText[self.activeSubTreeInfo.name]
             if name then
                 self.HeroSpecLabel:SetText(name)
             end
-        elseif not self:IsDisplayingHeroSpecChoices() and self:IsDisplayingPreviewSpecs() then            
+        elseif not self:IsDisplayingHeroSpecChoices() and self:IsDisplayingPreviewSpecs() then
             self.LockedLabel2:SetFormattedText('达到%d级后解锁', self.heroSpecsRequiredLevel)
-        end       
+        end
     end)
 
-    PlayerSpellsFrame.TalentsFrame.WarmodeButton:HookScript('OnEnter', function(self)   
+    PlayerSpellsFrame.TalentsFrame.WarmodeButton:HookScript('OnEnter', function(self)
         local wrap = true;
         local warModeRewardBonus = C_PvP.GetWarModeRewardBonus();
         GameTooltip:AddLine(' ')
         GameTooltip_AddNormalLine(GameTooltip, format('加入战争模式即可激活世界PvP，使任务的奖励和经验值提高%1$d%%，并可以在野外使用PvP天赋。', warModeRewardBonus), wrap);
         local canToggleWarmode = C_PvP.CanToggleWarMode(true);
-        local canToggleWarmodeOFF = C_PvP.CanToggleWarMode(false);    
+        local canToggleWarmodeOFF = C_PvP.CanToggleWarMode(false);
         if(not canToggleWarmode or not canToggleWarmodeOFF) then
                 if (not C_PvP.ArePvpTalentsUnlocked()) then
                 GameTooltip_AddErrorLine(GameTooltip, format('在%d级解锁', C_PvP.GetPvpTalentsUnlockedLevel()), wrap);
@@ -143,6 +143,21 @@ local function Init_TalentsFrame()
         GameTooltip:Show();
     end)
 
+
+    hooksecurefunc(PlayerSpellsFrame.TalentsFrame.PvPTalentList.ScrollBox, 'Update', function(frame)
+        if not frame:GetView() then
+            return
+        end
+        for _, btn in pairs(frame:GetFrames() or {}) do
+            local info= btn.talentInfo
+            if info then
+                local name= e.cn(nil, {spellID=info.spellID, isName=true})
+                if name then
+                    btn.Name:SetText(name)
+                end
+            end
+        end
+    end)
 end
 
 
@@ -166,21 +181,21 @@ end
 
 
 local function Init_SpecFrame()
-    
+
     hooksecurefunc(PlayerSpellsFrame.SpecFrame, 'UpdateSpecContents', function(self, index, sex, frameWidth, numSpecs)
         if self.isInitialized or not C_SpecializationInfo.IsInitialized() then
             return;
         end
         self.isInitialized = true;
-    
+
         local numSpecs = GetNumSpecializations(false, false);
         self.numSpecs = numSpecs;
-        if numSpecs == 0 then 
+        if numSpecs == 0 then
             return;
         end
         local sex = UnitSex("player");
         local specContentWidth = self:GetWidth() / numSpecs;
-    
+
         -- set spec infos
         self.SpecContentFramePool:ReleaseAll();
         for i = 1, numSpecs do
@@ -194,7 +209,7 @@ local function Init_SpecFrame()
 
 
     local sex= UnitSex('player')
-    for frame in PlayerSpellsFrame.SpecFrame.SpecContentFramePool:EnumerateActive() do 
+    for frame in PlayerSpellsFrame.SpecFrame.SpecContentFramePool:EnumerateActive() do
         e.hookLabel(frame.SpecName)
         e.hookLabel(frame.RoleName)
         e.hookLabel(frame.ActivatedText)
@@ -218,7 +233,7 @@ end
 
 
 
-local function Init()    
+local function Init()
     Init_SpellBookFrame()
     Init_TalentsFrame()
     Init_SpecFrame()

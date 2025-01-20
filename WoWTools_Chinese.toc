@@ -11,7 +11,7 @@
 
 ##繁体，简体，不会载加
 ##界面，中文化，主要function
-Mixin\Init.lua
+WoWTools_Setup.lua
 
 ##字符, 常用
 zhCN.lua
