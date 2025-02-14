@@ -3,7 +3,7 @@ local e= select(2, ...)
 e.set(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
 e.set(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
 e.set(QuestScrollFrame.SearchBox.Instructions)
-if QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice then
+if  QuestMapFrame.QuestsFrame.DetailsFrame and QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame and QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice then--11.1
     e.set(QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text)
     QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text:SetTextColor(0,1,0)
 end
