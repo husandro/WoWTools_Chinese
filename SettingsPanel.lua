@@ -2,18 +2,20 @@ local id, e= ...
 
 
 hooksecurefunc(SettingsCategoryListButtonMixin, 'Init', function(self, initializer)--列表 Blizzard_CategoryList.lua
-    local category = initializer.data.category
+    local category = not InCombatLockdown() and initializer.data.category
     if category then
         e.set(self.Label, category:GetName())
     end
 end)
 hooksecurefunc(SettingsCategoryListHeaderMixin, 'Init', function(self, initializer)
-    e.set(self.Label, initializer.data.label)
+    if not InCombatLockdown() then
+        e.set(self.Label, initializer.data.label)
+    end
 end)
 
 --选项
 hooksecurefunc(SettingsPanel.Container.SettingsList.ScrollBox, 'Update', function(frame)
-    if not frame:GetView() or not frame:IsVisible() then
+    if not frame:GetView() or not frame:IsVisible() or InCombatLockdown() then
         return
     end
 
@@ -44,6 +46,9 @@ hooksecurefunc(SettingsPanel.Container.SettingsList.ScrollBox, 'Update', functio
     end
 end)
 hooksecurefunc('BindingButtonTemplate_SetupBindingButton', function(_, button)--BindingUtil.lua
+    if InCombatLockdown() then
+        return
+    end
     local text= button:GetText()
     if text==GRAY_FONT_COLOR:WrapTextInColorCode(NOT_BOUND) then
         button:SetText(GRAY_FONT_COLOR:WrapTextInColorCode('未设置'))
@@ -52,8 +57,10 @@ hooksecurefunc('BindingButtonTemplate_SetupBindingButton', function(_, button)--
     end
 end)
 
-hooksecurefunc(KeyBindingFrameBindingTemplateMixin, 'Init', function(self, initializer)
-    e.set(self.Label)
+hooksecurefunc(KeyBindingFrameBindingTemplateMixin, 'Init', function(self)
+    if not InCombatLockdown() then
+        e.set(self.Label)
+    end
 end)
 
 e.hookLabel(SettingsPanel.OutputText)
@@ -144,10 +151,6 @@ end)
 
 
 local function Init()
-    local label2= e.Cstr(SettingsPanel.CategoryList)
-    label2:SetPoint('RIGHT', SettingsPanel.ClosePanelButton, 'LEFT', -2, 0)
-    label2:SetText(id..' 语言翻译 提示：请要不在战斗中修改选项')
-
     SettingsPanel.Container.SettingsList.Header.DefaultsButton:SetText('默认设置')
     e.dia('GAME_SETTINGS_APPLY_DEFAULTS', {text= '你想要将所有用户界面和插件设置重置为默认状态，还是只重置这个界面或插件的设置？', button1= '所有设置', button2= '取消', button3= '这些设置'})--Blizzard_Dialogs.lua
     SettingsPanel.GameTab.Text:SetText('游戏')
@@ -158,7 +161,6 @@ local function Init()
 
     SettingsPanel.NineSlice.Text:SetText('选项')
     SettingsPanel.SearchBox.Instructions:SetText('搜索')
-
 end
 
 
