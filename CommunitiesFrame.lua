@@ -465,23 +465,3 @@ e.set(CommunitiesFrame.GuildMemberDetailFrame.NoteLabel)
 e.hookLabel(CommunitiesFrame.GuildMemberDetailFrame.NoteBackground.PersonalNoteText)
 
 e.hookLabel(CommunitiesFrame.PostingExpirationText.ExpiredText)
-
---[[###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if id==arg1 then
-        if C_AddOns.IsAddOnLoaded('Blizzard_Communities') then
-            Init()
-            self:UnregisterEvent('ADDON_LOADED')
-        end
-
-    elseif arg1=='Blizzard_Communities' then--冒险指南
-        Init()
-        self:UnregisterEvent('ADDON_LOADED')
-
-    end
-end)
-]]

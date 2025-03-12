@@ -493,22 +493,10 @@ end
 
 
 
-
-
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if id==arg1 then
-        if C_AddOns.IsAddOnLoaded('Blizzard_EncounterJournal') then
-            Init()
-            self:UnregisterEvent('ADDON_LOADED')
-        end
-
-    elseif arg1=='Blizzard_EncounterJournal' then--冒险指南
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
+    if arg1=='Blizzard_EncounterJournal' then
         Init()
-        self:UnregisterEvent('ADDON_LOADED')
+        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
     end
 end)
+

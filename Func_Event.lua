@@ -705,14 +705,7 @@ end
 
 
 
-
-
-
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(_, _, arg1)
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(_, arg1)
     Init_Event(arg1)
 end)
+

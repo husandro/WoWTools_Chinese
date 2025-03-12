@@ -155,36 +155,14 @@ end
 
 
 
-local function Init()
-    DeathRecapFrame.CloseButton:SetText('关闭')
-    DeathRecapFrame.Title:SetText('死亡摘要')
+ 
 
-    hooksecurefunc('DeathRecapFrame_OpenRecap', set_DeathRecapFrame_OpenRecap)
-end
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
+    if arg1=='Blizzard_DeathRecap' then
+        DeathRecapFrame.CloseButton:SetText('关闭')
+        DeathRecapFrame.Title:SetText('死亡摘要')
 
-
-
-
-
-
-
-
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if id==arg1 then
-        if C_AddOns.IsAddOnLoaded('Blizzard_DeathRecap') then
-            Init()
-            self:UnregisterEvent('ADDON_LOADED')
-        end
-
-    elseif arg1=='Blizzard_DeathRecap' then--冒险指南
-        Init()
-        self:UnregisterEvent('ADDON_LOADED')
+        hooksecurefunc('DeathRecapFrame_OpenRecap', set_DeathRecapFrame_OpenRecap)
+        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
     end
 end)
-
-

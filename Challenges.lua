@@ -1,5 +1,5 @@
 
-local id, e= ...
+local e= select(2, ...)
 
 
 
@@ -167,34 +167,15 @@ end
 
 
 
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-function panel:un_event()
-    if C_AddOns.IsAddOnLoaded('Blizzard_WeeklyRewards')
-        and C_AddOns.IsAddOnLoaded('Blizzard_ChallengesUI')
-    then
-        self:UnregisterEvent('ADDON_LOADED')
-    end
-end
-panel:SetScript("OnEvent", function(self, _, arg1)
-    if arg1==id then
-        if C_AddOns.IsAddOnLoaded('Blizzard_WeeklyRewards') then
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
+    if arg1=='Blizzard_WeeklyRewards' or arg1=='Blizzard_ChallengesUI' then
+        if arg1=='Blizzard_WeeklyRewards' then
             Init_Blizzard_WeeklyRewards()
+        elseif arg1=='Blizzard_ChallengesUI' then
+            Init_Blizzard_ChallengesUI()
         end
-        if C_AddOns.IsAddOnLoaded('Blizzard_ChallengesUI') then
-            Init_Blizzard_WeeklyRewards()
+        if C_AddOns.IsAddOnLoaded('Blizzard_WeeklyRewards') and  C_AddOns.IsAddOnLoaded('Blizzard_ChallengesUI') then
+            EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
         end
-        self:un_event()
-
-    elseif arg1=='Blizzard_WeeklyRewards' then
-        Init_Blizzard_WeeklyRewards()
-        self:un_event()
-
-    elseif arg1=='Blizzard_ChallengesUI' then
-        Init_Blizzard_ChallengesUI()
-        self:un_event()
     end
 end)

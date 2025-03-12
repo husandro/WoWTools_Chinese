@@ -342,24 +342,19 @@ end)
 
 
 
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
+    if arg1=='Blizzard_PerksProgram' or arg1=='Blizzard_ItemSocketingUI' then
 
+        if arg1=='Blizzard_PerksProgram' then
+             set_GameTooltip_func(PerksProgramTooltip)
 
+        elseif arg1=='Blizzard_ItemSocketingUI' then
+            set_GameTooltip_func(ItemSocketingDescription)
+        end
 
-
-
---###########
---加载保存数据
---###########
-local panel= CreateFrame("Frame")
-panel:RegisterEvent("ADDON_LOADED")
-panel:SetScript("OnEvent", function(_, _, arg1)
-    if arg1=='Blizzard_PerksProgram' then--Blizzard_PerksProgramElements.lua
-        set_GameTooltip_func(PerksProgramTooltip)
-
-    elseif arg1=='Blizzard_ItemSocketingUI' then--镶嵌宝石，界面
-        ItemSocketingSocketButton:SetText('应用')
-        set_GameTooltip_func(ItemSocketingDescription)
-
+        if C_AddOns.IsAddOnLoaded('Blizzard_PerksProgram') and  C_AddOns.IsAddOnLoaded('BlizzarBlizzard_ItemSocketingUId_ChallengesUI') then
+            EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
+        end
     end
 end)
 
