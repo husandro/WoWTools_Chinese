@@ -335,9 +335,11 @@ end)
 hooksecurefunc('SearchBoxTemplate_OnLoad', function(self)--SharedUIPanelTemplates.lua
     self.Instructions:SetText('搜索')
 end)
-hooksecurefunc('Main_HelpPlate_Button_ShowTooltip', function(self)
-    HelpPlateTooltip.Text:SetText(self.MainHelpPlateButtonTooltipText or '点击这里打开/关闭本窗口的帮助系统。')
-end)
+if _G['Main_HelpPlate_Button_ShowTooltip'] then--11.1.5 无
+    hooksecurefunc('Main_HelpPlate_Button_ShowTooltip', function(self)
+        HelpPlateTooltip.Text:SetText(self.MainHelpPlateButtonTooltipText or '点击这里打开/关闭本窗口的帮助系统。')
+    end)
+end
 hooksecurefunc(SearchBoxListMixin, 'UpdateSearchPreview', function(self, finished, dbLoaded, numResults)
     if finished and not self.searchButtons[numResults] then
         self.showAllResults.text:SetFormattedText('显示全部%d个结果', numResults)
@@ -443,15 +445,15 @@ hooksecurefunc(HelpTipTemplateMixin, 'ApplyText', function(frame)
         frame.Text:SetText(text)
     end
 end)
-
-hooksecurefunc('HelpPlate_Button_OnEnter', function(self)
-    local text= e.strText[self.toolTipText]
-    if text then
-        self.toolTipText= text
-        HelpPlateTooltip.Text:SetText(text)
-    end
-end)
-
+if _G['HelpPlate_Button_OnEnter'] then--11.1.5无
+    hooksecurefunc('HelpPlate_Button_OnEnter', function(self)
+        local text= e.strText[self.toolTipText]
+        if text then
+            self.toolTipText= text
+            HelpPlateTooltip.Text:SetText(text)
+        end
+    end)
+end
 
 
 
