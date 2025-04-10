@@ -2,10 +2,19 @@ local e = select(2, ...)
 
 
 
+print(TokenFrame)
+--local function Init()
 
-local function Init()
+    hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
+        if not f:GetView() then
+            return
+        end
+        for _, frame in pairs(f:GetFrames() or {}) do
+           
+        end
+    end)
     hooksecurefunc(TokenHeaderMixin, 'Initialize', function(self)
-        if self.elementData.name then
+            if self.elementData.name then
             local name= e.strText[self.elementData.name]
             if name then
                 self.Name:SetText(name)
@@ -65,7 +74,7 @@ local function Init()
     
     e.set(CurrencyTransferLogTitleText)
     e.set(CurrencyTransferLog.EmptyLogMessage)
-end
+--end
 
 
 
@@ -77,12 +86,12 @@ end
 
 
 
-
+--[[
 EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
     if arg1=='Blizzard_TokenUI' then
         Init()
         EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
     end
-end)
+end)]]
 
 
