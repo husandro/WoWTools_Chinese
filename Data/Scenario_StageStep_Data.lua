@@ -3974,7 +3974,7 @@ local tab={
 ["15x1"]= {"带上200桶盎迦丛林酒去酿酒大锅。", "装满酿酒大锅"},
 ["15x2"]= {"击败乌克头领。", "击败乌克头领"},
 
-    
+
 }
 
 
@@ -4003,4 +4003,3 @@ function e.Get_Scenario_Step_Info(scenarioID, stepIndex)
         return data
     end
 end
-   
