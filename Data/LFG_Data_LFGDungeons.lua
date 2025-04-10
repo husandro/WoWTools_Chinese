@@ -1490,7 +1490,8 @@ local e= select(2, ...)
 
 
 local descTab={}
-do
+
+
 for dungeonID, info in pairs(tab) do
     local name= GetLFGDungeonInfo(dungeonID)
     if name and info[1] then
@@ -1500,8 +1501,6 @@ for dungeonID, info in pairs(tab) do
         descTab[dungeonID]= info[2]
     end
 end
-end
-tab=nil
 
 
 function e.Get_LFGDungeon_Desc(lfgDungeonID)

@@ -24,7 +24,7 @@ hooksecurefunc('NavBar_AddButton', function(self, buttonData)
             buttonExtraWidth = 30
         end
         navButton:SetWidth(navButton.text:GetStringWidth() + buttonExtraWidth)
-    end    
+    end
 end)
 
 

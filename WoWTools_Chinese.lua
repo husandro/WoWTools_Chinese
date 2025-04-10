@@ -16,61 +16,6 @@ local e= select(2, ...)
 
 
 
-function e.Get_HoliDay_Desc()end--{holydayID=eventID} {'名称', '描述}
-function e.Get_HoliDay_Name()end--{holydayID, isName}
-function e.Get_HoliDay_Info()end--{holydayID, isDesc}
-
-
-function e.Get_PerksActivity_Info()end---tab.perksActivityID {'名称', '描述}
-function e.Get_Vignette_Name()end--tab.vignetteID
-function e.Get_Title_Name()end--e.Get_Title_Name(titleID) 头衔
-
-function e.Get_Pet_Description()end---tab.speciesID
-function e.Get_Pet_Ablity_Info()end---tab.petAbilityID {'名称', '描述}
-
---{itemID, isName, isToy, isHeirloom}
-function e.Get_Toy_Source()end
-function e.Get_Heirloom_Source()end
-
-function e.Get_SkillLineAbility_Name()end--tab.skillLineAbilityID 专业配方，名称
-function e.Get_TradeSkillCategory_Name()end---tab.skillCategoryID 专业目录，名称
-function e.Get_Recipe_Source()end--配方，来源
-function e.Get_Profession_Node_Desc()end--tab.nodeID
-
-function e.Get_LFGDungeon_Desc()end--tab.lfgDungeonID
-function e.Get_Instance_Desc()end---tab.instanceID
-function e.Get_Scenario_Name()end--{scenarioID, isName}
-function e.Get_Scenario_Step_Info()end--{tab.scenarioID, tab.stepIndex}
-
-function e.Get_Boss_Name()end--tab.journalEncounterID
-function e.Get_Boss_Desc()end
-function e.Get_Boss_Info()end
-function e.Get_Boos_Section_Info()end--(sectionID, difficultyID)
-function e.Get_Boos_Section_Name()end--(sectionID, difficultyID)
-function e.Get_Boos_Section_Desc()end--(sectionID, difficultyID)
-
-
-
-
-function e.ReplaceText()end-- WoWeuCN_Tooltips
-
-function e.Get_Quest_Info()end--e.Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc) {['Title']='标题', ['Objectives']='目标描述', ['Description']='描述'}
-function e.Get_Quest_Object()end--{questID=1, index=1, isObject=true}
-function e.Get_Unit_Name()end--e.Get_Unit_Name(tab.unit, tab.npcID) NPC return 名称，头衔
-function e.Get_Unit_Info()end--e.Get_Unit_Name(tab.unit, tab.npcID) NPC return {'名称', '头衔'}
-
-
-function e.Get_Item_Info()end--物品数据
-function e.Get_Item_Name()end
-function e.Get_Item_Desc()end--{itemID, index}
-
-function e.Get_Spell_Data()end -- 初始func, 法术数据，{'名称', '1', '2', ...}
-function e.Get_Spell_Name()end --{spellID, isName}
-function e.Get_Spell_Desc()end-- {spellID, isDesc}
-
-
-
-
 
 
 
