@@ -15,10 +15,12 @@ local function calendar_Uptate()
         local data= e.cn(nil, {holydayID= info.eventID}) or {}
         local head= data[1]
         local desc= data[2]
+        print(info.eventID, head, desc)
         if head then
             CalendarViewHolidayFrame.Header:Setup(head)
         end
         if desc then
+            
             if (info.startTime and info.endTime) then
                 desc = format('%1$s|n|n开始：%2$s %3$s|n结束：%4$s %5$s', desc, FormatShortDate(info.startTime.monthDay, info.startTime.month, 0), GameTime_GetFormattedTime(info.startTime.hour, info.startTime.minute, true), FormatShortDate(info.endTime.monthDay, info.endTime.month), GameTime_GetFormattedTime(info.endTime.hour, info.endTime.minute, true));
             end
