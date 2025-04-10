@@ -1,7 +1,6 @@
 --[[
 [ID]= {'ActivityName_lang', 'Description_lang'},
 https://wago.tools/db2/PerksActivity?locale=zhCN
-11.0.5.56646
 ]]
 
 
