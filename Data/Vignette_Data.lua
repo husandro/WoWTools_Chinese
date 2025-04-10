@@ -6078,6 +6078,6 @@ local tab={
 
 
 local e = select(2, ...)
-function e.Get_Vignette_Name(vignetteID)
+function WoWTools_ChineseMixin:Get_Vignette_Name(vignetteID)
     return tab[vignetteID]
 end

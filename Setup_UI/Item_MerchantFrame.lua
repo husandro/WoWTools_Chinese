@@ -11,7 +11,7 @@ hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
         return
     end
 
-    local npc= e.Get_Unit_Name('npc')
+    local npc= WoWTools_ChineseMixin:Get_Unit_Name('npc')
     if npc then
         MerchantFrame:SetTitle(npc)
     end

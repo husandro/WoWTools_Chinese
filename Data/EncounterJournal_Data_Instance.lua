@@ -228,7 +228,7 @@ local e = select(2, ...)
 
 
 local tab={}
-function e.Get_Instance_Desc(instanceID)
+function WoWTools_ChineseMixin:Get_Instance_Desc(instanceID)
     return tab[instanceID]
 end
 

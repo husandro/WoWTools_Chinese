@@ -138,7 +138,7 @@ local function Init_Pet()
                 return
             end
             local _, _, _, customName, _, _, _, _, _, _, companionID= C_PetJournal.GetPetInfoByIndex(pet.index)
-            local npcName= e.Get_Unit_Name(nil, companionID)
+            local npcName= WoWTools_ChineseMixin:Get_Unit_Name(nil, companionID)
             if npcName then
                 if customName then
                     pet.subName:SetText(npcName)

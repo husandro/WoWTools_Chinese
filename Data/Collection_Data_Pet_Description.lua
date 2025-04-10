@@ -2173,7 +2173,7 @@ local tab={
 
 --给 WoWTools 调用
 local e= select(2, ...)
-function e.Get_Pet_Description(speciesID)
+function WoWTools_ChineseMixin:Get_Pet_Description(speciesID)
     return tab[speciesID]
 end
 

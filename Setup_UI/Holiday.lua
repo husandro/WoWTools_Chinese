@@ -55,7 +55,7 @@ local function Init()
         local day = dayButton.day
         local eventIndex = elementData.index
         local event = C_Calendar.GetDayEvent(monthOffset, day, eventIndex) or {}
-        local title= e.Get_HoliDay_Name(event.eventID)
+        local title= WoWTools_ChineseMixin:Get_HoliDay_Name(event.eventID)
         if title then
             btn.Title:SetText(title)
         end
@@ -77,7 +77,7 @@ local function Init()
             local eventButtonText1 = _G[dayButtonName..'EventButton'..eventButtonIndex.."Text1"]
             local event = C_Calendar.GetDayEvent(monthOffset, day, eventIndex)
             if ShouldDisplayEventOnCalendar(event) then
-                local title= e.Get_HoliDay_Name(event.eventID)
+                local title= WoWTools_ChineseMixin:Get_HoliDay_Name(event.eventID)
                 if title then
                     eventButtonText1:SetText(title)
                 end

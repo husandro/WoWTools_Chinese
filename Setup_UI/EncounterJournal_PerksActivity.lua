@@ -97,7 +97,7 @@ local function Init()
 
     --任务，名称
     hooksecurefunc(MonthlyActivitiesButtonTextContainerMixin, 'UpdateText', function(self, data)
-        local info= e.Get_PerksActivity_Info(data.ID)
+        local info= WoWTools_ChineseMixin:Get_PerksActivity_Info(data.ID)
         if not info then
             return
         end
@@ -116,7 +116,7 @@ local function Init()
     --任务，提示
     hooksecurefunc( MonthlyActivitiesButtonMixin, 'ShowTooltip', function(self)
         local data = self:GetData() or {}
-        local info= e.Get_PerksActivity_Info(data.ID)
+        local info= WoWTools_ChineseMixin:Get_PerksActivity_Info(data.ID)
         if not info then
             return
         end

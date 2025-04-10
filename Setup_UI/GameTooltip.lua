@@ -148,7 +148,7 @@ set_pettips_func(FloatingBattlePetTooltip)
         for index, text in pairs(info) do
             local line= tooltip['TextLeft'..index] or _G[tipName.."TextLeft"..index]
             if line then
-                line:SetText(isSpell and e.ReplaceText(text) or text)
+                line:SetText(isSpell and WoWTools_ChineseMixin:ReplaceText(text) or text)
                 --line:SetTextColor(line:GetTextColor())
             end
         end
@@ -157,13 +157,13 @@ set_pettips_func(FloatingBattlePetTooltip)
         for index, text in pairs(info) do
             if text~=' ' then
                 if index==1 then
-                    tooltip.TextLeft1:SetText(isSpell and e.ReplaceText(text) or text)
+                    tooltip.TextLeft1:SetText(isSpell and WoWTools_ChineseMixin:ReplaceText(text) or text)
                 else
                     if not add then
                         tooltip:AddLine(' ')
                         add=true
                     end
-                    tooltip:AddLine(isSpell and e.ReplaceText(text) or text, nil,nil,nil, true)
+                    tooltip:AddLine(isSpell and WoWTools_ChineseMixin:ReplaceText(text) or text, nil,nil,nil, true)
                 end
             end
         end
@@ -180,7 +180,7 @@ end]]
 
 
 local function set_item(tooltip, data)
-    local info= e.Get_Item_Info(data.id)
+    local info= WoWTools_ChineseMixin:Get_Item_Info(data.id)
     if not info then
         return
     end
@@ -208,10 +208,10 @@ end
 
 
 local function set_spell(tooltip, data)
-    local name = e.Get_Spell_Name(data.id)
+    local name = WoWTools_ChineseMixin:Get_Spell_Name(data.id)
     if name then
         tooltip.TextLeft1:SetText(name)
-        local desc, desc2= e.Get_Spell_Desc(data.id)
+        local desc, desc2= WoWTools_ChineseMixin:Get_Spell_Desc(data.id)
         if desc then
             tooltip:AddLine(' ')
             if desc2 then
@@ -229,7 +229,7 @@ if not GetItemData then
         set_item(tooltip, data)
 
         if C_Heirloom.IsItemHeirloom(data.id) then
-            local source= e.Get_Heirloom_Source(data.id)
+            local source= WoWTools_ChineseMixin:Get_Heirloom_Source(data.id)
             if source and not C_Heirloom.PlayerHasHeirloom(data.id) then
                 tooltip:AddLine(source, nil,nil,nil, true)
             end
@@ -253,7 +253,7 @@ end)
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(tooltip, data)
     set_item(tooltip, data)
     if not PlayerHasToy(data.id) then
-        local source= e.Get_Toy_Source(data.id)
+        local source= WoWTools_ChineseMixin:Get_Toy_Source(data.id)
         if source then
             tooltip:AddLine(source, nil,nil,nil, true)
         end
@@ -320,7 +320,7 @@ end
 --战斗宠物，技能 SharedPetBattleTemplates.lua
 hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilityInfo, additionalText)
     local abilityID = abilityInfo:GetAbilityID()
-    local info = abilityID and e.Get_Pet_Ablity_Info(abilityID)
+    local info = abilityID and WoWTools_ChineseMixin:Get_Pet_Ablity_Info(abilityID)
     if info then
         --local _, name, icon, _, unparsedDescription, _, petType = C_PetBattles.GetAbilityInfoByID(abilityID)
         local description = info[2] and SharedPetAbilityTooltip_ParseText(abilityInfo, info[2])

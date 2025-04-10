@@ -47,7 +47,7 @@ local function UpdateEncounterJournalHeaders()
         if infoHeader.myID and infoHeader.button then
             if infoHeader.description then                
                 local difficultyID = EJ_GetDifficulty()
-                local data = e.Get_Boos_Section_Info(infoHeader.myID, difficultyID)--difficultyID and WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
+                local data = WoWTools_ChineseMixin:Get_Boos_Section_Info(infoHeader.myID, difficultyID)--difficultyID and WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
                 if data then
                     local title= data["Title"]
                     local desc= data["Description"]
@@ -73,7 +73,7 @@ end
 
 local function get_encounter_name(encounterID)
     if encounterID then
-        return e.Get_Boss_Name(encounterID) or WoWTools_ChineseMixin:Setup(EJ_GetEncounterInfo(encounterID))
+        return WoWTools_ChineseMixin:Get_Boss_Name(encounterID) or WoWTools_ChineseMixin:Setup(EJ_GetEncounterInfo(encounterID))
     end
 end
 
@@ -269,7 +269,7 @@ local function Init_EncounterJournal()
         end
         for _, btn in pairs(self:GetFrames()) do
             local data= btn:GetData()
-            local name= data and e.Get_Boss_Name(data.bossID)
+            local name= data and WoWTools_ChineseMixin:Get_Boss_Name(data.bossID)
             if name then
                 btn.text:SetText(name)
             end
@@ -318,7 +318,7 @@ local function Init_EncounterJournal()
         if tooltip then
             self.info['overviewTab'].tooltip= tooltip
         end
-        local desc= e.Get_Instance_Desc(instanceID)
+        local desc= WoWTools_ChineseMixin:Get_Instance_Desc(instanceID)
         if desc then
             EncounterJournal.encounter.instance.LoreScrollingFont:SetText(desc)
         end
@@ -376,7 +376,7 @@ local function Init_WoWeuCN()
 
     hooksecurefunc("EncounterJournal_DisplayEncounter", function(encounterID)
         local self = EncounterJournal.encounter
-        local info= e.Get_Boss_Info(encounterID)
+        local info= WoWTools_ChineseMixin:Get_Boss_Info(encounterID)
         if info then
             local title= info["Title"]
             local desc= info["Description"]
@@ -395,7 +395,7 @@ local function Init_WoWeuCN()
             end
         end 
 
-        local desc= e.Get_Boos_Section_Desc(self.overviewFrame.rootOverviewSectionID)            
+        local desc= WoWTools_ChineseMixin:Get_Boos_Section_Desc(self.overviewFrame.rootOverviewSectionID)            
         if desc then
             self.overviewFrame.overviewDescription.Text:SetText(desc)
             self.overviewFrame.overviewDescription.descriptionHeight = self.overviewFrame.overviewDescription:GetHeight()
@@ -413,7 +413,7 @@ local function Init_WoWeuCN()
     end)
 
     hooksecurefunc("EncounterJournal_SetDescriptionWithBullets", function(infoHeader)
-        local data = infoHeader and e.Get_Boos_Section_Info(infoHeader.sectionID)
+        local data = infoHeader and WoWTools_ChineseMixin:Get_Boos_Section_Info(infoHeader.sectionID)
         if data then
             local title= data["Title"]
             local desc= data["Description"]

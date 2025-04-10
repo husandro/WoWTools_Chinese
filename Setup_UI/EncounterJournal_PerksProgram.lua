@@ -41,15 +41,15 @@ local function Init_Blizzard_PerksProgramElements()
             return;
         end
 
-        local itemData= e.Get_Item_Info(self.data.itemID)
-        local name= e.strText[self.data.name] or (itemData and e.ReplaceText(itemData[1]))
+        local itemData= WoWTools_ChineseMixin:Get_Item_Info(self.data.itemID)
+        local name= e.strText[self.data.name] or (itemData and WoWTools_ChineseMixin:ReplaceText(itemData[1]))
         if name then
             self.ProductNameText:SetText(name)
         end
 
         local descriptionText
         if self.data.speciesID and self.data.speciesID>0 then
-            local petData= e.Get_Pet_Description(self.data.speciesID)
+            local petData= WoWTools_ChineseMixin:Get_Pet_Description(self.data.speciesID)
             if petData then
                 descriptionText= petData[1]
             end
@@ -57,7 +57,7 @@ local function Init_Blizzard_PerksProgramElements()
         elseif itemData then
             table.remove(itemData, 1)
             for _, desc in pairs(itemData) do
-                descriptionText= (descriptionText and descriptionText..'|n' or '')..e.ReplaceText(desc)
+                descriptionText= (descriptionText and descriptionText..'|n' or '')..WoWTools_ChineseMixin:ReplaceText(desc)
             end
         end
         if descriptionText then

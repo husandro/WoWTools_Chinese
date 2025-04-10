@@ -33,17 +33,17 @@ https://www.curseforge.com/wow/addons/quest-chinese-translator
 如果已加 载WoWeuCN_Tooltips, 不会再次加载数据
 
 
-e.ReplaceText(string)
-法术 e.Get_Spell_Data(spellID)
-物品 e.Get_Item_Info(itemID)
+WoWTools_ChineseMixin:ReplaceText(string)
+法术 WoWTools_ChineseMixin:Get_Spell_Data(spellID)
+物品 WoWTools_ChineseMixin:Get_Item_Info(itemID)
 任务 e.Get_Quest_Info(questID, isName, isObject, isDesc)
 
 e.Get_Unit_Info(unit, npcID)
 e.Get_Unit_Name(unit, npcID)
 
-e.Get_Boss_Info(journalEncounterID)
-e.Get_Boss_Desc(journalEncounterID)
-e.Get_Boss_Name(journalEncounterID)
+WoWTools_ChineseMixin:Get_Boss_Info(journalEncounterID)
+WoWTools_ChineseMixin:Get_Boss_Desc(journalEncounterID)
+WoWTools_ChineseMixin:Get_Boss_Name(journalEncounterID)
 ]]
 
 
@@ -90,7 +90,7 @@ else
         ["点混乱伤害"] = "Ö",
         ["点流血伤害"] = "Ø"
     }
-    function e.ReplaceText(s)
+    function WoWTools_ChineseMixin:ReplaceText(s)
         if s and s~='' then
             for origin,new in pairs(replacement) do
                 s = string.gsub(s, new, origin)
@@ -120,8 +120,12 @@ end
 
 
 
---法术 e.Get_Spell_Data(spellID)
-e.Get_Spell_Data= GetSpellData or function(spellID)
+--法术 WoWTools_ChineseMixin:Get_Spell_Data(spellID)
+e.Get_Spell_Data= function(spellID)
+    if GetSpellData then
+        GetSpellData(spellID)
+    end
+    
     local data
     if spellID and WoWeuCN_Tooltips_SpellIndexData_0 then
         local index
@@ -153,7 +157,7 @@ e.Get_Spell_Data= GetSpellData or function(spellID)
                 while (string.find(data[1], "¿")) do
                     newID= string.sub(data[1], 3)
                     newID= newID and tonumber(newID)
-                    data = e.Get_Spell_Data(newID)
+                    data = WoWTools_ChineseMixin:Get_Spell_Data(newID)
                     if not data then
                         return
                     end
@@ -169,24 +173,24 @@ end
 
 
 
-function e.Get_Spell_Name(spellID)
+function WoWTools_ChineseMixin:Get_Spell_Name(spellID)
     if spellID then
-        local data= e.Get_Spell_Data(spellID)
+        local data= WoWTools_ChineseMixin:Get_Spell_Data(spellID)
         if data then
-            return e.ReplaceText(data[1])
+            return WoWTools_ChineseMixin:ReplaceText(data[1])
         end
     end
 end
 
-function e.Get_Spell_Desc(spellID)
+function WoWTools_ChineseMixin:Get_Spell_Desc(spellID)
     if spellID then
-        local data= e.Get_Spell_Data(spellID)
+        local data= WoWTools_ChineseMixin:Get_Spell_Data(spellID)
         if data then
             local index= #data
             if index>1 then
                 local desc
                 for i=2, index do
-                    local desc2= e.ReplaceText(data[i])
+                    local desc2= WoWTools_ChineseMixin:ReplaceText(data[i])
                     if desc2 then
                         desc= (desc and desc..'|n' or '').. desc2
                     end
@@ -211,11 +215,11 @@ end
 
 
 
---物品 e.Get_Item_Info(itemID)
+--物品 WoWTools_ChineseMixin:Get_Item_Info(itemID)
 if GetItemData then
     e.Get_Item_Info= GetItemData
 else
-    function e.Get_Item_Info(itemID)
+    function WoWTools_ChineseMixin:Get_Item_Info(itemID)
         if itemID and WoWeuCN_Tooltips_ItemData_0 then
             local index = nil
             if (itemID >= 0 and itemID < 100000) then
@@ -241,9 +245,9 @@ end
 
 function WoWTools_ChineseMixin:Get_Item_Name(itemID)
     if itemID then
-        local data= e.Get_Item_Info(itemID)
+        local data= WoWTools_ChineseMixin:Get_Item_Info(itemID)
         if data then
-            return e.ReplaceText(data[1])
+            return WoWTools_ChineseMixin:ReplaceText(data[1])
         end
     end
 end
@@ -447,7 +451,7 @@ end
 
 
 
-function e.Get_Boss_Info(journalEncounterID)
+function WoWTools_ChineseMixin:Get_Boss_Info(journalEncounterID)
     if not WoWeuCN_Tooltips_EncounterData then
         return
     end
@@ -468,15 +472,15 @@ function e.Get_Boss_Info(journalEncounterID)
     end
 end
 
-function e.Get_Boss_Desc(journalEncounterID)
-    local data= e.Get_Boss_Info(journalEncounterID)
+function WoWTools_ChineseMixin:Get_Boss_Desc(journalEncounterID)
+    local data= WoWTools_ChineseMixin:Get_Boss_Info(journalEncounterID)
     if data then
         return data.Description
     end
 end
 
-function e.Get_Boss_Name(journalEncounterID)
-    local data= e.Get_Boss_Info(journalEncounterID)
+function WoWTools_ChineseMixin:Get_Boss_Name(journalEncounterID)
+    local data= WoWTools_ChineseMixin:Get_Boss_Info(journalEncounterID)
     if data then
         return data.Title
     end
@@ -485,7 +489,7 @@ end
 
 
 
-function e.Get_Boos_Section_Info(sectionID, difficultyID)
+function WoWTools_ChineseMixin:Get_Boos_Section_Info(sectionID, difficultyID)
     if WoWeuCN_Tooltips_EncounterSectionData then
         difficultyID = difficultyID or EJ_GetDifficulty()
         if difficultyID and sectionID then
@@ -494,14 +498,14 @@ function e.Get_Boos_Section_Info(sectionID, difficultyID)
     end
 end
 
-function e.Get_Boos_Section_Name(sectionID, difficultyID)
-    local data= e.Get_Boos_Section_Info(sectionID, difficultyID)
+function WoWTools_ChineseMixin:Get_Boos_Section_Name(sectionID, difficultyID)
+    local data= WoWTools_ChineseMixin:Get_Boos_Section_Info(sectionID, difficultyID)
     if data and data.Title~='' then
         return data.Title
     end
 end
-function e.Get_Boos_Section_Desc(sectionID, difficultyID)
-    local data= e.Get_Boos_Section_Info(sectionID, difficultyID)
+function WoWTools_ChineseMixin:Get_Boos_Section_Desc(sectionID, difficultyID)
+    local data= WoWTools_ChineseMixin:Get_Boos_Section_Info(sectionID, difficultyID)
     if data and data.Description~='' then
         return data.Description
     end

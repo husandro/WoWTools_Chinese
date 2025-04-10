@@ -25,7 +25,7 @@ local function get_spell_name(option)
     end
     local name, icon
     if option.optionType==Enum.SelfResurrectOptionType.Spell then
-        name= e.Get_Spell_Name(option.id)
+        name= WoWTools_ChineseMixin:Get_Spell_Name(option.id)
         icon= C_Spell.GetSpellTexture(option.id)
 
     elseif option.optionType==Enum.SelfResurrectOptionType.Item then
@@ -124,7 +124,7 @@ local function set_DeathRecapFrame_OpenRecap()
         local evtData = events[i]
         if entry and entry:IsShown() and evtData then
             local spellId, spellName = DeathRecapFrame_GetEventInfo(evtData)
-            local name= e.Get_Spell_Name(spellId) or e.strText[spellName]
+            local name= WoWTools_ChineseMixin:Get_Spell_Name(spellId) or e.strText[spellName]
             if name then
                 entry.SpellInfo.Name:SetText(name)
             end

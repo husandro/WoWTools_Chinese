@@ -397,7 +397,7 @@ local e= select(2, ...)
 
     --奖励, 法术，GuildPerks.lua
     hooksecurefunc(CommunitiesGuildPerksButtonMixin, 'Init', function(self, data)
-        local name= e.Get_Spell_Name(self.spellID) or e.strText[GetGuildPerkInfo(data.index)]
+        local name= WoWTools_ChineseMixin:Get_Spell_Name(self.spellID) or e.strText[GetGuildPerkInfo(data.index)]
         if name then
             self.Name:SetText('|cff00adef'..name..'|r')
         end

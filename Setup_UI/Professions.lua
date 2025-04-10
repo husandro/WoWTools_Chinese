@@ -248,9 +248,9 @@ local function Init_CraftingPage_SchematicForm()
         end
         local sourceText
         if not recipeInfo.learned then
-            sourceText = e.Get_Recipe_Source(recipeInfo.recipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.recipeID)]
+            sourceText = WoWTools_ChineseMixin:Get_Recipe_Source(recipeInfo.recipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.recipeID)]
         elseif recipeInfo.nextRecipeID then
-            sourceText =  e.Get_Recipe_Source(recipeInfo.nextRecipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.nextRecipeID)]
+            sourceText =  WoWTools_ChineseMixin:Get_Recipe_Source(recipeInfo.nextRecipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.nextRecipeID)]
         end
         if sourceText then
             GameTooltip:AddLine(' ')
@@ -347,14 +347,14 @@ local function Init_CraftingPage_SchematicForm()
         local spellID= spell:GetSpellID()
         if spellID then
             local desc
-            for i, text in pairs(e.Get_Spell_Data(spellID) or {}) do
+            for i, text in pairs(WoWTools_ChineseMixin:Get_Spell_Data(spellID) or {}) do
                 if i>1 then
                     if not desc or #text> #desc then
                         desc= text
                     end
                 end
             end
-            desc= e.ReplaceText(desc)
+            desc= WoWTools_ChineseMixin:ReplaceText(desc)
             if desc and desc ~= "" then
                 self.Description:SetText(desc);
                 self.Description:SetHeight(600);
@@ -452,7 +452,7 @@ local function Init_SpecPage()
 
     --ProfessionsSpecFrameMixin
     hooksecurefunc(ProfessionsFrame.SpecPage, 'UpdateDetailedPanel', function(self)
-        local data= e.Get_Profession_Node_Desc(self:GetDetailedPanelNodeID())
+        local data= WoWTools_ChineseMixin:Get_Profession_Node_Desc(self:GetDetailedPanelNodeID())
         local name= data and data[1]
         if not name then
             local detailedViewPath = self:GetDetailedPanelPath();
@@ -466,7 +466,7 @@ local function Init_SpecPage()
 
     --专精，技能，提示
     local function on_enter(self)
-        local data= e.Get_Profession_Node_Desc(self.nodeID)
+        local data= WoWTools_ChineseMixin:Get_Profession_Node_Desc(self.nodeID)
         if data then
             if data[1] then
                 GameTooltipTextLeft1:SetText(data[1])
@@ -1080,7 +1080,7 @@ local function Init()
      hooksecurefunc(ProfessionsRecipeListCategoryMixin, 'Init', function(self, node)
         local info= node:GetData().categoryInfo
         if info then
-            local name= e.Get_TradeSkillCategory_Name(info.categoryID) or e.strText[info.name]
+            local name= WoWTools_ChineseMixin:Get_TradeSkillCategory_Name(info.categoryID) or e.strText[info.name]
             if name then
                 self.Label:SetText(name)
             end
@@ -1105,9 +1105,9 @@ local function Init()
         local data = C_TradeSkillUI.GetProfessionInfoByRecipeID(recipeID) or {}
         local name
         if data.professionName then
-            name= e.Get_TradeSkillCategory_Name(data.professionID) or e.strText[data.professionName]
+            name= WoWTools_ChineseMixin:Get_TradeSkillCategory_Name(data.professionID) or e.strText[data.professionName]
         elseif data.parentProfessionName then
-            name= e.Get_TradeSkillCategory_Name(data.parentProfessionID) or e.strText[data.parentProfessionName]
+            name= WoWTools_ChineseMixin:Get_TradeSkillCategory_Name(data.parentProfessionID) or e.strText[data.parentProfessionName]
         end
         if name then
             self:SetTitle(name)

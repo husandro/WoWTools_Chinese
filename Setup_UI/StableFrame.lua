@@ -22,7 +22,7 @@ hooksecurefunc(StableFrame.PetModelScene.PetInfo, 'SetPet', function(self, petDa
 end)
 
 hooksecurefunc(StablePetAbilityMixin, 'Initialize', function(self, spellID)
-    local name = spellID and e.Get_Spell_Name(spellID)
+    local name = spellID and WoWTools_ChineseMixin:Get_Spell_Name(spellID)
     if name then
         self.Name:SetText(name)
     end

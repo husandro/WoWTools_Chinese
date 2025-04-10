@@ -46,7 +46,7 @@ QuestFrame:HookScript('OnShow', function()
     if not UnitExists('questnpc') then
        return
     end
-    local name, name2= e.Get_Unit_Name('questnpc', nil, true)
+    local name, name2= WoWTools_ChineseMixin:Get_Unit_Name('questnpc', nil, true)
     if name then
        QuestFrame:SetTitle(name..(name2 and ' - '..name2 or ''))
     end
@@ -111,7 +111,7 @@ local function set_objectives(questID)
 					name= WoWTools_ChineseMixin:Setup(type)
 					text= type
 				else
-					local new= e.Get_Quest_Object(questID, i)--无法找到
+					local new= WoWTools_ChineseMixin:Get_Quest_Object(questID, i)--无法找到
 					if new then
 						name= text:gsub('%d+/%d+ (.+)', new)
 					end
@@ -165,7 +165,7 @@ local function set_quest_item(questID)
 	end
 
 	for frame in rewardsFrame.spellRewardPool:EnumerateActive() do
-		local name= e.Get_Spell_Name(frame.rewardSpellID)
+		local name= WoWTools_ChineseMixin:Get_Spell_Name(frame.rewardSpellID)
 		if name then
 			frame.Name:SetText(name)
 		end
@@ -239,7 +239,7 @@ local function set_quest_info()
 		return
 	end
 
-    local data= e.Get_Quest_Info(questID)
+    local data= WoWTools_ChineseMixin:Get_Quest_Info(questID)
 	local title, object, desc
 
 	if data then
@@ -320,7 +320,7 @@ hooksecurefunc('QuestInfo_Display', set_quest_info)
 
 
 hooksecurefunc('QuestInfo_ShowTitle', function()
-	local title= e.Get_Quest_Info(WoWTools_ChineseMixin:GetQuestID(), true, false, false)
+	local title= WoWTools_ChineseMixin:Get_Quest_Info(WoWTools_ChineseMixin:GetQuestID(), true, false, false)
 	if not title then
 	   return
 	end
@@ -333,7 +333,7 @@ hooksecurefunc('QuestInfo_ShowTitle', function()
 
 
  hooksecurefunc('QuestInfo_ShowDescriptionText', function()
-	local desc=  e.Get_Quest_Info(WoWTools_ChineseMixin:GetQuestID(), false, false, true)
+	local desc=  WoWTools_ChineseMixin:Get_Quest_Info(WoWTools_ChineseMixin:GetQuestID(), false, false, true)
 	if desc then
 	   QuestInfoDescriptionText:SetText(desc)
 	end
@@ -365,7 +365,7 @@ hooksecurefunc('QuestInfo_ShowTitle', function()
 	if not spellID then
 	   return
 	end
-	spellName = e.strText[spellName] or e.Get_Spell_Name(spellID)
+	spellName = e.strText[spellName] or WoWTools_ChineseMixin:Get_Spell_Name(spellID)
 	if spellName then
 	   QuestInfoSpellObjectiveFrame.Name:SetText(spellName)
 	end

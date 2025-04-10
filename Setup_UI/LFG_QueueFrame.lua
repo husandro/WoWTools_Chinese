@@ -81,7 +81,7 @@ hooksecurefunc('LFGRewardsFrame_UpdateFrame', function(parentFrame, dungeonID)--
 
 
     name= name or e.strText[dungeonName]
-    desc= desc or e.strText[dungeonDescription] or e.Get_LFGDungeon_Desc(dungeonID)
+    desc= desc or e.strText[dungeonDescription] or WoWTools_ChineseMixin:Get_LFGDungeon_Desc(dungeonID)
 
     if name then
         parentFrame.title:SetText(name)

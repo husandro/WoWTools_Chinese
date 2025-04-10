@@ -75,7 +75,7 @@ QuestScrollFrame.covenantCallingsHeaderFramePool
 local function set_text(line)
     WoWTools_ChineseMixin:Set_Label_Text(line.ButtonText)
     if line.Text then
-        local name =  e.Get_Quest_Info(line.questID, true, false, false)
+        local name =  WoWTools_ChineseMixin:Get_Quest_Info(line.questID, true, false, false)
         if name then
             line.Text:SetText(name)
         end

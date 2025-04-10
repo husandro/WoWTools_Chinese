@@ -15736,6 +15736,6 @@ https://wago.tools/db2/SkillLineAbility?locale=zhCN
 function WoWTools_ChineseMixin:Get_SkillLineAbility_Name(skillLineAbilityID)
     local spellID= tab[skillLineAbilityID]
     if spellID then
-        return e.Get_Spell_Name(spellID)
+        return WoWTools_ChineseMixin:Get_Spell_Name(spellID)
     end
 end

@@ -119,7 +119,7 @@ local tab={
 
 
 
-function e.Get_Heirloom_Source(itemID)
+function WoWTools_ChineseMixin:Get_Heirloom_Source(itemID)
     return tab[itemID]
 end
 

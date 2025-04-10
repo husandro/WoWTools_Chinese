@@ -10785,6 +10785,6 @@ https://wago.tools/db2/SourceInfo?build=11.0.2.55399&locale=zhCN
 
 
 local e= select(2, ...)
-function e.Get_Recipe_Source(recipeID)
+function WoWTools_ChineseMixin:Get_Recipe_Source(recipeID)
     return tab[recipeID]
 end

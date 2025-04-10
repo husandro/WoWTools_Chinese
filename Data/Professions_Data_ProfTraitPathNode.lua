@@ -485,6 +485,6 @@ local tab={
 }
 
 local e= select(2, ...)
-function e.Get_Profession_Node_Desc(nodeID)
+function WoWTools_ChineseMixin:Get_Profession_Node_Desc(nodeID)
     return tab[nodeID]
 end

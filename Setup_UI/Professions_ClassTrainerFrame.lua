@@ -32,7 +32,7 @@ local function Init()
                 if not name then
                     local data= C_TooltipInfo.GetTrainerService(skillIndex)
                     if data and not data.isAzeriteItem and data.id then
-                        name= e.Get_Spell_Name(data.id)
+                        name= WoWTools_ChineseMixin:Get_Spell_Name(data.id)
                     end
                 end
             end

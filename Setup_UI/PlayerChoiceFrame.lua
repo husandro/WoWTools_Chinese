@@ -17,7 +17,7 @@ local function set_header(self)
     if not data and data.header and data.header~='' then
         return
     end
-    local header= e.strText[data.header] or e.Get_Spell_Name(data.spellID)
+    local header= e.strText[data.header] or WoWTools_ChineseMixin:Get_Spell_Name(data.spellID)
     if header then
         local label= self.Header.Contents and self.Header.Contents.Text or  self.Header.Text
         if label then
@@ -41,7 +41,7 @@ local function set_optionText(self)
     if not data or not self.OptionText:IsShown() then
         return
     end
-    local desc= e.strText[data.description] or e.Get_Spell_Desc(data.spellID)
+    local desc= e.strText[data.description] or WoWTools_ChineseMixin:Get_Spell_Desc(data.spellID)
     local quality= rarityToString[data.rarity]
     if desc or quality then
         desc= (quality or '')..(desc or '')
