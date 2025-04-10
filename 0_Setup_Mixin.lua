@@ -1,4 +1,5 @@
 local e= select(2, ...)
+e.strText={}--主要，汉化
 
 WoWTools_Chinese_Mixin={}
 

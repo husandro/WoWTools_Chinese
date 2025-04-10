@@ -11,13 +11,13 @@
 
 ##繁体，简体，不会载加
 ##界面，中文化，主要function
-WoWTools_Setup.lua
+0_Setup_Mixin.lua
+1_SetText_Mixin.lua
+2_func_Mixin.lua
 
 ##字符, 常用
-zhCN.lua
+Data\zhCN.lua
 
-WoWTools_Chinese.lua
-WoWTools_Chinese_SetText.lua
 
 
 
