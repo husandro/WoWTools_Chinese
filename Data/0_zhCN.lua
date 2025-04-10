@@ -21530,7 +21530,7 @@ local tab={
 ["OPTION_TOOLTIP_ADV_FLY_PITCH_CONTROL"]= "使用驭空术时，辅助进行手部运动控制。\\n\\n|cffffffff后/上：|r驭空术期间，向后移动的输入也会使倾角变高，向前移动的输入也会使倾角变低。\\n\\n|cffffffff前/上：|r驭空术期间，向前移动的输入也会使倾角变高，向后移动的输入也会使倾角变低。",
 ["SPELL_FAILED_CUSTOM_ERROR_1008"]= "这个生物最近刚刚进行了调谐。",
 ["SPELL_FAILED_CUSTOM_ERROR_646"]= "你目前不能持有更多这类纹章。",
-["PERKS_PROGRAM_PURCHASED_TIME_REMAINING"]= "|cff808080--|r",
+
 ["ERR_FOLLOWER_DUNGEON_LIMIT_REACHED"]= "你在短时间内进入追随者地下城的次数过多。",
 ["ACCESSIBILITY_ADV_FLY_LABEL"]= "驭空术",
 ["ADV_FLY_MINIMUM_PITCH_TEXT"]= "最低键盘倾斜速度",
@@ -21574,7 +21574,7 @@ local tab={
 ["QUEST_BG_DARK"]= "黑色",
 ["QUEST_BG_LIGHT3"]= "灰色",
 ["GREAT_VAULT_REWARDS_HEROIC_IMPROVE"]= "完成%1$d次史诗难度的地下城，提升你的奖励。",
-["AUCTION_HOUSE_ITEM_QUANTITY_FORMAT"]= "|cff808080x%s|r",
+
 ["SPELL_FAILED_CUSTOM_ERROR_860"]= "你还没有向这个灵魂证明自己。",
 ["BANK_WITHDRAW_MONEY_BUTTON_LABEL"]= "提取",
 ["BANK_DEPOSIT_MONEY_BUTTON_LABEL"]= "存放",
@@ -21661,7 +21661,7 @@ local tab={
 ["SPELL_FAILED_CUSTOM_ERROR_870"]= "此物品无法在当前赛季使用。",
 ["STABLE_PET_BUTTON_LABEL"]= "放入兽栏",
 ["MAKE_ACTIVE_PET_BUTTON_LABEL"]= "设为激活",
-["STABLE_PET_INFO_SPECIALIZATION_TYPE_LABEL"]= "%s %s",
+
 ["STABLE_PET_INFO_FAMILY_LABEL"]= "族系：%s",
 ["STABLE_PET_INFO_TYPE_TOOLTIP_FAMILY"]= "%s 族系",
 ["STABLE_ACTIVE_PET_LIST_LABEL"]= "激活",
@@ -22421,7 +22421,7 @@ local tab={
 ["PLUNDERSTORM_DROP_MAP_BUTTON_DISABLED_TOOLTIP"]= "你的队长正在选择初始区域",
 ["ACCOUNT_STORE_CURRENCY_MAX_TOOLTIP_FORMAT"]= "%s已达到上限",
 ["ACCOUNT_STORE_CURRENCY_APPROACHING_MAX_TOOLTIP_FORMAT"]= "%s即将达到上限",
-["ACCOUNT_STORE_CURRENCY_TOTAL_TOOLTIP_FORMAT"]= "%s / %s",
+
 ["LIFETIME_PLUNDER_TOOLTIP_FORMAT"]= "生涯：%s",
 ["ERR_LFG_NO_CROSS_FACTION_PARTIES_MULTIPLE"]= "跨阵营队伍无法排队进入一个或多个选中的副本。",
 ["SPELL_FAILED_ALREADY_HAVE_DISGUISE"]= "你已经穿上了伪装。",
@@ -22441,7 +22441,7 @@ local tab={
 ["VIGNETTE_SUGGESTED_GROUP_NUM"]= "建议玩家人数：[%d]",
 ["QUEST_PREPEND"]= "（任务）",
 ["PLAY_MOVIE_PREPEND"]= "（播放影片）",
-["GOSSIP_OPTION_PREPEND"]= "|cnPURE_BLUE_COLOR:%s|r %s",
+
 ["STABLE_SECONDARY_PET_LABEL"]= "动物伙伴",
 ["STABLE_EMPTY_SLOT_LABEL"]= "这个栏位是空的",
 ["WARBAND_SCENE_COLLECTION_APPLY"]= "应用",
@@ -22467,7 +22467,7 @@ local tab={
 ["CHARACTER_GROUP_OPTION_RENAME_DELETE"]= "重命名/删除",
 ["CONFIRM_DELETE_CHARACTER_GROUP_TEXT"]= "你确定要删除营地%s吗？",
 ["CHARACTER_GROUP_OPTION_RENAME"]= "重命名",
-["ADDON_PERFORMANCE_MENU_TOOLTIP"]= "（%s）%s",
+
 ["ADDON_LIST_ENABLE_DEPENDENCIES"]= "启用所有依赖功能",
 ["ADDON_LIST_ENABLE_GROUP"]= "启用插件组",
 ["ADDON_LIST_DISABLE_GROUP"]= "禁用插件组",
@@ -22475,7 +22475,7 @@ local tab={
 ["ADDON_LIST_RESET_ALL_TO_DEFAULT"]= "全部重置为默认",
 ["ADDON_LIST_RESET_TO_DEFAULT"]= "重置为默认",
 ["ADDON_LIST_ENABLE_CATEGORY"]= "启用所有插件",
-["GENERIC_TRAIT_FRAME_DRIVE_TITLE"]= "D.R.I.V.E.",
+
 ["EVENT_SCHEDULER_FRAME_LABEL"]= "游戏活动",
 ["GENERIC_TRAIT_FRAME_VISIONS_TITLE"]= "惊魂幻象沙漏",
 ["ADD_CHARACTER_GROUP_TOOLTIP_DISABLED"]= "已达到%d个营地的上限",
@@ -22483,11 +22483,9 @@ local tab={
 ["DRIVE_TURBO_METER_HELP_TIP"]= "在转向时按住空格键可以做出漂移。漂移能够恢复涡轮表。",
 ["DRIVE_START_JOB_HELP_TIP"]= "从塔露拉奶奶处接受第一份差事。你也可以取消并换一份新差事。",
 ["WORLD_MAP_FILTER_COUNTER_TOOLTIP"]= "隐藏：%s",
-["TW_FRAUD_WARNING_TEXT"]= "System message",
-["EVENT_SCHEDULER_DAY_FORMAT"]= "%1$s %2$d",
-["EVENT_SCHEDULER_TIME_WITH_LOCATION"]= "%1$s - %2$s",
+
 ["ACCOUNT_LEVEL_SCENE"]= "战团营区",
-["ACCESSIBILITY_DRIVE_LABEL"]= "D.R.I.V.E.",
+
 ["EVENT_SCHEDULER_ONGOING_HEADER"]= "进行中的活动 - %s",
 ["EVENT_SCHEDULER_SCHEDULED_HEADER"]= "活动日程 - %s",
 ["SPELL_FAILED_CUSTOM_ERROR_1068"]= "只有一个潜行者可以打开这把锁。",
@@ -22624,15 +22622,27 @@ local tab={
 ["NAME_NOT_AVAILABLE"]= "该名字不可用",
 ["KIOSK_SESSION_STARTED_BODY"]= "新的世界之树在梦境中盛放。\\n菲莱克需要圣泉的力量\\n才能夺取巨树之心，\\n并将他的烈焰散播到整个艾泽拉斯。",
 ["KIOSK_SESSION_EXPIRED_SUBTITLE"]= "梦境守护者",
+
 }
 
+
+
+
+
+
+
+
+
+
+
+
 do
-for name, text in pairs(tab) do
-    name= _G[name]
-    if name then
-        e.strText[name]= text
+    for name, text in pairs(tab) do
+        name= _G[name]
+        if name then
+            e.strText[name]= text
+        end
     end
 end
-end        
 tab=nil
 

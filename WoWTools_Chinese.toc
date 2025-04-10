@@ -34,7 +34,6 @@ Data\Achievement_Data.lua
 Data\EncounterJournal_Data_Instance.lua
 Data\EncounterJournal_Data_PerksActivity.lua
 Data\EncounterJournal_Data_PerksActivity_Tag.lua
-Data\Collection_Data_WarbandScene.lua
 
 ##派系
 Data\Faction_Data.lua
@@ -47,7 +46,7 @@ Data\Currency_Data.lua
 ##任务
 Data\Scenario_StageBlock_Data.lua
 Data\Scenario_StageStep_Data.lua
-
+Data\Quest_Objective_Data.lua
 ##头衔
 Data\Title_Data.lua
 
@@ -68,6 +67,7 @@ Data\Collection_Data_Mount.lua
 Data\Collection_Data_Pet_Ability.lua
 Data\Collection_Data_Pet_Description.lua
 Data\Collection_Data_Toy.lua
+Data\Collection_Data_WarbandScene.lua
 
 ##挑战
 Data\Challenges_Data_MapChallengeMode.lua
