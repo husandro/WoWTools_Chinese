@@ -1,20 +1,20 @@
 local e= select(2, ...)
 
-e.set(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
-e.set(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
-e.set(QuestScrollFrame.SearchBox.Instructions)
+WoWTools_ChineseMixin:Set_Label_Text(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
+WoWTools_ChineseMixin:Set_Label_Text(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
+WoWTools_ChineseMixin:Set_Label_Text(QuestScrollFrame.SearchBox.Instructions)
 if  QuestMapFrame.QuestsFrame.DetailsFrame and QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame and QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice then--11.1
-    e.set(QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text)
     QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text:SetTextColor(0,1,0)
 end
 
 --地图图例
-e.set(QuestMapFrame.MapLegend.TitleText)
+WoWTools_ChineseMixin:Set_Label_Text(QuestMapFrame.MapLegend.TitleText)
 if MapLegendScrollFrame then
     for _, layout in pairs(MapLegendScrollFrame.ScrollChild:GetLayoutChildren() or {}) do
-        e.set(layout.TitleText)
+        WoWTools_ChineseMixin:Set_Label_Text(layout.TitleText)
         for _, text in pairs(layout:GetLayoutChildren() or {}) do
-            e.set(text, text.nameText)
+            WoWTools_ChineseMixin:Set_Label_Text(text, text.nameText)
         end
     end
 end
@@ -29,7 +29,7 @@ hooksecurefunc(WorldMapFrame, 'SynchronizeDisplayState', function(self)
         self.BorderFrame:SetTitle('地图和任务日志')
     end
 end)
-e.font(WorldMapFrameHomeButtonText)
+WoWTools_ChineseMixin:SetLabelFont(WorldMapFrameHomeButtonText)
 WorldMapFrameHomeButtonText:SetText('世界')
 
 local optionButton=WorldMapFrame.overlayFrames[2]
@@ -73,7 +73,7 @@ QuestScrollFrame.covenantCallingsHeaderFramePool
 ]]
 
 local function set_text(line)
-    e.set(line.ButtonText)
+    WoWTools_ChineseMixin:Set_Label_Text(line.ButtonText)
     if line.Text then
         local name =  e.Get_Quest_Info(line.questID, true, false, false)
         if name then
@@ -88,12 +88,12 @@ hooksecurefunc("QuestLogQuests_Update", function()
 
     for line in QuestScrollFrame.titleFramePool:EnumerateActive() do
         set_text(line)
-       e.set(line.ButtonText)
+       WoWTools_ChineseMixin:Set_Label_Text(line.ButtonText)
     end
 
     for line in QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
-       e.set(line.Text)
-       e.set(line.Progress)
+       WoWTools_ChineseMixin:Set_Label_Text(line.Text)
+       WoWTools_ChineseMixin:Set_Label_Text(line.Progress)
     end
 
     for line in QuestScrollFrame.covenantCallingsHeaderFramePool:EnumerateActive() do--没测试
@@ -175,12 +175,12 @@ do
 for _, data in ipairs(MapLegendData) do
     local frame=_G[data.CategoryTitle]
     if frame then
-        e.set(frame.TitleText, data.CategoryTitle)
+        WoWTools_ChineseMixin:Set_Label_Text(frame.TitleText, data.CategoryTitle)
     end
     for _, categoryData in ipairs(data.CategoryData) do
         local btn=_G[categoryData.Name]
         if btn then
-            e.set(btn, categoryData.Name)
+            WoWTools_ChineseMixin:Set_Label_Text(btn, categoryData.Name)
             local tooltip= e.strText[categoryData.Tooltip]
             if tooltip then
                 btn.tooltipText= tooltip

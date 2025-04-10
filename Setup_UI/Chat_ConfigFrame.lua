@@ -5,7 +5,7 @@ ChatConfigCombatSettings:HookScript('OnShow', function()
     for index, value in pairs(COMBAT_CONFIG_TABS) do--ChatConfigCombat_OnLoad()
         local tab = _G[CHAT_CONFIG_COMBAT_TAB_NAME..index]
         if tab then
-            e.set(tab.Text, value.text)
+            WoWTools_ChineseMixin:Set_Label_Text(tab.Text, value.text)
             PanelTemplates_TabResize(tab, 0)
         end
 
@@ -21,15 +21,15 @@ local function set_Checkboxes(frame)
         return
     end
     local name= frame:GetName()
-    e.set(_G[name.."Title"])
-    e.set(_G[name.."ColorHeader"])
+    WoWTools_ChineseMixin:Set_Label_Text(_G[name.."Title"])
+    WoWTools_ChineseMixin:Set_Label_Text(_G[name.."ColorHeader"])
     
     local check = name.."Checkbox"
 	for index in pairs(frame.checkBoxTable or {}) do
 		local checkBoxName = check..index
-        e.set(_G[checkBoxName.."CheckText"])
+        WoWTools_ChineseMixin:Set_Label_Text(_G[checkBoxName.."CheckText"])
         if _G[checkBoxName] then
-		    e.set(_G[checkBoxName].BlankText)
+		    WoWTools_ChineseMixin:Set_Label_Text(_G[checkBoxName].BlankText)
         end
 	end
 end
@@ -45,12 +45,12 @@ local function set_TieredCheckboxes(frame)
 	local checkBoxName, subCheckboxName, subCheckboxNameString
 	for index, value in ipairs(frame.checkBoxTable or {}) do
 		checkBoxName = checkBoxNameString..index
-        e.set(_G[checkBoxName.."Text"])
+        WoWTools_ChineseMixin:Set_Label_Text(_G[checkBoxName.."Text"])
         if ( value.subTypes ) then
             subCheckboxNameString = checkBoxName.."_"
             for k, v in ipairs(value.subTypes) do
                 subCheckboxName = subCheckboxNameString..k
-                e.set(_G[subCheckboxName.."Text"])
+                WoWTools_ChineseMixin:Set_Label_Text(_G[subCheckboxName.."Text"])
             end
         end
 
@@ -64,10 +64,10 @@ local function set_ColorSwatches(frame)
         return
     end
     local frameName= frame:GetName()
-    e.set(_G[frameName.."Title"])
+    WoWTools_ChineseMixin:Set_Label_Text(_G[frameName.."Title"])
     local nameString = frameName.."Swatch"
     for index, _ in pairs(frame.swatchTable or {}) do
-        e.set(_G[nameString..index.."Text"])
+        WoWTools_ChineseMixin:Set_Label_Text(_G[nameString..index.."Text"])
     end
 end
 hooksecurefunc('ChatConfig_CreateColorSwatches', set_ColorSwatches)
@@ -78,16 +78,16 @@ hooksecurefunc('CombatConfig_Colorize_Update', function()
     if ( not CHATCONFIG_SELECTED_FILTER.settings ) then
 		return
 	end
-    e.set(CombatConfigColorsExampleString1)    
-    e.set(CombatConfigColorsExampleString2)
+    WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsExampleString1)    
+    WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsExampleString2)
 end)
 hooksecurefunc('CombatConfig_Formatting_Update', function()
-    e.set(CombatConfigFormattingExampleString1)
-	e.set(CombatConfigFormattingExampleString2)
+    WoWTools_ChineseMixin:Set_Label_Text(CombatConfigFormattingExampleString1)
+	WoWTools_ChineseMixin:Set_Label_Text(CombatConfigFormattingExampleString2)
 end)
 
 hooksecurefunc('ChatConfigCombat_InitButton', function(button)
-    e.set(button.NormalText)
+    WoWTools_ChineseMixin:Set_Label_Text(button.NormalText)
 end)
 
 hooksecurefunc(ChatWindowTabMixin, 'SetChatWindowIndex', function(self, chatWindowIndex)
@@ -112,7 +112,7 @@ hooksecurefunc('TextToSpeechFrame_UpdateMessageCheckboxes', function(frame)--Tex
     for index in pairs(frame.checkBoxTable or {}) do
         local check= _G[checkBoxNameString..index]
         if check then
-            e.set(check.text)
+            WoWTools_ChineseMixin:Set_Label_Text(check.text)
         end
     end
 end)
@@ -130,14 +130,14 @@ end)
 
 hooksecurefunc('FCF_SetWindowName', function(frame, name)--FloatingChatFrame.lua
     local tab = _G[frame:GetName().."Tab"]
-    e.set(tab, name)
+    WoWTools_ChineseMixin:Set_Label_Text(tab, name)
     PanelTemplates_TabResize(tab, tab.sizePadding or 0)
 end)
 
 
 
 for i=1, 7 do
-    e.set(_G['ChatConfigCategoryFrameButton'..i])
+    WoWTools_ChineseMixin:Set_Label_Text(_G['ChatConfigCategoryFrameButton'..i])
 end
 
 local channelsWithTtsName =
@@ -153,7 +153,7 @@ hooksecurefunc('TextToSpeechFrame_CreateCheckboxes', function(frame)
 		checkBoxName = checkBoxNameString..index
 		checkBox = _G[checkBoxName]
         checkBoxFontString = checkBox.text;
-        checkBoxFontString:SetText((channelsWithTtsName[value] and e.cn(_G[value.."_TTS_LABEL"]) or e.cn(_G[value])) or value)
+        checkBoxFontString:SetText((channelsWithTtsName[value] and WoWTools_ChineseMixin:Setup(_G[value.."_TTS_LABEL"]) or WoWTools_ChineseMixin:Setup(_G[value])) or value)
 	end
 end)
 
@@ -236,18 +236,18 @@ ChatFrameChannelButton:SetTooltipFunction(function()--ChannelFrameButtonMixin.lu
     return MicroButtonTooltipText('聊天频道', "TOGGLECHATTAB")
 end)
 
-e.set(CombatConfigColorsColorizeUnitNameCheckText)
-e.set(CombatConfigColorsColorizeSpellNamesCheckText)
-e.set(CombatConfigColorsColorizeSpellNamesSchoolColoringText)
-e.set(CombatConfigColorsColorizeDamageNumberCheckText)
-e.set(CombatConfigColorsColorizeDamageNumberSchoolColoringText)
-e.set(CombatConfigColorsColorizeDamageSchoolCheckText)
-e.set(CombatConfigColorsColorizeEntireLineCheckText)
-e.set(CombatConfigColorsColorizeEntireLineBySourceText)
-e.set(CombatConfigColorsColorizeEntireLineByTargetText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsColorizeUnitNameCheckText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsColorizeSpellNamesCheckText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsColorizeSpellNamesSchoolColoringText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsColorizeDamageNumberCheckText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsColorizeDamageNumberSchoolColoringText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsColorizeDamageSchoolCheckText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsColorizeEntireLineCheckText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsColorizeEntireLineBySourceText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsColorizeEntireLineByTargetText)
 
-e.set(CombatConfigColorsHighlightingTitle)
-e.set(CombatConfigColorsHighlightingLineText)
-e.set(CombatConfigColorsHighlightingAbilityText)
-e.set(CombatConfigColorsHighlightingDamageText)
-e.set(CombatConfigColorsHighlightingSchoolText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsHighlightingTitle)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsHighlightingLineText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsHighlightingAbilityText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsHighlightingDamageText)
+WoWTools_ChineseMixin:Set_Label_Text(CombatConfigColorsHighlightingSchoolText)

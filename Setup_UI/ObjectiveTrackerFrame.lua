@@ -5,7 +5,7 @@ local e= select(2, ...)
 
 local function set_objective_header(self)
     if self.Header then
-        e.set(self.Header.Text, self.headerText)
+        WoWTools_ChineseMixin:Set_Label_Text(self.Header.Text, self.headerText)
     end
 end
 
@@ -340,7 +340,7 @@ hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, is
     end
 
 
-    local blockName= e.Get_Recipe_Name(C_TradeSkillUI.GetRecipeInfo(recipeID), nil) or e.strText[recipeSchematic.name]
+    local blockName= WoWTools_ChineseMixin:GetRecipeName(C_TradeSkillUI.GetRecipeInfo(recipeID), nil) or e.strText[recipeSchematic.name]
 
     if blockName then
         blockName = isRecraft and format('再造：%s', blockName) or blockName
@@ -359,7 +359,7 @@ hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, is
             if reagentSlotSchematic then
                 local reagent = reagentSlotSchematic.reagents[1] or {}
                 if reagent.itemID then
-                    name= e.Get_Item_Name(reagent.itemID)
+                    name= WoWTools_ChineseMixin:Get_Item_Name(reagent.itemID)
                     if not name then
                         local item = Item:CreateFromItemID(reagent.itemID)
                         name= e.strText[item:GetItemName()]

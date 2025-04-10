@@ -23,7 +23,7 @@ hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
         local label= _G['MerchantItem'..i..'Name']
         if btn and btn.ItemButton.hasItem and label then
             local itemID= GetMerchantItemID(btn.ItemButton:GetID())
-            local itemName= e.Get_Item_Name(itemID)
+            local itemName= WoWTools_ChineseMixin:Get_Item_Name(itemID)
             if itemName then
                 itemName= itemName:match('^|c........(.+)|r$') or itemName                
                 label:SetText(itemName)
@@ -33,7 +33,7 @@ hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
 
     
     local itemID= C_MerchantFrame.GetBuybackItemID(GetNumBuybackItems() or 0)
-    local itemName= e.Get_Item_Name(itemID)
+    local itemName= WoWTools_ChineseMixin:Get_Item_Name(itemID)
     if itemName then
         itemName= itemName:match('^|c........(.+)|r$') or itemName
         MerchantBuyBackItemName:SetText(itemName)
@@ -53,7 +53,7 @@ hooksecurefunc('MerchantFrame_UpdateBuybackInfo', function()
         local label= _G['MerchantItem'..i..'Name']
         if btn and btn.ItemButton.hasItem and label then
             local itemID= C_MerchantFrame.GetBuybackItemID(btn.ItemButton:GetID())
-            local itemName= e.Get_Item_Name(itemID)
+            local itemName= WoWTools_ChineseMixin:Get_Item_Name(itemID)
             if itemName then
                 itemName= itemName:match('^|c........(.+)|r$') or itemName
                 label:SetText(itemName)

@@ -58,8 +58,8 @@ end
 
 
 local function Init()
-    e.dia("CONFIRM_PLAYER_CHOICE", {button1 = '确定', button2 = '取消'})
-    e.dia("CONFIRM_PLAYER_CHOICE_WITH_CONFIRMATION_STRING", {button1 = '接受', button2 = '拒绝'})
+    WoWTools_ChineseMixin:AddDialogs("CONFIRM_PLAYER_CHOICE", {button1 = '确定', button2 = '取消'})
+    WoWTools_ChineseMixin:AddDialogs("CONFIRM_PLAYER_CHOICE_WITH_CONFIRMATION_STRING", {button1 = '接受', button2 = '拒绝'})
 
 
     --Blizzard_PlayerChoice.lua
@@ -94,7 +94,7 @@ local function Init()
 
 
     hooksecurefunc(PlayerChoiceBaseOptionButtonTemplateMixin, 'Setup', function(self, buttonInfo)
-        e.set(self, buttonInfo.text)
+        WoWTools_ChineseMixin:Set_Label_Text(self, buttonInfo.text)
         local tooltip= e.strText[buttonInfo.tooltip]
         if tooltip then
             self.tooltip = tooltip
@@ -102,9 +102,9 @@ local function Init()
     end)
 
     --隐藏，显示，按钮
-    e.hookLabel(TorghastPlayerChoiceToggleButton.Text)
-    e.hookLabel(CypherPlayerChoiceToggleButton.Text)
-    e.hookLabel(GenericPlayerChoiceToggleButton.Text)
+    WoWTools_ChineseMixin:HookLabel(TorghastPlayerChoiceToggleButton.Text)
+    WoWTools_ChineseMixin:HookLabel(CypherPlayerChoiceToggleButton.Text)
+    WoWTools_ChineseMixin:HookLabel(GenericPlayerChoiceToggleButton.Text)
 
     --剩余时间 Blizzard_PlayerChoiceTimer.lua PlayerChoiceTimeRemainingMixin
     hooksecurefunc(PlayerChoiceTimeRemaining, 'OnUpdate', function(self)

@@ -3,8 +3,8 @@ local id, e = ...
 
 --专业，训练师
 local function Init()
-    e.dia("CONFIRM_PROFESSION", {text = format('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', "XXX"), button1 = '接受', button2 = '取消'})
-    e.hookDia("CONFIRM_PROFESSION", 'OnShow', function(self)
+    WoWTools_ChineseMixin:AddDialogs("CONFIRM_PROFESSION", {text = format('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', "XXX"), button1 = '接受', button2 = '取消'})
+    WoWTools_ChineseMixin:HookDialog("CONFIRM_PROFESSION", 'OnShow', function(self)
         local prof1, prof2 = GetProfessions()
         if ( prof1 and not prof2 ) then
             self.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第二个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
@@ -27,7 +27,7 @@ local function Init()
                 local itemID= itemLink and C_Item.GetItemInfoInstant(itemLink)
                 if itemID then
                     local itemName= C_Item.GetItemNameByID(itemLink)
-                    name= e.Get_Item_Name(itemID) or e.strText[itemName]
+                    name= WoWTools_ChineseMixin:Get_Item_Name(itemID) or e.strText[itemName]
                 end
                 if not name then
                     local data= C_TooltipInfo.GetTrainerService(skillIndex)
@@ -57,7 +57,7 @@ local function Init()
         if ( isTradeSkill ) then
             local skill, rank, hasReq = GetTrainerServiceSkillReq(skillIndex)
             if ( skill ) then
-                skill= e.cn(skill)
+                skill= WoWTools_ChineseMixin:Setup(skill)
                 if ( hasReq ) then
                     requirements = requirements..separator..format('%s (|cffffffff%d|r)', skill, rank )
                 else
@@ -74,7 +74,7 @@ local function Init()
             for i=1, numRequirements, 1 do
                 ability, hasReq = GetTrainerServiceAbilityReq(skillIndex, i)
                 if ( ability ) then
-                    ability= e.cn(ability)
+                    ability= WoWTools_ChineseMixin:Setup(ability)
                     if ( hasReq ) then
                         requirements = requirements..separator..format('|cffffffff%s|r', ability )
                     else

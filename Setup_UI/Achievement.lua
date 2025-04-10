@@ -28,12 +28,12 @@ local function Init()
     AchievementFrame.SearchBox.Instructions:SetText('搜索')
     AchievementFrameSummaryAchievementsHeaderTitle:SetText('近期成就')
     AchievementFrameSummaryCategoriesHeaderTitle:SetText('进展总览')
-    e.set(AchievementFrameSummaryCategoriesStatusBarTitle)
+    WoWTools_ChineseMixin:Set_Label_Text(AchievementFrameSummaryCategoriesStatusBarTitle)
 
     --标题
     AchievementFrame.Header.Title:SetText('成就点数')
     hooksecurefunc('AchievementFrame_RefreshView', function()--Blizzard_AchievementUI.lua
-        e.set(AchievementFrame.Header.Title)
+        WoWTools_ChineseMixin:Set_Label_Text(AchievementFrame.Header.Title)
     end)
 
     --近期成就
@@ -52,8 +52,8 @@ local function Init()
                     achievementID = select(i, ...)
                     if achievementID then
                         _, name, _, _, _, _, _, description = GetAchievementInfo(achievementID)
-                        e.set(button.Label, name)
-                        e.set(button.Description, description)
+                        WoWTools_ChineseMixin:Set_Label_Text(button.Label, name)
+                        WoWTools_ChineseMixin:Set_Label_Text(button.Description, description)
                     end
                 else
                     local tAchievements
@@ -71,8 +71,8 @@ local function Init()
                         if ( completed ) then
                             defaultAchievementCount = defaultAchievementCount+1
                         else
-                            e.set(button.Label, name)
-                            e.set(button.Description, description)
+                            WoWTools_ChineseMixin:Set_Label_Text(button.Label, name)
+                            WoWTools_ChineseMixin:Set_Label_Text(button.Description, description)
                             defaultAchievementCount = defaultAchievementCount+1
                             button.tooltipTitle = "未获得的成就"
                             button.tooltip = "达到每个成就所要求的条件，赢取成就点数、奖励和荣耀！"
@@ -88,7 +88,7 @@ local function Init()
             local statusBar = _G["AchievementFrameSummaryCategoriesCategory"..i]
             if statusBar and i <= #categories then
                 local categoryName = GetCategoryInfo(categories[i])
-                e.set(statusBar.Label, categoryName)
+                WoWTools_ChineseMixin:Set_Label_Text(statusBar.Label, categoryName)
             end
         end
     end)
@@ -100,8 +100,8 @@ local function Init()
         end
         for _, btn in pairs(frame:GetFrames() or {}) do
             if btn.Button then
-                e.set(btn.Button.Label, btn.Button.name)
-                --print(btn.Button.Label:GetText(), e.cn(btn.Button.name))
+                WoWTools_ChineseMixin:Set_Label_Text(btn.Button.Label, btn.Button.name)
+                --print(btn.Button.Label:GetText(), WoWTools_ChineseMixin:Setup(btn.Button.name))
             end
         end
     end)
@@ -129,14 +129,14 @@ local function Init()
         else
             _, name, _, _, _, _, _, description, _, _, rewardText = GetAchievementInfo(self.id)--Social
         end
-        e.set(self.Label, name)
-        e.set(self.Description, description)
-        e.set(self.HiddenDescription, description)
-        e.set(self.Reward, rewardText)
+        WoWTools_ChineseMixin:Set_Label_Text(self.Label, name)
+        WoWTools_ChineseMixin:Set_Label_Text(self.Description, description)
+        WoWTools_ChineseMixin:Set_Label_Text(self.HiddenDescription, description)
+        WoWTools_ChineseMixin:Set_Label_Text(self.Reward, rewardText)
         if self.Tracked:IsShown() and not self.Tracked.is_set then
             for _, region in pairs({self.Tracked:GetRegions()}) do
                 if region:GetObjectType()=='FontString' then
-                    e.set(region)
+                    WoWTools_ChineseMixin:Set_Label_Text(region)
                 end
             end
             self.Tracked.is_set= true
@@ -152,7 +152,7 @@ local function Init()
             requiresRep, _, repLevel = GetAchievementGuildRep(ID)
             if ( requiresRep and repLevel) then
                 local factionStandingtext = GetText("FACTION_STANDING_LABEL"..repLevel, UnitSex("player"))
-                objectivesFrame.RepCriteria:SetFormattedText('|cffffffff需要公会声望：|r %s', e.cn(factionStandingtext) or '')
+                objectivesFrame.RepCriteria:SetFormattedText('|cffffffff需要公会声望：|r %s', WoWTools_ChineseMixin:Setup(factionStandingtext) or '')
             end
         end
         local numCriteria = GetAchievementNumCriteria(ID) or 0
@@ -198,7 +198,7 @@ local function Init()
             if ( index <= numResults ) then
                 local achievementID = GetFilteredAchievementID(index)
                 local name= achievementID and select(2, GetAchievementInfo(achievementID))
-                e.set(searchPreview.Name, name)
+                WoWTools_ChineseMixin:Set_Label_Text(searchPreview.Name, name)
             end
         end
 
@@ -208,7 +208,7 @@ local function Init()
     end)
     hooksecurefunc(AchievementFullSearchResultsButtonMixin, 'Init', function(self)
         local _, name, _, completed = GetAchievementInfo(self.achievementID)
-        e.set(self.Name, name)
+        WoWTools_ChineseMixin:Set_Label_Text(self.Name, name)
 
         if ( completed ) then
             self.ResultType:SetText('已获得')
@@ -219,10 +219,10 @@ local function Init()
         local categoryID = GetAchievementCategory(self.achievementID)
         local categoryName, parentCategoryID = GetCategoryInfo(categoryID)
 
-        local path = e.cn(categoryName)
+        local path = WoWTools_ChineseMixin:Setup(categoryName)
         while ( not (parentCategoryID == -1) ) do
             categoryName, parentCategoryID = GetCategoryInfo(parentCategoryID)
-            path = e.cn(categoryName).." > "..path
+            path = WoWTools_ChineseMixin:Setup(categoryName).." > "..path
         end
         self.Path:SetText(path)
     end)
@@ -248,7 +248,7 @@ local function Init()
                 end
             else
                 local name= select(2, GetAchievementInfo(category))
-                e.set(self.Text, name)
+                WoWTools_ChineseMixin:Set_Label_Text(self.Text, name)
             end
         end
     end)
@@ -259,8 +259,8 @@ local function Init()
     --比较
     hooksecurefunc(AchievementComparisonTemplateMixin, 'Init', function(self, elementData)
         local _, name, _, _, _, _, _, description = GetAchievementInfo(elementData.category, elementData.index)
-        e.set(self.Player.Label, name)
-        e.set(self.Player.Description, description)
+        WoWTools_ChineseMixin:Set_Label_Text(self.Player.Label, name)
+        WoWTools_ChineseMixin:Set_Label_Text(self.Player.Description, description)
         if not GetAchievementComparisonInfo(self.id) then
             self.Friend.Status:SetText('未完成')
         end
@@ -288,7 +288,7 @@ local function Init()
 
         else
             local name= select(2, GetAchievementInfo(category))
-            e.set(self.Text, name)
+            WoWTools_ChineseMixin:Set_Label_Text(self.Text, name)
         end
     end)
 

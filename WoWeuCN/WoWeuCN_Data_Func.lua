@@ -239,7 +239,7 @@ else
 end
 
 
-function e.Get_Item_Name(itemID)
+function WoWTools_ChineseMixin:Get_Item_Name(itemID)
     if itemID then
         local data= e.Get_Item_Info(itemID)
         if data then
@@ -351,8 +351,8 @@ end
 --local Player_Col= '|c'..select(4, GetClassColor(baseClass))..'%s|r'
 local Player_Sex= UnitSex("player")
 local Player_Name=  UnitName('player')
-local Player_Race=  e.cn(UnitRace('player'))
-local Player_Class=  e.cn(UnitClass('player'))
+local Player_Race=  WoWTools_ChineseMixin:Setup(UnitRace('player'))
+local Player_Class=  WoWTools_ChineseMixin:Setup(UnitClass('player'))
 
 local function expand_text(msg)-- function WoWeuCN_Quests_ExpandUnitInfo(desc)
    if not msg and msg=='' then

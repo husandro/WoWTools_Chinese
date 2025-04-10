@@ -6,7 +6,7 @@ local e= select(2, ...)
 
 StableFrame.StabledPetList.FilterBar.SearchBox.Instructions:SetText('查询')
 --StableFrame.StabledPetList.FilterBar.FilterDropdown.Text:SetText('过滤')
-e.hookButton(StableFrame.StableTogglePetButton, true)
+WoWTools_ChineseMixin:HookButton(StableFrame.StableTogglePetButton, true)
 StableFrame.ReleasePetButton:SetText('释放')
 StableFrame.ReleasePetButton.disabledTooltip='你只能释放你当前召唤的宠物。'
 StableFrame.PetModelScene.AbilitiesList.ListHeader:SetText('特殊技能')
@@ -34,6 +34,6 @@ hooksecurefunc(StableFrame.StabledPetList.ScrollBox, 'Update', function(frame)
         return
     end
     for _, btn in pairs(frame:GetFrames() or {}) do
-        e.set(btn.Label)       
+        WoWTools_ChineseMixin:Set_Label_Text(btn.Label)       
     end
 end)

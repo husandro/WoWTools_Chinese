@@ -5,8 +5,8 @@ local e= select(2, ...)
 AddonListTitleText:SetText('插件列表')
 
 
-    e.set(AddonList.SearchBox.Instructions)
-    e.set(AddonList.Performance.Header)
+    WoWTools_ChineseMixin:Set_Label_Text(AddonList.SearchBox.Instructions)
+    WoWTools_ChineseMixin:Set_Label_Text(AddonList.Performance.Header)
 
     AddonList.EnableAllButton:SetText('全部启用')
     AddonList.DisableAllButton:SetText('全部禁用')
@@ -23,11 +23,11 @@ AddonListTitleText:SetText('插件列表')
     --hooksecurefunc('AddonList_InitButton', function(entry)
     hooksecurefunc('AddonList_InitAddon', function(entry)
         if entry then
-            e.hookLabel(entry.Status)
-            e.hookLabel(entry.Reload)
+            WoWTools_ChineseMixin:HookLabel(entry.Status)
+            WoWTools_ChineseMixin:HookLabel(entry.Reload)
         end
     end)
 
     C_Timer.After(2, function()
-        e.region(AddonListForceLoad)
+        WoWTools_ChineseMixin:SetRegions(AddonListForceLoad)
     end)

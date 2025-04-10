@@ -34,7 +34,7 @@ MailFrameTab1:SetText('收件箱')
                 end
                 local expireTime= _G["MailItem"..i.."ExpireTime"]
                 if expireTime then
-                    e.set(expireTime, daysLeft)
+                    WoWTools_ChineseMixin:Set_Label_Text(expireTime, daysLeft)
                     if ( InboxItemCanDelete(index) ) then
                         expireTime.tooltip = '信息保留时间'
                     else

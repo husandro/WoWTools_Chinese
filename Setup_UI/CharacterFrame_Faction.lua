@@ -40,8 +40,8 @@ hooksecurefunc(ReputationEntryMixin, 'Initialize', function(self)
     end
 end)
 
-e.hookLabel(ReputationFrame.ReputationDetailFrame.Title)
-e.hookLabel(ReputationFrame.ReputationDetailFrame.Description)
+WoWTools_ChineseMixin:HookLabel(ReputationFrame.ReputationDetailFrame.Title)
+WoWTools_ChineseMixin:HookLabel(ReputationFrame.ReputationDetailFrame.Description)
     --hooksecurefunc(ReputationFrame.ReputationDetailFrame, 'Refresh', function(self)
 
 
@@ -50,7 +50,7 @@ e.hookLabel(ReputationFrame.ReputationDetailFrame.Description)
             return
         end
         for _, frame in pairs(self:GetFrames() or {}) do
-            e.set(frame.Container.Name)
+            WoWTools_ChineseMixin:Set_Label_Text(frame.Container.Name)
 
             local bar=frame.Container.ReputationBar
             if bar then

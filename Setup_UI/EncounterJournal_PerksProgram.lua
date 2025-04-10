@@ -26,16 +26,16 @@ local id, e= ...
 
 local function Init_Blizzard_PerksProgramElements()
     --Blizzard_PerksProgramElements.lua
-    e.dia("PERKS_PROGRAM_CONFIRM_PURCHASE", {text= '用%s%s 交易下列物品？', button1 = '购买', button2 = '取消'})
-    e.dia("PERKS_PROGRAM_CONFIRM_REFUND", {text= '退还下列物品，获得退款%s%s？', button1 = '退款', button2 = '取消'})
-    e.dia("PERKS_PROGRAM_SERVER_ERROR", {text= '商栈与服务器交换数据时出现困难，请稍后再试。', button1 = '确定'})
-    e.dia("PERKS_PROGRAM_ITEM_PROCESSING_ERROR", {text= '正在处理一件物品。请稍后再试。。', button1 = '确定'})
-    e.dia("PERKS_PROGRAM_CONFIRM_OVERRIDE_FROZEN_ITEM", {text= '你确定想替换当前的冻结物品吗？现在的冻结物品有可能已经下架了。', button1 = '确认', button2 = '取消'})
-    e.dia("PERKS_PROGRAM_SLOW_PURCHASE", {text= '处理您的本次购买所花费的时间比正常情况更长。购买过程会在后台继续进行。', button1= '回到商栈'})
+    WoWTools_ChineseMixin:AddDialogs("PERKS_PROGRAM_CONFIRM_PURCHASE", {text= '用%s%s 交易下列物品？', button1 = '购买', button2 = '取消'})
+    WoWTools_ChineseMixin:AddDialogs("PERKS_PROGRAM_CONFIRM_REFUND", {text= '退还下列物品，获得退款%s%s？', button1 = '退款', button2 = '取消'})
+    WoWTools_ChineseMixin:AddDialogs("PERKS_PROGRAM_SERVER_ERROR", {text= '商栈与服务器交换数据时出现困难，请稍后再试。', button1 = '确定'})
+    WoWTools_ChineseMixin:AddDialogs("PERKS_PROGRAM_ITEM_PROCESSING_ERROR", {text= '正在处理一件物品。请稍后再试。。', button1 = '确定'})
+    WoWTools_ChineseMixin:AddDialogs("PERKS_PROGRAM_CONFIRM_OVERRIDE_FROZEN_ITEM", {text= '你确定想替换当前的冻结物品吗？现在的冻结物品有可能已经下架了。', button1 = '确认', button2 = '取消'})
+    WoWTools_ChineseMixin:AddDialogs("PERKS_PROGRAM_SLOW_PURCHASE", {text= '处理您的本次购买所花费的时间比正常情况更长。购买过程会在后台继续进行。', button1= '回到商栈'})
 
     --PerksProgramProductDetailsFrameMixin
     --PerksProgramFrame.ProductsFrame.PerksProgramProductDetailsContainerFrame.DetailsFrame.CategoryText
-    e.region(PerksProgramFrame.ProductsFrame.PerksProgramProductDetailsContainerFrame.SetDetailsScrollBoxContainer)
+    WoWTools_ChineseMixin:SetRegions(PerksProgramFrame.ProductsFrame.PerksProgramProductDetailsContainerFrame.SetDetailsScrollBoxContainer)
     hooksecurefunc(PerksProgramFrame.ProductsFrame.PerksProgramProductDetailsContainerFrame.DetailsFrame, 'Refresh', function(self)
         if not self.data then
             return;
@@ -64,9 +64,9 @@ local function Init_Blizzard_PerksProgramElements()
             self.DescriptionText:SetText(descriptionText);
         end
 
-        local categoryText = e.cn(PerksProgramFrame:GetCategoryText(self.data.perksVendorCategoryID))
+        local categoryText = WoWTools_ChineseMixin:Setup(PerksProgramFrame:GetCategoryText(self.data.perksVendorCategoryID))
         if self.data.perksVendorCategoryID == Enum.PerksVendorCategoryType.Mount then
-            categoryText = format('%s %s', e.cn(self.data.mountTypeName), categoryText);
+            categoryText = format('%s %s', WoWTools_ChineseMixin:Setup(self.data.mountTypeName), categoryText);
         end
         self.CategoryText:SetText(categoryText);
 
@@ -115,7 +115,7 @@ local function Init_Blizzard_PerksProgramElements()
     end)
 
     hooksecurefunc(PerksProgramSetDetailsItemMixin, 'Refresh', function(self)
-        local name= e.strText[self.elementData.itemName] or e.Get_Item_Name(self.elementData.itemID)
+        local name= e.strText[self.elementData.itemName] or WoWTools_ChineseMixin:Get_Item_Name(self.elementData.itemID)
         if name then
             self.ItemName:SetText(name)
         end
@@ -156,28 +156,28 @@ local function Init()
         if not self.itemInfo then
             return
         end
-        local itemName= e.Get_Item_Name(self.itemInfo.itemID)
+        local itemName= WoWTools_ChineseMixin:Get_Item_Name(self.itemInfo.itemID)
         if itemName then
             self.ContentsContainer.Label:SetText(itemName)
         end
     end
     hooksecurefunc(PerksProgramProductButtonMixin, 'SetItemInfo', set_item)
     hooksecurefunc(PerksProgramFrozenProductButtonMixin, 'SetItemInfo', set_item)
-    e.set(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.NameSortButton.Label)
-    e.set(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.PriceSortButton.Label)
+    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.NameSortButton.Label)
+    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.PriceSortButton.Label)
 
 
 
 
     -- Blizzard_PerksProgramFooter.lua
     --PerksProgramFooterFrameMixin
-    e.hookLabel(PerksProgramFrame.FooterFrame.PurchaseButton)
-    e.set(PerksProgramFrame.FooterFrame.RefundButton)
-    e.set(PerksProgramFrame.FooterFrame.TogglePlayerPreview.Text)
-    e.set(PerksProgramFrame.FooterFrame.ToggleMountSpecial.Text)
-    e.set(PerksProgramFrame.FooterFrame.ToggleHideArmor.Text)
-    e.set(PerksProgramFrame.FooterFrame.ToggleAttackAnimation.Text)
-    e.set(PerksProgramFrame.FooterFrame.PurchasedHistoryFrame.PurchasedText)
+    WoWTools_ChineseMixin:HookLabel(PerksProgramFrame.FooterFrame.PurchaseButton)
+    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.RefundButton)
+    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.TogglePlayerPreview.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.ToggleMountSpecial.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.ToggleHideArmor.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.ToggleAttackAnimation.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.PurchasedHistoryFrame.PurchasedText)
     PerksProgramFrame.FooterFrame.LeaveButton:HookScript('OnShow', function(self)
         self:SetFormattedText('%s 离开', CreateAtlasMarkup("perks-backarrow", 8, 13, 0, 0))
     end)

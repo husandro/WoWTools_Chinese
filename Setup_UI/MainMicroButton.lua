@@ -97,11 +97,11 @@ EJMicroButton:HookScript('OnEvent', function(self, event)
     end
 end)
 if not (EncounterJournal and EncounterJournal:IsShown() ) and not AdventureGuideUtil.IsAvailable() then
-    EJMicroButton.disabledTooltip = Kiosk.IsEnabled() and (e.onlyChinese and '该系统目前已被禁用。' or ERR_SYSTEM_DISABLED) or (e.onlyChinese and '该功能尚不可用。' or FEATURE_NOT_YET_AVAILABLE)
+    EJMicroButton.disabledTooltip = Kiosk.IsEnabled() and '该系统目前已被禁用。'  or '该功能尚不可用。'
 end
 hooksecurefunc(EJMicroButton, 'UpdateDisplay', function(self)
     if not ( EncounterJournal and EncounterJournal:IsShown() ) and not AdventureGuideUtil.IsAvailable() then
-        self.disabledTooltip = Kiosk.IsEnabled() and (e.onlyChinese and '该系统目前已被禁用。' or ERR_SYSTEM_DISABLED) or (e.onlyChinese and '该功能尚不可用。' or FEATURE_NOT_YET_AVAILABLE)
+        self.disabledTooltip = Kiosk.IsEnabled() and '该系统目前已被禁用。' or '该功能尚不可用。'
     end
 end)
 

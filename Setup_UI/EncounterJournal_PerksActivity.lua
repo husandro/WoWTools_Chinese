@@ -85,7 +85,7 @@ local function Init()
         end
     end)
     if EncounterJournalMonthlyActivitiesFrame.ThresholdContainer then
-        e.set(EncounterJournalMonthlyActivitiesFrame.ThresholdContainer.TextContainer.Points)
+        WoWTools_ChineseMixin:Set_Label_Text(EncounterJournalMonthlyActivitiesFrame.ThresholdContainer.TextContainer.Points)
     end
     EncounterJournalMonthlyActivitiesFrame.HeaderContainer.Title:SetText('旅行者日志')
     EncounterJournalMonthlyActivitiesFrame.BarComplete.AllRewardsCollectedText:SetText('你已经收集完了本月的所有奖励')
@@ -145,7 +145,7 @@ local function Init()
             return
         end
         for _, btn in pairs(self:GetFrames() or {}) do
-            e.set(btn.Label)
+            WoWTools_ChineseMixin:Set_Label_Text(btn.Label)
         end
     end)
 
@@ -159,7 +159,7 @@ local function Init()
         if name then
             self.HeaderContainer.Month:SetText(name)
         else
-            e.set(self.HeaderContainer.Month)
+            WoWTools_ChineseMixin:Set_Label_Text(self.HeaderContainer.Month)
         end
     end)
 

@@ -139,7 +139,7 @@ FriendsFrameTab1:SetText('好友')
 
 
             RecruitAFriendRewardsFrame.Title:SetText('战友招募奖励')
-            e.set(RecruitAFriendRewardsFrame.Description)
+            WoWTools_ChineseMixin:Set_Label_Text(RecruitAFriendRewardsFrame.Description)
             hooksecurefunc(RecruitAFriendRewardsFrame, 'UpdateDescription', function(self, selectedRAFVersionInfo)
                 self.Description:SetText((selectedRAFVersionInfo.rafVersion == self:GetRecruitAFriendFrame():GetLatestRAFVersion()) and '每名拥有可用的游戏时间的被招募者|n每30天可以为你提供一份月度奖励。' or '不能再为旧版招募活动再招募新的战友，但是旧版现有的被招募的战友还会继续提供战友招募奖励。')
             end)
@@ -209,8 +209,8 @@ FriendsFrameTab1:SetText('好友')
             end
         end)
 
-        e.set(FriendsFriendsFrame.SendRequestButton)
-        e.set(FriendsFriendsFrame.CloseButton)
+        WoWTools_ChineseMixin:Set_Label_Text(FriendsFriendsFrame.SendRequestButton)
+        WoWTools_ChineseMixin:Set_Label_Text(FriendsFriendsFrame.CloseButton)
         
 
         
@@ -286,7 +286,7 @@ hooksecurefunc('RaidInfoFrame_InitButton', function(button, elementData)--RaidFr
     local function InitButton(extended, locked, name, difficulty, difficultyId)
         name= e.strText[name]
         if extended or locked then
-            e.set(button.name, name)
+            WoWTools_ChineseMixin:Set_Label_Text(button.name, name)
         else
             button.reset:SetFormattedText("|cff808080%s|r", '已过期')
             if name then
@@ -350,6 +350,6 @@ hooksecurefunc(QuickJoinFrame, 'UpdateJoinButtonState', function(self)--QuickJoi
 end)
 
 C_Timer.After(2, function()
-    e.region(FriendsFrameBattlenetFrame.BroadcastFrame)--, '通告', 1)
-    e.region(BattleTagInviteFrame)--, '发送一个|cff82c5ff战网昵称|r请求给：', 1)
+    WoWTools_ChineseMixin:SetRegions(FriendsFrameBattlenetFrame.BroadcastFrame)--, '通告', 1)
+    WoWTools_ChineseMixin:SetRegions(BattleTagInviteFrame)--, '发送一个|cff82c5ff战网昵称|r请求给：', 1)
 end)

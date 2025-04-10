@@ -29,7 +29,7 @@ QuickKeybindFrame.UseCharacterBindingsButton.text:SetText('角色专用按键设
 
 
 
-e.Cstr(nil, {changeFont= QuickKeybindFrame.OutputText, size=16})
+WoWTools_ChineseMixin:Cstr(nil, {changeFont= QuickKeybindFrame.OutputText, size=16})
 local function set_SetOutputText(self, text)
     if not text then
         return
@@ -39,7 +39,7 @@ local function set_SetOutputText(self, text)
     elseif text==KEY_BOUND then
         self.OutputText:SetText('|cnGREEN_FONT_COLOR:按键设置成功|r')
     else
-        local a, b, c= e.Magic(PRIMARY_KEY_UNBOUND_ERROR), e.Magic(KEY_UNBOUND_ERROR), e.Magic(SETTINGS_BIND_KEY_TO_COMMAND_OR_CANCEL)
+        local a, b, c= WoWTools_ChineseMixin:Magic(PRIMARY_KEY_UNBOUND_ERROR), WoWTools_ChineseMixin:Magic(KEY_UNBOUND_ERROR), WoWTools_ChineseMixin:Magic(SETTINGS_BIND_KEY_TO_COMMAND_OR_CANCEL)
         local finda, findb= text:match(a), text:match(b)
         local findc1, findc2= text:match(c)
         if finda then
@@ -67,6 +67,6 @@ hooksecurefunc(SettingsPanel, 'SetOutputText', set_SetOutputText)
 hooksecurefunc(KeyBindingFrameBindingTemplateMixin,'Init', function(self)
     local label= self.Text or self.Label
     if label then
-        e.set(label, label:GetText())
+        WoWTools_ChineseMixin:Set_Label_Text(label, label:GetText())
     end
 end)

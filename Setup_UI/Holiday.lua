@@ -12,7 +12,7 @@ local function calendar_Uptate()
     local info= indexInfo and C_Calendar.GetDayEvent(indexInfo.offsetMonths, indexInfo.monthDay, indexInfo.eventIndex) or {}
 
     if info.eventID then
-        local data= e.cn(nil, {holydayID= info.eventID}) or {}
+        local data= WoWTools_ChineseMixin:Setup(nil, {holydayID= info.eventID}) or {}
         local head= data[1]
         local desc= data[2]
         if head then
@@ -32,20 +32,20 @@ end
 
 
 local function Init()
-    --e.dia("CALENDAR_DELETE_EVENT", {button1 = '确定', button2 = '取消',})
-    --e.dia('CALENDAR_ERROR', {button1 = '确定'})
+    --WoWTools_ChineseMixin:AddDialogs("CALENDAR_DELETE_EVENT", {button1 = '确定', button2 = '取消',})
+    --WoWTools_ChineseMixin:AddDialogs('CALENDAR_ERROR', {button1 = '确定'})
     --CalendarFrame.FilterButton.Text:SetText('过滤器')
 
     CalendarEventPickerCloseButtonText:SetText('关闭')
     --星期
     hooksecurefunc('CalendarFrame_Update', function()
         for i= 1, 7 do
-            e.set(_G['CalendarWeekday'..i..'Name'])
+            WoWTools_ChineseMixin:Set_Label_Text(_G['CalendarWeekday'..i..'Name'])
         end
     end)
     --月份
     hooksecurefunc('CalendarFrame_UpdateTitle', function()
-        e.set(CalendarMonthName)
+        WoWTools_ChineseMixin:Set_Label_Text(CalendarMonthName)
     end)
 
     CalendarEventPickerFrame.Header.Text:SetText('选择一个活动')
@@ -92,31 +92,31 @@ local function Init()
     hooksecurefunc('CalendarViewHolidayFrame_Update', calendar_Uptate)
 
 
-    e.hookLabel(CalendarTexturePickerFrame.Header.Text)
-    e.set(CalendarTexturePickerAcceptButton)
-    e.set(CalendarTexturePickerCancelButton)
+    WoWTools_ChineseMixin:HookLabel(CalendarTexturePickerFrame.Header.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(CalendarTexturePickerAcceptButton)
+    WoWTools_ChineseMixin:Set_Label_Text(CalendarTexturePickerCancelButton)
     hooksecurefunc(CalendarTexturePickerFrame.ScrollBox, 'Update', function(frame)
         if not frame:GetView() then
             return
         end
         for _, btn in pairs(frame:GetFrames() or {}) do
-            e.set(btn.Title)
+            WoWTools_ChineseMixin:Set_Label_Text(btn.Title)
         end
     end)
 
 
     --创建，活动
-    e.hookLabel(CalendarCreateEventFrame.Header.Text)
-    e.set(CalendarCreateEventLockEventCheckText)
-    e.set(CalendarCreateEventInviteListNameSortButton)
-    e.set(CalendarCreateEventInviteListClassSortButton)
-    e.set(CalendarCreateEventInviteListStatusSortButton)
-    e.set(CalendarCreateEventInviteButtonText)
-    e.set(CalendarCreateEventMassInviteButtonText)
-    e.hookLabel(CalendarCreateEventCreateButton)
-    e.region(CalendarMassInviteFrame)
-    e.set(CalendarMassInviteFrame.Header.Text)
-    e.set(CalendarMassInviteAcceptButtonText)
+    WoWTools_ChineseMixin:HookLabel(CalendarCreateEventFrame.Header.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(CalendarCreateEventLockEventCheckText)
+    WoWTools_ChineseMixin:Set_Label_Text(CalendarCreateEventInviteListNameSortButton)
+    WoWTools_ChineseMixin:Set_Label_Text(CalendarCreateEventInviteListClassSortButton)
+    WoWTools_ChineseMixin:Set_Label_Text(CalendarCreateEventInviteListStatusSortButton)
+    WoWTools_ChineseMixin:Set_Label_Text(CalendarCreateEventInviteButtonText)
+    WoWTools_ChineseMixin:Set_Label_Text(CalendarCreateEventMassInviteButtonText)
+    WoWTools_ChineseMixin:HookLabel(CalendarCreateEventCreateButton)
+    WoWTools_ChineseMixin:SetRegions(CalendarMassInviteFrame)
+    WoWTools_ChineseMixin:Set_Label_Text(CalendarMassInviteFrame.Header.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(CalendarMassInviteAcceptButtonText)
 end
 
 

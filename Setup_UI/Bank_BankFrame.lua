@@ -3,56 +3,56 @@ local e= select(2, ...)
 
 --银行
 --BankFrame.lua
-e.set(BankFrameTab1.Text)--:SetText('银行')
-e.set(BankFrameTab2.Text)--:SetText('材料')
-e.set(BankFrameTab3.Text)
-e.set(BankFramePurchaseButton)
-e.set(ReagentBankFrameUnlockInfoPurchaseButton)
-e.set(ReagentBankFrameUnlockInfoTitle)
-e.set(ReagentBankFrameUnlockInfoText)
-e.set(AccountBankPanel.LockPrompt.PromptText)
-e.set(ReagentBankFrameUnlockInfoTabCost)
+WoWTools_ChineseMixin:Set_Label_Text(BankFrameTab1.Text)--:SetText('银行')
+WoWTools_ChineseMixin:Set_Label_Text(BankFrameTab2.Text)--:SetText('材料')
+WoWTools_ChineseMixin:Set_Label_Text(BankFrameTab3.Text)
+WoWTools_ChineseMixin:Set_Label_Text(BankFramePurchaseButton)
+WoWTools_ChineseMixin:Set_Label_Text(ReagentBankFrameUnlockInfoPurchaseButton)
+WoWTools_ChineseMixin:Set_Label_Text(ReagentBankFrameUnlockInfoTitle)
+WoWTools_ChineseMixin:Set_Label_Text(ReagentBankFrameUnlockInfoText)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.LockPrompt.PromptText)
+WoWTools_ChineseMixin:Set_Label_Text(ReagentBankFrameUnlockInfoTabCost)
 
-e.hookLabel(BankFrameTitleText)
+WoWTools_ChineseMixin:HookLabel(BankFrameTitleText)
 --BANK_PANELS[2].SetTitle=function() BankFrame:SetTitle('材料银行') end
-e.set(ReagentBankFrame.DespositButton)--:SetText('存放各种材料')
-e.region(BankFramePurchaseInfo)
+WoWTools_ChineseMixin:Set_Label_Text(ReagentBankFrame.DespositButton)--:SetText('存放各种材料')
+WoWTools_ChineseMixin:SetRegions(BankFramePurchaseInfo)
 --BankItemSearchBox.Instructions:SetText('搜索')
-e.region(BankSlotsFrame)
-e.region(CombatConfigSettingsNameEditBox)--过滤名称
+WoWTools_ChineseMixin:SetRegions(BankSlotsFrame)
+WoWTools_ChineseMixin:SetRegions(CombatConfigSettingsNameEditBox)--过滤名称
 
 
 
 
 --战团
-e.region( AccountBankPanel.PurchasePrompt)
-e.set(AccountBankPanel.PurchasePrompt.TabCostFrame.TabCost)
-e.set(AccountBankPanel.PurchasePrompt.TabCostFrame.PurchaseButton)
-e.set(AccountBankPanel.MoneyFrame.WithdrawButton)
-e.set(AccountBankPanel.MoneyFrame.DepositButton)
+WoWTools_ChineseMixin:SetRegions( AccountBankPanel.PurchasePrompt)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.PurchasePrompt.TabCostFrame.TabCost)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.PurchasePrompt.TabCostFrame.PurchaseButton)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.MoneyFrame.WithdrawButton)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.MoneyFrame.DepositButton)
 
 
-e.set(AccountBankPanel.ItemDepositFrame.DepositButton)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.ItemDepositFrame.DepositButton)
 AccountBankPanel.ItemDepositFrame:HookScript('OnShow', function(self)
-    e.set(self.IncludeReagentsCheckbox.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(self.IncludeReagentsCheckbox.Text)
 end)
-e.set(BankItemSearchBox.Instructions)
+WoWTools_ChineseMixin:Set_Label_Text(BankItemSearchBox.Instructions)
 
 
-e.set(AccountBankPanel.TabSettingsMenu.BorderBox.EditBoxHeaderText)
-e.set(AccountBankPanel.TabSettingsMenu.DepositSettingsMenu.AssignSettingsHeader)
-e.set(AccountBankPanel.TabSettingsMenu.DepositSettingsMenu.AssignExpansionHeader)
-e.set(AccountBankPanel.TabSettingsMenu.DepositSettingsMenu.CleanUpSettingsHeader)
-e.set(AccountBankPanel.TabSettingsMenu.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconHeader)
-e.set(AccountBankPanel.TabSettingsMenu.BorderBox.OkayButton)
-e.set(AccountBankPanel.TabSettingsMenu.BorderBox.CancelButton)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.TabSettingsMenu.BorderBox.EditBoxHeaderText)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.TabSettingsMenu.DepositSettingsMenu.AssignSettingsHeader)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.TabSettingsMenu.DepositSettingsMenu.AssignExpansionHeader)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.TabSettingsMenu.DepositSettingsMenu.CleanUpSettingsHeader)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.TabSettingsMenu.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconHeader)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.TabSettingsMenu.BorderBox.OkayButton)
+WoWTools_ChineseMixin:Set_Label_Text(AccountBankPanel.TabSettingsMenu.BorderBox.CancelButton)
 
 AccountBankPanel.TabSettingsMenu.DepositSettingsMenu:HookScript('OnShow', function (self)
-    e.set(self.AssignEquipmentCheckbox.Text)
-    e.set(self.AssignConsumablesCheckbox.Text)
-    e.set(self.AssignProfessionGoodsCheckbox.Text)
-    e.set(self.AssignReagentsCheckbox.Text)
-    e.set(self.AssignJunkCheckbox.Text)
-    e.set(self.IgnoreCleanUpCheckbox.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(self.AssignEquipmentCheckbox.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(self.AssignConsumablesCheckbox.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(self.AssignProfessionGoodsCheckbox.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(self.AssignReagentsCheckbox.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(self.AssignJunkCheckbox.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(self.IgnoreCleanUpCheckbox.Text)
 end)
 

@@ -4,18 +4,18 @@ local e= select(2, ...)
 
 
 local function Init_Blizzard_WeeklyRewards()
-    e.dia("CONFIRM_SELECT_WEEKLY_REWARD", {text = '你一旦选好奖励就不能变更了。|n|n你确定要选择这件物品吗？', button1 = '是', button2 = '取消'})
+    WoWTools_ChineseMixin:AddDialogs("CONFIRM_SELECT_WEEKLY_REWARD", {text = '你一旦选好奖励就不能变更了。|n|n你确定要选择这件物品吗？', button1 = '是', button2 = '取消'})
 
-    e.hookLabel(WeeklyRewardsFrame.RaidFrame.Name)
-    e.hookLabel(WeeklyRewardsFrame.MythicFrame.Name)
+    WoWTools_ChineseMixin:HookLabel(WeeklyRewardsFrame.RaidFrame.Name)
+    WoWTools_ChineseMixin:HookLabel(WeeklyRewardsFrame.MythicFrame.Name)
 
-    e.font(WeeklyRewardsFrame.HeaderFrame.Text)
+    WoWTools_ChineseMixin:SetLabelFont(WeeklyRewardsFrame.HeaderFrame.Text)
 
 
     hooksecurefunc(WeeklyRewardsFrame, 'UpdateOverlay', function(self)--Blizzard_WeeklyRewards.lua
         if self.Overlay then
-            e.set(self.Overlay.Text)
-            e.set(self.Overlay.Title)
+            WoWTools_ChineseMixin:Set_Label_Text(self.Overlay.Text)
+            WoWTools_ChineseMixin:Set_Label_Text(self.Overlay.Title)
         end
     end)
 
@@ -150,14 +150,14 @@ local function Init_Blizzard_ChallengesUI()
             local mapID, _, powerLevel= C_ChallengeMode.GetSlottedKeystoneInfo()
             if mapID ~= nil then
                 local name= C_ChallengeMode.GetMapUIInfo(mapID)
-                e.set(self.DungeonName, name)
+                WoWTools_ChineseMixin:Set_Label_Text(self.DungeonName, name)
                 self.PowerLevel:SetFormattedText('%d级', powerLevel)
             end
         end)
 
-    e.set(ChallengesFrame.SeasonChangeNoticeFrame.NewSeason)--:SetText('全新赛季！')
-    e.hookLabel(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription)--:SetText('地下城奖励的物品等级已经提升！')
-    e.hookLabel(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription2)--:SetText('史诗地下城的敌人变得更强了！')
+    WoWTools_ChineseMixin:Set_Label_Text(ChallengesFrame.SeasonChangeNoticeFrame.NewSeason)--:SetText('全新赛季！')
+    WoWTools_ChineseMixin:HookLabel(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription)--:SetText('地下城奖励的物品等级已经提升！')
+    WoWTools_ChineseMixin:HookLabel(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription2)--:SetText('史诗地下城的敌人变得更强了！')
 
     ChallengesFrame.SeasonChangeNoticeFrame.Leave:SetText('离开')
 

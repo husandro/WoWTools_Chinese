@@ -223,7 +223,7 @@ end
 local function Init_CraftingPage_SchematicForm()
     local frame= ProfessionsFrame.CraftingPage.SchematicForm
 
-    e.hookLabel(frame.RecraftingDescription)
+    WoWTools_ChineseMixin:HookLabel(frame.RecraftingDescription)
     if frame.AllocateBestQualityCheckbox then
         frame:HookScript('OnShow', function(self)
             self.AllocateBestQualityCheckbox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'));
@@ -231,9 +231,9 @@ local function Init_CraftingPage_SchematicForm()
         end)
     end
 
-    e.hookLabel(frame.Reagents.Label)
-    e.set(frame.FirstCraftBonus.Text)
-    e.hookLabel(frame.RecipeSourceButton.Text)--未学习的配方
+    WoWTools_ChineseMixin:HookLabel(frame.Reagents.Label)
+    WoWTools_ChineseMixin:Set_Label_Text(frame.FirstCraftBonus.Text)
+    WoWTools_ChineseMixin:HookLabel(frame.RecipeSourceButton.Text)--未学习的配方
 
     frame.QualityDialog.AcceptButton:SetText('接受')
     frame.QualityDialog.CancelButton:SetText('取消')
@@ -284,9 +284,9 @@ local function Init_CraftingPage_SchematicForm()
         local outputItemInfo = C_TradeSkillUI.GetRecipeOutputItemData(recipeID, reagents, self.transaction:GetAllocationItemGUID()) or {}
 
         if outputItemInfo.hyperlink then
-            name = e.Get_Recipe_Name(recipeInfo, outputItemInfo.hyperlink)
+            name = WoWTools_ChineseMixin:GetRecipeName(recipeInfo, outputItemInfo.hyperlink)
         else
-            name= e.strText[self.recipeSchematic.name] or e.Get_Recipe_Name(recipeInfo)
+            name= e.strText[self.recipeSchematic.name] or WoWTools_ChineseMixin:GetRecipeName(recipeInfo)
             name= name and WrapTextInColor(name, NORMAL_FONT_COLOR)
             isRecraft= true
         end
@@ -315,9 +315,9 @@ local function Init_CraftingPage_SchematicForm()
         if self.RecipeSourceButton:IsShown() then
             local sourceText--, sourceTextIsForNextRank
             if not recipeInfo.learned then
-                sourceText = e.cn(C_TradeSkillUI.GetRecipeSourceText(recipeID), {recipeID=recipeID})
+                sourceText = WoWTools_ChineseMixin:Setup(C_TradeSkillUI.GetRecipeSourceText(recipeID), {recipeID=recipeID})
             elseif recipeInfo.nextRecipeID then
-                sourceText= e.cn(C_TradeSkillUI.GetRecipeSourceText(nextRecipeID), {recipeID=nextRecipeID})
+                sourceText= WoWTools_ChineseMixin:Setup(C_TradeSkillUI.GetRecipeSourceText(nextRecipeID), {recipeID=nextRecipeID})
                 --sourceTextIsForNextRank = true
             end
             if sourceText then
@@ -407,17 +407,17 @@ end
 
 local function Init_SpecPage()
     --Blizzard_ProfessionsSpecializations.lua
-    e.dia("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", {button1 = '是', button2 = '取消'})
-    e.hookDia("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", 'OnShow', function(self, info)
-        local specName= e.cn(info.specName)
-        local headerText = HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(format('学习%s？', e.cn(specName)).."\n\n")
+    WoWTools_ChineseMixin:AddDialogs("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", {button1 = '是', button2 = '取消'})
+    WoWTools_ChineseMixin:HookDialog("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", 'OnShow', function(self, info)
+        local specName= WoWTools_ChineseMixin:Setup(info.specName)
+        local headerText = HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(format('学习%s？', WoWTools_ChineseMixin:Setup(specName)).."\n\n")
         local bodyKey = info.hasAnyConfigChanges and '所有待定的改动都会在解锁此专精后进行应用。您确定要学习%s副专精吗？' or '您确定想学习%s专精吗？您将来可以在%s专业里更加精进后选择额外的专精。'
-        local bodyText = NORMAL_FONT_COLOR:WrapTextInColorCode(bodyKey:format(specName, e.cn(info.profName)))
+        local bodyText = NORMAL_FONT_COLOR:WrapTextInColorCode(bodyKey:format(specName, WoWTools_ChineseMixin:Setup(info.profName)))
         self.text:SetText(headerText..bodyText)
         self.text:Show()
     end)
     --Blizzard_ProfessionsFrame.lua
-    e.dia("PROFESSIONS_SPECIALIZATION_CONFIRM_CLOSE", {text = '你想在离开前应用改动吗？', button1 = '是', button2 = '否',})
+    WoWTools_ChineseMixin:AddDialogs("PROFESSIONS_SPECIALIZATION_CONFIRM_CLOSE", {text = '你想在离开前应用改动吗？', button1 = '是', button2 = '否',})
 
 
     ProfessionsFrame.SpecPage.ApplyButton:SetText('应用改动')
@@ -443,7 +443,7 @@ local function Init_SpecPage()
         end
         local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyTypesID)
         if self.treeCurrencyInfoMap[spendCurrency] ~= nil and self.treeCurrencyInfoMap[spendCurrency].quantity == 0 and currencyInfo.name then
-            local name= '|T'..(currencyInfo.iconFileID or 0)..':0|t'..e.cn(currencyInfo.name)
+            local name= '|T'..(currencyInfo.iconFileID or 0)..':0|t'..WoWTools_ChineseMixin:Setup(currencyInfo.name)
             GameTooltip:SetOwner(frame, "ANCHOR_RIGHT", 0, 0)
             GameTooltip_AddErrorLine(GameTooltip, format('你没有可以消耗的|n%s', name))
             GameTooltip:Show()
@@ -492,7 +492,7 @@ local function Init_SpecPage()
     hooksecurefunc(ProfessionSpecTabMixin, 'OnLoad', function(self)
         self.StateIcon:SetScript("OnEnter", function(frame)
             GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
-            local name= e.cn(self:GetParent().professionInfo.professionName)
+            local name= WoWTools_ChineseMixin:Setup(self:GetParent().professionInfo.professionName)
             GameTooltip_AddNormalLine(GameTooltip, format('你可以选择一个新的专精|n|cnGREEN_FONT_COLOR:%s|r', name))
             GameTooltip:Show();
         end)       
@@ -540,9 +540,9 @@ local function Init_OrdersPage()
     frame.OrderView.OrderInfo.BackButton:SetText('返回')
 
     frame.BrowseFrame.PublicOrdersButton.Text:SetText('公开')
-    e.font(frame.BrowseFrame.PublicOrdersButton.Text)
+    WoWTools_ChineseMixin:SetLabelFont(frame.BrowseFrame.PublicOrdersButton.Text)
     frame.BrowseFrame.PersonalOrdersButton.Text:SetText('个人')
-    e.font(frame.BrowseFrame.PersonalOrdersButton.Text)
+    WoWTools_ChineseMixin:SetLabelFont(frame.BrowseFrame.PersonalOrdersButton.Text)
 
     ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.SearchBox.Instructions:SetText('搜索')
     --ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.FilterButton:SetText('过滤器')
@@ -611,7 +611,7 @@ local function Init_OrdersPage()
         if self.professionInfo then
             local isPublic = self.orderType == Enum.CraftingOrderType.Public
             if isPublic and self.professionInfo and self.professionInfo.profession then
-                e.set(self.BrowseFrame.OrdersRemainingDisplay.OrdersRemaining, format('剩余订单：%s', C_CraftingOrders.GetOrderClaimInfo(self.professionInfo.profession).claimsRemaining))
+                WoWTools_ChineseMixin:Set_Label_Text(self.BrowseFrame.OrdersRemainingDisplay.OrdersRemaining, format('剩余订单：%s', C_CraftingOrders.GetOrderClaimInfo(self.professionInfo.profession).claimsRemaining))
             end
         end
     end)
@@ -722,7 +722,7 @@ local function Init_OrdersPage()
     end)
 
     hooksecurefunc(frame.OrderView, 'UpdateCreateButton', function(self)
-        e.set(self.CreateButton)
+        WoWTools_ChineseMixin:Set_Label_Text(self.CreateButton)
         local transaction = self.OrderDetails.SchematicForm.transaction
         local errorReason
         if Professions.IsRecipeOnCooldown(self.order.spellID) then
@@ -810,7 +810,7 @@ local function Init_CraftingOutputLog()
             return
         end
 
-        e.set(self.ItemContainer.Text)
+        WoWTools_ChineseMixin:Set_Label_Text(self.ItemContainer.Text)
 
         if resultData.hasIngenuityProc and resultData.ingenuityRefund > 0 then
             self.ItemContainer.CritText:SetScript("OnEnter", function(text)
@@ -856,13 +856,13 @@ end
 local function Init_Details_Stat()
 
     --ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.DifficultyStatLine.LeftLabel
-    e.hookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.Label)--制做详情
-    e.hookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.DifficultyStatLine.LeftLabel)--配方难度：
-    e.hookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.SkillStatLine.LeftLabel)--技能：
+    WoWTools_ChineseMixin:HookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.Label)--制做详情
+    WoWTools_ChineseMixin:HookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.DifficultyStatLine.LeftLabel)--配方难度：
+    WoWTools_ChineseMixin:HookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.SkillStatLine.LeftLabel)--技能：
     hooksecurefunc(ProfessionsCrafterDetailsStatLineMixin, 'SetLabel', function(self, label)
-        e.set(self.LeftLabel, label)
+        WoWTools_ChineseMixin:Set_Label_Text(self.LeftLabel, label)
     end)
-    --e.hookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.FinishingReagentSlotContainer.Label)--成品材料：
+    --WoWTools_ChineseMixin:HookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.FinishingReagentSlotContainer.Label)--成品材料：
 
     --预期品质
     ProfessionsFrame.CraftingPage.SchematicForm.Details.QualityMeter.Center:SetScript("OnEnter", function(fill)
@@ -951,7 +951,7 @@ local function Init_ReagentSlot()
                 reagentName= '未知'
             end
         else
-            reagentName= e.Get_Item_Name(reagent.itemID)
+            reagentName= WoWTools_ChineseMixin:Get_Item_Name(reagent.itemID)
             if not reagentName then
                 local item = Item:CreateFromItemID(reagent.itemID)
                 local itemName= item:GetItemName()
@@ -1061,15 +1061,15 @@ local function Init()
 
     hooksecurefunc(ProfessionsFrame, 'UpdateTabs', function(self)
         local recipesTab = self:GetTabButton(self.recipesTabID)
-        e.font(recipesTab.Text)
+        WoWTools_ChineseMixin:SetLabelFont(recipesTab.Text)
         recipesTab.Text:SetText('配方')
 
         recipesTab = self:GetTabButton(self.specializationsTabID)
-        e.font(recipesTab.Text)
+        WoWTools_ChineseMixin:SetLabelFont(recipesTab.Text)
         recipesTab.Text:SetText('专精')
 
         recipesTab = self:GetTabButton(self.craftingOrdersTabID )
-        e.font(recipesTab.Text)
+        WoWTools_ChineseMixin:SetLabelFont(recipesTab.Text)
         recipesTab.Text:SetText('制造订单')
     end)
 
@@ -1092,7 +1092,7 @@ local function Init()
     hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'Init', function(self, node)
         local elementData = node:GetData()
         local recipeInfo = Professions.GetHighestLearnedRecipe(elementData.recipeInfo) or elementData.recipeInfo
-        local name= e.Get_Recipe_Name(recipeInfo, nil)
+        local name= WoWTools_ChineseMixin:GetRecipeName(recipeInfo, nil)
         if name then
             self.Label:SetText(name)
         end
@@ -1100,7 +1100,7 @@ local function Init()
 
 
     --Blizzard_ProfessionsInspectRecipe.lua InspectRecipeMixin
-    e.set(InspectRecipeFrame.SchematicForm.Reagents.Label)
+    WoWTools_ChineseMixin:Set_Label_Text(InspectRecipeFrame.SchematicForm.Reagents.Label)
     hooksecurefunc(InspectRecipeFrame, 'Open', function(self, recipeID)
         local data = C_TradeSkillUI.GetProfessionInfoByRecipeID(recipeID) or {}
         local name

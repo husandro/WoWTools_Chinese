@@ -43,7 +43,7 @@ model(PetStableModelScene)]]
 
 
 local function get_gameTooltip_text(self)
-    e.set(self)
+    WoWTools_ChineseMixin:Set_Label_Text(self)
     self:SetTextColor(self:GetTextColor())
 end
 
@@ -75,8 +75,8 @@ local function set_pettips_func(self)--FloatingPetBattleTooltip.xml
         return
     end
     local function set_pet_func(frame)
-        e.set(frame.BattlePet)
-        e.set(frame.PetType)
+        WoWTools_ChineseMixin:Set_Label_Text(frame.BattlePet)
+        WoWTools_ChineseMixin:Set_Label_Text(frame.PetType)
         local level = frame.Level:GetText():match('(%d+)')
         if level then
             frame.Level:SetFormattedText('等级 %s', level)

@@ -98,7 +98,7 @@ end)
 
 --飞行地图，地图名称
 hooksecurefunc(ZoneLabelDataProviderMixin, 'EvaluateBestAreaTrigger', function(self)
-    e.set(self.ZoneLabel and self.ZoneLabel.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(self.ZoneLabel and self.ZoneLabel.Text)
 end)
 
 --QuestMapFrame.DetailsFrame.BackFrame.BackButton:SetText('返回')
@@ -142,7 +142,7 @@ hooksecurefunc(WorldMapFrame, 'SynchronizeDisplayState', function(self)
         self.BorderFrame:SetTitle('地图和任务日志')
     end
 end)
-e.font(WorldMapFrameHomeButtonText)
+WoWTools_ChineseMixin:SetLabelFont(WorldMapFrameHomeButtonText)
 WorldMapFrameHomeButtonText:SetText('世界')
 
 

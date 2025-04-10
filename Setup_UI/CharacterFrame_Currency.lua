@@ -51,7 +51,7 @@ local e = select(2, ...)
     hooksecurefunc(CurrencyTransferMenu, 'RefreshMenuTitle', function(self)
         local name
         if self.currencyInfo then
-            name= e.cn(self.currencyInfo.name)
+            name= WoWTools_ChineseMixin:Setup(self.currencyInfo.name)
             if name and self.currencyInfo.iconFileID then
                 name= '|T'..self.currencyInfo.iconFileID..':0|t'..name
             end
@@ -72,8 +72,8 @@ local e = select(2, ...)
     CurrencyTransferMenu.ConfirmButton:SetText('转移')
     CurrencyTransferMenu.CancelButton:SetText('取消')
 
-    e.set(CurrencyTransferLogTitleText)
-    e.set(CurrencyTransferLog.EmptyLogMessage)
+    WoWTools_ChineseMixin:Set_Label_Text(CurrencyTransferLogTitleText)
+    WoWTools_ChineseMixin:Set_Label_Text(CurrencyTransferLog.EmptyLogMessage)
 --end
 
 

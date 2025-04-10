@@ -7,9 +7,9 @@ local id, e = ...
 
 
 local function Set_UpdateButton(self)
-    e.set(self.spellString)
-    e.set(self.subSpellString)
-    e.set(self.subSpellString)
+    WoWTools_ChineseMixin:Set_Label_Text(self.spellString)
+    WoWTools_ChineseMixin:Set_Label_Text(self.subSpellString)
+    WoWTools_ChineseMixin:Set_Label_Text(self.subSpellString)
 end
 
 
@@ -24,20 +24,20 @@ end
 
 
 local function Init()
-    e.set(ProfessionsBookFrameTitleText)
+    WoWTools_ChineseMixin:Set_Label_Text(ProfessionsBookFrameTitleText)
 
-    e.set(PrimaryProfession1Missing)
-    e.set(PrimaryProfession1.missingText)
-    e.set(PrimaryProfession2Missing)
-    e.set(PrimaryProfession2.missingText)
+    WoWTools_ChineseMixin:Set_Label_Text(PrimaryProfession1Missing)
+    WoWTools_ChineseMixin:Set_Label_Text(PrimaryProfession1.missingText)
+    WoWTools_ChineseMixin:Set_Label_Text(PrimaryProfession2Missing)
+    WoWTools_ChineseMixin:Set_Label_Text(PrimaryProfession2.missingText)
 
-    e.set(SecondaryProfession1Missing)
-    e.set(SecondaryProfession2Missing)
-    e.set(SecondaryProfession3Missing)
+    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession1Missing)
+    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession2Missing)
+    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession3Missing)
 
-    e.set(SecondaryProfession1.missingText)
-    e.set(SecondaryProfession2.missingText)
-    e.set(SecondaryProfession3.missingText)
+    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession1.missingText)
+    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession2.missingText)
+    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession3.missingText)
 
 
     local tab={
@@ -57,8 +57,8 @@ local function Init()
     end
 
     hooksecurefunc('FormatProfession', function(frame)
-        e.set(frame.rank)
-        e.hookLabel(frame.professionName, frame.skillName)
+        WoWTools_ChineseMixin:Set_Label_Text(frame.rank)
+        WoWTools_ChineseMixin:HookLabel(frame.professionName, frame.skillName)
     end)
 end
 

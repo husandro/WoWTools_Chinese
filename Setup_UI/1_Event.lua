@@ -6,7 +6,7 @@ local id, e = ...
 
 local function Init_Event(arg1)
     if arg1=='Blizzard_MacroUI' then
-        e.region(MacroFrame)
+        WoWTools_ChineseMixin:SetRegions(MacroFrame)
         MacroFrameTab1:SetText('通用宏')
         MacroFrameTab2:SetText('专用宏', 0.3)
         MacroSaveButton:SetText('保存')
@@ -15,7 +15,7 @@ local function Init_Event(arg1)
         MacroNewButton:SetText('新建')
         MacroExitButton:SetText('退出')
 
-        e.dia("CONFIRM_DELETE_SELECTED_MACRO", {text= '确定要删除这个宏吗？', button1= '是', button2= '取消'})
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_DELETE_SELECTED_MACRO", {text= '确定要删除这个宏吗？', button1= '是', button2= '取消'})
 
 
 
@@ -182,25 +182,25 @@ local function Init_Event(arg1)
 
     elseif arg1=='Blizzard_ArtifactUI' then
         --Blizzard_ArtifactUI.lua
-        e.dia("CONFIRM_ARTIFACT_RESPEC", {text = '确定要重置你的神器专长吗？|n|n这将消耗%s点|cffe6cc80神器能量|r。', button1 = '是', button2 = '否'})
-        e.dia("NOT_ENOUGH_POWER_ARTIFACT_RESPEC", {text = '你没有足够的|cffe6cc80神器能量|r来重置你的专长。|n|n需要%s点|cffe6cc80神器能量|r。', button1 = '确定'})
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_ARTIFACT_RESPEC", {text = '确定要重置你的神器专长吗？|n|n这将消耗%s点|cffe6cc80神器能量|r。', button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:AddDialogs("NOT_ENOUGH_POWER_ARTIFACT_RESPEC", {text = '你没有足够的|cffe6cc80神器能量|r来重置你的专长。|n|n需要%s点|cffe6cc80神器能量|r。', button1 = '确定'})
 
         --Blizzard_ArtifactPerks.lua
-        e.dia("CONFIRM_RELIC_REPLACE", {text = '你确定要替换此圣物吗？已有的圣物将被摧毁。', button1 = '接受', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_RELIC_REPLACE", {text = '你确定要替换此圣物吗？已有的圣物将被摧毁。', button1 = '接受', button2 = '取消'})
 
     elseif arg1=='Blizzard_Soulbinds' then
-        e.dia("SOULBIND_DIALOG_MOVE_CONDUIT", {text = '一个导灵器只能同时被放置在一个插槽内，所以之前插槽里的该导灵器已被移除。', button1 = '接受'})
-        e.dia("SOULBIND_DIALOG_INSTALL_CONDUIT_UNUSABLE", {text = '此插槽目前未激活。你确定想在此添加一个导灵器吗？', button1 = '接受', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("SOULBIND_DIALOG_MOVE_CONDUIT", {text = '一个导灵器只能同时被放置在一个插槽内，所以之前插槽里的该导灵器已被移除。', button1 = '接受'})
+        WoWTools_ChineseMixin:AddDialogs("SOULBIND_DIALOG_INSTALL_CONDUIT_UNUSABLE", {text = '此插槽目前未激活。你确定想在此添加一个导灵器吗？', button1 = '接受', button2 = '取消'})
 
     elseif arg1=='Blizzard_AnimaDiversionUI' then--Blizzard_AnimaDiversionUI.lua
-        e.dia("ANIMA_DIVERSION_CONFIRM_CHANNEL", {text = '你确定想引导心能到%s吗？|n|n|cffffd200%s|r', button1 = '是', button2 = '取消'})
-        e.dia("ANIMA_DIVERSION_CONFIRM_REINFORCE", {text = '你确定想强化%s吗？|n|n|cffffd200这样会永久激活此地点，而且无法撤销。|r', button1 = '是', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("ANIMA_DIVERSION_CONFIRM_CHANNEL", {text = '你确定想引导心能到%s吗？|n|n|cffffd200%s|r', button1 = '是', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("ANIMA_DIVERSION_CONFIRM_REINFORCE", {text = '你确定想强化%s吗？|n|n|cffffd200这样会永久激活此地点，而且无法撤销。|r', button1 = '是', button2 = '取消'})
 
-        e.dia("SOULBIND_CONDUIT_NO_CHANGES_CONFIRMATION", {text = '你对你的导灵器进行了改动，但并没有应用这些改动。你确定想要离开吗？', button1 = '离开', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("SOULBIND_CONDUIT_NO_CHANGES_CONFIRMATION", {text = '你对你的导灵器进行了改动，但并没有应用这些改动。你确定想要离开吗？', button1 = '离开', button2 = '取消'})
 
     elseif arg1=='Blizzard_CovenantSanctum' then--Blizzard_CovenantSanctumUpgrades.lua
-        e.dia("CONFIRM_ARTIFACT_RESPEC", {button1 = '是', button2 = '否'})
-        e.hookDia("CONFIRM_ARTIFACT_RESPEC", 'OnShow', function(self, data)
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_ARTIFACT_RESPEC", {button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:HookDialog("CONFIRM_ARTIFACT_RESPEC", 'OnShow', function(self, data)
             if data then
                 local costString = GetGarrisonTalentCostString(data.talent)
                 self.text:SetFormattedText('把|cff20ff20%s|r升到%d级会花费|n%s', data.talent.name, data.talent.tier + 1, costString)
@@ -230,18 +230,18 @@ local function Init_Event(arg1)
 
 
     elseif arg1=='Blizzard_GarrisonTemplates' then--Blizzard_GarrisonSharedTemplates.lua
-        e.dia("CONFIRM_FOLLOWER_UPGRADE", {button1 = '是', button2 = '否'})
-        e.dia("CONFIRM_FOLLOWER_ABILITY_UPGRADE", {button1 = '是', button2 = '否'})
-        e.dia("CONFIRM_FOLLOWER_TEMPORARY_ABILITY", {text = '确定要赋予%s这个临时技能吗？', button1 = '是', button2 = '否'})
-        e.dia("CONFIRM_FOLLOWER_EQUIPMENT", {button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_FOLLOWER_UPGRADE", {button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_FOLLOWER_ABILITY_UPGRADE", {button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_FOLLOWER_TEMPORARY_ABILITY", {text = '确定要赋予%s这个临时技能吗？', button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_FOLLOWER_EQUIPMENT", {button1 = '是', button2 = '否'})
 
     elseif arg1=='Blizzard_ClassTrial' then--Blizzard_WeeklyRewards.lua
-        e.dia("CLASS_TRIAL_CHOOSE_BOOST_TYPE", {text = '你希望使用哪种角色直升？', button1 = '接受', button2 = '接受', button3 = '取消'})
-        e.dia("CLASS_TRIAL_CHOOSE_BOOST_LOGOUT_PROMPT", {text = '要使用此角色直升服务，请登出游戏，返回角色选择界面。', button1 = '立刻返回角色选择画面', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("CLASS_TRIAL_CHOOSE_BOOST_TYPE", {text = '你希望使用哪种角色直升？', button1 = '接受', button2 = '接受', button3 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("CLASS_TRIAL_CHOOSE_BOOST_LOGOUT_PROMPT", {text = '要使用此角色直升服务，请登出游戏，返回角色选择界面。', button1 = '立刻返回角色选择画面', button2 = '取消'})
 
     elseif arg1=='Blizzard_GarrisonUI' then--要塞
-        e.dia("DEACTIVATE_FOLLOWER", {button1 = '是', button2 = '否'})
-        e.hookDia("DEACTIVATE_FOLLOWER", 'OnShow', function(self)
+        WoWTools_ChineseMixin:AddDialogs("DEACTIVATE_FOLLOWER", {button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:HookDialog("DEACTIVATE_FOLLOWER", 'OnShow', function(self)
             local quality = C_Garrison.GetFollowerQuality(self.data)
             local name = FOLLOWER_QUALITY_COLORS[quality].hex..C_Garrison.GetFollowerName(self.data)..FONT_COLOR_CODE_CLOSE
             local cost = GetMoneyString(C_Garrison.GetFollowerActivationCost())
@@ -249,8 +249,8 @@ local function Init_Event(arg1)
             self.text:SetFormattedText('确定要遣散|n%s吗？|n|n重新激活一名追随者需要花费%s。|n你每天可重新激活%d名追随者。', name, cost, uses)
         end)
 
-        e.dia("ACTIVATE_FOLLOWER", {button1 = '是', button2 = '否'})
-        e.hookDia("ACTIVATE_FOLLOWER", 'OnShow', function(self)
+        WoWTools_ChineseMixin:AddDialogs("ACTIVATE_FOLLOWER", {button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:HookDialog("ACTIVATE_FOLLOWER", 'OnShow', function(self)
             local quality = C_Garrison.GetFollowerQuality(self.data)
             local name = FOLLOWER_QUALITY_COLORS[quality].hex..C_Garrison.GetFollowerName(self.data)..FONT_COLOR_CODE_CLOSE
             local cost = GetMoneyString(C_Garrison.GetFollowerActivationCost())
@@ -258,36 +258,36 @@ local function Init_Event(arg1)
             self.text:SetFormattedText('确定要激活|n%s吗？|n|n你今天还能激活%d名追随者，这将花费：', name, cost, uses)
         end)
 
-        e.dia("CONFIRM_RECRUIT_FOLLOWER", {text  = '确定要招募%s吗？', button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_RECRUIT_FOLLOWER", {text  = '确定要招募%s吗？', button1 = '是', button2 = '否'})
 
-        e.dia("DANGEROUS_MISSIONS", {button1 = '确定', button2 = '取消'})
-        e.hookDia("DANGEROUS_MISSIONS", 'OnShow', function(self)
+        WoWTools_ChineseMixin:AddDialogs("DANGEROUS_MISSIONS", {button1 = '确定', button2 = '取消'})
+        WoWTools_ChineseMixin:HookDialog("DANGEROUS_MISSIONS", 'OnShow', function(self)
             local warningIconText = "|T" .. STATICPOPUP_TEXTURE_ALERT .. ":15:15:0:-2|t"
             self.text:SetFormattedText('|n %s |cffff2020警告！|r %s |n|n你即将执行一项高危行动。如果行动失败，所有参与任务的舰船都有一定几率永久损毁。', warningIconText, warningIconText)
         end)
 
-        e.dia("GARRISON_SHIP_RENAME", {text  = '输入你想要的名字：', button1 = '接受', button2 = '取消', button3= '默认'})
+        WoWTools_ChineseMixin:AddDialogs("GARRISON_SHIP_RENAME", {text  = '输入你想要的名字：', button1 = '接受', button2 = '取消', button3= '默认'})
 
-        e.dia("GARRISON_SHIP_DECOMMISSION", {button1 = '是', button2 = '否'})
-        e.hookDia("GARRISON_SHIP_DECOMMISSION", 'OnShow', function(self)
+        WoWTools_ChineseMixin:AddDialogs("GARRISON_SHIP_DECOMMISSION", {button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:HookDialog("GARRISON_SHIP_DECOMMISSION", 'OnShow', function(self)
             local quality = C_Garrison.GetFollowerQuality(self.data.followerID)
             local name = FOLLOWER_QUALITY_COLORS[quality].hex..C_Garrison.GetFollowerName(self.data.followerID)..FONT_COLOR_CODE_CLOSE
             self.text:SetFormattedText('你确定要永久报废|n%s吗？|n|n你将无法重新获得这艘舰船。', name)
         end)
 
-        e.dia("GARRISON_CANCEL_UPGRADE_BUILDING", {text  = '确定要取消这次建筑升级吗？升级的费用将被退还。', button1 = '是', button2 = '否'})
-        e.dia("GARRISON_CANCEL_BUILD_BUILDING", {text  = '确定要取消建造这座建筑吗？建造的费用将被退还。', button1 = '是', button2 = '否'})
-        e.dia("COVENANT_MISSIONS_CONFIRM_ADVENTURE", {text  = '开始冒险？', button1 = '确认', button2 = '取消'})
-        e.dia("COVENANT_MISSIONS_HEAL_CONFIRMATION", {text  = '你确定要彻底治愈这名追随者吗？', button1 = '确认', button2 = '取消'})
-        e.dia("COVENANT_MISSIONS_HEAL_ALL_CONFIRMATION", {text  = '你确定要付出%s，治疗所有受伤的伙伴？', button1 = '治疗全部', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("GARRISON_CANCEL_UPGRADE_BUILDING", {text  = '确定要取消这次建筑升级吗？升级的费用将被退还。', button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:AddDialogs("GARRISON_CANCEL_BUILD_BUILDING", {text  = '确定要取消建造这座建筑吗？建造的费用将被退还。', button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:AddDialogs("COVENANT_MISSIONS_CONFIRM_ADVENTURE", {text  = '开始冒险？', button1 = '确认', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("COVENANT_MISSIONS_HEAL_CONFIRMATION", {text  = '你确定要彻底治愈这名追随者吗？', button1 = '确认', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("COVENANT_MISSIONS_HEAL_ALL_CONFIRMATION", {text  = '你确定要付出%s，治疗所有受伤的伙伴？', button1 = '治疗全部', button2 = '取消'})
 
     elseif arg1=='Blizzard_RuneforgeUI' then--Blizzard_RuneforgeCreateFrame.lua
-        e.dia("CONFIRM_RUNEFORGE_LEGENDARY_CRAFT", {button1 = '是', button2 = '否'})
-        e.hookDia("CONFIRM_RUNEFORGE_LEGENDARY_CRAFT", 'OnShow', function(self, data)
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_RUNEFORGE_LEGENDARY_CRAFT", {button1 = '是', button2 = '否'})
+        WoWTools_ChineseMixin:HookDialog("CONFIRM_RUNEFORGE_LEGENDARY_CRAFT", 'OnShow', function(self, data)
             self.text:SetText(data.title)
             local text= data and data.title or ''
-            local a= text:match(e.Magic(RUNEFORGE_LEGENDARY_UPGRADING_CONFIRMATION))
-            local b= text:match(e.Magic(RUNEFORGE_LEGENDARY_CRAFTING_CONFIRMATION))
+            local a= text:match(WoWTools_ChineseMixin:Magic(RUNEFORGE_LEGENDARY_UPGRADING_CONFIRMATION))
+            local b= text:match(WoWTools_ChineseMixin:Magic(RUNEFORGE_LEGENDARY_CRAFTING_CONFIRMATION))
             if a then
                 self.text:SetFormattedText('你确定要花费%s给这件传说装备升级吗？', a)
             elseif b then
@@ -297,8 +297,8 @@ local function Init_Event(arg1)
         --set_GameTooltip_func(RuneforgeFrameResultTooltip)
 
     elseif arg1=='Blizzard_ClickBindingUI' then
-        e.dia("CONFIRM_LOSE_UNSAVED_CLICK_BINDINGS", {text  = '你有未保存的点击施法按键绑定。如果你现在关闭，会丢失所有改动。', button1 = '确定', button2 = '取消'})
-        e.dia("CONFIRM_RESET_CLICK_BINDINGS", {text  = '确定将所有点击施法按键绑定重置为默认值吗？\n', button1 = '确定', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_LOSE_UNSAVED_CLICK_BINDINGS", {text  = '你有未保存的点击施法按键绑定。如果你现在关闭，会丢失所有改动。', button1 = '确定', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("CONFIRM_RESET_CLICK_BINDINGS", {text  = '确定将所有点击施法按键绑定重置为默认值吗？\n', button1 = '确定', button2 = '取消'})
 
 
         ClickBindingFrameTitleText:SetText('关于点击施法按键绑定')
@@ -432,7 +432,7 @@ local function Init_Event(arg1)
         end
         hooksecurefunc(ClickBindingLineMixin, 'Init', function(self, elementData)
             local name= BindingTextFromElementData(elementData)
-            --e.set(self.BindingText)--, BindingTextFromElementData(elementData))
+            --WoWTools_ChineseMixin:Set_Label_Text(self.BindingText)--, BindingTextFromElementData(elementData))
             if name then
                 self.BindingText:SetText(name)
             end
@@ -441,24 +441,24 @@ local function Init_Event(arg1)
             if name then
                 self.Name:SetText(name)
             end
-            --e.set(self.Name)--, ColoredNameAndIconFromElementData(elementData))
+            --WoWTools_ChineseMixin:Set_Label_Text(self.Name)--, ColoredNameAndIconFromElementData(elementData))
         end)
         hooksecurefunc(ClickBindingHeaderMixin, 'Init', function(self, elementData)
             local name= ColoredNameAndIconFromElementData(elementData)
             if name then
                 self.Name:SetText(name)
             end
-	        --e.set(self.Name)--, ColoredNameAndIconFromElementData(elementData))
+	        --WoWTools_ChineseMixin:Set_Label_Text(self.Name)--, ColoredNameAndIconFromElementData(elementData))
         end)
 
     elseif arg1=='Blizzard_ProfessionsTemplates' then
-        e.dia("PROFESSIONS_RECRAFT_REPLACE_OPTIONAL_REAGENT", {button1 = '接受', button2 = '取消'})
-        e.hookDia("PROFESSIONS_RECRAFT_REPLACE_OPTIONAL_REAGENT", 'OnShow', function(self, data)
-            self.text:SetFormattedText('你想替换%s吗？\n它会在再造时被摧毁。', e.cn(data.itemName))
+        WoWTools_ChineseMixin:AddDialogs("PROFESSIONS_RECRAFT_REPLACE_OPTIONAL_REAGENT", {button1 = '接受', button2 = '取消'})
+        WoWTools_ChineseMixin:HookDialog("PROFESSIONS_RECRAFT_REPLACE_OPTIONAL_REAGENT", 'OnShow', function(self, data)
+            self.text:SetFormattedText('你想替换%s吗？\n它会在再造时被摧毁。', WoWTools_ChineseMixin:Setup(data.itemName))
         end)
 
     elseif arg1=='Blizzard_BlackMarketUI' then
-        e.dia("BID_BLACKMARKET", {text = '确定要出价%s竞拍以下物品吗？', button1 = '确定', button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("BID_BLACKMARKET", {text = '确定要出价%s竞拍以下物品吗？', button1 = '确定', button2 = '取消'})
 
    
 
@@ -501,7 +501,7 @@ local function Init_Event(arg1)
         ItemUpgradeFrame.UpgradeCostFrame.Label:SetText('总花费：')
         hooksecurefunc(ItemUpgradeFrame, 'PopulatePreviewFrames', function(self)
             if self.FrameErrorText:IsShown() then
-                e.set(self.FrameErrorText)--该物品已经升到满级了
+                WoWTools_ChineseMixin:Set_Label_Text(self.FrameErrorText)--该物品已经升到满级了
             end
         end)
 
@@ -595,8 +595,8 @@ local function Init_Event(arg1)
 
     elseif arg1=='Blizzard_ItemInteractionUI' then--套装, 转换
         ItemInteractionFrame.CurrencyCost.Costs:SetText('花费：')
-        e.dia("ITEM_INTERACTION_CONFIRMATION_DELAYED", {button2 = '取消'})
-        e.dia("ITEM_INTERACTION_CONFIRMATION_DELAYED_WITH_CHARGE_INFO", {button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("ITEM_INTERACTION_CONFIRMATION_DELAYED", {button2 = '取消'})
+        WoWTools_ChineseMixin:AddDialogs("ITEM_INTERACTION_CONFIRMATION_DELAYED_WITH_CHARGE_INFO", {button2 = '取消'})
          --[[
         hooksecurefunc(ItemInteractionFrame, 'LoadInteractionFrameData', function(self, frameData)
             local title= e.strText[frameData.titleText]
@@ -622,7 +622,7 @@ local function Init_Event(arg1)
 
     elseif arg1=='Blizzard_MajorFactions' then
         hooksecurefunc(MajorFactionButtonUnlockedStateMixin, 'Refresh', function(self, majorFactionData)--Blizzard_MajorFactionsLandingTemplates.lua
-            e.set(self.Title, majorFactionData.name)
+            WoWTools_ChineseMixin:Set_Label_Text(self.Title, majorFactionData.name)
             self.RenownLevel:SetFormattedText('%d级', majorFactionData.renownLevel or 0)
         end)
         hooksecurefunc(MajorFactionWatchFactionButtonMixin, 'OnLoad', function(self)
@@ -634,7 +634,7 @@ local function Init_Event(arg1)
             local majorFactionData = C_MajorFactions.GetMajorFactionData(self.majorFactionID) or {}
 ---@diagnostic disable-next-line: undefined-field
             if majorFactionData.name and majorFactionData.currentFactionID ~= self.majorFactionID then
-                e.set(self.TrackFrame.Title, majorFactionData.name)
+                WoWTools_ChineseMixin:Set_Label_Text(self.TrackFrame.Title, majorFactionData.name)
             end
         end)
 

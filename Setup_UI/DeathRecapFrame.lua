@@ -2,18 +2,18 @@ local e= select(2, ...)
 
 
 
-e.dia("DEATH", {text = '%d%s后释放灵魂', button1 = '释放灵魂', button2 = '复活', button3 = '复活', button4 = '摘要'})
+WoWTools_ChineseMixin:AddDialogs("DEATH", {text = '%d%s后释放灵魂', button1 = '释放灵魂', button2 = '复活', button3 = '复活', button4 = '摘要'})
 
-e.hookDia("DEATH", 'OnShow', function(self)
+WoWTools_ChineseMixin:HookDialog("DEATH", 'OnShow', function(self)
     if ( IsActiveBattlefieldArena() and not C_PvP.IsInBrawl() ) then
         self.text:SetText('你死亡了。释放灵魂后将进入观察模式。')
     elseif ( self.timeleft == -1 ) then
         self.text:SetText('你死亡了。要释放灵魂到最近的墓地吗？')
     end
-    e.set(self.button1)
-    e.set(self.button2)
-    e.set(self.button3)
-    e.set(self.button4)
+    WoWTools_ChineseMixin:Set_Label_Text(self.button1)
+    WoWTools_ChineseMixin:Set_Label_Text(self.button2)
+    WoWTools_ChineseMixin:Set_Label_Text(self.button3)
+    WoWTools_ChineseMixin:Set_Label_Text(self.button4)
 end)
 
 
@@ -29,7 +29,7 @@ local function get_spell_name(option)
         icon= C_Spell.GetSpellTexture(option.id)
 
     elseif option.optionType==Enum.SelfResurrectOptionType.Item then
-        name= e.Get_Item_Name(option.id)
+        name= WoWTools_ChineseMixin:Get_Item_Name(option.id)
         icon= C_Item.GetItemIconByID(option.id)
     end
     if icon== 134400 then
@@ -41,7 +41,7 @@ local function get_spell_name(option)
     end
 end
 
-e.hookDia("DEATH", 'OnUpdate', function(self)
+WoWTools_ChineseMixin:HookDialog("DEATH", 'OnUpdate', function(self)
     if ( IsFalling() and not IsOutOfBounds()) then
         return
     end
@@ -92,9 +92,9 @@ end)
 
 
 
-e.dia("RESURRECT", {text = '%s想要复活你。一旦这样复活，你将会进入复活虚弱状态', delayText = '%s要复活你，%d%s内生效。一旦这样复活，你将会进入复活虚弱状态。', button1 = '接受', button2 = '拒绝'})
-e.dia("RESURRECT_NO_SICKNESS", {text = '%s想要复活你', delayText = '%s要复活你，%d%s内生效', button1 = '接受', button2 = '拒绝'})
-e.dia("RESURRECT_NO_TIMER", {text = '%s想要复活你', button1 = '接受', button2 = '拒绝'})
+WoWTools_ChineseMixin:AddDialogs("RESURRECT", {text = '%s想要复活你。一旦这样复活，你将会进入复活虚弱状态', delayText = '%s要复活你，%d%s内生效。一旦这样复活，你将会进入复活虚弱状态。', button1 = '接受', button2 = '拒绝'})
+WoWTools_ChineseMixin:AddDialogs("RESURRECT_NO_SICKNESS", {text = '%s想要复活你', delayText = '%s要复活你，%d%s内生效', button1 = '接受', button2 = '拒绝'})
+WoWTools_ChineseMixin:AddDialogs("RESURRECT_NO_TIMER", {text = '%s想要复活你', button1 = '接受', button2 = '拒绝'})
 
 
 
@@ -128,7 +128,7 @@ local function set_DeathRecapFrame_OpenRecap()
             if name then
                 entry.SpellInfo.Name:SetText(name)
             end
-            e.set(entry.SpellInfo.Caster)
+            WoWTools_ChineseMixin:Set_Label_Text(entry.SpellInfo.Caster)
 
             local dmgInfo = entry.DamageInfo;
             if dmgInfo and evtData.amount then

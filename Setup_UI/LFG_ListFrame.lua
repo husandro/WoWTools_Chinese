@@ -30,7 +30,7 @@ local function LFGListUtil_GetDecoratedCategoryName(categoryName, filter, useCol
 		extraName = '经典旧世';
 	elseif ( filter == Enum.LFGListFilter.Recommended ) then
 		local exp = LFGListUtil_GetCurrentExpansion();
-		extraName = e.cn(_G["EXPANSION_NAME"..exp])
+		extraName = WoWTools_ChineseMixin:Setup(_G["EXPANSION_NAME"..exp])
 	end
 
 	if(extraName ~= "") then
@@ -73,7 +73,7 @@ hooksecurefunc('LFGListCategorySelection_AddButton', function(self, btnIndex, ca
     
     local btn= self.CategoryButtons[btnIndex]
     if text and btn then
-        e.font(btn:GetFontString())
+        WoWTools_ChineseMixin:SetLabelFont(btn:GetFontString())
         local name= text:match('%- (.+)')
         local cnName= name and e.strText[name]
         if cnName then
@@ -100,9 +100,9 @@ end)
         LFGListFrame.EntryCreation.PrivateGroup.Label:SetText('个人')
         LFGListFrame.EntryCreation.PrivateGroup.tooltip= '仅对已在队伍中的好友和公会成员可见。'
 
-        e.font(LFGListFrame.ApplicationViewer.ItemLevelColumnHeader.Label)
-        e.font(LFGListFrame.ApplicationViewer.RoleColumnHeader.Label)
-        e.font(LFGListFrame.ApplicationViewer.NameColumnHeader.Label)
+        WoWTools_ChineseMixin:SetLabelFont(LFGListFrame.ApplicationViewer.ItemLevelColumnHeader.Label)
+        WoWTools_ChineseMixin:SetLabelFont(LFGListFrame.ApplicationViewer.RoleColumnHeader.Label)
+        WoWTools_ChineseMixin:SetLabelFont(LFGListFrame.ApplicationViewer.NameColumnHeader.Label)
         LFGListFrame.ApplicationViewer.NameColumnHeader.Label:SetText('名称', nil, true)
         LFGListFrame.ApplicationViewer.RoleColumnHeader.Label:SetText('职责', nil, true)
         LFGListFrame.ApplicationViewer.ItemLevelColumnHeader.Label:SetText('装等', nil, true)
@@ -283,11 +283,11 @@ hooksecurefunc('LFGListApplicationViewer_UpdateInfo', function(self)
         return
     end
 
-    e.set(self.EntryName, activeEntryInfo.name)
+    WoWTools_ChineseMixin:Set_Label_Text(self.EntryName, activeEntryInfo.name)
 
     local activityName= e.strText[self.DescriptionFrame.activityName]
     if ( activeEntryInfo.comment == "" ) then
-        e.set(self.DescriptionFrame.Text, activityName)
+        WoWTools_ChineseMixin:Set_Label_Text(self.DescriptionFrame.Text, activityName)
     else
         local comment= e.strText[activeEntryInfo.comment]
         if comment or activityName then
@@ -422,7 +422,7 @@ end)
 
 hooksecurefunc('LFGListEntryCreation_Show', function(self, _, selectedCategory)
     local categoryInfo = C_LFGList.GetLfgCategoryInfo(selectedCategory)
-    e.set(self.Label,categoryInfo.name)
+    WoWTools_ChineseMixin:Set_Label_Text(self.Label,categoryInfo.name)
 end)
 
 LFGListFrame.ApplicationViewer.AutoAcceptButton.Label:SetText('自动邀请')
@@ -542,7 +542,7 @@ end)
 --LFGList.lua
 hooksecurefunc('LFGListSearchPanel_SetCategory', function(self)--, categoryID, filters)
 	local categoryInfo = C_LFGList.GetLfgCategoryInfo(self.categoryID);
-	self.SearchBox.Instructions:SetText(e.cn(categoryInfo.searchPromptOverride) or '过滤器');
+	self.SearchBox.Instructions:SetText(WoWTools_ChineseMixin:Setup(categoryInfo.searchPromptOverride) or '过滤器');
 	local name = LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, self.filters, false);
 	self.CategoryName:SetText(name)
 end)

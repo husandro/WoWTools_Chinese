@@ -14,10 +14,10 @@ local function Init_Mount()
     --列表，名称
     hooksecurefunc('MountJournal_InitMountButton', function(btn)
         --btn.DragonRidingLabel:SetText("驭空术")
-        e.set(btn.name)
+        WoWTools_ChineseMixin:Set_Label_Text(btn.name)
     end)
 
-    e.dia("DIALOG_REPLACE_MOUNT_EQUIPMENT", {text = '你确定要替换此坐骑装备吗？已有的坐骑装备将被摧毁。', button1 = '是', button2 = '否'})
+    WoWTools_ChineseMixin:AddDialogs("DIALOG_REPLACE_MOUNT_EQUIPMENT", {text = '你确定要替换此坐骑装备吗？已有的坐骑装备将被摧毁。', button1 = '是', button2 = '否'})
 
     MountJournalSearchBox.Instructions:SetText('搜索')
     MountJournal.MountCount.Label:SetText('坐骑')
@@ -35,15 +35,15 @@ local function Init_Mount()
         if not MountJournal.selectedMountID then
             return
         end
-        e.set(MountJournal.MountDisplay.InfoButton.Name)
-        e.set(MountJournal.MountDisplay.InfoButton.Source)
-        e.set(MountJournal.MountDisplay.InfoButton.Lore)
+        WoWTools_ChineseMixin:Set_Label_Text(MountJournal.MountDisplay.InfoButton.Name)
+        WoWTools_ChineseMixin:Set_Label_Text(MountJournal.MountDisplay.InfoButton.Source)
+        WoWTools_ChineseMixin:Set_Label_Text(MountJournal.MountDisplay.InfoButton.Lore)
             --[[local creatureName, spellID= C_MountJournal.GetMountInfoByID(MountJournal.selectedMountID)
             if ( MountJournal.MountDisplay.lastDisplayed ~= spellID or forceSceneChange ) then
                 local _, descriptionText, sourceText = C_MountJournal.GetMountInfoExtraByID(MountJournal.selectedMountID)
-                e.set(MountJournal.MountDisplay.InfoButton.Name, creatureName)
-                e.set(MountJournal.MountDisplay.InfoButton.Source, sourceText)
-                e.set(MountJournal.MountDisplay.InfoButton.Lore, descriptionText)
+                WoWTools_ChineseMixin:Set_Label_Text(MountJournal.MountDisplay.InfoButton.Name, creatureName)
+                WoWTools_ChineseMixin:Set_Label_Text(MountJournal.MountDisplay.InfoButton.Source, sourceText)
+                WoWTools_ChineseMixin:Set_Label_Text(MountJournal.MountDisplay.InfoButton.Lore, descriptionText)
             end]]
             if C_MountJournal.NeedsFanfare(MountJournal.selectedMountID) then
                 MountJournal.MountButton:SetText('打开')
@@ -65,8 +65,8 @@ local function Init_Mount()
         GameTooltip:Show()
     end)
 
-    --e.set(MountJournal.FilterDropdown.Text)
-    e.region(MountJournal.ToggleDynamicFlightFlyoutButton)
+    --WoWTools_ChineseMixin:Set_Label_Text(MountJournal.FilterDropdown.Text)
+    WoWTools_ChineseMixin:SetRegions(MountJournal.ToggleDynamicFlightFlyoutButton)
 end
 
 
@@ -87,9 +87,9 @@ end
 
 
 local function Init_Pet()
-    e.dia("BATTLE_PET_RENAME", {text = '重命名', button1 = '接受', button2 = '取消', button3 = '默认'})
-    e.dia("BATTLE_PET_PUT_IN_CAGE", {text = '把这只宠物放入笼中？', button1 = '确定', button2 = '取消'})
-    e.dia("BATTLE_PET_RELEASE", {text = "\n\n你确定要释放|cffffd200%s|r吗？\n\n", button1 = '确定', button2 = '取消'})
+    WoWTools_ChineseMixin:AddDialogs("BATTLE_PET_RENAME", {text = '重命名', button1 = '接受', button2 = '取消', button3 = '默认'})
+    WoWTools_ChineseMixin:AddDialogs("BATTLE_PET_PUT_IN_CAGE", {text = '把这只宠物放入笼中？', button1 = '确定', button2 = '取消'})
+    WoWTools_ChineseMixin:AddDialogs("BATTLE_PET_RELEASE", {text = "\n\n你确定要释放|cffffd200%s|r吗？\n\n", button1 = '确定', button2 = '取消'})
 
     PetJournalSearchBox.Instructions:SetText('搜索')
     --PetJournal.FilterDropdown.Text:SetText('过滤器')
@@ -165,7 +165,7 @@ end
 
 local function Init_Toy()
     --ToyBox.searchBox.Instructions:SetText('搜索')
-    --e.set(ToyBox.FilterDropdown.Text)
+    --WoWTools_ChineseMixin:Set_Label_Text(ToyBox.FilterDropdown.Text)
     hooksecurefunc(ToyBox.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
         self.PageText:SetFormattedText('%d/%d页', self.currentPage, self.maxPages)
     end)
@@ -178,7 +178,7 @@ local function Init_Toy()
                     if not self:IsVisible() then
                         return
                     end
-                    local name = e.strText[text] or  e.Get_Item_Name(self:GetParent().itemID)
+                    local name = e.strText[text] or  WoWTools_ChineseMixin:Get_Item_Name(self:GetParent().itemID)
                     if name then
                         name= name:match('|c........(.-)|r') or name
                         if name ~=text then
@@ -192,7 +192,7 @@ local function Init_Toy()
 
     --[[if not _G['OnToyBoxButtonUpdate'] then
         local function set_toy_name(self)
-            local name = e.Get_Item_Name(self.itemID) or e.strText[self.name:GetText()]
+            local name = WoWTools_ChineseMixin:Get_Item_Name(self.itemID) or e.strText[self.name:GetText()]
             if name then
                 name= name:match('|c........(.-)|r') or name
                 self.name:SetText(name)
@@ -241,7 +241,7 @@ local function Init_Heirlooms()
 
     hooksecurefunc(HeirloomsJournal, 'LayoutCurrentPage', function(self)
         for _, header in pairs(self.heirloomHeaderFrames or {}) do
-            e.set(header.text)
+            WoWTools_ChineseMixin:Set_Label_Text(header.text)
         end
     end)
 
@@ -250,7 +250,7 @@ local function Init_Heirlooms()
         if not btn.name then
             return
         end
-        local name= e.Get_Item_Name(btn.itemID) or e.strText[btn.name:GetText()]
+        local name= WoWTools_ChineseMixin:Get_Item_Name(btn.itemID) or e.strText[btn.name:GetText()]
         if name then
             name= name:match('|c........(.-)|r') or name
             btn.name:SetText(name)
@@ -271,7 +271,7 @@ end
 
 --幻化
 local function Init_Wardrobe()
-    e.set(WardrobeTransmogFrame.OutfitDropdown.SaveButton)
+    WoWTools_ChineseMixin:Set_Label_Text(WardrobeTransmogFrame.OutfitDropdown.SaveButton)
     WardrobeCollectionFrameSearchBox.Instructions:SetText('搜索')
     WardrobeCollectionFrameTab1:SetText('物品')
     hooksecurefunc(WardrobeCollectionFrame.ItemsCollectionFrame.PagingFrame, 'Update', function(self)--Blizzard_CollectionTemplates.lua
@@ -297,12 +297,12 @@ local function Init_Wardrobe()
     end)
 
     hooksecurefunc(WardrobeSetsScrollFrameButtonMixin, 'Init', function(btn, data)
-        e.set(btn.Name)
+        WoWTools_ChineseMixin:Set_Label_Text(btn.Name)
     end)
 
-    e.hookLabel(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Name)
-    e.hookLabel(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Label)
-    e.set(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.LimitedSet.Text)
+    WoWTools_ChineseMixin:HookLabel(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Name)
+    WoWTools_ChineseMixin:HookLabel(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.Label)
+    WoWTools_ChineseMixin:Set_Label_Text(WardrobeCollectionFrame.SetsCollectionFrame.DetailsFrame.LimitedSet.Text)
 end
 
 
@@ -355,7 +355,7 @@ hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'OnEnter', function(self)--DressUp
             local nameColor = self.item:GetItemQualityColor().color
             GameTooltip_AddColoredLine(GameTooltip,name, nameColor)
             local slotName = TransmogUtil.GetSlotName(self.slotID)
-            GameTooltip_AddColoredLine(GameTooltip, e.cn(_G[slotName]), HIGHLIGHT_FONT_COLOR)
+            GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:Setup(_G[slotName]), HIGHLIGHT_FONT_COLOR)
             GameTooltip_AddErrorLine(GameTooltip, '你的角色无法使用此外观。')
         else
             local hideVendorPrice = true
@@ -367,14 +367,14 @@ hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'OnEnter', function(self)--DressUp
             local nameColor = self.item:GetItemQualityColor().color
             GameTooltip_AddColoredLine(GameTooltip, name, nameColor)
             local slotName = TransmogUtil.GetSlotName(self.slotID)
-            GameTooltip_AddColoredLine(GameTooltip, e.cn(_G[slotName]), HIGHLIGHT_FONT_COLOR)
+            GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:Setup(_G[slotName]), HIGHLIGHT_FONT_COLOR)
             GameTooltip_AddColoredLine(GameTooltip, '|cnRED_FONT_COLOR:你尚未收藏过此外观', LIGHTBLUE_FONT_COLOR)
         end
     else
         local nameColor = self.item:GetItemQualityColor().color
         GameTooltip_AddColoredLine(GameTooltip, name, nameColor)
         local slotName = TransmogUtil.GetSlotName(self.slotID)
-        GameTooltip_AddColoredLine(GameTooltip, e.cn(_G[slotName]), HIGHLIGHT_FONT_COLOR)
+        GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:Setup(_G[slotName]), HIGHLIGHT_FONT_COLOR)
         GameTooltip_AddColoredLine(GameTooltip, '|cnGREEN_FONT_COLOR:|A:common-icon-checkmark:16:16:0:-1|a 你已经收藏过此外观了', GREEN_FONT_COLOR)
     end
     GameTooltip:Show()
@@ -415,7 +415,7 @@ local function Init_DressUpFrame()
         GameTooltip_SetTitle(GameTooltip, '外观列表')
         GameTooltip:Show()
     end)
-    e.set(DressUpFrameOutfitDropdown.SaveButton)
+    WoWTools_ChineseMixin:Set_Label_Text(DressUpFrameOutfitDropdown.SaveButton)
 end
 
 
@@ -436,14 +436,14 @@ local function Init_WarbandSceneJournal()
         end
         --self.warbandSceneInfo = C_WarbandScene.GetWarbandSceneEntry(self.elementData.warbandSceneID)
         if self.warbandSceneInfo then
-            local name= e.cn(self.warbandSceneInfo.name)
+            local name= WoWTools_ChineseMixin:Setup(self.warbandSceneInfo.name)
             if name and name~=self.warbandSceneInfo.name then
                 self.Name:SetText(name)
             end
             self.Icon:SetAtlas(self.warbandSceneInfo.textureKit, TextureKitConstants.UseAtlasSize)
         end
     end)
-    --e.set(WarbandSceneJournal.IconsFrame.Icons.Controls.ShowOwned.Text)
+    --WoWTools_ChineseMixin:Set_Label_Text(WarbandSceneJournal.IconsFrame.Icons.Controls.ShowOwned.Text)
 end
 
 
@@ -455,7 +455,7 @@ end
 
 
 local function Init()
-    e.hookLabel(CollectionsJournalTitleText)
+    WoWTools_ChineseMixin:HookLabel(CollectionsJournalTitleText)
     Init_Mount()
     Init_Pet()
     Init_Toy()
@@ -464,7 +464,7 @@ local function Init()
     Init_DressUpFrame()
     Init_WarbandSceneJournal()
     hooksecurefunc('CollectionsJournal_UpdateSelectedTab', function(self)--设置，标题
-        e.set(self.Text)
+        WoWTools_ChineseMixin:Set_Label_Text(self.Text)
     end)
 
     CollectionsJournalTab1:SetText('坐骑')

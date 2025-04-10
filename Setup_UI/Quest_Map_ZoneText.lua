@@ -7,8 +7,8 @@ local e= select(2, ...)
 --SubZoneTextFrame
 --屏幕，上方区域提示
 ZoneTextFrame:HookScript('OnEvent', function()--ZoneText_OnEvent
-    e.set(SubZoneTextString)
-    e.set(ZoneTextString)
+    WoWTools_ChineseMixin:Set_Label_Text(SubZoneTextString)
+    WoWTools_ChineseMixin:Set_Label_Text(ZoneTextString)
 end)
 hooksecurefunc('SetZoneText', function()
     local pvpType, isSubZonePvP, factionName = C_PvP.GetZonePVPInfo()
@@ -22,7 +22,7 @@ hooksecurefunc('SetZoneText', function()
         pvpTextString:SetText('（PvP区域）')
     elseif ( pvpType == "friendly" or  pvpType == "hostile" ) then
         if (factionName and factionName ~= "") then
-            pvpTextString:SetFormattedText('（%s领地）', e.cn(factionName))
+            pvpTextString:SetFormattedText('（%s领地）', WoWTools_ChineseMixin:Setup(factionName))
         end
     elseif ( pvpType == "contested" ) then
         pvpTextString:SetText('（争夺中的领土）')
@@ -32,7 +32,7 @@ hooksecurefunc('SetZoneText', function()
 end)
 
 
---local label = e.Cstr(MinimapCluster.ZoneTextButton, {name='MinimapZoneText2', copyFont= MinimapZoneText})
+--local label = WoWTools_ChineseMixin:Cstr(MinimapCluster.ZoneTextButton, {name='MinimapZoneText2', copyFont= MinimapZoneText})
 hooksecurefunc('Minimap_Update', function()
     local name= e.strText[GetMinimapZoneText()]
     if name then

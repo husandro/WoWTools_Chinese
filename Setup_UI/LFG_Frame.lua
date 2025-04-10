@@ -9,9 +9,9 @@ local e= select(2, ...)
 
 
 
-e.hookLabel(GroupFinderFrameGroupButton1Name)--地下城查找器 GroupFinderFrame.groupButton1.name
-e.hookLabel(GroupFinderFrameGroupButton2Name)--团队查找器 GroupFinderFrame.groupButton2.name
-e.hookLabel(GroupFinderFrameGroupButton3Name)--预创建队伍 GroupFinderFrame.groupButton3.name
+WoWTools_ChineseMixin:HookLabel(GroupFinderFrameGroupButton1Name)--地下城查找器 GroupFinderFrame.groupButton1.name
+WoWTools_ChineseMixin:HookLabel(GroupFinderFrameGroupButton2Name)--团队查找器 GroupFinderFrame.groupButton2.name
+WoWTools_ChineseMixin:HookLabel(GroupFinderFrameGroupButton3Name)--预创建队伍 GroupFinderFrame.groupButton3.name
 
 
 
@@ -26,7 +26,7 @@ PVEFrameTab2:SetText('PvP')
 PVEFrameTab3:SetText('史诗钥石地下城')
 PVEFrameTab4:SetText('地下堡')
 
-e.set(LFDQueueFrameRandomScrollFrameChildFrameXPLabel)
+WoWTools_ChineseMixin:Set_Label_Text(LFDQueueFrameRandomScrollFrameChildFrameXPLabel)
 hooksecurefunc('LFDQueueFrameFindGroupButton_Update', function()--LFDFrame.lua
     local mode = GetLFGMode(LE_LFG_CATEGORY_LFD)
     if ( mode == "queued" or mode == "rolecheck" or mode == "proposal" or mode == "suspended" ) then
@@ -182,7 +182,7 @@ end)
 
 
 hooksecurefunc('LFGDungeonReadyDialog_UpdateInstanceInfo', function(name, completedEncounters, totalEncounters)
-    e.set(LFGDungeonReadyDialogInstanceInfoFrame.name, name)
+    WoWTools_ChineseMixin:Set_Label_Text(LFGDungeonReadyDialogInstanceInfoFrame.name, name)
     if ( totalEncounters > 0 ) then
         LFGDungeonReadyDialogInstanceInfoFrame.statusText:SetFormattedText('已消灭|cnGREEN_FONT_COLOR:%d/%d|r个首领', completedEncounters, totalEncounters)
     end
@@ -197,9 +197,9 @@ LFGDungeonReadyDialogInstanceInfoFrame:HookScript('OnEnter', function()--LFGDung
     for i=1, numBosses do
         local bossName, _, isKilled = GetLFGProposalEncounter(i)
         if ( isKilled ) then
-            GameTooltip:AddDoubleLine('|A:common-icon-redx:0:0|a'.. e.cn(bossName), '|cnRED_FONT_COLOR:已消灭')
+            GameTooltip:AddDoubleLine('|A:common-icon-redx:0:0|a'.. WoWTools_ChineseMixin:Setup(bossName), '|cnRED_FONT_COLOR:已消灭')
         else
-            GameTooltip:AddDoubleLine(format('|A:%s:0:0|a', e.Icon.select)..e.cn(bossName), '|cnGREEN_FONT_COLOR:可消灭')
+            GameTooltip:AddDoubleLine(format('|A:%s:0:0|a', e.Icon.select)..WoWTools_ChineseMixin:Setup(bossName), '|cnGREEN_FONT_COLOR:可消灭')
         end
     end
     GameTooltip:Show()
@@ -244,7 +244,7 @@ hooksecurefunc('LFGDungeonReadyPopup_Update', function()--LFGFrame.lua
         end
         role= _G[role]
         if subtypeID ~= LFG_SUBTYPEID_SCENARIO and subtypeID ~= LFG_SUBTYPEID_FLEXRAID then
-            e.set(LFGDungeonReadyDialogRoleLabel, role)
+            WoWTools_ChineseMixin:Set_Label_Text(LFGDungeonReadyDialogRoleLabel, role)
         end
     end
 end)
@@ -296,8 +296,8 @@ end)
 
 
 C_Timer.After(2, function()
-    e.hookLabel(RaidFinderQueueFrameSelectionDropDownName)
-    e.hookLabel(LFGListFrame.ApplicationViewer.DescriptionFrame.Text)
+    WoWTools_ChineseMixin:HookLabel(RaidFinderQueueFrameSelectionDropDownName)
+    WoWTools_ChineseMixin:HookLabel(LFGListFrame.ApplicationViewer.DescriptionFrame.Text)
 end)
 
 

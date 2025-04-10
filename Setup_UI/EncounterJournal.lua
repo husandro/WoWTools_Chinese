@@ -27,11 +27,11 @@ local function EncounterJournal_SetupIconFlags(sectionID, infoHeaderButton, inde
                 icon.tooltipTitle = tab[iconFlag]--_G["ENCOUNTER_JOURNAL_SECTION_FLAG"..iconFlag]
                 if index then
                     if iconFlag==1 then
-                        e.set(infoHeaderButton.title, '伤害')
+                        WoWTools_ChineseMixin:Set_Label_Text(infoHeaderButton.title, '伤害')
                     elseif iconFlag==2 then
-                        e.set(infoHeaderButton.title, '治疗者')
+                        WoWTools_ChineseMixin:Set_Label_Text(infoHeaderButton.title, '治疗者')
                     elseif iconFlag==0 then
-                        e.set(infoHeaderButton.title, '坦克')
+                        WoWTools_ChineseMixin:Set_Label_Text(infoHeaderButton.title, '坦克')
                     end
                 end
             end
@@ -73,7 +73,7 @@ end
 
 local function get_encounter_name(encounterID)
     if encounterID then
-        return e.Get_Boss_Name(encounterID) or e.cn(EJ_GetEncounterInfo(encounterID))
+        return e.Get_Boss_Name(encounterID) or WoWTools_ChineseMixin:Setup(EJ_GetEncounterInfo(encounterID))
     end
 end
 
@@ -150,7 +150,7 @@ local function Init_EncounterJournal()
             return
         end
         for _, button in pairs(frame:GetFrames()) do
-            e.set(button.name)
+            WoWTools_ChineseMixin:Set_Label_Text(button.name)
             local tooltiptext=  e.strText[button.tooltiptext]
             if tooltiptext then
                 button.tooltiptext= tooltiptext
@@ -162,7 +162,7 @@ local function Init_EncounterJournal()
     hooksecurefunc(EncounterJournalItemMixin,'Init', function(self)--Blizzard_EncounterJournal.lua
         local itemInfo = C_EncounterJournal.GetLootInfoByIndex(self.index)
         if ( itemInfo and itemInfo.name ) then
-            local name= e.Get_Item_Name(itemInfo.itemID) or e.strText[itemInfo.name]
+            local name= WoWTools_ChineseMixin:Get_Item_Name(itemInfo.itemID) or e.strText[itemInfo.name]
             if name then
                 self.name:SetText(WrapTextInColorCode(name, itemInfo.itemQuality))
             end
@@ -236,7 +236,7 @@ local function Init_EncounterJournal()
                 name = classInfo.className
             end
         end
-        name= e.cn(name)
+        name= WoWTools_ChineseMixin:Setup(name)
         if name then
             EncounterJournal.encounter.info.LootContainer.classClearFilter.text:SetFormattedText('职业筛选：%s', name)
         end
@@ -292,7 +292,7 @@ local function Init_EncounterJournal()
             return
         end
         for _, btn in pairs(self:GetFrames() or {}) do
-            e.set(btn.SetName)
+            WoWTools_ChineseMixin:Set_Label_Text(btn.SetName)
         end
     end)
 
@@ -310,9 +310,9 @@ local function Init_EncounterJournal()
         local self= EncounterJournal.encounter
         local instanceName, description = EJ_GetInstanceInfo()
 
-        e.set(self.instance.title, instanceName)
-        e.set(self.info.instanceTitle, instanceName)
-        e.set(self.instance.LoreScrollingFont, description)
+        WoWTools_ChineseMixin:Set_Label_Text(self.instance.title, instanceName)
+        WoWTools_ChineseMixin:Set_Label_Text(self.info.instanceTitle, instanceName)
+        WoWTools_ChineseMixin:Set_Label_Text(self.instance.LoreScrollingFont, description)
 
         local tooltip= e.strText[self.info['overviewTab'].tooltip]
         if tooltip then
@@ -324,8 +324,8 @@ local function Init_EncounterJournal()
         end
     end)
 
-    e.hookButton(EncounterJournalEncounterFrameInfoSlotFilterToggle)
-    e.hookButton(EncounterJournalEncounterFrameInfoDifficulty)
+    WoWTools_ChineseMixin:HookButton(EncounterJournalEncounterFrameInfoSlotFilterToggle)
+    WoWTools_ChineseMixin:HookButton(EncounterJournalEncounterFrameInfoDifficulty)
 end
 
 
@@ -348,7 +348,7 @@ local function set_navButton(navBar, text)
     end
     local navButton = navBar.navList[#navBar.navList]
     if navButton then
-        e.font(navButton.text)
+        WoWTools_ChineseMixin:SetLabelFont(navButton.text)
         navButton:SetText(text)
         local buttonExtraWidth
         if navButton.listFunc  and not navBar.oldStyle then
@@ -465,12 +465,12 @@ local function Init()
                 if not suggestion or not data then
                     break;
                 end
-                e.set(suggestion.centerDisplay.title.text, data.title)
-                e.set(suggestion.centerDisplay.description.text, data.description)
+                WoWTools_ChineseMixin:Set_Label_Text(suggestion.centerDisplay.title.text, data.title)
+                WoWTools_ChineseMixin:Set_Label_Text(suggestion.centerDisplay.description.text, data.description)
                 if suggestion.centerDisplay then
-                    e.set(suggestion.centerDisplay.button, data.buttonText)
+                    WoWTools_ChineseMixin:Set_Label_Text(suggestion.centerDisplay.button, data.buttonText)
                 else
-                    e.set(suggestion.button, data.buttonText)
+                    WoWTools_ChineseMixin:Set_Label_Text(suggestion.button, data.buttonText)
                 end
             end
     end)

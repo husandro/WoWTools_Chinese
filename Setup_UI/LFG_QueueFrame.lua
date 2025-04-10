@@ -11,14 +11,14 @@ LFDQueueFrameFollowerDescription:SetText('与NPC队友一起完成地下城')
 
 --自定义，地下城，列表
 hooksecurefunc('LFGDungeonListButton_SetDungeon', function(button)
-    e.set(button.instanceName)
+    WoWTools_ChineseMixin:Set_Label_Text(button.instanceName)
 end)
 
 
 
 
-e.set(LFDQueueFrameTypeDropdownName)
-e.set(RaidFinderQueueFrameSelectionDropdownName)
+WoWTools_ChineseMixin:Set_Label_Text(LFDQueueFrameTypeDropdownName)
+WoWTools_ChineseMixin:Set_Label_Text(RaidFinderQueueFrameSelectionDropdownName)
 
 
 

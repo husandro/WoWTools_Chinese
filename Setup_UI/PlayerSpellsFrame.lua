@@ -16,25 +16,25 @@ local id, e= ...
 
 
 local function Init_SpellBookFrame()
-    e.set(PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton.Label)--隐藏被动技能
-    e.set(PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton.Text)
-    e.set(ClassTalentLoadoutCreateDialog.Title)
-    e.set(ClassTalentLoadoutCreateDialog.NameControl.Label)
-    e.set(ClassTalentLoadoutCreateDialog.AcceptButton)
-    e.set(ClassTalentLoadoutCreateDialog.CancelButton)
+    WoWTools_ChineseMixin:Set_Label_Text(PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton.Label)--隐藏被动技能
+    WoWTools_ChineseMixin:Set_Label_Text(PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(ClassTalentLoadoutCreateDialog.Title)
+    WoWTools_ChineseMixin:Set_Label_Text(ClassTalentLoadoutCreateDialog.NameControl.Label)
+    WoWTools_ChineseMixin:Set_Label_Text(ClassTalentLoadoutCreateDialog.AcceptButton)
+    WoWTools_ChineseMixin:Set_Label_Text(ClassTalentLoadoutCreateDialog.CancelButton)
 
 --TabSys
     for _, tabID in pairs(PlayerSpellsFrame.SpellBookFrame:GetTabSet() or {}) do
         local btn= PlayerSpellsFrame.SpellBookFrame:GetTabButton(tabID)
         if btn then
-            e.set(btn.Text)
+            WoWTools_ChineseMixin:Set_Label_Text(btn.Text)
         end
     end
 
 
 --名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateVisuals', function(self)
-        local name= e.cn(self.spellBookItemInfo.name, {spellID=self.spellBookItemInfo.actionID, isName=true})
+        local name= WoWTools_ChineseMixin:Setup(self.spellBookItemInfo.name, {spellID=self.spellBookItemInfo.actionID, isName=true})
         if name then
             self.Name:SetText(name)
         end
@@ -56,7 +56,7 @@ local function Init_SpellBookFrame()
 
 --子，名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateSubName', function(self, subNameText)
-        local name= e.cn(subNameText)
+        local name= WoWTools_ChineseMixin:Setup(subNameText)
         if name then
             self.SubName:SetText(name)
         end
@@ -97,9 +97,9 @@ end)
 
 --天赋
 local function Init_TalentsFrame()
-    e.set(PlayerSpellsFrame.TalentsFrame.ApplyButton)--:SetText('应用改动')
-    e.hookLabel(PlayerSpellsFrame.TalentsFrame.LoadSystem.Dropdown.Text)
-    e.set(PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(PlayerSpellsFrame.TalentsFrame.ApplyButton)--:SetText('应用改动')
+    WoWTools_ChineseMixin:HookLabel(PlayerSpellsFrame.TalentsFrame.LoadSystem.Dropdown.Text)
+    WoWTools_ChineseMixin:Set_Label_Text(PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton.Text)
     --专精，名称
     hooksecurefunc(PlayerSpellsFrame.TalentsFrame, 'RefreshCurrencyDisplay', function(self)
         local className = e.strText[self:GetClassName()]
@@ -151,7 +151,7 @@ local function Init_TalentsFrame()
         for _, btn in pairs(frame:GetFrames() or {}) do
             local info= btn.talentInfo
             if info then
-                local name= e.cn(nil, {spellID=info.spellID, isName=true})
+                local name= WoWTools_ChineseMixin:Setup(nil, {spellID=info.spellID, isName=true})
                 if name then
                     btn.Name:SetText(name)
                 end
@@ -210,15 +210,15 @@ local function Init_SpecFrame()
 
     local sex= UnitSex('player')
     for frame in PlayerSpellsFrame.SpecFrame.SpecContentFramePool:EnumerateActive() do
-        e.hookLabel(frame.SpecName)
-        e.hookLabel(frame.RoleName)
-        e.hookLabel(frame.ActivatedText)
-        e.hookLabel(frame.ActivateButton)
-        e.hookLabel(frame.SampleAbilityText)
+        WoWTools_ChineseMixin:HookLabel(frame.SpecName)
+        WoWTools_ChineseMixin:HookLabel(frame.RoleName)
+        WoWTools_ChineseMixin:HookLabel(frame.ActivatedText)
+        WoWTools_ChineseMixin:HookLabel(frame.ActivateButton)
+        WoWTools_ChineseMixin:HookLabel(frame.SampleAbilityText)
 
         local specID, name, description, icon, _, primaryStat = GetSpecializationInfo(frame.specIndex, false, false, nil, sex)
         if description then
-            frame.Description:SetText(e.cn(description).."|n"..format('主要属性：%s', e.cn(SPEC_STAT_STRINGS[primaryStat])))
+            frame.Description:SetText(WoWTools_ChineseMixin:Setup(description).."|n"..format('主要属性：%s', WoWTools_ChineseMixin:Setup(SPEC_STAT_STRINGS[primaryStat])))
         end
     end
 end
@@ -238,12 +238,12 @@ local function Init()
     Init_TalentsFrame()
     Init_SpecFrame()
 
-    e.hookLabel(PlayerSpellsFrameTitleText)--标题
+    WoWTools_ChineseMixin:HookLabel(PlayerSpellsFrameTitleText)--标题
 
     for _, tabID in pairs(PlayerSpellsFrame:GetTabSet() or {}) do
         local btn= PlayerSpellsFrame:GetTabButton(tabID)
         if btn then
-            e.set(btn.Text)
+            WoWTools_ChineseMixin:Set_Label_Text(btn.Text)
         end
     end
 end

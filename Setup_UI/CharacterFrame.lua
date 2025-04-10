@@ -50,7 +50,7 @@ hooksecurefunc(CharacterFrame, 'SetTitle', function(self)
             end
         end
     else
-        --e.set(CharacterFrameTitleText)
+        --WoWTools_ChineseMixin:Set_Label_Text(CharacterFrameTitleText)
     end
 end)
 
@@ -79,7 +79,7 @@ hooksecurefunc(PaperDollFrame.TitleManagerPane.ScrollBox, 'Update', function(fra
                 local name= self.titleId==-1 and '无头衔' or e.Get_Title_Name(self.titleId)                
                 return name
             end
-            e.font(btn:GetFontString())
+            WoWTools_ChineseMixin:SetLabelFont(btn:GetFontString())
             btn:HookScript('OnLeave', GameTooltip_Hide)
             btn:HookScript('OnEnter', function(self)
                 if self.titleId==-1 then
