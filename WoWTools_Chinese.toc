@@ -34,6 +34,7 @@ Data\Achievement_Data.lua
 Data\EncounterJournal_Data_Instance.lua
 Data\EncounterJournal_Data_PerksActivity.lua
 Data\EncounterJournal_Data_PerksActivity_Tag.lua
+Data\Collection_Data_WarbandScene.lua
 
 ##派系
 Data\Faction_Data.lua

@@ -427,10 +427,9 @@ end
 
 
 local function Init_WarbandSceneJournal()
-    if not WarbandSceneJournal then
-        return
-    end
+
     WarbandSceneJournal.IconsFrame.Icons.Controls.ShowOwned.Text:SetText('只显示已获得的')
+
     hooksecurefunc(WarbandSceneEntryMixin, 'UpdateWarbandSceneData', function(self)
         if not self.elementData then
             return
@@ -450,6 +449,11 @@ end
 
 
 
+
+
+
+
+
 local function Init()
     e.hookLabel(CollectionsJournalTitleText)
     Init_Mount()
@@ -459,7 +463,6 @@ local function Init()
     Init_Wardrobe()
     Init_DressUpFrame()
     Init_WarbandSceneJournal()
-
     hooksecurefunc('CollectionsJournal_UpdateSelectedTab', function(self)--设置，标题
         e.set(self.Text)
     end)
