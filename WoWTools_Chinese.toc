@@ -17,7 +17,6 @@
 
 ##字符, 常用
 Data\0_zhCN.lua
-Data\0_zhCN_Add.lua
 
 
 
