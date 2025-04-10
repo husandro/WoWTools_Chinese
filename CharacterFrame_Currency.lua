@@ -2,7 +2,7 @@ local e = select(2, ...)
 
 
 
-print(TokenFrame)
+
 --local function Init()
 
     hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
@@ -10,7 +10,7 @@ print(TokenFrame)
             return
         end
         for _, frame in pairs(f:GetFrames() or {}) do
-           
+
         end
     end)
     hooksecurefunc(TokenHeaderMixin, 'Initialize', function(self)
@@ -71,7 +71,7 @@ print(TokenFrame)
 
     CurrencyTransferMenu.ConfirmButton:SetText('转移')
     CurrencyTransferMenu.CancelButton:SetText('取消')
-    
+
     e.set(CurrencyTransferLogTitleText)
     e.set(CurrencyTransferLog.EmptyLogMessage)
 --end
