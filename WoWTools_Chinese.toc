@@ -16,8 +16,8 @@
 2_func_Mixin.lua
 
 ##字符, 常用
-Data\zhCN.lua
-
+Data\0_zhCN.lua
+0_zhCN_Add.lua
 
 
 
