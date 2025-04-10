@@ -22,7 +22,6 @@ function WoWTools_Chinese_Mixin:Setup(text, tab)
             else
                 data= e.Get_HoliDay_Info(tab.holydayID)--节日 eventID
             end
-            print(tab.holydayID, data[1], data[2])
         elseif tab.perksActivityID then
             data= e.Get_PerksActivity_Info(tab.perksActivityID)--PERKS
 

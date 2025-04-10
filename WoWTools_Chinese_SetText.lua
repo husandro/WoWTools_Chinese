@@ -71,7 +71,12 @@ function e.font(lable)
     end
 end
 
+
 local function set(self, text)
+    self.isInRunCN= true
+    if self.isInRunCN then
+        return
+    end
     local label= self
     if self and not text then
         if self.GetText then
@@ -82,6 +87,7 @@ local function set(self, text)
                 text= label:GetText()
             end
         else
+            self.isInRunCN= nil
             return
         end
     end
@@ -92,6 +98,7 @@ local function set(self, text)
             label:SetText(text2)
         end
     end
+    self.isInRunCN= nil
 end
 
 
