@@ -94,6 +94,8 @@ Setup_UI\0_Init.lua
 Setup_UI\1_Event.lua
 
 Setup_UI\AccountStoreFrame.lua
+Setup_UI\Achievement.lua
+
 Setup_UI\StableFrame.lua
 Setup_UI\MailFrame.lua
 Setup_UI\SettingsPanel.lua
@@ -111,7 +113,6 @@ Setup_UI\PlayerChoiceFrame.lua
 Setup_UI\DeathRecapFrame.lua
 Setup_UI\ObjectiveTrackerFrame.lua
 Setup_UI\PlayerSpellsFrame.lua
-Setup_UI\Achievement.lua
 Setup_UI\Collection.lua
 Setup_UI\Challenges.lua
 Setup_UI\Holiday.lua
@@ -129,7 +130,7 @@ Setup_UI\Quest.lua
 Setup_UI\Quest_GossipFrame.lua
 Setup_UI\Quest_Map.lua
 Setup_UI\Quest_Map_ZoneText.lua
-Setup_UI\ldMapFrame.lua
+Setup_UI\Quest_WorldMapFrame.lua
 
 Setup_UI\Professions.lua
 Setup_UI\Professions_BookFrame.lua
@@ -159,7 +160,6 @@ WoWeuCN\SpellData_cn.lua
 WoWeuCN\QuestData_cn.lua
 WoWeuCN\UnitData_cn.lua
 WoWeuCN\EncounterData_cn.lua
-##WoWeuCN\EncounterData_Add.lua
 WoWeuCN\WoWeuCN_Data_Func.lua
 
 ##放最后
