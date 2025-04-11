@@ -30,7 +30,7 @@ local function LFGListUtil_GetDecoratedCategoryName(categoryName, filter, useCol
 		extraName = '经典旧世';
 	elseif ( filter == Enum.LFGListFilter.Recommended ) then
 		local exp = LFGListUtil_GetCurrentExpansion();
-		extraName = WoWTools_ChineseMixin:Setup(_G["EXPANSION_NAME"..exp])
+		extraName = WoWTools_ChineseMixin:GetData(_G["EXPANSION_NAME"..exp])
 	end
 
 	if(extraName ~= "") then
@@ -542,7 +542,7 @@ end)
 --LFGList.lua
 hooksecurefunc('LFGListSearchPanel_SetCategory', function(self)--, categoryID, filters)
 	local categoryInfo = C_LFGList.GetLfgCategoryInfo(self.categoryID);
-	self.SearchBox.Instructions:SetText(WoWTools_ChineseMixin:Setup(categoryInfo.searchPromptOverride) or '过滤器');
+	self.SearchBox.Instructions:SetText(WoWTools_ChineseMixin:GetData(categoryInfo.searchPromptOverride) or '过滤器');
 	local name = LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, self.filters, false);
 	self.CategoryName:SetText(name)
 end)

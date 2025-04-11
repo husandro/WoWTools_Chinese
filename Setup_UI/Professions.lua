@@ -315,9 +315,9 @@ local function Init_CraftingPage_SchematicForm()
         if self.RecipeSourceButton:IsShown() then
             local sourceText--, sourceTextIsForNextRank
             if not recipeInfo.learned then
-                sourceText = WoWTools_ChineseMixin:Setup(C_TradeSkillUI.GetRecipeSourceText(recipeID), {recipeID=recipeID})
+                sourceText = WoWTools_ChineseMixin:GetData(C_TradeSkillUI.GetRecipeSourceText(recipeID), {recipeID=recipeID})
             elseif recipeInfo.nextRecipeID then
-                sourceText= WoWTools_ChineseMixin:Setup(C_TradeSkillUI.GetRecipeSourceText(nextRecipeID), {recipeID=nextRecipeID})
+                sourceText= WoWTools_ChineseMixin:GetData(C_TradeSkillUI.GetRecipeSourceText(nextRecipeID), {recipeID=nextRecipeID})
                 --sourceTextIsForNextRank = true
             end
             if sourceText then
@@ -409,10 +409,10 @@ local function Init_SpecPage()
     --Blizzard_ProfessionsSpecializations.lua
     WoWTools_ChineseMixin:AddDialogs("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", {button1 = '是', button2 = '取消'})
     WoWTools_ChineseMixin:HookDialog("PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB", 'OnShow', function(self, info)
-        local specName= WoWTools_ChineseMixin:Setup(info.specName)
-        local headerText = HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(format('学习%s？', WoWTools_ChineseMixin:Setup(specName)).."\n\n")
+        local specName= WoWTools_ChineseMixin:GetData(info.specName)
+        local headerText = HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(format('学习%s？', WoWTools_ChineseMixin:GetData(specName)).."\n\n")
         local bodyKey = info.hasAnyConfigChanges and '所有待定的改动都会在解锁此专精后进行应用。您确定要学习%s副专精吗？' or '您确定想学习%s专精吗？您将来可以在%s专业里更加精进后选择额外的专精。'
-        local bodyText = NORMAL_FONT_COLOR:WrapTextInColorCode(bodyKey:format(specName, WoWTools_ChineseMixin:Setup(info.profName)))
+        local bodyText = NORMAL_FONT_COLOR:WrapTextInColorCode(bodyKey:format(specName, WoWTools_ChineseMixin:GetData(info.profName)))
         self.text:SetText(headerText..bodyText)
         self.text:Show()
     end)
@@ -443,7 +443,7 @@ local function Init_SpecPage()
         end
         local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(currencyTypesID)
         if self.treeCurrencyInfoMap[spendCurrency] ~= nil and self.treeCurrencyInfoMap[spendCurrency].quantity == 0 and currencyInfo.name then
-            local name= '|T'..(currencyInfo.iconFileID or 0)..':0|t'..WoWTools_ChineseMixin:Setup(currencyInfo.name)
+            local name= '|T'..(currencyInfo.iconFileID or 0)..':0|t'..WoWTools_ChineseMixin:GetData(currencyInfo.name)
             GameTooltip:SetOwner(frame, "ANCHOR_RIGHT", 0, 0)
             GameTooltip_AddErrorLine(GameTooltip, format('你没有可以消耗的|n%s', name))
             GameTooltip:Show()
@@ -492,7 +492,7 @@ local function Init_SpecPage()
     hooksecurefunc(ProfessionSpecTabMixin, 'OnLoad', function(self)
         self.StateIcon:SetScript("OnEnter", function(frame)
             GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
-            local name= WoWTools_ChineseMixin:Setup(self:GetParent().professionInfo.professionName)
+            local name= WoWTools_ChineseMixin:GetData(self:GetParent().professionInfo.professionName)
             GameTooltip_AddNormalLine(GameTooltip, format('你可以选择一个新的专精|n|cnGREEN_FONT_COLOR:%s|r', name))
             GameTooltip:Show();
         end)       

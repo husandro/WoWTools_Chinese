@@ -132,22 +132,38 @@ local function Init_Pet()
 ]]
 
 
-    if not _G['OnPetJournalButtonInit'] then
-        hooksecurefunc('PetJournal_InitPetButton', function(pet)
-            if not pet:IsVisible() then
-                return
+    hooksecurefunc('PetJournal_InitPetButton', function(pet)
+        if not pet:IsVisible() then
+            return
+        end
+        local _, _, _, customName, _, _, _, _, _, _, companionID= C_PetJournal.GetPetInfoByIndex(pet.index)
+        local npcName= WoWTools_ChineseMixin:GetUnitName(nil, companionID)
+        if npcName then
+            if customName then
+                pet.subName:SetText(npcName)
+            else
+                pet.name:SetText(npcName)
             end
-            local _, _, _, customName, _, _, _, _, _, _, companionID= C_PetJournal.GetPetInfoByIndex(pet.index)
-            local npcName= WoWTools_ChineseMixin:GetUnitName(nil, companionID)
-            if npcName then
-                if customName then
-                    pet.subName:SetText(npcName)
-                else
-                    pet.name:SetText(npcName)
+        end
+    end)
+
+    hooksecurefunc('PetJournal_UpdatePetLoadOut', function()
+        for i=1,3 do
+            local loadoutPlate = PetJournal.Loadout["Pet"..i];
+            if loadoutPlate and loadoutPlate.name:IsShown() then
+                local petID = C_PetJournal.GetPetLoadOutInfo(i)
+                if petID then
+                    local _, customName, _, _, _, _, _, name = C_PetJournal.GetPetInfoByPetID(petID)
+                    if not customName then
+                        name= WoWTools_ChineseMixin:GetData(name, {petID=petID})
+                        if name then
+                            loadoutPlate.name:SetText(name)
+                        end
+                    end
                 end
             end
-        end)
-    end
+        end
+    end)
 end
 
 
@@ -355,7 +371,7 @@ hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'OnEnter', function(self)--DressUp
             local nameColor = self.item:GetItemQualityColor().color
             GameTooltip_AddColoredLine(GameTooltip,name, nameColor)
             local slotName = TransmogUtil.GetSlotName(self.slotID)
-            GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:Setup(_G[slotName]), HIGHLIGHT_FONT_COLOR)
+            GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:GetData(_G[slotName]), HIGHLIGHT_FONT_COLOR)
             GameTooltip_AddErrorLine(GameTooltip, '你的角色无法使用此外观。')
         else
             local hideVendorPrice = true
@@ -367,14 +383,14 @@ hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'OnEnter', function(self)--DressUp
             local nameColor = self.item:GetItemQualityColor().color
             GameTooltip_AddColoredLine(GameTooltip, name, nameColor)
             local slotName = TransmogUtil.GetSlotName(self.slotID)
-            GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:Setup(_G[slotName]), HIGHLIGHT_FONT_COLOR)
+            GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:GetData(_G[slotName]), HIGHLIGHT_FONT_COLOR)
             GameTooltip_AddColoredLine(GameTooltip, '|cnRED_FONT_COLOR:你尚未收藏过此外观', LIGHTBLUE_FONT_COLOR)
         end
     else
         local nameColor = self.item:GetItemQualityColor().color
         GameTooltip_AddColoredLine(GameTooltip, name, nameColor)
         local slotName = TransmogUtil.GetSlotName(self.slotID)
-        GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:Setup(_G[slotName]), HIGHLIGHT_FONT_COLOR)
+        GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:GetData(_G[slotName]), HIGHLIGHT_FONT_COLOR)
         GameTooltip_AddColoredLine(GameTooltip, '|cnGREEN_FONT_COLOR:|A:common-icon-checkmark:16:16:0:-1|a 你已经收藏过此外观了', GREEN_FONT_COLOR)
     end
     GameTooltip:Show()
@@ -436,7 +452,7 @@ local function Init_WarbandSceneJournal()
         end
         --self.warbandSceneInfo = C_WarbandScene.GetWarbandSceneEntry(self.elementData.warbandSceneID)
         if self.warbandSceneInfo then
-            local name= WoWTools_ChineseMixin:Setup(self.warbandSceneInfo.name)
+            local name= WoWTools_ChineseMixin:GetData(self.warbandSceneInfo.name)
             if name and name~=self.warbandSceneInfo.name then
                 self.Name:SetText(name)
             end

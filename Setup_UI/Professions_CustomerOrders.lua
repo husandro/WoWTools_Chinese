@@ -162,7 +162,7 @@ local function Init()
     hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'InitSchematic', function(self)
         local professionName = C_TradeSkillUI.GetProfessionNameForSkillLineAbility(self.order.skillLineAbilityID)
         professionName= WoWTools_ChineseMixin:CN(professionName) or professionName
-        self.ProfessionText:SetFormattedText('%s 配方', WoWTools_ChineseMixin:Setup(professionName))
+        self.ProfessionText:SetFormattedText('%s 配方', WoWTools_ChineseMixin:GetData(professionName))
     end)
 
     hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'Init', function(self, order)

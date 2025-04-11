@@ -323,11 +323,11 @@
         for i, specId in ipairs(specIds) do
             local _, name = GetSpecializationInfoForSpecID(specId)
             if (self.card.recruitingSpecIds[specId]) then
-                table.insert(matchingSpecNames, WoWTools_ChineseMixin:Setup(name))
+                table.insert(matchingSpecNames, WoWTools_ChineseMixin:GetData(name))
             end
         end
         local classDisplayName = UnitClass("player")
-        classDisplayName= WoWTools_ChineseMixin:Setup(classDisplayName)
+        classDisplayName= WoWTools_ChineseMixin:GetData(classDisplayName)
         local isRecruitingAllSpecs = #self.info.recruitingSpecIds == 0 or #self.info.recruitingSpecIds == ClubFinderGetTotalNumSpecializations()
         if(isRecruitingAllSpecs) then
             if(self.info.isGuild) then
@@ -390,7 +390,7 @@
             local guildFactionData = C_Reputation.GetGuildFactionData()
             if guildFactionData and repLevel and repLevel > guildFactionData.reaction then
                 local factionStandingtext = GetText("FACTION_STANDING_LABEL"..repLevel, gender)
-                self.SubText:SetFormattedText('需要：|cffff0000%s|r', WoWTools_ChineseMixin:Setup(factionStandingtext))
+                self.SubText:SetFormattedText('需要：|cffff0000%s|r', WoWTools_ChineseMixin:GetData(factionStandingtext))
             end
         end
     end)
@@ -449,7 +449,7 @@
 
 --没测试
 hooksecurefunc('GuildNewsButton_SetText', function(button, _, text, a, b, c, ...)
-    button.text:SetFormattedText(WoWTools_ChineseMixin:Setup(text), WoWTools_ChineseMixin:Setup(a), WoWTools_ChineseMixin:Setup(b), WoWTools_ChineseMixin:Setup(c), ...)
+    button.text:SetFormattedText(WoWTools_ChineseMixin:GetData(text), WoWTools_ChineseMixin:GetData(a), WoWTools_ChineseMixin:GetData(b), WoWTools_ChineseMixin:GetData(c), ...)
 end)
 
 

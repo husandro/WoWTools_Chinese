@@ -349,8 +349,8 @@ end
 --local Player_Col= '|c'..select(4, GetClassColor(baseClass))..'%s|r'
 local Player_Sex= UnitSex("player")
 local Player_Name=  UnitName('player')
-local Player_Race=  WoWTools_ChineseMixin:Setup(UnitRace('player'))
-local Player_Class=  WoWTools_ChineseMixin:Setup(UnitClass('player'))
+local Player_Race=  WoWTools_ChineseMixin:GetData(UnitRace('player'))
+local Player_Class=  WoWTools_ChineseMixin:GetData(UnitClass('player'))
 
 local function expand_text(msg)-- function WoWeuCN_Quests_ExpandUnitInfo(desc)
    if not msg and msg=='' then

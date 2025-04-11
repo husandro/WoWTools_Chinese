@@ -426,7 +426,7 @@ end
 function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsTemplates()
     WoWTools_ChineseMixin:AddDialogs("PROFESSIONS_RECRAFT_REPLACE_OPTIONAL_REAGENT", {button1 = '接受', button2 = '取消'})
     WoWTools_ChineseMixin:HookDialog("PROFESSIONS_RECRAFT_REPLACE_OPTIONAL_REAGENT", 'OnShow', function(frame, data)
-        frame.text:SetFormattedText('你想替换%s吗？\n它会在再造时被摧毁。', WoWTools_ChineseMixin:Setup(data.itemName))
+        frame.text:SetFormattedText('你想替换%s吗？\n它会在再造时被摧毁。', WoWTools_ChineseMixin:GetData(data.itemName) or data.itemName or '')
     end)
 end
 

@@ -76,7 +76,7 @@ local function InitControlDropdown(containerFrame, _, name, tooltip)
     end
     WoWTools_ChineseMixin:SetLabelText(containerFrame.Text, name)
 
-    local tooltipFunc = GenerateClosure(Settings.InitTooltip, WoWTools_ChineseMixin:Setup(name), WoWTools_ChineseMixin:Setup(tooltip))
+    local tooltipFunc = GenerateClosure(Settings.InitTooltip, WoWTools_ChineseMixin:GetData(name), WoWTools_ChineseMixin:GetData(tooltip))
     containerFrame:SetTooltipFunc(tooltipFunc)
 end
 
@@ -86,7 +86,7 @@ local function InitControlSlider(containerFrame, _, name, tooltip)
     end
     WoWTools_ChineseMixin:SetLabelText(containerFrame.Text, name)
     local sliderWithSteppers = containerFrame.SliderWithSteppers
-    local initTooltip = GenerateClosure(Settings.InitTooltip, WoWTools_ChineseMixin:Setup(name), WoWTools_ChineseMixin:Setup(tooltip))
+    local initTooltip = GenerateClosure(Settings.InitTooltip, WoWTools_ChineseMixin:GetData(name), WoWTools_ChineseMixin:GetData(tooltip))
     sliderWithSteppers.Slider:SetTooltipFunc(initTooltip)
     containerFrame:SetTooltipFunc(initTooltip)
 end
@@ -135,12 +135,12 @@ end)
 
 
 hooksecurefunc(Settings, 'InitTooltip', function(name, tooltip)
-    GameTooltip_SetTitle(SettingsTooltip, WoWTools_ChineseMixin:Setup(name))
+    GameTooltip_SetTitle(SettingsTooltip, WoWTools_ChineseMixin:GetData(name))
 	if tooltip then
 		if type(tooltip) == "function" then
-			GameTooltip_AddNormalLine(SettingsTooltip, WoWTools_ChineseMixin:Setup(tooltip()))
+			GameTooltip_AddNormalLine(SettingsTooltip, WoWTools_ChineseMixin:GetData(tooltip()))
 		else
-			GameTooltip_AddNormalLine(SettingsTooltip, WoWTools_ChineseMixin:Setup(tooltip))
+			GameTooltip_AddNormalLine(SettingsTooltip, WoWTools_ChineseMixin:GetData(tooltip))
 		end
 	end
 end)

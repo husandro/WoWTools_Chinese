@@ -101,7 +101,6 @@ local function Init()
         for _, btn in pairs(frame:GetFrames() or {}) do
             if btn.Button then
                 WoWTools_ChineseMixin:SetLabelText(btn.Button.Label, btn.Button.name)
-                --print(btn.Button.Label:GetText(), WoWTools_ChineseMixin:Setup(btn.Button.name))
             end
         end
     end)
@@ -152,7 +151,7 @@ local function Init()
             requiresRep, _, repLevel = GetAchievementGuildRep(ID)
             if ( requiresRep and repLevel) then
                 local factionStandingtext = GetText("FACTION_STANDING_LABEL"..repLevel, UnitSex("player"))
-                objectivesFrame.RepCriteria:SetFormattedText('|cffffffff需要公会声望：|r %s', WoWTools_ChineseMixin:Setup(factionStandingtext) or '')
+                objectivesFrame.RepCriteria:SetFormattedText('|cffffffff需要公会声望：|r %s', WoWTools_ChineseMixin:GetData(factionStandingtext) or factionStandingtext)
             end
         end
         local numCriteria = GetAchievementNumCriteria(ID) or 0
@@ -219,10 +218,10 @@ local function Init()
         local categoryID = GetAchievementCategory(self.achievementID)
         local categoryName, parentCategoryID = GetCategoryInfo(categoryID)
 
-        local path = WoWTools_ChineseMixin:Setup(categoryName)
+        local path = WoWTools_ChineseMixin:GetData(categoryName) or categoryName
         while ( not (parentCategoryID == -1) ) do
             categoryName, parentCategoryID = GetCategoryInfo(parentCategoryID)
-            path = WoWTools_ChineseMixin:Setup(categoryName).." > "..path
+            path = (WoWTools_ChineseMixin:GetData(categoryName) or categoryName).." > "..path
         end
         self.Path:SetText(path)
     end)

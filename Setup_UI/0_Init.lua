@@ -457,7 +457,7 @@ end)
 PlayerCastingBarFrame:HookScript('OnEvent', function(self, event, _, _, spellID)
     if self:IsShown() then
         if event== "UNIT_SPELLCAST_START" or event== "UNIT_SPELLCAST_CHANNEL_START" or event== "UNIT_SPELLCAST_EMPOWER_START" then
-            local name= WoWTools_ChineseMixin:Setup(self.Text:GetText(), {spellID=spellID, isName=true})
+            local name= WoWTools_ChineseMixin:GetData(self.Text:GetText(), {spellID=spellID, isName=true})
             if name then
                 self.Text:SetText(name)
             end
@@ -476,7 +476,7 @@ end)
 OverlayPlayerCastingBarFrame:HookScript('OnEvent', function(self, event, _, _, spellID)
     if self:IsShown() then
         if event== "UNIT_SPELLCAST_START" or event== "UNIT_SPELLCAST_CHANNEL_START" or event== "UNIT_SPELLCAST_EMPOWER_START" then
-            local name= WoWTools_ChineseMixin:Setup(self.Text:GetText(), {spellID=spellID, isName=true})
+            local name= WoWTools_ChineseMixin:GetData(self.Text:GetText(), {spellID=spellID, isName=true})
             if name then
                 self.Text:SetText(name)
             end

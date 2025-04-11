@@ -105,7 +105,7 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
         end
 
 	elseif ( which == "BILLING_NAG" ) then
-		text:SetFormattedText(WoWTools_ChineseMixin:Setup(info.text), WoWTools_ChineseMixin:Setup(text_arg1), '|4分钟:分钟;');
+		text:SetFormattedText(WoWTools_ChineseMixin:GetData(info.text), WoWTools_ChineseMixin:GetData(text_arg1), '|4分钟:分钟;');
 
 	elseif ( which == "SPELL_CONFIRMATION_PROMPT" or which == "SPELL_CONFIRMATION_WARNING" or which == "SPELL_CONFIRMATION_PROMPT_ALERT" or which == "SPELL_CONFIRMATION_WARNING_ALERT" ) then
         local a= WoWTools_ChineseMixin:SetText(text_arg1)
@@ -116,11 +116,11 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
 
 	elseif ( which == "CONFIRM_AZERITE_EMPOWERED_RESPEC_EXPENSIVE" ) then
 		local goldDisplay = GetMoneyString(data.respecCost, true);
-		text:SetFormattedText(WoWTools_ChineseMixin:Setup(info.text), goldDisplay, WoWTools_ChineseMixin:Setup(text_arg1), '重铸');
+		text:SetFormattedText(WoWTools_ChineseMixin:GetData(info.text), goldDisplay, WoWTools_ChineseMixin:GetData(text_arg1), '重铸');
 
 	elseif  ( which == "BUYOUT_AUCTION_EXPENSIVE" ) then
 		local goldDisplay = GetMoneyString(text_arg1, true);
-		text:SetFormattedText(WoWTools_ChineseMixin:Setup(info.text), goldDisplay, '一口价');
+		text:SetFormattedText(WoWTools_ChineseMixin:GetData(info.text), goldDisplay, '一口价');
 
 	else
         local a, b= WoWTools_ChineseMixin:SetText(text_arg1), WoWTools_ChineseMixin:SetText(text_arg2)

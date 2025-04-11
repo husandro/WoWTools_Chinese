@@ -22,7 +22,7 @@ hooksecurefunc('SetZoneText', function()
         pvpTextString:SetText('（PvP区域）')
     elseif ( pvpType == "friendly" or  pvpType == "hostile" ) then
         if (factionName and factionName ~= "") then
-            pvpTextString:SetFormattedText('（%s领地）', WoWTools_ChineseMixin:Setup(factionName))
+            pvpTextString:SetFormattedText('（%s领地）', WoWTools_ChineseMixin:GetData(factionName))
         end
     elseif ( pvpType == "contested" ) then
         pvpTextString:SetText('（争夺中的领土）')

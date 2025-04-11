@@ -34,7 +34,7 @@ local function Init_SpellBookFrame()
 
 --名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateVisuals', function(self)
-        local name= WoWTools_ChineseMixin:Setup(self.spellBookItemInfo.name, {spellID=self.spellBookItemInfo.actionID, isName=true})
+        local name= WoWTools_ChineseMixin:GetData(self.spellBookItemInfo.name, {spellID=self.spellBookItemInfo.actionID, isName=true})
         if name then
             self.Name:SetText(name)
         end
@@ -56,7 +56,7 @@ local function Init_SpellBookFrame()
 
 --子，名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateSubName', function(self, subNameText)
-        local name= WoWTools_ChineseMixin:Setup(subNameText)
+        local name= WoWTools_ChineseMixin:GetData(subNameText)
         if name then
             self.SubName:SetText(name)
         end
@@ -151,7 +151,7 @@ local function Init_TalentsFrame()
         for _, btn in pairs(frame:GetFrames() or {}) do
             local info= btn.talentInfo
             if info then
-                local name= WoWTools_ChineseMixin:Setup(nil, {spellID=info.spellID, isName=true})
+                local name= WoWTools_ChineseMixin:GetData(nil, {spellID=info.spellID, isName=true})
                 if name then
                     btn.Name:SetText(name)
                 end
@@ -218,7 +218,7 @@ local function Init_SpecFrame()
 
         local specID, name, description, icon, _, primaryStat = GetSpecializationInfo(frame.specIndex, false, false, nil, sex)
         if description then
-            frame.Description:SetText(WoWTools_ChineseMixin:Setup(description).."|n"..format('主要属性：%s', WoWTools_ChineseMixin:Setup(SPEC_STAT_STRINGS[primaryStat])))
+            frame.Description:SetText(WoWTools_ChineseMixin:GetData(description).."|n"..format('主要属性：%s', WoWTools_ChineseMixin:GetData(SPEC_STAT_STRINGS[primaryStat])))
         end
     end
 end

@@ -19,7 +19,8 @@
 Data\0_zhCN.lua
 Data\1_zhCN_Add.lua
 
-
+##商店
+Data\AccountStore.lua
 
 ##法术
 Data\Spell_Data_Flyout.lua
@@ -41,6 +42,7 @@ Data\Faction_Data_Friend.lua
 
 ##货币
 Data\Currency_Data.lua
+
 
 ##任务
 Data\Scenario_StageBlock_Data.lua

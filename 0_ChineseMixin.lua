@@ -23,7 +23,7 @@ end
 
 
 
-function WoWTools_ChineseMixin:Setup(text, tab)
+function WoWTools_ChineseMixin:GetData(text, tab)
     local data= self:SetText(text)
     if data then
         return data

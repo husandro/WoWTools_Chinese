@@ -64,9 +64,9 @@ local function Init_Blizzard_PerksProgramElements()
             self.DescriptionText:SetText(descriptionText);
         end
 
-        local categoryText = WoWTools_ChineseMixin:Setup(PerksProgramFrame:GetCategoryText(self.data.perksVendorCategoryID))
+        local categoryText = WoWTools_ChineseMixin:GetData(PerksProgramFrame:GetCategoryText(self.data.perksVendorCategoryID))
         if self.data.perksVendorCategoryID == Enum.PerksVendorCategoryType.Mount then
-            categoryText = format('%s %s', WoWTools_ChineseMixin:Setup(self.data.mountTypeName), categoryText);
+            categoryText = format('%s %s', WoWTools_ChineseMixin:GetData(self.data.mountTypeName), categoryText);
         end
         self.CategoryText:SetText(categoryText);
 

@@ -197,9 +197,9 @@ LFGDungeonReadyDialogInstanceInfoFrame:HookScript('OnEnter', function()--LFGDung
     for i=1, numBosses do
         local bossName, _, isKilled = GetLFGProposalEncounter(i)
         if ( isKilled ) then
-            GameTooltip:AddDoubleLine('|A:common-icon-redx:0:0|a'.. WoWTools_ChineseMixin:Setup(bossName), '|cnRED_FONT_COLOR:已消灭')
+            GameTooltip:AddDoubleLine('|A:common-icon-redx:0:0|a'.. WoWTools_ChineseMixin:GetData(bossName), '|cnRED_FONT_COLOR:已消灭')
         else
-            GameTooltip:AddDoubleLine(format('|A:%s:0:0|a', e.Icon.select)..WoWTools_ChineseMixin:Setup(bossName), '|cnGREEN_FONT_COLOR:可消灭')
+            GameTooltip:AddDoubleLine(format('|A:%s:0:0|a', e.Icon.select)..WoWTools_ChineseMixin:GetData(bossName), '|cnGREEN_FONT_COLOR:可消灭')
         end
     end
     GameTooltip:Show()

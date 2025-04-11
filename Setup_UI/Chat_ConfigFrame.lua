@@ -153,7 +153,7 @@ hooksecurefunc('TextToSpeechFrame_CreateCheckboxes', function(frame)
 		checkBoxName = checkBoxNameString..index
 		checkBox = _G[checkBoxName]
         checkBoxFontString = checkBox.text;
-        checkBoxFontString:SetText((channelsWithTtsName[value] and WoWTools_ChineseMixin:Setup(_G[value.."_TTS_LABEL"]) or WoWTools_ChineseMixin:Setup(_G[value])) or value)
+        checkBoxFontString:SetText((channelsWithTtsName[value] and WoWTools_ChineseMixin:GetData(_G[value.."_TTS_LABEL"]) or WoWTools_ChineseMixin:GetData(_G[value])) or value)
 	end
 end)
 

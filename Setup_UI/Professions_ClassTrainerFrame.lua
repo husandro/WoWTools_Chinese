@@ -57,7 +57,7 @@ local function Init()
         if ( isTradeSkill ) then
             local skill, rank, hasReq = GetTrainerServiceSkillReq(skillIndex)
             if ( skill ) then
-                skill= WoWTools_ChineseMixin:Setup(skill)
+                skill= WoWTools_ChineseMixin:GetData(skill)
                 if ( hasReq ) then
                     requirements = requirements..separator..format('%s (|cffffffff%d|r)', skill, rank )
                 else
@@ -74,7 +74,7 @@ local function Init()
             for i=1, numRequirements, 1 do
                 ability, hasReq = GetTrainerServiceAbilityReq(skillIndex, i)
                 if ( ability ) then
-                    ability= WoWTools_ChineseMixin:Setup(ability)
+                    ability= WoWTools_ChineseMixin:GetData(ability)
                     if ( hasReq ) then
                         requirements = requirements..separator..format('|cffffffff%s|r', ability )
                     else

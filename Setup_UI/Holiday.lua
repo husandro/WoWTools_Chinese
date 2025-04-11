@@ -12,7 +12,7 @@ local function calendar_Uptate()
     local info= indexInfo and C_Calendar.GetDayEvent(indexInfo.offsetMonths, indexInfo.monthDay, indexInfo.eventIndex) or {}
 
     if info.eventID then
-        local data= WoWTools_ChineseMixin:Setup(nil, {holydayID= info.eventID}) or {}
+        local data= WoWTools_ChineseMixin:GetData(nil, {holydayID= info.eventID}) or {}
         local head= data[1]
         local desc= data[2]
         if head then
