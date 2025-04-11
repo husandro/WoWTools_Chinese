@@ -300,7 +300,7 @@ function GameTooltip_OnTooltipAddMoney(self, cost, maxcost)
     if( not maxcost or maxcost < 1 ) then --We just have 1 price to display
         SetTooltipMoney(self, cost, nil, string.format("%s:", '卖价'))
     else
-        GameTooltip_AddColoredLine(self, ("%s:"):format('卖价'), HIGHLIGHT_FONT_COLOR)
+        GameTooltip_AddColoredLine(self, format("%s:", '卖价'), HIGHLIGHT_FONT_COLOR)
         local indent = string.rep(" ",4)
         SetTooltipMoney(self, cost, nil, string.format("%s%s:", indent, '最小'))
         SetTooltipMoney(self, maxcost, nil, string.format("%s%s:", indent, '最大'))

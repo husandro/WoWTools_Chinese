@@ -247,7 +247,7 @@ local function LFGListUtil_GetQuestDescription(questID)
     if ( QuestUtils_IsQuestWorldQuest(questID) ) then
         descriptionFormat = '完成世界任务[%s]。'
     end
-    return descriptionFormat:format(QuestUtils_GetQuestName(questID))
+    return format(descriptionFormat, QuestUtils_GetQuestName(questID))
 end
 hooksecurefunc('LFGListEntryCreation_SetEditMode', function(self)--LFGList.lua
     local descInstructions = nil
