@@ -36,10 +36,10 @@ https://www.curseforge.com/wow/addons/quest-chinese-translator
 WoWTools_ChineseMixin:ReplaceText(string)
 法术 WoWTools_ChineseMixin:Get_Spell_Data(spellID)
 物品 WoWTools_ChineseMixin:Get_Item_Info(itemID)
-任务 e.Get_Quest_Info(questID, isName, isObject, isDesc)
+任务 WoWTools_ChineseMixin:Get_Quest_Info(questID, isName, isObject, isDesc)
 
-e.Get_Unit_Info(unit, npcID)
-e.Get_Unit_Name(unit, npcID)
+WoWTools_ChineseMixin:Get_Unit_Info(unit, npcID)
+WoWTools_ChineseMixin:Get_Unit_Name(unit, npcID)
 
 WoWTools_ChineseMixin:Get_Boss_Info(journalEncounterID)
 WoWTools_ChineseMixin:Get_Boss_Desc(journalEncounterID)
@@ -121,11 +121,11 @@ end
 
 
 --法术 WoWTools_ChineseMixin:Get_Spell_Data(spellID)
-e.Get_Spell_Data= function(spellID)
+function WoWTools_ChineseMixin:Get_Spell_Data(spellID)
     if GetSpellData then
         GetSpellData(spellID)
     end
-    
+
     local data
     if spellID and WoWeuCN_Tooltips_SpellIndexData_0 then
         local index
@@ -274,7 +274,7 @@ end
 
 
 
---单位 e.Get_Unit_Name(tab.unit, tab.npcID)
+--单位 WoWTools_ChineseMixin:Get_Unit_Name(tab.unit, tab.npcID)
 local function Get_NPC_ID(unit)--NPC ID
     if UnitExists(unit) then
         local guid=UnitGUID(unit)
@@ -318,13 +318,13 @@ local Get_Unit_Data= GetUnitData or function(npcID)
 end
 
 
-function e.Get_Unit_Info(unit, npcID)
+function WoWTools_ChineseMixin:Get_Unit_Info(unit, npcID)
     npcID= npcID or Get_NPC_ID(unit)
     return Get_Unit_Data(npcID)
 end
 
-function e.Get_Unit_Name(unit, npcID)
-    local data= e.Get_Unit_Info(unit, npcID)
+function WoWTools_ChineseMixin:Get_Unit_Name(unit, npcID)
+    local data= self:Get_Unit_Info(unit, npcID)
     if data then
         return data[1], data[2]
     end
@@ -350,7 +350,7 @@ end
 
 
 
---任务 e.Get_Quest_Info(questID, isName, isObject, isDesc)
+--任务 WoWTools_ChineseMixin:Get_Quest_Info(questID, isName, isObject, isDesc)
 --local baseClass= UnitClassBase('player')
 --local Player_Col= '|c'..select(4, GetClassColor(baseClass))..'%s|r'
 local Player_Sex= UnitSex("player")
@@ -384,7 +384,7 @@ end
 
 
 
-function e.Get_Quest_Info(questID, isName, isObject, isDesc)
+function WoWTools_ChineseMixin:Get_Quest_Info(questID, isName, isObject, isDesc)
     if not questID then
         return
     end
