@@ -16,6 +16,7 @@ do
         if info then
             WoWTools_ChineseMixin:SetCN(info.name, data[1])
             WoWTools_ChineseMixin:SetCN(info.description, data[2])
+            WoWTools_ChineseMixin:SetCN(info.source, data[3])
         end
     end
 end
