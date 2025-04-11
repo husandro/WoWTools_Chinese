@@ -277,9 +277,12 @@ local function Init_CraftingPage_SchematicForm()
         if not recipeInfo then
             return
         end
+        
         local name
         local isRecraft
         local recipeID = recipeInfo.recipeID
+        self.recipeID= recipeID
+
         local reagents = self.transaction:CreateCraftingReagentInfoTbl()
         local outputItemInfo = C_TradeSkillUI.GetRecipeOutputItemData(recipeID, reagents, self.transaction:GetAllocationItemGUID()) or {}
 
@@ -336,6 +339,62 @@ local function Init_CraftingPage_SchematicForm()
             end
         end
     end)
+
+
+
+    --[[local RequirementTypeToString =
+    {
+        [Enum.RecipeRequirementType.SpellFocus] = "SpellFocusRequirement",
+        [Enum.RecipeRequirementType.Totem] = "TotemRequirement",
+        [Enum.RecipeRequirementType.Area] = "AreaRequirement",
+    };
+    local function FormatRequirements(requirements)
+        local formattedRequirements = {};
+        for _, recipeRequirement in ipairs(requirements) do
+            table.insert(formattedRequirements, LinkUtil.FormatLink(RequirementTypeToString[recipeRequirement.type], recipeRequirement.name));
+            table.insert(formattedRequirements, recipeRequirement.met);
+        end
+        return formattedRequirements;
+    end
+    local function Tools_Text(self, text)
+        local recipeInfo= self:GetParent().currentRecipeInfo
+        local recipeID= recipeInfo.recipeID
+        if not recipeID or not self:IsShown() or text=='' then
+            self.P_SetText(self, text)
+            return
+        end
+
+        local requirements = C_TradeSkillUI.GetRecipeRequirements(recipeID)
+        if (#requirements > 0) then
+            local requirementsText = BuildColoredListString(unpack(FormatRequirements(requirements)));
+            local minimized= ProfessionsUtil.IsCraftingMinimized()
+            local maxWidth = minimized and 250 or 800;
+            local multiline = minimized;
+            print(requirementsText)
+            SetTextToFit(self, PROFESSIONS_REQUIRED_TOOLS:format(requirementsText), maxWidth, multiline);
+        else
+            self.P_SetText(self, "")
+        end
+    end
+
+
+    
+    frame.RequiredTools.P_SetText= frame.RequiredTools.SetText
+    frame.RecraftingRequiredTools.P_SetText= frame.RecraftingRequiredTools.SetText
+    function frame.RequiredTools:SetText(...)
+        Tools_Text(self, ...)
+    end
+    function frame.RecraftingRequiredTools:SetText(...)
+        Tools_Text(self, ...)
+    end]]
+
+
+
+
+
+
+
+
 
 
 
