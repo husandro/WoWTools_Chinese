@@ -283,6 +283,7 @@ local function Init_CraftingPage_SchematicForm()
         local reagents = self.transaction:CreateCraftingReagentInfoTbl()
         local outputItemInfo = C_TradeSkillUI.GetRecipeOutputItemData(recipeID, reagents, self.transaction:GetAllocationItemGUID()) or {}
 
+
         if outputItemInfo.hyperlink then
             name = WoWTools_ChineseMixin:GetRecipeName(recipeInfo, outputItemInfo.hyperlink)
         else
@@ -315,10 +316,9 @@ local function Init_CraftingPage_SchematicForm()
         if self.RecipeSourceButton:IsShown() then
             local sourceText--, sourceTextIsForNextRank
             if not recipeInfo.learned then
-                sourceText = WoWTools_ChineseMixin:GetData(C_TradeSkillUI.GetRecipeSourceText(recipeID), {recipeID=recipeID})
+                sourceText= WoWTools_ChineseMixin:GetRecipeSource(recipeID) or WoWTools_ChineseMixin:CN(C_TradeSkillUI.GetRecipeSourceText(recipeID))
             elseif recipeInfo.nextRecipeID then
-                sourceText= WoWTools_ChineseMixin:GetData(C_TradeSkillUI.GetRecipeSourceText(nextRecipeID), {recipeID=nextRecipeID})
-                --sourceTextIsForNextRank = true
+                sourceText= WoWTools_ChineseMixin:GetRecipeSource(recipeInfo.nextRecipeID) or WoWTools_ChineseMixin:CN(C_TradeSkillUI.GetRecipeSourceText(recipeInfo.nextRecipeID))
             end
             if sourceText then
                 --[[if sourceTextIsForNextRank then
@@ -329,6 +329,7 @@ local function Init_CraftingPage_SchematicForm()
                 self.RecipeSourceButton:SetScript("OnEnter", function()
                     GameTooltip:SetOwner(self.RecipeSourceButton.Text, "ANCHOR_RIGHT")
                     GameTooltip:SetCustomWordWrapMinWidth(350)
+                    print(sourceText, recipeID)
                     GameTooltip_AddHighlightLine(GameTooltip, sourceText)
                     GameTooltip:Show()
                 end)
@@ -412,7 +413,7 @@ local function Init_SpecPage()
         local specName= WoWTools_ChineseMixin:GetData(info.specName)
         local headerText = HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(format('学习%s？', WoWTools_ChineseMixin:GetData(specName)).."\n\n")
         local bodyKey = info.hasAnyConfigChanges and '所有待定的改动都会在解锁此专精后进行应用。您确定要学习%s副专精吗？' or '您确定想学习%s专精吗？您将来可以在%s专业里更加精进后选择额外的专精。'
-        local bodyText = NORMAL_FONT_COLOR:WrapTextInColorCode(bodyKey:format(specName, WoWTools_ChineseMixin:GetData(info.profName)))
+        local bodyText = NORMAL_FONT_COLOR:WrapTextInColorCode(format(bodyKey, specName, WoWTools_ChineseMixin:GetData(info.profName)))
         self.text:SetText(headerText..bodyText)
         self.text:Show()
     end)

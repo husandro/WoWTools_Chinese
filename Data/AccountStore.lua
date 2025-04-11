@@ -103,7 +103,6 @@ do
     for categoryID, data in pairs(categoryTab) do
         local info= C_AccountStore.GetCategoryInfo(categoryID)
         if info and info.icon==data[2] then
-            print(info.name, data[1])
             WoWTools_ChineseMixin:SetCN(info.name, data[1])
         end
     end
