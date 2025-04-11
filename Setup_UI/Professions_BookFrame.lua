@@ -7,9 +7,9 @@ local id, e = ...
 
 
 local function Set_UpdateButton(self)
-    WoWTools_ChineseMixin:Set_Label_Text(self.spellString)
-    WoWTools_ChineseMixin:Set_Label_Text(self.subSpellString)
-    WoWTools_ChineseMixin:Set_Label_Text(self.subSpellString)
+    WoWTools_ChineseMixin:SetLabelText(self.spellString)
+    WoWTools_ChineseMixin:SetLabelText(self.subSpellString)
+    WoWTools_ChineseMixin:SetLabelText(self.subSpellString)
 end
 
 
@@ -24,20 +24,20 @@ end
 
 
 local function Init()
-    WoWTools_ChineseMixin:Set_Label_Text(ProfessionsBookFrameTitleText)
+    WoWTools_ChineseMixin:SetLabelText(ProfessionsBookFrameTitleText)
 
-    WoWTools_ChineseMixin:Set_Label_Text(PrimaryProfession1Missing)
-    WoWTools_ChineseMixin:Set_Label_Text(PrimaryProfession1.missingText)
-    WoWTools_ChineseMixin:Set_Label_Text(PrimaryProfession2Missing)
-    WoWTools_ChineseMixin:Set_Label_Text(PrimaryProfession2.missingText)
+    WoWTools_ChineseMixin:SetLabelText(PrimaryProfession1Missing)
+    WoWTools_ChineseMixin:SetLabelText(PrimaryProfession1.missingText)
+    WoWTools_ChineseMixin:SetLabelText(PrimaryProfession2Missing)
+    WoWTools_ChineseMixin:SetLabelText(PrimaryProfession2.missingText)
 
-    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession1Missing)
-    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession2Missing)
-    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession3Missing)
+    WoWTools_ChineseMixin:SetLabelText(SecondaryProfession1Missing)
+    WoWTools_ChineseMixin:SetLabelText(SecondaryProfession2Missing)
+    WoWTools_ChineseMixin:SetLabelText(SecondaryProfession3Missing)
 
-    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession1.missingText)
-    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession2.missingText)
-    WoWTools_ChineseMixin:Set_Label_Text(SecondaryProfession3.missingText)
+    WoWTools_ChineseMixin:SetLabelText(SecondaryProfession1.missingText)
+    WoWTools_ChineseMixin:SetLabelText(SecondaryProfession2.missingText)
+    WoWTools_ChineseMixin:SetLabelText(SecondaryProfession3.missingText)
 
 
     local tab={
@@ -57,7 +57,7 @@ local function Init()
     end
 
     hooksecurefunc('FormatProfession', function(frame)
-        WoWTools_ChineseMixin:Set_Label_Text(frame.rank)
+        WoWTools_ChineseMixin:SetLabelText(frame.rank)
         WoWTools_ChineseMixin:HookLabel(frame.professionName, frame.skillName)
     end)
 end

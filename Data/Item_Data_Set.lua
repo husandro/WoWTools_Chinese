@@ -977,7 +977,7 @@ do
             if itemID and itemID>0 then
                 name= C_Item.GetItemNameByID(itemID)
                 if name then
-                    local cnName= WoWTools_ChineseMixin:Get_Item_Name(itemID)
+                    local cnName= WoWTools_ChineseMixin:GetItemName(itemID)
                     if cnName then
                         cnName= cnName:match('^|c........(.+)|r$') or cnName
                         e.strText[name]= cnName

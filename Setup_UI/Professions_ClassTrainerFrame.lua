@@ -27,12 +27,12 @@ local function Init()
                 local itemID= itemLink and C_Item.GetItemInfoInstant(itemLink)
                 if itemID then
                     local itemName= C_Item.GetItemNameByID(itemLink)
-                    name= WoWTools_ChineseMixin:Get_Item_Name(itemID) or e.strText[itemName]
+                    name= WoWTools_ChineseMixin:GetItemName(itemID) or e.strText[itemName]
                 end
                 if not name then
                     local data= C_TooltipInfo.GetTrainerService(skillIndex)
                     if data and not data.isAzeriteItem and data.id then
-                        name= WoWTools_ChineseMixin:Get_Spell_Name(data.id)
+                        name= WoWTools_ChineseMixin:GetSpellName(data.id)
                     end
                 end
             end

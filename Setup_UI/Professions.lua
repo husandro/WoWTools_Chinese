@@ -232,7 +232,7 @@ local function Init_CraftingPage_SchematicForm()
     end
 
     WoWTools_ChineseMixin:HookLabel(frame.Reagents.Label)
-    WoWTools_ChineseMixin:Set_Label_Text(frame.FirstCraftBonus.Text)
+    WoWTools_ChineseMixin:SetLabelText(frame.FirstCraftBonus.Text)
     WoWTools_ChineseMixin:HookLabel(frame.RecipeSourceButton.Text)--未学习的配方
 
     frame.QualityDialog.AcceptButton:SetText('接受')
@@ -248,9 +248,9 @@ local function Init_CraftingPage_SchematicForm()
         end
         local sourceText
         if not recipeInfo.learned then
-            sourceText = WoWTools_ChineseMixin:Get_Recipe_Source(recipeInfo.recipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.recipeID)]
+            sourceText = WoWTools_ChineseMixin:GetRecipeSource(recipeInfo.recipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.recipeID)]
         elseif recipeInfo.nextRecipeID then
-            sourceText =  WoWTools_ChineseMixin:Get_Recipe_Source(recipeInfo.nextRecipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.nextRecipeID)]
+            sourceText =  WoWTools_ChineseMixin:GetRecipeSource(recipeInfo.nextRecipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.nextRecipeID)]
         end
         if sourceText then
             GameTooltip:AddLine(' ')
@@ -347,7 +347,7 @@ local function Init_CraftingPage_SchematicForm()
         local spellID= spell:GetSpellID()
         if spellID then
             local desc
-            for i, text in pairs(WoWTools_ChineseMixin:Get_Spell_Data(spellID) or {}) do
+            for i, text in pairs(WoWTools_ChineseMixin:GetSpellData(spellID) or {}) do
                 if i>1 then
                     if not desc or #text> #desc then
                         desc= text
@@ -452,7 +452,7 @@ local function Init_SpecPage()
 
     --ProfessionsSpecFrameMixin
     hooksecurefunc(ProfessionsFrame.SpecPage, 'UpdateDetailedPanel', function(self)
-        local data= WoWTools_ChineseMixin:Get_Profession_Node_Desc(self:GetDetailedPanelNodeID())
+        local data= WoWTools_ChineseMixin:GetProfessionNodeDesc(self:GetDetailedPanelNodeID())
         local name= data and data[1]
         if not name then
             local detailedViewPath = self:GetDetailedPanelPath();
@@ -466,7 +466,7 @@ local function Init_SpecPage()
 
     --专精，技能，提示
     local function on_enter(self)
-        local data= WoWTools_ChineseMixin:Get_Profession_Node_Desc(self.nodeID)
+        local data= WoWTools_ChineseMixin:GetProfessionNodeDesc(self.nodeID)
         if data then
             if data[1] then
                 GameTooltipTextLeft1:SetText(data[1])
@@ -611,7 +611,7 @@ local function Init_OrdersPage()
         if self.professionInfo then
             local isPublic = self.orderType == Enum.CraftingOrderType.Public
             if isPublic and self.professionInfo and self.professionInfo.profession then
-                WoWTools_ChineseMixin:Set_Label_Text(self.BrowseFrame.OrdersRemainingDisplay.OrdersRemaining, format('剩余订单：%s', C_CraftingOrders.GetOrderClaimInfo(self.professionInfo.profession).claimsRemaining))
+                WoWTools_ChineseMixin:SetLabelText(self.BrowseFrame.OrdersRemainingDisplay.OrdersRemaining, format('剩余订单：%s', C_CraftingOrders.GetOrderClaimInfo(self.professionInfo.profession).claimsRemaining))
             end
         end
     end)
@@ -722,7 +722,7 @@ local function Init_OrdersPage()
     end)
 
     hooksecurefunc(frame.OrderView, 'UpdateCreateButton', function(self)
-        WoWTools_ChineseMixin:Set_Label_Text(self.CreateButton)
+        WoWTools_ChineseMixin:SetLabelText(self.CreateButton)
         local transaction = self.OrderDetails.SchematicForm.transaction
         local errorReason
         if Professions.IsRecipeOnCooldown(self.order.spellID) then
@@ -810,7 +810,7 @@ local function Init_CraftingOutputLog()
             return
         end
 
-        WoWTools_ChineseMixin:Set_Label_Text(self.ItemContainer.Text)
+        WoWTools_ChineseMixin:SetLabelText(self.ItemContainer.Text)
 
         if resultData.hasIngenuityProc and resultData.ingenuityRefund > 0 then
             self.ItemContainer.CritText:SetScript("OnEnter", function(text)
@@ -860,7 +860,7 @@ local function Init_Details_Stat()
     WoWTools_ChineseMixin:HookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.DifficultyStatLine.LeftLabel)--配方难度：
     WoWTools_ChineseMixin:HookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.SkillStatLine.LeftLabel)--技能：
     hooksecurefunc(ProfessionsCrafterDetailsStatLineMixin, 'SetLabel', function(self, label)
-        WoWTools_ChineseMixin:Set_Label_Text(self.LeftLabel, label)
+        WoWTools_ChineseMixin:SetLabelText(self.LeftLabel, label)
     end)
     --WoWTools_ChineseMixin:HookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.FinishingReagentSlotContainer.Label)--成品材料：
 
@@ -951,7 +951,7 @@ local function Init_ReagentSlot()
                 reagentName= '未知'
             end
         else
-            reagentName= WoWTools_ChineseMixin:Get_Item_Name(reagent.itemID)
+            reagentName= WoWTools_ChineseMixin:GetItemName(reagent.itemID)
             if not reagentName then
                 local item = Item:CreateFromItemID(reagent.itemID)
                 local itemName= item:GetItemName()
@@ -1080,7 +1080,7 @@ local function Init()
      hooksecurefunc(ProfessionsRecipeListCategoryMixin, 'Init', function(self, node)
         local info= node:GetData().categoryInfo
         if info then
-            local name= WoWTools_ChineseMixin:Get_TradeSkillCategory_Name(info.categoryID) or e.strText[info.name]
+            local name= WoWTools_ChineseMixin:GetTradeSkillCategoryName(info.categoryID) or e.strText[info.name]
             if name then
                 self.Label:SetText(name)
             end
@@ -1100,14 +1100,14 @@ local function Init()
 
 
     --Blizzard_ProfessionsInspectRecipe.lua InspectRecipeMixin
-    WoWTools_ChineseMixin:Set_Label_Text(InspectRecipeFrame.SchematicForm.Reagents.Label)
+    WoWTools_ChineseMixin:SetLabelText(InspectRecipeFrame.SchematicForm.Reagents.Label)
     hooksecurefunc(InspectRecipeFrame, 'Open', function(self, recipeID)
         local data = C_TradeSkillUI.GetProfessionInfoByRecipeID(recipeID) or {}
         local name
         if data.professionName then
-            name= WoWTools_ChineseMixin:Get_TradeSkillCategory_Name(data.professionID) or e.strText[data.professionName]
+            name= WoWTools_ChineseMixin:GetTradeSkillCategoryName(data.professionID) or e.strText[data.professionName]
         elseif data.parentProfessionName then
-            name= WoWTools_ChineseMixin:Get_TradeSkillCategory_Name(data.parentProfessionID) or e.strText[data.parentProfessionName]
+            name= WoWTools_ChineseMixin:GetTradeSkillCategoryName(data.parentProfessionID) or e.strText[data.parentProfessionName]
         end
         if name then
             self:SetTitle(name)

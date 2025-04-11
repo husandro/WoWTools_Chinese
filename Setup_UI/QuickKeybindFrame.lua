@@ -67,6 +67,6 @@ hooksecurefunc(SettingsPanel, 'SetOutputText', set_SetOutputText)
 hooksecurefunc(KeyBindingFrameBindingTemplateMixin,'Init', function(self)
     local label= self.Text or self.Label
     if label then
-        WoWTools_ChineseMixin:Set_Label_Text(label, label:GetText())
+        WoWTools_ChineseMixin:SetLabelText(label, label:GetText())
     end
 end)

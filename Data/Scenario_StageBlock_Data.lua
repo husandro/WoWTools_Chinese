@@ -1234,6 +1234,6 @@ local tab={
 
 
 local e= select(2, ...)
-function WoWTools_ChineseMixin:Get_Scenario_Name(scenarioID)
+function WoWTools_ChineseMixin:GetScenarioName(scenarioID)
     return tab[scenarioID]
 end

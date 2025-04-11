@@ -283,11 +283,11 @@ hooksecurefunc('LFGListApplicationViewer_UpdateInfo', function(self)
         return
     end
 
-    WoWTools_ChineseMixin:Set_Label_Text(self.EntryName, activeEntryInfo.name)
+    WoWTools_ChineseMixin:SetLabelText(self.EntryName, activeEntryInfo.name)
 
     local activityName= e.strText[self.DescriptionFrame.activityName]
     if ( activeEntryInfo.comment == "" ) then
-        WoWTools_ChineseMixin:Set_Label_Text(self.DescriptionFrame.Text, activityName)
+        WoWTools_ChineseMixin:SetLabelText(self.DescriptionFrame.Text, activityName)
     else
         local comment= e.strText[activeEntryInfo.comment]
         if comment or activityName then
@@ -422,7 +422,7 @@ end)
 
 hooksecurefunc('LFGListEntryCreation_Show', function(self, _, selectedCategory)
     local categoryInfo = C_LFGList.GetLfgCategoryInfo(selectedCategory)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Label,categoryInfo.name)
+    WoWTools_ChineseMixin:SetLabelText(self.Label,categoryInfo.name)
 end)
 
 LFGListFrame.ApplicationViewer.AutoAcceptButton.Label:SetText('自动邀请')

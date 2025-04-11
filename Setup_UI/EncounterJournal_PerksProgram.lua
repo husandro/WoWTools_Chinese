@@ -41,7 +41,7 @@ local function Init_Blizzard_PerksProgramElements()
             return;
         end
 
-        local itemData= WoWTools_ChineseMixin:Get_Item_Info(self.data.itemID)
+        local itemData= WoWTools_ChineseMixin:GetItemData(self.data.itemID)
         local name= e.strText[self.data.name] or (itemData and WoWTools_ChineseMixin:ReplaceText(itemData[1]))
         if name then
             self.ProductNameText:SetText(name)
@@ -49,7 +49,7 @@ local function Init_Blizzard_PerksProgramElements()
 
         local descriptionText
         if self.data.speciesID and self.data.speciesID>0 then
-            local petData= WoWTools_ChineseMixin:Get_Pet_Description(self.data.speciesID)
+            local petData= WoWTools_ChineseMixin:GetPetDesc(self.data.speciesID)
             if petData then
                 descriptionText= petData[1]
             end
@@ -115,7 +115,7 @@ local function Init_Blizzard_PerksProgramElements()
     end)
 
     hooksecurefunc(PerksProgramSetDetailsItemMixin, 'Refresh', function(self)
-        local name= e.strText[self.elementData.itemName] or WoWTools_ChineseMixin:Get_Item_Name(self.elementData.itemID)
+        local name= e.strText[self.elementData.itemName] or WoWTools_ChineseMixin:GetItemName(self.elementData.itemID)
         if name then
             self.ItemName:SetText(name)
         end
@@ -156,15 +156,15 @@ local function Init()
         if not self.itemInfo then
             return
         end
-        local itemName= WoWTools_ChineseMixin:Get_Item_Name(self.itemInfo.itemID)
+        local itemName= WoWTools_ChineseMixin:GetItemName(self.itemInfo.itemID)
         if itemName then
             self.ContentsContainer.Label:SetText(itemName)
         end
     end
     hooksecurefunc(PerksProgramProductButtonMixin, 'SetItemInfo', set_item)
     hooksecurefunc(PerksProgramFrozenProductButtonMixin, 'SetItemInfo', set_item)
-    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.NameSortButton.Label)
-    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.PriceSortButton.Label)
+    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.NameSortButton.Label)
+    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.PriceSortButton.Label)
 
 
 
@@ -172,12 +172,12 @@ local function Init()
     -- Blizzard_PerksProgramFooter.lua
     --PerksProgramFooterFrameMixin
     WoWTools_ChineseMixin:HookLabel(PerksProgramFrame.FooterFrame.PurchaseButton)
-    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.RefundButton)
-    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.TogglePlayerPreview.Text)
-    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.ToggleMountSpecial.Text)
-    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.ToggleHideArmor.Text)
-    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.ToggleAttackAnimation.Text)
-    WoWTools_ChineseMixin:Set_Label_Text(PerksProgramFrame.FooterFrame.PurchasedHistoryFrame.PurchasedText)
+    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.RefundButton)
+    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.TogglePlayerPreview.Text)
+    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.ToggleMountSpecial.Text)
+    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.ToggleHideArmor.Text)
+    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.ToggleAttackAnimation.Text)
+    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.PurchasedHistoryFrame.PurchasedText)
     PerksProgramFrame.FooterFrame.LeaveButton:HookScript('OnShow', function(self)
         self:SetFormattedText('%s 离开', CreateAtlasMarkup("perks-backarrow", 8, 13, 0, 0))
     end)

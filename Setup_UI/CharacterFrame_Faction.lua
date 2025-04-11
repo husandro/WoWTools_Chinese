@@ -50,7 +50,7 @@ WoWTools_ChineseMixin:HookLabel(ReputationFrame.ReputationDetailFrame.Descriptio
             return
         end
         for _, frame in pairs(self:GetFrames() or {}) do
-            WoWTools_ChineseMixin:Set_Label_Text(frame.Container.Name)
+            WoWTools_ChineseMixin:SetLabelText(frame.Container.Name)
 
             local bar=frame.Container.ReputationBar
             if bar then

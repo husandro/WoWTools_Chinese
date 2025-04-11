@@ -5,7 +5,7 @@ local e= select(2, ...)
 
 local function set_objective_header(self)
     if self.Header then
-        WoWTools_ChineseMixin:Set_Label_Text(self.Header.Text, self.headerText)
+        WoWTools_ChineseMixin:SetLabelText(self.Header.Text, self.headerText)
     end
 end
 
@@ -32,7 +32,7 @@ end
 local function set_quest(_, block)
     local questID= block.id and tonumber(block.id)
     if questID then
-        local name= WoWTools_ChineseMixin:Get_Quest_Info(questID, true, false, false)
+        local name= WoWTools_ChineseMixin:GetQuestData(questID, true, false, false)
         if name then
             block:SetHeader(name)
         end
@@ -46,7 +46,7 @@ end
 hooksecurefunc(QuestObjectiveTracker, 'UpdateSingle', set_quest)
 local questID = quest:GetID()
 local block = Get_Block(self, questID)    
-local name= WoWTools_ChineseMixin:Get_Quest_Info(questID, true, false, false)
+local name= WoWTools_ChineseMixin:GetQuestData(questID, true, false, false)
 if block and name then
     block:SetHeader(name)
 end
@@ -70,7 +70,7 @@ hooksecurefunc(AutoQuestPopupBlockMixin, 'Update', function(self, questTitle, qu
         contents.TopText:SetText('发现任务！')
         contents.BottomText:SetText('点击以查看任务')
     end
-    local title= WoWTools_ChineseMixin:Get_Quest_Info(questID, true, false, false) or e.strText[questTitle]
+    local title= WoWTools_ChineseMixin:GetQuestData(questID, true, false, false) or e.strText[questTitle]
     if title then
         contents.QuestName:SetText(title)
     end
@@ -110,7 +110,7 @@ hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', set_quest)
 --MonthlyActivitiesObjectiveTracker:HookScript('OnShow', set_objective_header)
 hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'AddBlock', function(_, block)
-    local data= WoWTools_ChineseMixin:Get_PerksActivity_Info(block.id)
+    local data= WoWTools_ChineseMixin:GetPerksActivityInfo(block.id)
     if data and data[1] then
         block:SetHeader(data[1])
     end
@@ -206,7 +206,7 @@ hooksecurefunc(ScenarioObjectiveTracker, 'LayoutContents', function(self)
 	local scenarioName, _, _, _, _, _, _, _, _, scenarioType, _, _, scenarioID = C_Scenario.GetInfo()
     local name
 	if scenarioType == LE_SCENARIO_TYPE_CHALLENGE_MODE then
-        name= WoWTools_ChineseMixin:Get_Scenario_Name(scenarioID) or e.strText[scenarioName]
+        name= WoWTools_ChineseMixin:GetScenarioName(scenarioID) or e.strText[scenarioName]
 
 	elseif scenarioType == LE_SCENARIO_TYPE_PROVING_GROUNDS or self.ProvingGroundsBlock:IsActive() then
 		name= '试炼场'
@@ -215,7 +215,7 @@ hooksecurefunc(ScenarioObjectiveTracker, 'LayoutContents', function(self)
 	elseif ShouldShowMawBuffs() and not IsInJailersTower() then
 		name= e.strText[GetZoneText()]
 	else
-		name= WoWTools_ChineseMixin:Get_Scenario_Name(scenarioID) or e.strText[scenarioName]
+		name= WoWTools_ChineseMixin:GetScenarioName(scenarioID) or e.strText[scenarioName]
 	end
     if name then
         self.Header.Text:SetText(name)
@@ -227,7 +227,7 @@ end)
 ScenarioObjectiveTracker.StageBlock.Name:SetPoint('RIGHT', -20, 0)
 hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function(self, scenarioID, scenarioType, widgetSetID, textureKit, flags, currentStage, stageName, numStages)
     if bit.band(flags, SCENARIO_FLAG_SUPRESS_STAGE_TEXT) == SCENARIO_FLAG_SUPRESS_STAGE_TEXT then
-        local data= WoWTools_ChineseMixin:Get_Scenario_Step_Info(scenarioID, currentStage) or {}
+        local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage) or {}
         local name= data[2] or e.strText[stageName]
         if name then
 		    self.Stage:SetText(name)
@@ -238,7 +238,7 @@ hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function
 		else
 			self.Stage:SetFormattedText('阶段 %d', currentStage)
 		end
-        local data= WoWTools_ChineseMixin:Get_Scenario_Step_Info(scenarioID, currentStage) or {}
+        local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage) or {}
         local name= data[2] or e.strText[stageName]
         if name then
 		    self.Name:SetText(name)
@@ -266,7 +266,7 @@ end)
 
 ScenarioObjectiveTracker.StageBlock:HookScript('OnEnter', function()
     local _, currentStage, numStages, _, _, _, _, _, _, _, _, _, scenarioID = C_Scenario.GetInfo()
-    local data= WoWTools_ChineseMixin:Get_Scenario_Step_Info(scenarioID, currentStage) or {}
+    local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage) or {}
     local desc, name= data[1], data[2]
     if name or desc then
         GameTooltip:AddLine(' ')
@@ -278,7 +278,7 @@ ScenarioObjectiveTracker.StageBlock:HookScript('OnEnter', function()
         end
         if numStages and currentStage< numStages then
             for index= currentStage+1, numStages, 1 do
-                data= WoWTools_ChineseMixin:Get_Scenario_Step_Info(scenarioID, index) or {}
+                data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, index) or {}
                 desc, name= data[1], data[2]
                 if name then
                     GameTooltip:AddLine('|cffffffff'..index..') '..name..'|r', nil,nil,nil, true)
@@ -359,7 +359,7 @@ hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, is
             if reagentSlotSchematic then
                 local reagent = reagentSlotSchematic.reagents[1] or {}
                 if reagent.itemID then
-                    name= WoWTools_ChineseMixin:Get_Item_Name(reagent.itemID)
+                    name= WoWTools_ChineseMixin:GetItemName(reagent.itemID)
                     if not name then
                         local item = Item:CreateFromItemID(reagent.itemID)
                         name= e.strText[item:GetItemName()]

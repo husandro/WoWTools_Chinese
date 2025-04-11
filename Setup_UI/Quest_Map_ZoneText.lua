@@ -7,8 +7,8 @@ local e= select(2, ...)
 --SubZoneTextFrame
 --屏幕，上方区域提示
 ZoneTextFrame:HookScript('OnEvent', function()--ZoneText_OnEvent
-    WoWTools_ChineseMixin:Set_Label_Text(SubZoneTextString)
-    WoWTools_ChineseMixin:Set_Label_Text(ZoneTextString)
+    WoWTools_ChineseMixin:SetLabelText(SubZoneTextString)
+    WoWTools_ChineseMixin:SetLabelText(ZoneTextString)
 end)
 hooksecurefunc('SetZoneText', function()
     local pvpType, isSubZonePvP, factionName = C_PvP.GetZonePVPInfo()

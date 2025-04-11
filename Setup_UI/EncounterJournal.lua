@@ -27,11 +27,11 @@ local function EncounterJournal_SetupIconFlags(sectionID, infoHeaderButton, inde
                 icon.tooltipTitle = tab[iconFlag]--_G["ENCOUNTER_JOURNAL_SECTION_FLAG"..iconFlag]
                 if index then
                     if iconFlag==1 then
-                        WoWTools_ChineseMixin:Set_Label_Text(infoHeaderButton.title, '伤害')
+                        WoWTools_ChineseMixin:SetLabelText(infoHeaderButton.title, '伤害')
                     elseif iconFlag==2 then
-                        WoWTools_ChineseMixin:Set_Label_Text(infoHeaderButton.title, '治疗者')
+                        WoWTools_ChineseMixin:SetLabelText(infoHeaderButton.title, '治疗者')
                     elseif iconFlag==0 then
-                        WoWTools_ChineseMixin:Set_Label_Text(infoHeaderButton.title, '坦克')
+                        WoWTools_ChineseMixin:SetLabelText(infoHeaderButton.title, '坦克')
                     end
                 end
             end
@@ -47,7 +47,7 @@ local function UpdateEncounterJournalHeaders()
         if infoHeader.myID and infoHeader.button then
             if infoHeader.description then                
                 local difficultyID = EJ_GetDifficulty()
-                local data = WoWTools_ChineseMixin:Get_Boos_Section_Info(infoHeader.myID, difficultyID)--difficultyID and WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
+                local data = WoWTools_ChineseMixin:GetBoosSectionData(infoHeader.myID, difficultyID)--difficultyID and WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
                 if data then
                     local title= data["Title"]
                     local desc= data["Description"]
@@ -73,7 +73,7 @@ end
 
 local function get_encounter_name(encounterID)
     if encounterID then
-        return WoWTools_ChineseMixin:Get_Boss_Name(encounterID) or WoWTools_ChineseMixin:Setup(EJ_GetEncounterInfo(encounterID))
+        return WoWTools_ChineseMixin:GetBossName(encounterID) or WoWTools_ChineseMixin:Setup(EJ_GetEncounterInfo(encounterID))
     end
 end
 
@@ -150,7 +150,7 @@ local function Init_EncounterJournal()
             return
         end
         for _, button in pairs(frame:GetFrames()) do
-            WoWTools_ChineseMixin:Set_Label_Text(button.name)
+            WoWTools_ChineseMixin:SetLabelText(button.name)
             local tooltiptext=  e.strText[button.tooltiptext]
             if tooltiptext then
                 button.tooltiptext= tooltiptext
@@ -162,7 +162,7 @@ local function Init_EncounterJournal()
     hooksecurefunc(EncounterJournalItemMixin,'Init', function(self)--Blizzard_EncounterJournal.lua
         local itemInfo = C_EncounterJournal.GetLootInfoByIndex(self.index)
         if ( itemInfo and itemInfo.name ) then
-            local name= WoWTools_ChineseMixin:Get_Item_Name(itemInfo.itemID) or e.strText[itemInfo.name]
+            local name= WoWTools_ChineseMixin:GetItemName(itemInfo.itemID) or e.strText[itemInfo.name]
             if name then
                 self.name:SetText(WrapTextInColorCode(name, itemInfo.itemQuality))
             end
@@ -269,7 +269,7 @@ local function Init_EncounterJournal()
         end
         for _, btn in pairs(self:GetFrames()) do
             local data= btn:GetData()
-            local name= data and WoWTools_ChineseMixin:Get_Boss_Name(data.bossID)
+            local name= data and WoWTools_ChineseMixin:GetBossName(data.bossID)
             if name then
                 btn.text:SetText(name)
             end
@@ -292,7 +292,7 @@ local function Init_EncounterJournal()
             return
         end
         for _, btn in pairs(self:GetFrames() or {}) do
-            WoWTools_ChineseMixin:Set_Label_Text(btn.SetName)
+            WoWTools_ChineseMixin:SetLabelText(btn.SetName)
         end
     end)
 
@@ -310,15 +310,15 @@ local function Init_EncounterJournal()
         local self= EncounterJournal.encounter
         local instanceName, description = EJ_GetInstanceInfo()
 
-        WoWTools_ChineseMixin:Set_Label_Text(self.instance.title, instanceName)
-        WoWTools_ChineseMixin:Set_Label_Text(self.info.instanceTitle, instanceName)
-        WoWTools_ChineseMixin:Set_Label_Text(self.instance.LoreScrollingFont, description)
+        WoWTools_ChineseMixin:SetLabelText(self.instance.title, instanceName)
+        WoWTools_ChineseMixin:SetLabelText(self.info.instanceTitle, instanceName)
+        WoWTools_ChineseMixin:SetLabelText(self.instance.LoreScrollingFont, description)
 
         local tooltip= e.strText[self.info['overviewTab'].tooltip]
         if tooltip then
             self.info['overviewTab'].tooltip= tooltip
         end
-        local desc= WoWTools_ChineseMixin:Get_Instance_Desc(instanceID)
+        local desc= WoWTools_ChineseMixin:GetInstanceDesc(instanceID)
         if desc then
             EncounterJournal.encounter.instance.LoreScrollingFont:SetText(desc)
         end
@@ -376,7 +376,7 @@ local function Init_WoWeuCN()
 
     hooksecurefunc("EncounterJournal_DisplayEncounter", function(encounterID)
         local self = EncounterJournal.encounter
-        local info= WoWTools_ChineseMixin:Get_Boss_Info(encounterID)
+        local info= WoWTools_ChineseMixin:GetBossData(encounterID)
         if info then
             local title= info["Title"]
             local desc= info["Description"]
@@ -395,7 +395,7 @@ local function Init_WoWeuCN()
             end
         end 
 
-        local desc= WoWTools_ChineseMixin:Get_Boos_Section_Desc(self.overviewFrame.rootOverviewSectionID)            
+        local desc= WoWTools_ChineseMixin:GetBoosSectionDesc(self.overviewFrame.rootOverviewSectionID)            
         if desc then
             self.overviewFrame.overviewDescription.Text:SetText(desc)
             self.overviewFrame.overviewDescription.descriptionHeight = self.overviewFrame.overviewDescription:GetHeight()
@@ -413,7 +413,7 @@ local function Init_WoWeuCN()
     end)
 
     hooksecurefunc("EncounterJournal_SetDescriptionWithBullets", function(infoHeader)
-        local data = infoHeader and WoWTools_ChineseMixin:Get_Boos_Section_Info(infoHeader.sectionID)
+        local data = infoHeader and WoWTools_ChineseMixin:GetBoosSectionData(infoHeader.sectionID)
         if data then
             local title= data["Title"]
             local desc= data["Description"]
@@ -465,12 +465,12 @@ local function Init()
                 if not suggestion or not data then
                     break;
                 end
-                WoWTools_ChineseMixin:Set_Label_Text(suggestion.centerDisplay.title.text, data.title)
-                WoWTools_ChineseMixin:Set_Label_Text(suggestion.centerDisplay.description.text, data.description)
+                WoWTools_ChineseMixin:SetLabelText(suggestion.centerDisplay.title.text, data.title)
+                WoWTools_ChineseMixin:SetLabelText(suggestion.centerDisplay.description.text, data.description)
                 if suggestion.centerDisplay then
-                    WoWTools_ChineseMixin:Set_Label_Text(suggestion.centerDisplay.button, data.buttonText)
+                    WoWTools_ChineseMixin:SetLabelText(suggestion.centerDisplay.button, data.buttonText)
                 else
-                    WoWTools_ChineseMixin:Set_Label_Text(suggestion.button, data.buttonText)
+                    WoWTools_ChineseMixin:SetLabelText(suggestion.button, data.buttonText)
                 end
             end
     end)

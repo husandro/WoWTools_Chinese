@@ -5,8 +5,8 @@ local e= select(2, ...)
 AddonListTitleText:SetText('插件列表')
 
 
-    WoWTools_ChineseMixin:Set_Label_Text(AddonList.SearchBox.Instructions)
-    WoWTools_ChineseMixin:Set_Label_Text(AddonList.Performance.Header)
+    WoWTools_ChineseMixin:SetLabelText(AddonList.SearchBox.Instructions)
+    WoWTools_ChineseMixin:SetLabelText(AddonList.Performance.Header)
 
     AddonList.EnableAllButton:SetText('全部启用')
     AddonList.DisableAllButton:SetText('全部禁用')

@@ -789,7 +789,7 @@ local tab={
 
 
 local e= select(2, ...)
-function WoWTools_ChineseMixin:Get_PerksActivity_Info(perksActivityID)
+function WoWTools_ChineseMixin:GetPerksActivityInfo(perksActivityID)
     if perksActivityID then
         return tab[perksActivityID]--{'ActivityName_lang', 'Description_lang'},
     end

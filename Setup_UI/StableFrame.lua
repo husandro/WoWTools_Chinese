@@ -22,7 +22,7 @@ hooksecurefunc(StableFrame.PetModelScene.PetInfo, 'SetPet', function(self, petDa
 end)
 
 hooksecurefunc(StablePetAbilityMixin, 'Initialize', function(self, spellID)
-    local name = spellID and WoWTools_ChineseMixin:Get_Spell_Name(spellID)
+    local name = spellID and WoWTools_ChineseMixin:GetSpellName(spellID)
     if name then
         self.Name:SetText(name)
     end
@@ -34,6 +34,6 @@ hooksecurefunc(StableFrame.StabledPetList.ScrollBox, 'Update', function(frame)
         return
     end
     for _, btn in pairs(frame:GetFrames() or {}) do
-        WoWTools_ChineseMixin:Set_Label_Text(btn.Label)       
+        WoWTools_ChineseMixin:SetLabelText(btn.Label)       
     end
 end)

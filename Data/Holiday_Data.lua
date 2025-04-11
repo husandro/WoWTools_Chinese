@@ -1002,7 +1002,7 @@ local indexTab={
 
 local e = select(2, ...)
 
-function WoWTools_ChineseMixin:Get_HoliDay_Name(eventID)
+function WoWTools_ChineseMixin:GetHoliDayName(eventID)
     local data= indexTab[eventID]
     local index= data and data[1]
     if index and index>0 then
@@ -1010,7 +1010,7 @@ function WoWTools_ChineseMixin:Get_HoliDay_Name(eventID)
     end
 end
 
-function WoWTools_ChineseMixin:Get_HoliDay_Desc(eventID)
+function WoWTools_ChineseMixin:GetHoliDayDesc(eventID)
     local data= indexTab[eventID]
     local index= data and data[2]
     if index and index>0 then
@@ -1018,7 +1018,7 @@ function WoWTools_ChineseMixin:Get_HoliDay_Desc(eventID)
     end
 end
 
-function WoWTools_ChineseMixin:Get_HoliDay_Info(eventID)
+function WoWTools_ChineseMixin:GetHoliDayInfo(eventID)
     local data= indexTab[eventID]
     if not data then
         return

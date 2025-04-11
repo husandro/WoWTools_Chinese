@@ -1544,7 +1544,7 @@ local tab={
 }
 
 
-function WoWTools_ChineseMixin:Get_TradeSkillCategory_Name(categoryID)
+function WoWTools_ChineseMixin:GetTradeSkillCategoryName(categoryID)
     return tab[categoryID]
 end
 --[[do

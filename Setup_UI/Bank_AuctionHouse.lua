@@ -20,7 +20,7 @@ local function Init()
 
     --目录，列表
     hooksecurefunc('AuctionHouseFilterButton_SetUp', function(btn, info)        
-        WoWTools_ChineseMixin:Set_Label_Text(btn, info.name)
+        WoWTools_ChineseMixin:SetLabelText(btn, info.name)
     end)
 
     AuctionHouseFrameBuyTab.Text:SetText('购买')
@@ -56,7 +56,7 @@ local function Init()
     AuctionHouseFrame.ItemSellFrame.PostButton:SetText('创建拍卖')
     AuctionHouseFrame.ItemSellFrame.QuantityInput.Label:SetText('数量')
     --AuctionHouseFrame.ItemSellFrame.DurationDropDown.Label:SetText('持续时间')
-    WoWTools_ChineseMixin:Set_Label_Text(AuctionHouseFrame.ItemSellFrame.Duration.Label)
+    WoWTools_ChineseMixin:SetLabelText(AuctionHouseFrame.ItemSellFrame.Duration.Label)
     AuctionHouseFrame.ItemSellFrame.Deposit.Label:SetText('保证金')
     AuctionHouseFrame.ItemSellFrame.TotalPrice.Label:SetText('总价')
     AuctionHouseFrame.ItemSellFrame.QuantityInput.MaxButton:SetText('最大数量')
@@ -77,7 +77,7 @@ local function Init()
     AuctionHouseFrame.CommoditiesSellFrame.QuantityInput.Label:SetText('数量')
     AuctionHouseFrame.CommoditiesSellFrame.PriceInput.Label:SetText('一口价')
     --AuctionHouseFrame.CommoditiesSellFrame.DurationDropDown.Label:SetText('持续时间')
-    WoWTools_ChineseMixin:Set_Label_Text(AuctionHouseFrame.CommoditiesSellFrame.Duration.Label)
+    WoWTools_ChineseMixin:SetLabelText(AuctionHouseFrame.CommoditiesSellFrame.Duration.Label)
     AuctionHouseFrame.CommoditiesSellFrame.Deposit.Label:SetText('保证金')
     AuctionHouseFrame.CommoditiesSellFrame.TotalPrice.Label:SetText('总价')
     AuctionHouseFrame.CommoditiesSellFrame.QuantityInput.MaxButton:SetText('最大数量')
@@ -211,7 +211,7 @@ local function Init()
             local itemKey= btn.rowData and btn.rowData.itemKey
             local itemKeyInfo = itemKey and C_AuctionHouse.GetItemKeyInfo(itemKey)--itemID battlePetSpeciesID itemName battlePetLink appearanceLink quality iconFileID isPet isCommodity isEquipment
             if itemKeyInfo then
-                local name= WoWTools_ChineseMixin:Get_Item_Name(itemKeyInfo.itemID) or e.strText[itemKeyInfo.itemName]
+                local name= WoWTools_ChineseMixin:GetItemName(itemKeyInfo.itemID) or e.strText[itemKeyInfo.itemName]
                 if name then
                     local hex= select(4, C_Item.GetItemQualityColor(itemKeyInfo.quality))
                     if hex then

@@ -628,6 +628,6 @@ local tab={
 
 
 local e= select(2, ...)
-function WoWTools_ChineseMixin:Get_Title_Name(titleID)
+function WoWTools_ChineseMixin:GetTitleName(titleID)
     return tab[titleID]
 end

@@ -175,7 +175,7 @@ local function Init()
                 local seconds = remainingTime >= 60 and remainingTime or 60 -- Never show < 1min
                 local timeRemainingText = Professions.OrderTimeLeftFormatter:Format(seconds)
                 timeRemainingText = format('%s （等待中）', timeRemainingText)
-                WoWTools_ChineseMixin:Set_Label_Text(self.PaymentContainer.TimeRemainingDisplay.Text, timeRemainingText)
+                WoWTools_ChineseMixin:SetLabelText(self.PaymentContainer.TimeRemainingDisplay.Text, timeRemainingText)
             end
 
             if not order.crafterName then
@@ -185,7 +185,7 @@ local function Init()
                 else
                     crafterText = '未领取'
                 end
-                WoWTools_ChineseMixin:Set_Label_Text(self.OrderRecipientDisplay.CrafterValue, crafterText)
+                WoWTools_ChineseMixin:SetLabelText(self.OrderRecipientDisplay.CrafterValue, crafterText)
             end
 
             local orderTypeText
@@ -196,7 +196,7 @@ local function Init()
             elseif self.order.orderType == Enum.CraftingOrderType.Personal then
                 orderTypeText = '个人订单'
             end
-            WoWTools_ChineseMixin:Set_Label_Text(self.OrderRecipientDisplay.PostedTo, orderTypeText)
+            WoWTools_ChineseMixin:SetLabelText(self.OrderRecipientDisplay.PostedTo, orderTypeText)
 
             local orderStateText
             if self.order.orderState == Enum.CraftingOrderState.Created then
@@ -212,7 +212,7 @@ local function Init()
             else
                 orderStateText = '|cnGREEN_FONT_COLOR:订单完成！|r'
             end
-            WoWTools_ChineseMixin:Set_Label_Text(self.OrderStateText, orderStateText)
+            WoWTools_ChineseMixin:SetLabelText(self.OrderStateText, orderStateText)
 
             self.ReagentContainer.Reagents.Label:SetText('提供的材料：')
             self.ReagentContainer.OptionalReagents.Label:SetText('提供的附加材料：')
@@ -249,7 +249,7 @@ local function Init()
                 local data= btn:GetData()
                 local option= data and data.option
                 if  option then
-                    local name= WoWTools_ChineseMixin:Get_Item_Name(option.itemID) or e.strText[option.itemName]
+                    local name= WoWTools_ChineseMixin:GetItemName(option.itemID) or e.strText[option.itemName]
                     if name then
                         local hex= option.quality and select(4, C_Item.GetItemQualityColor(option.quality))
                         if hex then

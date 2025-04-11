@@ -9,7 +9,7 @@ for _, frame in pairs({'StaticPopup1ItemFrameText', 'StaticPopup2ItemFrameText',
             local link= self:GetParent().link
             if link then
                 local itemID= C_Item.GetItemInfoInstant(link)
-                itemName= WoWTools_ChineseMixin:Get_Item_Name(itemID)
+                itemName= WoWTools_ChineseMixin:GetItemName(itemID)
             end
         end
         if itemName then
@@ -87,7 +87,7 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
 		 (which == "CONFIRM_DESTROY_COMMUNITY_STREAM") or
 		 (which == "CONFIRM_RUNEFORGE_LEGENDARY_CRAFT") or
 		 (which == "ANIMA_DIVERSION_CONFIRM_CHANNEL")) then
-        local a, b= WoWTools_ChineseMixin:Set_Text(text_arg1), WoWTools_ChineseMixin:Set_Text(text_arg2)
+        local a, b= WoWTools_ChineseMixin:SetText(text_arg1), WoWTools_ChineseMixin:SetText(text_arg2)
         if a then
             text.text_arg1 = a
         end
@@ -96,7 +96,7 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
         end
 
 	elseif (which == "PREMADE_GROUP_LEADER_CHANGE_DELIST_WARNING") then
-        local a, b= WoWTools_ChineseMixin:Set_Text(text_arg1), WoWTools_ChineseMixin:Set_Text(text_arg2)
+        local a, b= WoWTools_ChineseMixin:SetText(text_arg1), WoWTools_ChineseMixin:SetText(text_arg2)
         if a then
 		    dialog.SubText.text_arg1 = a
         end
@@ -108,7 +108,7 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
 		text:SetFormattedText(WoWTools_ChineseMixin:Setup(info.text), WoWTools_ChineseMixin:Setup(text_arg1), '|4分钟:分钟;');
 
 	elseif ( which == "SPELL_CONFIRMATION_PROMPT" or which == "SPELL_CONFIRMATION_WARNING" or which == "SPELL_CONFIRMATION_PROMPT_ALERT" or which == "SPELL_CONFIRMATION_WARNING_ALERT" ) then
-        local a= WoWTools_ChineseMixin:Set_Text(text_arg1)
+        local a= WoWTools_ChineseMixin:SetText(text_arg1)
         if a then
             text:SetText(a)
             info.text = a
@@ -123,8 +123,8 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
 		text:SetFormattedText(WoWTools_ChineseMixin:Setup(info.text), goldDisplay, '一口价');
 
 	else
-        local a, b= WoWTools_ChineseMixin:Set_Text(text_arg1), WoWTools_ChineseMixin:Set_Text(text_arg2)
-        local s= WoWTools_ChineseMixin:Set_Text(info.text)
+        local a, b= WoWTools_ChineseMixin:SetText(text_arg1), WoWTools_ChineseMixin:SetText(text_arg2)
+        local s= WoWTools_ChineseMixin:SetText(info.text)
         if a or b or s then
 		    text:SetFormattedText(s or info.text, a or text_arg1, b or text_arg2)
         end

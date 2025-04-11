@@ -72,8 +72,8 @@ local e = select(2, ...)
     CurrencyTransferMenu.ConfirmButton:SetText('转移')
     CurrencyTransferMenu.CancelButton:SetText('取消')
 
-    WoWTools_ChineseMixin:Set_Label_Text(CurrencyTransferLogTitleText)
-    WoWTools_ChineseMixin:Set_Label_Text(CurrencyTransferLog.EmptyLogMessage)
+    WoWTools_ChineseMixin:SetLabelText(CurrencyTransferLogTitleText)
+    WoWTools_ChineseMixin:SetLabelText(CurrencyTransferLog.EmptyLogMessage)
 --end
 
 

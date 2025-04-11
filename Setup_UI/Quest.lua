@@ -1,17 +1,17 @@
 local e= select(2, ...)
 
-WoWTools_ChineseMixin:Set_Label_Text(QuestFrameAcceptButton)--:SetText('接受')
-WoWTools_ChineseMixin:Set_Label_Text(QuestFrameGreetingGoodbyeButton)--:SetText('再见')
-WoWTools_ChineseMixin:Set_Label_Text(QuestFrameCompleteQuestButton)--:SetText('完成任务')
-WoWTools_ChineseMixin:Set_Label_Text(QuestFrameCompleteButton)--:SetText('继续')
-WoWTools_ChineseMixin:Set_Label_Text(QuestFrameGoodbyeButton)--:SetText('再见')
-WoWTools_ChineseMixin:Set_Label_Text(QuestFrameDeclineButton)--:SetText('拒绝')
-WoWTools_ChineseMixin:Set_Label_Text(QuestLogPopupDetailFrameAbandonButton)--:SetText('放弃')
-WoWTools_ChineseMixin:Set_Label_Text(QuestLogPopupDetailFrameShareButton)--:SetText('共享')
-WoWTools_ChineseMixin:Set_Label_Text(QuestLogPopupDetailFrame.ShowMapButton.Text)--:SetText('显示地图')
+WoWTools_ChineseMixin:SetLabelText(QuestFrameAcceptButton)--:SetText('接受')
+WoWTools_ChineseMixin:SetLabelText(QuestFrameGreetingGoodbyeButton)--:SetText('再见')
+WoWTools_ChineseMixin:SetLabelText(QuestFrameCompleteQuestButton)--:SetText('完成任务')
+WoWTools_ChineseMixin:SetLabelText(QuestFrameCompleteButton)--:SetText('继续')
+WoWTools_ChineseMixin:SetLabelText(QuestFrameGoodbyeButton)--:SetText('再见')
+WoWTools_ChineseMixin:SetLabelText(QuestFrameDeclineButton)--:SetText('拒绝')
+WoWTools_ChineseMixin:SetLabelText(QuestLogPopupDetailFrameAbandonButton)--:SetText('放弃')
+WoWTools_ChineseMixin:SetLabelText(QuestLogPopupDetailFrameShareButton)--:SetText('共享')
+WoWTools_ChineseMixin:SetLabelText(QuestLogPopupDetailFrame.ShowMapButton.Text)--:SetText('显示地图')
 
-WoWTools_ChineseMixin:Set_Label_Text(QuestMapFrame.DetailsFrame.BackButton)--:SetText('返回')
-WoWTools_ChineseMixin:Set_Label_Text(QuestMapFrame.DetailsFrame.AbandonButton)--:SetText('放弃')]]
+WoWTools_ChineseMixin:SetLabelText(QuestMapFrame.DetailsFrame.BackButton)--:SetText('返回')
+WoWTools_ChineseMixin:SetLabelText(QuestMapFrame.DetailsFrame.AbandonButton)--:SetText('放弃')]]
 QuestMapFrame.DetailsFrame.ShareButton:SetText('共享')
 QuestMapFrame.DetailsFrame.DestinationMapButton.tooltipText= '显示最终目的地'
 QuestMapFrame.DetailsFrame.WaypointMapButton.tooltipText= '显示旅行路径'
@@ -22,7 +22,7 @@ WoWTools_ChineseMixin:SetRegions(QuestInfoRewardsFrame, false, true)
 WoWTools_ChineseMixin:HookLabel(QuestInfoObjectivesHeader)
 WoWTools_ChineseMixin:HookLabel(QuestInfoDescriptionHeader)
 
-WoWTools_ChineseMixin:Set_Label_Text(QuestInfoXPFrame.ReceiveText)
+WoWTools_ChineseMixin:SetLabelText(QuestInfoXPFrame.ReceiveText)
 WoWTools_ChineseMixin:HookLabel(QuestInfoAccountCompletedNotice)
 
 
@@ -46,7 +46,7 @@ QuestFrame:HookScript('OnShow', function()
     if not UnitExists('questnpc') then
        return
     end
-    local name, name2= WoWTools_ChineseMixin:Get_Unit_Name('questnpc', nil, true)
+    local name, name2= WoWTools_ChineseMixin:GetUnitName('questnpc', nil, true)
     if name then
        QuestFrame:SetTitle(name..(name2 and ' - '..name2 or ''))
     end
@@ -111,7 +111,7 @@ local function set_objectives(questID)
 					name= WoWTools_ChineseMixin:Setup(type)
 					text= type
 				else
-					local new= WoWTools_ChineseMixin:Get_Quest_Object(questID, i)--无法找到
+					local new= WoWTools_ChineseMixin:GetQuestObject(questID, i)--无法找到
 					if new then
 						name= text:gsub('%d+/%d+ (.+)', new)
 					end
@@ -165,7 +165,7 @@ local function set_quest_item(questID)
 	end
 
 	for frame in rewardsFrame.spellRewardPool:EnumerateActive() do
-		local name= WoWTools_ChineseMixin:Get_Spell_Name(frame.rewardSpellID)
+		local name= WoWTools_ChineseMixin:GetSpellName(frame.rewardSpellID)
 		if name then
 			frame.Name:SetText(name)
 		end
@@ -188,7 +188,7 @@ local function set_quest_item(questID)
 		if btn:IsShown() then
 			local name
 			if btn.type == "reward" and  btn.objectType == "questSessionBonusReward" then
-				name= WoWTools_ChineseMixin:Get_Item_Name(171305)--一箱回收的物资
+				name= WoWTools_ChineseMixin:GetItemName(171305)--一箱回收的物资
 			elseif btn.objectType == 'currency' then
 				name= btn.currencyInfo and e.strText[btn.currencyInfo.name]
 			else
@@ -202,7 +202,7 @@ local function set_quest_item(questID)
 				else
 					itemID = select(6, GetQuestItemInfo(btn.type, btn:GetID()))
 				end
-				name= WoWTools_ChineseMixin:Get_Item_Name(itemID)
+				name= WoWTools_ChineseMixin:GetItemName(itemID)
 			end
 			if name then
 				btn.Name:SetText(name)
@@ -210,8 +210,8 @@ local function set_quest_item(questID)
 		end
 	end
 
-	WoWTools_ChineseMixin:Set_Label_Text(rewardsFrame.HonorFrame.Name)
-	WoWTools_ChineseMixin:Set_Label_Text(rewardsFrame.TitleFrame.Name)
+	WoWTools_ChineseMixin:SetLabelText(rewardsFrame.HonorFrame.Name)
+	WoWTools_ChineseMixin:SetLabelText(rewardsFrame.TitleFrame.Name)
 end
 
 
@@ -239,7 +239,7 @@ local function set_quest_info()
 		return
 	end
 
-    local data= WoWTools_ChineseMixin:Get_Quest_Info(questID)
+    local data= WoWTools_ChineseMixin:GetQuestData(questID)
 	local title, object, desc
 
 	if data then
@@ -320,7 +320,7 @@ hooksecurefunc('QuestInfo_Display', set_quest_info)
 
 
 hooksecurefunc('QuestInfo_ShowTitle', function()
-	local title= WoWTools_ChineseMixin:Get_Quest_Info(WoWTools_ChineseMixin:GetQuestID(), true, false, false)
+	local title= WoWTools_ChineseMixin:GetQuestData(WoWTools_ChineseMixin:GetQuestID(), true, false, false)
 	if not title then
 	   return
 	end
@@ -333,7 +333,7 @@ hooksecurefunc('QuestInfo_ShowTitle', function()
 
 
  hooksecurefunc('QuestInfo_ShowDescriptionText', function()
-	local desc=  WoWTools_ChineseMixin:Get_Quest_Info(WoWTools_ChineseMixin:GetQuestID(), false, false, true)
+	local desc=  WoWTools_ChineseMixin:GetQuestData(WoWTools_ChineseMixin:GetQuestID(), false, false, true)
 	if desc then
 	   QuestInfoDescriptionText:SetText(desc)
 	end
@@ -365,7 +365,7 @@ hooksecurefunc('QuestInfo_ShowTitle', function()
 	if not spellID then
 	   return
 	end
-	spellName = e.strText[spellName] or WoWTools_ChineseMixin:Get_Spell_Name(spellID)
+	spellName = e.strText[spellName] or WoWTools_ChineseMixin:GetSpellName(spellID)
 	if spellName then
 	   QuestInfoSpellObjectiveFrame.Name:SetText(spellName)
 	end

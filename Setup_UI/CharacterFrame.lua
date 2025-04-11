@@ -42,7 +42,7 @@ hooksecurefunc(CharacterFrame, 'SetTitle', function(self)
     if self.activeSubframe== 'PaperDollFrame' then
         local titleID = GetCurrentTitle()
         if titleID and titleID>0 then
-            local title= WoWTools_ChineseMixin:Get_Title_Name(titleID)
+            local title= WoWTools_ChineseMixin:GetTitleName(titleID)
             if title then
                 local name= NORMAL_FONT_COLOR:WrapTextInColorCode(UnitName("player"))
                 name= format(title, name)
@@ -50,7 +50,7 @@ hooksecurefunc(CharacterFrame, 'SetTitle', function(self)
             end
         end
     else
-        --WoWTools_ChineseMixin:Set_Label_Text(CharacterFrameTitleText)
+        --WoWTools_ChineseMixin:SetLabelText(CharacterFrameTitleText)
     end
 end)
 
@@ -76,7 +76,7 @@ hooksecurefunc(PaperDollFrame.TitleManagerPane.ScrollBox, 'Update', function(fra
     for _, btn in pairs(frame:GetFrames() or {}) do
         if not btn.get_name then
             function btn:get_name()
-                local name= self.titleId==-1 and '无头衔' or WoWTools_ChineseMixin:Get_Title_Name(self.titleId)                
+                local name= self.titleId==-1 and '无头衔' or WoWTools_ChineseMixin:GetTitleName(self.titleId)                
                 return name
             end
             WoWTools_ChineseMixin:SetLabelFont(btn:GetFontString())

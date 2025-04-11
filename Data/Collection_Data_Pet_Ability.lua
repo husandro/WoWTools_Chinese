@@ -1364,6 +1364,6 @@ local tab={
 
 
 local e= select(2, ...)
-function WoWTools_ChineseMixin:Get_Pet_Ablity_Info(abilityID)
+function WoWTools_ChineseMixin:GetPetAblityInfo(abilityID)
     return tab[abilityID]
 end

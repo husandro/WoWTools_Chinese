@@ -21,7 +21,7 @@ WoWTools_ChineseMixin={}
 
 
 function WoWTools_ChineseMixin:Setup(text, tab)
-    local data= self:Set_Text(text)
+    local data= self:SetText(text)
     if data then
         return data
     end
@@ -29,29 +29,29 @@ function WoWTools_ChineseMixin:Setup(text, tab)
     if type(tab)=='table' then
         if tab.holydayID then
             if tab.isName then
-                data= self:Get_HoliDay_Name(tab.holydayID)
+                data= self:GetHoliDayName(tab.holydayID)
             elseif tab.isDesc then
-                data= self:Get_HoliDay_Desc(tab.holydayID)
+                data= self:GetHoliDayDesc(tab.holydayID)
             else
-                data= self:Get_HoliDay_Info(tab.holydayID)--节日 eventID
+                data= self:GetHoliDayInfo(tab.holydayID)--节日 eventID
             end
         elseif tab.perksActivityID then
-            data= self:Get_PerksActivity_Info(tab.perksActivityID)--PERKS
+            data= self:GetPerksActivityInfo(tab.perksActivityID)--PERKS
 
         elseif tab.vignetteID then
-            data= self:Get_Vignette_Name(tab.vignetteID)--Vignette
+            data= self:GetVignetteName(tab.vignetteID)--Vignette
 
         elseif tab.toyID then
-            data= self:Get_Toy_Source(tab.toyID)--玩具itemID
+            data= self:GetToySource(tab.toyID)--玩具itemID
 
         elseif tab.speciesID then
-            data= self:Get_Pet_Description(tab.speciesID)--专精
+            data= self:GetPetDesc(tab.speciesID)--专精
 
         elseif tab.petAbilityID then
-            data= self:Get_Pet_Ablity_Info(tab.petAbilityID)--宠物技能
+            data= self:GetPetAblityInfo(tab.petAbilityID)--宠物技能
 
         elseif tab.skillCategoryID then
-            data= self:Get_TradeSkillCategory_Name(tab.skillCategoryID)--专业目录
+            data= self:GetTradeSkillCategoryName(tab.skillCategoryID)--专业目录
 
         elseif tab.spellID or tab.spellLink then
             local spellID= tab.spellID
@@ -63,7 +63,7 @@ function WoWTools_ChineseMixin:Setup(text, tab)
             end
             if spellID then
                 if tab.isName then
-                    local name= self:Get_Spell_Name(spellID)--法术名称
+                    local name= self:GetSpellName(spellID)--法术名称
                     if name then
                         if tab.spellLink and tab.spellLink:find('|h%[.-]|h') then
                             data= tab.spellLink:gsub('|h%[.-]|h', '|h['..name..']|h')
@@ -71,9 +71,9 @@ function WoWTools_ChineseMixin:Setup(text, tab)
                         data= data or name
                     end
                 elseif tab.isDesc then
-                    data= self:Get_Spell_Desc(spellID)
+                    data= self:GetSpellDesc(spellID)
                 else
-                    data= self:Get_Spell_Data(spellID)
+                    data= self:GetSpellData(spellID)
                     if data then
                         for index, name2 in pairs(data) do
                             data[index]= self:ReplaceText(name2)
@@ -85,14 +85,14 @@ function WoWTools_ChineseMixin:Setup(text, tab)
         elseif tab.itemID or tab.itemLink then
             local itemID= tab.itemID or C_Item.GetItemIDForItemInfo(tab.itemLink)
             if tab.isToy then
-                data= self:Get_Toy_Source(itemID)
+                data= self:GetToySource(itemID)
             elseif tab.isHeirloom then
-                data= self:Get_Heirloom_Source(itemID)
+                data= self:GetHeirloomSource(itemID)
 
             elseif tab.isName then
                 local link= tab.itemLink
                 if link then
-                    local name= self:Get_Item_Name(itemID)--物品名称
+                    local name= self:GetItemName(itemID)--物品名称
                     if name then
                         name= name:match('|c........(.+)|r') or name
                         if link:find('|h%[.-]|h') then
@@ -100,13 +100,13 @@ function WoWTools_ChineseMixin:Setup(text, tab)
                         end
                     end
                 end
-                data= data or self:Get_Item_Name(itemID)--物品名称
+                data= data or self:GetItemName(itemID)--物品名称
 
             elseif tab.isDesc then
-                data= self:Get_Heirloom_Source(itemID)--物品名称
+                data= self:GetHeirloomSource(itemID)--物品名称
                 
             else
-                data= self:Get_Item_Info(itemID)--物品名称
+                data= self:GetItemData(itemID)--物品名称
                 if data then
                     for index, name2 in pairs(data) do
                         data[index]= self:ReplaceText(name2)
@@ -115,63 +115,63 @@ function WoWTools_ChineseMixin:Setup(text, tab)
             end
 
         elseif tab.skillLineAbilityID then
-            data= self:Get_SkillLineAbility_Name(tab.skillLineAbilityID)--专业配方,名称
+            data= self:GetSkillLineAbilityName(tab.skillLineAbilityID)--专业配方,名称
 
         elseif tab.recipeID then
-            data= self:Get_Recipe_Source(tab.recipeID)--专业配方,来源
+            data= self:GetRecipeSource(tab.recipeID)--专业配方,来源
 
         elseif tab.ProfessionNodeID then
-            data= self:Get_Profession_Node_Desc(tab.ProfessionNodeID)
+            data= self:GetProfessionNodeDesc(tab.ProfessionNodeID)
 
 
         elseif tab.lfgDungeonID then
-            data= self:Get_LFGDungeon_Desc(tab.lfgDungeonID)
+            data= self:GetLFGDungeonDesc(tab.lfgDungeonID)
 
         elseif tab.sectionID then
             if tab.isName then
-                data= self:Get_Boos_Section_Name(tab.sectionID, tab.difficultyID)
+                data= self:GetBoosSectionName(tab.sectionID, tab.difficultyID)
             elseif tab.isDesc then
-                data= self:Get_Boos_Section_Desc(tab.sectionID, tab.difficultyID)
+                data= self:GetBoosSectionDesc(tab.sectionID, tab.difficultyID)
             else
-                data= self:Get_Boos_Section_Info(tab.sectionID, tab.difficultyID)
+                data= self:GetBoosSectionData(tab.sectionID, tab.difficultyID)
             end
 
         elseif tab.journalEncounterID then
             if tab.isName then
-               data= self:Get_Boss_Name(journalEncounterID)
+               data= self:GetBossName(journalEncounterID)
             elseif tab.isDesc then
-                data= self:Get_Boss_Desc(tab.journalEncounterID)--BOOS
+                data= self:GetBossDesc(tab.journalEncounterID)--BOOS
             else
-                data= self:Get_Boss_Info(tab.journalEncounterID)
+                data= self:GetBossData(tab.journalEncounterID)
             end
 
         elseif tab.instanceID then
-            data= self:Get_Instance_Desc(tab.instanceID)--副本
+            data= self:GetInstanceDesc(tab.instanceID)--副本
 
         elseif tab.scenarioID then
             if tab.isName then
-                data= self:Get_Scenario_Name(tab.scenarioID)
+                data= self:GetScenarioName(tab.scenarioID)
             else
-                self:Get_Scenario_Step_Info(tab.scenarioID, tab.stepIndex)
+                self:GetScenarioStepData(tab.scenarioID, tab.stepIndex)
             end
 
         elseif tab.questID then
             if tab.isObject then
-                self:Get_Quest_Object(tab.questID, tab.index)
+                self:GetQuestObject(tab.questID, tab.index)
             else
-                data= self:Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc)
+                data= self:GetQuestData(tab.questID, tab.isName, tab.isObject, tab.isDesc)
             end
 
         elseif tab.npcID or tab.unit then
             if tab.isName then
-                data= self:Get_Unit_Name(tab.unit, tab.npcID)
+                data= self:GetUnitName(tab.unit, tab.npcID)
             else
-                data= self:Get_Unit_Info(tab.unit, tab.npcID)
+                data= self:GetUnitData(tab.unit, tab.npcID)
             end
 
 
         elseif tab.titleID then
-            data= self:Get_Title_Name(tab.titleID)
+            data= self:GetTitleName(tab.titleID)
         end
     end
     return data or text
@@ -192,6 +192,28 @@ end
 
 
 
+local function set(self, text)
+    local label= self
+    if self and not text then
+        if self.GetText then
+            text= self:GetText()
+        elseif self.GetObjectType and self:GetObjectType()=='Button' then
+            label= self:GetFontString()
+            if label then
+                text= label:GetText()
+            end
+        else
+            return
+        end
+    end
+
+    if text and label and label.SetText then
+        local text2= WoWTools_ChineseMixin:SetText(text)
+        if text2 and text2~=text then
+            label:SetText(text2)
+        end
+    end
+end
 
 
 
@@ -207,8 +229,17 @@ local function set_match(text, a, b)
     end
 end
 
+
+
+
+
+
+
+
+
+
 --( ) . % + - * ? [ ^ $
-function WoWTools_ChineseMixin:Set_Text(text)
+function WoWTools_ChineseMixin:SetText(text)
     if type(text)~='string' or text=='' or text=='%s' then
         return
     end
@@ -265,31 +296,9 @@ function WoWTools_ChineseMixin:SetLabelFont(lable)
 end
 
 
-local function set(self, text)
-    local label= self
-    if self and not text then
-        if self.GetText then
-            text= self:GetText()
-        elseif self.GetObjectType and self:GetObjectType()=='Button' then
-            label= self:GetFontString()
-            if label then
-                text= label:GetText()
-            end
-        else
-            return
-        end
-    end
-
-    if text and label and label.SetText then
-        local text2= WoWTools_ChineseMixin:Set_Text(text)
-        if text2 and text2~=text then
-            label:SetText(text2)
-        end
-    end
-end
 
 
-function WoWTools_ChineseMixin:Set_Label_Text(label, text, affer, setFont)
+function WoWTools_ChineseMixin:SetLabelText(label, text, affer, setFont)
     if label and not label.hook_chines then
         if setFont then
             self:SetLabelFont(lable)
@@ -327,7 +336,7 @@ function WoWTools_ChineseMixin:HookLabel(label, setFont)
         if setFont then
             self:SetLabelFont(label)
         end
-        self:Set_Label_Text(label)
+        self:SetLabelText(label)
         hooksecurefunc(label, 'SetText', function(self, name)
             set(self, name)
         end)
@@ -344,7 +353,7 @@ function WoWTools_ChineseMixin:HookButton(btn, setFont)
         end
         local label= btn:GetFontString()
         if label then
-            self:Set_Label_Text(labe)
+            self:SetLabelText(labe)
         end
         hooksecurefunc(btn, 'SetText', function(self, name)
             if name and name~='' then
@@ -374,14 +383,14 @@ function WoWTools_ChineseMixin:SetRegions(frame, setFont, isHook, notAfter)
             if notAfter then
                 for _, region in pairs({frame:GetRegions()}) do
                     if region:GetObjectType()=='FontString' then
-                        self:Set_Label_Text(region, setFont)
+                        self:SetLabelText(region, setFont)
                     end
                 end
             else
                 C_Timer.After(2, function()
                     for _, region in pairs({frame:GetRegions()}) do
                         if region:GetObjectType()=='FontString' then
-                            self:Set_Label_Text(region, setFont)
+                            self:SetLabelText(region, setFont)
                         end
                     end
                 end)
@@ -393,10 +402,10 @@ end
 
 
 --PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
-function WoWTools_ChineseMixin:Set_TabSystem(frame, setFont, padding, minWidth, absoluteSize)
+function WoWTools_ChineseMixin:SetTabSystem(frame, setFont, padding, minWidth, absoluteSize)
     for _, tabID in pairs(frame:GetTabSet() or {}) do
         local btn= frame:GetTabButton(tabID)
-        self:Set_Label_Text(btn.Text or btn, nil, nil, setFont)
+        self:SetLabelText(btn.Text or btn, nil, nil, setFont)
 
         PanelTemplates_TabResize(frame, padding or 20, absoluteSize, minWidth or 70)
     end
@@ -421,10 +430,10 @@ function WoWTools_ChineseMixin:GetRecipeName(recipeInfo, hyperlink)
     if hyperlink then
         local item = Item:CreateFromItemLink(hyperlink)
         color= (item:GetItemQualityColor() or {}).color
-        name= self:Get_Item_Name(item:GetItemID()) or e.strText[item:GetItemName()]
+        name= self:GetItemName(item:GetItemID()) or e.strText[item:GetItemName()]
     end
     if not name and recipeInfo then
-        name= self:Get_SkillLineAbility_Name(recipeInfo.skillLineAbilityID)
+        name= self:GetSkillLineAbilityName(recipeInfo.skillLineAbilityID)
     end
     if name and color then
         name= WrapTextInColor(name, color)
@@ -583,17 +592,6 @@ function WoWTools_ChineseMixin:Magic(text)
     end
     return text
 end
-
-
-
-
-
-
-
-
-
-
-
 
 
 

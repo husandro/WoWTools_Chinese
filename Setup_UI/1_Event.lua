@@ -432,7 +432,7 @@ local function Init_Event(arg1)
         end
         hooksecurefunc(ClickBindingLineMixin, 'Init', function(self, elementData)
             local name= BindingTextFromElementData(elementData)
-            --WoWTools_ChineseMixin:Set_Label_Text(self.BindingText)--, BindingTextFromElementData(elementData))
+            --WoWTools_ChineseMixin:SetLabelText(self.BindingText)--, BindingTextFromElementData(elementData))
             if name then
                 self.BindingText:SetText(name)
             end
@@ -441,14 +441,14 @@ local function Init_Event(arg1)
             if name then
                 self.Name:SetText(name)
             end
-            --WoWTools_ChineseMixin:Set_Label_Text(self.Name)--, ColoredNameAndIconFromElementData(elementData))
+            --WoWTools_ChineseMixin:SetLabelText(self.Name)--, ColoredNameAndIconFromElementData(elementData))
         end)
         hooksecurefunc(ClickBindingHeaderMixin, 'Init', function(self, elementData)
             local name= ColoredNameAndIconFromElementData(elementData)
             if name then
                 self.Name:SetText(name)
             end
-	        --WoWTools_ChineseMixin:Set_Label_Text(self.Name)--, ColoredNameAndIconFromElementData(elementData))
+	        --WoWTools_ChineseMixin:SetLabelText(self.Name)--, ColoredNameAndIconFromElementData(elementData))
         end)
 
     elseif arg1=='Blizzard_ProfessionsTemplates' then
@@ -501,7 +501,7 @@ local function Init_Event(arg1)
         ItemUpgradeFrame.UpgradeCostFrame.Label:SetText('总花费：')
         hooksecurefunc(ItemUpgradeFrame, 'PopulatePreviewFrames', function(self)
             if self.FrameErrorText:IsShown() then
-                WoWTools_ChineseMixin:Set_Label_Text(self.FrameErrorText)--该物品已经升到满级了
+                WoWTools_ChineseMixin:SetLabelText(self.FrameErrorText)--该物品已经升到满级了
             end
         end)
 
@@ -622,7 +622,7 @@ local function Init_Event(arg1)
 
     elseif arg1=='Blizzard_MajorFactions' then
         hooksecurefunc(MajorFactionButtonUnlockedStateMixin, 'Refresh', function(self, majorFactionData)--Blizzard_MajorFactionsLandingTemplates.lua
-            WoWTools_ChineseMixin:Set_Label_Text(self.Title, majorFactionData.name)
+            WoWTools_ChineseMixin:SetLabelText(self.Title, majorFactionData.name)
             self.RenownLevel:SetFormattedText('%d级', majorFactionData.renownLevel or 0)
         end)
         hooksecurefunc(MajorFactionWatchFactionButtonMixin, 'OnLoad', function(self)
@@ -634,7 +634,7 @@ local function Init_Event(arg1)
             local majorFactionData = C_MajorFactions.GetMajorFactionData(self.majorFactionID) or {}
 ---@diagnostic disable-next-line: undefined-field
             if majorFactionData.name and majorFactionData.currentFactionID ~= self.majorFactionID then
-                WoWTools_ChineseMixin:Set_Label_Text(self.TrackFrame.Title, majorFactionData.name)
+                WoWTools_ChineseMixin:SetLabelText(self.TrackFrame.Title, majorFactionData.name)
             end
         end)
 

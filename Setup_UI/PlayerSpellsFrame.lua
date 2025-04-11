@@ -16,18 +16,18 @@ local id, e= ...
 
 
 local function Init_SpellBookFrame()
-    WoWTools_ChineseMixin:Set_Label_Text(PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton.Label)--隐藏被动技能
-    WoWTools_ChineseMixin:Set_Label_Text(PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton.Text)
-    WoWTools_ChineseMixin:Set_Label_Text(ClassTalentLoadoutCreateDialog.Title)
-    WoWTools_ChineseMixin:Set_Label_Text(ClassTalentLoadoutCreateDialog.NameControl.Label)
-    WoWTools_ChineseMixin:Set_Label_Text(ClassTalentLoadoutCreateDialog.AcceptButton)
-    WoWTools_ChineseMixin:Set_Label_Text(ClassTalentLoadoutCreateDialog.CancelButton)
+    WoWTools_ChineseMixin:SetLabelText(PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton.Label)--隐藏被动技能
+    WoWTools_ChineseMixin:SetLabelText(PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton.Text)
+    WoWTools_ChineseMixin:SetLabelText(ClassTalentLoadoutCreateDialog.Title)
+    WoWTools_ChineseMixin:SetLabelText(ClassTalentLoadoutCreateDialog.NameControl.Label)
+    WoWTools_ChineseMixin:SetLabelText(ClassTalentLoadoutCreateDialog.AcceptButton)
+    WoWTools_ChineseMixin:SetLabelText(ClassTalentLoadoutCreateDialog.CancelButton)
 
 --TabSys
     for _, tabID in pairs(PlayerSpellsFrame.SpellBookFrame:GetTabSet() or {}) do
         local btn= PlayerSpellsFrame.SpellBookFrame:GetTabButton(tabID)
         if btn then
-            WoWTools_ChineseMixin:Set_Label_Text(btn.Text)
+            WoWTools_ChineseMixin:SetLabelText(btn.Text)
         end
     end
 
@@ -97,9 +97,9 @@ end)
 
 --天赋
 local function Init_TalentsFrame()
-    WoWTools_ChineseMixin:Set_Label_Text(PlayerSpellsFrame.TalentsFrame.ApplyButton)--:SetText('应用改动')
+    WoWTools_ChineseMixin:SetLabelText(PlayerSpellsFrame.TalentsFrame.ApplyButton)--:SetText('应用改动')
     WoWTools_ChineseMixin:HookLabel(PlayerSpellsFrame.TalentsFrame.LoadSystem.Dropdown.Text)
-    WoWTools_ChineseMixin:Set_Label_Text(PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton.Text)
+    WoWTools_ChineseMixin:SetLabelText(PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton.Text)
     --专精，名称
     hooksecurefunc(PlayerSpellsFrame.TalentsFrame, 'RefreshCurrencyDisplay', function(self)
         local className = e.strText[self:GetClassName()]
@@ -243,7 +243,7 @@ local function Init()
     for _, tabID in pairs(PlayerSpellsFrame:GetTabSet() or {}) do
         local btn= PlayerSpellsFrame:GetTabButton(tabID)
         if btn then
-            WoWTools_ChineseMixin:Set_Label_Text(btn.Text)
+            WoWTools_ChineseMixin:SetLabelText(btn.Text)
         end
     end
 end

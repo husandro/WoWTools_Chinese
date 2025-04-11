@@ -10,10 +10,10 @@ WoWTools_ChineseMixin:HookDialog("DEATH", 'OnShow', function(self)
     elseif ( self.timeleft == -1 ) then
         self.text:SetText('你死亡了。要释放灵魂到最近的墓地吗？')
     end
-    WoWTools_ChineseMixin:Set_Label_Text(self.button1)
-    WoWTools_ChineseMixin:Set_Label_Text(self.button2)
-    WoWTools_ChineseMixin:Set_Label_Text(self.button3)
-    WoWTools_ChineseMixin:Set_Label_Text(self.button4)
+    WoWTools_ChineseMixin:SetLabelText(self.button1)
+    WoWTools_ChineseMixin:SetLabelText(self.button2)
+    WoWTools_ChineseMixin:SetLabelText(self.button3)
+    WoWTools_ChineseMixin:SetLabelText(self.button4)
 end)
 
 
@@ -25,11 +25,11 @@ local function get_spell_name(option)
     end
     local name, icon
     if option.optionType==Enum.SelfResurrectOptionType.Spell then
-        name= WoWTools_ChineseMixin:Get_Spell_Name(option.id)
+        name= WoWTools_ChineseMixin:GetSpellName(option.id)
         icon= C_Spell.GetSpellTexture(option.id)
 
     elseif option.optionType==Enum.SelfResurrectOptionType.Item then
-        name= WoWTools_ChineseMixin:Get_Item_Name(option.id)
+        name= WoWTools_ChineseMixin:GetItemName(option.id)
         icon= C_Item.GetItemIconByID(option.id)
     end
     if icon== 134400 then
@@ -124,11 +124,11 @@ local function set_DeathRecapFrame_OpenRecap()
         local evtData = events[i]
         if entry and entry:IsShown() and evtData then
             local spellId, spellName = DeathRecapFrame_GetEventInfo(evtData)
-            local name= WoWTools_ChineseMixin:Get_Spell_Name(spellId) or e.strText[spellName]
+            local name= WoWTools_ChineseMixin:GetSpellName(spellId) or e.strText[spellName]
             if name then
                 entry.SpellInfo.Name:SetText(name)
             end
-            WoWTools_ChineseMixin:Set_Label_Text(entry.SpellInfo.Caster)
+            WoWTools_ChineseMixin:SetLabelText(entry.SpellInfo.Caster)
 
             local dmgInfo = entry.DamageInfo;
             if dmgInfo and evtData.amount then

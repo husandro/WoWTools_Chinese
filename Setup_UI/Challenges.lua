@@ -14,8 +14,8 @@ local function Init_Blizzard_WeeklyRewards()
 
     hooksecurefunc(WeeklyRewardsFrame, 'UpdateOverlay', function(self)--Blizzard_WeeklyRewards.lua
         if self.Overlay then
-            WoWTools_ChineseMixin:Set_Label_Text(self.Overlay.Text)
-            WoWTools_ChineseMixin:Set_Label_Text(self.Overlay.Title)
+            WoWTools_ChineseMixin:SetLabelText(self.Overlay.Text)
+            WoWTools_ChineseMixin:SetLabelText(self.Overlay.Title)
         end
     end)
 
@@ -150,12 +150,12 @@ local function Init_Blizzard_ChallengesUI()
             local mapID, _, powerLevel= C_ChallengeMode.GetSlottedKeystoneInfo()
             if mapID ~= nil then
                 local name= C_ChallengeMode.GetMapUIInfo(mapID)
-                WoWTools_ChineseMixin:Set_Label_Text(self.DungeonName, name)
+                WoWTools_ChineseMixin:SetLabelText(self.DungeonName, name)
                 self.PowerLevel:SetFormattedText('%d级', powerLevel)
             end
         end)
 
-    WoWTools_ChineseMixin:Set_Label_Text(ChallengesFrame.SeasonChangeNoticeFrame.NewSeason)--:SetText('全新赛季！')
+    WoWTools_ChineseMixin:SetLabelText(ChallengesFrame.SeasonChangeNoticeFrame.NewSeason)--:SetText('全新赛季！')
     WoWTools_ChineseMixin:HookLabel(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription)--:SetText('地下城奖励的物品等级已经提升！')
     WoWTools_ChineseMixin:HookLabel(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription2)--:SetText('史诗地下城的敌人变得更强了！')
 

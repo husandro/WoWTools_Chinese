@@ -4,7 +4,7 @@ local e = select(2, ...)
 
 
 hooksecurefunc(DragonridingPanelSkillsButtonMixin, 'OnLoad', function(self)--Blizzard_DragonflightLandingPage.lua
-    WoWTools_ChineseMixin:Set_Label_Text(self)
+    WoWTools_ChineseMixin:SetLabelText(self)
 end)
 
 
@@ -64,7 +64,7 @@ GroupLootHistoryFrame.NoInfoString:SetText('地下城和团队副本的战利品
 hooksecurefunc('GuildChallengeAlertFrame_SetUp', function(frame, challengeType)--AlertFrameSystems.lua
     local name= _G["GUILD_CHALLENGE_TYPE"..challengeType]
     if name then
-        WoWTools_ChineseMixin:Set_Label_Text(frame.Type, name)
+        WoWTools_ChineseMixin:SetLabelText(frame.Type, name)
     end
 end)
 
@@ -179,7 +179,7 @@ ReportFrame.MinorReportDescription:SetText('提供详细信息（选择所有适
 ReportFrame.Comment.EditBox.Instructions:SetText('补充更多关于这次举报的细节（可选）')
 hooksecurefunc(ReportingFrameMinorCategoryButtonMixin, 'SetupButton', function(self, minorCategory)
     local categoryName = minorCategory and _G[C_ReportSystem.GetMinorCategoryString(minorCategory)]
-    WoWTools_ChineseMixin:Set_Label_Text(self.Text, categoryName)
+    WoWTools_ChineseMixin:SetLabelText(self.Text, categoryName)
 end)
 ReportFrame.ThankYouText:SetText('感谢您的举报！')
 ReportFrame.TitleText:SetText('《魔兽世界》客户支持')
@@ -215,7 +215,7 @@ ReportFrame.ReportButton:SetText('举报')
 --ButtonTrayUtil.lua
 if ButtonTrayUtil.TestCheckboxTraySetup then
     hooksecurefunc(ButtonTrayUtil, 'TestCheckboxTraySetup', function(button, labelText)--ButtonTrayUtil.lua
-        WoWTools_ChineseMixin:Set_Label_Text(button.Label, labelText)
+        WoWTools_ChineseMixin:SetLabelText(button.Label, labelText)
     end)
 end
 
@@ -226,7 +226,7 @@ hooksecurefunc(ButtonTrayUtil, 'TestButtonTraySetup', function(button, label)
     end
 end)
 hooksecurefunc(ResizeCheckButtonMixin, 'SetLabelText', function(self, labelText)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Label, labelText)
+    WoWTools_ChineseMixin:SetLabelText(self.Label, labelText)
 end)
 
 
@@ -329,7 +329,7 @@ MovieFrame.CloseDialog.ResumeButton:SetText('否')
 
 --SharedUIPanelTemplates.lua
 hooksecurefunc(SliderControlFrameMixin, 'SetupSlider', function(self, _, _, _, _, label)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Label, label)
+    WoWTools_ChineseMixin:SetLabelText(self.Label, label)
 end)
 
 hooksecurefunc('SearchBoxTemplate_OnLoad', function(self)--SharedUIPanelTemplates.lua
@@ -353,7 +353,7 @@ hooksecurefunc(IconSelectorPopupFrameTemplateMixin, 'SetSelectedIconText', funct
     end
 end)
 --[[hooksecurefunc(LabeledEnumDropDownControlMixin, 'SetLabelText', function(self, text)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Label, text)
+    WoWTools_ChineseMixin:SetLabelText(self.Label, text)
 end)]]
 
 
@@ -409,14 +409,14 @@ CompactRaidFrameManager.displayFrame.label:SetText(IsInRaid() and '团员' or '�
 hooksecurefunc('CompactRaidFrameManager_UpdateLabel', function()
     CompactRaidFrameManager.displayFrame.label:SetText(IsInRaid() and '团员' or '队员')
 end)
---WoWTools_ChineseMixin:Set_Label_Text(parentBottomButtonsLeavePartyButton)
+--WoWTools_ChineseMixin:SetLabelText(parentBottomButtonsLeavePartyButton)
 parentBottomButtonsLeavePartyButton:SetText('离开队伍')
---WoWTools_ChineseMixin:Set_Label_Text(parentBottomButtonsLeaveInstanceGroupButton)
+--WoWTools_ChineseMixin:SetLabelText(parentBottomButtonsLeaveInstanceGroupButton)
 WoWTools_ChineseMixin:HookLabel(parentBottomButtonsLeaveInstanceGroupButton)--:SetText('离开副本队伍')
 
-WoWTools_ChineseMixin:Set_Label_Text(CompactRaidFrameManagerDisplayFrame.RestrictPingsLabel.Label)
-WoWTools_ChineseMixin:Set_Label_Text(CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerUnitTab)
-WoWTools_ChineseMixin:Set_Label_Text(CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerGroundTab)
+WoWTools_ChineseMixin:SetLabelText(CompactRaidFrameManagerDisplayFrame.RestrictPingsLabel.Label)
+WoWTools_ChineseMixin:SetLabelText(CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerUnitTab)
+WoWTools_ChineseMixin:SetLabelText(CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerGroundTab)
 --[[hooksecurefunc(CompactRaidFrameManagerDisplayFrame.RestrictPingsButton, 'UpdateLabel', function(self)
     self.Text:SetText(IsInRaid() and '只限助手发送信号' or '只限领袖发送信号')
 end)
@@ -462,7 +462,7 @@ end
 hooksecurefunc(PlayerCastingBarFrame, 'HandleInterruptOrSpellFailed', function(self, _, event, ...)
     -- self.barType == "interrupted" and self.Text then
     --    self.Text:SetText(event == "UNIT_SPELLCAST_FAILED" and '失败' or '被打断')
-    WoWTools_ChineseMixin:Set_Label_Text(self.Text)
+    WoWTools_ChineseMixin:SetLabelText(self.Text)
 end)
 
 PlayerCastingBarFrame:HookScript('OnEvent', function(self, event, _, _, spellID)
@@ -473,7 +473,7 @@ PlayerCastingBarFrame:HookScript('OnEvent', function(self, event, _, _, spellID)
                 self.Text:SetText(name)
             end
         else
-            WoWTools_ChineseMixin:Set_Label_Text(self.Text)            
+            WoWTools_ChineseMixin:SetLabelText(self.Text)            
         end
     end
 end)
@@ -482,7 +482,7 @@ end)
 hooksecurefunc(OverlayPlayerCastingBarFrame, 'HandleInterruptOrSpellFailed', function(self, _, event, ...)
     -- self.barType == "interrupted" and self.Text then
     --    self.Text:SetText(event == "UNIT_SPELLCAST_FAILED" and '失败' or '被打断')
-    WoWTools_ChineseMixin:Set_Label_Text(self.Text)
+    WoWTools_ChineseMixin:SetLabelText(self.Text)
 end)
 OverlayPlayerCastingBarFrame:HookScript('OnEvent', function(self, event, _, _, spellID)
     if self:IsShown() then
@@ -492,7 +492,7 @@ OverlayPlayerCastingBarFrame:HookScript('OnEvent', function(self, event, _, _, s
                 self.Text:SetText(name)
             end
         else
-            WoWTools_ChineseMixin:Set_Label_Text(self.Text)            
+            WoWTools_ChineseMixin:SetLabelText(self.Text)            
         end
     end
 end)
@@ -509,7 +509,7 @@ C_Timer.After(4, function()
 
 
     for i=1, 12 do
-        WoWTools_ChineseMixin:Set_Label_Text(_G['ChatMenuButton'..i])
+        WoWTools_ChineseMixin:SetLabelText(_G['ChatMenuButton'..i])
     end
 
     if _G['VoiceMacroMenu'] then
@@ -587,9 +587,9 @@ end)
 --EventToastManager.lua EventToastManagerFrame
 --没有全部测试
 hooksecurefunc(EventToastScenarioBaseToastMixin, 'Setup', function(self, toastInfo)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Title, toastInfo.title)
-    WoWTools_ChineseMixin:Set_Label_Text(self.SubTitle, toastInfo.subtitle)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Description, toastInfo.instructionText)
+    WoWTools_ChineseMixin:SetLabelText(self.Title, toastInfo.title)
+    WoWTools_ChineseMixin:SetLabelText(self.SubTitle, toastInfo.subtitle)
+    WoWTools_ChineseMixin:SetLabelText(self.Description, toastInfo.instructionText)
 end)
 hooksecurefunc(EventToastScenarioExpandToastMixin, 'Setup', function(self, toastInfo)
     self.Description:SetText('左键点击以查看详情')
@@ -607,40 +607,40 @@ hooksecurefunc(EventToastScenarioExpandToastMixin, 'OnClick', function(self, but
     end
 end)
 hooksecurefunc(EventToastWeeklyRewardToastMixin, 'Setup', function(self, toastInfo)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Contents.Title, toastInfo.title)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Contents.SubTitle, e.strText[toastInfo.subtitle])
+    WoWTools_ChineseMixin:SetLabelText(self.Contents.Title, toastInfo.title)
+    WoWTools_ChineseMixin:SetLabelText(self.Contents.SubTitle, e.strText[toastInfo.subtitle])
 end)
 hooksecurefunc(EventToastWithIconBaseMixin, 'Setup', function(self, toastInfo)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Title, toastInfo.title)
-    WoWTools_ChineseMixin:Set_Label_Text(self.SubTitle, toastInfo.subtitle)
+    WoWTools_ChineseMixin:SetLabelText(self.Title, toastInfo.title)
+    WoWTools_ChineseMixin:SetLabelText(self.SubTitle, toastInfo.subtitle)
     if not self.isSideDisplayToast then
-        WoWTools_ChineseMixin:Set_Label_Text(self.InstructionalText, toastInfo.instructionText)
+        WoWTools_ChineseMixin:SetLabelText(self.InstructionalText, toastInfo.instructionText)
     end
 end)
 hooksecurefunc(EventToastWithIconWithRarityMixin, 'Setup', function(self, toastInfo)
     if (toastInfo.qualityString) then
-        WoWTools_ChineseMixin:Set_Label_Text(self.RarityValue, toastInfo.qualityString)
+        WoWTools_ChineseMixin:SetLabelText(self.RarityValue, toastInfo.qualityString)
     end
 end)
 hooksecurefunc(EventToastChallengeModeToastMixin, 'Setup', function(self, toastInfo)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Title, toastInfo.title)
+    WoWTools_ChineseMixin:SetLabelText(self.Title, toastInfo.title)
     if (toastInfo.time) then
         if e.strText[toastInfo.subtitle] then
             self.SubTitle:SetFormattedText(e.strText[toastInfo.subtitle], SecondsToClock(toastInfo.time/1000, true))
         end
     else
-        WoWTools_ChineseMixin:Set_Label_Text(self.SubTitle, toastInfo.subtitle)
+        WoWTools_ChineseMixin:SetLabelText(self.SubTitle, toastInfo.subtitle)
     end
 end)
 hooksecurefunc(EventToastManagerNormalTitleAndSubtitleMixin, 'Setup', function(self, toastInfo)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Title, toastInfo.title)
-    WoWTools_ChineseMixin:Set_Label_Text(self.SubTitle, toastInfo.subtitle)
+    WoWTools_ChineseMixin:SetLabelText(self.Title, toastInfo.title)
+    WoWTools_ChineseMixin:SetLabelText(self.SubTitle, toastInfo.subtitle)
 end)
 hooksecurefunc(EventToastManagerNormalSingleLineMixin, 'Setup', function(self, toastInfo)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Title, toastInfo.title)
+    WoWTools_ChineseMixin:SetLabelText(self.Title, toastInfo.title)
 end)
 hooksecurefunc(EventToastManagerNormalBlockTextMixin, 'Setup', function(self, toastInfo)
-    WoWTools_ChineseMixin:Set_Label_Text(self.Title, toastInfo.title)
+    WoWTools_ChineseMixin:SetLabelText(self.Title, toastInfo.title)
 end)
 
 

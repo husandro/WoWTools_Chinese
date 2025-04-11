@@ -3875,6 +3875,6 @@ local e= select(2, ...)
 https://wago.tools/db2/QuestObjective?build=11.0.2.55763&locale=zhCN
 ]]
 
-function WoWTools_ChineseMixin:Get_Quest_Object(questID, index)
+function WoWTools_ChineseMixin:GetQuestObject(questID, index)
     return tab[questID..'x'..((index or 1)-1)]
 end

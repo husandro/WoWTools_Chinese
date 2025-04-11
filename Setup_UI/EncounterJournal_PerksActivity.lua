@@ -85,7 +85,7 @@ local function Init()
         end
     end)
     if EncounterJournalMonthlyActivitiesFrame.ThresholdContainer then
-        WoWTools_ChineseMixin:Set_Label_Text(EncounterJournalMonthlyActivitiesFrame.ThresholdContainer.TextContainer.Points)
+        WoWTools_ChineseMixin:SetLabelText(EncounterJournalMonthlyActivitiesFrame.ThresholdContainer.TextContainer.Points)
     end
     EncounterJournalMonthlyActivitiesFrame.HeaderContainer.Title:SetText('旅行者日志')
     EncounterJournalMonthlyActivitiesFrame.BarComplete.AllRewardsCollectedText:SetText('你已经收集完了本月的所有奖励')
@@ -97,7 +97,7 @@ local function Init()
 
     --任务，名称
     hooksecurefunc(MonthlyActivitiesButtonTextContainerMixin, 'UpdateText', function(self, data)
-        local info= WoWTools_ChineseMixin:Get_PerksActivity_Info(data.ID)
+        local info= WoWTools_ChineseMixin:GetPerksActivityInfo(data.ID)
         if not info then
             return
         end
@@ -116,7 +116,7 @@ local function Init()
     --任务，提示
     hooksecurefunc( MonthlyActivitiesButtonMixin, 'ShowTooltip', function(self)
         local data = self:GetData() or {}
-        local info= WoWTools_ChineseMixin:Get_PerksActivity_Info(data.ID)
+        local info= WoWTools_ChineseMixin:GetPerksActivityInfo(data.ID)
         if not info then
             return
         end
@@ -145,7 +145,7 @@ local function Init()
             return
         end
         for _, btn in pairs(self:GetFrames() or {}) do
-            WoWTools_ChineseMixin:Set_Label_Text(btn.Label)
+            WoWTools_ChineseMixin:SetLabelText(btn.Label)
         end
     end)
 
@@ -159,7 +159,7 @@ local function Init()
         if name then
             self.HeaderContainer.Month:SetText(name)
         else
-            WoWTools_ChineseMixin:Set_Label_Text(self.HeaderContainer.Month)
+            WoWTools_ChineseMixin:SetLabelText(self.HeaderContainer.Month)
         end
     end)
 

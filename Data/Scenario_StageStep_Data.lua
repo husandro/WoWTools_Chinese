@@ -3989,7 +3989,7 @@ local tab={
 
 local e= select(2, ...)
 
-function WoWTools_ChineseMixin:Get_Scenario_Step_Info(scenarioID, stepIndex)
+function WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, stepIndex)
     stepIndex= stepIndex or 1
     stepIndex= stepIndex-1
     local data= tab[scenarioID..'x'..stepIndex]

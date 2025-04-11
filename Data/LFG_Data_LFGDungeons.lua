@@ -1503,7 +1503,7 @@ for dungeonID, info in pairs(tab) do
 end
 
 
-function WoWTools_ChineseMixin:Get_LFGDungeon_Desc(lfgDungeonID)
+function WoWTools_ChineseMixin:GetLFGDungeonDesc(lfgDungeonID)
     return descTab[lfgDungeonID]
 end
 
