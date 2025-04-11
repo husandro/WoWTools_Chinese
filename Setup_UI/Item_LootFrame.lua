@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 --LootFrame.lua
@@ -15,9 +15,9 @@ hooksecurefunc(LootFrameElementMixin, "Init", function(self, ...)
     local slotIndex = self:GetSlotIndex();
     local name
 	local texture, item, quantity, currencyID, itemQuality = GetLootSlotInfo(slotIndex);
-	if currencyID then 
+	if currencyID then
 		item = CurrencyContainerUtil.GetCurrencyContainerInfo(currencyID, quantity, item, texture, itemQuality);
-        name= e.strText[item]
+        name= WoWTools_ChineseMixin:CN(item)
     else
         local itemLink	= GetLootSlotLink(slotIndex);
         if itemLink then

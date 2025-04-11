@@ -15,7 +15,7 @@ local e = select(2, ...)
     end)
     hooksecurefunc(TokenHeaderMixin, 'Initialize', function(self)
             if self.elementData.name then
-            local name= e.strText[self.elementData.name]
+            local name= WoWTools_ChineseMixin:CN(self.elementData.name)
             if name then
                 self.Name:SetText(name)
             end
@@ -23,7 +23,7 @@ local e = select(2, ...)
     end)
     hooksecurefunc(TokenEntryMixin, 'Initialize', function(self)
         if self.elementData.name then
-            local name= e.strText[self.elementData.name]
+            local name= WoWTools_ChineseMixin:CN(self.elementData.name)
             if not self.Content.Name2 then--点击，不能，弹出对话框，所以加个
                 self.Content.Name2= self.Content:CreateFontString(nil, 'BORDER', 'GameFontHighlightLeft')
                 self.Content.Name2:SetPoint('LEFT', self.Content.AccountWideIcon, 'RIGHT')
@@ -35,7 +35,7 @@ local e = select(2, ...)
     end)
     hooksecurefunc(TokenSubHeaderMixin, 'Initialize', function(self)
         if self.elementData.name then
-            local name= e.strText[self.elementData.name]
+            local name= WoWTools_ChineseMixin:CN(self.elementData.name)
             if name then
                 self.Text:SetText(HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(name))
             end

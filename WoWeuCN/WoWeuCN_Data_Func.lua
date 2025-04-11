@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 --[[do
 if select(4, C_AddOns.GetAddOnInfo('WoWeuCN_Tooltips')) then
     
@@ -515,12 +515,6 @@ end
 
 
 for journalEncounterID, info in pairs(WoWeuCN_Tooltips_EncounterData or {}) do
-    local title= info['Title']
-    if title and title~='' then
-        local name= EJ_GetEncounterInfo(journalEncounterID)
-        if name then
-            e.strText[name]= title
-        end
-    end
+    WoWTools_ChineseMixin:SetCN(EJ_GetEncounterInfo(journalEncounterID),  info['Title'])
 end
 

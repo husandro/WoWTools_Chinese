@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 ChatConfigCombatSettings:HookScript('OnShow', function()
@@ -94,7 +94,7 @@ hooksecurefunc(ChatWindowTabMixin, 'SetChatWindowIndex', function(self, chatWind
     local text
     if chatWindowIndex ~= VOICE_WINDOW_ID then
         local chatTab = _G["ChatFrame"..chatWindowIndex.."Tab"]
-        text= e.strText[chatTab.Text:GetText()]
+        text= WoWTools_ChineseMixin:CN(chatTab.Text:GetText())
     else
         text= '文本转语音'
     end
@@ -124,7 +124,7 @@ hooksecurefunc('ChatConfigCategoryFrame_Refresh', function()--ChatConfigFrame.lu
     if  CURRENT_CHAT_FRAME_ID == VOICE_WINDOW_ID then
         ChatConfigFrame.Header:Setup('文字转语音选项')
     else
-        ChatConfigFrame.Header:Setup(currentChatFrame ~= nil and format('%s设置', e.strText[currentChatFrame.name] or currentChatFrame.name) or "")
+        ChatConfigFrame.Header:Setup(currentChatFrame ~= nil and format('%s设置', WoWTools_ChineseMixin:CN(currentChatFrame.name) or currentChatFrame.name) or "")
     end
 end)
 

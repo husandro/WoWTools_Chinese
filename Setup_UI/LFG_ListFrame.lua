@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 --预创建队伍
 
@@ -13,7 +13,7 @@ local e= select(2, ...)
 
 
 local function LFGListUtil_GetDecoratedCategoryName(categoryName, filter, useColors)
-    categoryName= e.strText[categoryName] or categoryName
+    categoryName= WoWTools_ChineseMixin:CN(categoryName) or categoryName
 	if ( filter == 0 ) then
 		return categoryName;
 	end
@@ -75,7 +75,7 @@ hooksecurefunc('LFGListCategorySelection_AddButton', function(self, btnIndex, ca
     if text and btn then
         WoWTools_ChineseMixin:SetLabelFont(btn:GetFontString())
         local name= text:match('%- (.+)')
-        local cnName= name and e.strText[name]
+        local cnName= name and WoWTools_ChineseMixin:CN(name)
         if cnName then
             text= text:gsub(name, cnName)
         end
@@ -285,11 +285,11 @@ hooksecurefunc('LFGListApplicationViewer_UpdateInfo', function(self)
 
     WoWTools_ChineseMixin:SetLabelText(self.EntryName, activeEntryInfo.name)
 
-    local activityName= e.strText[self.DescriptionFrame.activityName]
+    local activityName= WoWTools_ChineseMixin:CN(self.DescriptionFrame.activityName)
     if ( activeEntryInfo.comment == "" ) then
         WoWTools_ChineseMixin:SetLabelText(self.DescriptionFrame.Text, activityName)
     else
-        local comment= e.strText[activeEntryInfo.comment]
+        local comment= WoWTools_ChineseMixin:CN(activeEntryInfo.comment)
         if comment or activityName then
             self.DescriptionFrame.Text:SetFormattedText("%s |cff888888- %s|r", activityName or self.DescriptionFrame.activityName, comment or self.DescriptionFrame.comment)
         end
@@ -358,8 +358,8 @@ hooksecurefunc('LFGListSearchPanel_UpdateButtonStatus', function(self)
         elseif not ( resultID ) then
             self.SignUpButton.tooltip = '选择一个搜索结果。'
         end
-    elseif self.SignUpButton.tooltip and e.strText[self.SignUpButton.tooltip] then
-        self.SignUpButton.tooltip= e.strText[self.SignUpButton.tooltip]
+    elseif self.SignUpButton.tooltip and WoWTools_ChineseMixin:CN(self.SignUpButton.tooltip) then
+        self.SignUpButton.tooltip= WoWTools_ChineseMixin:CN(self.SignUpButton.tooltip)
     end
     local isPartyLeader = UnitIsGroupLeader("player", LE_PARTY_CATEGORY_HOME)
     local canBrowseWhileQueued = C_LFGList.HasActiveEntryInfo() and isPartyLeader
@@ -406,8 +406,8 @@ hooksecurefunc('LFGListSearchEntry_Update', function(self)
             self.PendingLabel:SetText('待定|cff40bf40-|r')
         end
         local searchResultInfo = C_LFGList.GetSearchResultInfo(self.resultID)
-        if e.strText[searchResultInfo.voiceChat] then
-            self.VoiceChat.tooltip = e.strText[searchResultInfo.voiceChat]
+        if WoWTools_ChineseMixin:CN(searchResultInfo.voiceChat) then
+            self.VoiceChat.tooltip = WoWTools_ChineseMixin:CN(searchResultInfo.voiceChat)
         end
     end
 end)
@@ -465,15 +465,15 @@ hooksecurefunc('LFGListInviteDialog_Show', function(self, resultID, kstringGroup
     local activityName = C_LFGList.GetActivityFullName(searchResultInfo.activityID, nil, searchResultInfo.isWarMode)
     local _, status, _, _, role = C_LFGList.GetApplicationInfo(resultID)
     local name= kstringGroupName or searchResultInfo.name
-    if e.strText[name] then
-        self.GroupName:SetText(e.strText[name])
+    if WoWTools_ChineseMixin:CN(name) then
+        self.GroupName:SetText(WoWTools_ChineseMixin:CN(name))
     end
-    if e.strText[activityName] then
-        self.ActivityName:SetText(e.strText[activityName])
+    if WoWTools_ChineseMixin:CN(activityName) then
+        self.ActivityName:SetText(WoWTools_ChineseMixin:CN(activityName))
     end
     role= _G[role]
-    if e.strText[role] then
-        self.Role:SetText(e.strText[role])
+    if WoWTools_ChineseMixin:CN(role) then
+        self.Role:SetText(WoWTools_ChineseMixin:CN(role))
     end
     self.Label:SetText(status ~= "invited" and '你已经加入了一支队伍：' or '你收到了一支队伍的邀请：')
 end)
@@ -497,21 +497,21 @@ hooksecurefunc('LFGListEntryCreationActivityFinder_InitButton', function(btn)
     if not fullName then
         return
     end
-    local name= e.strText[fullName]
+    local name= WoWTools_ChineseMixin:CN(fullName)
     if not name then
         local str= fullName:match('(.-) %(')
-        local cn= str and e.strText[str]
+        local cn= str and WoWTools_ChineseMixin:CN(str)
         if cn then
             name= fullName:gsub(str, cn)
         end
         local shortName= activityInfo.shortName
         if name and shortName and name:find(shortName) then
-            local s= e.strText[shortName]
+            local s= WoWTools_ChineseMixin:CN(shortName)
             if s then
                 name= name:gsub(shortName, s)
             elseif shortName:find(' (.+)') then--(10 英雄)
                 local sh1= shortName:match(' (.+)')
-                local cnSh1= e.strText[sh1]
+                local cnSh1= WoWTools_ChineseMixin:CN(sh1)
                 if cnSh1 then
                     name= name:gsub(sh1, cnSh1)
                 end

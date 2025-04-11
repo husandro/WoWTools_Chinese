@@ -1,4 +1,4 @@
-local id, e = ...
+
 
 
 
@@ -474,9 +474,9 @@ local function Init_Event(arg1)
                     local name= tab.name
                     local quickButtonName= tab.quickButtonName
                     local tooltip= tab.tooltip
-                    name= name and e.strText[name]
-                    quickButtonName= quickButtonName and e.strText[quickButtonName]
-                    tooltip= tooltip and e.strText[tooltip]
+                    name= name and WoWTools_ChineseMixin:CN(name)
+                    quickButtonName= quickButtonName and WoWTools_ChineseMixin:CN(quickButtonName)
+                    tooltip= tooltip and WoWTools_ChineseMixin:CN(tooltip)
                     if name then
                         self[index].name= name
                     end
@@ -599,11 +599,11 @@ local function Init_Event(arg1)
         WoWTools_ChineseMixin:AddDialogs("ITEM_INTERACTION_CONFIRMATION_DELAYED_WITH_CHARGE_INFO", {button2 = '取消'})
          --[[
         hooksecurefunc(ItemInteractionFrame, 'LoadInteractionFrameData', function(self, frameData)
-            local title= e.strText[frameData.titleText]
+            local title= WoWTools_ChineseMixin:CN(frameData.titleText)
             if title then
                 self:SetTitle(title);
             end
-            local name= e.strText[frameData.buttonText]
+            local name= WoWTools_ChineseMixin:CN(frameData.buttonText)
             if name then
                 self.ButtonFrame.ActionButton:SetText(name)
             end
@@ -613,7 +613,7 @@ local function Init_Event(arg1)
        
         需要内容
     hooksecurefunc(ItemInteractionFrame, 'UpdateDescription', function(self, description)
-        local desc= e.strText[description]
+        local desc= WoWTools_ChineseMixin:CN(description)
         if desc then
             self.Description:SetText(desc)
         end

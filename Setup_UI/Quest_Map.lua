@@ -1,5 +1,4 @@
-local id, e = ...
-if e.Not_Is_EU then return end
+
 
 
 

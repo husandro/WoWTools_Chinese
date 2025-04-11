@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 --[[
 [ID] ={'Name_lang', 'Description_lang'},
 https://wago.tools/db2/SpellFlyout?locale=zhCN
@@ -36,7 +36,7 @@ local tab={
 [235]= {'战团', '利用这些技能发掘战团的协作潜力。'},
 [236]= {'数字序列', '向附近的装置输入一串数字。'},
 [242]= {'英雄之路：地心之战团队副本', '传送到一个地心之战团队副本的入口处。在特定阵营中达到最大名望，或完成其他英雄事迹后解锁。'},
-    
+
 }
 
 
@@ -44,12 +44,8 @@ local tab={
 do
     for flyoutID, info in pairs(tab) do
         local name, desc = GetFlyoutInfo(flyoutID)
-        if name and info[1] then
-            e.strText[name]= info[1]
-        end
-        if desc and info[2] then
-            e.strText[desc]= info[2]
-        end
+        WoWTools_ChineseMixin:SetCN(name, info[1])
+        WoWTools_ChineseMixin:SetCN(desc, info[2])
     end
 end
 tab= nil

@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 
@@ -62,13 +62,13 @@ end)
 LFDMicroButton.tooltipText = MicroButtonTooltipText('队伍查找器', "TOGGLEGROUPFINDER")
 LFDMicroButton.disabledTooltip = function()
     local canUse, failureReason = C_LFGInfo.CanPlayerUseGroupFinder()
-    return canUse and '此功能在你选择阵营前不可用。' or (e.strText[failureReason] or failureReason)
+    return canUse and '此功能在你选择阵营前不可用。' or (WoWTools_ChineseMixin:CN(failureReason) or failureReason)
 end
 hooksecurefunc(LFDMicroButton, 'UpdateMicroButton',function(self)
     if not ( PVEFrame and PVEFrame:IsShown() ) and not self:IsActive() then
         self.disabledTooltip = function()
             local canUse, failureReason = C_LFGInfo.CanPlayerUseGroupFinder()
-            return canUse and '此功能在你选择阵营前不可用。' or (e.strText[failureReason] or failureReason)
+            return canUse and '此功能在你选择阵营前不可用。' or (WoWTools_ChineseMixin:CN(failureReason) or failureReason)
         end
     end
 end)

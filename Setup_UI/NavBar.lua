@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 --[[
 导航条
@@ -13,7 +13,7 @@ navButton.data = buttonData
 
 hooksecurefunc('NavBar_AddButton', function(self, buttonData)
     local navButton = self.navList[#self.navList]
-    local name= e.strText[buttonData.name]
+    local name= WoWTools_ChineseMixin:CN(buttonData.name)
     if name then
         WoWTools_ChineseMixin:SetLabelFont(navButton.text)
         navButton.text:SetText(name)

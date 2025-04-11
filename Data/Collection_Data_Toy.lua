@@ -1052,7 +1052,7 @@ local tab={
 
 
 
-local e= select(2, ...)
+
 function WoWTools_ChineseMixin:GetToySource(itemID)
     return tab[itemID]
 end

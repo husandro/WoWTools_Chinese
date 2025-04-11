@@ -1,17 +1,17 @@
-local e= select(2, ...)
+
 
 --[[
 local function set_model_tooltip(self)
     if self then
-        local tooltip= self.tooltip and e.strText[self.tooltip]
+        local tooltip= self.tooltip and WoWTools_ChineseMixin:CN(self.tooltip)
         if tooltip then
             self.tooltip = tooltip
         end
-        local tooltipText= self.tooltipText and e.strText[self.tooltipText]
+        local tooltipText= self.tooltipText and WoWTools_ChineseMixin:CN(self.tooltipText)
         if tooltipText then
             self.tooltipText = tooltipText
         end
-        local simpleTooltipLine= self.simpleTooltipLine and e.strText[self.simpleTooltipLine]
+        local simpleTooltipLine= self.simpleTooltipLine and WoWTools_ChineseMixin:CN(self.simpleTooltipLine)
         if simpleTooltipLine then
             self.simpleTooltipLine= simpleTooltipLine
         end

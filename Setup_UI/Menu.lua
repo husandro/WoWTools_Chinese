@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 --Blizzard_Menu
 
 
@@ -72,7 +72,7 @@ end)
 
 
 hooksecurefunc(MenuUtil, 'SetElementText', function(elementDescription, text)
-    local name= e.strText[text]
+    local name= WoWTools_ChineseMixin:CN(text)
     if name and name~=text then
         elementDescription.text = name
     end

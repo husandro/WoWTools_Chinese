@@ -1,5 +1,4 @@
 --https://wago.tools/db2/WarbandScene?locale=zhCN
-local e= select(2, ...)
 
 local tab={
 
@@ -15,12 +14,8 @@ do
     for warbandSceneID, data in pairs(tab) do
         local info= C_WarbandScene.GetWarbandSceneEntry(warbandSceneID)
         if info then
-            if info.name then
-                e.strText[info.name]= data[1]
-            end
-            if info.description and data[2] then
-                e.strText[info.description]= data[2]
-            end
+            WoWTools_ChineseMixin:SetCN(info.name, data[1])
+            WoWTools_ChineseMixin:SetCN(info.description, data[2])
         end
     end
 end

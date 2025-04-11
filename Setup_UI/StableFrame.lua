@@ -2,7 +2,7 @@ if UnitClassBase('player')~= 'HUNTER' then
     return
 end
 
-local e= select(2, ...)
+
 
 StableFrame.StabledPetList.FilterBar.SearchBox.Instructions:SetText('查询')
 --StableFrame.StabledPetList.FilterBar.FilterDropdown.Text:SetText('过滤')

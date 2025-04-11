@@ -1,16 +1,24 @@
-local e= select(2, ...)
-e.strText={}--主要，汉化
-
 WoWTools_ChineseMixin={}
 
 
+local CNData={}--主要，汉化
 
 
+function WoWTools_ChineseMixin:SetCN(en, cn)
+    if en and cn and cn:find("[\228-\233][\128-\191][\128-\191]") then--检查 UTF-8 字符
+        CNData[en]=cn
+    end
+end
 
+function WoWTools_ChineseMixin:CN(text)
+    return CNData[text]
+end
 
+--[[
 
+WoWTools_ChineseMixin:SetCN(
 
-
+]]
 
 
 
@@ -218,8 +226,8 @@ end
 
 
 local function set_match(text, a, b)
-    local a1= a and e.strText[a]
-    local b1= b and e.strText[b]
+    local a1=WoWTools_ChineseMixin:CN(a)
+    local b1= WoWTools_ChineseMixin:CN(b)
 
     local r= a1 and a1:find('%W') and text:gsub(a, a1) or text
     r= b1 and b1:find('%W') and r:gsub(b, b1) or r
@@ -244,7 +252,7 @@ function WoWTools_ChineseMixin:SetText(text)
         return
     end
 
-    local text2= e.strText[text]
+    local text2= self:CN(text)
     if text2 then
         if text2:find('%W') then
             return text2
@@ -355,11 +363,11 @@ function WoWTools_ChineseMixin:HookButton(btn, setFont)
         if label then
             self:SetLabelText(labe)
         end
-        hooksecurefunc(btn, 'SetText', function(self, name)
+        hooksecurefunc(btn, 'SetText', function(frame, name)
             if name and name~='' then
-                local cnName= e.strText[name]
+                local cnName= WoWTools_ChineseMixin:CN(name)
                 if cnName then
-                    self:SetText(cnName)
+                    frame:SetText(cnName)
                 end
             end
         end)
@@ -430,7 +438,7 @@ function WoWTools_ChineseMixin:GetRecipeName(recipeInfo, hyperlink)
     if hyperlink then
         local item = Item:CreateFromItemLink(hyperlink)
         color= (item:GetItemQualityColor() or {}).color
-        name= self:GetItemName(item:GetItemID()) or e.strText[item:GetItemName()]
+        name= self:GetItemName(item:GetItemID()) or self:CN(item:GetItemName())
     end
     if not name and recipeInfo then
         name= self:GetSkillLineAbilityName(recipeInfo.skillLineAbilityID)
@@ -592,23 +600,3 @@ function WoWTools_ChineseMixin:Magic(text)
     end
     return text
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
-    e.strText['']=nil
-    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
-end)

@@ -1,4 +1,4 @@
-local id, e= ...
+
 
 
 
@@ -102,11 +102,11 @@ local function Init_TalentsFrame()
     WoWTools_ChineseMixin:SetLabelText(PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton.Text)
     --专精，名称
     hooksecurefunc(PlayerSpellsFrame.TalentsFrame, 'RefreshCurrencyDisplay', function(self)
-        local className = e.strText[self:GetClassName()]
+        local className = WoWTools_ChineseMixin:CN(self:GetClassName())
         if className then
             self.ClassCurrencyDisplay:SetPointTypeText(className)
         end
-        local specName= e.strText[self:GetSpecName()]
+        local specName= WoWTools_ChineseMixin:CN(self:GetSpecName())
         if specName then
             self.SpecCurrencyDisplay:SetPointTypeText(specName)
         end
@@ -119,7 +119,7 @@ local function Init_TalentsFrame()
 
     hooksecurefunc(PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer, 'UpdateHeroSpecButton', function(self)
         if self:IsDisplayingActiveHeroSpec() then
-            local name= e.strText[self.activeSubTreeInfo.name]
+            local name= WoWTools_ChineseMixin:CN(self.activeSubTreeInfo.name)
             if name then
                 self.HeroSpecLabel:SetText(name)
             end

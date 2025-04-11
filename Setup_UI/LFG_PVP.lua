@@ -1,4 +1,4 @@
-local id, e = ...
+
 
 
 --地下城和团队副本, PVP
@@ -162,7 +162,7 @@ local function Init_HonorFrame()
         local name
         if (brawlInfo and brawlInfo.canQueue) then
             local data= brawlTab[brawlInfo.brawlID]
-            name = data and data[1] or e.strText[brawlInfo.name]
+            name = data and data[1] or WoWTools_ChineseMixin:CN(brawlInfo.name)
         else
             local timeUntilNext = brawlInfo and brawlInfo.timeLeftUntilNextChange or 0
             if (timeUntilNext == 0) then
@@ -180,7 +180,7 @@ local function Init_HonorFrame()
         if (brawlInfo) then
             if (brawlInfo and brawlInfo.canQueue) then
                 local data= brawlTab[brawlInfo.brawlID]
-                specName = data and data[1] or e.strText[brawlInfo.name]
+                specName = data and data[1] or WoWTools_ChineseMixin:CN(brawlInfo.name)
             else
                 specName= '乱斗（已关闭）'
             end
@@ -454,7 +454,7 @@ local function conquestFrameButton_OnEnter(self)--hooksecurefunc('ConquestFrameB
 	end
 
     if self.modeDescription then
-        local desc= e.strText[self.modeDescription]
+        local desc= WoWTools_ChineseMixin:CN(self.modeDescription)
         if desc then
             desc= desc:gsub('。', '。|n')
             tooltip.ModeDescription:SetText(desc)
@@ -720,7 +720,7 @@ local function Init()
             PVEFrame:SetTitle('玩家VS玩家（休赛期）')
         else
             local expName = _G["EXPANSION_NAME"..GetExpansionLevel()]
-            PVEFrame:SetTitleFormatted('玩家VS玩家 '..(e.strText[expName] or expName)..' 第 %d 赛季', PVPUtil.GetCurrentSeasonNumber())
+            PVEFrame:SetTitleFormatted('玩家VS玩家 '..(WoWTools_ChineseMixin:CN(expName) or expName)..' 第 %d 赛季', PVPUtil.GetCurrentSeasonNumber())
         end
     end)
     PVPQueueFrameCategoryButton1.Name:SetText('快速比赛')

@@ -1,7 +1,6 @@
 --[[
 [skillLineID]= {DisplayName_lang, AlternateVerb_lang, Description_lang}
 https://wago.tools/db2/SkillLine?locale=zhCN
-11.0.2.55789
 ]]
 
 local tab={
@@ -390,17 +389,9 @@ local tab={
 
 
 
-local e= select(2, ...)
-
 do
     for skillLineID, info in pairs(tab) do
-        local name
-        if info[1] then
-             name = C_TradeSkillUI.GetTradeSkillDisplayName(skillLineID)
-            if name then
-                e.strText[name]= info[1]
-            end
-        end 
+        WoWTools_ChineseMixin:SetCN(C_TradeSkillUI.GetTradeSkillDisplayName(skillLineID), info[1])
     end
 end
 tab=nil

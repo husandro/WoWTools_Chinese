@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 WoWTools_ChineseMixin:SetLabelText(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
 WoWTools_ChineseMixin:SetLabelText(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
@@ -181,7 +181,7 @@ for _, data in ipairs(MapLegendData) do
         local btn=_G[categoryData.Name]
         if btn then
             WoWTools_ChineseMixin:SetLabelText(btn, categoryData.Name)
-            local tooltip= e.strText[categoryData.Tooltip]
+            local tooltip= WoWTools_ChineseMixin:CN(categoryData.Tooltip)
             if tooltip then
                 btn.tooltipText= tooltip
             end

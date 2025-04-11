@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 --[[
 [ID]= 'Name_lang',
@@ -1547,14 +1547,3 @@ local tab={
 function WoWTools_ChineseMixin:GetTradeSkillCategoryName(categoryID)
     return tab[categoryID]
 end
---[[do
-for categoryID, cnName in pairs(tab) do
-    local data= C_TradeSkillUI.GetCategoryInfo(categoryID)
-    
-    if data and data.name then
-        e.strText[data.name]=cnName
-    end
-end
-end
-tab=nil
-]]

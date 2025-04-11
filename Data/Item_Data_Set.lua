@@ -957,35 +957,31 @@ local tab={
 [65]= {'蜘蛛之吻', 13218,13183, nil, nil, nil, nil, nil, nil},
 [41]= {'雷德双刀', 12940,12939, nil, nil, nil, nil, nil, nil},
 [1]= {'角斗士', 11729,11726,11728,11731,11730, nil, nil, nil},
-    
+
 }
 
 
 
-local e= select(2, ...)
-
-C_Timer.After(4, function()
-do
-    local name
-    for setID, info in pairs(tab) do
-        name= C_Item.GetItemSetInfo(setID)
-        if name then
-            e.strText[name]= info[1]        
-        end
-        for i=2, 8 do
-            local itemID= info[i]
-            if itemID and itemID>0 then
-                name= C_Item.GetItemNameByID(itemID)
-                if name then
-                    local cnName= WoWTools_ChineseMixin:GetItemName(itemID)
-                    if cnName then
-                        cnName= cnName:match('^|c........(.+)|r$') or cnName
-                        e.strText[name]= cnName
+EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+    do
+        local name
+        for setID, info in pairs(tab) do
+            WoWTools_ChineseMixin:SetCN(C_Item.GetItemSetInfo(setID), info[1])
+            for i=2, 8 do
+                local itemID= info[i]
+                if itemID and itemID>0 then
+                    name= C_Item.GetItemNameByID(itemID)
+                    if name then
+                        local cnName= WoWTools_ChineseMixin:GetItemName(itemID)
+                        if cnName then
+                            cnName= cnName:match('^|c........(.+)|r$') or cnName
+                            WoWTools_ChineseMixin:SetCN(name, cnName)
+                        end
                     end
                 end
             end
         end
     end
-end
-tab= nil
+    tab= nil
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
 end)

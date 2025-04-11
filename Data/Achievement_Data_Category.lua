@@ -235,13 +235,10 @@ local tab={
 
 
 
-local e= select(2, ...)
+
 do
     for categoryID, text in pairs(tab) do
-        local name = GetCategoryInfo(categoryID)
-        if name and text then
-            e.strText[name]= text
-        end
+        WoWTools_ChineseMixin:SetCN(GetCategoryInfo(categoryID), text)
     end
 end
 tab= nil

@@ -15,7 +15,7 @@
 
 ##字符, 常用
 Data\0_zhCN.lua
-
+Data\1_zhCN_Add.lua
 
 
 
@@ -160,6 +160,4 @@ WoWeuCN\UnitData_cn.lua
 WoWeuCN\EncounterData_cn.lua
 WoWeuCN\WoWeuCN_Data_Func.lua
 
-##放最后
-Data\1_zhCN_Add.lua
 

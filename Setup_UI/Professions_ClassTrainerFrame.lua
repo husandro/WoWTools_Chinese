@@ -1,4 +1,4 @@
-local id, e = ...
+
 
 
 --专业，训练师
@@ -21,13 +21,13 @@ local function Init()
         if ( not serviceName ) then
             serviceName = '未知'
         else
-            local name= e.strText[serviceName]
+            local name= WoWTools_ChineseMixin:CN(serviceName)
             if not name then
                 local itemLink= GetTrainerServiceItemLink(skillIndex)
                 local itemID= itemLink and C_Item.GetItemInfoInstant(itemLink)
                 if itemID then
                     local itemName= C_Item.GetItemNameByID(itemLink)
-                    name= WoWTools_ChineseMixin:GetItemName(itemID) or e.strText[itemName]
+                    name= WoWTools_ChineseMixin:GetItemName(itemID) or WoWTools_ChineseMixin:CN(itemName)
                 end
                 if not name then
                     local data= C_TooltipInfo.GetTrainerService(skillIndex)

@@ -3867,9 +3867,6 @@ local tab={
 }
 
 
-
-local e= select(2, ...)
-
 --[[
 [QuestID.. x ..OrderIndex]= desc
 https://wago.tools/db2/QuestObjective?build=11.0.2.55763&locale=zhCN

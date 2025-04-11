@@ -28,7 +28,7 @@ if PagingControlsMixin then
         local shouldHideControls = self.hideWhenSinglePage and self.maxPages <= 1
         if not shouldHideControls then
             if self.displayMaxPages then
-                local name= e.strText[self.currentPageWithMaxText]
+                local name= WoWTools_ChineseMixin:CN(self.currentPageWithMaxText)
                 if name then
                     self.PageText:SetFormattedText(name, self.currentPage, self.maxPages)
                 end
@@ -151,7 +151,7 @@ hooksecurefunc('MinimapMailFrameUpdate', function()
     local senders = { GetLatestThreeSenders() }
     local headerText = #senders >= 1 and '未读邮件来自：' or '你有未阅读的邮件'
     for i, sender in ipairs(senders) do
-        headerText = headerText.."\n"..(e.strText[sender] or sender)
+        headerText = headerText.."\n"..(WoWTools_ChineseMixin:CN(sender) or sender)
     end
     GameTooltip:SetText(headerText)
     GameTooltip:Show()
@@ -220,7 +220,7 @@ if ButtonTrayUtil.TestCheckboxTraySetup then
 end
 
 hooksecurefunc(ButtonTrayUtil, 'TestButtonTraySetup', function(button, label)
-    label= e.strText[label]
+    label= WoWTools_ChineseMixin:CN(label)
     if label then
         button:SetText(label)
     end
@@ -397,7 +397,7 @@ end)
 
 --UIErrorsFrame
 hooksecurefunc(UIErrorsFrame, 'AddMessage', function(self, msg, ...)
-    local text= e.strText[msg]
+    local text= WoWTools_ChineseMixin:CN(msg)
     if text and msg~=text then
         self:AddMessage(text, ...)
     end
@@ -439,7 +439,7 @@ RolePollPopupAcceptButtonText:SetText('接受')
 
 --HelpTipTemplateMixin:ApplyText()
 hooksecurefunc(HelpTipTemplateMixin, 'ApplyText', function(frame)
-    local text= e.strText[frame.info.text]
+    local text= WoWTools_ChineseMixin:CN(frame.info.text)
     if text then
         frame.info.text= text
         frame.Text:SetText(text)
@@ -447,7 +447,7 @@ hooksecurefunc(HelpTipTemplateMixin, 'ApplyText', function(frame)
 end)
 if _G['HelpPlate_Button_OnEnter'] then--11.1.5无
     hooksecurefunc('HelpPlate_Button_OnEnter', function(self)
-        local text= e.strText[self.toolTipText]
+        local text= WoWTools_ChineseMixin:CN(self.toolTipText)
         if text then
             self.toolTipText= text
             HelpPlateTooltip.Text:SetText(text)
@@ -518,7 +518,7 @@ C_Timer.After(4, function()
         for i=1, 23 do
             local btn= _G['VoiceMacroMenuButton'..i]
             local name= btn and btn:GetText()
-            local text= name and e.strText[name]
+            local text= name and WoWTools_ChineseMixin:CN(name)
             if text then
                 btn:SetText(text)
                 local shortcutString = _G[btn:GetName().."ShortcutText"]
@@ -536,7 +536,7 @@ C_Timer.After(4, function()
         for i=1, 21 do
             local btn= _G['EmoteMenuButton'..i]
             local name= btn and btn:GetText()
-            local text= name and e.strText[name]
+            local text= name and WoWTools_ChineseMixin:CN(name)
             if text then
                 btn:SetText(text)
                 local shortcutString = _G[btn:GetName().."ShortcutText"]
@@ -557,7 +557,7 @@ C_Timer.After(4, function()
     --[[Blizzard_FrameXMLBase/Constants.lua
     local function set_table(data)
         for index, name in pairs(_G[data] or {}) do
-            local cnName= e.strText[name]
+            local cnName= WoWTools_ChineseMixin:CN(name)
             if cnName then
                 _G[data][index]= cnName
             end
@@ -608,7 +608,7 @@ hooksecurefunc(EventToastScenarioExpandToastMixin, 'OnClick', function(self, but
 end)
 hooksecurefunc(EventToastWeeklyRewardToastMixin, 'Setup', function(self, toastInfo)
     WoWTools_ChineseMixin:SetLabelText(self.Contents.Title, toastInfo.title)
-    WoWTools_ChineseMixin:SetLabelText(self.Contents.SubTitle, e.strText[toastInfo.subtitle])
+    WoWTools_ChineseMixin:SetLabelText(self.Contents.SubTitle, WoWTools_ChineseMixin:CN(toastInfo.subtitle))
 end)
 hooksecurefunc(EventToastWithIconBaseMixin, 'Setup', function(self, toastInfo)
     WoWTools_ChineseMixin:SetLabelText(self.Title, toastInfo.title)
@@ -625,8 +625,8 @@ end)
 hooksecurefunc(EventToastChallengeModeToastMixin, 'Setup', function(self, toastInfo)
     WoWTools_ChineseMixin:SetLabelText(self.Title, toastInfo.title)
     if (toastInfo.time) then
-        if e.strText[toastInfo.subtitle] then
-            self.SubTitle:SetFormattedText(e.strText[toastInfo.subtitle], SecondsToClock(toastInfo.time/1000, true))
+        if WoWTools_ChineseMixin:CN(toastInfo.subtitle) then
+            self.SubTitle:SetFormattedText(WoWTools_ChineseMixin:CN(toastInfo.subtitle), SecondsToClock(toastInfo.time/1000, true))
         end
     else
         WoWTools_ChineseMixin:SetLabelText(self.SubTitle, toastInfo.subtitle)
@@ -647,13 +647,13 @@ end)
 
 -- PVP
 for index, en in pairs(CONQUEST_SIZE_STRINGS) do
-    local cn= e.strText[en]
+    local cn= WoWTools_ChineseMixin:CN(en)
     if cn then
         CONQUEST_SIZE_STRINGS[index]= cn
     end
 end
 for index, en in pairs(CONQUEST_TYPE_STRINGS) do
-    local cn= e.strText[en]
+    local cn= WoWTools_ChineseMixin:CN(en)
     if cn then
         CONQUEST_TYPE_STRINGS[index]= cn
     end

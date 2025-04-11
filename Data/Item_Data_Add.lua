@@ -1,20 +1,15 @@
-local e= select(2, ...)
-
-
-
 local tab= {
+
     [6948]= '炉石',
+
 }
 
-
-C_Timer.After(4, function()
+EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
     do
         for itemID, text in pairs(tab) do
-            local name= C_Item.GetItemNameByID(itemID)
-            if name then
-                e.strText[name]= text
-            end
+            WoWTools_ChineseMixin:SetCN(C_Item.GetItemNameByID(itemID), text)
         end
     end
     tab=nil
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
 end)

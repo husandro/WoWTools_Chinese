@@ -1,7 +1,6 @@
 --[[
 [ID]= {'Name_lang', 'Description_lang'},
 https://wago.tools/db2/Faction?locale=zhCN
-11.0.2.55763
 ]]
 
 
@@ -735,15 +734,12 @@ local tab={
 
 
 
-local id, e = ...
 do
     for factionID, info in pairs(tab) do
         local data= C_Reputation.GetFactionDataByID(factionID) or {}
-        if data.name and info[1] then
-            e.strText[data.name] = info[1]
-        end
-        if data.description and info[2] then
-            e.strText[data.description]= info[2]
+        if data then
+            WoWTools_ChineseMixin:SetCN(data.name, info[1])
+            WoWTools_ChineseMixin:SetCN(data.description, info[2])
         end
     end
 end

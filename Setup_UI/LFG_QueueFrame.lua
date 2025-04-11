@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 --地下城查找器
 
@@ -80,8 +80,8 @@ hooksecurefunc('LFGRewardsFrame_UpdateFrame', function(parentFrame, dungeonID)--
     end
 
 
-    name= name or e.strText[dungeonName]
-    desc= desc or e.strText[dungeonDescription] or WoWTools_ChineseMixin:GetLFGDungeonDesc(dungeonID)
+    name= name or WoWTools_ChineseMixin:CN(dungeonName)
+    desc= desc or WoWTools_ChineseMixin:CN(dungeonDescription) or WoWTools_ChineseMixin:GetLFGDungeonDesc(dungeonID)
 
     if name then
         parentFrame.title:SetText(name)

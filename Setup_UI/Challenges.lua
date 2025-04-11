@@ -1,5 +1,5 @@
 
-local e= select(2, ...)
+
 
 
 
@@ -36,12 +36,12 @@ end
         local activityInfo = self.info;
         local name
         if text then
-            name= e.strText[text]
+            name= WoWTools_ChineseMixin:CN(text)
         elseif self.hasRewards then
             
         elseif self.unlocked then
             if activityInfo.type == Enum.WeeklyRewardChestThresholdType.Raid then
-                name = e.strText[DifficultyUtil.GetDifficultyName(activityInfo.level)]
+                name = WoWTools_ChineseMixin:CN(DifficultyUtil.GetDifficultyName(activityInfo.level))
                 
             elseif activityInfo.type == Enum.WeeklyRewardChestThresholdType.Activities then
                 if self:IsCompletedAtHeroicLevel() then
@@ -50,7 +50,7 @@ end
                     name= format('史诗 %d', activityInfo.level);
                 end
             elseif activityInfo.type == Enum.WeeklyRewardChestThresholdType.RankedPvP then
-                name= e.strText[PVPUtil.GetTierName(activityInfo.level)]
+                name= WoWTools_ChineseMixin:CN(PVPUtil.GetTierName(activityInfo.level))
             elseif activityInfo.type == Enum.WeeklyRewardChestThresholdType.World then
                 name= format('难度 %s', activityInfo.level)
             end
@@ -83,7 +83,7 @@ local function Init_Blizzard_ChallengesUI()
             PVEFrame:SetTitle('史诗钥石地下城')
         else
             local expName = _G["EXPANSION_NAME"..GetExpansionLevel()]
-            local title = format('史诗钥石地下城 %s 赛季 %d', e.strText[expName] or expName, currentDisplaySeason)
+            local title = format('史诗钥石地下城 %s 赛季 %d', WoWTools_ChineseMixin:CN(expName) or expName, currentDisplaySeason)
             PVEFrame:SetTitle(title)
         end
     end)

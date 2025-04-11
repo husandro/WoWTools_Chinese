@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 local rarityToString ={
@@ -17,7 +17,7 @@ local function set_header(self)
     if not data and data.header and data.header~='' then
         return
     end
-    local header= e.strText[data.header] or WoWTools_ChineseMixin:GetSpellName(data.spellID)
+    local header= WoWTools_ChineseMixin:CN(data.header) or WoWTools_ChineseMixin:GetSpellName(data.spellID)
     if header then
         local label= self.Header.Contents and self.Header.Contents.Text or  self.Header.Text
         if label then
@@ -30,7 +30,7 @@ local function set_sub_header(self)
     if not self.SubHeader:IsShown() then
         return
     end
-    local name= e.strText[self.optionInfo.subHeader]
+    local name= WoWTools_ChineseMixin:CN(self.optionInfo.subHeader)
     if name then
         self.SubHeader.Text:SetText(name)
     end
@@ -41,7 +41,7 @@ local function set_optionText(self)
     if not data or not self.OptionText:IsShown() then
         return
     end
-    local desc= e.strText[data.description] or WoWTools_ChineseMixin:GetSpellDesc(data.spellID)
+    local desc= WoWTools_ChineseMixin:CN(data.description) or WoWTools_ChineseMixin:GetSpellDesc(data.spellID)
     local quality= rarityToString[data.rarity]
     if desc or quality then
         desc= (quality or '')..(desc or '')
@@ -65,7 +65,7 @@ local function Init()
     --Blizzard_PlayerChoice.lua
     hooksecurefunc(PlayerChoiceFrame, 'TryShow', function(self)
         local choiceInfo = self.choiceInfo--C_PlayerChoice.GetCurrentPlayerChoiceInfo();
-        local name= choiceInfo and e.strText[choiceInfo.questionText]
+        local name= choiceInfo and WoWTools_ChineseMixin:CN(choiceInfo.questionText)
         if name then
             self.Title.Text:SetText(name)
         end
@@ -95,7 +95,7 @@ local function Init()
 
     hooksecurefunc(PlayerChoiceBaseOptionButtonTemplateMixin, 'Setup', function(self, buttonInfo)
         WoWTools_ChineseMixin:SetLabelText(self, buttonInfo.text)
-        local tooltip= e.strText[buttonInfo.tooltip]
+        local tooltip= WoWTools_ChineseMixin:CN(buttonInfo.tooltip)
         if tooltip then
             self.tooltip = tooltip
         end

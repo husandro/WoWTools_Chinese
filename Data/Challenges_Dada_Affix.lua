@@ -49,17 +49,13 @@ local tab={
 [160]= {'萨拉塔斯的交易：吞噬', '在战斗中，萨拉塔斯会撕开裂隙，吞噬玩家的精华。'},
 [162]= {'萨拉塔斯的交易：脉冲', '在战斗中，萨拉塔斯会召唤环绕玩家的脉冲星。'},
 }
-local e= select(2, ...)
+
 
 do
-for affixID, info in pairs(tab) do
-    local name, desc = C_ChallengeMode.GetAffixInfo(affixID)
-    if name and info[1] then
-        e.strText[name]= info[1]
+    for affixID, info in pairs(tab) do
+        local name, desc = C_ChallengeMode.GetAffixInfo(affixID)
+        WoWTools_ChineseMixin:SetCN(name, info[1])
+        WoWTools_ChineseMixin:SetCN(desc, info[2])
     end
-    if desc and info[2]then
-        e.strText[desc]= info[2]
-    end
-end
 end
 tab=nil

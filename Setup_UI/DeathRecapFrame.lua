@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 
@@ -35,7 +35,7 @@ local function get_spell_name(option)
     if icon== 134400 then
         icon=nil
     end
-    name= name or e.strText[option.name]
+    name= name or WoWTools_ChineseMixin:CN(option.name)
     if name then
         return (icon and '|T'..icon..':0|t' or '')..name
     end
@@ -124,7 +124,7 @@ local function set_DeathRecapFrame_OpenRecap()
         local evtData = events[i]
         if entry and entry:IsShown() and evtData then
             local spellId, spellName = DeathRecapFrame_GetEventInfo(evtData)
-            local name= WoWTools_ChineseMixin:GetSpellName(spellId) or e.strText[spellName]
+            local name= WoWTools_ChineseMixin:GetSpellName(spellId) or WoWTools_ChineseMixin:CN(spellName)
             if name then
                 entry.SpellInfo.Name:SetText(name)
             end

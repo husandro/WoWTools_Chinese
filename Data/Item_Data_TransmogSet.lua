@@ -3901,13 +3901,12 @@ local tab={
 
 
 }
-local e = select(2, ...)
 
 do
     for transmogSetID, cnName in pairs(tab) do
-        local info= C_TransmogSets.GetSetInfo(transmogSetID) or {}--description label name
-        if info.name and cnName then
-            e.strText[info.name]= cnName
+        local info= C_TransmogSets.GetSetInfo(transmogSetID)--description label name
+        if info then
+            WoWTools_ChineseMixin:SetCN(info.name, cnName)
         end
     end
 end

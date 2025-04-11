@@ -10,7 +10,6 @@ end
 
 
 
-local e= select(2, ...)
 local tab={
 [122353]= '|cFFFFD200商人出售：|r艾斯特蕾·根德瑞|n|cFFFFD200地区：|r奥格瑞玛 - 奥格瑞玛城门|n|n|cFFFFD200商人出售：|r克罗姆·粗臂|n|cFFFFD200地区：|r铁炉堡 - 探险者大厅',
 [122365]= '|cFFFFD200商人出售：|r艾斯特蕾·根德瑞|n|cFFFFD200地区：|r奥格瑞玛 - 奥格瑞玛城门|n|n|cFFFFD200商人出售：|r克罗姆·粗臂|n|cFFFFD200地区：|r铁炉堡 - 探险者大厅',

@@ -1233,7 +1233,7 @@ local tab={
 }
 
 
-local e= select(2, ...)
+
 function WoWTools_ChineseMixin:GetScenarioName(scenarioID)
     return tab[scenarioID]
 end

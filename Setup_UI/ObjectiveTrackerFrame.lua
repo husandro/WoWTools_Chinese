@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 
@@ -70,7 +70,7 @@ hooksecurefunc(AutoQuestPopupBlockMixin, 'Update', function(self, questTitle, qu
         contents.TopText:SetText('发现任务！')
         contents.BottomText:SetText('点击以查看任务')
     end
-    local title= WoWTools_ChineseMixin:GetQuestData(questID, true, false, false) or e.strText[questTitle]
+    local title= WoWTools_ChineseMixin:GetQuestData(questID, true, false, false) or WoWTools_ChineseMixin:CN(questTitle)
     if title then
         contents.QuestName:SetText(title)
     end
@@ -130,7 +130,7 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
          return
     end
 
-    achievementName= e.strText[achievementName]
+    achievementName= WoWTools_ChineseMixin:CN(achievementName)
     if achievementName then
 	    block:SetHeader(achievementName)
     end
@@ -145,7 +145,7 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
                 local _, criteriaType, _, _, _, _, flags, assetID, quantityString = GetAchievementCriteriaInfo(achievementID, criteriaIndex, true)
                 local text
                 if description and bit.band(flags, EVALUATION_TREE_FLAG_PROGRESS_BAR) == EVALUATION_TREE_FLAG_PROGRESS_BAR then
-                    local desc= e.strText[description]
+                    local desc= WoWTools_ChineseMixin:CN(description)
                     if desc then-- progress bar                    
                         if string.find(strlower(quantityString), "interface\\moneyframe") then	-- no easy way of telling it's a money progress bar
                             text = quantityString.."\n"..desc
@@ -155,7 +155,7 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
                     end
                 else
                     if ( criteriaType == CRITERIA_TYPE_ACHIEVEMENT and assetID ) then--for meta criteria look up the achievement name
-                        text = e.strText[select(2, GetAchievementInfo(assetID))]
+                        text = WoWTools_ChineseMixin:CN(select(2, GetAchievementInfo(assetID)))
                     end
                 end
                 if text then
@@ -164,7 +164,7 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
             end
         end
     else
-        local desc= e.strText[description]
+        local desc= WoWTools_ChineseMixin:CN(description)
         if desc then
             local colorStyle = (not timerFailed and IsAchievementEligible(achievementID)) and OBJECTIVE_TRACKER_COLOR["Normal"] or OBJECTIVE_TRACKER_COLOR["Failed"]
             local line= block.usedLines[1]
@@ -206,16 +206,16 @@ hooksecurefunc(ScenarioObjectiveTracker, 'LayoutContents', function(self)
 	local scenarioName, _, _, _, _, _, _, _, _, scenarioType, _, _, scenarioID = C_Scenario.GetInfo()
     local name
 	if scenarioType == LE_SCENARIO_TYPE_CHALLENGE_MODE then
-        name= WoWTools_ChineseMixin:GetScenarioName(scenarioID) or e.strText[scenarioName]
+        name= WoWTools_ChineseMixin:GetScenarioName(scenarioID) or WoWTools_ChineseMixin:CN(scenarioName)
 
 	elseif scenarioType == LE_SCENARIO_TYPE_PROVING_GROUNDS or self.ProvingGroundsBlock:IsActive() then
 		name= '试炼场'
 	elseif scenarioType == LE_SCENARIO_TYPE_USE_DUNGEON_DISPLAY then
 		name= '地下城'
 	elseif ShouldShowMawBuffs() and not IsInJailersTower() then
-		name= e.strText[GetZoneText()]
+		name= WoWTools_ChineseMixin:CN(GetZoneText())
 	else
-		name= WoWTools_ChineseMixin:GetScenarioName(scenarioID) or e.strText[scenarioName]
+		name= WoWTools_ChineseMixin:GetScenarioName(scenarioID) or WoWTools_ChineseMixin:CN(scenarioName)
 	end
     if name then
         self.Header.Text:SetText(name)
@@ -228,7 +228,7 @@ ScenarioObjectiveTracker.StageBlock.Name:SetPoint('RIGHT', -20, 0)
 hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function(self, scenarioID, scenarioType, widgetSetID, textureKit, flags, currentStage, stageName, numStages)
     if bit.band(flags, SCENARIO_FLAG_SUPRESS_STAGE_TEXT) == SCENARIO_FLAG_SUPRESS_STAGE_TEXT then
         local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage) or {}
-        local name= data[2] or e.strText[stageName]
+        local name= data[2] or WoWTools_ChineseMixin:CN(stageName)
         if name then
 		    self.Stage:SetText(name)
         end
@@ -239,7 +239,7 @@ hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function
 			self.Stage:SetFormattedText('阶段 %d', currentStage)
 		end
         local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage) or {}
-        local name= data[2] or e.strText[stageName]
+        local name= data[2] or WoWTools_ChineseMixin:CN(stageName)
         if name then
 		    self.Name:SetText(name)
         end
@@ -340,7 +340,7 @@ hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, is
     end
 
 
-    local blockName= WoWTools_ChineseMixin:GetRecipeName(C_TradeSkillUI.GetRecipeInfo(recipeID), nil) or e.strText[recipeSchematic.name]
+    local blockName= WoWTools_ChineseMixin:GetRecipeName(C_TradeSkillUI.GetRecipeInfo(recipeID), nil) or WoWTools_ChineseMixin:CN(recipeSchematic.name)
 
     if blockName then
         blockName = isRecraft and format('再造：%s', blockName) or blockName
@@ -362,12 +362,12 @@ hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, is
                     name= WoWTools_ChineseMixin:GetItemName(reagent.itemID)
                     if not name then
                         local item = Item:CreateFromItemID(reagent.itemID)
-                        name= e.strText[item:GetItemName()]
+                        name= WoWTools_ChineseMixin:CN(item:GetItemName())
                     end
                 elseif reagent.currencyID then
                     local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(reagent.currencyID)
                     if currencyInfo then
-                        name= e.strText[currencyInfo.name]
+                        name= WoWTools_ChineseMixin:CN(currencyInfo.name)
                     end
                 end
                 if name then

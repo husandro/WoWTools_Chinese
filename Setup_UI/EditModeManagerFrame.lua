@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 
@@ -110,7 +110,7 @@ EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptio
 end)
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.MiscContainer:HookScript('OnShow', function(self)
     for _,frame in pairs(self:GetLayoutChildren() or {}) do
-        local text= e.strText[frame.labelText]
+        local text= WoWTools_ChineseMixin:CN(frame.labelText)
         if text then
             frame:SetLabelText(text)
         end

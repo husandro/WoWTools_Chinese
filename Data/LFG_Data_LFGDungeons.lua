@@ -1,7 +1,6 @@
 --[[
 [ID]= {"Name_lang", "Description_lang"},
 https://wago.tools/db2/LFGDungeons?locale=zhCN
-11.0.5.56646
 ]]
 
 local tab={
@@ -1486,34 +1485,20 @@ local tab={
 }
 
 
-local e= select(2, ...)
+
 
 
 local descTab={}
-
-
-for dungeonID, info in pairs(tab) do
-    local name= GetLFGDungeonInfo(dungeonID)
-    if name and info[1] then
-        e.strText[name]=info[1]
-    end
-    if info[2] then
-        descTab[dungeonID]= info[2]
+do
+    for dungeonID, info in pairs(tab) do
+        WoWTools_ChineseMixin:SetCN(GetLFGDungeonInfo(dungeonID), info[1])
+        if info[2] then
+            descTab[dungeonID]= info[2]
+        end
     end
 end
-
+tab= nil
 
 function WoWTools_ChineseMixin:GetLFGDungeonDesc(lfgDungeonID)
     return descTab[lfgDungeonID]
 end
-
---[[
-for lfgDungeonID, data in pairs(tab) do
-    if data[1] then
-        local info= C_LFGInfo.GetDungeonInfo(lfgDungeonID)
-        if info and info.name then
-            e.strText[info.name]= data[1]
-        end
-    end
-end
-]]

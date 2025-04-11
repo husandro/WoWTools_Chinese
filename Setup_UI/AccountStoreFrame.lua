@@ -2,7 +2,7 @@ if not AccountStoreFrame then
     return
 end
 
-local e= select(2, ...)
+
 
 
 hooksecurefunc(AccountStoreFrame.CategoryList.ScrollBox, 'Update', function(frame)

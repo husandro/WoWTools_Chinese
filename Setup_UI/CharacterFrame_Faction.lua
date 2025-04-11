@@ -6,10 +6,10 @@ local e = select(2, ...)
 hooksecurefunc(ReputationBarMixin, 'TryShowReputationStandingText', function(self)
     local text= self.reputationStandingText
     if text then
-        local cnName= e.strText[text]
+        local cnName= WoWTools_ChineseMixin:CN(text)
         if not cnName and text:find('(.-) %d') then
             local name= text:match('(.-) %d')
-            local name2= name and e.strText[name]
+            local name2= name and WoWTools_ChineseMixin:CN(name)
             if name and name2 then
                 cnName=text:gsub(name, name2)
             end
@@ -25,7 +25,7 @@ ReputationFrame.ReputationDetailFrame.MakeInactiveCheckbox.Label:SetText('隐藏
 ReputationFrame.ReputationDetailFrame.AtWarCheckbox.Label:SetText('交战状态')
 hooksecurefunc(ReputationHeaderMixin, 'Initialize', function(self)
     if self.elementData.name then
-        local cnName= e.strText[self.elementData.name]
+        local cnName= WoWTools_ChineseMixin:CN(self.elementData.name)
         if cnName then
             self.Name:SetText(cnName)
         end
@@ -33,7 +33,7 @@ hooksecurefunc(ReputationHeaderMixin, 'Initialize', function(self)
 end)
 hooksecurefunc(ReputationEntryMixin, 'Initialize', function(self)
     if self.elementData.name then
-        local cnName= e.strText[self.elementData.name]
+        local cnName= WoWTools_ChineseMixin:CN(self.elementData.name)
         if cnName then
             self.Content.Name:SetText(cnName)
         end
@@ -56,10 +56,10 @@ WoWTools_ChineseMixin:HookLabel(ReputationFrame.ReputationDetailFrame.Descriptio
             if bar then
                 local text= bar.FactionStanding:GetText()
                 if text then
-                    local cnName= e.strText[text]
+                    local cnName= WoWTools_ChineseMixin:CN(text)
                     if not cnName and text:find('(.-) %d') then
                         local name= text:match('(.-) %d')
-                        local name2= name and e.strText[name]
+                        local name2= name and WoWTools_ChineseMixin:CN(name)
                         if name and name2 then
                             cnName=text:gsub(name, name2)
                         end

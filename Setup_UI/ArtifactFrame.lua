@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 local function Init()
@@ -15,7 +15,7 @@ local function Init()
         if not itemID then
             return
         end
-        local name = WoWTools_ChineseMixin:GetItemName(itemID) or e.strText[itemName]
+        local name = WoWTools_ChineseMixin:GetItemName(itemID) or WoWTools_ChineseMixin:CN(itemName)
         if name then
             if C_ArtifactUI.IsArtifactDisabled() then
                 self:GetParent().DisabledFrame.ArtifactName:SetText(name)

@@ -1,5 +1,3 @@
-local e = select(2, ...)
-
 --[[
 [ID]= DisplayName_lang
 https://warcraft.wiki.gg/wiki/API_C_PerksProgram.GetCategoryInfo
@@ -49,34 +47,22 @@ local PerksActivityTag={
 [23]= '霸业风暴',
 }
 
-do 
-local tags= C_PerksActivities.GetAllPerksActivityTags() or {}
-for index, name in pairs(tags.tagName or {}) do
-    local cnName= PerksActivityTag[index]
-    if name and cnName then
-        e.strText[name]= cnName
-    end
-end
-end
-PerksActivityTag=nil
-
-
 do
-    for categoryID, name in pairs(categoryTab) do
-        local data= C_PerksProgram.GetCategoryInfo(categoryID) or {}
-    
-        if data.displayName then
-            e.strText[data.displayName]= name
+    local tags= C_PerksActivities.GetAllPerksActivityTags()
+    if tags and tags.tagName then
+        for index, name in pairs(tags.tagName) do
+            local cnName= PerksActivityTag[index]
+            if name and cnName then
+                WoWTools_ChineseMixin:SetCN(name, cnName)
+            end
         end
     end
+    for categoryID, name in pairs(categoryTab) do
+        local data= C_PerksProgram.GetCategoryInfo(categoryID)
+        if data then
+            WoWTools_ChineseMixin:SetCN(data.displayName, name)
+        end
     end
-    categoryTab=nil
-    
-    
-
-
-
-
-
-
-
+end
+PerksActivityTag=nil
+categoryTab=nil

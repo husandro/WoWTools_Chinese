@@ -151,7 +151,7 @@ local function Init_EncounterJournal()
         end
         for _, button in pairs(frame:GetFrames()) do
             WoWTools_ChineseMixin:SetLabelText(button.name)
-            local tooltiptext=  e.strText[button.tooltiptext]
+            local tooltiptext=  WoWTools_ChineseMixin:CN(button.tooltiptext)
             if tooltiptext then
                 button.tooltiptext= tooltiptext
             end
@@ -162,11 +162,11 @@ local function Init_EncounterJournal()
     hooksecurefunc(EncounterJournalItemMixin,'Init', function(self)--Blizzard_EncounterJournal.lua
         local itemInfo = C_EncounterJournal.GetLootInfoByIndex(self.index)
         if ( itemInfo and itemInfo.name ) then
-            local name= WoWTools_ChineseMixin:GetItemName(itemInfo.itemID) or e.strText[itemInfo.name]
+            local name= WoWTools_ChineseMixin:GetItemName(itemInfo.itemID) or WoWTools_ChineseMixin:CN(itemInfo.name)
             if name then
                 self.name:SetText(WrapTextInColorCode(name, itemInfo.itemQuality))
             end
-            local slot= e.strText[itemInfo.slot]
+            local slot= WoWTools_ChineseMixin:CN(itemInfo.slot)
             if slot and self.slot then
                 if itemInfo.handError then
                     self.slot:SetText(INVALID_EQUIPMENT_COLOR:WrapTextInColorCode(slot))
@@ -174,7 +174,7 @@ local function Init_EncounterJournal()
                     self.slot:SetText(slot)
                 end
             end
-            local armorType= e.strText[itemInfo.armorType]
+            local armorType= WoWTools_ChineseMixin:CN(itemInfo.armorType)
             if armorType and self.armorType then
                 if itemInfo.weaponTypeError then
                     self.armorType:SetText(INVALID_EQUIPMENT_COLOR:WrapTextInColorCode(armorType))
@@ -211,14 +211,14 @@ local function Init_EncounterJournal()
     end)
 
     hooksecurefunc(EncounterJournalItemHeaderMixin, 'Init', function(self, elementData)
-        local name= e.strText[elementData.text]
+        local name= WoWTools_ChineseMixin:CN(elementData.text)
         if name then
             self.name:SetText(name)
         end
     end)
 
     hooksecurefunc(EncounterBossButtonMixin, 'Init', function(self, elementData)
-        local name= e.strText[elementData.name]
+        local name= WoWTools_ChineseMixin:CN(elementData.name)
         if name then
             self:SetText(name)
         end
@@ -253,7 +253,7 @@ local function Init_EncounterJournal()
         for _, str in pairs (btnTab) do
             local button= EncounterJournal.encounter.info[str]
             if button then
-                local tooltip= e.strText[button.tooltip]
+                local tooltip= WoWTools_ChineseMixin:CN(button.tooltip)
                 if tooltip then
                     button.tooltip= tooltip
                 end
@@ -279,10 +279,7 @@ local function Init_EncounterJournal()
 
 
 
-    local t= EJ_GetTierInfo(2)
-    if t then
-        e.strText[t]='燃烧远征'
-    end
+
 
 
 
@@ -314,7 +311,7 @@ local function Init_EncounterJournal()
         WoWTools_ChineseMixin:SetLabelText(self.info.instanceTitle, instanceName)
         WoWTools_ChineseMixin:SetLabelText(self.instance.LoreScrollingFont, description)
 
-        local tooltip= e.strText[self.info['overviewTab'].tooltip]
+        local tooltip= WoWTools_ChineseMixin:CN(self.info['overviewTab'].tooltip)
         if tooltip then
             self.info['overviewTab'].tooltip= tooltip
         end

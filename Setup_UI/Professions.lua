@@ -1,4 +1,4 @@
-local id, e = ...
+
 
 
 
@@ -144,7 +144,7 @@ local function Init_CraftingPage()
         return rankText
     end
     hooksecurefunc(ProfessionsFrame.CraftingPage.RankBar, 'Update', function(self, professionInfo)
-        local name= e.strText[professionInfo.professionName]
+        local name= WoWTools_ChineseMixin:CN(professionInfo.professionName)
         if name then
             local rankText = GenerateRankText(name, professionInfo.skillLevel, professionInfo.maxSkillLevel, professionInfo.skillModifier)
             self.Rank.Text:SetText(rankText)
@@ -248,9 +248,9 @@ local function Init_CraftingPage_SchematicForm()
         end
         local sourceText
         if not recipeInfo.learned then
-            sourceText = WoWTools_ChineseMixin:GetRecipeSource(recipeInfo.recipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.recipeID)]
+            sourceText = WoWTools_ChineseMixin:GetRecipeSource(recipeInfo.recipeID) or WoWTools_ChineseMixin:CN(C_TradeSkillUI.GetRecipeSourceText(recipeInfo.recipeID))
         elseif recipeInfo.nextRecipeID then
-            sourceText =  WoWTools_ChineseMixin:GetRecipeSource(recipeInfo.nextRecipeID) or e.strText[C_TradeSkillUI.GetRecipeSourceText(recipeInfo.nextRecipeID)]
+            sourceText =  WoWTools_ChineseMixin:GetRecipeSource(recipeInfo.nextRecipeID) or WoWTools_ChineseMixin:CN(C_TradeSkillUI.GetRecipeSourceText(recipeInfo.nextRecipeID))
         end
         if sourceText then
             GameTooltip:AddLine(' ')
@@ -286,7 +286,7 @@ local function Init_CraftingPage_SchematicForm()
         if outputItemInfo.hyperlink then
             name = WoWTools_ChineseMixin:GetRecipeName(recipeInfo, outputItemInfo.hyperlink)
         else
-            name= e.strText[self.recipeSchematic.name] or WoWTools_ChineseMixin:GetRecipeName(recipeInfo)
+            name= WoWTools_ChineseMixin:CN(self.recipeSchematic.name) or WoWTools_ChineseMixin:GetRecipeName(recipeInfo)
             name= name and WrapTextInColor(name, NORMAL_FONT_COLOR)
             isRecraft= true
         end
@@ -456,7 +456,7 @@ local function Init_SpecPage()
         local name= data and data[1]
         if not name then
             local detailedViewPath = self:GetDetailedPanelPath();
-            name= e.strText[detailedViewPath:GetName()]
+            name= WoWTools_ChineseMixin:CN(detailedViewPath:GetName())
         end
         if name then
             self.DetailedView.PathName:SetText(name)
@@ -499,7 +499,7 @@ local function Init_SpecPage()
     end)
 
     hooksecurefunc(ProfessionSpecTabMixin, 'SetState', function(self, state)
-        local name= e.strText[self.tabInfo.name]
+        local name= WoWTools_ChineseMixin:CN(self.tabInfo.name)
         if name then
             name = (state ~= Enum.ProfessionsSpecTabState.Locked) and name or DISABLED_FONT_COLOR:WrapTextInColorCode(name);
             self.Text:SetText(name);
@@ -946,7 +946,7 @@ local function Init_ReagentSlot()
         if reagent.currencyID then
             local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(reagent.currencyID)
             if currencyInfo and currencyInfo.name then
-                reagentName= e.strText[currencyInfo.name]
+                reagentName= WoWTools_ChineseMixin:CN(currencyInfo.name)
             else
                 reagentName= '未知'
             end
@@ -956,7 +956,7 @@ local function Init_ReagentSlot()
                 local item = Item:CreateFromItemID(reagent.itemID)
                 local itemName= item:GetItemName()
                 if itemName then
-                    reagentName= e.strText[itemName]
+                    reagentName= WoWTools_ChineseMixin:CN(itemName)
                 else
                     reagentName= '未知'
                 end
@@ -1040,8 +1040,8 @@ local function Init()
     Init_Details_Stat()
     Init_ReagentSlot()
     hooksecurefunc(ProfessionsFrame, 'SetTitle', function(self, skillLineName)
-        if e.strText[skillLineName] then
-            skillLineName= e.strText[skillLineName]
+        if WoWTools_ChineseMixin:CN(skillLineName) then
+            skillLineName= WoWTools_ChineseMixin:CN(skillLineName)
             if C_TradeSkillUI.IsTradeSkillGuild() then
                 self:SetTitleFormatted('公会%s"', skillLineName)
             else
@@ -1080,7 +1080,7 @@ local function Init()
      hooksecurefunc(ProfessionsRecipeListCategoryMixin, 'Init', function(self, node)
         local info= node:GetData().categoryInfo
         if info then
-            local name= WoWTools_ChineseMixin:GetTradeSkillCategoryName(info.categoryID) or e.strText[info.name]
+            local name= WoWTools_ChineseMixin:GetTradeSkillCategoryName(info.categoryID) or WoWTools_ChineseMixin:CN(info.name)
             if name then
                 self.Label:SetText(name)
             end
@@ -1105,9 +1105,9 @@ local function Init()
         local data = C_TradeSkillUI.GetProfessionInfoByRecipeID(recipeID) or {}
         local name
         if data.professionName then
-            name= WoWTools_ChineseMixin:GetTradeSkillCategoryName(data.professionID) or e.strText[data.professionName]
+            name= WoWTools_ChineseMixin:GetTradeSkillCategoryName(data.professionID) or WoWTools_ChineseMixin:CN(data.professionName)
         elseif data.parentProfessionName then
-            name= WoWTools_ChineseMixin:GetTradeSkillCategoryName(data.parentProfessionID) or e.strText[data.parentProfessionName]
+            name= WoWTools_ChineseMixin:GetTradeSkillCategoryName(data.parentProfessionID) or WoWTools_ChineseMixin:CN(data.parentProfessionName)
         end
         if name then
             self:SetTitle(name)

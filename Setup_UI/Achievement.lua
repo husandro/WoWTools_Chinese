@@ -164,7 +164,7 @@ local function Init()
             local criteriaString, criteriaType, completed, _, _, _, flags, assetID = GetAchievementCriteriaInfo(ID, i)
             if ( criteriaType == CRITERIA_TYPE_ACHIEVEMENT and assetID ) then
                 metas = metas + 1
-                local achievementName = e.strText[select(2, GetAchievementInfo(assetID))]
+                local achievementName = WoWTools_ChineseMixin:CN(select(2, GetAchievementInfo(assetID)))
                 local metaCriteria = objectivesFrame:GetMeta(metas)
                 if achievementName and metaCriteria then
                     metaCriteria.Label:SetText(achievementName)
@@ -172,7 +172,7 @@ local function Init()
 
             elseif not (flags and bit.band(flags, EVALUATION_TREE_FLAG_PROGRESS_BAR) == EVALUATION_TREE_FLAG_PROGRESS_BAR) then
                 textStrings = textStrings + 1
-                criteriaString= e.strText[criteriaString]
+                criteriaString= WoWTools_ChineseMixin:CN(criteriaString)
                 if criteriaString then
                     local criteria = objectivesFrame:GetCriteria(textStrings)
                     if criteria then
@@ -241,7 +241,7 @@ local function Init()
                 if ( category == ACHIEVEMENT_COMPARISON_STATS_SUMMARY_ID ) then
                     text = '总览'
                 else
-                    text = e.strText[GetCategoryInfo(category)]
+                    text = WoWTools_ChineseMixin:CN(GetCategoryInfo(category))
                 end
                 if text then
                     self.Title:SetText(text)
@@ -270,7 +270,7 @@ local function Init()
         if ID == ACHIEVEMENT_COMPARISON_SUMMARY_ID then-- -1
             name = '总览'
         else
-            name= e.strText[GetCategoryInfo(ID)]
+            name= WoWTools_ChineseMixin:CN(GetCategoryInfo(ID))
         end
         if name then
             AchievementFrameComparison.Summary.Player.StatusBar.Title:SetFormattedText('已获得 %s 项成就', name)
@@ -281,7 +281,7 @@ local function Init()
         local category = elementData.id
         local colorIndex = elementData.colorIndex
         if elementData.header then
-            local title= e.strText[GetCategoryInfo(category)]
+            local title= WoWTools_ChineseMixin:CN(GetCategoryInfo(category))
             if title then
                 self.Title:SetText(title)
             end

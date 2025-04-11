@@ -1,4 +1,4 @@
-local id, e = ...
+
 
 
 
@@ -10,7 +10,7 @@ local function Init()
         if isRecraftCategory then
             self:SetText('开始再造订单')
         elseif categoryInfo then
-            local text= e.strText[categoryInfo.categoryName]
+            local text= WoWTools_ChineseMixin:CN(categoryInfo.categoryName)
             if text then
                 self:SetText(text)
             end
@@ -161,7 +161,7 @@ local function Init()
 
     hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'InitSchematic', function(self)
         local professionName = C_TradeSkillUI.GetProfessionNameForSkillLineAbility(self.order.skillLineAbilityID)
-        professionName= e.strText[professionName] or professionName
+        professionName= WoWTools_ChineseMixin:CN(professionName) or professionName
         self.ProfessionText:SetFormattedText('%s 配方', WoWTools_ChineseMixin:Setup(professionName))
     end)
 
@@ -249,7 +249,7 @@ local function Init()
                 local data= btn:GetData()
                 local option= data and data.option
                 if  option then
-                    local name= WoWTools_ChineseMixin:GetItemName(option.itemID) or e.strText[option.itemName]
+                    local name= WoWTools_ChineseMixin:GetItemName(option.itemID) or WoWTools_ChineseMixin:CN(option.itemName)
                     if name then
                         local hex= option.quality and select(4, C_Item.GetItemQualityColor(option.quality))
                         if hex then

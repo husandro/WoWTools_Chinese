@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 
@@ -278,8 +278,8 @@ hooksecurefunc('LFGInvitePopup_Update', function(inviter, _, _, _, _, isQuestSes
     playerName= playerName=='' and inviter or playerName
     LFGInvitePopupText:SetFormattedText(titleMarkup ..'%s邀请你加入队伍', inviter)
     local tankButton = LFGInvitePopupRoleButtonTank
-    if tankButton.disabledTooltip and e.strText[tankButton.disabledTooltip] then
-        tankButton.disabledTooltip = e.strText[tankButton.disabledTooltip]
+    if tankButton.disabledTooltip and WoWTools_ChineseMixin:CN(tankButton.disabledTooltip) then
+        tankButton.disabledTooltip = WoWTools_ChineseMixin:CN(tankButton.disabledTooltip)
     end
 
     local text

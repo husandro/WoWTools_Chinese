@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 --商人
 MerchantFrameTab1:SetText('商人')
 MerchantFrameTab2:SetText('购回')

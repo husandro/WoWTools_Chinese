@@ -1,4 +1,4 @@
-local id, e= ...
+
 
 
 hooksecurefunc(SettingsCategoryListButtonMixin, 'Init', function(self, initializer)--列表 Blizzard_CategoryList.lua

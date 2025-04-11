@@ -4,7 +4,7 @@ local  e = select(2, ...)
 --StaticPopupItemFrameMixin:DisplayInfo(link, name, color, texture, count, tooltip)
 for _, frame in pairs({'StaticPopup1ItemFrameText', 'StaticPopup2ItemFrameText', 'StaticPopup3ItemFrameText', 'StaticPopup4ItemFrameText'}) do
     hooksecurefunc(_G[frame], 'SetText', function(self, name)
-        local itemName= e.strText[name]
+        local itemName= WoWTools_ChineseMixin:CN(name)
         if not itemName then
             local link= self:GetParent().link
             if link then
@@ -145,7 +145,7 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
 
 
 	if info.subText then
-        local subText= e.strText[info.subText]
+        local subText= WoWTools_ChineseMixin:CN(info.subText)
         if subText then
             dialog.SubText:SetText(subText)
         end
@@ -154,7 +154,7 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
 	local buttons = {_G[dialog:GetName().."Button1"], _G[dialog:GetName().."Button2"], _G[dialog:GetName().."Button3"], _G[dialog:GetName().."Button4"]};
 	for index, button in ipairs_reverse(buttons) do
         if info["button"..index] then
-            local buttonText= e.strText[info["button"..index]]
+            local buttonText= WoWTools_ChineseMixin:CN(info["button"..index])
             if buttonText then
                 button:SetText(buttonText)
             end
@@ -162,7 +162,7 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
 	end
 
 	if info.extraButton then
-        local extraText= e.strText[info.extraButton]
+        local extraText= WoWTools_ChineseMixin:CN(info.extraButton)
         if extraText then
             local extraButton = dialog.extraButton;
             extraButton:SetText(extraText);

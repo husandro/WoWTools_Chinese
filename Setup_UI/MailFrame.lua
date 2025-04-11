@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 --邮箱 MailFrame.lua

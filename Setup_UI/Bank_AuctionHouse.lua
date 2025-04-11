@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
     
 
 
@@ -211,7 +211,7 @@ local function Init()
             local itemKey= btn.rowData and btn.rowData.itemKey
             local itemKeyInfo = itemKey and C_AuctionHouse.GetItemKeyInfo(itemKey)--itemID battlePetSpeciesID itemName battlePetLink appearanceLink quality iconFileID isPet isCommodity isEquipment
             if itemKeyInfo then
-                local name= WoWTools_ChineseMixin:GetItemName(itemKeyInfo.itemID) or e.strText[itemKeyInfo.itemName]
+                local name= WoWTools_ChineseMixin:GetItemName(itemKeyInfo.itemID) or WoWTools_ChineseMixin:CN(itemKeyInfo.itemName)
                 if name then
                     local hex= select(4, C_Item.GetItemQualityColor(itemKeyInfo.quality))
                     if hex then

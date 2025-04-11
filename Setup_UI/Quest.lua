@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 WoWTools_ChineseMixin:SetLabelText(QuestFrameAcceptButton)--:SetText('接受')
 WoWTools_ChineseMixin:SetLabelText(QuestFrameGreetingGoodbyeButton)--:SetText('再见')
@@ -172,13 +172,13 @@ local function set_quest_item(questID)
 	end
 
 	for frame in rewardsFrame.reputationRewardPool:EnumerateActive() do
-		local name= e.strText[frame.factionName]
+		local name= WoWTools_ChineseMixin:CN(frame.factionName)
 		if name then
 			frame.Name:SetFormattedText('%s声望', name)
 		end
 	end
 
-	skillName= skillName and e.strText[skillName]
+	skillName= skillName and WoWTools_ChineseMixin:CN(skillName)
 	if skillName and skillPoints then
 		rewardsFrame.SkillPointFrame.Name:SetFormattedText('%s技能', skillName)
 		rewardsFrame.SkillPointFrame.tooltip = format('+%d %s技能点数', skillPoints, skillName)
@@ -190,7 +190,7 @@ local function set_quest_item(questID)
 			if btn.type == "reward" and  btn.objectType == "questSessionBonusReward" then
 				name= WoWTools_ChineseMixin:GetItemName(171305)--一箱回收的物资
 			elseif btn.objectType == 'currency' then
-				name= btn.currencyInfo and e.strText[btn.currencyInfo.name]
+				name= btn.currencyInfo and WoWTools_ChineseMixin:CN(btn.currencyInfo.name)
 			else
 				local itemID
 				if QuestInfoFrame.questLog then
@@ -365,7 +365,7 @@ hooksecurefunc('QuestInfo_ShowTitle', function()
 	if not spellID then
 	   return
 	end
-	spellName = e.strText[spellName] or WoWTools_ChineseMixin:GetSpellName(spellID)
+	spellName = WoWTools_ChineseMixin:CN(spellName) or WoWTools_ChineseMixin:GetSpellName(spellID)
 	if spellName then
 	   QuestInfoSpellObjectiveFrame.Name:SetText(spellName)
 	end

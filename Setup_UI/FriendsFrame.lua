@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 
@@ -176,7 +176,7 @@ FriendsFrameTab1:SetText('好友')
                     if recruitmentInfo.sourceFaction ~= "" then
                         local region= e.Get_Region(recruitmentInfo.sourceRealm)
                         local reaml= (region and region.col or '')..(recruitmentInfo.sourceRealm or '')
-                        self.FactionAndRealm:SetFormattedText('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', e.strText[recruitmentInfo.sourceFaction] or recruitmentInfo.sourceFaction, reaml)
+                        self.FactionAndRealm:SetFormattedText('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', WoWTools_ChineseMixin:CN(recruitmentInfo.sourceFaction) or recruitmentInfo.sourceFaction, reaml)
                     end
                 else
                     local PLAYER_FACTION_NAME= UnitFactionGroup('player')=='Alliance' and PLAYER_FACTION_COLOR_ALLIANCE:WrapTextInColorCode('联盟') or (UnitFactionGroup('player')=='Horde' and PLAYER_FACTION_COLOR_HORDE:WrapTextInColorCode('部落')) or '中立'
@@ -284,7 +284,7 @@ hooksecurefunc('RaidInfoFrame_UpdateButtons', function()
 end)
 hooksecurefunc('RaidInfoFrame_InitButton', function(button, elementData)--RaidFrame.lua
     local function InitButton(extended, locked, name, difficulty, difficultyId)
-        name= e.strText[name]
+        name= WoWTools_ChineseMixin:CN(name)
         if extended or locked then
             WoWTools_ChineseMixin:SetLabelText(button.name, name)
         else
@@ -294,7 +294,7 @@ hooksecurefunc('RaidInfoFrame_InitButton', function(button, elementData)--RaidFr
             end
         end
 
-        local difficultyText = difficultyId and WoWTools_MapMixin and WoWTools_MapMixin:GetDifficultyColor(difficulty, difficultyId) or e.strText[difficulty]
+        local difficultyText = difficultyId and WoWTools_MapMixin and WoWTools_MapMixin:GetDifficultyColor(difficulty, difficultyId) or WoWTools_ChineseMixin:CN(difficulty)
         if difficultyText then
             button.difficulty:SetText(difficultyText)
         end
@@ -313,15 +313,15 @@ hooksecurefunc('RaidInfoFrame_InitButton', function(button, elementData)--RaidFr
         local locked = true
         local extended = false
         --[[if index==1 then--Sha della Rabbia
-            e.strText[name]= '怒之煞'
+            WoWTools_ChineseMixin:CN(name)= '怒之煞'
         elseif index==2 then --Galeone
-            e.strText[name]= '炮舰'
+            WoWTools_ChineseMixin:CN(name)= '炮舰'
         elseif index==3 then--Nalak
-            e.strText[name]= '纳拉克'
+            WoWTools_ChineseMixin:CN(name)= '纳拉克'
         elseif index==4 then --Undasta
-            e.strText[name]= '乌达斯塔'
+            WoWTools_ChineseMixin:CN(name)= '乌达斯塔'
         elseif index==9 then--Rukhmar
-            e.strText[name]= '鲁克玛'
+            WoWTools_ChineseMixin:CN(name)= '鲁克玛'
         end]]
         InitButton(extended, locked, name, RAID_INFO_WORLD_BOSS)
     end

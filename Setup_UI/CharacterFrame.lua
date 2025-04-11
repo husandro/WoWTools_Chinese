@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
     
     
 
@@ -12,7 +12,7 @@ CharacterStatsPane.EnhancementsCategory.Title:SetText('强化属性')
 
 hooksecurefunc('PaperDollFrame_SetLabelAndText', function(statFrame, label)--PaperDollFrame.lua
     if statFrame.Label then
-        local text= e.strText[label]
+        local text= WoWTools_ChineseMixin:CN(label)
         if text then
             statFrame.Label:SetFormattedText('%s：', text)
         end

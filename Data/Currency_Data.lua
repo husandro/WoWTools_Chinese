@@ -454,15 +454,13 @@ local tab={
 
 
 
-local e = select(2, ...)
+
 do
     for currencyID, info in pairs(tab) do
-        local data =C_CurrencyInfo.GetCurrencyInfo(currencyID) or {}
-        if data.name and info[1]  then
-            e.strText[data.name]= info[1]
-        end
-        if data.description and info[2] then
-            e.strText[data.description]= info[2]
+        local data =C_CurrencyInfo.GetCurrencyInfo(currencyID)
+        if data then
+            WoWTools_ChineseMixin:SetCN(data.name, info[1])
+            WoWTools_ChineseMixin:SetCN(data.description, info[2])
         end
     end
 end

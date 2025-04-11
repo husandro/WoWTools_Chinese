@@ -4,7 +4,6 @@ https://wago.tools/db2/GlobalStrings?&locale=zhCN
 11.0.5.56646
 ]]
 
-local e = select(2, ...)
 
 
 
@@ -22637,11 +22636,8 @@ local tab={
 
 
 do
-    for name, text in pairs(tab) do
-        name= _G[name]
-        if name then
-            e.strText[name]= text
-        end
+    for en, cn in pairs(tab) do
+        WoWTools_ChineseMixin:SetCN(_G[en], cn)
     end
 end
 tab=nil

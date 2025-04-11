@@ -1,11 +1,10 @@
-local e= select(2, ...)
 --[[
 {'DisplayName_lang', 'VerboseName_lang',ClassID,SubClassID},
 https://wago.tools/db2/ItemSubClass?locale=zhCN
-11.0.2.55789
 ]]
 
 local tab={
+
 {'容器', nil,1,0},
 {'斧', '单手斧',2,0},
 {'斧', '双手斧',2,1},
@@ -174,6 +173,7 @@ local tab={
 {'材料包', nil,1,11},
 {'效能珍玩', nil,0,10},
 {'战斗珍玩', nil,0,11},
+
 }
 
 
@@ -184,6 +184,7 @@ local tab={
 
 
 local classTab={
+
     [0]= '消耗品',
     [1]= '容器',
     [2]= '武器',
@@ -204,24 +205,18 @@ local classTab={
     [17]= '战斗宠物',
     [18]= '时光徽章',
     [19]= '专业技能',
+    
 }
 
 do
-for _, info in pairs(tab) do
-    local sub= C_Item.GetItemSubClassInfo(info[3], info[4])
-    if sub then
-        e.strText[sub]= info[2] or info[1]
+    for _, info in pairs(tab) do
+        WoWTools_ChineseMixin:SetCN(C_Item.GetItemSubClassInfo(info[3], info[4]), info[2] or info[1])
     end
-end
-end
-tab=nil
 
-do
-for classID, info in pairs(classTab) do
-    local class= C_Item.GetItemClassInfo(classID)
-    if class then
-        e.strText[class]= info
+    for classID, cn in pairs(classTab) do
+        WoWTools_ChineseMixin:SetCN(C_Item.GetItemClassInfo(classID), cn)
     end
 end
-end
+
+tab=nil
 classTab=nil

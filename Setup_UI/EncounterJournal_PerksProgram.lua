@@ -1,4 +1,4 @@
-local id, e= ...
+
 
 
 
@@ -41,8 +41,8 @@ local function Init_Blizzard_PerksProgramElements()
             return;
         end
 
-        local itemData= WoWTools_ChineseMixin:GetItemData(self.data.itemID)
-        local name= e.strText[self.data.name] or (itemData and WoWTools_ChineseMixin:ReplaceText(itemData[1]))
+        local itemData= WoWTools_ChineseMixin:Get_Item_Info(self.data.itemID)
+        local name= WoWTools_ChineseMixin:SetCN(self.data.name) or (itemData and WoWTools_ChineseMixin:ReplaceText(itemData[1]))
         if name then
             self.ProductNameText:SetText(name)
         end
@@ -95,8 +95,8 @@ local function Init_Blizzard_PerksProgramElements()
     hooksecurefunc(PerksProgramSetDetailsItemMixin, 'InitItem', function(self, elementData)
         --self.elementData = elementData;
         local itemSlot = elementData.itemSlot;
-        local leftText = itemSlot.leftText and e.strText[itemSlot.leftText]
-        local rightText = itemSlot.rightText and e.strText[itemSlot.rightText]
+        local leftText = itemSlot.leftText and WoWTools_ChineseMixin:CN(itemSlot.leftText)
+        local rightText = itemSlot.rightText and WoWTools_ChineseMixin:CN(itemSlot.rightText)
         
         if leftText then
             local wrapLeftInColor = itemSlot.leftColor and not itemSlot.leftColor:IsRGBEqualTo(WHITE_FONT_COLOR);
@@ -115,7 +115,7 @@ local function Init_Blizzard_PerksProgramElements()
     end)
 
     hooksecurefunc(PerksProgramSetDetailsItemMixin, 'Refresh', function(self)
-        local name= e.strText[self.elementData.itemName] or WoWTools_ChineseMixin:GetItemName(self.elementData.itemID)
+        local name= WoWTools_ChineseMixin:CN(self.elementData.itemName) or WoWTools_ChineseMixin:Get_Item_Name(self.elementData.itemID)
         if name then
             self.ItemName:SetText(name)
         end
@@ -156,7 +156,7 @@ local function Init()
         if not self.itemInfo then
             return
         end
-        local itemName= WoWTools_ChineseMixin:GetItemName(self.itemInfo.itemID)
+        local itemName= WoWTools_ChineseMixin:Get_Item_Name(self.itemInfo.itemID)
         if itemName then
             self.ContentsContainer.Label:SetText(itemName)
         end

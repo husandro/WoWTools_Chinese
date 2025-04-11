@@ -1805,13 +1805,11 @@ local tab={
 }
 
 
-local e = select(2, ...)
-
 do
     for uiMapID, name in pairs(tab) do
         local info = C_Map.GetMapInfo(uiMapID)
-        if info and info.name and info.name~='' and name~='' then
-            e.strText[info.name]= name
+        if info then
+            WoWTools_ChineseMixin:SetCN(info.name, name)
         end
     end
 end

@@ -1,7 +1,6 @@
 --[[
-[ID]= {'Description_lang', 'Title_lang', 'Reward_lang'},
+[ID]= {'Title_lang', 'Description_lang', 'Reward_lang'},
 https://wago.tools/db2/Achievement?locale=zhCN
-11.0.5.56646
 ]]
 
 local tab={
@@ -11856,33 +11855,17 @@ local tab={
 [8]= {'30级', '升到30级。', nil},
 [7]= {'20级', '升到20级。', nil},
 [6]= {'10级', '升到10级。', nil},
-    
+
 }
-
-
---[[
-function e.Get_Achievement_Info(achievementID)
-    return tab[achievementID]
-end
-]]
-
-local e = select(2, ...)
-
-
-local function is_add(a, b)
-    if a and b and b~='' then        
-        e.strText[a]=b
-    end
-end
 
 
 do
     for achievementID, info in pairs(tab) do
-        local _, name, _, _, _, _, _, desc, _, _, re= GetAchievementInfo(achievementID)
+        local _, name, _, _, _, _, _, description, _, _, rewardText= GetAchievementInfo(achievementID)
         do
-            is_add(name, info[2])
-            is_add(desc, info[1])
-            is_add(re, info[3])
+            WoWTools_ChineseMixin:SetCN(name, info[1])
+            WoWTools_ChineseMixin:SetCN(description, info[2])
+            WoWTools_ChineseMixin:SetCN(rewardText, info[3])
         end
     end
 end

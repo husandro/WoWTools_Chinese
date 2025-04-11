@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 local  tab={-- [', ''},
 [818]= {'烹饪用火', '点起一堆营火，使附近所有冒险者的全能提高1，并可以在营火旁烹饪'},
@@ -157,21 +157,39 @@ local  tab={-- [', ''},
 
 }
 
+local EVTab={}
 
-
-
-C_Timer.After(4, function()
+local function Event()
     do
+        for spellID, info in pairs(EVTab) do
+            WoWTools_ChineseMixin:SetCN(C_Spell.GetSpellName(spellID), info[1])
+            WoWTools_ChineseMixin:SetCN(C_Spell.GetSpellDescription(spellID), info[2])
+        end
+    end
+    EVTab=nil
+end
+
+
+
+EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+    do
+        local find
         for spellID, info in pairs(tab) do
-            local name=info[1] and C_Spell.GetSpellName(spellID)
-            if name then
-                e.strText[name]= info[1]
+            if C_Spell.IsSpellDataCached(spellID) then
+                WoWTools_ChineseMixin:SetCN(C_Spell.GetSpellName(spellID), info[1])
+                WoWTools_ChineseMixin:SetCN(C_Spell.GetSpellDescription(spellID), info[2])
+            else
+                C_Spell.RequestLoadSpellData(spellID)
+                EVTab[spellID]= info
+                find=true
             end
-            local desc= info[2] and C_Spell.GetSpellDescription(spellID)
-            if desc then
-                e.strText[desc]= info[2]
-            end
+        end
+        if find then
+            C_Timer.After(4, function() Event() end)
+        else
+            EVTab=nil
         end
     end
     tab=nil
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
 end)

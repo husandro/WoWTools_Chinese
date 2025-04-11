@@ -1,5 +1,3 @@
-local e = select(2, ...)
-
 --[[
 ['Name_lang']= {UiMapGroupID,UiMapID},
 https://wago.tools/db2/UiMapGroupMember?locale=zhCN
@@ -764,7 +762,7 @@ local tab={
 {'黑石深渊', 140, 35},
 {'法戈第矿洞', 139, 38},
 {'矿洞下层', 139, 39},
-    
+
 }
 
 
@@ -776,10 +774,12 @@ local tab={
 
 do
     for _, data in pairs(tab) do
-        for _, member in pairs(C_Map.GetMapGroupMembersInfo(data[2]) or {}) do
-            if member.name and member.mapID==data[3] then
-                e.strText[member.name]= data[1]
-                break
+        if data[2] and data[3] then
+            for _, member in pairs(C_Map.GetMapGroupMembersInfo(data[2])) do
+                if member and member.mapID==data[3] then
+                    WoWTools_ChineseMixin:SetCN(member.name, data[1])
+                    break
+                end
             end
         end
     end

@@ -1384,7 +1384,7 @@ local tab={
 [2535]= {'虚痕山猫', '|cFFFFD200掉落：|r没收的密教徒背包', '驯服山猫是阿拉希人精修了多年的技术。虽然夜幕教徒依然对自己的大业忠心耿耿，但他们依然将这项传统传承了下去。'},
 [2255]= {'金色炽焰凤凰', '|cFFFFD200特殊|r |n', '这只烈焰之鸟通体散发着金色的光芒，很多人声称它是奥的子嗣，但也有人说它是多年前陨落的一只古老凤凰，自圣光中获得重生。'},
 [2478]= {'祥云锦绣火鹰', '|cFFFFD200特殊|r ', '只有最热忱的灵魂和最炽烈的心灵，才能收获祥云锦绣火鹰的忠心。'},
-    
+
 }
 
 
@@ -1393,21 +1393,11 @@ local tab={
 
 
 
-local id, e= ...
 do
     for mountID, info in pairs(tab) do
         local desc, source= select(2, C_MountJournal.GetMountInfoExtraByID(mountID))
-        if desc and info[3] then
-            e.strText[desc]= info[3]
-        end
-        if source and info[2] then
-            e.strText[source]= info[2]
-        end
-        if info[1] then
-            local name= C_MountJournal.GetMountInfoByID(mountID)
-            if name then
-                e.strText[name]= info[1]
-            end
-        end
+        WoWTools_ChineseMixin:SetCN(C_MountJournal.GetMountInfoByID(mountID), info[1])
+        WoWTools_ChineseMixin:SetCN(desc, info[2])
+        WoWTools_ChineseMixin:SetCN(source, info[3])
     end
 end

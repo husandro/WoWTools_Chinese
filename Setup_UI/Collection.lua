@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 
@@ -178,7 +178,7 @@ local function Init_Toy()
                     if not self:IsVisible() then
                         return
                     end
-                    local name = e.strText[text] or  WoWTools_ChineseMixin:GetItemName(self:GetParent().itemID)
+                    local name = WoWTools_ChineseMixin:CN(text) or  WoWTools_ChineseMixin:GetItemName(self:GetParent().itemID)
                     if name then
                         name= name:match('|c........(.-)|r') or name
                         if name ~=text then
@@ -192,7 +192,7 @@ local function Init_Toy()
 
     --[[if not _G['OnToyBoxButtonUpdate'] then
         local function set_toy_name(self)
-            local name = WoWTools_ChineseMixin:GetItemName(self.itemID) or e.strText[self.name:GetText()]
+            local name = WoWTools_ChineseMixin:GetItemName(self.itemID) or WoWTools_ChineseMixin:CN(self.name:GetText())
             if name then
                 name= name:match('|c........(.-)|r') or name
                 self.name:SetText(name)
@@ -250,7 +250,7 @@ local function Init_Heirlooms()
         if not btn.name then
             return
         end
-        local name= WoWTools_ChineseMixin:GetItemName(btn.itemID) or e.strText[btn.name:GetText()]
+        local name= WoWTools_ChineseMixin:GetItemName(btn.itemID) or WoWTools_ChineseMixin:CN(btn.name:GetText())
         if name then
             name= name:match('|c........(.-)|r') or name
             btn.name:SetText(name)
@@ -329,7 +329,7 @@ hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'OnEnter', function(self)--DressUp
     if not self.transmogID or (self.item and not self.item:IsItemDataCached()) then
         return
     end
-    local name= e.strText[self.name] or ' '
+    local name= WoWTools_ChineseMixin:CN(self.name) or ' '
     if self.isHiddenVisual then
         GameTooltip_AddColoredLine(GameTooltip, name, NORMAL_FONT_COLOR)
     elseif not self.item then
@@ -384,7 +384,7 @@ hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'SetAppearance', function(self, sl
     local itemID = C_TransmogCollection.GetSourceItemID(transmogID)
     if not itemID and not isSecondary then
         local name= _G[TransmogUtil.GetSlotName(slotID)]
-        local slotName = e.strText[name]
+        local slotName = WoWTools_ChineseMixin:CN(name)
         if slotName then
             self.Name:SetFormattedText('(%s)', slotName)
         end

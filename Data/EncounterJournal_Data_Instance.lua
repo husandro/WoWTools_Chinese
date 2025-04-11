@@ -11,7 +11,7 @@ https://wago.tools/db2/JournalInstance?locale=zhCN
 
 
 
-local instanceTab={
+local tab={
 [1310]={'泽克维尔的巢穴'},
 [1301]= {'黑石深渊', '静静燃烧的黑石深渊是黑铁矮人和他们的皇帝，达格兰·索瑞森的家园。和他的前任一样，达格兰服从炎魔拉格纳罗斯的铁腕统治。这个残忍的生物是数个世纪前被召唤到这个世界的。混乱的元素活动将暮光之锤的邪教徒引到了这片山区。他们与拉格纳罗斯的仆人一起将矮人逼向毁灭的边缘，这最终也将导致全艾泽拉斯的毁灭。'},
 [1296]= {'解放安德麦','联合起来的各大财阀虽已竭尽全力，加斯特·加里维克斯还是钻进了加乐宫，开始讨要别人欠给他的每一个人情……众多可能的压迫者挡在了安德麦的地精和铬武大王之间。加兹鲁维和其余的地精必须想办法闯入娱乐城，才能一劳永逸地摆脱加里维克斯。'},
@@ -224,26 +224,20 @@ local instanceTab={
 }
 
 
-local e = select(2, ...)
-
-
-local tab={}
+local instanceTab={}
 function WoWTools_ChineseMixin:GetInstanceDesc(instanceID)
-    return tab[instanceID]
+    return instanceTab[instanceID]
 end
 
 
 do
-    for journalInstanceID, info in pairs(instanceTab) do
-        local name= EJ_GetInstanceInfo(journalInstanceID)
-        if name then
-            e.strText[name]= info[1]
-        end
+    for journalInstanceID, info in pairs(tab) do
+        WoWTools_ChineseMixin:SetCN(EJ_GetInstanceInfo(journalInstanceID), info[1])
         if info[2] then
-            tab[journalInstanceID]= info[2]
+            instanceTab[journalInstanceID]= info[2]
         end
     end
 end
-instanceTab=nil
+tab=nil
 
 

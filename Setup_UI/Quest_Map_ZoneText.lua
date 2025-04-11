@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 
@@ -34,7 +34,7 @@ end)
 
 --local label = WoWTools_ChineseMixin:Cstr(MinimapCluster.ZoneTextButton, {name='MinimapZoneText2', copyFont= MinimapZoneText})
 hooksecurefunc('Minimap_Update', function()
-    local name= e.strText[GetMinimapZoneText()]
+    local name= WoWTools_ChineseMixin:CN(GetMinimapZoneText())
     if name then
         MinimapZoneText:SetText(name)
     end

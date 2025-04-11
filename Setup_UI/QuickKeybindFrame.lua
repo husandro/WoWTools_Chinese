@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 
 
@@ -43,11 +43,11 @@ local function set_SetOutputText(self, text)
         local finda, findb= text:match(a), text:match(b)
         local findc1, findc2= text:match(c)
         if finda then
-            self.OutputText:SetFormattedText('|cffff0000主要动作 |cffff00ff%s|r 现在没有绑定！|r', e.strText[finda] or finda)
+            self.OutputText:SetFormattedText('|cffff0000主要动作 |cffff00ff%s|r 现在没有绑定！|r', WoWTools_ChineseMixin:CN(finda) or finda)
         elseif findb then
-            self.OutputText:SetFormattedText('|cffff0000动作 |cffff00ff%s|r 现在没有绑定！|r', e.strText[findb] or findb)
+            self.OutputText:SetFormattedText('|cffff0000动作 |cffff00ff%s|r 现在没有绑定！|r', WoWTools_ChineseMixin:CN(findb) or findb)
         elseif findc1 and findc2 then
-            self.OutputText:SetFormattedText('设置 |cnGREEN_FONT_COLOR:%s|r 的快捷键，或者按 %s 取消', e.strText[findc1] or findc1, findc2)
+            self.OutputText:SetFormattedText('设置 |cnGREEN_FONT_COLOR:%s|r 的快捷键，或者按 %s 取消', WoWTools_ChineseMixin:CN(findc1) or findc1, findc2)
         end
     end
 end

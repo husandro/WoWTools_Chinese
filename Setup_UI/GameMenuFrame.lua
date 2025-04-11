@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 
 GameMenuFrame.Header.Text:SetText('游戏菜单')
 

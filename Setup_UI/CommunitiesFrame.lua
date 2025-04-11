@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 --公会和社区
 
 
@@ -375,14 +375,14 @@ local e= select(2, ...)
     --奖励, 物品，GuildRewards.lua
     hooksecurefunc(CommunitiesGuildRewardsButtonMixin, 'Init', function(self, data)
         local achievementID, itemID, itemName, _, repLevel = GetGuildRewardInfo(self.index)
-        local name= WoWTools_ChineseMixin:GetItemName(itemID) or e.strText[itemName]
+        local name= WoWTools_ChineseMixin:GetItemName(itemID) or WoWTools_ChineseMixin:CN(itemName)
         if name then
             self.Name:SetText(name);
         end
 
         if ( achievementID and achievementID > 0 ) then
             local name = select(2, GetAchievementInfo(achievementID))
-            name= e.strText[name]
+            name= WoWTools_ChineseMixin:CN(name)
             if name then
                 self.SubText:SetText('需要：'..COMMUNITIES_GUILD_REWARDS_ACHIEVEMENT_ICON..YELLOW_FONT_COLOR_CODE..name..FONT_COLOR_CODE_CLOSE);
             end
@@ -397,7 +397,7 @@ local e= select(2, ...)
 
     --奖励, 法术，GuildPerks.lua
     hooksecurefunc(CommunitiesGuildPerksButtonMixin, 'Init', function(self, data)
-        local name= WoWTools_ChineseMixin:GetSpellName(self.spellID) or e.strText[GetGuildPerkInfo(data.index)]
+        local name= WoWTools_ChineseMixin:GetSpellName(self.spellID) or WoWTools_ChineseMixin:CN(GetGuildPerkInfo(data.index))
         if name then
             self.Name:SetText('|cff00adef'..name..'|r')
         end
@@ -433,7 +433,7 @@ local e= select(2, ...)
     if CommunitiesGuildNewsFiltersFrame then--CommunitiesGuildNewsFiltersFrame_OnLoad
         WoWTools_ChineseMixin:SetLabelText(CommunitiesGuildNewsFiltersFrame.Title)
         for _, filterButton in pairs(CommunitiesGuildNewsFiltersFrame.GuildNewsFilterButtons) do
-            local name= e.strText[_G["GUILD_NEWS_FILTER"..filterButton:GetID()]]
+            local name= WoWTools_ChineseMixin:CN(_G["GUILD_NEWS_FILTER"..filterButton:GetID()])
             if name then
                 filterButton.Text:SetText(name);
             end

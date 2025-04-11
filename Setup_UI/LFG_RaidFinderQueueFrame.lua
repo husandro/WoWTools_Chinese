@@ -1,4 +1,4 @@
-local e= select(2, ...)
+
 --团队查找器
 --RaidFinder.lua
 

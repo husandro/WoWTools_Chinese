@@ -1,9 +1,5 @@
-local _, e = ...
-
-
-
-
-local tab={-- []= {[1]='', [2]='', [3]='', [4]='', [5]=''},--
+-- []= {[1]='', [2]='', [3]='', [4]='', [5]=''},--
+local tab={
 [2544]= {[1]='中立', [2]='偏爱', [3]='尊重', [4]='重视', [5]='崇尚'},--工匠商盟-巨龙群岛支部
 [2550]= {[1]='空', [2]='低', [3]='中', [4]='高', [5]='最大'},--钴蓝集所
 [2517]= {[1]='熟人', [2]= '同好', [3]='盟友', [4]='龙牙', [5]='朋友', [6]='挚友'},--拉希奥
@@ -38,10 +34,10 @@ local tab={-- []= {[1]='', [2]='', [3]='', [4]='', [5]=''},--
 
 do
     for friendshipFactionID, info in pairs(tab) do
-        local rankInfo = C_GossipInfo.GetFriendshipReputation(friendshipFactionID) or {}
-        local rank = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID) or {}
-        if rankInfo.reaction and info[rank.currentLevel] then
-            e.strText[rankInfo.reaction]= info[rank.currentLevel]
+        local rankInfo = C_GossipInfo.GetFriendshipReputation(friendshipFactionID)
+        local rank = C_GossipInfo.GetFriendshipReputationRanks(friendshipFactionID)
+        if rankInfo and rank then
+            WoWTools_ChineseMixin:SetCN(rankInfo.reaction, info[rank.currentLevel])
         end
     end
 end
