@@ -29,7 +29,9 @@ local tabString={
 }
 
 
-
+local tabItem= {
+    [6948]= '炉石',
+}
 
 
 EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
@@ -40,11 +42,14 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
         for en, cn in pairs(tabString) do
             WoWTools_ChineseMixin:SetCN(en, cn)
         end
+        for itemID, text in pairs(tabItem) do
+            WoWTools_ChineseMixin:SetCN(C_Item.GetItemNameByID(itemID), text)
+        end
     end
 
     tab_G=nil
     tabString=nil
-
+    tabItem=nil
     WoWTools_ChineseMixin:SetCN(EJ_GetTierInfo(2), '燃烧远征')
 
     EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
