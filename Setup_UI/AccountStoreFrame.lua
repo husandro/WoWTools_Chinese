@@ -56,7 +56,7 @@ hooksecurefunc(AccountStoreFrame.StoreDisplay, 'SetPage', function(self, page)
 	end
 	self.Footer.PageText:SetFormattedText('%d/%d页', page, maxPage)
 end)
-
+--[[
 local function GenerateAccountStoreCategoryInfo(cardTemplate, maxCards)
 	return {
 		cardTemplate = cardTemplate,
@@ -72,7 +72,7 @@ local AccountStoreCategoryToInfo = {
 };
 
 
---[[hooksecurefunc(AccountStoreItemRackMixin, 'SetCategoryType', function(self, categoryType)
+hooksecurefunc(AccountStoreItemRackMixin, 'SetCategoryType', function(self, categoryType)
     local categoryInfo = AccountStoreCategoryToInfo[categoryType]
     
 	self.maxCards = categoryInfo.maxCards*2

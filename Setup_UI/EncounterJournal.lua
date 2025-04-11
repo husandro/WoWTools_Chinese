@@ -345,7 +345,7 @@ local function set_navButton(navBar, text)
     end
     local navButton = navBar.navList[#navBar.navList]
     if navButton then
-        WoWTools_ChineseMixin:SetLabelFont(navButton.text)
+        WoWTools_ChineseMixin:SetCNFont(navButton.text)
         navButton:SetText(text)
         local buttonExtraWidth
         if navButton.listFunc  and not navBar.oldStyle then

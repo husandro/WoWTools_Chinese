@@ -540,9 +540,9 @@ local function Init_OrdersPage()
     frame.OrderView.OrderInfo.BackButton:SetText('返回')
 
     frame.BrowseFrame.PublicOrdersButton.Text:SetText('公开')
-    WoWTools_ChineseMixin:SetLabelFont(frame.BrowseFrame.PublicOrdersButton.Text)
+    WoWTools_ChineseMixin:SetCNFont(frame.BrowseFrame.PublicOrdersButton.Text)
     frame.BrowseFrame.PersonalOrdersButton.Text:SetText('个人')
-    WoWTools_ChineseMixin:SetLabelFont(frame.BrowseFrame.PersonalOrdersButton.Text)
+    WoWTools_ChineseMixin:SetCNFont(frame.BrowseFrame.PersonalOrdersButton.Text)
 
     ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.SearchBox.Instructions:SetText('搜索')
     --ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.FilterButton:SetText('过滤器')
@@ -1061,15 +1061,15 @@ local function Init()
 
     hooksecurefunc(ProfessionsFrame, 'UpdateTabs', function(self)
         local recipesTab = self:GetTabButton(self.recipesTabID)
-        WoWTools_ChineseMixin:SetLabelFont(recipesTab.Text)
+        WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
         recipesTab.Text:SetText('配方')
 
         recipesTab = self:GetTabButton(self.specializationsTabID)
-        WoWTools_ChineseMixin:SetLabelFont(recipesTab.Text)
+        WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
         recipesTab.Text:SetText('专精')
 
         recipesTab = self:GetTabButton(self.craftingOrdersTabID )
-        WoWTools_ChineseMixin:SetLabelFont(recipesTab.Text)
+        WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
         recipesTab.Text:SetText('制造订单')
     end)
 

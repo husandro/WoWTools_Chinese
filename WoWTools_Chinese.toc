@@ -12,6 +12,8 @@
 ##繁体，简体，不会载加
 ##界面，中文化，主要function
 0_ChineseMixin.lua
+1_Get_Mixin.lua
+2_Func_Mixin.lua
 
 ##字符, 常用
 Data\0_zhCN.lua

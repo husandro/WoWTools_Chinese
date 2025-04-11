@@ -1,8 +1,8 @@
-WoWTools_ChineseMixin={}
-
+WoWTools_ChineseMixin={
+    Events={}
+}
 
 local CNData={}--主要，汉化
-
 
 function WoWTools_ChineseMixin:SetCN(en, cn)
     if en and cn and cn:find("[\228-\233][\128-\191][\128-\191]") then--检查 UTF-8 字符
@@ -14,11 +14,6 @@ function WoWTools_ChineseMixin:CN(text)
     return CNData[text]
 end
 
---[[
-
-WoWTools_ChineseMixin:SetCN(
-
-]]
 
 
 
@@ -296,12 +291,7 @@ end
 
 
 
-function WoWTools_ChineseMixin:SetLabelFont(lable)
-    if lable then
-        local _, size2, fontFlag2= lable:GetFont()
-        lable:SetFont('Fonts\\ARHei.ttf', size2, fontFlag2 or 'OUTLINE')
-    end
-end
+
 
 
 
@@ -309,7 +299,7 @@ end
 function WoWTools_ChineseMixin:SetLabelText(label, text, affer, setFont)
     if label and not label.hook_chines then
         if setFont then
-            self:SetLabelFont(lable)
+            self:SetCNFont(lable)
         end
         if affer then
             C_Timer.After(affer, function() set(label, text) end)
@@ -342,7 +332,7 @@ end
 function WoWTools_ChineseMixin:HookLabel(label, setFont)
     if label and not label.hook_chines and label.SetText then
         if setFont then
-            self:SetLabelFont(label)
+            self:SetCNFont(label)
         end
         self:SetLabelText(label)
         hooksecurefunc(label, 'SetText', function(self, name)
@@ -357,7 +347,7 @@ end
 function WoWTools_ChineseMixin:HookButton(btn, setFont)
     if btn and btn.SetText and not btn.hook_chines then
         if setFont then
-            self:SetLabelFont(btn:GetFontString())
+            self:SetCNFont(btn:GetFontString())
         end
         local label= btn:GetFontString()
         if label then
@@ -417,186 +407,4 @@ function WoWTools_ChineseMixin:SetTabSystem(frame, setFont, padding, minWidth, a
 
         PanelTemplates_TabResize(frame, padding or 20, absoluteSize, minWidth or 70)
     end
-end
-
-
-
-
-
-
-
-
-
-
-
-
-function WoWTools_ChineseMixin:GetRecipeName(recipeInfo, hyperlink)
-    local name
-    hyperlink= hyperlink or (recipeInfo and recipeInfo.hyperlink)
-
-    local color
-    if hyperlink then
-        local item = Item:CreateFromItemLink(hyperlink)
-        color= (item:GetItemQualityColor() or {}).color
-        name= self:GetItemName(item:GetItemID()) or self:CN(item:GetItemName())
-    end
-    if not name and recipeInfo then
-        name= self:GetSkillLineAbilityName(recipeInfo.skillLineAbilityID)
-    end
-    if name and color then
-        name= WrapTextInColor(name, color)
-    end
-
-    return name
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function WoWTools_ChineseMixin:MK(number, bit)
-    if not number then
-        return
-    end
-    bit = bit or 1
-
-    local text= ''
-    if number>=1e6 then
-        number= number/1e6
-        text= 'm'
-    elseif number>= 1e4 then
-        number= number/1e4
-        text='w'
-    elseif number>=1e3 then
-        number= number/1e3
-        text= 'k'
-    end
-    if bit==0 then
-        number= math.modf(number)
-        number= number==0 and 0 or number
-        return number..text--format('%i', number)..text
-    else
-        local num, point= math.modf(number)
-        if point==0 then
-            return num..text
-        else---0.5/10^bit
-            return format('%0.'..bit..'f', number)..text
-        end
-    end
-end
-
-
-
-
-
-
-
-
-
-
-function WoWTools_ChineseMixin:Cstr(frame, tab)
-    tab= tab or {}
-    frame= frame or UIParent
-    local name= tab.name
-    local alpha= tab.alpha
-    local font= tab.changeFont
-    local layer= tab.layer or 'OVERLAY'
-    local fontName= tab.fontName or 'GameFontNormal'
-    local copyFont= tab.copyFont
-    local size= tab.size or 12
-    local justifyH= tab.justifyH
-    local notFlag= tab.notFlag
-    local notShadow= tab.notShadow
-    local color= tab.color
-    local mouse= tab.mouse
-    local wheel= tab.wheel
-
-    font = font or frame:CreateFontString(name, layer, fontName)
-    if copyFont then
-        local fontName2, size2, fontFlag2 = copyFont:GetFont()
-        font:SetFont(fontName2, size or size2, fontFlag2)
-        font:SetTextColor(copyFont:GetTextColor())
-        font:SetFontObject(copyFont:GetFontObject())
-        font:SetShadowColor(copyFont:GetShadowColor())
-        font:SetShadowOffset(copyFont:GetShadowOffset())
-        if justifyH then font:SetJustifyH(justifyH) end
-        --if alpha then font:SetAlpha(alpha) end
-    else
-        local _, size2, fontFlag2= font:GetFont()
-        font:SetFont('Fonts\\ARHei.ttf', size or size2, notFlag and fontFlag2 or 'OUTLINE')
-        font:SetJustifyH(justifyH or 'LEFT')
-    end
-    if not notShadow then
-        font:SetShadowOffset(1, -1)
-    end
-    if color~=false then
-        if type(color)=='table' then
-            font:SetTextColor(color.r, color.g, color.b, color.a or 1)
-        else
-            font:SetTextColor(1, 0.82, 0, 1)
-        end
-    end
-    if mouse then
-        font:EnableMouse(true)
-    end
-    if wheel then
-        font:EnableMouseWheel(true)
-    end
-    if alpha then
-        font:SetAlpha(alpha)
-    end
-    return font
-end
-
-
-
-
-function WoWTools_ChineseMixin:GetQuestID()
-    if QuestInfoFrame.questLog then
-       return C_QuestLog.GetSelectedQuest()
-    else
-       return GetQuestID()
-    end
-end
-
-
-
-
-
-
-function WoWTools_ChineseMixin:Magic(text)
-    local tab= {'%.', '%(','%)','%+', '%-', '%*', '%?', '%[', '%^'}
-    for _,v in pairs(tab) do
-        text= text:gsub(v,'%%'..v)
-    end
-    tab={
-        ['%%%d%$s']= '%(%.%-%)',
-        ['%%s']= '%(%.%-%)',
-        ['%%%d%$d']= '%(%%d%+%)',
-        ['%%d']= '%(%%d%+%)',
-    }
-    local find
-    for k,v in pairs(tab) do
-        text= text:gsub(k,v)
-        find=true
-    end
-    if find then
-        tab={'%$'}
-    else
-        tab={'%%','%$'}
-    end
-    for _, v in pairs(tab) do
-        text= text:gsub(v,'%%'..v)
-    end
-    return text
 end

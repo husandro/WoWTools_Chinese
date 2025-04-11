@@ -79,7 +79,7 @@ hooksecurefunc(PaperDollFrame.TitleManagerPane.ScrollBox, 'Update', function(fra
                 local name= self.titleId==-1 and '无头衔' or WoWTools_ChineseMixin:GetTitleName(self.titleId)                
                 return name
             end
-            WoWTools_ChineseMixin:SetLabelFont(btn:GetFontString())
+            WoWTools_ChineseMixin:SetCNFont(btn:GetFontString())
             btn:HookScript('OnLeave', GameTooltip_Hide)
             btn:HookScript('OnEnter', function(self)
                 if self.titleId==-1 then

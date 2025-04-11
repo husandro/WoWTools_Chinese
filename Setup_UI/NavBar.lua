@@ -15,7 +15,7 @@ hooksecurefunc('NavBar_AddButton', function(self, buttonData)
     local navButton = self.navList[#self.navList]
     local name= WoWTools_ChineseMixin:CN(buttonData.name)
     if name then
-        WoWTools_ChineseMixin:SetLabelFont(navButton.text)
+        WoWTools_ChineseMixin:SetCNFont(navButton.text)
         navButton.text:SetText(name)
         local buttonExtraWidth
         if ( buttonData.listFunc and not self.oldStyle ) then
@@ -29,6 +29,6 @@ end)
 
 
 hooksecurefunc('NavBar_Initialize', function(_, _, homeData, homeButton)
-    WoWTools_ChineseMixin:SetLabelFont(homeButton.text)
+    WoWTools_ChineseMixin:SetCNFont(homeButton.text)
     WoWTools_ChineseMixin:SetLabelText(homeButton.text)
 end)

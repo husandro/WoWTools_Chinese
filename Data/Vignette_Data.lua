@@ -6077,7 +6077,7 @@ local tab={
 }
 
 
-local e = select(2, ...)
+
 function WoWTools_ChineseMixin:GetVignetteName(vignetteID)
     return tab[vignetteID]
 end

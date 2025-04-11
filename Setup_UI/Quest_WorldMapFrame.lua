@@ -29,7 +29,7 @@ hooksecurefunc(WorldMapFrame, 'SynchronizeDisplayState', function(self)
         self.BorderFrame:SetTitle('地图和任务日志')
     end
 end)
-WoWTools_ChineseMixin:SetLabelFont(WorldMapFrameHomeButtonText)
+WoWTools_ChineseMixin:SetCNFont(WorldMapFrameHomeButtonText)
 WorldMapFrameHomeButtonText:SetText('世界')
 
 local optionButton=WorldMapFrame.overlayFrames[2]

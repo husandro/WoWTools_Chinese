@@ -9,7 +9,7 @@ local function Init_Blizzard_WeeklyRewards()
     WoWTools_ChineseMixin:HookLabel(WeeklyRewardsFrame.RaidFrame.Name)
     WoWTools_ChineseMixin:HookLabel(WeeklyRewardsFrame.MythicFrame.Name)
 
-    WoWTools_ChineseMixin:SetLabelFont(WeeklyRewardsFrame.HeaderFrame.Text)
+    WoWTools_ChineseMixin:SetCNFont(WeeklyRewardsFrame.HeaderFrame.Text)
 
 
     hooksecurefunc(WeeklyRewardsFrame, 'UpdateOverlay', function(self)--Blizzard_WeeklyRewards.lua

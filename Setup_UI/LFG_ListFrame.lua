@@ -73,7 +73,7 @@ hooksecurefunc('LFGListCategorySelection_AddButton', function(self, btnIndex, ca
     
     local btn= self.CategoryButtons[btnIndex]
     if text and btn then
-        WoWTools_ChineseMixin:SetLabelFont(btn:GetFontString())
+        WoWTools_ChineseMixin:SetCNFont(btn:GetFontString())
         local name= text:match('%- (.+)')
         local cnName= name and WoWTools_ChineseMixin:CN(name)
         if cnName then
@@ -100,9 +100,9 @@ end)
         LFGListFrame.EntryCreation.PrivateGroup.Label:SetText('个人')
         LFGListFrame.EntryCreation.PrivateGroup.tooltip= '仅对已在队伍中的好友和公会成员可见。'
 
-        WoWTools_ChineseMixin:SetLabelFont(LFGListFrame.ApplicationViewer.ItemLevelColumnHeader.Label)
-        WoWTools_ChineseMixin:SetLabelFont(LFGListFrame.ApplicationViewer.RoleColumnHeader.Label)
-        WoWTools_ChineseMixin:SetLabelFont(LFGListFrame.ApplicationViewer.NameColumnHeader.Label)
+        WoWTools_ChineseMixin:SetCNFont(LFGListFrame.ApplicationViewer.ItemLevelColumnHeader.Label)
+        WoWTools_ChineseMixin:SetCNFont(LFGListFrame.ApplicationViewer.RoleColumnHeader.Label)
+        WoWTools_ChineseMixin:SetCNFont(LFGListFrame.ApplicationViewer.NameColumnHeader.Label)
         LFGListFrame.ApplicationViewer.NameColumnHeader.Label:SetText('名称', nil, true)
         LFGListFrame.ApplicationViewer.RoleColumnHeader.Label:SetText('职责', nil, true)
         LFGListFrame.ApplicationViewer.ItemLevelColumnHeader.Label:SetText('装等', nil, true)

@@ -1000,7 +1000,7 @@ local indexTab={
 
 
 
-local e = select(2, ...)
+
 
 function WoWTools_ChineseMixin:GetHoliDayName(eventID)
     local data= indexTab[eventID]

@@ -1,20 +1,9 @@
-local e = select(2, ...)
-
 
 
 
 hooksecurefunc(DragonridingPanelSkillsButtonMixin, 'OnLoad', function(self)--Blizzard_DragonflightLandingPage.lua
     WoWTools_ChineseMixin:SetLabelText(self)
 end)
-
-
-
-
-
-
-
-
-
 
 
 

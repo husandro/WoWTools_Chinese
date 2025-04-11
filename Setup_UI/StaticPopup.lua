@@ -1,4 +1,4 @@
-local  e = select(2, ...)
+
 
 --StaticPopup.lua
 --StaticPopupItemFrameMixin:DisplayInfo(link, name, color, texture, count, tooltip)
