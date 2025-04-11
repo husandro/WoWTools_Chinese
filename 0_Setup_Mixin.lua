@@ -29,29 +29,29 @@ function WoWTools_ChineseMixin:Setup(text, tab)
     if type(tab)=='table' then
         if tab.holydayID then
             if tab.isName then
-                data= WoWTools_ChineseMixin:Get_HoliDay_Name(tab.holydayID)
+                data= self:Get_HoliDay_Name(tab.holydayID)
             elseif tab.isDesc then
-                data= WoWTools_ChineseMixin:Get_HoliDay_Desc(tab.holydayID)
+                data= self:Get_HoliDay_Desc(tab.holydayID)
             else
-                data= WoWTools_ChineseMixin:Get_HoliDay_Info(tab.holydayID)--节日 eventID
+                data= self:Get_HoliDay_Info(tab.holydayID)--节日 eventID
             end
         elseif tab.perksActivityID then
-            data= WoWTools_ChineseMixin:Get_PerksActivity_Info(tab.perksActivityID)--PERKS
+            data= self:Get_PerksActivity_Info(tab.perksActivityID)--PERKS
 
         elseif tab.vignetteID then
-            data= WoWTools_ChineseMixin:Get_Vignette_Name(tab.vignetteID)--Vignette
+            data= self:Get_Vignette_Name(tab.vignetteID)--Vignette
 
         elseif tab.toyID then
-            data= WoWTools_ChineseMixin:Get_Toy_Source(tab.toyID)--玩具itemID
+            data= self:Get_Toy_Source(tab.toyID)--玩具itemID
 
         elseif tab.speciesID then
-            data= WoWTools_ChineseMixin:Get_Pet_Description(tab.speciesID)--专精
+            data= self:Get_Pet_Description(tab.speciesID)--专精
 
         elseif tab.petAbilityID then
-            data= WoWTools_ChineseMixin:Get_Pet_Ablity_Info(tab.petAbilityID)--宠物技能
+            data= self:Get_Pet_Ablity_Info(tab.petAbilityID)--宠物技能
 
         elseif tab.skillCategoryID then
-            data= WoWTools_ChineseMixin:Get_TradeSkillCategory_Name(tab.skillCategoryID)--专业目录
+            data= self:Get_TradeSkillCategory_Name(tab.skillCategoryID)--专业目录
 
         elseif tab.spellID or tab.spellLink then
             local spellID= tab.spellID
@@ -63,7 +63,7 @@ function WoWTools_ChineseMixin:Setup(text, tab)
             end
             if spellID then
                 if tab.isName then
-                    local name= WoWTools_ChineseMixin:Get_Spell_Name(spellID)--法术名称
+                    local name= self:Get_Spell_Name(spellID)--法术名称
                     if name then
                         if tab.spellLink and tab.spellLink:find('|h%[.-]|h') then
                             data= tab.spellLink:gsub('|h%[.-]|h', '|h['..name..']|h')
@@ -71,12 +71,12 @@ function WoWTools_ChineseMixin:Setup(text, tab)
                         data= data or name
                     end
                 elseif tab.isDesc then
-                    data= WoWTools_ChineseMixin:Get_Spell_Desc(spellID)
+                    data= self:Get_Spell_Desc(spellID)
                 else
-                    data= WoWTools_ChineseMixin:Get_Spell_Data(spellID)
+                    data= self:Get_Spell_Data(spellID)
                     if data then
                         for index, name2 in pairs(data) do
-                            data[index]= WoWTools_ChineseMixin:ReplaceText(name2)
+                            data[index]= self:ReplaceText(name2)
                         end
                     end
                 end
@@ -85,9 +85,9 @@ function WoWTools_ChineseMixin:Setup(text, tab)
         elseif tab.itemID or tab.itemLink then
             local itemID= tab.itemID or C_Item.GetItemIDForItemInfo(tab.itemLink)
             if tab.isToy then
-                data= WoWTools_ChineseMixin:Get_Toy_Source(itemID)
+                data= self:Get_Toy_Source(itemID)
             elseif tab.isHeirloom then
-                data= WoWTools_ChineseMixin:Get_Heirloom_Source(itemID)
+                data= self:Get_Heirloom_Source(itemID)
 
             elseif tab.isName then
                 local link= tab.itemLink
@@ -103,13 +103,13 @@ function WoWTools_ChineseMixin:Setup(text, tab)
                 data= data or self:Get_Item_Name(itemID)--物品名称
 
             elseif tab.isDesc then
-                data= WoWTools_ChineseMixin:Get_Heirloom_Source(itemID)--物品名称
+                data= self:Get_Heirloom_Source(itemID)--物品名称
                 
             else
-                data= WoWTools_ChineseMixin:Get_Item_Info(itemID)--物品名称
+                data= self:Get_Item_Info(itemID)--物品名称
                 if data then
                     for index, name2 in pairs(data) do
-                        data[index]= WoWTools_ChineseMixin:ReplaceText(name2)
+                        data[index]= self:ReplaceText(name2)
                     end
                 end
             end
@@ -118,60 +118,60 @@ function WoWTools_ChineseMixin:Setup(text, tab)
             data= self:Get_SkillLineAbility_Name(tab.skillLineAbilityID)--专业配方,名称
 
         elseif tab.recipeID then
-            data= WoWTools_ChineseMixin:Get_Recipe_Source(tab.recipeID)--专业配方,来源
+            data= self:Get_Recipe_Source(tab.recipeID)--专业配方,来源
 
         elseif tab.ProfessionNodeID then
-            data= WoWTools_ChineseMixin:Get_Profession_Node_Desc(tab.ProfessionNodeID)
+            data= self:Get_Profession_Node_Desc(tab.ProfessionNodeID)
 
 
         elseif tab.lfgDungeonID then
-            data= WoWTools_ChineseMixin:Get_LFGDungeon_Desc(tab.lfgDungeonID)
+            data= self:Get_LFGDungeon_Desc(tab.lfgDungeonID)
 
         elseif tab.sectionID then
             if tab.isName then
-                data= WoWTools_ChineseMixin:Get_Boos_Section_Name(tab.sectionID, tab.difficultyID)
+                data= self:Get_Boos_Section_Name(tab.sectionID, tab.difficultyID)
             elseif tab.isDesc then
-                data= WoWTools_ChineseMixin:Get_Boos_Section_Desc(tab.sectionID, tab.difficultyID)
+                data= self:Get_Boos_Section_Desc(tab.sectionID, tab.difficultyID)
             else
-                data= WoWTools_ChineseMixin:Get_Boos_Section_Info(tab.sectionID, tab.difficultyID)
+                data= self:Get_Boos_Section_Info(tab.sectionID, tab.difficultyID)
             end
 
         elseif tab.journalEncounterID then
             if tab.isName then
-               data= WoWTools_ChineseMixin:Get_Boss_Name(journalEncounterID)
+               data= self:Get_Boss_Name(journalEncounterID)
             elseif tab.isDesc then
-                data= WoWTools_ChineseMixin:Get_Boss_Desc(tab.journalEncounterID)--BOOS
+                data= self:Get_Boss_Desc(tab.journalEncounterID)--BOOS
             else
-                data= WoWTools_ChineseMixin:Get_Boss_Info(tab.journalEncounterID)
+                data= self:Get_Boss_Info(tab.journalEncounterID)
             end
 
         elseif tab.instanceID then
-            data= WoWTools_ChineseMixin:Get_Instance_Desc(tab.instanceID)--副本
+            data= self:Get_Instance_Desc(tab.instanceID)--副本
 
         elseif tab.scenarioID then
             if tab.isName then
-                data= WoWTools_ChineseMixin:Get_Scenario_Name(tab.scenarioID)
+                data= self:Get_Scenario_Name(tab.scenarioID)
             else
-                WoWTools_ChineseMixin:Get_Scenario_Step_Info(tab.scenarioID, tab.stepIndex)
+                self:Get_Scenario_Step_Info(tab.scenarioID, tab.stepIndex)
             end
 
         elseif tab.questID then
             if tab.isObject then
-                WoWTools_ChineseMixin:Get_Quest_Object(tab.questID, tab.index)
+                self:Get_Quest_Object(tab.questID, tab.index)
             else
-                data= WoWTools_ChineseMixin:Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc)
+                data= self:Get_Quest_Info(tab.questID, tab.isName, tab.isObject, tab.isDesc)
             end
 
         elseif tab.npcID or tab.unit then
             if tab.isName then
-                data= WoWTools_ChineseMixin:Get_Unit_Name(tab.unit, tab.npcID)
+                data= self:Get_Unit_Name(tab.unit, tab.npcID)
             else
-                data= WoWTools_ChineseMixin:Get_Unit_Info(tab.unit, tab.npcID)
+                data= self:Get_Unit_Info(tab.unit, tab.npcID)
             end
 
 
         elseif tab.titleID then
-            data= WoWTools_ChineseMixin:Get_Title_Name(tab.titleID)
+            data= self:Get_Title_Name(tab.titleID)
         end
     end
     return data or text
