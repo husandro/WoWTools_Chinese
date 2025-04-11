@@ -44,7 +44,7 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
 
     tab_G=nil
     tabString=nil
-print(EJ_GetTierInfo(2))
+
     WoWTools_ChineseMixin:SetCN(EJ_GetTierInfo(2), '燃烧远征')
 
     EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
