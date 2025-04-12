@@ -6,10 +6,10 @@
 
 
 
-local function Set_UpdateButton(self)
-    WoWTools_ChineseMixin:SetLabelText(self.spellString)
-    WoWTools_ChineseMixin:SetLabelText(self.subSpellString)
-    WoWTools_ChineseMixin:SetLabelText(self.subSpellString)
+local function Set_UpdateButton(frame)
+    WoWTools_ChineseMixin:SetLabelText(frame.spellString)
+    WoWTools_ChineseMixin:SetLabelText(frame.subSpellString)
+    WoWTools_ChineseMixin:SetLabelText(frame.subSpellString)
 end
 
 
@@ -23,7 +23,7 @@ end
 
 
 
-local function Init()
+function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsBook()
     WoWTools_ChineseMixin:SetLabelText(ProfessionsBookFrameTitleText)
 
     WoWTools_ChineseMixin:SetLabelText(PrimaryProfession1Missing)
@@ -61,20 +61,3 @@ local function Init()
         WoWTools_ChineseMixin:HookLabel(frame.professionName, frame.skillName)
     end)
 end
-
-
-
-
-
-
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_ProfessionsBook' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)

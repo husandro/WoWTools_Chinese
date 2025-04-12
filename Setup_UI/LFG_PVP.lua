@@ -712,7 +712,7 @@ end
 
 
 --Blizzard_PVPUI.lua
-local function Init()
+function WoWTools_ChineseMixin.Events:Blizzard_PVPUI()
     hooksecurefunc('PVPQueueFrame_UpdateTitle', function()--Blizzard_PVPUI.lua
         if ConquestFrame.seasonState == 2 then--SEASON_STATE_PRESEASON
             PVEFrame:SetTitle('PvP（季前赛）')
@@ -738,24 +738,3 @@ local function Init()
     Init_HonorFrame()
     Init_ConquestFrame()
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_PVPUI' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)
-

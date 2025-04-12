@@ -35,7 +35,7 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
         return
     end
 
-    local dialog = nil	
+    local dialog = nil
 	dialog = StaticPopup_FindVisible(which, data);
 
 	if ( not dialog ) then
@@ -140,7 +140,7 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
 
 
 
-	
+
 
 
 

@@ -1,7 +1,6 @@
 WoWTools_ChineseMixin={
     Events={}
 }
-
 local CNData={}--主要，汉化
 
 function WoWTools_ChineseMixin:SetCN(en, cn)

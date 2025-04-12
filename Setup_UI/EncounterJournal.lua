@@ -442,23 +442,23 @@ end
 
 
 
-local function Init()
+function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
     Init_EncounterJournal()
     Init_WoWeuCN()
 
     hooksecurefunc('EJSuggestFrame_RefreshDisplay', function()
        
 
-        local self = EncounterJournal.suggestFrame;
+        local frame = EncounterJournal.suggestFrame;
        
 
-        local num= #self.suggestions
+        local num= #frame.suggestions
         if  num== 0 then
             return
         end
             for i = 1, num do
-                local suggestion = self["Suggestion"..i]
-		        local data = self.suggestions[i]
+                local suggestion = frame["Suggestion"..i]
+		        local data = frame.suggestions[i]
                 if not suggestion or not data then
                     break;
                 end
@@ -473,8 +473,11 @@ local function Init()
     end)
 
 
-    --hooksecurefunc(EncounterJournalItemMixin, 'Init', function(self, data)可用
-        
+    --hooksecurefunc(EncounterJournalItemMixin, 'Init', function(frame, data)可用
+    do
+        WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
+    end
+    WoWTools_ChineseMixin.Events.Blizzard_EncounterJournal_PerksActivity=nil
 end
 
 
@@ -484,16 +487,4 @@ end
 
 
 
-
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_EncounterJournal' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)
 

@@ -1090,8 +1090,7 @@ end
 
 
 
-
-local function Init()
+function WoWTools_ChineseMixin.Events:Blizzard_Professions()
     Init_CraftingPage()
     Init_CraftingPage_SchematicForm()
     Init_SpecPage()
@@ -1099,36 +1098,36 @@ local function Init()
     Init_CraftingOutputLog()
     Init_Details_Stat()
     Init_ReagentSlot()
-    hooksecurefunc(ProfessionsFrame, 'SetTitle', function(self, skillLineName)
+    hooksecurefunc(ProfessionsFrame, 'SetTitle', function(frame, skillLineName)
         if WoWTools_ChineseMixin:CN(skillLineName) then
             skillLineName= WoWTools_ChineseMixin:CN(skillLineName)
             if C_TradeSkillUI.IsTradeSkillGuild() then
-                self:SetTitleFormatted('公会%s"', skillLineName)
+                frame:SetTitleFormatted('公会%s"', skillLineName)
             else
                 local linked, linkedName = C_TradeSkillUI.IsTradeSkillLinked()
                 if linked and linkedName then
-                    self:SetTitleFormatted("%s %s[%s]|r", format('%s', skillLineName), HIGHLIGHT_FONT_COLOR_CODE, linkedName)
+                    frame:SetTitleFormatted("%s %s[%s]|r", format('%s', skillLineName), HIGHLIGHT_FONT_COLOR_CODE, linkedName)
                 else
-                    self:SetTitleFormatted('%s', skillLineName)
+                    frame:SetTitleFormatted('%s', skillLineName)
                 end
             end
         elseif C_TradeSkillUI.IsTradeSkillGuild() then
-            self:SetTitleFormatted('公会%s"', skillLineName)
+            frame:SetTitleFormatted('公会%s"', skillLineName)
         end
     end)
 
 
 
-    hooksecurefunc(ProfessionsFrame, 'UpdateTabs', function(self)
-        local recipesTab = self:GetTabButton(self.recipesTabID)
+    hooksecurefunc(ProfessionsFrame, 'UpdateTabs', function(frame)
+        local recipesTab = frame:GetTabButton(frame.recipesTabID)
         WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
         recipesTab.Text:SetText('配方')
 
-        recipesTab = self:GetTabButton(self.specializationsTabID)
+        recipesTab = frame:GetTabButton(frame.specializationsTabID)
         WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
         recipesTab.Text:SetText('专精')
 
-        recipesTab = self:GetTabButton(self.craftingOrdersTabID )
+        recipesTab = frame:GetTabButton(frame.craftingOrdersTabID )
         WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
         recipesTab.Text:SetText('制造订单')
     end)
@@ -1137,31 +1136,31 @@ local function Init()
      --目录，列表，标题
      ProfessionsFrame.CraftingPage.RecipeList.SearchBox.Instructions:SetText('搜索')
      --ProfessionsFrame.CraftingPage.RecipeList.FilterDropdown.Text:SetText('过滤器')
-     hooksecurefunc(ProfessionsRecipeListCategoryMixin, 'Init', function(self, node)
+     hooksecurefunc(ProfessionsRecipeListCategoryMixin, 'Init', function(frame, node)
         local info= node:GetData().categoryInfo
         if info then
             local name= WoWTools_ChineseMixin:GetTradeSkillCategoryName(info.categoryID) or WoWTools_ChineseMixin:CN(info.name)
             if name then
-                self.Label:SetText(name)
+                frame.Label:SetText(name)
             end
         end
     end)
 
 
     --列表，目录
-    hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'Init', function(self, node)
+    hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'Init', function(frame, node)
         local elementData = node:GetData()
         local recipeInfo = Professions.GetHighestLearnedRecipe(elementData.recipeInfo) or elementData.recipeInfo
         local name= WoWTools_ChineseMixin:GetRecipeName(recipeInfo, nil)
         if name then
-            self.Label:SetText(name)
+            frame.Label:SetText(name)
         end
     end)
 
 
     --Blizzard_ProfessionsInspectRecipe.lua InspectRecipeMixin
     WoWTools_ChineseMixin:SetLabelText(InspectRecipeFrame.SchematicForm.Reagents.Label)
-    hooksecurefunc(InspectRecipeFrame, 'Open', function(self, recipeID)
+    hooksecurefunc(InspectRecipeFrame, 'Open', function(frame, recipeID)
         local data = C_TradeSkillUI.GetProfessionInfoByRecipeID(recipeID) or {}
         local name
         if data.professionName then
@@ -1170,7 +1169,7 @@ local function Init()
             name= WoWTools_ChineseMixin:GetTradeSkillCategoryName(data.parentProfessionID) or WoWTools_ChineseMixin:CN(data.parentProfessionName)
         end
         if name then
-            self:SetTitle(name)
+            frame:SetTitle(name)
         end
     end)
 end
@@ -1179,28 +1178,3 @@ end
 
 --Blizzard_ProfessionsRecipeFlyout.lua
 --ProfessionsItemFlyoutMixin:OnLoad()
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_Professions' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)

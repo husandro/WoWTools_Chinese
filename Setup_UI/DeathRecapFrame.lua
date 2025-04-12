@@ -113,14 +113,14 @@ local function set_DeathRecapFrame_OpenRecap()
     if not DeathRecapFrame:IsShown() then
         return
     end
-    
+
     local events = DeathRecap_GetEvents(self.recapID );
     if( not events or #events <= 0 ) then
         return;
     end
 
     for i = 1, #events do
-        local entry = self.DeathRecapEntry[i]        
+        local entry = self.DeathRecapEntry[i]
         local evtData = events[i]
         if entry and entry:IsShown() and evtData then
             local spellId, spellName = DeathRecapFrame_GetEventInfo(evtData)
@@ -155,14 +155,9 @@ end
 
 
 
- 
+function WoWTools_ChineseMixin.Events:Blizzard_DeathRecap()
+    DeathRecapFrame.CloseButton:SetText('关闭')
+    DeathRecapFrame.Title:SetText('死亡摘要')
 
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_DeathRecap' then
-        DeathRecapFrame.CloseButton:SetText('关闭')
-        DeathRecapFrame.Title:SetText('死亡摘要')
-
-        hooksecurefunc('DeathRecapFrame_OpenRecap', set_DeathRecapFrame_OpenRecap)
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)
+    hooksecurefunc('DeathRecapFrame_OpenRecap', set_DeathRecapFrame_OpenRecap)
+end

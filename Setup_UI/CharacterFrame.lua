@@ -1,9 +1,9 @@
 
-    
-    
 
 
- 
+
+
+
 PAPERDOLL_SIDEBARS[1].name= '角色属性'
 CharacterStatsPane.ItemLevelCategory.Title:SetText('物品等级')
 CharacterStatsPane.AttributesCategory.Title:SetText('属性')
@@ -37,7 +37,7 @@ hooksecurefunc('PaperDollEquipmentManagerPane_InitButton', function(button, elem
 end)
 
 
-    
+
 hooksecurefunc(CharacterFrame, 'SetTitle', function(self)
     if self.activeSubframe== 'PaperDollFrame' then
         local titleID = GetCurrentTitle()
@@ -76,7 +76,7 @@ hooksecurefunc(PaperDollFrame.TitleManagerPane.ScrollBox, 'Update', function(fra
     for _, btn in pairs(frame:GetFrames() or {}) do
         if not btn.get_name then
             function btn:get_name()
-                local name= self.titleId==-1 and '无头衔' or WoWTools_ChineseMixin:GetTitleName(self.titleId)                
+                local name= self.titleId==-1 and '无头衔' or WoWTools_ChineseMixin:GetTitleName(self.titleId)
                 return name
             end
             WoWTools_ChineseMixin:SetCNFont(btn:GetFontString())
@@ -89,7 +89,7 @@ hooksecurefunc(PaperDollFrame.TitleManagerPane.ScrollBox, 'Update', function(fra
                 if not name then
                     return
                 end
-                GameTooltip:SetOwner(self, "ANCHOR_LEFT")     
+                GameTooltip:SetOwner(self, "ANCHOR_LEFT")
                 local title= format(name, UnitName('player'))
                 GameTooltip_SetTitle(GameTooltip, title)
                 GameTooltip_AddNormalLine(GameTooltip, (GetTitleName(self.titleId) or '')..' ')

@@ -233,7 +233,7 @@ end
 
 
 
-local function Init()
+function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
     Init_SpellBookFrame()
     Init_TalentsFrame()
     Init_SpecFrame()
@@ -247,23 +247,3 @@ local function Init()
         end
     end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_PlayerSpells' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)

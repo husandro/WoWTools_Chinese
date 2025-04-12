@@ -5,16 +5,16 @@
 
 
 
-local function Init()
-    hooksecurefunc(AuctionHouseFrame, 'UpdateTitle', function(self)
-        local tab = PanelTemplates_GetSelectedTab(self)
+function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
+    hooksecurefunc(AuctionHouseFrame, 'UpdateTitle', function(frame)
+        local tab = PanelTemplates_GetSelectedTab(frame)
         local title = '浏览拍卖'
         if tab == 2 then
             title = '发布拍卖'
         elseif tab == 3 then
             title = '拍卖'
         end
-        self:SetTitle(title)
+        frame:SetTitle(title)
     end)
 
 
@@ -27,14 +27,14 @@ local function Init()
     AuctionHouseFrame.SearchBar.FilterButton:SetText('过滤器')
 
 
-    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList, 'SetState', function(self, state)
+    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList, 'SetState', function(frame, state)
         if state == 1 then
-            local searchResultsText = self.searchStartedFunc and select(2, self.searchStartedFunc())
+            local searchResultsText = frame.searchStartedFunc and select(2, frame.searchStartedFunc())
             if searchResultsText== AUCTION_HOUSE_BROWSE_FAVORITES_TIP then
-                self.ResultsText:SetText('小窍门：右键点击物品可以设置偏好。偏好的物品会在你打开拍卖行时立即出现。')
+                frame.ResultsText:SetText('小窍门：右键点击物品可以设置偏好。偏好的物品会在你打开拍卖行时立即出现。')
             end
         elseif state == 2 then
-            self.ResultsText:SetText('未发现物品')
+            frame.ResultsText:SetText('未发现物品')
         end
     end)
 
@@ -44,9 +44,9 @@ local function Init()
     AuctionHouseFrameAuctionsFrameAuctionsTab.Text:SetText('拍卖')
     AuctionHouseFrameAuctionsFrameBidsTab.Text:SetText('竞标')
     AuctionHouseFrameAuctionsFrameBidsTab.Text:SetText('竞标')
-    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList, 'SetDataProvider', function(self)
-        if self.ResultsText and self.ResultsText:IsShown() then
-            self.ResultsText:SetText('小窍门：右键点击物品可以设置偏好。偏好的物品会在你打开拍卖行时立即出现。')
+    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList, 'SetDataProvider', function(frame)
+        if frame.ResultsText and frame.ResultsText:IsShown() then
+            frame.ResultsText:SetText('小窍门：右键点击物品可以设置偏好。偏好的物品会在你打开拍卖行时立即出现。')
         end
     end)
 
@@ -66,9 +66,9 @@ local function Init()
     --Blizzard_AuctionHouseUI
     WoWTools_ChineseMixin:HookLabel(AuctionHouseFrame.ItemSellFrame.PriceInput.Label)--一口价
 
-    hooksecurefunc(AuctionHouseFrame.ItemSellFrame, 'SetSecondaryPriceInputEnabled', function(self, enabled)        
+    hooksecurefunc(AuctionHouseFrame.ItemSellFrame, 'SetSecondaryPriceInputEnabled', function(frame, enabled)        
         if enabled then
-            self.PriceInput:SetSubtext('|cff777777(可选)|r')--AUCTION_HOUSE_BUYOUT_OPTIONAL_LABEL
+            frame.PriceInput:SetSubtext('|cff777777(可选)|r')--AUCTION_HOUSE_BUYOUT_OPTIONAL_LABEL
         end
     end)
 
@@ -110,52 +110,52 @@ local function Init()
 
 
     --Blizzard_AuctionHouseSharedTemplates.lua
-    hooksecurefunc(AuctionHouseFrame.ItemSellList.RefreshFrame, 'SetQuantity', function(self, totalQuantity)
+    hooksecurefunc(AuctionHouseFrame.ItemSellList.RefreshFrame, 'SetQuantity', function(frame, totalQuantity)
         if totalQuantity ~= 0 then
-            self.TotalQuantity:SetFormattedText('可购买数量：|cnGREEN_FONT_COLOR:%s|r', WoWTools_ChineseMixin:MK(totalQuantity, 0))
+            frame.TotalQuantity:SetFormattedText('可购买数量：|cnGREEN_FONT_COLOR:%s|r', WoWTools_ChineseMixin:MK(totalQuantity, 0))
         end
     end)
-    hooksecurefunc(AuctionHouseFrame.CommoditiesSellList.RefreshFrame, 'SetQuantity', function(self, totalQuantity)
+    hooksecurefunc(AuctionHouseFrame.CommoditiesSellList.RefreshFrame, 'SetQuantity', function(frame, totalQuantity)
         if totalQuantity ~= 0 then
-            self.TotalQuantity:SetFormattedText('可购买数量：|cnGREEN_FONT_COLOR:%s|r', WoWTools_ChineseMixin:MK(totalQuantity, 0))
+            frame.TotalQuantity:SetFormattedText('可购买数量：|cnGREEN_FONT_COLOR:%s|r', WoWTools_ChineseMixin:MK(totalQuantity, 0))
         end
     end)
-    hooksecurefunc(AuctionHouseFrame.ItemBuyFrame.BidFrame, 'SetPrice', function(self, minBid, isOwnerItem, isPlayerHighBid)
+    hooksecurefunc(AuctionHouseFrame.ItemBuyFrame.BidFrame, 'SetPrice', function(frame, minBid, isOwnerItem, isPlayerHighBid)
         if not (isPlayerHighBid or minBid == 0) then
             if minBid > GetMoney() then
-                self.BidButton:SetDisableTooltip('你的钱不够')
+                frame.BidButton:SetDisableTooltip('你的钱不够')
             elseif isOwnerItem then
-                self.BidButton:SetDisableTooltip('你不能购买自己的拍卖品')
+                frame.BidButton:SetDisableTooltip('你不能购买自己的拍卖品')
             end
         end
     end)
 
     --Blizzard_AuctionHouseSellFrame.lua
-    hooksecurefunc(AuctionHouseFrame.CommoditiesSellFrame, 'UpdatePostButtonState', function(self)
-        local canPostItem, reasonTooltip = self:CanPostItem()
+    hooksecurefunc(AuctionHouseFrame.CommoditiesSellFrame, 'UpdatePostButtonState', function(frame)
+        local canPostItem, reasonTooltip = frame:CanPostItem()
         if not canPostItem and reasonTooltip then
             if reasonTooltip== AUCTION_HOUSE_SELL_FRAME_ERROR_ITEM then
-                self.PostButton:SetTooltip('没有选择物品')
+                frame.PostButton:SetTooltip('没有选择物品')
             elseif reasonTooltip== AUCTION_HOUSE_SELL_FRAME_ERROR_DEPOSIT then
-                self.PostButton:SetTooltip('你没有足够的钱来支付保证金')
+                frame.PostButton:SetTooltip('你没有足够的钱来支付保证金')
             elseif reasonTooltip== AUCTION_HOUSE_SELL_FRAME_ERROR_QUANTITY then
-                self.PostButton:SetTooltip('数量必须大于0')
+                frame.PostButton:SetTooltip('数量必须大于0')
             elseif reasonTooltip== ERR_GENERIC_THROTTLE then
-                self.PostButton:SetTooltip('你太快了')
+                frame.PostButton:SetTooltip('你太快了')
             end
         end
     end)
-    hooksecurefunc(AuctionHouseFrame.ItemSellFrame, 'UpdatePostButtonState', function(self)
-        local canPostItem, reasonTooltip = self:CanPostItem()
+    hooksecurefunc(AuctionHouseFrame.ItemSellFrame, 'UpdatePostButtonState', function(frame)
+        local canPostItem, reasonTooltip = frame:CanPostItem()
         if not canPostItem and reasonTooltip then
             if reasonTooltip== AUCTION_HOUSE_SELL_FRAME_ERROR_ITEM then
-                self.PostButton:SetTooltip('没有选择物品')
+                frame.PostButton:SetTooltip('没有选择物品')
             elseif reasonTooltip== AUCTION_HOUSE_SELL_FRAME_ERROR_DEPOSIT then
-                self.PostButton:SetTooltip('你没有足够的钱来支付保证金')
+                frame.PostButton:SetTooltip('你没有足够的钱来支付保证金')
             elseif reasonTooltip== AUCTION_HOUSE_SELL_FRAME_ERROR_QUANTITY then
-                self.PostButton:SetTooltip('数量必须大于0')
+                frame.PostButton:SetTooltip('数量必须大于0')
             elseif reasonTooltip== ERR_GENERIC_THROTTLE then
-                self.PostButton:SetTooltip('你太快了')
+                frame.PostButton:SetTooltip('你太快了')
             end
         end
     end)
@@ -181,17 +181,17 @@ local function Init()
     WoWTools_ChineseMixin:AddDialogs("BID_AUCTION", {text = '出价为：', button1 = '接受', button2 = '取消',})
 
     WoWTools_ChineseMixin:AddDialogs("PURCHASE_AUCTION_UNIQUE", {text = '出价为：', button1 = '确定', button2 = '取消',})
-    WoWTools_ChineseMixin:HookDialog("PURCHASE_AUCTION_UNIQUE", 'OnShow', function(self, data)
-        self.text:SetFormattedText('|cffffd200此物品属于“%s”。|n|n你同时只能装备一件拥有此标签的装备。|r', data.categoryName)
+    WoWTools_ChineseMixin:HookDialog("PURCHASE_AUCTION_UNIQUE", 'OnShow', function(frame, data)
+        frame.text:SetFormattedText('|cffffd200此物品属于“%s”。|n|n你同时只能装备一件拥有此标签的装备。|r', data.categoryName)
     end)
 
     WoWTools_ChineseMixin:AddDialogs("CANCEL_AUCTION", {text = '取消拍卖将使你失去保证金。', button1 = '接受', button2 = '取消'})
-    WoWTools_ChineseMixin:HookDialog("CANCEL_AUCTION", 'OnShow', function(self)
-        local cancelCost = C_AuctionHouse.GetCancelCost(self.data.auctionID)
+    WoWTools_ChineseMixin:HookDialog("CANCEL_AUCTION", 'OnShow', function(frame)
+        local cancelCost = C_AuctionHouse.GetCancelCost(frame.data.auctionID)
         if cancelCost > 0 then
-            self.text:SetText('取消拍卖会没收你所有的保证金和：')
+            frame.text:SetText('取消拍卖会没收你所有的保证金和：')
         else
-            self.text:SetText('取消拍卖将使你失去保证金。')
+            frame.text:SetText('取消拍卖将使你失去保证金。')
         end
     end)
 
@@ -234,11 +234,3 @@ end
 
 
 
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_AuctionHouseUI' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)

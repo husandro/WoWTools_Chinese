@@ -470,7 +470,7 @@ end
 
 
 
-local function Init()
+function WoWTools_ChineseMixin.Events:Blizzard_Collections()
     WoWTools_ChineseMixin:HookLabel(CollectionsJournalTitleText)
     Init_Mount()
     Init_Pet()
@@ -479,8 +479,8 @@ local function Init()
     Init_Wardrobe()
     Init_DressUpFrame()
     Init_WarbandSceneJournal()
-    hooksecurefunc('CollectionsJournal_UpdateSelectedTab', function(self)--设置，标题
-        WoWTools_ChineseMixin:SetLabelText(self.Text)
+    hooksecurefunc('CollectionsJournal_UpdateSelectedTab', function(frame)--设置，标题
+        WoWTools_ChineseMixin:SetLabelText(frame.Text)
     end)
 
     CollectionsJournalTab1:SetText('坐骑')
@@ -491,36 +491,4 @@ local function Init()
     if CollectionsJournalTab6 then--11.1
         CollectionsJournalTab6:SetText('营地')
     end
-
-
-
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_Collections' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)

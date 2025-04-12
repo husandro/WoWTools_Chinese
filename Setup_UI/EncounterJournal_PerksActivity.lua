@@ -4,7 +4,6 @@
 --[[
 [Field_10_0_5_47118_002]= 'Name_lang',
 https://wago.tools/db2/PerksActivityThresholdGroup?locale=zhCN
-11.0.2.55789
 ]]
 local PerksActivityThresholdGroup={
 [1]= '一月：重新启程',
@@ -68,7 +67,18 @@ local function set_desc_event(desc, data)
 end
 
 
-local function Init()
+
+
+
+
+
+
+
+
+
+
+function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
+
     EncounterJournalMonthlyActivitiesFrame.RestrictedText:SetText('你必须有可用的订阅或游戏时间|n才能完成活动并在商栈赢取奖励')
     EncounterJournalMonthlyActivitiesTab:SetText('旅行者日志')
     EncounterJournalMonthlyActivitiesTab:SetScript('OnEnter', function()
@@ -164,21 +174,3 @@ local function Init()
     end)
 
 end
-
-
-
-
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_EncounterJournal' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)
-
-
-

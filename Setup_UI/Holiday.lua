@@ -31,7 +31,7 @@ end
 
 
 
-local function Init()
+function WoWTools_ChineseMixin.Events:Blizzard_Calendar()
     --WoWTools_ChineseMixin:AddDialogs("CALENDAR_DELETE_EVENT", {button1 = '确定', button2 = '取消',})
     --WoWTools_ChineseMixin:AddDialogs('CALENDAR_ERROR', {button1 = '确定'})
     --CalendarFrame.FilterButton.Text:SetText('过滤器')
@@ -118,19 +118,3 @@ local function Init()
     WoWTools_ChineseMixin:SetLabelText(CalendarMassInviteFrame.Header.Text)
     WoWTools_ChineseMixin:SetLabelText(CalendarMassInviteAcceptButtonText)
 end
-
-
-
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_Calendar' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)
-
-

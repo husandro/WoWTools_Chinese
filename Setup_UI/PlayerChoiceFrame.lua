@@ -57,17 +57,17 @@ end
 
 
 
-local function Init()
+function WoWTools_ChineseMixin.Events:Blizzard_PlayerChoice()
     WoWTools_ChineseMixin:AddDialogs("CONFIRM_PLAYER_CHOICE", {button1 = '确定', button2 = '取消'})
     WoWTools_ChineseMixin:AddDialogs("CONFIRM_PLAYER_CHOICE_WITH_CONFIRMATION_STRING", {button1 = '接受', button2 = '拒绝'})
 
 
     --Blizzard_PlayerChoice.lua
-    hooksecurefunc(PlayerChoiceFrame, 'TryShow', function(self)
-        local choiceInfo = self.choiceInfo--C_PlayerChoice.GetCurrentPlayerChoiceInfo();
+    hooksecurefunc(PlayerChoiceFrame, 'TryShow', function(frame)
+        local choiceInfo = frame.choiceInfo--C_PlayerChoice.GetCurrentPlayerChoiceInfo();
         local name= choiceInfo and WoWTools_ChineseMixin:CN(choiceInfo.questionText)
         if name then
-            self.Title.Text:SetText(name)
+            frame.Title.Text:SetText(name)
         end
     end)
 
@@ -79,8 +79,8 @@ local function Init()
 
     hooksecurefunc(PlayerChoiceNormalOptionTemplateMixin, 'SetupSubHeader', set_sub_header)
 
-    hooksecurefunc(PlayerChoiceFrame, 'SetupOptions', function(self)
-        for frame in self.optionPools:EnumerateActiveByTemplate(self.optionFrameTemplate) do
+    hooksecurefunc(PlayerChoiceFrame, 'SetupOptions', function(frame)
+        for frame in frame.optionPools:EnumerateActiveByTemplate(frame.optionFrameTemplate) do
             set_optionText(frame)
         end
     end)
@@ -93,11 +93,11 @@ local function Init()
 
 
 
-    hooksecurefunc(PlayerChoiceBaseOptionButtonTemplateMixin, 'Setup', function(self, buttonInfo)
-        WoWTools_ChineseMixin:SetLabelText(self, buttonInfo.text)
+    hooksecurefunc(PlayerChoiceBaseOptionButtonTemplateMixin, 'Setup', function(frame, buttonInfo)
+        WoWTools_ChineseMixin:SetLabelText(frame, buttonInfo.text)
         local tooltip= WoWTools_ChineseMixin:CN(buttonInfo.tooltip)
         if tooltip then
-            self.tooltip = tooltip
+            frame.tooltip = tooltip
         end
     end)
 
@@ -107,33 +107,10 @@ local function Init()
     WoWTools_ChineseMixin:HookLabel(GenericPlayerChoiceToggleButton.Text)
 
     --剩余时间 Blizzard_PlayerChoiceTimer.lua PlayerChoiceTimeRemainingMixin
-    hooksecurefunc(PlayerChoiceTimeRemaining, 'OnUpdate', function(self)
+    hooksecurefunc(PlayerChoiceTimeRemaining, 'OnUpdate', function(frame)
         local remainingTime = C_PlayerChoice.GetRemainingTime();
         if remainingTime ~= nil then
-            self.TimerText:SetText("剩余时间："..SecondsToClock(remainingTime))
+            frame.TimerText:SetText("剩余时间："..SecondsToClock(remainingTime))
         end
     end)
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_PlayerChoice' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)

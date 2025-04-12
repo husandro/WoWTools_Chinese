@@ -145,6 +145,29 @@ function WoWTools_ChineseMixin.Events:Blizzard_ArtifactUI()
 
     --Blizzard_ArtifactPerks.lua
     WoWTools_ChineseMixin:AddDialogs("CONFIRM_RELIC_REPLACE", {text = '你确定要替换此圣物吗？已有的圣物将被摧毁。', button1 = '接受', button2 = '取消'})
+
+    hooksecurefunc(ArtifactFrame, 'SetTab', function()
+        WoWTools_ChineseMixin:SetLabelText(ArtifactFrameTab1)
+	    WoWTools_ChineseMixin:SetLabelText(ArtifactFrameTab2)
+    end)
+
+    --Blizzard_ArtifactPerks.lua ArtifactTitleTemplateMixin
+    WoWTools_ChineseMixin:SetLabelText(ArtifactFrame.PerksTab.TitleContainer.ArtifactPower)
+    WoWTools_ChineseMixin:SetRegions(ArtifactFrame.PerksTab.DisabledFrame, nil, nil, true)
+    hooksecurefunc(ArtifactFrame.PerksTab.TitleContainer, 'RefreshTitle', function(frame)
+        local itemID, itemName= C_ArtifactUI.GetArtifactInfo()
+        if not itemID then
+            return
+        end
+        local name = WoWTools_ChineseMixin:GetItemName(itemID) or WoWTools_ChineseMixin:CN(itemName)
+        if name then
+            if C_ArtifactUI.IsArtifactDisabled() then
+                frame:GetParent().DisabledFrame.ArtifactName:SetText(name)
+            else
+                frame.ArtifactName:SetText(name);
+            end
+        end
+    end)    
 end
 
 
@@ -729,34 +752,68 @@ end
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(_, arg1)
-    if WoWTools_ChineseMixin.Events[arg1] then
-        do
-            WoWTools_ChineseMixin.Events[arg1]()
+function WoWTools_ChineseMixin.Events:Blizzard_CooldownViewer()
+    hooksecurefunc(CooldownViewerBuffBarItemMixin, 'RefreshName', function(frame)
+        local nameFontString = frame:GetNameFontString()
+        if not nameFontString:IsShown() then
+            return
         end
-        WoWTools_ChineseMixin.Events[arg1]=nil
-    end
-end)
+        local spellID = frame:GetSpellID()
+        if spellID then
+            local cn= WoWTools_ChineseMixin:GetSpellName(spellID)
+            if cn then
+	            nameFontString:SetText(cn)
+            end
+        end
+   end)
+end
 
-EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+
+--[[function CooldownViewerBuffBarItemMixin:RefreshName()
+	local nameFontString = self:GetNameFontString();
+	if not nameFontString:IsShown() then
+		return;
+	end
+	local nameText = self:GetNameText();
+	nameFontString:SetText(nameText);
+end
+function CooldownViewerBuffBarItemMixin:SetBarContent(barContent)
+	local iconFrame = self:GetIconFrame();
+	local nameFontString = self:GetNameFontString();
+	local point, relativeTo, relativePoint, offsetX, offsetY = "LEFT", iconFrame, "RIGHT", 0, 0;
+
+	if barContent == Enum.CooldownViewerBarContent.IconAndName then
+		iconFrame:Show();
+		nameFontString:Show();
+	elseif barContent == Enum.CooldownViewerBarContent.IconOnly then
+		iconFrame:Show();
+		nameFontString:Hide();
+	elseif barContent == Enum.CooldownViewerBarContent.NameOnly then
+		iconFrame:Hide();
+		nameFontString:Show();
+		relativeTo = self;
+		relativePoint = "LEFT";
+	else
+		assertsafe(false, "Unknown value for bar content: %d", barContent);
+	end
+
+	self:GetBarFrame():SetPoint(point, relativeTo, relativePoint, offsetX, offsetY);
+end
+]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+local function Init()
     for name in pairs(WoWTools_ChineseMixin.Events) do
         if C_AddOns.IsAddOnLoaded(name) then
             do
@@ -765,5 +822,19 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
             WoWTools_ChineseMixin.Events[name]= nil
         end
     end
-    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
+    Init=function()end
+end
+
+
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(_, arg1)
+    if WoWTools_ChineseMixin.Events[arg1] then
+        do
+            WoWTools_ChineseMixin.Events[arg1]()
+        end
+        WoWTools_ChineseMixin.Events[arg1]=nil
+    else
+        Init()
+    end
 end)
+
+

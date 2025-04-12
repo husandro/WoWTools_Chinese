@@ -3,7 +3,7 @@
 
 
 
-local function Init_Blizzard_WeeklyRewards()
+function WoWTools_ChineseMixin.Events:Blizzard_WeeklyRewards()
     WoWTools_ChineseMixin:AddDialogs("CONFIRM_SELECT_WEEKLY_REWARD", {text = '你一旦选好奖励就不能变更了。|n|n你确定要选择这件物品吗？', button1 = '是', button2 = '取消'})
 
     WoWTools_ChineseMixin:HookLabel(WeeklyRewardsFrame.RaidFrame.Name)
@@ -12,39 +12,39 @@ local function Init_Blizzard_WeeklyRewards()
     WoWTools_ChineseMixin:SetCNFont(WeeklyRewardsFrame.HeaderFrame.Text)
 
 
-    hooksecurefunc(WeeklyRewardsFrame, 'UpdateOverlay', function(self)--Blizzard_WeeklyRewards.lua
-        if self.Overlay then
-            WoWTools_ChineseMixin:SetLabelText(self.Overlay.Text)
-            WoWTools_ChineseMixin:SetLabelText(self.Overlay.Title)
+    hooksecurefunc(WeeklyRewardsFrame, 'UpdateOverlay', function(frame)--Blizzard_WeeklyRewards.lua
+        if frame.Overlay then
+            WoWTools_ChineseMixin:SetLabelText(frame.Overlay.Text)
+            WoWTools_ChineseMixin:SetLabelText(frame.Overlay.Title)
         end
     end)
 
 
-    hooksecurefunc(WeeklyRewardsFrame, 'UpdateTitle', function(self)
+    hooksecurefunc(WeeklyRewardsFrame, 'UpdateTitle', function(frame)
         local canClaimRewards = C_WeeklyRewards.CanClaimRewards()
         if canClaimRewards then
-            self.HeaderFrame.Text:SetText('你只能从宏伟宝库选择一件奖励。')
+            frame.HeaderFrame.Text:SetText('你只能从宏伟宝库选择一件奖励。')
         elseif not C_WeeklyRewards.HasInteraction() and C_WeeklyRewards.HasAvailableRewards() then
-            self.HeaderFrame.Text:SetText('返回宏伟宝库，获取你的奖励')
+            frame.HeaderFrame.Text:SetText('返回宏伟宝库，获取你的奖励')
         else
-            self.HeaderFrame.Text:SetText('每周完成活动可以将物品添加到宏伟宝库中。|n你每周可以选择一件奖励。')
+            frame.HeaderFrame.Text:SetText('每周完成活动可以将物品添加到宏伟宝库中。|n你每周可以选择一件奖励。')
         end
     end)
 end
 
-    --[[hooksecurefunc(WeeklyRewardsActivityMixin, 'SetProgressText', function(self, text)
-        local activityInfo = self.info;
+    --[[hooksecurefunc(WeeklyRewardsActivityMixin, 'SetProgressText', function(frame, text)
+        local activityInfo = frame.info;
         local name
         if text then
             name= WoWTools_ChineseMixin:CN(text)
-        elseif self.hasRewards then
+        elseif frame.hasRewards then
             
-        elseif self.unlocked then
+        elseif frame.unlocked then
             if activityInfo.type == Enum.WeeklyRewardChestThresholdType.Raid then
                 name = WoWTools_ChineseMixin:CN(DifficultyUtil.GetDifficultyName(activityInfo.level))
                 
             elseif activityInfo.type == Enum.WeeklyRewardChestThresholdType.Activities then
-                if self:IsCompletedAtHeroicLevel() then
+                if frame:IsCompletedAtHeroicLevel() then
                     name= '英雄'
                 else
                     name= format('史诗 %d', activityInfo.level);
@@ -56,7 +56,7 @@ end
             end
         end
         if name then
-            self.Progress:SetText(name);
+            frame.Progress:SetText(name);
         end
     end)]]
 
@@ -75,7 +75,7 @@ end
 
 
 --挑战, 钥匙插入， 界面
-local function Init_Blizzard_ChallengesUI()
+function WoWTools_ChineseMixin.Events:Blizzard_ChallengesUI()
 
     hooksecurefunc(ChallengesFrame, 'UpdateTitle', function()
         local currentDisplaySeason =  C_MythicPlus.GetCurrentUIDisplaySeason()
@@ -91,20 +91,20 @@ local function Init_Blizzard_ChallengesUI()
     ChallengesFrame.WeeklyInfo.Child.ThisWeekLabel:SetText('本周')
     ChallengesFrame.WeeklyInfo.Child.Description:SetText('在史诗难度下，你每完成一个地下城，都会提升下一个地下城的难度和奖励。\n\n每周你都会根据完成的史诗地下城获得一系列奖励。\n\n要想开始挑战，把你的地下城难度设置为史诗，然后前往任意下列地下城吧。')
 
-    hooksecurefunc(ChallengesFrame.WeeklyInfo.Child.WeeklyChest, 'Update', function(self, bestMapID, dungeonScore)
+    hooksecurefunc(ChallengesFrame.WeeklyInfo.Child.WeeklyChest, 'Update', function(frame, bestMapID, dungeonScore)
         if C_WeeklyRewards.HasAvailableRewards() then
-            self.RunStatus:SetText('拜访宏伟宝库获取你的奖励！')
-        elseif self:HasUnlockedRewards(Enum.WeeklyRewardChestThresholdType.Activities)  then
-            self.RunStatus:SetText('完成史诗钥石地下城即可获得：')
+            frame.RunStatus:SetText('拜访宏伟宝库获取你的奖励！')
+        elseif frame:HasUnlockedRewards(Enum.WeeklyRewardChestThresholdType.Activities)  then
+            frame.RunStatus:SetText('完成史诗钥石地下城即可获得：')
         elseif C_MythicPlus.GetOwnedKeystoneLevel() or (dungeonScore and dungeonScore > 0) then
-            self.RunStatus:SetText('完成史诗钥石地下城即可获得：')
+            frame.RunStatus:SetText('完成史诗钥石地下城即可获得：')
         end
     end)
 
 
-    ChallengesFrame.WeeklyInfo.Child.WeeklyChest:HookScript('OnEnter', function(self)
+    ChallengesFrame.WeeklyInfo.Child.WeeklyChest:HookScript('OnEnter', function(frame)
         GameTooltip_SetTitle(GameTooltip, '宏伟宝库奖励')
-        if self.state == 4 then--CHEST_STATE_COLLECT
+        if frame.state == 4 then--CHEST_STATE_COLLECT
             GameTooltip_AddColoredLine(GameTooltip, '宏伟宝库里有奖励在等待着你。', GREEN_FONT_COLOR)
             GameTooltip_AddBlankLineToTooltip(GameTooltip)
         end
@@ -146,12 +146,12 @@ local function Init_Blizzard_ChallengesUI()
     CHALLENGE_MODE_EXTRA_AFFIX_INFO["health"].desc = '敌人的生命值提高%d%%'
     ChallengesKeystoneFrame.StartButton:SetText('激活')
     ChallengesKeystoneFrame.Instructions:SetText('插入史诗钥石')
-        hooksecurefunc(ChallengesKeystoneFrame, 'OnKeystoneSlotted', function(self)
+        hooksecurefunc(ChallengesKeystoneFrame, 'OnKeystoneSlotted', function(frame)
             local mapID, _, powerLevel= C_ChallengeMode.GetSlottedKeystoneInfo()
             if mapID ~= nil then
                 local name= C_ChallengeMode.GetMapUIInfo(mapID)
-                WoWTools_ChineseMixin:SetLabelText(self.DungeonName, name)
-                self.PowerLevel:SetFormattedText('%d级', powerLevel)
+                WoWTools_ChineseMixin:SetLabelText(frame.DungeonName, name)
+                frame.PowerLevel:SetFormattedText('%d级', powerLevel)
             end
         end)
 
@@ -163,19 +163,3 @@ local function Init_Blizzard_ChallengesUI()
 
     --ChallengesFrame.WeeklyInfo.Child.SeasonBest:SetText('赛季最佳')
 end
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_WeeklyRewards' or arg1=='Blizzard_ChallengesUI' then
-        if arg1=='Blizzard_WeeklyRewards' then
-            Init_Blizzard_WeeklyRewards()
-        elseif arg1=='Blizzard_ChallengesUI' then
-            Init_Blizzard_ChallengesUI()
-        end
-        if C_AddOns.IsAddOnLoaded('Blizzard_WeeklyRewards') and  C_AddOns.IsAddOnLoaded('Blizzard_ChallengesUI') then
-            EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-        end
-    end
-end)

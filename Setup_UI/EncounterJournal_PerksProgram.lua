@@ -138,6 +138,15 @@ end
 
 
 
+local function set_item(self)
+    if not self.itemInfo then
+        return
+    end
+    local itemName= WoWTools_ChineseMixin:Get_Item_Name(self.itemInfo.itemID)
+    if itemName then
+        self.ContentsContainer.Label:SetText(itemName)
+    end
+end
 
 
 
@@ -146,21 +155,10 @@ end
 
 
 
-
-local function Init()
+function WoWTools_ChineseMixin.Events:Blizzard_PerksProgram()
     Init_Blizzard_PerksProgramElements()
 
 
-
-    local function set_item(self)
-        if not self.itemInfo then
-            return
-        end
-        local itemName= WoWTools_ChineseMixin:Get_Item_Name(self.itemInfo.itemID)
-        if itemName then
-            self.ContentsContainer.Label:SetText(itemName)
-        end
-    end
     hooksecurefunc(PerksProgramProductButtonMixin, 'SetItemInfo', set_item)
     hooksecurefunc(PerksProgramFrozenProductButtonMixin, 'SetItemInfo', set_item)
     WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.NameSortButton.Label)
@@ -178,13 +176,13 @@ local function Init()
     WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.ToggleHideArmor.Text)
     WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.ToggleAttackAnimation.Text)
     WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.PurchasedHistoryFrame.PurchasedText)
-    PerksProgramFrame.FooterFrame.LeaveButton:HookScript('OnShow', function(self)
-        self:SetFormattedText('%s 离开', CreateAtlasMarkup("perks-backarrow", 8, 13, 0, 0))
+    PerksProgramFrame.FooterFrame.LeaveButton:HookScript('OnShow', function(frame)
+        frame:SetFormattedText('%s 离开', CreateAtlasMarkup("perks-backarrow", 8, 13, 0, 0))
     end)
-    hooksecurefunc(PerksProgramFrame.FooterFrame, 'OnProductSelected', function(self, data)
-        if self.selectedProductInfo.refundable then
-            local refundTimeLeft = format('此物品退款剩余时间：%s', PerksProgramFrame:FormatTimeLeft(C_PerksProgram.GetVendorItemInfoRefundTimeLeft(self.selectedProductInfo.perksVendorItemID), PerksProgramFrame.TimeLeftFooterFormatter))
-            self.PurchasedHistoryFrame.RefundText:SetText(refundTimeLeft);
+    hooksecurefunc(PerksProgramFrame.FooterFrame, 'OnProductSelected', function(frame, data)
+        if frame.selectedProductInfo.refundable then
+            local refundTimeLeft = format('此物品退款剩余时间：%s', PerksProgramFrame:FormatTimeLeft(C_PerksProgram.GetVendorItemInfoRefundTimeLeft(frame.selectedProductInfo.perksVendorItemID), PerksProgramFrame.TimeLeftFooterFormatter))
+            frame.PurchasedHistoryFrame.RefundText:SetText(refundTimeLeft);
         end
     end)
 end
@@ -199,14 +197,4 @@ end
 
 
 
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_PerksProgram' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)
 

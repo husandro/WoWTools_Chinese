@@ -17,7 +17,7 @@
 
 ##字符, 常用
 Data\0_zhCN.lua
-Data\1_zhCN_Add.lua
+
 
 ##商店
 Data\AccountStore.lua
@@ -107,7 +107,7 @@ Setup_UI\AddonList.lua
 Setup_UI\FriendsFrame.lua
 Setup_UI\QuickKeybindFrame.lua
 Setup_UI\MainMicroButton.lua
-Setup_UI\ArtifactFrame.lua
+
 Setup_UI\CommunitiesFrame.lua
 Setup_UI\GameMenuFrame.lua
 Setup_UI\PlayerChoiceFrame.lua
@@ -163,4 +163,5 @@ WoWeuCN\UnitData_cn.lua
 WoWeuCN\EncounterData_cn.lua
 WoWeuCN\WoWeuCN_Data_Func.lua
 
-
+##放最后
+Data\1_zhCN_Add.lua

@@ -2,14 +2,14 @@
 
 
 --专业，训练师
-local function Init()
+function WoWTools_ChineseMixin.Events:Blizzard_TrainerUI()
     WoWTools_ChineseMixin:AddDialogs("CONFIRM_PROFESSION", {text = format('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', "XXX"), button1 = '接受', button2 = '取消'})
-    WoWTools_ChineseMixin:HookDialog("CONFIRM_PROFESSION", 'OnShow', function(self)
+    WoWTools_ChineseMixin:HookDialog("CONFIRM_PROFESSION", 'OnShow', function(frame)
         local prof1, prof2 = GetProfessions()
         if ( prof1 and not prof2 ) then
-            self.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第二个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
+            frame.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第二个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
         elseif ( not prof1 ) then
-            self.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
+            frame.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
         end
     end)
     ClassTrainerTrainButton:SetText('训练')
@@ -100,14 +100,3 @@ local function Init()
         skillButton.subText:SetText(requirements)
     end)
 end
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='Blizzard_TrainerUI' then
-        Init()
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
-end)
