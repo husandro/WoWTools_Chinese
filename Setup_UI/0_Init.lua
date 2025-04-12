@@ -648,5 +648,12 @@ for index, en in pairs(CONQUEST_TYPE_STRINGS) do
     end
 end
 
+--光环 AuraUtil.lua
+if DebuffTypeSymbol then
+    DebuffTypeSymbol["Magic"] = '魔'
+    DebuffTypeSymbol["Curse"] ='诅'
+    DebuffTypeSymbol["Disease"] = '疾'
+    DebuffTypeSymbol["Poison"] = '毒'
+end
 
 
