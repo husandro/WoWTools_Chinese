@@ -211,7 +211,9 @@ end
 
 --物品 WoWTools_ChineseMixin:GetItemData(itemID)
 if GetItemData then
-    e.Get_Item_Info= GetItemData
+    function WoWTools_ChineseMixin:GetItemData(itemID)
+        return GetItemData(itemID)
+    end
 else
     function WoWTools_ChineseMixin:GetItemData(itemID)
         if itemID and WoWeuCN_Tooltips_ItemData_0 then
