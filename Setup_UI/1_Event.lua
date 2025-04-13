@@ -696,59 +696,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_BarbershopUI()
 end
 
 
---地下堡
-function WoWTools_ChineseMixin.Events:Blizzard_DelvesDashboardUI()
-    local function HasActiveSeason()
-        local num= C_DelvesUI.GetCurrentDelvesSeasonNumber()
-        return num and num>0
-    end
-
-    hooksecurefunc(DelvesDashboardFrame, 'UpdateTitles', function(frame)
-        local currExpID = GetExpansionLevel()
-        local expName = WoWTools_ChineseMixin:CN(_G["EXPANSION_NAME"..currExpID])
-        if HasActiveSeason()  then
-            PVEFrame:SetTitle('地下堡')
-            frame.ReputationBarTitle:SetText('地下堡行者的旅程（赛季期间可用）')
-        else
-            PVEFrame:SetTitle(format('%s（%s第%s赛季）', '地下堡', expName, num))
-            frame.ReputationBarTitle:SetText(format('地下堡行者的旅程（%s第%s赛季）', expName, num))
-        end
-    end)
-
-    --DelvesDashboardFrame.ButtonPanelLayoutFrame.CompanionConfigButtonPanel
-    --CompanionConfigButtonPanelMixin
-    --hooksecurefunc(CompanionConfigButtonPanelMixin, 'OnShow', function(frame)
-    DelvesDashboardFrame.ButtonPanelLayoutFrame.CompanionConfigButtonPanel:HookScript('OnShow', function(frame)
-        local companionFactionID = C_DelvesUI.GetFactionForCompanion()
-        local companionFactionInfo = companionFactionID and C_Reputation.GetFactionDataByID(companionFactionID)
-        if companionFactionInfo then
-            local name= WoWTools_ChineseMixin:CN(companionFactionInfo.name)
-            if name then
-                frame.PanelTitle:SetText(name)
-            end
-            frame.PanelDescription:SetText('地下堡伙伴')
-        else
-            frame.PanelTitle:SetText('地下堡伙伴')
-        end
-    end)
-
-    --DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel
-    --hooksecurefunc(GreatVaultButtonPanelMixin, 'OnShow', function(frame)
-    DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel:HookScript('OnShow', function(frame)
-        frame.PanelTitle:SetText('宏伟宝库')
-        if not HasActiveSeason() then
-            frame.PanelDescription:SetText('赛季期间可用')
-        else
-            frame.PanelDescription:SetText('完成地下堡获取每周奖励')
-        end
-    end)
-    WoWTools_ChineseMixin:SetLabelText(DelvesDashboardFrame.ButtonPanelLayoutFrame.CompanionConfigButtonPanel.CompanionConfigButton.ButtonText)
-
-    --[[hooksecurefunc(ReputationThresholdRewardMixin, 'OnEnter', function(frame)
-        print(frame.name, WoWTools_ChineseMixin:CN(frame.name))
-    end)]]
-
-end
 
 
 

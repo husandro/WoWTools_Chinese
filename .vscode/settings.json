@@ -18,7 +18,8 @@
         "redundant-parameter",
         "missing-parameter",
         "param-type-mismatch",
-        "inject-field"
+        "inject-field",
+        "undefined-field"
     ],
     "Lua.runtime.version": "Lua 5.1",
     "Lua.runtime.builtin": {
