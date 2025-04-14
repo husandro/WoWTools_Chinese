@@ -794,3 +794,17 @@ function WoWTools_ChineseMixin:GetPerksActivityInfo(perksActivityID)
         return tab[perksActivityID]--{'ActivityName_lang', 'Description_lang'},
     end
 end
+
+function WoWTools_ChineseMixin:GetPerksActivityName(perksActivityID)
+    local data= tab[perksActivityID]
+    if data then
+        return data[1]
+    end
+end
+
+function WoWTools_ChineseMixin:GetPerksActivityDesc(perksActivityID)
+    local data= tab[perksActivityID]
+    if data then
+        return data[2]
+    end
+end

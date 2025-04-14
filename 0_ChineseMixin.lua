@@ -38,7 +38,14 @@ function WoWTools_ChineseMixin:GetData(text, tab)
                 data= self:GetHoliDayInfo(tab.holydayID)--节日 eventID
             end
         elseif tab.perksActivityID then
-            data= self:GetPerksActivityInfo(tab.perksActivityID)--PERKS
+            
+            if tab.isName then
+                data= self:GetPerksActivityName(tab.perksActivityID)
+            elseif tab.isDesc then
+                data= self:GetPerksActivityDesc(tab.perksActivityID)
+            else
+                data= self:GetPerksActivityInfo(tab.perksActivityID)--PERKS
+            end
 
         elseif tab.vignetteID then
             data= self:GetVignetteName(tab.vignetteID)--Vignette
