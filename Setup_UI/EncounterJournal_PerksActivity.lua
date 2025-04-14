@@ -106,26 +106,26 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
 
 
     --任务，名称
-    hooksecurefunc(MonthlyActivitiesButtonTextContainerMixin, 'UpdateText', function(self, data)
+    hooksecurefunc(MonthlyActivitiesButtonTextContainerMixin, 'UpdateText', function(frame, data)
         local info= WoWTools_ChineseMixin:GetPerksActivityInfo(data.ID)
         if not info then
             return
         end
         local name= info[1]
         if name then
-            self.NameText:SetText(name)
+            frame.NameText:SetText(name)
         end
         local desc= set_desc_event(info[2], data)
         if desc then
-            self.ConditionsText:SetText(desc)
-            self.ConditionsText:SetPoint('RIGHT', -30,0)
-            self:SetPoint('RIGHT', -30)
+            frame.ConditionsText:SetText(desc)
+            frame.ConditionsText:SetPoint('RIGHT', -30,0)
+            frame:SetPoint('RIGHT', -30)
         end
     end)
 
     --任务，提示
-    hooksecurefunc( MonthlyActivitiesButtonMixin, 'ShowTooltip', function(self)
-        local data = self:GetData() or {}
+    hooksecurefunc( MonthlyActivitiesButtonMixin, 'ShowTooltip', function(frame)
+        local data = frame:GetData() or {}
         local info= WoWTools_ChineseMixin:GetPerksActivityInfo(data.ID)
         if not info then
             return
@@ -150,26 +150,26 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
 
 
     --任务，列表，名称
-    hooksecurefunc(EncounterJournalMonthlyActivitiesFrame.FilterList.ScrollBox, 'Update', function(self)
-        if not self:GetView() then
+    hooksecurefunc(EncounterJournalMonthlyActivitiesFrame.FilterList.ScrollBox, 'Update', function(frame)
+        if not frame:GetView() then
             return
         end
-        for _, btn in pairs(self:GetFrames() or {}) do
+        for _, btn in pairs(frame:GetFrames() or {}) do
             WoWTools_ChineseMixin:SetLabelText(btn.Label)
         end
     end)
 
 
     --月份 名称
-    hooksecurefunc(EncounterJournalMonthlyActivitiesFrame, 'UpdateTime', function(self, _, secondsRemaining)
+    hooksecurefunc(EncounterJournalMonthlyActivitiesFrame, 'UpdateTime', function(frame, _, secondsRemaining)
         local text = EncounterJournalMonthlyActivitiesFrame.TimeLeftFormatter:Format(secondsRemaining)
-        self.HeaderContainer.TimeLeft:SetFormattedText('|A:activities-clock:0:0:0:0|a %s |cnRED_FONT_COLOR:后结束|r', text)
+        frame.HeaderContainer.TimeLeft:SetFormattedText('|A:activities-clock:0:0:0:0|a %s |cnRED_FONT_COLOR:后结束|r', text)
         local data = C_PerksActivities.GetPerksActivitiesInfo() or {}
         local name= data.activePerksMonth and PerksActivityThresholdGroup[data.activePerksMonth]
         if name then
-            self.HeaderContainer.Month:SetText(name)
+            frame.HeaderContainer.Month:SetText(name)
         else
-            WoWTools_ChineseMixin:SetLabelText(self.HeaderContainer.Month)
+            WoWTools_ChineseMixin:SetLabelText(frame.HeaderContainer.Month)
         end
     end)
 
