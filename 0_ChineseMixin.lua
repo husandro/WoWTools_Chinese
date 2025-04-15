@@ -302,7 +302,7 @@ end
 
 
 function WoWTools_ChineseMixin:SetLabel(label, text, affer, setFont)
-    if label and not label.hook_chines then
+    if label and not label.hook_chinese then
         if setFont then
             self:SetCNFont(lable)
         end
@@ -315,8 +315,9 @@ function WoWTools_ChineseMixin:SetLabel(label, text, affer, setFont)
 end
 
 function WoWTools_ChineseMixin:SetButton(btn, text, affer, setFont)
-    if btn and not btn.hook_chines then
+    if btn and not btn.hook_chinese then
         local label= btn:GetFontString()
+        print('aaaa',lable)
         if label then
             self:SetLabel(label, text, affer, setFont)
         end
@@ -344,7 +345,7 @@ function WoWTools_ChineseMixin:HookDialog(string, text, func)
 end
 
 function WoWTools_ChineseMixin:HookLabel(label, setFont)
-    if label and not label.hook_chines and label.SetText then
+    if label and not label.hook_chinese and label.SetText then
         if setFont then
             self:SetCNFont(label)
         end
@@ -355,14 +356,14 @@ function WoWTools_ChineseMixin:HookLabel(label, setFont)
         label:HookScript('OnShow', function(obj)
             set(obj, name)
         end)
-        label.hook_chines=true
+        label.hook_chinese=true
     end
 end
 
 
 
 function WoWTools_ChineseMixin:HookButton(btn, setFont)
-    if btn and btn.SetText and not btn.hook_chines then
+    if btn and btn.SetText and not btn.hook_chinese then
         self:SetButton(btn, nil, nil, setFont)
        
         hooksecurefunc(btn, 'SetText', function(frame, name)
@@ -373,7 +374,7 @@ function WoWTools_ChineseMixin:HookButton(btn, setFont)
                 end
             end
         end)
-        btn.hook_chines=true
+        btn.hook_chinese=true
     end
 end
 

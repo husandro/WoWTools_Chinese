@@ -246,7 +246,8 @@ end
     C_DelvesUI.GetTraitTreeForCompanion()
 ]]
 function WoWTools_ChineseMixin.Events:Blizzard_DelvesCompanionConfiguration()
-    self:SetButton(DelvesCompanionConfigurationFrame.CompanionConfigShowAbilitiesButton)
+    self:SetRegions(DelvesCompanionConfigurationFrame.CompanionConfigShowAbilitiesButton)
+
 --第一个栏， 伙伴
     hooksecurefunc(DelvesCompanionConfigurationFrame.CompanionInfoFrame, 'Refresh', function(frame)
         local companionInfo = DelvesCompanionConfigurationFrame.companionInfo
