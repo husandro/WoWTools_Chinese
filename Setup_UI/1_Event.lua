@@ -147,12 +147,12 @@ function WoWTools_ChineseMixin.Events:Blizzard_ArtifactUI()
     WoWTools_ChineseMixin:AddDialogs("CONFIRM_RELIC_REPLACE", {text = '你确定要替换此圣物吗？已有的圣物将被摧毁。', button1 = '接受', button2 = '取消'})
 
     hooksecurefunc(ArtifactFrame, 'SetTab', function()
-        WoWTools_ChineseMixin:SetLabelText(ArtifactFrameTab1)
-	    WoWTools_ChineseMixin:SetLabelText(ArtifactFrameTab2)
+        WoWTools_ChineseMixin:SetLabel(ArtifactFrameTab1)
+	    WoWTools_ChineseMixin:SetLabel(ArtifactFrameTab2)
     end)
 
     --Blizzard_ArtifactPerks.lua ArtifactTitleTemplateMixin
-    WoWTools_ChineseMixin:SetLabelText(ArtifactFrame.PerksTab.TitleContainer.ArtifactPower)
+    WoWTools_ChineseMixin:SetLabel(ArtifactFrame.PerksTab.TitleContainer.ArtifactPower)
     WoWTools_ChineseMixin:SetRegions(ArtifactFrame.PerksTab.DisabledFrame, nil, nil, true)
     hooksecurefunc(ArtifactFrame.PerksTab.TitleContainer, 'RefreshTitle', function(frame)
         local itemID, itemName= C_ArtifactUI.GetArtifactInfo()
@@ -418,7 +418,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ClickBindingUI()
     end
     hooksecurefunc(ClickBindingLineMixin, 'Init', function(frame, elementData)
         local name= BindingTextFromElementData(elementData)
-        --WoWTools_ChineseMixin:SetLabelText(frame.BindingText)--, BindingTextFromElementData(elementData))
+        --WoWTools_ChineseMixin:SetLabel(frame.BindingText)--, BindingTextFromElementData(elementData))
         if name then
             frame.BindingText:SetText(name)
         end
@@ -427,14 +427,14 @@ function WoWTools_ChineseMixin.Events:Blizzard_ClickBindingUI()
         if name then
             frame.Name:SetText(name)
         end
-        --WoWTools_ChineseMixin:SetLabelText(frame.Name)--, ColoredNameAndIconFromElementData(elementData))
+        --WoWTools_ChineseMixin:SetLabel(frame.Name)--, ColoredNameAndIconFromElementData(elementData))
     end)
     hooksecurefunc(ClickBindingHeaderMixin, 'Init', function(frame, elementData)
         local name= ColoredNameAndIconFromElementData(elementData)
         if name then
             frame.Name:SetText(name)
         end
-        --WoWTools_ChineseMixin:SetLabelText(frame.Name)--, ColoredNameAndIconFromElementData(elementData))
+        --WoWTools_ChineseMixin:SetLabel(frame.Name)--, ColoredNameAndIconFromElementData(elementData))
     end)
 end
 
@@ -512,7 +512,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ItemUpgradeUI()
     ItemUpgradeFrame.UpgradeCostFrame.Label:SetText('总花费：')
     hooksecurefunc(ItemUpgradeFrame, 'PopulatePreviewFrames', function(frame)
         if frame.FrameErrorText:IsShown() then
-            WoWTools_ChineseMixin:SetLabelText(frame.FrameErrorText)--该物品已经升到满级了
+            WoWTools_ChineseMixin:SetLabel(frame.FrameErrorText)--该物品已经升到满级了
         end
     end)
 end
@@ -623,7 +623,7 @@ end
 
 function WoWTools_ChineseMixin.Events:Blizzard_MajorFactions()
     hooksecurefunc(MajorFactionButtonUnlockedStateMixin, 'Refresh', function(frame, majorFactionData)--Blizzard_MajorFactionsLandingTemplates.lua
-        WoWTools_ChineseMixin:SetLabelText(frame.Title, majorFactionData.name)
+        WoWTools_ChineseMixin:SetLabel(frame.Title, majorFactionData.name)
         frame.RenownLevel:SetFormattedText('%d级', majorFactionData.renownLevel or 0)
     end)
     hooksecurefunc(MajorFactionWatchFactionButtonMixin, 'OnLoad', function(frame)
@@ -633,7 +633,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_MajorFactions()
     hooksecurefunc(MajorFactionRenownFrame, 'SetUpMajorFactionData', function(frame)
         local majorFactionData = C_MajorFactions.GetMajorFactionData(frame.majorFactionID) or {}
         if majorFactionData.name and majorFactionData.currentFactionID ~= frame.majorFactionID then
-            WoWTools_ChineseMixin:SetLabelText(frame.TrackFrame.Title, majorFactionData.name)
+            WoWTools_ChineseMixin:SetLabel(frame.TrackFrame.Title, majorFactionData.name)
         end
     end)
 end
@@ -764,7 +764,7 @@ local function Init()
     for name in pairs(WoWTools_ChineseMixin.Events) do
         if C_AddOns.IsAddOnLoaded(name) then
             do
-                WoWTools_ChineseMixin.Events[name]()
+                WoWTools_ChineseMixin.Events[name](WoWTools_ChineseMixin)
             end
             WoWTools_ChineseMixin.Events[name]= nil
         end
@@ -776,7 +776,7 @@ end
 EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(_, arg1)
     if WoWTools_ChineseMixin.Events[arg1] then
         do
-            WoWTools_ChineseMixin.Events[arg1]()
+            WoWTools_ChineseMixin.Events[arg1](WoWTools_ChineseMixin)
         end
         WoWTools_ChineseMixin.Events[arg1]=nil
     else

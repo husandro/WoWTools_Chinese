@@ -1,20 +1,20 @@
 
 
-WoWTools_ChineseMixin:SetLabelText(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
-WoWTools_ChineseMixin:SetLabelText(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
-WoWTools_ChineseMixin:SetLabelText(QuestScrollFrame.SearchBox.Instructions)
+WoWTools_ChineseMixin:SetLabel(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
+WoWTools_ChineseMixin:SetLabel(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
+WoWTools_ChineseMixin:SetLabel(QuestScrollFrame.SearchBox.Instructions)
 if  QuestMapFrame.QuestsFrame.DetailsFrame and QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame and QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice then--11.1
-    WoWTools_ChineseMixin:SetLabelText(QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text)
+    WoWTools_ChineseMixin:SetLabel(QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text)
     QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text:SetTextColor(0,1,0)
 end
 
 --地图图例
-WoWTools_ChineseMixin:SetLabelText(QuestMapFrame.MapLegend.TitleText)
+WoWTools_ChineseMixin:SetLabel(QuestMapFrame.MapLegend.TitleText)
 if MapLegendScrollFrame then
     for _, layout in pairs(MapLegendScrollFrame.ScrollChild:GetLayoutChildren() or {}) do
-        WoWTools_ChineseMixin:SetLabelText(layout.TitleText)
+        WoWTools_ChineseMixin:SetLabel(layout.TitleText)
         for _, text in pairs(layout:GetLayoutChildren() or {}) do
-            WoWTools_ChineseMixin:SetLabelText(text, text.nameText)
+            WoWTools_ChineseMixin:SetLabel(text, text.nameText)
         end
     end
 end
@@ -73,7 +73,7 @@ QuestScrollFrame.covenantCallingsHeaderFramePool
 ]]
 
 local function set_text(line)
-    WoWTools_ChineseMixin:SetLabelText(line.ButtonText)
+    WoWTools_ChineseMixin:SetLabel(line.ButtonText)
     if line.Text then
         local name =  WoWTools_ChineseMixin:GetQuestData(line.questID, true, false, false)
         if name then
@@ -88,12 +88,12 @@ hooksecurefunc("QuestLogQuests_Update", function()
 
     for line in QuestScrollFrame.titleFramePool:EnumerateActive() do
         set_text(line)
-       WoWTools_ChineseMixin:SetLabelText(line.ButtonText)
+       WoWTools_ChineseMixin:SetLabel(line.ButtonText)
     end
 
     for line in QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
-       WoWTools_ChineseMixin:SetLabelText(line.Text)
-       WoWTools_ChineseMixin:SetLabelText(line.Progress)
+       WoWTools_ChineseMixin:SetLabel(line.Text)
+       WoWTools_ChineseMixin:SetLabel(line.Progress)
     end
 
     for line in QuestScrollFrame.covenantCallingsHeaderFramePool:EnumerateActive() do--没测试
@@ -175,12 +175,12 @@ do
 for _, data in ipairs(MapLegendData) do
     local frame=_G[data.CategoryTitle]
     if frame then
-        WoWTools_ChineseMixin:SetLabelText(frame.TitleText, data.CategoryTitle)
+        WoWTools_ChineseMixin:SetLabel(frame.TitleText, data.CategoryTitle)
     end
     for _, categoryData in ipairs(data.CategoryData) do
         local btn=_G[categoryData.Name]
         if btn then
-            WoWTools_ChineseMixin:SetLabelText(btn, categoryData.Name)
+            WoWTools_ChineseMixin:SetLabel(btn, categoryData.Name)
             local tooltip= WoWTools_ChineseMixin:CN(categoryData.Tooltip)
             if tooltip then
                 btn.tooltipText= tooltip

@@ -232,7 +232,7 @@ local function Init_CraftingPage_SchematicForm()
     end
 
     WoWTools_ChineseMixin:HookLabel(frame.Reagents.Label)
-    WoWTools_ChineseMixin:SetLabelText(frame.FirstCraftBonus.Text)
+    WoWTools_ChineseMixin:SetLabel(frame.FirstCraftBonus.Text)
     WoWTools_ChineseMixin:HookLabel(frame.RecipeSourceButton.Text)--未学习的配方
 
     frame.QualityDialog.AcceptButton:SetText('接受')
@@ -671,7 +671,7 @@ local function Init_OrdersPage()
         if self.professionInfo then
             local isPublic = self.orderType == Enum.CraftingOrderType.Public
             if isPublic and self.professionInfo and self.professionInfo.profession then
-                WoWTools_ChineseMixin:SetLabelText(self.BrowseFrame.OrdersRemainingDisplay.OrdersRemaining, format('剩余订单：%s', C_CraftingOrders.GetOrderClaimInfo(self.professionInfo.profession).claimsRemaining))
+                WoWTools_ChineseMixin:SetLabel(self.BrowseFrame.OrdersRemainingDisplay.OrdersRemaining, format('剩余订单：%s', C_CraftingOrders.GetOrderClaimInfo(self.professionInfo.profession).claimsRemaining))
             end
         end
     end)
@@ -782,7 +782,7 @@ local function Init_OrdersPage()
     end)
 
     hooksecurefunc(frame.OrderView, 'UpdateCreateButton', function(self)
-        WoWTools_ChineseMixin:SetLabelText(self.CreateButton)
+        WoWTools_ChineseMixin:SetLabel(self.CreateButton)
         local transaction = self.OrderDetails.SchematicForm.transaction
         local errorReason
         if Professions.IsRecipeOnCooldown(self.order.spellID) then
@@ -870,7 +870,7 @@ local function Init_CraftingOutputLog()
             return
         end
 
-        WoWTools_ChineseMixin:SetLabelText(self.ItemContainer.Text)
+        WoWTools_ChineseMixin:SetLabel(self.ItemContainer.Text)
 
         if resultData.hasIngenuityProc and resultData.ingenuityRefund > 0 then
             self.ItemContainer.CritText:SetScript("OnEnter", function(text)
@@ -920,7 +920,7 @@ local function Init_Details_Stat()
     WoWTools_ChineseMixin:HookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.DifficultyStatLine.LeftLabel)--配方难度：
     WoWTools_ChineseMixin:HookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.StatLines.SkillStatLine.LeftLabel)--技能：
     hooksecurefunc(ProfessionsCrafterDetailsStatLineMixin, 'SetLabel', function(self, label)
-        WoWTools_ChineseMixin:SetLabelText(self.LeftLabel, label)
+        WoWTools_ChineseMixin:SetLabel(self.LeftLabel, label)
     end)
     --WoWTools_ChineseMixin:HookLabel(ProfessionsFrame.CraftingPage.SchematicForm.Details.FinishingReagentSlotContainer.Label)--成品材料：
 
@@ -1159,7 +1159,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_Professions()
 
 
     --Blizzard_ProfessionsInspectRecipe.lua InspectRecipeMixin
-    WoWTools_ChineseMixin:SetLabelText(InspectRecipeFrame.SchematicForm.Reagents.Label)
+    WoWTools_ChineseMixin:SetLabel(InspectRecipeFrame.SchematicForm.Reagents.Label)
     hooksecurefunc(InspectRecipeFrame, 'Open', function(frame, recipeID)
         local data = C_TradeSkillUI.GetProfessionInfoByRecipeID(recipeID) or {}
         local name

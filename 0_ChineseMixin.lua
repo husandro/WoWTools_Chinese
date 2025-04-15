@@ -202,24 +202,19 @@ end
 
 
 local function set(self, text)
-    local label= self
-    if self and not text then
-        if self.GetText then
-            text= self:GetText()
-        elseif self.GetObjectType and self:GetObjectType()=='Button' then
-            label= self:GetFontString()
-            if label then
-                text= label:GetText()
-            end
-        else
-            return
-        end
+    if not self
+        or not self.SetText
+        or (not text and not self.GetText)
+    then
+        return
     end
 
-    if text and label and label.SetText then
-        local text2= WoWTools_ChineseMixin:SetText(text)
-        if text2 and text2~=text then
-            label:SetText(text2)
+    text= text or self:GetText()
+
+    if text then
+        local cn= WoWTools_ChineseMixin:SetText(text)
+        if cn and cn~=text then
+            self:SetText(cn)
         end
     end
 end
@@ -290,6 +285,10 @@ function WoWTools_ChineseMixin:SetText(text)
          return set_match(s, s:match(': (.-) %('))
     end)
 
+    text2= text:gsub('|A:.-|a.+', function(s)
+        return set_match(s, s:match('|A:.-|a (.+)'))
+    end)
+
     if text ~= text2 and text2:find('%W') then
         return text2
     end
@@ -302,7 +301,7 @@ end
 
 
 
-function WoWTools_ChineseMixin:SetLabelText(label, text, affer, setFont)
+function WoWTools_ChineseMixin:SetLabel(label, text, affer, setFont)
     if label and not label.hook_chines then
         if setFont then
             self:SetCNFont(lable)
@@ -311,6 +310,15 @@ function WoWTools_ChineseMixin:SetLabelText(label, text, affer, setFont)
             C_Timer.After(affer, function() set(label, text) end)
         else
             set(label, text)
+        end
+    end
+end
+
+function WoWTools_ChineseMixin:SetButton(btn, text, affer, setFont)
+    if btn and not btn.hook_chines then
+        local label= btn:GetFontString()
+        if label then
+            self:SetLabel(label, text, affer, setFont)
         end
     end
 end
@@ -340,9 +348,12 @@ function WoWTools_ChineseMixin:HookLabel(label, setFont)
         if setFont then
             self:SetCNFont(label)
         end
-        self:SetLabelText(label)
-        hooksecurefunc(label, 'SetText', function(self, name)
-            set(self, name)
+        self:SetLabel(label)
+        hooksecurefunc(label, 'SetText', function(obj, name)
+            set(obj, name)
+        end)
+        label:HookScript('OnShow', function(obj)
+            set(obj, name)
         end)
         label.hook_chines=true
     end
@@ -352,13 +363,8 @@ end
 
 function WoWTools_ChineseMixin:HookButton(btn, setFont)
     if btn and btn.SetText and not btn.hook_chines then
-        if setFont then
-            self:SetCNFont(btn:GetFontString())
-        end
-        local label= btn:GetFontString()
-        if label then
-            self:SetLabelText(labe)
-        end
+        self:SetButton(btn, nil, nil, setFont)
+       
         hooksecurefunc(btn, 'SetText', function(frame, name)
             if name and name~='' then
                 local cnName= WoWTools_ChineseMixin:CN(name)
@@ -387,14 +393,14 @@ function WoWTools_ChineseMixin:SetRegions(frame, setFont, isHook, notAfter)
             if notAfter then
                 for _, region in pairs({frame:GetRegions()}) do
                     if region:GetObjectType()=='FontString' then
-                        self:SetLabelText(region, setFont)
+                        self:SetLabel(region, setFont)
                     end
                 end
             else
                 C_Timer.After(2, function()
                     for _, region in pairs({frame:GetRegions()}) do
                         if region:GetObjectType()=='FontString' then
-                            self:SetLabelText(region, setFont)
+                            self:SetLabel(region, setFont)
                         end
                     end
                 end)
@@ -409,7 +415,7 @@ end
 function WoWTools_ChineseMixin:SetTabSystem(frame, setFont, padding, minWidth, absoluteSize)
     for _, tabID in pairs(frame:GetTabSet() or {}) do
         local btn= frame:GetTabButton(tabID)
-        self:SetLabelText(btn.Text or btn, nil, nil, setFont)
+        self:SetLabel(btn.Text or btn, nil, nil, setFont)
 
         PanelTemplates_TabResize(frame, padding or 20, absoluteSize, minWidth or 70)
     end

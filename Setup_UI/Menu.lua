@@ -10,13 +10,13 @@
 
 --MenuTemplates.lua
 hooksecurefunc('GetWowStyle1ArrowButtonState', function(self)
-    WoWTools_ChineseMixin:SetLabelText(self.Text)
+    WoWTools_ChineseMixin:HookLabel(self.Text)
 end)
 hooksecurefunc(DropdownTextMixin, 'OnLoad', function(self)
-    WoWTools_ChineseMixin:SetLabelText(self.Text)
+    WoWTools_ChineseMixin:HookLabel(self.Text)
 end)
 hooksecurefunc(DropdownTextMixin, 'UpdateText', function(self)
-	WoWTools_ChineseMixin:SetLabelText(self.Text)
+	WoWTools_ChineseMixin:SetLabel(self.Text)
 	if self.resizeToText then
         local newWidth = self.Text:GetUnboundedStringWidth();
         if self.resizeToTextPadding then
@@ -32,10 +32,11 @@ hooksecurefunc(DropdownTextMixin, 'UpdateText', function(self)
     end
 end)
 hooksecurefunc(DropdownSelectionTextMixin, 'OverrideText', function(self)
-    WoWTools_ChineseMixin:SetLabelText(self.Text)
+    WoWTools_ChineseMixin:HookLabel(self.Text)
 end)
 hooksecurefunc(DropdownSelectionTextMixin, 'UpdateToMenuSelections', function(self)
-    WoWTools_ChineseMixin:SetLabelText(self.Text)
+    --WoWTools_ChineseMixin:SetLabel(self.Text)
+    WoWTools_ChineseMixin:HookLabel(self.Text)
 end)
 
 
@@ -49,14 +50,14 @@ end)
 
 
 hooksecurefunc(DropdownButtonMixin, 'SetupMenu', function(self)
-    WoWTools_ChineseMixin:SetLabelText(self.Text)
+    WoWTools_ChineseMixin:SetLabel(self.Text)
 end)
 
 
 
 local function set_fontString(frame)
     C_Timer.After(0.01, function()
-        WoWTools_ChineseMixin:SetLabelText(frame.fontString)
+        WoWTools_ChineseMixin:SetLabel(frame.fontString)
     end)
 end
 hooksecurefunc(MenuVariants, 'CreateFontString', set_fontString)

@@ -5,8 +5,8 @@
 AddonListTitleText:SetText('插件列表')
 
 
-    WoWTools_ChineseMixin:SetLabelText(AddonList.SearchBox.Instructions)
-    WoWTools_ChineseMixin:SetLabelText(AddonList.Performance.Header)
+    WoWTools_ChineseMixin:SetLabel(AddonList.SearchBox.Instructions)
+    WoWTools_ChineseMixin:SetLabel(AddonList.Performance.Header)
 
     AddonList.EnableAllButton:SetText('全部启用')
     AddonList.DisableAllButton:SetText('全部禁用')

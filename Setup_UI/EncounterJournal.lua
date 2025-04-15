@@ -27,11 +27,11 @@ local function EncounterJournal_SetupIconFlags(sectionID, infoHeaderButton, inde
                 icon.tooltipTitle = tab[iconFlag]--_G["ENCOUNTER_JOURNAL_SECTION_FLAG"..iconFlag]
                 if index then
                     if iconFlag==1 then
-                        WoWTools_ChineseMixin:SetLabelText(infoHeaderButton.title, '伤害')
+                        WoWTools_ChineseMixin:SetLabel(infoHeaderButton.title, '伤害')
                     elseif iconFlag==2 then
-                        WoWTools_ChineseMixin:SetLabelText(infoHeaderButton.title, '治疗者')
+                        WoWTools_ChineseMixin:SetLabel(infoHeaderButton.title, '治疗者')
                     elseif iconFlag==0 then
-                        WoWTools_ChineseMixin:SetLabelText(infoHeaderButton.title, '坦克')
+                        WoWTools_ChineseMixin:SetLabel(infoHeaderButton.title, '坦克')
                     end
                 end
             end
@@ -150,7 +150,7 @@ local function Init_EncounterJournal()
             return
         end
         for _, button in pairs(frame:GetFrames()) do
-            WoWTools_ChineseMixin:SetLabelText(button.name)
+            WoWTools_ChineseMixin:SetLabel(button.name)
             local tooltiptext=  WoWTools_ChineseMixin:CN(button.tooltiptext)
             if tooltiptext then
                 button.tooltiptext= tooltiptext
@@ -289,7 +289,7 @@ local function Init_EncounterJournal()
             return
         end
         for _, btn in pairs(self:GetFrames() or {}) do
-            WoWTools_ChineseMixin:SetLabelText(btn.SetName)
+            WoWTools_ChineseMixin:SetLabel(btn.SetName)
         end
     end)
 
@@ -307,9 +307,9 @@ local function Init_EncounterJournal()
         local self= EncounterJournal.encounter
         local instanceName, description = EJ_GetInstanceInfo()
 
-        WoWTools_ChineseMixin:SetLabelText(self.instance.title, instanceName)
-        WoWTools_ChineseMixin:SetLabelText(self.info.instanceTitle, instanceName)
-        WoWTools_ChineseMixin:SetLabelText(self.instance.LoreScrollingFont, description)
+        WoWTools_ChineseMixin:SetLabel(self.instance.title, instanceName)
+        WoWTools_ChineseMixin:SetLabel(self.info.instanceTitle, instanceName)
+        WoWTools_ChineseMixin:SetLabel(self.instance.LoreScrollingFont, description)
 
         local tooltip= WoWTools_ChineseMixin:CN(self.info['overviewTab'].tooltip)
         if tooltip then
@@ -462,12 +462,12 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
                 if not suggestion or not data then
                     break;
                 end
-                WoWTools_ChineseMixin:SetLabelText(suggestion.centerDisplay.title.text, data.title)
-                WoWTools_ChineseMixin:SetLabelText(suggestion.centerDisplay.description.text, data.description)
+                WoWTools_ChineseMixin:SetLabel(suggestion.centerDisplay.title.text, data.title)
+                WoWTools_ChineseMixin:SetLabel(suggestion.centerDisplay.description.text, data.description)
                 if suggestion.centerDisplay then
-                    WoWTools_ChineseMixin:SetLabelText(suggestion.centerDisplay.button, data.buttonText)
+                    WoWTools_ChineseMixin:SetLabel(suggestion.centerDisplay.button, data.buttonText)
                 else
-                    WoWTools_ChineseMixin:SetLabelText(suggestion.button, data.buttonText)
+                    WoWTools_ChineseMixin:SetLabel(suggestion.button, data.buttonText)
                 end
             end
     end)

@@ -10,10 +10,10 @@ WoWTools_ChineseMixin:HookDialog("DEATH", 'OnShow', function(self)
     elseif ( self.timeleft == -1 ) then
         self.text:SetText('你死亡了。要释放灵魂到最近的墓地吗？')
     end
-    WoWTools_ChineseMixin:SetLabelText(self.button1)
-    WoWTools_ChineseMixin:SetLabelText(self.button2)
-    WoWTools_ChineseMixin:SetLabelText(self.button3)
-    WoWTools_ChineseMixin:SetLabelText(self.button4)
+    WoWTools_ChineseMixin:SetLabel(self.button1)
+    WoWTools_ChineseMixin:SetLabel(self.button2)
+    WoWTools_ChineseMixin:SetLabel(self.button3)
+    WoWTools_ChineseMixin:SetLabel(self.button4)
 end)
 
 
@@ -128,7 +128,7 @@ local function set_DeathRecapFrame_OpenRecap()
             if name then
                 entry.SpellInfo.Name:SetText(name)
             end
-            WoWTools_ChineseMixin:SetLabelText(entry.SpellInfo.Caster)
+            WoWTools_ChineseMixin:SetLabel(entry.SpellInfo.Caster)
 
             local dmgInfo = entry.DamageInfo;
             if dmgInfo and evtData.amount then

@@ -169,7 +169,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsCustomerOrders()
                 local seconds = remainingTime >= 60 and remainingTime or 60 -- Never show < 1min
                 local timeRemainingText = Professions.OrderTimeLeftFormatter:Format(seconds)
                 timeRemainingText = format('%s （等待中）', timeRemainingText)
-                WoWTools_ChineseMixin:SetLabelText(frame.PaymentContainer.TimeRemainingDisplay.Text, timeRemainingText)
+                WoWTools_ChineseMixin:SetLabel(frame.PaymentContainer.TimeRemainingDisplay.Text, timeRemainingText)
             end
 
             if not order.crafterName then
@@ -179,7 +179,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsCustomerOrders()
                 else
                     crafterText = '未领取'
                 end
-                WoWTools_ChineseMixin:SetLabelText(frame.OrderRecipientDisplay.CrafterValue, crafterText)
+                WoWTools_ChineseMixin:SetLabel(frame.OrderRecipientDisplay.CrafterValue, crafterText)
             end
 
             local orderTypeText
@@ -190,7 +190,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsCustomerOrders()
             elseif frame.order.orderType == Enum.CraftingOrderType.Personal then
                 orderTypeText = '个人订单'
             end
-            WoWTools_ChineseMixin:SetLabelText(frame.OrderRecipientDisplay.PostedTo, orderTypeText)
+            WoWTools_ChineseMixin:SetLabel(frame.OrderRecipientDisplay.PostedTo, orderTypeText)
 
             local orderStateText
             if frame.order.orderState == Enum.CraftingOrderState.Created then
@@ -206,7 +206,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsCustomerOrders()
             else
                 orderStateText = '|cnGREEN_FONT_COLOR:订单完成！|r'
             end
-            WoWTools_ChineseMixin:SetLabelText(frame.OrderStateText, orderStateText)
+            WoWTools_ChineseMixin:SetLabel(frame.OrderStateText, orderStateText)
 
             frame.ReagentContainer.Reagents.Label:SetText('提供的材料：')
             frame.ReagentContainer.OptionalReagents.Label:SetText('提供的附加材料：')

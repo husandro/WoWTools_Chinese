@@ -13,7 +13,7 @@ EditModeManagerFrame.EnableAdvancedOptionsCheckButton.Label:SetText('高级选�
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.FramesTitle.Title:SetText('框体')
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.CombatTitle.Title:SetText('战斗')
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.MiscTitle.Title:SetText('其它')
-WoWTools_ChineseMixin:SetLabelText(EditModeManagerFrame.LayoutLabel)--布局：
+WoWTools_ChineseMixin:SetLabel(EditModeManagerFrame.LayoutLabel)--布局：
 hooksecurefunc(EditModeManagerFrame.AccountSettings, 'SetExpandedState', function(self, expanded, isUserInput)
     self.Expander.Label:SetText(expanded and '收起选项 |A:editmode-up-arrow:16:11:0:3|a' or '展开选项 |A:editmode-down-arrow:16:11:0:-7|a')
 end)
@@ -37,7 +37,7 @@ end)
 
 hooksecurefunc(EditModeSystemSettingsDialog, 'AttachToSystemFrame', function(self, systemFrame)
     local name= systemFrame:GetSystemName()
-    WoWTools_ChineseMixin:SetLabelText(self.Title, name)
+    WoWTools_ChineseMixin:SetLabel(self.Title, name)
 end)
 
 EditModeNewLayoutDialog.Title:SetText('给新布局起名')
@@ -95,24 +95,24 @@ end)
 --EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.CombatContainer
 
 for _, frame in pairs(EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.BasicOptionsContainer:GetLayoutChildren() or {}) do
-    WoWTools_ChineseMixin:SetLabelText(frame.Label)
+    WoWTools_ChineseMixin:SetLabel(frame.Label)
 end
 
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.FramesContainer:HookScript('OnShow', function(self)
     for _,frame in pairs(self:GetLayoutChildren() or {}) do
-        WoWTools_ChineseMixin:SetLabelText(frame.Label)
+        WoWTools_ChineseMixin:SetLabel(frame.Label)
     end
 end)
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.CombatContainer:HookScript('OnShow', function(self)
     for _,frame in pairs(self:GetLayoutChildren() or {}) do
-        WoWTools_ChineseMixin:SetLabelText(frame.Label)
+        WoWTools_ChineseMixin:SetLabel(frame.Label)
     end
 end)
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.MiscContainer:HookScript('OnShow', function(self)
     for _,frame in pairs(self:GetLayoutChildren() or {}) do
         local text= WoWTools_ChineseMixin:CN(frame.labelText)
         if text then
-            frame:SetLabelText(text)
+            frame:SetLabel(text)
         end
         if frame.disabledTooltipText== HUD_EDIT_MODE_LOOT_FRAME_DISABLED_TOOLTIP then
             frame.disabledTooltipText= '你必须关闭位于：界面 > 控制菜单中的“鼠标位置打开拾取窗口”选项，才能自定义拾取窗口布局。'
@@ -120,24 +120,24 @@ EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptio
     end
 end)
 hooksecurefunc(EditModeManagerFrame.AccountSettings, 'SetupStatusTrackingBar2', function(self)
-    self.settingsCheckButtons.StatusTrackingBar2:SetLabelText('状态栏 2')
+    self.settingsCheckButtons.StatusTrackingBar2:SetLabel('状态栏 2')
 end)
 
 
 --EditModeTemplates.lua
 hooksecurefunc(EditModeSettingCheckboxMixin, 'SetupSetting', function(self, settingData)
-    WoWTools_ChineseMixin:SetLabelText(self.Label, settingData.settingName)
+    WoWTools_ChineseMixin:SetLabel(self.Label, settingData.settingName)
 end)
 hooksecurefunc(EditModeSettingDropdownMixin, 'SetupSetting', function(self, settingData)
-    WoWTools_ChineseMixin:SetLabelText(self.Label, settingData.settingName)
+    WoWTools_ChineseMixin:SetLabel(self.Label, settingData.settingName)
 end)
 hooksecurefunc(EditModeSettingSliderMixin, 'SetupSetting', function(self, settingData)
-    WoWTools_ChineseMixin:SetLabelText(self.Label, settingData.settingName)
+    WoWTools_ChineseMixin:SetLabel(self.Label, settingData.settingName)
     if settingData.displayInfo.minText then
-        WoWTools_ChineseMixin:SetLabelText(self.Slider.MinText, settingData.displayInfo.minText)
+        WoWTools_ChineseMixin:SetLabel(self.Slider.MinText, settingData.displayInfo.minText)
     end
     if settingData.displayInfo.maxText then
-        WoWTools_ChineseMixin:SetLabelText(self.Slider.MaxText, settingData.displayInfo.maxText)
+        WoWTools_ChineseMixin:SetLabel(self.Slider.MaxText, settingData.displayInfo.maxText)
     end
 end)
 
@@ -151,9 +151,9 @@ end)
 hooksecurefunc(EditModeSystemSettingsDialog, 'UpdateButtons', function(self, systemFrame)
     if systemFrame == self.attachedToSystem then
         if systemFrame.Selection then
-            WoWTools_ChineseMixin:SetLabelText(systemFrame.Selection.HorizontalLabel)
-            WoWTools_ChineseMixin:SetLabelText(systemFrame.Selection.Label)
-            WoWTools_ChineseMixin:SetLabelText(systemFrame.Selection.VerticalLabel)
+            WoWTools_ChineseMixin:SetLabel(systemFrame.Selection.HorizontalLabel)
+            WoWTools_ChineseMixin:SetLabel(systemFrame.Selection.Label)
+            WoWTools_ChineseMixin:SetLabel(systemFrame.Selection.VerticalLabel)
         end
     end
 end)

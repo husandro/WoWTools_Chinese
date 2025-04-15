@@ -34,6 +34,6 @@ hooksecurefunc(StableFrame.StabledPetList.ScrollBox, 'Update', function(frame)
         return
     end
     for _, btn in pairs(frame:GetFrames() or {}) do
-        WoWTools_ChineseMixin:SetLabelText(btn.Label)       
+        WoWTools_ChineseMixin:SetLabel(btn.Label)       
     end
 end)

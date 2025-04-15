@@ -40,12 +40,12 @@ function WoWTools_ChineseMixin.Events:Blizzard_Calendar()
     --星期
     hooksecurefunc('CalendarFrame_Update', function()
         for i= 1, 7 do
-            WoWTools_ChineseMixin:SetLabelText(_G['CalendarWeekday'..i..'Name'])
+            WoWTools_ChineseMixin:SetLabel(_G['CalendarWeekday'..i..'Name'])
         end
     end)
     --月份
     hooksecurefunc('CalendarFrame_UpdateTitle', function()
-        WoWTools_ChineseMixin:SetLabelText(CalendarMonthName)
+        WoWTools_ChineseMixin:SetLabel(CalendarMonthName)
     end)
 
     CalendarEventPickerFrame.Header.Text:SetText('选择一个活动')
@@ -93,28 +93,28 @@ function WoWTools_ChineseMixin.Events:Blizzard_Calendar()
 
 
     WoWTools_ChineseMixin:HookLabel(CalendarTexturePickerFrame.Header.Text)
-    WoWTools_ChineseMixin:SetLabelText(CalendarTexturePickerAcceptButton)
-    WoWTools_ChineseMixin:SetLabelText(CalendarTexturePickerCancelButton)
+    WoWTools_ChineseMixin:SetLabel(CalendarTexturePickerAcceptButton)
+    WoWTools_ChineseMixin:SetLabel(CalendarTexturePickerCancelButton)
     hooksecurefunc(CalendarTexturePickerFrame.ScrollBox, 'Update', function(frame)
         if not frame:GetView() then
             return
         end
         for _, btn in pairs(frame:GetFrames() or {}) do
-            WoWTools_ChineseMixin:SetLabelText(btn.Title)
+            WoWTools_ChineseMixin:SetLabel(btn.Title)
         end
     end)
 
 
     --创建，活动
     WoWTools_ChineseMixin:HookLabel(CalendarCreateEventFrame.Header.Text)
-    WoWTools_ChineseMixin:SetLabelText(CalendarCreateEventLockEventCheckText)
-    WoWTools_ChineseMixin:SetLabelText(CalendarCreateEventInviteListNameSortButton)
-    WoWTools_ChineseMixin:SetLabelText(CalendarCreateEventInviteListClassSortButton)
-    WoWTools_ChineseMixin:SetLabelText(CalendarCreateEventInviteListStatusSortButton)
-    WoWTools_ChineseMixin:SetLabelText(CalendarCreateEventInviteButtonText)
-    WoWTools_ChineseMixin:SetLabelText(CalendarCreateEventMassInviteButtonText)
+    WoWTools_ChineseMixin:SetLabel(CalendarCreateEventLockEventCheckText)
+    WoWTools_ChineseMixin:SetLabel(CalendarCreateEventInviteListNameSortButton)
+    WoWTools_ChineseMixin:SetLabel(CalendarCreateEventInviteListClassSortButton)
+    WoWTools_ChineseMixin:SetLabel(CalendarCreateEventInviteListStatusSortButton)
+    WoWTools_ChineseMixin:SetLabel(CalendarCreateEventInviteButtonText)
+    WoWTools_ChineseMixin:SetLabel(CalendarCreateEventMassInviteButtonText)
     WoWTools_ChineseMixin:HookLabel(CalendarCreateEventCreateButton)
     WoWTools_ChineseMixin:SetRegions(CalendarMassInviteFrame)
-    WoWTools_ChineseMixin:SetLabelText(CalendarMassInviteFrame.Header.Text)
-    WoWTools_ChineseMixin:SetLabelText(CalendarMassInviteAcceptButtonText)
+    WoWTools_ChineseMixin:SetLabel(CalendarMassInviteFrame.Header.Text)
+    WoWTools_ChineseMixin:SetLabel(CalendarMassInviteAcceptButtonText)
 end

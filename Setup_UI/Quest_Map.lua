@@ -97,7 +97,7 @@ end)
 
 --飞行地图，地图名称
 hooksecurefunc(ZoneLabelDataProviderMixin, 'EvaluateBestAreaTrigger', function(self)
-    WoWTools_ChineseMixin:SetLabelText(self.ZoneLabel and self.ZoneLabel.Text)
+    WoWTools_ChineseMixin:SetLabel(self.ZoneLabel and self.ZoneLabel.Text)
 end)
 
 --QuestMapFrame.DetailsFrame.BackFrame.BackButton:SetText('返回')

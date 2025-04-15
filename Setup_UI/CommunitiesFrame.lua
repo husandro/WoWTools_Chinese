@@ -151,10 +151,10 @@
 
     if ClubFinderGuildFinderFrame.InsetFrame.CommunityCards then
         hooksecurefunc(ClubFinderGuildFinderFrame.InsetFrame.CommunityCards, 'BuildCardList', function(self)--ClubFinderCommunitiesCardsMixin
-            WoWTools_ChineseMixin:SetLabelText(self:GetParent().InsetFrame.GuildDescription)--('未发现结果。请修改你的搜索条件。')
+            WoWTools_ChineseMixin:SetLabel(self:GetParent().InsetFrame.GuildDescription)--('未发现结果。请修改你的搜索条件。')
         end)
         hooksecurefunc(ClubFinderGuildFinderFrame.InsetFrame.PendingCommunityCards, 'BuildCardList', function(self)
-            WoWTools_ChineseMixin:SetLabelText(self:GetParent().InsetFrame.GuildDescription)--('未发现结果。请修改你的搜索条件。')
+            WoWTools_ChineseMixin:SetLabel(self:GetParent().InsetFrame.GuildDescription)--('未发现结果。请修改你的搜索条件。')
         end)
     end
 
@@ -234,7 +234,7 @@
 
         --set(ClubFinderFilterDropdown.Label, '过滤器')
         --set(ClubFinderSortByDropdown.Label, '排序')
-        --WoWTools_ChineseMixin:SetLabelText(ClubFinderSizeDropdown.Label)
+        --WoWTools_ChineseMixin:SetLabel(ClubFinderSizeDropdown.Label)
         ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search:SetText('搜索')
         ClubFinderGuildFinderFrame.OptionsList.Search:SetText('搜索')
         hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame, 'UpdateType', function(self)-- ClubFinderGuildAndCommunityMixin:UpdateType()
@@ -258,8 +258,8 @@
             self:GetParent().InsetFrame.GuildDescription:SetText('未发现结果。请修改你的搜索条件。')
         end)
         ClubFinderCommunityAndGuildFinderFrame.InsetFrame.GuildDescription:SetText('公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。|n|n使用此工具来寻找与你志同道合的公会吧。')
-        WoWTools_ChineseMixin:SetLabelText(ClubFinderGuildFinderFrame.InsetFrame.GuildDescription, '公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。|n|n使用此工具来寻找与你志同道合的公会吧。')
-        WoWTools_ChineseMixin:SetLabelText(ClubFinderGuildFinderFrame.OptionsList.ClubFilterDropdown.Label)
+        WoWTools_ChineseMixin:SetLabel(ClubFinderGuildFinderFrame.InsetFrame.GuildDescription, '公会是由许多关系紧密，想要一起享受游戏乐趣的玩家组成的群体。加入公会后，你可以享受许多福利，包括分享公会银行，以及公会聊天频道。|n|n使用此工具来寻找与你志同道合的公会吧。')
+        WoWTools_ChineseMixin:SetLabel(ClubFinderGuildFinderFrame.OptionsList.ClubFilterDropdown.Label)
         ClubFinderGuildFinderFrame.OptionsList.ClubSizeDropdown.Label:SetText('规模')
 
         hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame, 'GetDisplayModeBasedOnSelectedTab', function(self)
@@ -315,7 +315,7 @@
             return
         end
         for check in pairs(self.SpecsPool.activeObjects or {}) do
-            WoWTools_ChineseMixin:SetLabelText(check.SpecName)
+            WoWTools_ChineseMixin:SetLabel(check.SpecName)
         end
 
         local specIds = ClubFinderGetPlayerSpecIds()
@@ -418,20 +418,20 @@
     --信息 GuildNews.lua
     --GuildUtil.lua
     CommunitiesFrameGuildDetailsFrameInfo.TitleText:SetText('信息')
-    WoWTools_ChineseMixin:SetLabelText(CommunitiesFrameGuildDetailsFrameInfoHeader1Label)
-    WoWTools_ChineseMixin:SetLabelText(CommunitiesFrameGuildDetailsFrameInfo.Header2Label)
+    WoWTools_ChineseMixin:SetLabel(CommunitiesFrameGuildDetailsFrameInfoHeader1Label)
+    WoWTools_ChineseMixin:SetLabel(CommunitiesFrameGuildDetailsFrameInfo.Header2Label)
     
     for i=1, 4 do
         local btn= _G['CommunitiesFrameGuildDetailsFrameInfoChallenge'..i]
         WoWTools_ChineseMixin:HookLabel(btn and btn.label)
     end
 
-    WoWTools_ChineseMixin:SetLabelText(CommunitiesFrameGuildDetailsFrameNews.TitleText)--公会新闻
-    WoWTools_ChineseMixin:SetLabelText(CommunitiesFrameGuildDetailsFrameNews.SetFiltersButton)
+    WoWTools_ChineseMixin:SetLabel(CommunitiesFrameGuildDetailsFrameNews.TitleText)--公会新闻
+    WoWTools_ChineseMixin:SetLabel(CommunitiesFrameGuildDetailsFrameNews.SetFiltersButton)
 
     --公会新闻过滤
     if CommunitiesGuildNewsFiltersFrame then--CommunitiesGuildNewsFiltersFrame_OnLoad
-        WoWTools_ChineseMixin:SetLabelText(CommunitiesGuildNewsFiltersFrame.Title)
+        WoWTools_ChineseMixin:SetLabel(CommunitiesGuildNewsFiltersFrame.Title)
         for _, filterButton in pairs(CommunitiesGuildNewsFiltersFrame.GuildNewsFilterButtons) do
             local name= WoWTools_ChineseMixin:CN(_G["GUILD_NEWS_FILTER"..filterButton:GetID()])
             if name then
@@ -441,8 +441,8 @@
     end
 
     --查看日志
-    WoWTools_ChineseMixin:SetLabelText(CommunitiesGuildLogFrameTitle)
-    WoWTools_ChineseMixin:SetLabelText(CommunitiesGuildLogFrameCloseButtonText)
+    WoWTools_ChineseMixin:SetLabel(CommunitiesGuildLogFrameTitle)
+    WoWTools_ChineseMixin:SetLabel(CommunitiesGuildLogFrameCloseButtonText)
 
 
 
@@ -455,13 +455,13 @@ end)
 
 
 
-WoWTools_ChineseMixin:SetLabelText(CommunitiesFrame.GuildMemberDetailFrame.RemoveButton)
-WoWTools_ChineseMixin:SetLabelText(CommunitiesFrame.GuildMemberDetailFrame.GroupInviteButton)
-WoWTools_ChineseMixin:SetLabelText(CommunitiesFrame.GuildMemberDetailFrame.ZoneLabel)
+WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.GuildMemberDetailFrame.RemoveButton)
+WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.GuildMemberDetailFrame.GroupInviteButton)
+WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.GuildMemberDetailFrame.ZoneLabel)
 WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.GuildMemberDetailFrame.ZoneText)
-WoWTools_ChineseMixin:SetLabelText(CommunitiesFrame.GuildMemberDetailFrame.RankLabel)
-WoWTools_ChineseMixin:SetLabelText(CommunitiesFrame.GuildMemberDetailFrame.OnlineLabel)
-WoWTools_ChineseMixin:SetLabelText(CommunitiesFrame.GuildMemberDetailFrame.NoteLabel)
+WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.GuildMemberDetailFrame.RankLabel)
+WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.GuildMemberDetailFrame.OnlineLabel)
+WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.GuildMemberDetailFrame.NoteLabel)
 WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.GuildMemberDetailFrame.NoteBackground.PersonalNoteText)
 
 WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.PostingExpirationText.ExpiredText)

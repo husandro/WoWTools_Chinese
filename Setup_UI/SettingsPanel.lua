@@ -4,12 +4,12 @@
 hooksecurefunc(SettingsCategoryListButtonMixin, 'Init', function(self, initializer)--列表 Blizzard_CategoryList.lua
     local category = not InCombatLockdown() and initializer.data.category
     if category then
-        WoWTools_ChineseMixin:SetLabelText(self.Label, category:GetName())
+        WoWTools_ChineseMixin:SetLabel(self.Label, category:GetName())
     end
 end)
 hooksecurefunc(SettingsCategoryListHeaderMixin, 'Init', function(self, initializer)
     if not InCombatLockdown() then
-        WoWTools_ChineseMixin:SetLabelText(self.Label, initializer.data.label)
+        WoWTools_ChineseMixin:SetLabel(self.Label, initializer.data.label)
     end
 end)
 
@@ -19,29 +19,29 @@ hooksecurefunc(SettingsPanel.Container.SettingsList.ScrollBox, 'Update', functio
         return
     end
 
-    WoWTools_ChineseMixin:SetLabelText(SettingsPanel.Container.SettingsList.Header.Title)--标提
+    WoWTools_ChineseMixin:SetLabel(SettingsPanel.Container.SettingsList.Header.Title)--标提
     for _, btn in pairs(frame:GetFrames() or {}) do
         local lable
         if btn.Button then--按钮
             lable= btn.Button.Text or btn.Button
             if lable then
-                WoWTools_ChineseMixin:SetLabelText(lable)
+                WoWTools_ChineseMixin:SetLabel(lable)
             end
         end
         if btn.DropDown and btn.DropDown.Button and btn.DropDown.Button.SelectionDetails  then--下拉，菜单info= btn
             lable= btn.DropDown.Button.SelectionDetails.SelectionName
             if lable then
-                WoWTools_ChineseMixin:SetLabelText(lable)
+                WoWTools_ChineseMixin:SetLabel(lable)
             end
         end
         lable= btn.Text or btn.Label or btn.Title
         if lable then
-            WoWTools_ChineseMixin:SetLabelText(lable)
+            WoWTools_ChineseMixin:SetLabel(lable)
         elseif btn.Text and btn.data and btn.data.name and btn.data.name then
-            WoWTools_ChineseMixin:SetLabelText(btn.Text, btn.data.name)
+            WoWTools_ChineseMixin:SetLabel(btn.Text, btn.data.name)
         end
         if btn.SubTextContainer then
-            WoWTools_ChineseMixin:SetLabelText(btn.SubTextContainer.SubText)
+            WoWTools_ChineseMixin:SetLabel(btn.SubTextContainer.SubText)
         end
     end
 end)
@@ -53,13 +53,13 @@ hooksecurefunc('BindingButtonTemplate_SetupBindingButton', function(_, button)--
     if text==GRAY_FONT_COLOR:WrapTextInColorCode(NOT_BOUND) then
         button:SetText(GRAY_FONT_COLOR:WrapTextInColorCode('未设置'))
     else
-        WoWTools_ChineseMixin:SetLabelText(button, text)
+        WoWTools_ChineseMixin:SetLabel(button, text)
     end
 end)
 
 hooksecurefunc(KeyBindingFrameBindingTemplateMixin, 'Init', function(self)
     if not InCombatLockdown() then
-        WoWTools_ChineseMixin:SetLabelText(self.Label)
+        WoWTools_ChineseMixin:SetLabel(self.Label)
     end
 end)
 
@@ -74,7 +74,7 @@ local function InitControlDropdown(containerFrame, _, name, tooltip)
     if not containerFrame:IsShown() then
         return
     end
-    WoWTools_ChineseMixin:SetLabelText(containerFrame.Text, name)
+    WoWTools_ChineseMixin:SetLabel(containerFrame.Text, name)
 
     local tooltipFunc = GenerateClosure(Settings.InitTooltip, WoWTools_ChineseMixin:GetData(name), WoWTools_ChineseMixin:GetData(tooltip))
     containerFrame:SetTooltipFunc(tooltipFunc)
@@ -84,16 +84,16 @@ local function InitControlSlider(containerFrame, _, name, tooltip)
     if not containerFrame:IsShown() then
         return
     end
-    WoWTools_ChineseMixin:SetLabelText(containerFrame.Text, name)
+    WoWTools_ChineseMixin:SetLabel(containerFrame.Text, name)
     local sliderWithSteppers = containerFrame.SliderWithSteppers
     local initTooltip = GenerateClosure(Settings.InitTooltip, WoWTools_ChineseMixin:GetData(name), WoWTools_ChineseMixin:GetData(tooltip))
     sliderWithSteppers.Slider:SetTooltipFunc(initTooltip)
     containerFrame:SetTooltipFunc(initTooltip)
 end
     if raid then
-		WoWTools_ChineseMixin:SetLabelText(self.GraphicsQuality.Text, SETTINGS_RAID_GRAPHICS_QUALITY)
+		WoWTools_ChineseMixin:SetLabel(self.GraphicsQuality.Text, SETTINGS_RAID_GRAPHICS_QUALITY)
 	else
-        WoWTools_ChineseMixin:SetLabelText(self.GraphicsQuality.Text, BASE_GRAPHICS_QUALITY)
+        WoWTools_ChineseMixin:SetLabel(self.GraphicsQuality.Text, BASE_GRAPHICS_QUALITY)
 	end
     InitControlDropdown(self.ShadowQuality, nil, SHADOW_QUALITY, OPTION_TOOLTIP_SHADOW_QUALITY)
 	InitControlDropdown(self.LiquidDetail, nil, LIQUID_DETAIL, OPTION_TOOLTIP_LIQUID_DETAIL)
@@ -113,23 +113,23 @@ end
 
 hooksecurefunc(SettingsAdvancedQualityControlsMixin, 'Init', function(self, settings, raid, cbrHandles)
     if raid then
-		WoWTools_ChineseMixin:SetLabelText(self.GraphicsQuality.Text, SETTINGS_RAID_GRAPHICS_QUALITY)
+		WoWTools_ChineseMixin:SetLabel(self.GraphicsQuality.Text, SETTINGS_RAID_GRAPHICS_QUALITY)
 	else
-        WoWTools_ChineseMixin:SetLabelText(self.GraphicsQuality.Text, BASE_GRAPHICS_QUALITY)
+        WoWTools_ChineseMixin:SetLabel(self.GraphicsQuality.Text, BASE_GRAPHICS_QUALITY)
 	end
-    WoWTools_ChineseMixin:SetLabelText(self.ShadowQuality, SHADOW_QUALITY)
-	WoWTools_ChineseMixin:SetLabelText(self.LiquidDetail, LIQUID_DETAIL)
-	WoWTools_ChineseMixin:SetLabelText(self.ParticleDensity, PARTICLE_DENSITY)
-	WoWTools_ChineseMixin:SetLabelText(self.SSAO, SSAO_LABEL)
-	WoWTools_ChineseMixin:SetLabelText(self.DepthEffects, DEPTH_EFFECTS)
-	WoWTools_ChineseMixin:SetLabelText(self.ComputeEffects, COMPUTE_EFFECTS)
-	WoWTools_ChineseMixin:SetLabelText(self.OutlineMode, OUTLINE_MODE)
-	WoWTools_ChineseMixin:SetLabelText(self.TextureResolution, TEXTURE_DETAIL)
-	WoWTools_ChineseMixin:SetLabelText(self.SpellDensity, SPELL_DENSITY)
-	WoWTools_ChineseMixin:SetLabelText(self.ProjectedTextures, PROJECTED_TEXTURES)
-	WoWTools_ChineseMixin:SetLabelText(self.ViewDistance, FARCLIP)
-	WoWTools_ChineseMixin:SetLabelText(self.EnvironmentDetail, ENVIRONMENT_DETAIL)
-	WoWTools_ChineseMixin:SetLabelText(self.GroundClutter, GROUND_CLUTTER)
+    WoWTools_ChineseMixin:SetLabel(self.ShadowQuality, SHADOW_QUALITY)
+	WoWTools_ChineseMixin:SetLabel(self.LiquidDetail, LIQUID_DETAIL)
+	WoWTools_ChineseMixin:SetLabel(self.ParticleDensity, PARTICLE_DENSITY)
+	WoWTools_ChineseMixin:SetLabel(self.SSAO, SSAO_LABEL)
+	WoWTools_ChineseMixin:SetLabel(self.DepthEffects, DEPTH_EFFECTS)
+	WoWTools_ChineseMixin:SetLabel(self.ComputeEffects, COMPUTE_EFFECTS)
+	WoWTools_ChineseMixin:SetLabel(self.OutlineMode, OUTLINE_MODE)
+	WoWTools_ChineseMixin:SetLabel(self.TextureResolution, TEXTURE_DETAIL)
+	WoWTools_ChineseMixin:SetLabel(self.SpellDensity, SPELL_DENSITY)
+	WoWTools_ChineseMixin:SetLabel(self.ProjectedTextures, PROJECTED_TEXTURES)
+	WoWTools_ChineseMixin:SetLabel(self.ViewDistance, FARCLIP)
+	WoWTools_ChineseMixin:SetLabel(self.EnvironmentDetail, ENVIRONMENT_DETAIL)
+	WoWTools_ChineseMixin:SetLabel(self.GroundClutter, GROUND_CLUTTER)
 
 end)
 

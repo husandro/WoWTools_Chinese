@@ -355,8 +355,8 @@ end
 
     --随机战场，指定
     hooksecurefunc('HonorFrame_InitSpecificButton', function(self, data)
-        WoWTools_ChineseMixin:SetLabelText(self.NameText, data.localizedName)
-        WoWTools_ChineseMixin:SetLabelText(self.InfoText, data.gameType)
+        WoWTools_ChineseMixin:SetLabel(self.NameText, data.localizedName)
+        WoWTools_ChineseMixin:SetLabel(self.InfoText, data.gameType)
         if self.set_enter then
             return
         end
@@ -418,7 +418,7 @@ local function conquestFrameButton_OnEnter(self)--hooksecurefunc('ConquestFrameB
 
 	local rating, seasonBest, weeklyBest, seasonPlayed, seasonWon, weeklyPlayed, weeklyWon, lastWeeksBest, hasWon, pvpTier, ranking, roundsSeasonPlayed, roundsSeasonWon, roundsWeeklyPlayed, roundsWeeklyWon = GetPersonalRatedInfo(self.bracketIndex)
 
-	WoWTools_ChineseMixin:SetLabelText(tooltip.Title, self.toolTipTitle)
+	WoWTools_ChineseMixin:SetLabel(tooltip.Title, self.toolTipTitle)
 
 	local isSoloShuffle = self.id == 1--RATED_SOLO_SHUFFLE_BUTTON_ID
 	local isRatedBGBlitz = self.id == 2--RATED_BG_BLITZ_BUTTON_ID
@@ -504,16 +504,16 @@ end
 
 --评级
 local function Init_ConquestFrame()
-    WoWTools_ChineseMixin:SetLabelText(ConquestFrame.RatedSoloShuffle.TeamSizeText)--单人
-    WoWTools_ChineseMixin:SetLabelText(ConquestFrame.RatedSoloShuffle.TeamTypeText)--竞技场
-    WoWTools_ChineseMixin:SetLabelText(ConquestFrame.Arena2v2.TeamTypeText)
-    WoWTools_ChineseMixin:SetLabelText(ConquestFrame.Arena3v3.TeamTypeText)
-    WoWTools_ChineseMixin:SetLabelText(ConquestFrame.RatedBG.TeamTypeText)--战场
+    WoWTools_ChineseMixin:SetLabel(ConquestFrame.RatedSoloShuffle.TeamSizeText)--单人
+    WoWTools_ChineseMixin:SetLabel(ConquestFrame.RatedSoloShuffle.TeamTypeText)--竞技场
+    WoWTools_ChineseMixin:SetLabel(ConquestFrame.Arena2v2.TeamTypeText)
+    WoWTools_ChineseMixin:SetLabel(ConquestFrame.Arena3v3.TeamTypeText)
+    WoWTools_ChineseMixin:SetLabel(ConquestFrame.RatedBG.TeamTypeText)--战场
 
 
     --Blizzard_PVPUI.xml
-    WoWTools_ChineseMixin:SetLabelText(ConquestTooltip.WeeklyLabel)--第周统计
-    WoWTools_ChineseMixin:SetLabelText(ConquestTooltip.SeasonLabel)--赛季统计
+    WoWTools_ChineseMixin:SetLabel(ConquestTooltip.WeeklyLabel)--第周统计
+    WoWTools_ChineseMixin:SetLabel(ConquestTooltip.SeasonLabel)--赛季统计
 
     --PVPRatedActivityButtonTemplate
     ConquestFrame.RatedSoloShuffle:HookScript('OnEnter', conquestFrameButton_OnEnter)--单人模式
@@ -523,8 +523,8 @@ local function Init_ConquestFrame()
 
     if ConquestFrame.RatedBGBlitz then--11新模式
         ConquestFrame.RatedBGBlitz:HookScript('OnEnter', conquestFrameButton_OnEnter)
-        WoWTools_ChineseMixin:SetLabelText(ConquestFrame.RatedBGBlitz.TeamSizeText)
-        WoWTools_ChineseMixin:SetLabelText(ConquestFrame.RatedBGBlitz.TeamTypeText)
+        WoWTools_ChineseMixin:SetLabel(ConquestFrame.RatedBGBlitz.TeamSizeText)
+        WoWTools_ChineseMixin:SetLabel(ConquestFrame.RatedBGBlitz.TeamTypeText)
     end
 
     --加入战斗，按钮
@@ -671,7 +671,7 @@ local function Init_ConquestFrame()
     --赛季奖励
     for _, label in pairs({PVPQueueFrame.HonorInset.RatedPanel.SeasonRewardFrame:GetRegions()}) do
         if label:GetObjectType()=='FontString' then
-            WoWTools_ChineseMixin:SetLabelText(label)
+            WoWTools_ChineseMixin:SetLabel(label)
         end
     end
     PVPQueueFrame.HonorInset.CasualPanel.HonorLevelDisplay.NextRewardLevel:HookScript('OnEnter', function()

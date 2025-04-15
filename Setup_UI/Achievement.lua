@@ -30,12 +30,12 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
     AchievementFrame.SearchBox.Instructions:SetText('搜索')
     AchievementFrameSummaryAchievementsHeaderTitle:SetText('近期成就')
     AchievementFrameSummaryCategoriesHeaderTitle:SetText('进展总览')
-    WoWTools_ChineseMixin:SetLabelText(AchievementFrameSummaryCategoriesStatusBarTitle)
+    WoWTools_ChineseMixin:SetLabel(AchievementFrameSummaryCategoriesStatusBarTitle)
 
     --标题
     AchievementFrame.Header.Title:SetText('成就点数')
     hooksecurefunc('AchievementFrame_RefreshView', function()--Blizzard_AchievementUI.lua
-        WoWTools_ChineseMixin:SetLabelText(AchievementFrame.Header.Title)
+        WoWTools_ChineseMixin:SetLabel(AchievementFrame.Header.Title)
     end)
 
     --近期成就
@@ -54,8 +54,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
                     achievementID = select(i, ...)
                     if achievementID then
                         _, name, _, _, _, _, _, description = GetAchievementInfo(achievementID)
-                        WoWTools_ChineseMixin:SetLabelText(button.Label, name)
-                        WoWTools_ChineseMixin:SetLabelText(button.Description, description)
+                        WoWTools_ChineseMixin:SetLabel(button.Label, name)
+                        WoWTools_ChineseMixin:SetLabel(button.Description, description)
                     end
                 else
                     local tAchievements
@@ -73,8 +73,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
                         if ( completed ) then
                             defaultAchievementCount = defaultAchievementCount+1
                         else
-                            WoWTools_ChineseMixin:SetLabelText(button.Label, name)
-                            WoWTools_ChineseMixin:SetLabelText(button.Description, description)
+                            WoWTools_ChineseMixin:SetLabel(button.Label, name)
+                            WoWTools_ChineseMixin:SetLabel(button.Description, description)
                             defaultAchievementCount = defaultAchievementCount+1
                             button.tooltipTitle = "未获得的成就"
                             button.tooltip = "达到每个成就所要求的条件，赢取成就点数、奖励和荣耀！"
@@ -90,7 +90,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
             local statusBar = _G["AchievementFrameSummaryCategoriesCategory"..i]
             if statusBar and i <= #categories then
                 local categoryName = GetCategoryInfo(categories[i])
-                WoWTools_ChineseMixin:SetLabelText(statusBar.Label, categoryName)
+                WoWTools_ChineseMixin:SetLabel(statusBar.Label, categoryName)
             end
         end
     end)
@@ -102,7 +102,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
         end
         for _, btn in pairs(frame:GetFrames() or {}) do
             if btn.Button then
-                WoWTools_ChineseMixin:SetLabelText(btn.Button.Label, btn.Button.name)
+                WoWTools_ChineseMixin:SetLabel(btn.Button.Label, btn.Button.name)
             end
         end
     end)
@@ -130,14 +130,14 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
         else
             _, name, _, _, _, _, _, description, _, _, rewardText = GetAchievementInfo(frame.id)--Social
         end
-        WoWTools_ChineseMixin:SetLabelText(frame.Label, name)
-        WoWTools_ChineseMixin:SetLabelText(frame.Description, description)
-        WoWTools_ChineseMixin:SetLabelText(frame.HiddenDescription, description)
-        WoWTools_ChineseMixin:SetLabelText(frame.Reward, rewardText)
+        WoWTools_ChineseMixin:SetLabel(frame.Label, name)
+        WoWTools_ChineseMixin:SetLabel(frame.Description, description)
+        WoWTools_ChineseMixin:SetLabel(frame.HiddenDescription, description)
+        WoWTools_ChineseMixin:SetLabel(frame.Reward, rewardText)
         if frame.Tracked:IsShown() and not frame.Tracked.is_set then
             for _, region in pairs({frame.Tracked:GetRegions()}) do
                 if region:GetObjectType()=='FontString' then
-                    WoWTools_ChineseMixin:SetLabelText(region)
+                    WoWTools_ChineseMixin:SetLabel(region)
                 end
             end
             frame.Tracked.is_set= true
@@ -199,7 +199,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
             if ( index <= numResults ) then
                 local achievementID = GetFilteredAchievementID(index)
                 local name= achievementID and select(2, GetAchievementInfo(achievementID))
-                WoWTools_ChineseMixin:SetLabelText(searchPreview.Name, name)
+                WoWTools_ChineseMixin:SetLabel(searchPreview.Name, name)
             end
         end
 
@@ -209,7 +209,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
     end)
     hooksecurefunc(AchievementFullSearchResultsButtonMixin, 'Init', function(frame)
         local _, name, _, completed = GetAchievementInfo(frame.achievementID)
-        WoWTools_ChineseMixin:SetLabelText(frame.Name, name)
+        WoWTools_ChineseMixin:SetLabel(frame.Name, name)
 
         if ( completed ) then
             frame.ResultType:SetText('已获得')
@@ -249,7 +249,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
                 end
             else
                 local name= select(2, GetAchievementInfo(category))
-                WoWTools_ChineseMixin:SetLabelText(frame.Text, name)
+                WoWTools_ChineseMixin:SetLabel(frame.Text, name)
             end
         end
     end)
@@ -260,8 +260,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
     --比较
     hooksecurefunc(AchievementComparisonTemplateMixin, 'Init', function(frame, elementData)
         local _, name, _, _, _, _, _, description = GetAchievementInfo(elementData.category, elementData.index)
-        WoWTools_ChineseMixin:SetLabelText(frame.Player.Label, name)
-        WoWTools_ChineseMixin:SetLabelText(frame.Player.Description, description)
+        WoWTools_ChineseMixin:SetLabel(frame.Player.Label, name)
+        WoWTools_ChineseMixin:SetLabel(frame.Player.Description, description)
         if not GetAchievementComparisonInfo(frame.id) then
             frame.Friend.Status:SetText('未完成')
         end
@@ -289,7 +289,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
 
         else
             local name= select(2, GetAchievementInfo(category))
-            WoWTools_ChineseMixin:SetLabelText(frame.Text, name)
+            WoWTools_ChineseMixin:SetLabel(frame.Text, name)
         end
     end)
 end

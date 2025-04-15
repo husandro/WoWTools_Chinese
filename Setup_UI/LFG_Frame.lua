@@ -26,7 +26,7 @@ PVEFrameTab2:SetText('PvP')
 PVEFrameTab3:SetText('史诗钥石地下城')
 PVEFrameTab4:SetText('地下堡')
 
-WoWTools_ChineseMixin:SetLabelText(LFDQueueFrameRandomScrollFrameChildFrameXPLabel)
+WoWTools_ChineseMixin:SetLabel(LFDQueueFrameRandomScrollFrameChildFrameXPLabel)
 hooksecurefunc('LFDQueueFrameFindGroupButton_Update', function()--LFDFrame.lua
     local mode = GetLFGMode(LE_LFG_CATEGORY_LFD)
     if ( mode == "queued" or mode == "rolecheck" or mode == "proposal" or mode == "suspended" ) then
@@ -182,7 +182,7 @@ end)
 
 
 hooksecurefunc('LFGDungeonReadyDialog_UpdateInstanceInfo', function(name, completedEncounters, totalEncounters)
-    WoWTools_ChineseMixin:SetLabelText(LFGDungeonReadyDialogInstanceInfoFrame.name, name)
+    WoWTools_ChineseMixin:SetLabel(LFGDungeonReadyDialogInstanceInfoFrame.name, name)
     if ( totalEncounters > 0 ) then
         LFGDungeonReadyDialogInstanceInfoFrame.statusText:SetFormattedText('已消灭|cnGREEN_FONT_COLOR:%d/%d|r个首领', completedEncounters, totalEncounters)
     end
@@ -244,7 +244,7 @@ hooksecurefunc('LFGDungeonReadyPopup_Update', function()--LFGFrame.lua
         end
         role= _G[role]
         if subtypeID ~= LFG_SUBTYPEID_SCENARIO and subtypeID ~= LFG_SUBTYPEID_FLEXRAID then
-            WoWTools_ChineseMixin:SetLabelText(LFGDungeonReadyDialogRoleLabel, role)
+            WoWTools_ChineseMixin:SetLabel(LFGDungeonReadyDialogRoleLabel, role)
         end
     end
 end)

@@ -161,8 +161,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_PerksProgram()
 
     hooksecurefunc(PerksProgramProductButtonMixin, 'SetItemInfo', set_item)
     hooksecurefunc(PerksProgramFrozenProductButtonMixin, 'SetItemInfo', set_item)
-    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.NameSortButton.Label)
-    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.PriceSortButton.Label)
+    WoWTools_ChineseMixin:SetLabel(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.NameSortButton.Label)
+    WoWTools_ChineseMixin:SetLabel(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.PriceSortButton.Label)
 
 
 
@@ -170,12 +170,12 @@ function WoWTools_ChineseMixin.Events:Blizzard_PerksProgram()
     -- Blizzard_PerksProgramFooter.lua
     --PerksProgramFooterFrameMixin
     WoWTools_ChineseMixin:HookLabel(PerksProgramFrame.FooterFrame.PurchaseButton)
-    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.RefundButton)
-    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.TogglePlayerPreview.Text)
-    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.ToggleMountSpecial.Text)
-    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.ToggleHideArmor.Text)
-    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.ToggleAttackAnimation.Text)
-    WoWTools_ChineseMixin:SetLabelText(PerksProgramFrame.FooterFrame.PurchasedHistoryFrame.PurchasedText)
+    WoWTools_ChineseMixin:SetLabel(PerksProgramFrame.FooterFrame.RefundButton)
+    WoWTools_ChineseMixin:SetLabel(PerksProgramFrame.FooterFrame.TogglePlayerPreview.Text)
+    WoWTools_ChineseMixin:SetLabel(PerksProgramFrame.FooterFrame.ToggleMountSpecial.Text)
+    WoWTools_ChineseMixin:SetLabel(PerksProgramFrame.FooterFrame.ToggleHideArmor.Text)
+    WoWTools_ChineseMixin:SetLabel(PerksProgramFrame.FooterFrame.ToggleAttackAnimation.Text)
+    WoWTools_ChineseMixin:SetLabel(PerksProgramFrame.FooterFrame.PurchasedHistoryFrame.PurchasedText)
     PerksProgramFrame.FooterFrame.LeaveButton:HookScript('OnShow', function(frame)
         frame:SetFormattedText('%s 离开', CreateAtlasMarkup("perks-backarrow", 8, 13, 0, 0))
     end)

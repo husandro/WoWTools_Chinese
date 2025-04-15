@@ -5,7 +5,7 @@
 
 local function set_objective_header(self)
     if self.Header then
-        WoWTools_ChineseMixin:SetLabelText(self.Header.Text, self.headerText)
+        WoWTools_ChineseMixin:SetLabel(self.Header.Text, self.headerText)
     end
 end
 

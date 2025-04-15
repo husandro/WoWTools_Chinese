@@ -95,7 +95,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
         end
     end)
     if EncounterJournalMonthlyActivitiesFrame.ThresholdContainer then
-        WoWTools_ChineseMixin:SetLabelText(EncounterJournalMonthlyActivitiesFrame.ThresholdContainer.TextContainer.Points)
+        WoWTools_ChineseMixin:SetLabel(EncounterJournalMonthlyActivitiesFrame.ThresholdContainer.TextContainer.Points)
     end
     EncounterJournalMonthlyActivitiesFrame.HeaderContainer.Title:SetText('旅行者日志')
     EncounterJournalMonthlyActivitiesFrame.BarComplete.AllRewardsCollectedText:SetText('你已经收集完了本月的所有奖励')
@@ -155,7 +155,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
             return
         end
         for _, btn in pairs(frame:GetFrames() or {}) do
-            WoWTools_ChineseMixin:SetLabelText(btn.Label)
+            WoWTools_ChineseMixin:SetLabel(btn.Label)
         end
     end)
 
@@ -169,7 +169,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
         if name then
             frame.HeaderContainer.Month:SetText(name)
         else
-            WoWTools_ChineseMixin:SetLabelText(frame.HeaderContainer.Month)
+            WoWTools_ChineseMixin:SetLabel(frame.HeaderContainer.Month)
         end
     end)
 

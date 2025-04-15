@@ -1,17 +1,17 @@
 
 
-WoWTools_ChineseMixin:SetLabelText(QuestFrameAcceptButton)--:SetText('接受')
-WoWTools_ChineseMixin:SetLabelText(QuestFrameGreetingGoodbyeButton)--:SetText('再见')
-WoWTools_ChineseMixin:SetLabelText(QuestFrameCompleteQuestButton)--:SetText('完成任务')
-WoWTools_ChineseMixin:SetLabelText(QuestFrameCompleteButton)--:SetText('继续')
-WoWTools_ChineseMixin:SetLabelText(QuestFrameGoodbyeButton)--:SetText('再见')
-WoWTools_ChineseMixin:SetLabelText(QuestFrameDeclineButton)--:SetText('拒绝')
-WoWTools_ChineseMixin:SetLabelText(QuestLogPopupDetailFrameAbandonButton)--:SetText('放弃')
-WoWTools_ChineseMixin:SetLabelText(QuestLogPopupDetailFrameShareButton)--:SetText('共享')
-WoWTools_ChineseMixin:SetLabelText(QuestLogPopupDetailFrame.ShowMapButton.Text)--:SetText('显示地图')
+WoWTools_ChineseMixin:SetLabel(QuestFrameAcceptButton)--:SetText('接受')
+WoWTools_ChineseMixin:SetLabel(QuestFrameGreetingGoodbyeButton)--:SetText('再见')
+WoWTools_ChineseMixin:SetLabel(QuestFrameCompleteQuestButton)--:SetText('完成任务')
+WoWTools_ChineseMixin:SetLabel(QuestFrameCompleteButton)--:SetText('继续')
+WoWTools_ChineseMixin:SetLabel(QuestFrameGoodbyeButton)--:SetText('再见')
+WoWTools_ChineseMixin:SetLabel(QuestFrameDeclineButton)--:SetText('拒绝')
+WoWTools_ChineseMixin:SetLabel(QuestLogPopupDetailFrameAbandonButton)--:SetText('放弃')
+WoWTools_ChineseMixin:SetLabel(QuestLogPopupDetailFrameShareButton)--:SetText('共享')
+WoWTools_ChineseMixin:SetLabel(QuestLogPopupDetailFrame.ShowMapButton.Text)--:SetText('显示地图')
 
-WoWTools_ChineseMixin:SetLabelText(QuestMapFrame.DetailsFrame.BackButton)--:SetText('返回')
-WoWTools_ChineseMixin:SetLabelText(QuestMapFrame.DetailsFrame.AbandonButton)--:SetText('放弃')]]
+WoWTools_ChineseMixin:SetLabel(QuestMapFrame.DetailsFrame.BackButton)--:SetText('返回')
+WoWTools_ChineseMixin:SetLabel(QuestMapFrame.DetailsFrame.AbandonButton)--:SetText('放弃')]]
 QuestMapFrame.DetailsFrame.ShareButton:SetText('共享')
 QuestMapFrame.DetailsFrame.DestinationMapButton.tooltipText= '显示最终目的地'
 QuestMapFrame.DetailsFrame.WaypointMapButton.tooltipText= '显示旅行路径'
@@ -22,7 +22,7 @@ WoWTools_ChineseMixin:SetRegions(QuestInfoRewardsFrame, false, true)
 WoWTools_ChineseMixin:HookLabel(QuestInfoObjectivesHeader)
 WoWTools_ChineseMixin:HookLabel(QuestInfoDescriptionHeader)
 
-WoWTools_ChineseMixin:SetLabelText(QuestInfoXPFrame.ReceiveText)
+WoWTools_ChineseMixin:SetLabel(QuestInfoXPFrame.ReceiveText)
 WoWTools_ChineseMixin:HookLabel(QuestInfoAccountCompletedNotice)
 
 
@@ -210,8 +210,8 @@ local function set_quest_item(questID)
 		end
 	end
 
-	WoWTools_ChineseMixin:SetLabelText(rewardsFrame.HonorFrame.Name)
-	WoWTools_ChineseMixin:SetLabelText(rewardsFrame.TitleFrame.Name)
+	WoWTools_ChineseMixin:SetLabel(rewardsFrame.HonorFrame.Name)
+	WoWTools_ChineseMixin:SetLabel(rewardsFrame.TitleFrame.Name)
 end
 
 

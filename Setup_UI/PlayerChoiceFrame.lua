@@ -94,7 +94,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerChoice()
 
 
     hooksecurefunc(PlayerChoiceBaseOptionButtonTemplateMixin, 'Setup', function(frame, buttonInfo)
-        WoWTools_ChineseMixin:SetLabelText(frame, buttonInfo.text)
+        WoWTools_ChineseMixin:SetLabel(frame, buttonInfo.text)
         local tooltip= WoWTools_ChineseMixin:CN(buttonInfo.tooltip)
         if tooltip then
             frame.tooltip = tooltip

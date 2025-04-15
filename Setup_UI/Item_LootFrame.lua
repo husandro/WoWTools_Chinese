@@ -2,12 +2,12 @@
 
 
 --LootFrame.lua
-WoWTools_ChineseMixin:SetLabelText(LootFrameTitleText)
+WoWTools_ChineseMixin:SetLabel(LootFrameTitleText)
 
 --[[hooksecurefunc(LootFrameItemElementMixin, 'Init', function(self)
     local elementData = self:GetElementData() or {}
     if elementData.quality then
-        WoWTools_ChineseMixin:SetLabelText(self.QualityText, _G[format("ITEM_QUALITY%s_DESC", elementData.quality)])
+        WoWTools_ChineseMixin:SetLabel(self.QualityText, _G[format("ITEM_QUALITY%s_DESC", elementData.quality)])
     end
 end)]]
 
@@ -30,5 +30,5 @@ hooksecurefunc(LootFrameElementMixin, "Init", function(self, ...)
     if name then
         self.Text:SetText(name)
     end
-    WoWTools_ChineseMixin:SetLabelText(self.QualityText)
+    WoWTools_ChineseMixin:SetLabel(self.QualityText)
 end)

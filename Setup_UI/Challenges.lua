@@ -14,8 +14,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_WeeklyRewards()
 
     hooksecurefunc(WeeklyRewardsFrame, 'UpdateOverlay', function(frame)--Blizzard_WeeklyRewards.lua
         if frame.Overlay then
-            WoWTools_ChineseMixin:SetLabelText(frame.Overlay.Text)
-            WoWTools_ChineseMixin:SetLabelText(frame.Overlay.Title)
+            WoWTools_ChineseMixin:SetLabel(frame.Overlay.Text)
+            WoWTools_ChineseMixin:SetLabel(frame.Overlay.Title)
         end
     end)
 
@@ -150,12 +150,12 @@ function WoWTools_ChineseMixin.Events:Blizzard_ChallengesUI()
             local mapID, _, powerLevel= C_ChallengeMode.GetSlottedKeystoneInfo()
             if mapID ~= nil then
                 local name= C_ChallengeMode.GetMapUIInfo(mapID)
-                WoWTools_ChineseMixin:SetLabelText(frame.DungeonName, name)
+                WoWTools_ChineseMixin:SetLabel(frame.DungeonName, name)
                 frame.PowerLevel:SetFormattedText('%d级', powerLevel)
             end
         end)
 
-    WoWTools_ChineseMixin:SetLabelText(ChallengesFrame.SeasonChangeNoticeFrame.NewSeason)--:SetText('全新赛季！')
+    WoWTools_ChineseMixin:SetLabel(ChallengesFrame.SeasonChangeNoticeFrame.NewSeason)--:SetText('全新赛季！')
     WoWTools_ChineseMixin:HookLabel(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription)--:SetText('地下城奖励的物品等级已经提升！')
     WoWTools_ChineseMixin:HookLabel(ChallengesFrame.SeasonChangeNoticeFrame.SeasonDescription2)--:SetText('史诗地下城的敌人变得更强了！')
 
@@ -228,7 +228,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_DelvesDashboardUI()
             frame.PanelDescription:SetText('完成地下堡获取每周奖励')
         end
     end)
-    WoWTools_ChineseMixin:SetLabelText(DelvesDashboardFrame.ButtonPanelLayoutFrame.CompanionConfigButtonPanel.CompanionConfigButton.ButtonText)
+    WoWTools_ChineseMixin:SetLabel(DelvesDashboardFrame.ButtonPanelLayoutFrame.CompanionConfigButtonPanel.CompanionConfigButton.ButtonText)
 
     --[[hooksecurefunc(ReputationThresholdRewardMixin, 'OnEnter', function(frame)
         print(frame.name, WoWTools_ChineseMixin:CN(frame.name))
@@ -242,16 +242,14 @@ end
 
 
 
---DelvesCompanionConfigurationFrame
+--[[
+    C_DelvesUI.GetTraitTreeForCompanion()
+]]
 function WoWTools_ChineseMixin.Events:Blizzard_DelvesCompanionConfiguration()
-    
-    
-    hooksecurefunc(DelvesCompanionConfigurationFrame, 'Refresh', function(frame)
-        
+    self:SetButton(DelvesCompanionConfigurationFrame.CompanionConfigShowAbilitiesButton)
+--伙伴
+    hooksecurefunc(DelvesCompanionConfigurationFrame.CompanionInfoFrame, 'Refresh', function(frame)
         local companionInfo = DelvesCompanionConfigurationFrame.companionInfo
-        info= companionInfo
-        for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
-
         if companionInfo then
             local name= WoWTools_ChineseMixin:CN(companionInfo.name)
             if name then
@@ -261,7 +259,37 @@ function WoWTools_ChineseMixin.Events:Blizzard_DelvesCompanionConfiguration()
             if desc then
                 frame.CompanionDescription:SetText(desc)
             end
-            print(name, companionInfo.name, desc, companionInfo.description)
+        end
+    end)
+
+--职业 CompanionConfigSlotTemplateMixin
+    hooksecurefunc(DelvesCompanionConfigurationFrame.CompanionCombatRoleSlot, 'Refresh', function(frame)
+        local text= self:CN(frame:GetSlotLabelText())
+        if text then
+            frame.Label:SetText(text)
+        end
+        text= self:CN(frame.Value:GetText())
+        if text then
+            frame.Value:SetText(text)
+        end
+        
+    end)
+
+
+--技能
+    self:SetLabel(DelvesCompanionAbilityListFrameTitleText)
+    hooksecurefunc(DelvesCompanionAbilityMixin, 'InitAdditionalElements', function(frame)
+        local name= frame:GetName()
+        local text= self:GetData(name, {spellID=frame:GetSpellID(), isName=true})
+        if text~=name and text then
+            frame.Name:SetText(text)
+        end
+        if frame.locked  then
+            self:SetLabel(frame.UnlockCondition)
+        else
+            if frame.nodeInfo.maxRanks > 1 then
+                frame.Rank:SetFormattedText('等级 %d', frame.nodeInfo.currentRank)
+            end
         end
     end)
 end

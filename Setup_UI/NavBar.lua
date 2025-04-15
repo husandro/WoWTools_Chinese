@@ -30,5 +30,5 @@ end)
 
 hooksecurefunc('NavBar_Initialize', function(_, _, homeData, homeButton)
     WoWTools_ChineseMixin:SetCNFont(homeButton.text)
-    WoWTools_ChineseMixin:SetLabelText(homeButton.text)
+    WoWTools_ChineseMixin:SetLabel(homeButton.text)
 end)
