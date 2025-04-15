@@ -247,7 +247,7 @@ end
 ]]
 function WoWTools_ChineseMixin.Events:Blizzard_DelvesCompanionConfiguration()
     self:SetButton(DelvesCompanionConfigurationFrame.CompanionConfigShowAbilitiesButton)
---伙伴
+--第一个栏， 伙伴
     hooksecurefunc(DelvesCompanionConfigurationFrame.CompanionInfoFrame, 'Refresh', function(frame)
         local companionInfo = DelvesCompanionConfigurationFrame.companionInfo
         if companionInfo then
@@ -262,17 +262,38 @@ function WoWTools_ChineseMixin.Events:Blizzard_DelvesCompanionConfiguration()
         end
     end)
 
+--第二个栏 CompanionConfigSlotTemplateMixin
+    hooksecurefunc(DelvesCompanionConfigurationFrame.CompanionCombatTrinketSlot, 'Refresh', function(frame)
+        self:SetLabel(frame.Label)
+        if frame.selectionNodeInfo then
+            if not frame.selectionNodeInfo.isVisible then
+                self:SetLabel(frame.Value)
+            elseif frame:HasSelectionAndInfo() then
+                self:SetLabel(frame.Value)
+            else
+                frame.Value:SetText(GREEN_FONT_COLOR:WrapTextInColorCode('空置'))
+            end
+        end
+    end)
+
+--第三个栏 CompanionConfigSlotTemplateMixin 
+    hooksecurefunc(DelvesCompanionConfigurationFrame.CompanionUtilityTrinketSlot, 'Refresh', function(frame)
+        self:SetLabel(frame.Label)
+        if frame.selectionNodeInfo then
+            if not frame.selectionNodeInfo.isVisible then
+                self:SetLabel(frame.Value)
+            elseif frame:HasSelectionAndInfo() then
+                self:SetLabel(frame.Value)
+            else
+                frame.Value:SetText(GREEN_FONT_COLOR:WrapTextInColorCode('空置'))
+            end
+        end
+    end)
+
 --职业 CompanionConfigSlotTemplateMixin
     hooksecurefunc(DelvesCompanionConfigurationFrame.CompanionCombatRoleSlot, 'Refresh', function(frame)
-        local text= self:CN(frame:GetSlotLabelText())
-        if text then
-            frame.Label:SetText(text)
-        end
-        text= self:CN(frame.Value:GetText())
-        if text then
-            frame.Value:SetText(text)
-        end
-        
+        self:SetLabel(frame.Label)
+        self:SetLabel(frame.Value)
     end)
 
 
