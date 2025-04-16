@@ -236,15 +236,11 @@ end
 
 local function Blizzard_HeroTalentsSelectionDialog()
     hooksecurefunc(HeroTalentSpecContentMixin, 'Setup', function(self)
-        local specName= WoWTools_ChineseMixin:CN(self.subTreeInfo.name)
-        info =self.subTreeInfo
-        for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
-        local talentFrame = self:GetTalentFrame();
-        print(talentFrame.configID, self.subTreeID)
+        local specName= WoWTools_ChineseMixin:GetTraitSubTree(self.subTreeID, true, false)
         if specName then
             self.SpecName:SetText(specName)
         end
-        local desc= WoWTools_ChineseMixin:CN(self.subTreeInfo.description)
+        local desc= WoWTools_ChineseMixin:GetTraitSubTree(self.subTreeID, false, true)
         if desc then
             self.Description:SetText(desc)
         end
