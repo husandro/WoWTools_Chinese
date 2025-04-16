@@ -1363,6 +1363,6 @@ local tab={
 
 
 
-function WoWTools_ChineseMixin:GetPetAblityInfo(abilityID)
+function WoWTools_ChineseMixin:GetPetAblityData(abilityID)
     return tab[abilityID]
 end

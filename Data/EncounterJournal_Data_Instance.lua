@@ -224,18 +224,20 @@ local tab={
 }
 
 
-local instanceTab={}
+--[[local instanceTab={}
 function WoWTools_ChineseMixin:GetInstanceDesc(instanceID)
     return instanceTab[instanceID]
 end
-
+]]
 
 do
     for journalInstanceID, info in pairs(tab) do
-        WoWTools_ChineseMixin:SetCN(EJ_GetInstanceInfo(journalInstanceID), info[1])
-        if info[2] then
+        local name, desc= EJ_GetInstanceInfo(journalInstanceID)
+        WoWTools_ChineseMixin:SetCN(name, info[1])
+        WoWTools_ChineseMixin:SetCN(desc, info[2])
+        --[[if info[2] then
             instanceTab[journalInstanceID]= info[2]
-        end
+        end]]
     end
 end
 tab=nil

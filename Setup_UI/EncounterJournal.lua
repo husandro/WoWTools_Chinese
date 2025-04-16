@@ -42,10 +42,10 @@ end
 
 
 
-local function UpdateEncounterJournalHeaders()        
+local function UpdateEncounterJournalHeaders()
     for index, infoHeader in pairs(EncounterJournal.encounter.usedHeaders or {}) do
         if infoHeader.myID and infoHeader.button then
-            if infoHeader.description then                
+            if infoHeader.description then
                 local difficultyID = EJ_GetDifficulty()
                 local data = WoWTools_ChineseMixin:GetBoosSectionData(infoHeader.myID, difficultyID)--difficultyID and WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
                 if data then
@@ -60,7 +60,7 @@ local function UpdateEncounterJournalHeaders()
                     EncounterJournal_ShiftHeaders(index)
                 end
             end
-            
+
             EncounterJournal_SetupIconFlags(infoHeader.myID, infoHeader.button)
         end
     end
@@ -190,7 +190,7 @@ local function Init_EncounterJournal()
             end
 
             local numEncounters = EJ_GetNumEncountersForLootByIndex(self.index)
-            
+
             if ( numEncounters == 1 ) then
                 local name2= get_encounter_name(itemInfo.encounterID)
                 if name2 then
@@ -307,7 +307,7 @@ local function Init_EncounterJournal()
             EncounterJournal_SetupIconFlags(overviewSectionID, infoHeader.button, index)
         end
     end)
-    
+
     --副本，数据
     hooksecurefunc('EncounterJournal_DisplayInstance', function(instanceID)
         local self= EncounterJournal.encounter
@@ -321,10 +321,10 @@ local function Init_EncounterJournal()
         if tooltip then
             self.info['overviewTab'].tooltip= tooltip
         end
-        local desc= WoWTools_ChineseMixin:GetInstanceDesc(instanceID)
+        --[[local desc= WoWTools_ChineseMixin:GetInstanceDesc(instanceID)
         if desc then
             EncounterJournal.encounter.instance.LoreScrollingFont:SetText(desc)
-        end
+        end]]
     end)
 
     WoWTools_ChineseMixin:HookButton(EncounterJournalEncounterFrameInfoSlotFilterToggle)
@@ -386,7 +386,7 @@ local function Init_WoWeuCN()
             if title then
                 self.info.encounterTitle:SetText(title)
                 set_navButton(EncounterJournal.navBar, title)--导航条
-                
+
             end
             if desc then
                 self.overviewFrame.loreDescription:SetText(desc)
@@ -396,9 +396,9 @@ local function Init_WoWeuCN()
                     self.usedHeaders[1]:SetPoint("TOPRIGHT", 0 , -8 - EncounterJournal.encounter.infoFrame.descriptionHeight - 6)
                 end
             end
-        end 
+        end
 
-        local desc= WoWTools_ChineseMixin:GetBoosSectionDesc(self.overviewFrame.rootOverviewSectionID)            
+        local desc= WoWTools_ChineseMixin:GetBoosSectionDesc(self.overviewFrame.rootOverviewSectionID)
         if desc then
             self.overviewFrame.overviewDescription.Text:SetText(desc)
             self.overviewFrame.overviewDescription.descriptionHeight = self.overviewFrame.overviewDescription:GetHeight()
@@ -453,10 +453,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
     Init_WoWeuCN()
 
     hooksecurefunc('EJSuggestFrame_RefreshDisplay', function()
-       
+
 
         local frame = EncounterJournal.suggestFrame;
-       
+
 
         local num= #frame.suggestions
         if  num== 0 then

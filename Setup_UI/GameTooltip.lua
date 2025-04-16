@@ -320,7 +320,7 @@ end
 --战斗宠物，技能 SharedPetBattleTemplates.lua
 hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilityInfo, additionalText)
     local abilityID = abilityInfo:GetAbilityID()
-    local info = abilityID and WoWTools_ChineseMixin:GetPetAblityInfo(abilityID)
+    local info = abilityID and WoWTools_ChineseMixin:GetPetAblityData(abilityID)
     if info then
         --local _, name, icon, _, unparsedDescription, _, petType = C_PetBattles.GetAbilityInfoByID(abilityID)
         local description = info[2] and SharedPetAbilityTooltip_ParseText(abilityInfo, info[2])

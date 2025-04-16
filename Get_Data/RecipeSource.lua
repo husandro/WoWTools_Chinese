@@ -5,7 +5,10 @@
 
 [SpellID x PvpFaction']= 'SourceText_lang',
 https://wago.tools/db2/SourceInfo?locale=zhCN
-]]local tab={
+]]
+
+
+local tab={
 
 ['1226650x-1']= '|cFFFFD200掉落：|r大块头齐奇|n|cFFFFD200地区：|r奥格瑞玛的幻象',
 ['1218414x-1']= '|cFFFFD200发现：|r地道食谱',
@@ -11080,6 +11083,10 @@ https://wago.tools/db2/SourceInfo?locale=zhCN
 
 
 local faction= UnitFactionGroup('player')=='Alliance' and 'x0' or 'x1'
+
+
+
+
 function WoWTools_ChineseMixin:GetRecipeSource(recipeID)
     if recipeID then
         return tab[recipeID..faction] or tab[recipeID..'x-1']

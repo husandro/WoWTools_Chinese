@@ -1018,7 +1018,7 @@ function WoWTools_ChineseMixin:GetHoliDayDesc(eventID)
     end
 end
 
-function WoWTools_ChineseMixin:GetHoliDayInfo(eventID)
+function WoWTools_ChineseMixin:GetHolidayData(eventID)
     local data= indexTab[eventID]
     if not data then
         return

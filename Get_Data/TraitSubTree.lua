@@ -1,4 +1,5 @@
 --[[
+英雄专精
 https://wago.tools/db2/TraitSubTree?locale=zhCN
 [ID]= {'Name_lang', 'Description_lang'}
 ]]
@@ -62,7 +63,7 @@ local tab={
 
 }
 
-function WoWTools_ChineseMixin:Get_TraitSubTree(subTreeID, isName, isDesc)
+function WoWTools_ChineseMixin:GetTraitSubTree(subTreeID, isName, isDesc)
     local data= tab[subTreeID]
     if data then
         if isName then

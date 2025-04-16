@@ -107,7 +107,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
 
     --任务，名称
     hooksecurefunc(MonthlyActivitiesButtonTextContainerMixin, 'UpdateText', function(frame, data)
-        local info= WoWTools_ChineseMixin:GetPerksActivityInfo(data.ID)
+        local info= WoWTools_ChineseMixin:GetPerksActivityData(data.ID)
         if not info then
             return
         end
@@ -126,7 +126,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
     --任务，提示
     hooksecurefunc( MonthlyActivitiesButtonMixin, 'ShowTooltip', function(frame)
         local data = frame:GetData() or {}
-        local info= WoWTools_ChineseMixin:GetPerksActivityInfo(data.ID)
+        local info= WoWTools_ChineseMixin:GetPerksActivityData(data.ID)
         if not info then
             return
         end

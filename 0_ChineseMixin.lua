@@ -35,7 +35,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
             elseif tab.isDesc then
                 data= self:GetHoliDayDesc(tab.holydayID)
             else
-                data= self:GetHoliDayInfo(tab.holydayID)--节日 eventID
+                data= self:GetHolidayData(tab.holydayID)--节日 eventID
             end
         elseif tab.perksActivityID then
             
@@ -44,7 +44,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
             elseif tab.isDesc then
                 data= self:GetPerksActivityDesc(tab.perksActivityID)
             else
-                data= self:GetPerksActivityInfo(tab.perksActivityID)--PERKS
+                data= self:GetPerksActivityData(tab.perksActivityID)--PERKS
             end
 
         elseif tab.vignetteID then
@@ -57,7 +57,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
             data= self:GetPetDesc(tab.speciesID)--专精
 
         elseif tab.petAbilityID then
-            data= self:GetPetAblityInfo(tab.petAbilityID)--宠物技能
+            data= self:GetPetAblityData(tab.petAbilityID)--宠物技能
 
         elseif tab.skillCategoryID then
             data= self:GetTradeSkillCategoryName(tab.skillCategoryID)--专业目录
@@ -154,8 +154,8 @@ function WoWTools_ChineseMixin:GetData(text, tab)
                 data= self:GetBossData(tab.journalEncounterID)
             end
 
-        elseif tab.instanceID then
-            data= self:GetInstanceDesc(tab.instanceID)--副本
+        --[[elseif tab.instanceID then
+            data= self:GetInstanceDesc(tab.instanceID)--副本]]
 
         elseif tab.scenarioID then
             if tab.isName then

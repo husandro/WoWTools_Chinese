@@ -3,7 +3,6 @@
 --[[
 [ID]= 'Name_lang',
 https://wago.tools/db2/TradeSkillCategory?locale=zhCN
-11.0.2.55789
 ]]
 local tab={
 [58]= '节日烹饪',
