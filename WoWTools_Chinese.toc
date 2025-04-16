@@ -113,7 +113,7 @@ Setup_UI\GameMenuFrame.lua
 Setup_UI\PlayerChoiceFrame.lua
 Setup_UI\DeathRecapFrame.lua
 Setup_UI\ObjectiveTrackerFrame.lua
-Setup_UI\PlayerSpellsFrame.lua
+Setup_UI\Blizzard_PlayerSpells.lua
 Setup_UI\Collection.lua
 Setup_UI\Challenges.lua
 Setup_UI\Holiday.lua

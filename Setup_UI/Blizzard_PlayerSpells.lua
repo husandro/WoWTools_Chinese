@@ -42,11 +42,11 @@ local function Init_SpellBookFrame()
             local levelLearned = C_SpellBook.GetSpellBookItemLevelLearned(self.slotIndex, self.spellBank)
             local subtext
             if not self.isOffSpec and IsCharacterNewlyBoosted() then
-                subtext = '暂时锁定';
+                subtext = '暂时锁定'
             elseif levelLearned and levelLearned > UnitLevel("player") then
                 subtext = string.format('%d级', levelLearned)
             elseif not self.isOffSpec then
-                subtext = '访问你的训练师';
+                subtext = '访问你的训练师'
             end
             if subtext then
                 self.RequiredLevel:SetText(subtext)
@@ -56,7 +56,7 @@ local function Init_SpellBookFrame()
 
 --子，名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateSubName', function(self, subNameText)
-        local name= WoWTools_ChineseMixin:GetData(subNameText)
+        local name= WoWTools_ChineseMixin:CN(subNameText)
         if name then
             self.SubName:SetText(name)
         end
@@ -77,10 +77,10 @@ end
 --Blizzard_SharedTalentFrameTemplates.lua
 hooksecurefunc(TalentFrameGateMixin, 'OnEnter', function(self)
     if (self.condInfo.condID) then
-        local condInfo = self:GetTalentFrame():GetAndCacheCondInfo(self.condInfo.condID);
-        --GameTooltip:SetOwner(self, "ANCHOR_LEFT", 4, -4);
+        local condInfo = self:GetTalentFrame():GetAndCacheCondInfo(self.condInfo.condID)
+        --GameTooltip:SetOwner(self, "ANCHOR_LEFT", 4, -4)
         GameTooltip:ClearLines()
-        GameTooltip_AddErrorLine(GameTooltip, format('"再花费%d点天赋才能解锁此行', condInfo.spentAmountRequired));
+        GameTooltip_AddErrorLine(GameTooltip, format('"再花费%d点天赋才能解锁此行', condInfo.spentAmountRequired))
         GameTooltip:Show()
     end
 end)
@@ -129,18 +129,18 @@ local function Init_TalentsFrame()
     end)
 
     PlayerSpellsFrame.TalentsFrame.WarmodeButton:HookScript('OnEnter', function(self)
-        local wrap = true;
-        local warModeRewardBonus = C_PvP.GetWarModeRewardBonus();
+        local wrap = true
+        local warModeRewardBonus = C_PvP.GetWarModeRewardBonus()
         GameTooltip:AddLine(' ')
-        GameTooltip_AddNormalLine(GameTooltip, format('加入战争模式即可激活世界PvP，使任务的奖励和经验值提高%1$d%%，并可以在野外使用PvP天赋。', warModeRewardBonus), wrap);
-        local canToggleWarmode = C_PvP.CanToggleWarMode(true);
-        local canToggleWarmodeOFF = C_PvP.CanToggleWarMode(false);
+        GameTooltip_AddNormalLine(GameTooltip, format('加入战争模式即可激活世界PvP，使任务的奖励和经验值提高%1$d%%，并可以在野外使用PvP天赋。', warModeRewardBonus), wrap)
+        local canToggleWarmode = C_PvP.CanToggleWarMode(true)
+        local canToggleWarmodeOFF = C_PvP.CanToggleWarMode(false)
         if(not canToggleWarmode or not canToggleWarmodeOFF) then
                 if (not C_PvP.ArePvpTalentsUnlocked()) then
-                GameTooltip_AddErrorLine(GameTooltip, format('在%d级解锁', C_PvP.GetPvpTalentsUnlockedLevel()), wrap);
+                GameTooltip_AddErrorLine(GameTooltip, format('在%d级解锁', C_PvP.GetPvpTalentsUnlockedLevel()), wrap)
             end
         end
-        GameTooltip:Show();
+        GameTooltip:Show()
     end)
 
 
@@ -182,27 +182,27 @@ end
 
 local function Init_SpecFrame()
 
-    hooksecurefunc(PlayerSpellsFrame.SpecFrame, 'UpdateSpecContents', function(self, index, sex, frameWidth, numSpecs)
+    hooksecurefunc(PlayerSpellsFrame.SpecFrame, 'UpdateSpecContents', function(self)--, index, sex, frameWidth, numSpecs)
         if self.isInitialized or not C_SpecializationInfo.IsInitialized() then
-            return;
+            return
         end
-        self.isInitialized = true;
+        self.isInitialized = true
 
-        local numSpecs = GetNumSpecializations(false, false);
-        self.numSpecs = numSpecs;
+        local numSpecs = GetNumSpecializations(false, false)
+        self.numSpecs = numSpecs
         if numSpecs == 0 then
-            return;
+            return
         end
-        local sex = UnitSex("player");
-        local specContentWidth = self:GetWidth() / numSpecs;
+        local sex = UnitSex("player")
+        local specContentWidth = self:GetWidth() / numSpecs
 
         -- set spec infos
-        self.SpecContentFramePool:ReleaseAll();
+        self.SpecContentFramePool:ReleaseAll()
         for i = 1, numSpecs do
-            local contentFrame = self.SpecContentFramePool:Acquire();
-            contentFrame:Setup(i, sex, specContentWidth, numSpecs);
+            local contentFrame = self.SpecContentFramePool:Acquire()
+            contentFrame:Setup(i, sex, specContentWidth, numSpecs)
         end
-        self:Layout();
+        self:Layout()
     end)
 
 
@@ -216,9 +216,14 @@ local function Init_SpecFrame()
         WoWTools_ChineseMixin:HookLabel(frame.ActivateButton)
         WoWTools_ChineseMixin:HookLabel(frame.SampleAbilityText)
 
-        local specID, name, description, icon, _, primaryStat = GetSpecializationInfo(frame.specIndex, false, false, nil, sex)
+        local _, _, description, _, _, primaryStat = GetSpecializationInfo(frame.specIndex, false, false, nil, sex)
         if description then
-            frame.Description:SetText(WoWTools_ChineseMixin:GetData(description).."|n"..format('主要属性：%s', WoWTools_ChineseMixin:GetData(SPEC_STAT_STRINGS[primaryStat])))
+            local spec= SPEC_STAT_STRINGS[primaryStat]
+            frame.Description:SetText(
+                WoWTools_ChineseMixin:CN(description) or description
+                .."|n"
+                ..format('主要属性：%s', WoWTools_ChineseMixin:CN(spec) or spec or '')
+            )
         end
     end
 end
@@ -229,7 +234,22 @@ end
 
 
 
-
+local function Blizzard_HeroTalentsSelectionDialog()
+    hooksecurefunc(HeroTalentSpecContentMixin, 'Setup', function(self)
+        local specName= WoWTools_ChineseMixin:CN(self.subTreeInfo.name)
+        info =self.subTreeInfo
+        for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
+        local talentFrame = self:GetTalentFrame();
+        print(talentFrame.configID, self.subTreeID)
+        if specName then
+            self.SpecName:SetText(specName)
+        end
+        local desc= WoWTools_ChineseMixin:CN(self.subTreeInfo.description)
+        if desc then
+            self.Description:SetText(desc)
+        end
+    end)
+end
 
 
 
@@ -237,6 +257,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
     Init_SpellBookFrame()
     Init_TalentsFrame()
     Init_SpecFrame()
+    Blizzard_HeroTalentsSelectionDialog()
 
     WoWTools_ChineseMixin:HookLabel(PlayerSpellsFrameTitleText)--标题
 

@@ -181,9 +181,12 @@ function WoWTools_ChineseMixin:GetData(text, tab)
 
         elseif tab.titleID then
             data= self:GetTitleName(tab.titleID)
+
+        elseif tab.subTreeID then
+            data= WoWTools_ChineseMixin:Get_TraitSubTree(subTreeID, isName, isDesc)
         end
     end
-    return data or text
+    return data
 end
 
 
@@ -317,7 +320,6 @@ end
 function WoWTools_ChineseMixin:SetButton(btn, text, affer, setFont)
     if btn and not btn.hook_chinese then
         local label= btn:GetFontString()
-        print('aaaa',lable)
         if label then
             self:SetLabel(label, text, affer, setFont)
         end

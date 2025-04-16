@@ -155,8 +155,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsCustomerOrders()
 
     hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'InitSchematic', function(frame)
         local professionName = C_TradeSkillUI.GetProfessionNameForSkillLineAbility(frame.order.skillLineAbilityID)
-        professionName= WoWTools_ChineseMixin:CN(professionName) or professionName
-        frame.ProfessionText:SetFormattedText('%s 配方', WoWTools_ChineseMixin:GetData(professionName))
+        frame.ProfessionText:SetFormattedText('%s 配方', WoWTools_ChineseMixin:CN(professionName) or professionName)
     end)
 
     hooksecurefunc(ProfessionsCustomerOrdersFrame.Form, 'Init', function(frame, order)

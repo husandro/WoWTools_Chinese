@@ -46,7 +46,7 @@ TokenFramePopup.CurrencyTransferToggleButton:SetText('转移')
 hooksecurefunc(CurrencyTransferMenu, 'RefreshMenuTitle', function(self)
     local name
     if self.currencyInfo then
-        name= WoWTools_ChineseMixin:GetData(self.currencyInfo.name) or self.currencyInfo.name
+        name= WoWTools_ChineseMixin:CN(self.currencyInfo.name) or self.currencyInfo.name
         if name and self.currencyInfo.iconFileID then
             name= '|T'..self.currencyInfo.iconFileID..':0|t'..name
         end

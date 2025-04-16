@@ -155,7 +155,7 @@ local function Init_Pet()
                 if petID then
                     local _, customName, _, _, _, _, _, name = C_PetJournal.GetPetInfoByPetID(petID)
                     if not customName then
-                        name= WoWTools_ChineseMixin:GetData(name, {petID=petID})
+                        name= WoWTools_ChineseMixin:CN(name, {petID=petID})
                         if name then
                             loadoutPlate.name:SetText(name)
                         end
@@ -370,8 +370,8 @@ hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'OnEnter', function(self)--DressUp
         if canCollect then
             local nameColor = self.item:GetItemQualityColor().color
             GameTooltip_AddColoredLine(GameTooltip,name, nameColor)
-            local slotName = TransmogUtil.GetSlotName(self.slotID)
-            GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:GetData(_G[slotName]), HIGHLIGHT_FONT_COLOR)
+            local slotName = _G[TransmogUtil.GetSlotName(self.slotID)]
+            GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:CN(slotName) or slotName, HIGHLIGHT_FONT_COLOR)
             GameTooltip_AddErrorLine(GameTooltip, '你的角色无法使用此外观。')
         else
             local hideVendorPrice = true
@@ -382,15 +382,15 @@ hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'OnEnter', function(self)--DressUp
         if not C_TransmogCollection.PlayerKnowsSource(self.transmogID) then
             local nameColor = self.item:GetItemQualityColor().color
             GameTooltip_AddColoredLine(GameTooltip, name, nameColor)
-            local slotName = TransmogUtil.GetSlotName(self.slotID)
-            GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:GetData(_G[slotName]), HIGHLIGHT_FONT_COLOR)
+            local slotName = _G[TransmogUtil.GetSlotName(self.slotID)]
+            GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:CN(slotName) or slotName, HIGHLIGHT_FONT_COLOR)
             GameTooltip_AddColoredLine(GameTooltip, '|cnRED_FONT_COLOR:你尚未收藏过此外观', LIGHTBLUE_FONT_COLOR)
         end
     else
         local nameColor = self.item:GetItemQualityColor().color
         GameTooltip_AddColoredLine(GameTooltip, name, nameColor)
-        local slotName = TransmogUtil.GetSlotName(self.slotID)
-        GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:GetData(_G[slotName]), HIGHLIGHT_FONT_COLOR)
+        local slotName = _G[TransmogUtil.GetSlotName(self.slotID)]
+        GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:CN(slotName) or slotName, HIGHLIGHT_FONT_COLOR)
         GameTooltip_AddColoredLine(GameTooltip, '|cnGREEN_FONT_COLOR:|A:common-icon-checkmark:16:16:0:-1|a 你已经收藏过此外观了', GREEN_FONT_COLOR)
     end
     GameTooltip:Show()
@@ -452,11 +452,11 @@ local function Init_WarbandSceneJournal()
         end
         --self.warbandSceneInfo = C_WarbandScene.GetWarbandSceneEntry(self.elementData.warbandSceneID)
         if self.warbandSceneInfo then
-            local name= WoWTools_ChineseMixin:GetData(self.warbandSceneInfo.name)
-            if name and name~=self.warbandSceneInfo.name then
+            local name= WoWTools_ChineseMixin:CN(self.warbandSceneInfo.name)
+            if name then
                 self.Name:SetText(name)
             end
-            self.Icon:SetAtlas(self.warbandSceneInfo.textureKit, TextureKitConstants.UseAtlasSize)
+            --self.Icon:SetAtlas(self.warbandSceneInfo.textureKit, TextureKitConstants.UseAtlasSize)
         end
     end)
     --WoWTools_ChineseMixin:SetLabel(WarbandSceneJournal.IconsFrame.Icons.Controls.ShowOwned.Text)

@@ -13,7 +13,7 @@ hooksecurefunc(AccountStoreFrame.CategoryList.ScrollBox, 'Update', function(fram
     for _, btn in pairs(frame:GetFrames() or {}) do
         local categoryInfo = btn.categoryID and C_AccountStore.GetCategoryInfo(btn.categoryID)
         if categoryInfo then
-            local name= WoWTools_ChineseMixin:GetData(categoryInfo.name)
+            local name= WoWTools_ChineseMixin:CN(categoryInfo.name)
             if name then
                 btn.Text:SetText(name)
             end
@@ -28,7 +28,7 @@ hooksecurefunc(AccountStoreBaseCardMixin, 'SetItemID', function(self)
         return
     end
 
-    local name= WoWTools_ChineseMixin:GetData(itemInfo.name)
+    local name= WoWTools_ChineseMixin:CN(itemInfo.name)
     if name then
         self.Name:SetText(name)
     end

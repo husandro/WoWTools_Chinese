@@ -426,17 +426,20 @@ local function conquestFrameButton_OnEnter(self)--hooksecurefunc('ConquestFrameB
 	local tierName = tierInfo and tierInfo.pvpTierEnum and PVPUtil.GetTierName(tierInfo.pvpTierEnum)
 	local hasSpecRank = tierName and ranking and (isSoloShuffle or isRatedBGBlitz)
 	if tierName then
-        tierName= WoWTools_ChineseMixin:GetData(tierName)
-		if ranking and not hasSpecRank then
-			tooltip.Tier:SetFormattedText('"%1$s  #%2$d (%3$d)', tierName, ranking, rating)
-		else
-			tooltip.Tier:SetFormattedText('%1$s (%2$d)', tierName, rating)
-		end
+        tierName= WoWTools_ChineseMixin:CN(tierName)
+        if tierName then
+            if ranking and not hasSpecRank then
+                tooltip.Tier:SetFormattedText('"%1$s  #%2$d (%3$d)', tierName, ranking, rating)
+            else
+                tooltip.Tier:SetFormattedText('%1$s (%2$d)', tierName, rating)
+            end
+        end
 	end
     if hasSpecRank and ranking then
-	    tooltip.SpecRank:SetFormattedText('%s: 等级 #%d', WoWTools_ChineseMixin:GetData(PlayerUtil.GetSpecName()) or '', ranking)
+        local spec= PlayerUtil.GetSpecName()
+	    tooltip.SpecRank:SetFormattedText('%s: 等级 #%d', WoWTools_ChineseMixin:CN(spec) or spec or '', ranking)
 	end
-	
+
 	tooltip.WeeklyBest:SetText('最高等级：'..weeklyBest)
 	tooltip.WeeklyWon:SetText(isSoloShuffle and ('胜利回合：' .. roundsWeeklyWon) or ('赢得比赛：' .. weeklyWon))
 	tooltip.WeeklyPlayed:SetText(isSoloShuffle and ('已完成回合：' .. roundsWeeklyPlayed) or ('比赛场次：' .. weeklyPlayed))
@@ -448,9 +451,11 @@ local function conquestFrameButton_OnEnter(self)--hooksecurefunc('ConquestFrameB
 	local specStats = (isSoloShuffle and C_PvP.GetPersonalRatedSoloShuffleSpecStats()) or (isRatedBGBlitz and C_PvP.GetPersonalRatedBGBlitzSpecStats and C_PvP.GetPersonalRatedBGBlitzSpecStats())
 	if specStats then
 		local weeklyStat = isSoloShuffle and specStats.weeklyMostPlayedSpecRounds or specStats.weeklyMostPlayedSpecGames
-		tooltip.WeeklyMostPlayedSpec:SetFormattedText('使用最多：%s (%d)', WoWTools_ChineseMixin:GetData(PlayerUtil.GetSpecNameBySpecID(specStats.weeklyMostPlayedSpecID)), weeklyStat)
+        local spec= PlayerUtil.GetSpecNameBySpecID(specStats.weeklyMostPlayedSpecID)
+		tooltip.WeeklyMostPlayedSpec:SetFormattedText('使用最多：%s (%d)', WoWTools_ChineseMixin:CN(spec) or spec or '', weeklyStat)
 		local seasonStat = isSoloShuffle and specStats.seasonMostPlayedSpecRounds or specStats.seasonMostPlayedSpecGames
-		tooltip.SeasonMostPlayedSpec:SetFormattedText('使用最多：%s (%d)', WoWTools_ChineseMixin:GetData(PlayerUtil.GetSpecNameBySpecID(specStats.seasonMostPlayedSpecID)), seasonStat)
+        spec= PlayerUtil.GetSpecNameBySpecID(specStats.seasonMostPlayedSpecID)
+		tooltip.SeasonMostPlayedSpec:SetFormattedText('使用最多：%s (%d)', WoWTools_ChineseMixin:CN(spec) or spec or '', seasonStat)
 	end
 
     if self.modeDescription then
@@ -529,7 +534,7 @@ local function Init_ConquestFrame()
 
     --加入战斗，按钮
     hooksecurefunc('ConquestFrame_UpdateJoinButton', function()-- RATED_SOLO_SHUFFLE_BUTTON_ID=1  RATED_BG_BLITZ_BUTTON_ID=2 RATED_BG_BUTTON_ID =5
-        local button = ConquestFrame.JoinButton       
+        local button = ConquestFrame.JoinButton
         if not ConquestFrame_HasActiveSeason() then
             return
         end
@@ -570,7 +575,7 @@ local function Init_ConquestFrame()
                 elseif inGroup and not isGroupLeader then
                     if playerItemLevelBelowMinimum then
                         button.tooltip = format('你需要更高的PvP装备物品平均等级才能加入队列。|n（需要 %1$d，当前%2$d。）', minItemLevel, playerPvPItemLevel)
-                    else 
+                    else
                         button.tooltip = '只有小队队长能够带领小队加入队列。'
                     end
                 elseif not inGroup and playerItemLevelBelowMinimum then
@@ -640,7 +645,7 @@ local function Init_ConquestFrame()
     PVPQueueFrame.HonorInset.RatedPanel.Tier:HookScript('OnEnter', function(self)--PVPRatedTier_OnEnter(self)
         local tierName = self.tierInfo and self.tierInfo.pvpTierEnum and PVPUtil.GetTierName(self.tierInfo.pvpTierEnum)
         if tierName then
-            GameTooltip_SetTitle(GameTooltip, WoWTools_ChineseMixin:GetData(tierName))    
+            GameTooltip_SetTitle(GameTooltip, WoWTools_ChineseMixin:CN(tierName) or tierName)
             local _, weeklyItemLevel = C_PvP.GetRewardItemLevelsByTierEnum(self.tierInfo.pvpTierEnum)
             if weeklyItemLevel > 0 then
                 GameTooltip_AddColoredLine(GameTooltip, format('在此类别中获胜后，你可以从宏伟宝库获得物品等级为%d的奖励。', weeklyItemLevel), NORMAL_FONT_COLOR)
@@ -653,11 +658,11 @@ local function Init_ConquestFrame()
     PVPQueueFrame.HonorInset.RatedPanel.Tier.NextTier:HookScript('OnEnter', function(self)-- NextTier_OnEnter(self)
         local tierName = self.tierInfo and self.tierInfo.pvpTierEnum and PVPUtil.GetTierName(self.tierInfo.pvpTierEnum)
         if tierName then
-            GameTooltip_SetTitle(GameTooltip, format('下一级：%s', WoWTools_ChineseMixin:GetData(tierName)))
+            GameTooltip_SetTitle(GameTooltip, format('下一级：%s', WoWTools_ChineseMixin:CN(tierName) or tierName))
             local tierDescription = PVPUtil.GetTierDescription(self.tierInfo.pvpTierEnum)
             if tierDescription then
                 GameTooltip:SetMinimumWidth(270)--260
-                GameTooltip_AddNormalLine(GameTooltip, WoWTools_ChineseMixin:GetData(tierDescription))
+                GameTooltip_AddNormalLine(GameTooltip, WoWTools_ChineseMixin:CN(tierDescription) or tierDescription)
             end
             local activityItemLevel, weeklyItemLevel = C_PvP.GetRewardItemLevelsByTierEnum(self.tierInfo.pvpTierEnum)
             if activityItemLevel > 0 then
@@ -682,7 +687,7 @@ local function Init_ConquestFrame()
             local rewardText = select(11, GetAchievementInfo(rewardInfo.achievementRewardedID))
             if rewardText and rewardText ~= "" then
                 GameTooltip:SetText(format('到达荣誉等级%d级后可获得下一个奖励', nextHonorLevelForReward))
-                GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:GetData(rewardText), HIGHLIGHT_FONT_COLOR, true)
+                GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:CN(rewardText) or rewardText, HIGHLIGHT_FONT_COLOR, true)
                 GameTooltip:Show()
             end
         end

@@ -96,7 +96,7 @@ local function set_objectives(questID)
 		numVisibleObjectives = numVisibleObjectives + 1
 		objective = objectivesTable[numVisibleObjectives]
 		if objective then
-			objective:SetFormattedText('0/1 %s （可选）', WoWTools_ChineseMixin:GetData(waypointText))
+			objective:SetFormattedText('0/1 %s （可选）', WoWTools_ChineseMixin:CN(waypointText) or waypointText)
 		end
 	end
 	
@@ -108,14 +108,14 @@ local function set_objectives(questID)
 			if objective then
 				local name
 				if ( not text or strlen(text) == 0 ) then
-					name= WoWTools_ChineseMixin:GetData(type)
+					name= WoWTools_ChineseMixin:CN(type) or type
 					text= type
 				else
 					local new= WoWTools_ChineseMixin:GetQuestObject(questID, i)--无法找到
 					if new then
 						name= text:gsub('%d+/%d+ (.+)', new)
 					end
-					name= name or WoWTools_ChineseMixin:GetData(text)
+					name= name or WoWTools_ChineseMixin:CN(text) or text
 				end
 				if ( finished ) then
 					name = name.." （完成）"

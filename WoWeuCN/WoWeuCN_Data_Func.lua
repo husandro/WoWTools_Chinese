@@ -350,9 +350,15 @@ end
 --local baseClass= UnitClassBase('player')
 --local Player_Col= '|c'..select(4, GetClassColor(baseClass))..'%s|r'
 local Player_Sex= UnitSex("player")
-local Player_Name=  UnitName('player')
-local Player_Race=  WoWTools_ChineseMixin:GetData(UnitRace('player'))
-local Player_Class=  WoWTools_ChineseMixin:GetData(UnitClass('player'))
+local Player_Name= UnitName('player')
+local Player_Race= UnitRace('player')
+local Player_Class=  UnitClass('player')
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner)
+    Player_Race=  WoWTools_ChineseMixin:CN(Player_Race) or Player_Race
+    Player_Class=  WoWTools_ChineseMixin:CN(Player_Class) or Player_Class
+    EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
+end)
+
 
 local function expand_text(msg)-- function WoWeuCN_Quests_ExpandUnitInfo(desc)
    if not msg and msg=='' then

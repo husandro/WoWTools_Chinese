@@ -134,16 +134,17 @@ hooksecurefunc(SettingsAdvancedQualityControlsMixin, 'Init', function(self, sett
 end)
 
 
-hooksecurefunc(Settings, 'InitTooltip', function(name, tooltip)
-    GameTooltip_SetTitle(SettingsTooltip, WoWTools_ChineseMixin:GetData(name))
+--[[hooksecurefunc(Settings, 'InitTooltip', function(name, tooltip)
+    GameTooltip_SetTitle(SettingsTooltip, WoWTools_ChineseMixin:CN(name) or name)
 	if tooltip then
+        local text
 		if type(tooltip) == "function" then
-			GameTooltip_AddNormalLine(SettingsTooltip, WoWTools_ChineseMixin:GetData(tooltip()))
+			GameTooltip_AddNormalLine(SettingsTooltip, WoWTools_ChineseMixin:CN(tooltip()))
 		else
-			GameTooltip_AddNormalLine(SettingsTooltip, WoWTools_ChineseMixin:GetData(tooltip))
+			GameTooltip_AddNormalLine(SettingsTooltip, WoWTools_ChineseMixin:CN(tooltip))
 		end
 	end
-end)
+end)]]
 
 
 

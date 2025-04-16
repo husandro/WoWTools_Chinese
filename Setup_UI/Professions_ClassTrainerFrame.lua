@@ -56,8 +56,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_TrainerUI()
 
         if ( isTradeSkill ) then
             local skill, rank, hasReq = GetTrainerServiceSkillReq(skillIndex)
+            
             if ( skill ) then
-                skill= WoWTools_ChineseMixin:GetData(skill)
+                skill= WoWTools_ChineseMixin:CN(skill) or skill
                 if ( hasReq ) then
                     requirements = requirements..separator..format('%s (|cffffffff%d|r)', skill, rank )
                 else
@@ -74,7 +75,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_TrainerUI()
             for i=1, numRequirements, 1 do
                 ability, hasReq = GetTrainerServiceAbilityReq(skillIndex, i)
                 if ( ability ) then
-                    ability= WoWTools_ChineseMixin:GetData(ability)
+                    ability= WoWTools_ChineseMixin:CN(ability) or ability
                     if ( hasReq ) then
                         requirements = requirements..separator..format('|cffffffff%s|r', ability )
                     else

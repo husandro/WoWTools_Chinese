@@ -320,14 +320,14 @@
 
         local specIds = ClubFinderGetPlayerSpecIds()
         local matchingSpecNames = { }
-        for i, specId in ipairs(specIds) do
+        for _, specId in ipairs(specIds) do
             local _, name = GetSpecializationInfoForSpecID(specId)
             if (self.card.recruitingSpecIds[specId]) then
-                table.insert(matchingSpecNames, WoWTools_ChineseMixin:GetData(name))
+                table.insert(matchingSpecNames, WoWTools_ChineseMixin:CN(name) or name)
             end
         end
         local classDisplayName = UnitClass("player")
-        classDisplayName= WoWTools_ChineseMixin:GetData(classDisplayName)
+        classDisplayName= WoWTools_ChineseMixin:CN(classDisplayName) or classDisplayName
         local isRecruitingAllSpecs = #self.info.recruitingSpecIds == 0 or #self.info.recruitingSpecIds == ClubFinderGetTotalNumSpecializations()
         if(isRecruitingAllSpecs) then
             if(self.info.isGuild) then
@@ -381,7 +381,7 @@
         end
 
         if ( achievementID and achievementID > 0 ) then
-            local name = select(2, GetAchievementInfo(achievementID))
+            name = select(2, GetAchievementInfo(achievementID))
             name= WoWTools_ChineseMixin:CN(name)
             if name then
                 self.SubText:SetText('需要：'..COMMUNITIES_GUILD_REWARDS_ACHIEVEMENT_ICON..YELLOW_FONT_COLOR_CODE..name..FONT_COLOR_CODE_CLOSE);
@@ -390,7 +390,7 @@
             local guildFactionData = C_Reputation.GetGuildFactionData()
             if guildFactionData and repLevel and repLevel > guildFactionData.reaction then
                 local factionStandingtext = GetText("FACTION_STANDING_LABEL"..repLevel, gender)
-                self.SubText:SetFormattedText('需要：|cffff0000%s|r', WoWTools_ChineseMixin:GetData(factionStandingtext))
+                self.SubText:SetFormattedText('需要：|cffff0000%s|r', WoWTools_ChineseMixin:CN(factionStandingtext) or factionStandingtext)
             end
         end
     end)
@@ -449,7 +449,9 @@
 
 --没测试
 hooksecurefunc('GuildNewsButton_SetText', function(button, _, text, a, b, c, ...)
-    button.text:SetFormattedText(WoWTools_ChineseMixin:GetData(text), WoWTools_ChineseMixin:GetData(a), WoWTools_ChineseMixin:GetData(b), WoWTools_ChineseMixin:GetData(c), ...)
+    text= WoWTools_ChineseMixin:CN(text) or text
+    a, b, c= WoWTools_ChineseMixin:CN(a) or a, WoWTools_ChineseMixin:CN(b) or b, WoWTools_ChineseMixin:CN(c) or c
+    button.text:SetFormattedText(text, a, b, c, ...)
 end)
 
 

@@ -73,7 +73,13 @@ end
 
 local function get_encounter_name(encounterID)
     if encounterID then
-        return WoWTools_ChineseMixin:GetBossName(encounterID) or WoWTools_ChineseMixin:GetData(EJ_GetEncounterInfo(encounterID))
+        local name= WoWTools_ChineseMixin:GetBossName(encounterID)
+        if name then
+            return name
+        else
+            name= EJ_GetEncounterInfo(encounterID)
+            return WoWTools_ChineseMixin:CN(name) or name
+        end
     end
 end
 
@@ -236,7 +242,7 @@ local function Init_EncounterJournal()
                 name = classInfo.className
             end
         end
-        name= WoWTools_ChineseMixin:GetData(name)
+        name= WoWTools_ChineseMixin:CN(name) or name
         if name then
             EncounterJournal.encounter.info.LootContainer.classClearFilter.text:SetFormattedText('职业筛选：%s', name)
         end

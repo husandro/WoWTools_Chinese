@@ -153,7 +153,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
             requiresRep, _, repLevel = GetAchievementGuildRep(ID)
             if ( requiresRep and repLevel) then
                 local factionStandingtext = GetText("FACTION_STANDING_LABEL"..repLevel, UnitSex("player"))
-                objectivesFrame.RepCriteria:SetFormattedText('|cffffffff需要公会声望：|r %s', WoWTools_ChineseMixin:GetData(factionStandingtext) or factionStandingtext)
+                objectivesFrame.RepCriteria:SetFormattedText('|cffffffff需要公会声望：|r %s', WoWTools_ChineseMixin:CN(factionStandingtext) or factionStandingtext)
             end
         end
         local numCriteria = GetAchievementNumCriteria(ID) or 0
@@ -220,10 +220,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
         local categoryID = GetAchievementCategory(frame.achievementID)
         local categoryName, parentCategoryID = GetCategoryInfo(categoryID)
 
-        local path = WoWTools_ChineseMixin:GetData(categoryName) or categoryName
+        local path = WoWTools_ChineseMixin:CN(categoryName) or categoryName
         while ( not (parentCategoryID == -1) ) do
             categoryName, parentCategoryID = GetCategoryInfo(parentCategoryID)
-            path = (WoWTools_ChineseMixin:GetData(categoryName) or categoryName).." > "..path
+            path = (WoWTools_ChineseMixin:CN(categoryName) or categoryName).." > "..path
         end
         frame.Path:SetText(path)
     end)
