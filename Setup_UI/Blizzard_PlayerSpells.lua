@@ -244,6 +244,25 @@ local function Blizzard_HeroTalentsSelectionDialog()
         if desc then
             self.Description:SetText(desc)
         end
+        WoWTools_ChineseMixin:SetButton(self.ActivateButton)
+        WoWTools_ChineseMixin:SetButton(self.ApplyChangesButton)
+        WoWTools_ChineseMixin:SetButton(self.ApplyChangesButton)
+  
+        WoWTools_ChineseMixin:SetLabel(self.CurrencyFrame.LabelText)
+        --WoWTools_ChineseMixin:SetLabel(self.CurrencyFrame.ActivatedText)
+        WoWTools_ChineseMixin:SetLabel(self.ActivatedText)
+        WoWTools_ChineseMixin:SetLabel(self.LabelText)
+    end)
+
+    --HeroTalentsContainerMixin
+    hooksecurefunc(PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer, 'UpdateHeroSpecButton', function(self)
+
+        if self.HeroSpecLabel:IsShown() then
+            local specName= WoWTools_ChineseMixin:GetTraitSubTree(self.activeSubTreeInfo.ID, true, false)
+            if specName then
+                self.HeroSpecLabel:SetText(specName)
+            end
+        end
     end)
 end
 
