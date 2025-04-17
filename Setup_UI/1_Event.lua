@@ -159,7 +159,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ArtifactUI()
         if not itemID then
             return
         end
-        local name = WoWTools_ChineseMixin:GetItemName(itemID) or WoWTools_ChineseMixin:CN(itemName)
+        local name = WoWTools_ChineseMixin:GetItemName(itemID) or WoWTools_ChineseMixin:SetText(itemName)
         if name then
             if C_ArtifactUI.IsArtifactDisabled() then
                 frame:GetParent().DisabledFrame.ArtifactName:SetText(name)
@@ -481,9 +481,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_CombatLog()
                 local name= tab.name
                 local quickButtonName= tab.quickButtonName
                 local tooltip= tab.tooltip
-                name= name and WoWTools_ChineseMixin:CN(name)
-                quickButtonName= quickButtonName and WoWTools_ChineseMixin:CN(quickButtonName)
-                tooltip= tooltip and WoWTools_ChineseMixin:CN(tooltip)
+                name= name and WoWTools_ChineseMixin:SetText(name)
+                quickButtonName= quickButtonName and WoWTools_ChineseMixin:SetText(quickButtonName)
+                tooltip= tooltip and WoWTools_ChineseMixin:SetText(tooltip)
                 if name then
                     frame[index].name= name
                 end
@@ -624,13 +624,21 @@ end
 
 
 function WoWTools_ChineseMixin.Events:Blizzard_MajorFactions()
+    --解锁
     hooksecurefunc(MajorFactionButtonUnlockedStateMixin, 'Refresh', function(frame, majorFactionData)--Blizzard_MajorFactionsLandingTemplates.lua
         WoWTools_ChineseMixin:SetLabel(frame.Title, majorFactionData.name)
         frame.RenownLevel:SetFormattedText('%d级', majorFactionData.renownLevel or 0)
     end)
+--没解锁
+    hooksecurefunc(MajorFactionButtonLockedStateMixin, 'Refresh', function(frame, majorFactionData)
+        WoWTools_ChineseMixin:SetLabel(frame.Title, majorFactionData.name)
+        WoWTools_ChineseMixin:SetLabel(frame.StateInfo)
+    end)
+
     hooksecurefunc(MajorFactionWatchFactionButtonMixin, 'OnLoad', function(frame)
         frame.Label:SetText('显示为经验条')
     end)
+
     --Blizzard_MajorFactionRenown.lua
     hooksecurefunc(MajorFactionRenownFrame, 'SetUpMajorFactionData', function(frame)
         local majorFactionData = C_MajorFactions.GetMajorFactionData(frame.majorFactionID) or {}
@@ -717,6 +725,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_CooldownViewer()
    end)
 end
 
+
+--function WoWTools_ChineseMixin.Events:Blizzard_ExpansionLandingPage()
 
 --[[function CooldownViewerBuffBarItemMixin:RefreshName()
 	local nameFontString = self:GetNameFontString();

@@ -4,7 +4,7 @@ WoWTools_ChineseMixin={
 local CNData={}--主要，汉化
 
 function WoWTools_ChineseMixin:SetCN(en, cn)
-    if en and cn and cn:find("[\228-\233][\128-\191][\128-\191]") then--检查 UTF-8 字符
+    if en and cn and cn:find("[\228-\233][\128-\191][\128-\191]") and en:gsub(' ', '')~='' then--检查 UTF-8 字符
         CNData[en]=cn
     end
 end
@@ -356,7 +356,8 @@ function WoWTools_ChineseMixin:HookLabel(label, setFont)
             set(obj, name)
         end)
         label:HookScript('OnShow', function(obj)
-            set(obj, name)
+            set(obj)
+            print(self:SetText(obj:GetText()))
         end)
         label.hook_chinese=true
     end
@@ -370,7 +371,7 @@ function WoWTools_ChineseMixin:HookButton(btn, setFont)
        
         hooksecurefunc(btn, 'SetText', function(frame, name)
             if name and name~='' then
-                local cnName= WoWTools_ChineseMixin:CN(name)
+                local cnName= WoWTools_ChineseMixin:SetText(name)
                 if cnName then
                     frame:SetText(cnName)
                 end

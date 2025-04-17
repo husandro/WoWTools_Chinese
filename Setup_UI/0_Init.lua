@@ -209,7 +209,7 @@ if ButtonTrayUtil.TestCheckboxTraySetup then
 end
 
 hooksecurefunc(ButtonTrayUtil, 'TestButtonTraySetup', function(button, label)
-    label= WoWTools_ChineseMixin:CN(label)
+    label= WoWTools_ChineseMixin:SetText(label)
     if label then
         button:SetText(label)
     end
@@ -428,7 +428,7 @@ RolePollPopupAcceptButtonText:SetText('接受')
 
 --HelpTipTemplateMixin:ApplyText()
 hooksecurefunc(HelpTipTemplateMixin, 'ApplyText', function(frame)
-    local text= WoWTools_ChineseMixin:CN(frame.info.text)
+    local text= WoWTools_ChineseMixin:SetText(frame.info.text)
     if text then
         frame.info.text= text
         frame.Text:SetText(text)
@@ -436,7 +436,7 @@ hooksecurefunc(HelpTipTemplateMixin, 'ApplyText', function(frame)
 end)
 if _G['HelpPlate_Button_OnEnter'] then--11.1.5无
     hooksecurefunc('HelpPlate_Button_OnEnter', function(self)
-        local text= WoWTools_ChineseMixin:CN(self.toolTipText)
+        local text= WoWTools_ChineseMixin:SetText(self.toolTipText)
         if text then
             self.toolTipText= text
             HelpPlateTooltip.Text:SetText(text)
@@ -507,7 +507,7 @@ C_Timer.After(4, function()
         for i=1, 23 do
             local btn= _G['VoiceMacroMenuButton'..i]
             local name= btn and btn:GetText()
-            local text= name and WoWTools_ChineseMixin:CN(name)
+            local text= name and WoWTools_ChineseMixin:SetText(name)
             if text then
                 btn:SetText(text)
                 local shortcutString = _G[btn:GetName().."ShortcutText"]
@@ -525,7 +525,7 @@ C_Timer.After(4, function()
         for i=1, 21 do
             local btn= _G['EmoteMenuButton'..i]
             local name= btn and btn:GetText()
-            local text= name and WoWTools_ChineseMixin:CN(name)
+            local text= name and WoWTools_ChineseMixin:SetText(name)
             if text then
                 btn:SetText(text)
                 local shortcutString = _G[btn:GetName().."ShortcutText"]
@@ -546,7 +546,7 @@ C_Timer.After(4, function()
     --[[Blizzard_FrameXMLBase/Constants.lua
     local function set_table(data)
         for index, name in pairs(_G[data] or {}) do
-            local cnName= WoWTools_ChineseMixin:CN(name)
+            local cnName= WoWTools_ChineseMixin:SetText(name)
             if cnName then
                 _G[data][index]= cnName
             end
