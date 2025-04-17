@@ -173,12 +173,6 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
             local line= block.usedLines[1]
             if line then
                 block:SetStringText(line.Text, desc, nil, colorStyle, block.isHighlighted)
-                --local textHeight = block:SetStringText(line.Text, desc, nil, colorStyle, block.isHighlighted)            
-                --line:SetHeight(textHeight)
-               -- block.height = block.height+ textHeight + block.parentModule.lineSpacing*2
-                --print(block.parentModule.lineSpacing)
-                --block:SetHeight(block.height)
-            end
         end
     end
 end)

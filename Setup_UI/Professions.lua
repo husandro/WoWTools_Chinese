@@ -324,72 +324,15 @@ local function Init_CraftingPage_SchematicForm()
                 sourceText= WoWTools_ChineseMixin:GetRecipeSource(recipeInfo.nextRecipeID) or WoWTools_ChineseMixin:CN(C_TradeSkillUI.GetRecipeSourceText(recipeInfo.nextRecipeID))
             end
             if sourceText then
-                --[[if sourceTextIsForNextRank then
-                    self.RecipeSourceButton.Text:SetText('下一级')
-                else
-                    self.RecipeSourceButton.Text:SetText('未学习的配方')
-                end]]
                 self.RecipeSourceButton:SetScript("OnEnter", function()
                     GameTooltip:SetOwner(self.RecipeSourceButton.Text, "ANCHOR_RIGHT")
                     GameTooltip:SetCustomWordWrapMinWidth(350)
-                    print(sourceText, recipeID)
                     GameTooltip_AddHighlightLine(GameTooltip, sourceText)
                     GameTooltip:Show()
                 end)
             end
         end
     end)
-
-
-
-    --[[local RequirementTypeToString =
-    {
-        [Enum.RecipeRequirementType.SpellFocus] = "SpellFocusRequirement",
-        [Enum.RecipeRequirementType.Totem] = "TotemRequirement",
-        [Enum.RecipeRequirementType.Area] = "AreaRequirement",
-    };
-    local function FormatRequirements(requirements)
-        local formattedRequirements = {};
-        for _, recipeRequirement in ipairs(requirements) do
-            table.insert(formattedRequirements, LinkUtil.FormatLink(RequirementTypeToString[recipeRequirement.type], recipeRequirement.name));
-            table.insert(formattedRequirements, recipeRequirement.met);
-        end
-        return formattedRequirements;
-    end
-    local function Tools_Text(self, text)
-        local recipeInfo= self:GetParent().currentRecipeInfo
-        local recipeID= recipeInfo.recipeID
-        if not recipeID or not self:IsShown() or text=='' then
-            self.P_SetText(self, text)
-            return
-        end
-
-        local requirements = C_TradeSkillUI.GetRecipeRequirements(recipeID)
-        if (#requirements > 0) then
-            local requirementsText = BuildColoredListString(unpack(FormatRequirements(requirements)));
-            local minimized= ProfessionsUtil.IsCraftingMinimized()
-            local maxWidth = minimized and 250 or 800;
-            local multiline = minimized;
-            print(requirementsText)
-            SetTextToFit(self, PROFESSIONS_REQUIRED_TOOLS:format(requirementsText), maxWidth, multiline);
-        else
-            self.P_SetText(self, "")
-        end
-    end
-
-
-    
-    frame.RequiredTools.P_SetText= frame.RequiredTools.SetText
-    frame.RecraftingRequiredTools.P_SetText= frame.RecraftingRequiredTools.SetText
-    function frame.RequiredTools:SetText(...)
-        Tools_Text(self, ...)
-    end
-    function frame.RecraftingRequiredTools:SetText(...)
-        Tools_Text(self, ...)
-    end]]
-
-
-
 
 
 
@@ -423,16 +366,6 @@ local function Init_CraftingPage_SchematicForm()
         end
     end)
 end
-            --[[local reagents = self.transaction:CreateCraftingReagentInfoTbl();
-            --local description = C_TradeSkillUI.GetRecipeDescription(spell:GetSpellID(), reagents, self.transaction:GetAllocationItemGUID());
-    
-            -- If an embedded icon is present, substitute a small vertical offset so the icon is centered with the adjacent text.
-            local textureID, height = string.match(description, "|T(%d+):(%d+)|t");
-            if textureID then
-                local size = height or 24;
-                local xOffset, yOffset = 0, 3;
-                description = string.gsub(description, "|T.*|t", CreateSimpleTextureMarkup(textureID, size, size, xOffset, yOffset));
-            end]]
 
 
 

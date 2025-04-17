@@ -16,7 +16,6 @@ if select(4, C_AddOns.GetAddOnInfo('WoWeuCN_Tooltips')) then
     loadUnitData100000()
     loadUnitData200000()
   
-    print(id, '加载插件 Tooltips Translator 数据')
 end
 end]]
 --[[

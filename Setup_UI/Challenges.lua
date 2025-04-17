@@ -218,8 +218,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_DelvesDashboardUI()
         end
     end)
 
-    --DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel
-    --hooksecurefunc(GreatVaultButtonPanelMixin, 'OnShow', function(frame)
     DelvesDashboardFrame.ButtonPanelLayoutFrame.GreatVaultButtonPanel:HookScript('OnShow', function(frame)
         frame.PanelTitle:SetText('宏伟宝库')
         if not HasActiveSeason() then
@@ -230,9 +228,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_DelvesDashboardUI()
     end)
     WoWTools_ChineseMixin:SetLabel(DelvesDashboardFrame.ButtonPanelLayoutFrame.CompanionConfigButtonPanel.CompanionConfigButton.ButtonText)
 
-    --[[hooksecurefunc(ReputationThresholdRewardMixin, 'OnEnter', function(frame)
-        print(frame.name, WoWTools_ChineseMixin:CN(frame.name))
-    end)]]
+
 
 end
 
