@@ -173,6 +173,7 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
             local line= block.usedLines[1]
             if line then
                 block:SetStringText(line.Text, desc, nil, colorStyle, block.isHighlighted)
+            end
         end
     end
 end)
