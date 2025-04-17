@@ -726,7 +726,15 @@ function WoWTools_ChineseMixin.Events:Blizzard_CooldownViewer()
 end
 
 
---function WoWTools_ChineseMixin.Events:Blizzard_ExpansionLandingPage()
+function WoWTools_ChineseMixin.Events:Blizzard_ExpansionLandingPage()
+    hooksecurefunc(WarWithinLandingOverlayMixin, 'RefreshOverlay', function(frame)
+        self:SetLabel(frame.Header.Title)
+    end)
+    hooksecurefunc(DragonflightLandingOverlayMixin, 'RefreshOverlay', function(frame)
+        self:SetLabel(frame.Header.Title)
+    end)
+    
+end
 
 --[[function CooldownViewerBuffBarItemMixin:RefreshName()
 	local nameFontString = self:GetNameFontString();
