@@ -142,10 +142,11 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
         --local find
         for criteriaIndex, line in pairs(block.usedLines or {}) do
             if type(criteriaIndex)=='number' then
-                local _, criteriaType, _, _, _, _, flags, assetID, quantityString = GetAchievementCriteriaInfo(achievementID, criteriaIndex, true)
-                local text
+                local criteriaString, criteriaType, _, _, _, _, flags, assetID, quantityString = GetAchievementCriteriaInfo(achievementID, criteriaIndex, true)
+                local text= WoWTools_ChineseMixin:CN(criteriaString)
                 if description and bit.band(flags, EVALUATION_TREE_FLAG_PROGRESS_BAR) == EVALUATION_TREE_FLAG_PROGRESS_BAR then
                     local desc= WoWTools_ChineseMixin:CN(description)
+                   
                     if desc then-- progress bar                    
                         if string.find(strlower(quantityString), "interface\\moneyframe") then	-- no easy way of telling it's a money progress bar
                             text = quantityString.."\n"..desc
@@ -154,15 +155,17 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
                         end
                     end
                 else
-                    if ( criteriaType == CRITERIA_TYPE_ACHIEVEMENT and assetID ) then--for meta criteria look up the achievement name
+                    if ( criteriaType == CRITERIA_TYPE_ACHIEVEMENT and assetID ) then --for meta criteria look up the achievement name
                         text = WoWTools_ChineseMixin:CN(select(2, GetAchievementInfo(assetID)))
                     end
+                    
                 end
                 if text then
                     block:SetStringText(line.Text, text, nil, colorStyle, block.isHighlighted)
                 end
             end
         end
+
     else
         local desc= WoWTools_ChineseMixin:CN(description)
         if desc then
@@ -227,10 +230,10 @@ end)
 ScenarioObjectiveTracker.StageBlock.Name:SetPoint('RIGHT', -20, 0)
 hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function(self, scenarioID, scenarioType, widgetSetID, textureKit, flags, currentStage, stageName, numStages)
     if bit.band(flags, SCENARIO_FLAG_SUPRESS_STAGE_TEXT) == SCENARIO_FLAG_SUPRESS_STAGE_TEXT then
-        local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage) or {}
-        local name= data[2] or WoWTools_ChineseMixin:CN(stageName)
+        local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage)
+        local name= data and data[2] or WoWTools_ChineseMixin:CN(stageName)
         if name then
-		    self.Stage:SetText(name)
+            self.Stage:SetText(name)
         end
 	else
 		if currentStage == numStages then
@@ -238,11 +241,12 @@ hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function
 		else
 			self.Stage:SetFormattedText('阶段 %d', currentStage)
 		end
-        local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage) or {}
-        local name= data[2] or WoWTools_ChineseMixin:CN(stageName)
+        local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage)
+        local name= data and data[2] or WoWTools_ChineseMixin:CN(stageName)
         if name then
-		    self.Name:SetText(name)
+            self.Name:SetText(name)
         end
+        
 	end
 end)
 hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'SetupStageTransition', function(self, hasNewStage, scenarioCompleted)
@@ -411,3 +415,23 @@ hooksecurefunc(ObjectiveTrackerFrame, 'Init', set_objective_header)
 
 
 
+hooksecurefunc(UIWidgetObjectiveTracker, 'OnEvent', function(self)
+    local block = self.Block
+	if block:IsShown() then
+        local name= WoWTools_ChineseMixin:CN(GetRealZoneText())
+        if name then
+		    self:SetHeader(name)
+        end
+	end
+end)
+
+--UIWidgetObjectiveTracker
+hooksecurefunc(UIWidgetObjectiveTracker, 'LayoutContents', function(self)
+    local block = self.Block
+	if block and block:IsShown() then
+        local name= WoWTools_ChineseMixin:CN(GetRealZoneText())
+        if name then
+		    self:SetHeader(name)
+        end
+	end
+end)

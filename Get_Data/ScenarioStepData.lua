@@ -3992,14 +3992,5 @@ local tab={
 function WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, stepIndex)
     stepIndex= stepIndex or 1
     stepIndex= stepIndex-1
-    local data= tab[scenarioID..'x'..stepIndex]
-    if data then
-        if data[1]=='' then
-            data[1]=nil
-        end
-        if data[2]=='' then
-            data[2]=nil
-        end
-        return data
-    end
+    return tab[scenarioID..'x'..stepIndex]
 end
