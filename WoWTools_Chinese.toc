@@ -72,8 +72,8 @@ Data\Map_Data_UiMapGroupMember.lua
 Data\Item_Data_Set.lua
 Data\Item_Data_SubClass.lua
 Data\Item_Data_TransmogSet.lua
-
-
+##职业
+Data\Class.lua
 
 
 

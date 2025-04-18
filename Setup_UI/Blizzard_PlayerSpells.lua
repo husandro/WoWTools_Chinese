@@ -102,7 +102,7 @@ local function Init_TalentsFrame()
     WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton.Text)
     --专精，名称
     hooksecurefunc(PlayerSpellsFrame.TalentsFrame, 'RefreshCurrencyDisplay', function(self)
-        local className = WoWTools_ChineseMixin:CN(self:GetClassName())
+        local className = WoWTools_ChineseMixin:SetText(self:GetClassName()) or WoWTools_ChineseMixin:CN(PlayerUtil.GetClassName())
         if className then
             self.ClassCurrencyDisplay:SetPointTypeText(className)
         end
