@@ -228,8 +228,8 @@ local function set_match(text, a, b)
     local a1=WoWTools_ChineseMixin:CN(a)
     local b1= WoWTools_ChineseMixin:CN(b)
 
-    local r= a1 and a1:find('%W') and text:gsub(a, a1) or text
-    r= b1 and b1:find('%W') and r:gsub(b, b1) or r
+    local r= a1 and a1:find('[\228-\233][\128-\191][\128-\191]') and text:gsub(a, a1) or text
+    r= b1 and b1:find('[\228-\233][\128-\191][\128-\191]') and r:gsub(b, b1) or r
 
     if text~= r then
         return r
@@ -247,23 +247,23 @@ end
 
 --( ) . % + - * ? [ ^ $
 function WoWTools_ChineseMixin:SetText(text)
-    if type(text)~='string' or text=='' or text=='%s' then
+    if type(text)~='string' or text=='' or text=='%s' or text:find('[\228-\233][\128-\191][\128-\191]') then
         return
     end
 
     local text2= self:CN(text)
     if text2 then
-        if text2:find('%W') then
-            return text2
-        end
+        return text2
     end
 
     text2= text:gsub('|c.-|r', function(s)--颜色
         return set_match(s, s:match('|c........(.-)|r'))
     end)
+    
     text2= text2:gsub('%(.-%)', function(s)-- ()
         return set_match(s, s:match('%((.-)%)'))
     end)
+    
     text2= text2:gsub('  .+', function(s)--双空格
         return set_match(s, s:match('  (.+)'))
     end)
@@ -288,11 +288,15 @@ function WoWTools_ChineseMixin:SetText(text)
          return set_match(s, s:match(': (.-) %('))
     end)
 
-    text2= text:gsub('|A:.-|a.+', function(s)
-        return set_match(s, s:match('|A:.-|a (.+)'))
+
+    text2= text2:gsub('|A:.-|a.+', function(s)
+        return set_match(s, s:match('|A:.-|a (.+)') or s:match('|A:.-|a(.+)'))
+    end)
+    text2= text2:gsub('|T.-|t.+', function(s)
+        return set_match(s, s:match('|T.-|t (.+)') or s:match('|T.-|t(.+)'))
     end)
 
-    if text ~= text2 and text2:find('%W') then
+    if text ~= text2 and text2:find('[\228-\233][\128-\191][\128-\191]') then
         return text2
     end
 end
