@@ -109,7 +109,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
                         end
                     end
                 end
-                data= data or self:GetItemName(itemID)--物品名称
+                data= data or self:GetItemName(itemID) --物品名称
 
             elseif tab.isDesc then
                 data= self:GetHeirloomSource(itemID)--物品名称
