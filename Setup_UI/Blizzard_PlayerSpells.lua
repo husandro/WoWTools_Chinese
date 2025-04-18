@@ -56,7 +56,7 @@ local function Init_SpellBookFrame()
 
 --子，名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateSubName', function(self, subNameText)
-        local name= WoWTools_ChineseMixin:CN(subNameText)
+        local name= WoWTools_ChineseMixin:SetText(subNameText)
         if name then
             self.SubName:SetText(name)
         end
