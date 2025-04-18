@@ -357,7 +357,6 @@ function WoWTools_ChineseMixin:HookLabel(label, setFont)
         end)
         label:HookScript('OnShow', function(obj)
             set(obj)
-            print(self:SetText(obj:GetText()))
         end)
         label.hook_chinese=true
     end
