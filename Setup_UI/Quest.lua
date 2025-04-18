@@ -96,7 +96,7 @@ local function set_objectives(questID)
 		numVisibleObjectives = numVisibleObjectives + 1
 		objective = objectivesTable[numVisibleObjectives]
 		if objective then
-			objective:SetFormattedText('0/1 %s （可选）', WoWTools_ChineseMixin:CN(waypointText) or waypointText)
+			objective:SetFormattedText('0/1 %s （可选）', WoWTools_ChineseMixin:SetText(waypointText) or waypointText)
 		end
 	end
 	
@@ -108,14 +108,14 @@ local function set_objectives(questID)
 			if objective then
 				local name
 				if ( not text or strlen(text) == 0 ) then
-					name= WoWTools_ChineseMixin:CN(type) or type
+					name= WoWTools_ChineseMixin:SetText(type) or type
 					text= type
 				else
 					local new= WoWTools_ChineseMixin:GetQuestObject(questID, i)--无法找到
 					if new then
 						name= text:gsub('%d+/%d+ (.+)', new)
 					end
-					name= name or WoWTools_ChineseMixin:CN(text) or text
+					name= name or WoWTools_ChineseMixin:SetText(text) or text
 				end
 				if ( finished ) then
 					name = name.." （完成）"
@@ -172,13 +172,13 @@ local function set_quest_item(questID)
 	end
 
 	for frame in rewardsFrame.reputationRewardPool:EnumerateActive() do
-		local name= WoWTools_ChineseMixin:CN(frame.factionName)
+		local name= WoWTools_ChineseMixin:SetText(frame.factionName)
 		if name then
 			frame.Name:SetFormattedText('%s声望', name)
 		end
 	end
 
-	skillName= skillName and WoWTools_ChineseMixin:CN(skillName)
+	skillName= skillName and WoWTools_ChineseMixin:SetText(skillName)
 	if skillName and skillPoints then
 		rewardsFrame.SkillPointFrame.Name:SetFormattedText('%s技能', skillName)
 		rewardsFrame.SkillPointFrame.tooltip = format('+%d %s技能点数', skillPoints, skillName)
@@ -190,7 +190,7 @@ local function set_quest_item(questID)
 			if btn.type == "reward" and  btn.objectType == "questSessionBonusReward" then
 				name= WoWTools_ChineseMixin:GetItemName(171305)--一箱回收的物资
 			elseif btn.objectType == 'currency' then
-				name= btn.currencyInfo and WoWTools_ChineseMixin:CN(btn.currencyInfo.name)
+				name= btn.currencyInfo and WoWTools_ChineseMixin:SetText(btn.currencyInfo.name)
 			else
 				local itemID
 				if QuestInfoFrame.questLog then

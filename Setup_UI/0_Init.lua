@@ -17,7 +17,7 @@ if PagingControlsMixin then
         local shouldHideControls = self.hideWhenSinglePage and self.maxPages <= 1
         if not shouldHideControls then
             if self.displayMaxPages then
-                local name= WoWTools_ChineseMixin:CN(self.currentPageWithMaxText)
+                local name= WoWTools_ChineseMixin:SetText(self.currentPageWithMaxText)
                 if name then
                     self.PageText:SetFormattedText(name, self.currentPage, self.maxPages)
                 end
@@ -140,7 +140,7 @@ hooksecurefunc('MinimapMailFrameUpdate', function()
     local senders = { GetLatestThreeSenders() }
     local headerText = #senders >= 1 and '未读邮件来自：' or '你有未阅读的邮件'
     for i, sender in ipairs(senders) do
-        headerText = headerText.."\n"..(WoWTools_ChineseMixin:CN(sender) or sender)
+        headerText = headerText.."\n"..(WoWTools_ChineseMixin:SetText(sender) or sender)
     end
     GameTooltip:SetText(headerText)
     GameTooltip:Show()
@@ -386,7 +386,7 @@ end)
 
 --UIErrorsFrame
 hooksecurefunc(UIErrorsFrame, 'AddMessage', function(self, msg, ...)
-    local text= WoWTools_ChineseMixin:CN(msg)
+    local text= WoWTools_ChineseMixin:SetText(msg)
     if text and msg~=text then
         self:AddMessage(text, ...)
     end
@@ -597,7 +597,7 @@ hooksecurefunc(EventToastScenarioExpandToastMixin, 'OnClick', function(self, but
 end)
 hooksecurefunc(EventToastWeeklyRewardToastMixin, 'Setup', function(self, toastInfo)
     WoWTools_ChineseMixin:SetLabel(self.Contents.Title, toastInfo.title)
-    WoWTools_ChineseMixin:SetLabel(self.Contents.SubTitle, WoWTools_ChineseMixin:CN(toastInfo.subtitle))
+    WoWTools_ChineseMixin:SetLabel(self.Contents.SubTitle, WoWTools_ChineseMixin:SetText(toastInfo.subtitle))
 end)
 hooksecurefunc(EventToastWithIconBaseMixin, 'Setup', function(self, toastInfo)
     WoWTools_ChineseMixin:SetLabel(self.Title, toastInfo.title)
@@ -636,13 +636,13 @@ end)
 
 -- PVP
 for index, en in pairs(CONQUEST_SIZE_STRINGS) do
-    local cn= WoWTools_ChineseMixin:CN(en)
+    local cn= WoWTools_ChineseMixin:SetText(en)
     if cn then
         CONQUEST_SIZE_STRINGS[index]= cn
     end
 end
 for index, en in pairs(CONQUEST_TYPE_STRINGS) do
-    local cn= WoWTools_ChineseMixin:CN(en)
+    local cn= WoWTools_ChineseMixin:SetText(en)
     if cn then
         CONQUEST_TYPE_STRINGS[index]= cn
     end

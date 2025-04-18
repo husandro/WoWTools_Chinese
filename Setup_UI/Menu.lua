@@ -73,7 +73,7 @@ end)
 
 
 hooksecurefunc(MenuUtil, 'SetElementText', function(elementDescription, text)
-    local name= WoWTools_ChineseMixin:CN(text)
+    local name= WoWTools_ChineseMixin:SetText(text)
     if name and name~=text then
         elementDescription.text = name
     end

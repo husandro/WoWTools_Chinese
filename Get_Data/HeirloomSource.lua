@@ -1,7 +1,6 @@
 --[[
 [ItemID]= 'SourceText_lang',
 https://wago.tools/db2/Heirloom?locale=zhCN
-11.0.2.55789
 ]]
 
 if PlayerGetTimerunningSeasonID() then
