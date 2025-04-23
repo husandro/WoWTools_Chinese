@@ -257,7 +257,7 @@ local function Blizzard_HeroTalentsSelectionDialog()
     --HeroTalentsContainerMixin
     hooksecurefunc(PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer, 'UpdateHeroSpecButton', function(self)
 
-        if self.HeroSpecLabel:IsShown() then
+        if self.HeroSpecLabel:IsShown() and self.activeSubTreeInfo and self.activeSubTreeInfo then
             local specName= WoWTools_ChineseMixin:GetTraitSubTree(self.activeSubTreeInfo.ID, true, false)
             if specName then
                 self.HeroSpecLabel:SetText(specName)
