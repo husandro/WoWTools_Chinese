@@ -736,6 +736,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_ExpansionLandingPage()
     
 end
 
+
+
 --[[function CooldownViewerBuffBarItemMixin:RefreshName()
 	local nameFontString = self:GetNameFontString();
 	if not nameFontString:IsShown() then
@@ -803,5 +805,4 @@ EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(_, arg1)
         Init()
     end
 end)
-
 
