@@ -138,7 +138,7 @@ Setup_UI\Achievement.lua
 
 Setup_UI\StableFrame.lua
 Setup_UI\MailFrame.lua
-Setup_UI\SettingsPanel.lua
+Setup_UI\Blizzard_Settings.lua
 Setup_UI\EditModeManagerFrame.lua
 Setup_UI\NavBar.lua
 Setup_UI\GameTooltip.lua
