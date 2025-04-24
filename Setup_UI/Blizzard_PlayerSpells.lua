@@ -14,7 +14,7 @@
 
 
 
-
+--法术书
 local function Init_SpellBookFrame()
     WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton.Label)--隐藏被动技能
     WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton.Text)
@@ -30,7 +30,6 @@ local function Init_SpellBookFrame()
             WoWTools_ChineseMixin:SetLabel(btn.Text)
         end
     end
-
 
 --名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateVisuals', function(self)
@@ -62,7 +61,17 @@ local function Init_SpellBookFrame()
         end
     end)
 
+
+
+
 end
+
+
+
+
+
+
+
 
 
 
