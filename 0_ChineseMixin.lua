@@ -326,6 +326,8 @@ function WoWTools_ChineseMixin:SetButton(btn, text, affer, setFont)
         local label= btn:GetFontString()
         if label then
             self:SetLabel(label, text, affer, setFont)
+        elseif btn.GetText and btn.SetText then
+            WoWTools_ChineseMixin:SetLabel(btn, text, affer, setFont)
         end
     end
 end

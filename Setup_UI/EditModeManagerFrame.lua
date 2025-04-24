@@ -1,10 +1,6 @@
 
 
 
-
-
-
---编辑模式    
 EditModeManagerFrame.Title:SetText('HUD编辑模式')
 EditModeManagerFrame.Tutorial.MainHelpPlateButtonTooltipText= '点击这里打开/关闭编辑模式的帮助系统。'
 EditModeManagerFrame.ShowGridCheckButton.Label:SetText('显示网格')
@@ -13,7 +9,9 @@ EditModeManagerFrame.EnableAdvancedOptionsCheckButton.Label:SetText('高级选�
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.FramesTitle.Title:SetText('框体')
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.CombatTitle.Title:SetText('战斗')
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.MiscTitle.Title:SetText('其它')
+
 WoWTools_ChineseMixin:SetLabel(EditModeManagerFrame.LayoutLabel)--布局：
+
 hooksecurefunc(EditModeManagerFrame.AccountSettings, 'SetExpandedState', function(self, expanded, isUserInput)
     self.Expander.Label:SetText(expanded and '收起选项 |A:editmode-up-arrow:16:11:0:3|a' or '展开选项 |A:editmode-down-arrow:16:11:0:-7|a')
 end)
@@ -39,6 +37,8 @@ hooksecurefunc(EditModeSystemSettingsDialog, 'AttachToSystemFrame', function(sel
     local name= systemFrame:GetSystemName()
     WoWTools_ChineseMixin:SetLabel(self.Title, name)
 end)
+
+
 
 EditModeNewLayoutDialog.Title:SetText('给新布局起名')
 EditModeNewLayoutDialog.CharacterSpecificLayoutCheckButton.Label:SetText('角色专用布局')
@@ -92,7 +92,8 @@ hooksecurefunc(EditModeNewLayoutDialog, 'UpdateAcceptButtonEnabledState', functi
     end
 end)
 
---EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.CombatContainer
+
+
 
 for _, frame in pairs(EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.BasicOptionsContainer:GetLayoutChildren() or {}) do
     WoWTools_ChineseMixin:SetLabel(frame.Label)
@@ -110,17 +111,34 @@ EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptio
 end)
 EditModeManagerFrame.AccountSettings.SettingsContainer.ScrollChild.AdvancedOptionsContainer.MiscContainer:HookScript('OnShow', function(self)
     for _,frame in pairs(self:GetLayoutChildren() or {}) do
-        local text= WoWTools_ChineseMixin:CN(frame.labelText)
-        if text then
-            frame:SetLabel(text)
-        end
+        WoWTools_ChineseMixin:SetLabel(frame.Label)
         if frame.disabledTooltipText== HUD_EDIT_MODE_LOOT_FRAME_DISABLED_TOOLTIP then
             frame.disabledTooltipText= '你必须关闭位于：界面 > 控制菜单中的“鼠标位置打开拾取窗口”选项，才能自定义拾取窗口布局。'
         end
     end
 end)
+
+
+
+
+EditModeSystemSettingsDialog.Buttons.RevertChangesButton:SetText('撤销变更')
+hooksecurefunc(EditModeSystemSettingsDialog, 'UpdateExtraButtons', function(self, systemFrame)--EditModeDialogs.lua
+    if systemFrame == self.attachedToSystem then
+        systemFrame.resetToDefaultPositionButton:SetText('重设到默认位置')
+    end
+end)
+hooksecurefunc(EditModeSystemSettingsDialog, 'UpdateButtons', function(self, systemFrame)
+    if systemFrame == self.attachedToSystem then
+        if systemFrame.Selection then
+            WoWTools_ChineseMixin:SetLabel(systemFrame.Selection.HorizontalLabel)
+            WoWTools_ChineseMixin:SetLabel(systemFrame.Selection.Label)
+            WoWTools_ChineseMixin:SetLabel(systemFrame.Selection.VerticalLabel)
+        end
+    end
+end)
+
 hooksecurefunc(EditModeManagerFrame.AccountSettings, 'SetupStatusTrackingBar2', function(self)
-    self.settingsCheckButtons.StatusTrackingBar2:SetLabel('状态栏 2')
+    self.settingsCheckButtons.StatusTrackingBar2.Label:SetText('状态栏 2')
 end)
 
 
@@ -142,23 +160,24 @@ hooksecurefunc(EditModeSettingSliderMixin, 'SetupSetting', function(self, settin
 end)
 
 
-EditModeSystemSettingsDialog.Buttons.RevertChangesButton:SetText('撤销变更')
-hooksecurefunc(EditModeSystemSettingsDialog, 'UpdateExtraButtons', function(self, systemFrame)
-    if systemFrame == self.attachedToSystem then
-        systemFrame.resetToDefaultPositionButton:SetText('重设到默认位置')
-    end
-end)
-hooksecurefunc(EditModeSystemSettingsDialog, 'UpdateButtons', function(self, systemFrame)
-    if systemFrame == self.attachedToSystem then
-        if systemFrame.Selection then
-            WoWTools_ChineseMixin:SetLabel(systemFrame.Selection.HorizontalLabel)
-            WoWTools_ChineseMixin:SetLabel(systemFrame.Selection.Label)
-            WoWTools_ChineseMixin:SetLabel(systemFrame.Selection.VerticalLabel)
-        end
-    end
-end)
 
 
+
+
+
+--[[编辑模式    
+
+
+
+
+
+
+
+
+
+
+
+]]
 
 
 
