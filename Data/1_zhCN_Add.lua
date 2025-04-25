@@ -17,7 +17,7 @@ local tab_G={
 ['SPELLBOOK']= "法术书",
 ['GENERAL']= "综合",
 ['COLOR']= "颜色",
-['TRACKING'] = "追踪";
+['POI_FOCUS'] = "焦点",
 }
 
 
@@ -36,32 +36,29 @@ local tabItem= {
 
 
 EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
-
     do
         for itemID, text in pairs(tabItem) do
             WoWTools_ChineseMixin:SetCN(C_Item.GetItemNameByID(itemID), text)
         end
     end
-
     tabItem=nil
 
-    do
-        for en, cn in pairs(tab_G) do
-            WoWTools_ChineseMixin:SetCN(_G[en], cn)
-        end
-    end
-    tab_G=nil
-
     WoWTools_ChineseMixin:SetCN(EJ_GetTierInfo(2), '燃烧远征')
-    
+
     EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
 end)
 
+
+
 do
+    for en, cn in pairs(tab_G) do
+        WoWTools_ChineseMixin:SetCN(_G[en], cn)
+    end
+
     for en, cn in pairs(tabString) do
         WoWTools_ChineseMixin:SetCN(en, cn)
     end
 end
 
-
+tab_G=nil
 tabString=nil
