@@ -88,8 +88,8 @@ local replacement = {
 
 function WoWTools_ChineseMixin:ReplaceText(s)
     if s and s~='' then
-        for origin,new in pairs(replacement) do
-            s = string.gsub(s, new, origin)
+        for new, origin in pairs(replacement) do
+            s = s:gsub(origin, new)
         end
         return s
     end
@@ -170,7 +170,7 @@ function WoWTools_ChineseMixin:GetSpellName(spellID)
     if spellID then
         local data= self:GetSpellData(spellID)
         if data then
-            return self:ReplaceText(data[1])
+            return data[1]--self:ReplaceText(data[1])
         end
     end
 end
@@ -242,7 +242,7 @@ function WoWTools_ChineseMixin:GetItemName(itemID)
     if itemID then
         local data= self:GetItemData(itemID)
         if data then
-            return self:ReplaceText(data[1])
+            return data[1]--self:ReplaceText(data[1])
         end
     end
 end
