@@ -8,7 +8,7 @@ PAPERDOLL_SIDEBARS[1].name= '角色属性'
 CharacterStatsPane.ItemLevelCategory.Title:SetText('物品等级')
 CharacterStatsPane.AttributesCategory.Title:SetText('属性')
 CharacterStatsPane.EnhancementsCategory.Title:SetText('强化属性')
-
+WoWTools_ChineseMixin:SetLabel(CharacterTrialLevelErrorText)
 
 hooksecurefunc('PaperDollFrame_SetLabelAndText', function(statFrame, label)--PaperDollFrame.lua
     if statFrame.Label then
