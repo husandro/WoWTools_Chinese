@@ -64,6 +64,7 @@ local replacement = {
     ["码射程"] = "Â",
     ["秒"] = "Ã",
     ["冷却时间"] = "Ä",
+    --["|cffffffff"] = "Å",
     ["|cffffd100"] = "Å",
     ["|r|cff7f7f7f"] = "Æ",
     ["|r"] = "Ç",
@@ -520,8 +521,14 @@ end
 
 
 
-
-for journalEncounterID, info in pairs(WoWeuCN_Tooltips_EncounterData or {}) do
-    WoWTools_ChineseMixin:SetCN(EJ_GetEncounterInfo(journalEncounterID),  info['Title'])
+do
+    for journalEncounterID, info in pairs(WoWeuCN_Tooltips_EncounterData) do
+        local name, desc= EJ_GetEncounterInfo(journalEncounterID)
+        WoWTools_ChineseMixin:SetCN(name,  info['Title'])
+        WoWTools_ChineseMixin:SetCN(desc,  info['Description'])
+    end
+end
+if not loadEncounterData then
+    WoWeuCN_Tooltips_EncounterData=nil
 end
 

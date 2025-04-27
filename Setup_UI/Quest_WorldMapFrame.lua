@@ -75,7 +75,9 @@ QuestScrollFrame.covenantCallingsHeaderFramePool
 local function set_text(line)
     WoWTools_ChineseMixin:SetLabel(line.ButtonText)
     if line.Text then
+        
         local name =  WoWTools_ChineseMixin:GetQuestData(line.questID, true, false, false)
+        print(line.questID, name)
         if name then
             line.Text:SetText(name)
         end
@@ -172,22 +174,22 @@ local MapLegendData = {
 
 
 do
-for _, data in ipairs(MapLegendData) do
-    local frame=_G[data.CategoryTitle]
-    if frame then
-        WoWTools_ChineseMixin:SetLabel(frame.TitleText, data.CategoryTitle)
-    end
-    for _, categoryData in ipairs(data.CategoryData) do
-        local btn=_G[categoryData.Name]
-        if btn then
-            WoWTools_ChineseMixin:SetLabel(btn, categoryData.Name)
-            local tooltip= WoWTools_ChineseMixin:CN(categoryData.Tooltip)
-            if tooltip then
-                btn.tooltipText= tooltip
+    for _, data in pairs(MapLegendData) do
+        local frame=_G[data.CategoryTitle]
+        if frame then
+            WoWTools_ChineseMixin:SetLabel(frame.TitleText, data.CategoryTitle)
+        end
+        for _, categoryData in ipairs(data.CategoryData) do
+            local btn=_G[categoryData.Name]
+            if btn then
+                WoWTools_ChineseMixin:SetLabel(btn, categoryData.Name)
+                local tooltip= WoWTools_ChineseMixin:CN(categoryData.Tooltip)
+                if tooltip then
+                    btn.tooltipText= tooltip
+                end
             end
         end
     end
-end
 end
 QuestsCategoryData = nil
 LimitedCategoryData = nil
