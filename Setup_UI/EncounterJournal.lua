@@ -1,4 +1,3 @@
-local _, e = ...
 
 
 
@@ -49,13 +48,11 @@ local function UpdateEncounterJournalHeaders()
                 local difficultyID = EJ_GetDifficulty()
                 local data = WoWTools_ChineseMixin:GetBoosSectionData(infoHeader.myID, difficultyID)--difficultyID and WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
                 if data then
-                    local title= data["Title"]
-                    local desc= data["Description"]
-                    if title then
-                        infoHeader.button.title:SetText(data["Title"])
+                    if data.Title then
+                        infoHeader.button.title:SetText(data.Title)
                     end
-                    if desc then
-                        infoHeader.description:SetText(data["Description"])
+                    if data.Description then
+                        infoHeader.description:SetText(data.Description)
                     end
                     EncounterJournal_ShiftHeaders(index)
                 end
@@ -381,14 +378,16 @@ local function Init_WoWeuCN()
         local self = EncounterJournal.encounter
         local info= WoWTools_ChineseMixin:GetBossData(encounterID)
         if info then
-            local title= info["Title"]
-            local desc= info["Description"]
+            local title= info.Title
+            local desc= info.Description
+--技能，列表
             if title then
                 self.info.encounterTitle:SetText(title)
                 set_navButton(EncounterJournal.navBar, title)--导航条
 
             end
             if desc then
+
                 self.overviewFrame.loreDescription:SetText(desc)
                 self.infoFrame.description:SetText(desc)
                 self.infoFrame.descriptionHeight = self.infoFrame.description:GetHeight()
@@ -418,8 +417,9 @@ local function Init_WoWeuCN()
     hooksecurefunc("EncounterJournal_SetDescriptionWithBullets", function(infoHeader)
         local data = infoHeader and WoWTools_ChineseMixin:GetBoosSectionData(infoHeader.sectionID)
         if data then
-            local title= data["Title"]
-            local desc= data["Description"]
+
+            local title= data.Title
+            local desc= data.Description
             if title then
                 infoHeader.button.title:SetText(title)
             end

@@ -506,7 +506,7 @@ end
 
 
 
-
+--[[
 do
     for journalEncounterID, info in pairs(WoWeuCN_Tooltips_EncounterData) do
         local name, desc= EJ_GetEncounterInfo(journalEncounterID)
@@ -516,5 +516,5 @@ do
 end
 if not loadEncounterData then
     WoWeuCN_Tooltips_EncounterData=nil
-end
+end]]
 
