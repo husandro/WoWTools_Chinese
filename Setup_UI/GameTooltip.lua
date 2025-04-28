@@ -211,12 +211,9 @@ local function set_spell(tooltip, data)
     local name = WoWTools_ChineseMixin:GetSpellName(data.id)
     if name then
         tooltip.TextLeft1:SetText(name)
-        local desc, desc2= WoWTools_ChineseMixin:GetSpellDesc(data.id)
+        local desc= WoWTools_ChineseMixin:GetSpellDesc(data.id)
         if desc then
             tooltip:AddLine(' ')
-            if desc2 then
-                tooltip:AddLine(desc2, nil,nil,nil, true)
-            end
             tooltip:AddLine(desc, nil,nil,nil, true)
         end
     end
@@ -238,16 +235,6 @@ if not GetItemData then
 
 end
 
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Macro, function(tooltip, data)
-    local frame= tooltip:GetOwner()--宏 11版本
-    if frame and frame.action then
-        local type, macroID, subType= GetActionInfo(frame.action)
-        if type=='macro' and macroID and subType=='spell' then
-            data.id= macroID
-            set_spell(tooltip, data)
-        end
-    end
-end)
 
 
 TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(tooltip, data)
@@ -256,6 +243,20 @@ TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(toolt
         local source= WoWTools_ChineseMixin:GetToySource(data.id)
         if source then
             tooltip:AddLine(source, nil,nil,nil, true)
+        end
+    end
+end)
+
+
+
+
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Macro, function(tooltip, data)
+    local frame= tooltip:GetOwner()--宏 11版本
+    if frame and frame.action then
+        local type, macroID, subType= GetActionInfo(frame.action)
+        if type=='macro' and macroID and subType=='spell' then
+            data.id= macroID
+            set_spell(tooltip, data)
         end
     end
 end)
@@ -276,13 +277,39 @@ end
 
 
 
+--Title Objectives Description
+local function Set_Quest_Tooltip(tooltip, questID, isShow)
+    local data= WoWTools_ChineseMixin:GetQuestData(questID)
+    if not data then
+        return
+    end
+    local title= data['Title']
+    local ob= data['Objectives']
+    if title or ob then
+        tooltip:AddLine(' ')
+    end
+    tooltip:AddLine(title, nil,nil,nil, true)
+    GameTooltip_AddColoredLine(tooltip, ob, HIGHLIGHT_FONT_COLOR)
 
+    if isShow and (title or ob )  then
+        tooltip:Show()
+    end
+end
 
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Quest, function(tooltip, data)
+    Set_Quest_Tooltip(tooltip, data.id)
+end)
 
-
-
-
-
+hooksecurefunc("QuestMapLogTitleButton_OnEnter", function(self)
+    Set_Quest_Tooltip(GameTooltip, self.questID, true)
+end)
+hooksecurefunc('GameTooltip_AddQuest', function(self, questIDArg)
+    local questID = self.questID or questIDArg
+    Set_Quest_Tooltip(GameTooltip, questID, true)
+end)
+--[[hooksecurefunc('GameTooltip_AddQuestRewardsToTooltip', function(self)--世界任务ID GameTooltip_AddQuest
+    --WoWTools_TooltipMixin:Set_Quest(self, ques)
+end)]]
 
 
 --GameTooltip.lua

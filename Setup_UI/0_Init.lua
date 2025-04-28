@@ -12,25 +12,22 @@ end)
 
 
 --页数 Blizzard_PagingControls.lua
-if PagingControlsMixin then
-    hooksecurefunc(PagingControlsMixin, 'UpdateControls', function(self)
-        local shouldHideControls = self.hideWhenSinglePage and self.maxPages <= 1
-        if not shouldHideControls then
-            if self.displayMaxPages then
-                local name= WoWTools_ChineseMixin:SetText(self.currentPageWithMaxText)
-                if name then
-                    self.PageText:SetFormattedText(name, self.currentPage, self.maxPages)
-                end
-            else
-                local name=self.currentPageOnlyText
-                if name then
-                    self.PageText:SetFormattedText(name, self.currentPage)
-                end
+hooksecurefunc(PagingControlsMixin, 'UpdateControls', function(self)
+    local shouldHideControls = self.hideWhenSinglePage and self.maxPages <= 1
+    if not shouldHideControls then
+        if self.displayMaxPages then
+            local name= WoWTools_ChineseMixin:SetText(self.currentPageWithMaxText)
+            if name then
+                self.PageText:SetFormattedText(name, self.currentPage, self.maxPages)
+            end
+        else
+            local name=self.currentPageOnlyText
+            if name then
+                self.PageText:SetFormattedText(name, self.currentPage)
             end
         end
-    end)
-end
-
+    end
+end)
 
 
 
@@ -123,9 +120,7 @@ end)
 GhostFrameContentsFrameText:SetText('返回墓地')
 
 --宠物对战
-if PetBattleFrame then
-    PetBattleFrame.BottomFrame.TurnTimer.SkipButton:SetText('待命')
-end
+PetBattleFrame.BottomFrame.TurnTimer.SkipButton:SetText('待命')
 
 
 QuestInfoRequiredMoneyText:SetText('需要金钱：')
@@ -202,11 +197,9 @@ ReportFrame.ReportButton:SetText('举报')
 
 
 --ButtonTrayUtil.lua
-if ButtonTrayUtil.TestCheckboxTraySetup then
-    hooksecurefunc(ButtonTrayUtil, 'TestCheckboxTraySetup', function(button, labelText)--ButtonTrayUtil.lua
-        WoWTools_ChineseMixin:SetLabel(button.Label, labelText)
-    end)
-end
+hooksecurefunc(ButtonTrayUtil, 'TestCheckboxTraySetup', function(button, labelText)--ButtonTrayUtil.lua
+    WoWTools_ChineseMixin:SetLabel(button.Label, labelText)
+end)
 
 hooksecurefunc(ButtonTrayUtil, 'TestButtonTraySetup', function(button, label)
     label= WoWTools_ChineseMixin:SetText(label)

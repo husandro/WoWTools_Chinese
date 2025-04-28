@@ -75,14 +75,15 @@ QuestScrollFrame.covenantCallingsHeaderFramePool
 local function set_text(line)
     WoWTools_ChineseMixin:SetLabel(line.ButtonText)
     if line.Text then
-        
-        local name =  WoWTools_ChineseMixin:GetQuestData(line.questID, true, false, false)
-        print(line.questID, name)
+        local name = WoWTools_ChineseMixin:GetQuestName(line.questID)
         if name then
             line.Text:SetText(name)
+        else
+            WoWTools_ChineseMixin:SetLabel(line.Text)
         end
    end
 end
+
 hooksecurefunc("QuestLogQuests_Update", function()
     for line in QuestScrollFrame.headerFramePool:EnumerateActive() do
         set_text(line)

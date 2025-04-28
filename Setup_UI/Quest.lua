@@ -81,13 +81,14 @@ end)
 --任务，目标
 local function set_objectives(questID)
 	questID= questID or WoWTools_ChineseMixin:GetQuestID()
+	
 	if not questID then
 		return
 	end
 
 	local numObjectives = GetNumQuestLeaderBoards() or 0
 	local objective
-	local text, type, finished
+	local desc, obType, finished
 	local objectivesTable = QuestInfoObjectivesFrame.Objectives
 	local numVisibleObjectives = 0
 
@@ -96,34 +97,43 @@ local function set_objectives(questID)
 		numVisibleObjectives = numVisibleObjectives + 1
 		objective = objectivesTable[numVisibleObjectives]
 		if objective then
-			objective:SetFormattedText('0/1 %s （可选）', WoWTools_ChineseMixin:SetText(waypointText) or waypointText)
+			local cn=  WoWTools_ChineseMixin:SetText(waypointText)
+			if not cn then
+				local mapID= C_QuestLog.GetNextWaypoint(questID)
+				local mapInfo= C_Map.GetMapInfo(mapID)
+				cn= WoWTools_ChineseMixin:CN(mapInfo and mapInfo.name)
+				if cn then
+					cn= '前往|A:common-icon-rotateright:0:0|a'..cn..'|A:common-icon-rotateleft:0:0|a'
+				end
+			end
+
+			objective:SetFormattedText('0/1 %s （可选）', cn or waypointText)
 		end
 	end
 	
 	for i = 1, numObjectives do
-		text, type, finished = GetQuestLogLeaderBoard(i)
-		if (type ~= "spell" and type ~= "log" and numVisibleObjectives < MAX_OBJECTIVES) then
+		desc, obType, finished = GetQuestLogLeaderBoard(i)
+		if (obType ~= "spell" and obType ~= "log" and numVisibleObjectives < MAX_OBJECTIVES) then
 			numVisibleObjectives = numVisibleObjectives+1
 			objective = objectivesTable[numVisibleObjectives]
 			if objective then
 				local name
-				if ( not text or strlen(text) == 0 ) then
-					name= WoWTools_ChineseMixin:SetText(type) or type
-					text= type
+				if ( not desc or strlen(desc) == 0 ) then
+					name= WoWTools_ChineseMixin:SetText(obType) or obType
+					desc= obType
 				else
-					local new= WoWTools_ChineseMixin:GetQuestObject(questID, i)--无法找到
+					local new= WoWTools_ChineseMixin:GetQuestIndexObject(questID, i)--无法找到
 					if new then
-						name= text:gsub('%d+/%d+ (.+)', new)
+						name= desc:gsub('%d+/%d+ (.+)', new)
 					end
-					name= name or WoWTools_ChineseMixin:SetText(text) or text
+					name= name or WoWTools_ChineseMixin:SetText(desc) or desc
 				end
 				if ( finished ) then
 					name = name.." （完成）"
 				end
-				if text~=name then
+				if desc~=name then
 					objective:SetText(name)
 				end
-				--GetQuestLogItemLink(type, index)
 			end
 		end
 	end
@@ -320,7 +330,7 @@ hooksecurefunc('QuestInfo_Display', set_quest_info)
 
 
 hooksecurefunc('QuestInfo_ShowTitle', function()
-	local title= WoWTools_ChineseMixin:GetQuestData(WoWTools_ChineseMixin:GetQuestID(), true, false, false)
+	local title= WoWTools_ChineseMixin:GetQuestName(WoWTools_ChineseMixin:GetQuestID())
 	if not title then
 	   return
 	end
@@ -333,7 +343,7 @@ hooksecurefunc('QuestInfo_ShowTitle', function()
 
 
  hooksecurefunc('QuestInfo_ShowDescriptionText', function()
-	local desc=  WoWTools_ChineseMixin:GetQuestData(WoWTools_ChineseMixin:GetQuestID(), false, false, true)
+	local desc=  WoWTools_ChineseMixin:GetQuestDesc(WoWTools_ChineseMixin:GetQuestID())
 	if desc then
 	   QuestInfoDescriptionText:SetText(desc)
 	end

@@ -18,8 +18,6 @@
 ##字符, 常用
 Data\0_zhCN.lua
 
-
-
 ##商店
 Data\AccountStore.lua
 
@@ -27,7 +25,6 @@ Data\AccountStore.lua
 Data\Spell_Data_Flyout.lua
 Data\Spell_Data_Add.lua
 Data\Spell_Data_Specialization.lua
-
 
 ##成就
 Data\Achievement_Data_Category.lua
@@ -52,13 +49,8 @@ Data\Currency_Data.lua
 ##专业
 Data\Professions_Data_SkillLine.lua
 
-
 ##收藏
-
 Data\Collection_Data_Mount.lua
-
-
-
 Data\Collection_Data_WarbandScene.lua
 
 ##挑战
@@ -73,6 +65,7 @@ Data\Map_Data_UiMapGroupMember.lua
 Data\Item_Data_Set.lua
 Data\Item_Data_SubClass.lua
 Data\Item_Data_TransmogSet.lua
+
 ##职业
 Data\Class.lua
 
@@ -90,32 +83,44 @@ Data\Class.lua
 ##Function
 ##英雄专精
 Get_Data\TraitSubTree.lua
+
 ##Vignette
 Get_Data\VignetteName.lua
+
 ##头衔
 Get_Data\TitleName.lua
+
 ##场景
 Get_Data\ScenarioStepData.lua
 Get_Data\ScenarioName.lua
+
 ##任务目标
-Get_Data\QuestObject.lua
+Get_Data\QuestObjectIndex.lua
+
 ##专业
 Get_Data\TradeSkillCategoryName.lua
 Get_Data\RecipeSource.lua
 Get_Data\SkillLineAbilityName.lua
 Get_Data\ProfessionNodeDesc.lua
+
 ##LFG
 Get_Data\LFGDungeonDesc.lua
+
 ##节日
 Get_Data\HolidayData.lua
+
 ##冒险指南
 Get_Data\PerksActivityData.lua
+
 ##玩具，来原
 Get_Data\ToySource.lua
+
 ##宠物, desc
 Get_Data\PetDesc.lua
+
 ##宠物,技能
 Get_Data\PetAblityData.lua
+
 ##传家宝, desc
 Get_Data\HeirloomSource.lua
 

@@ -4020,6 +4020,14 @@ local tab={
 
 
 
-function WoWTools_ChineseMixin:GetQuestObject(questID, index)
-    return tab[questID..'x'..((index or 1)-1)]
+function WoWTools_ChineseMixin:GetQuestIndexObject(questID, index)
+    if not questID or not index then
+        return
+    end
+    local desc= tab[questID..'x'..(index-1)] or tab[questID..'x'..index]
+    if desc then
+        print(desc)
+    end
+
+    return desc
 end

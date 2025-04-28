@@ -116,8 +116,10 @@ end
 
 --法术 WoWTools_ChineseMixin:GetSpellData(spellID)
 function WoWTools_ChineseMixin:GetSpellData(spellID)
-    if GetSpellData then
-        GetSpellData(spellID)
+    if not spellID then
+        return
+    elseif GetSpellData then
+        return GetSpellData(spellID)
     end
 
     local data
@@ -168,31 +170,35 @@ end
 
 
 function WoWTools_ChineseMixin:GetSpellName(spellID)
-    if spellID then
-        local data= self:GetSpellData(spellID)
-        if data then
-            return data[1]--self:ReplaceText(data[1])
-        end
+    local data= self:GetSpellData(spellID)
+    if data then
+        return data[1]--self:ReplaceText(data[1])
     end
 end
 
 function WoWTools_ChineseMixin:GetSpellDesc(spellID)
-    if spellID then
-        local data= self:GetSpellData(spellID)
-        if data then
-            local index= #data
-            if index>1 then
-                local desc
-                for i=2, index do
-                    local desc2= self:ReplaceText(data[i])
-                    if desc2 then
-                        desc= (desc and desc..'|n' or '').. desc2
-                    end
-                end
-                return desc
+    local data= self:GetSpellData(spellID) or {}
+    local num= #data
+    if num<=1 then
+        return
+    end
+
+    local t, t2, desc
+    local tab={[data[1]]= true}
+
+    for index=2, num do
+        t= data[index]
+        if t and not tab[t] then
+            tab[t]=true
+
+            t2= self:ReplaceText(t)
+
+            if t2 and t2:find('[\228-\233][\128-\191][\128-\191]') then
+                desc= (desc and desc..'|n' or '').. t2
             end
         end
     end
+    return desc
 end
 
 
@@ -346,9 +352,7 @@ end
 
 
 
---任务 WoWTools_ChineseMixin:GetQuestData(questID, isName, isObject, isDesc)
---local baseClass= UnitClassBase('player')
---local Player_Col= '|c'..select(4, GetClassColor(baseClass))..'%s|r'
+--任务
 local Player_Sex= UnitSex("player")
 local Player_Name= UnitName('player')
 local Player_Race= UnitRace('player')
@@ -359,18 +363,21 @@ EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner)
     EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
 end)
 
+local function YOUR_GENDER(s)
+    local a,b= s:match('%((.-);(.-)%)')
+    if a and b then
+       return Player_Sex==3 and a or b--3	Female
+    end
+end
+
 
 local function expand_text(msg)-- function WoWeuCN_Quests_ExpandUnitInfo(desc)
-   if not msg and msg=='' then
+   if not msg or msg=='' then
       return
    end
+
    msg= msg:gsub("NEW_LINE", "\n")
-   msg= msg:gsub('YOUR_GENDER%(.-;.-%)', function(s)--YOUR_GENDER(兄弟;小姐)
-      local a,b= s:match('%((.-);(.-)%)')
-      if a and b then
-         return Player_Sex==3 and a or b--3	Female
-      end
-   end)
+   msg= msg:gsub('YOUR_GENDER%(.-;.-%)', YOUR_GENDER)--YOUR_GENDER(兄弟;小姐)
    msg= msg:gsub("{name}", Player_Name)
    msg= msg:gsub("{race}", Player_Race)
    msg= msg:gsub("{class}", Player_Class)
@@ -383,52 +390,31 @@ end
 
 
 
+--Title Objectives Description
 
+function WoWTools_ChineseMixin:GetQuestName(questID)
+    local data=self:GetQuestData(questID)
+    return expand_text(data and data["Title"])
+end
 
+function WoWTools_ChineseMixin:GetQuestObject(questID)
+    local data=self:GetQuestData(questID)
+    return expand_text(data and data["Objectives"])
+end
 
-function WoWTools_ChineseMixin:GetQuestData(questID, isName, isObject, isDesc)
-    if not questID then
-        return
-    end
+function WoWTools_ChineseMixin:GetQuestDesc(questID)
+    local data=self:GetQuestData(questID)
+    return expand_text(data and data["Description"])
+end
 
-    local str_ID= tostring(questID)
-    local data= WoWeuCN_Quests_QuestData and WoWeuCN_Quests_QuestData[str_ID]
-    if not data then
-        return
-    end
-
-    local name= data["Title"]
-    if name =='' then
-        name= nil
-    end
-
-    if isName then
-        return name
-
-    else
-        local object= expand_text(data["Objectives"])
-        if object =='' then
-            object= nil
-        end
-
-        if isObject then
-            return object
-        end
-
-        local desc= expand_text(data["Description"])
-        if desc =='' then
-            desc= nil
-        end
-
-        if isDesc then
-            return desc
-        else
-            return {
-                ["Title"]= name,
-                ["Objectives"]= object,
-                ["Description"]= desc,
-            }
-        end
+function WoWTools_ChineseMixin:GetQuestData(questID)
+    local data = questID and WoWeuCN_Quests_QuestData[tostring(questID)]
+    if data then
+        return {
+            Title= expand_text(data.Title),
+            Objectives= expand_text(data.Objectives),
+            Description= expand_text(data.Description),
+        }
     end
 end
 

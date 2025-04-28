@@ -32,7 +32,7 @@ end
 local function set_quest(_, block)
     local questID= block.id and tonumber(block.id)
     if questID then
-        local name= WoWTools_ChineseMixin:GetQuestData(questID, true, false, false)
+        local name= WoWTools_ChineseMixin:GetQuestName(questID)
         if name then
             block:SetHeader(name)
         end
@@ -46,7 +46,7 @@ end
 hooksecurefunc(QuestObjectiveTracker, 'UpdateSingle', set_quest)
 local questID = quest:GetID()
 local block = Get_Block(self, questID)    
-local name= WoWTools_ChineseMixin:GetQuestData(questID, true, false, false)
+local name= WoWTools_ChineseMixin:GetQuestName(questID)
 if block and name then
     block:SetHeader(name)
 end
@@ -70,7 +70,7 @@ hooksecurefunc(AutoQuestPopupBlockMixin, 'Update', function(self, questTitle, qu
         contents.TopText:SetText('发现任务！')
         contents.BottomText:SetText('点击以查看任务')
     end
-    local title= WoWTools_ChineseMixin:GetQuestData(questID, true, false, false) or WoWTools_ChineseMixin:CN(questTitle)
+    local title= WoWTools_ChineseMixin:GetQuestName(questID) or WoWTools_ChineseMixin:CN(questTitle)
     if title then
         contents.QuestName:SetText(title)
     end
