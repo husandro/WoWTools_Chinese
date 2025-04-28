@@ -274,9 +274,6 @@ end
 
 
 
-
-
-
 --Title Objectives Description
 local function Set_Quest_Tooltip(tooltip, questID, isShow)
     local data= WoWTools_ChineseMixin:GetQuestData(questID)
@@ -307,6 +304,8 @@ hooksecurefunc('GameTooltip_AddQuest', function(self, questIDArg)
     local questID = self.questID or questIDArg
     Set_Quest_Tooltip(GameTooltip, questID, true)
 end)
+
+
 --[[hooksecurefunc('GameTooltip_AddQuestRewardsToTooltip', function(self)--世界任务ID GameTooltip_AddQuest
     --WoWTools_TooltipMixin:Set_Quest(self, ques)
 end)]]
