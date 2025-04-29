@@ -28,164 +28,167 @@ function WoWTools_ChineseMixin:GetData(text, tab)
         return data
     end
 
-    if type(tab)=='table' then
-        if tab.holydayID then
+    if type(tab)~='table' then
+        return
+    end
+
+    if tab.holydayID then
+        if tab.isName then
+            data= self:GetHoliDayName(tab.holydayID)
+        elseif tab.isDesc then
+            data= self:GetHoliDayDesc(tab.holydayID)
+        else
+            data= self:GetHolidayData(tab.holydayID)--节日 eventID
+        end
+    elseif tab.perksActivityID then
+        
+        if tab.isName then
+            data= self:GetPerksActivityName(tab.perksActivityID)
+        elseif tab.isDesc then
+            data= self:GetPerksActivityDesc(tab.perksActivityID)
+        else
+            data= self:GetPerksActivityData(tab.perksActivityID)--PERKS
+        end
+
+    elseif tab.vignetteID then
+        data= self:GetVignetteName(tab.vignetteID)--Vignette
+
+    elseif tab.toyID then
+        data= self:GetToySource(tab.toyID)--玩具itemID
+
+    elseif tab.speciesID then
+        data= self:GetPetDesc(tab.speciesID)--专精
+
+    elseif tab.petAbilityID then
+        data= self:GetPetAblityData(tab.petAbilityID)--宠物技能
+
+    elseif tab.skillCategoryID then
+        data= self:GetTradeSkillCategoryName(tab.skillCategoryID)--专业目录
+
+    elseif tab.spellID or tab.spellLink then
+        local spellID= tab.spellID
+        if not spellID and tab.spellLink then
+            local spellInfo = C_Spell.GetSpellInfo(tab.spellLink)
+            if spellInfo then
+                spellID= spellInfo.spellID
+            end
+        end
+        if spellID then
             if tab.isName then
-                data= self:GetHoliDayName(tab.holydayID)
-            elseif tab.isDesc then
-                data= self:GetHoliDayDesc(tab.holydayID)
-            else
-                data= self:GetHolidayData(tab.holydayID)--节日 eventID
-            end
-        elseif tab.perksActivityID then
-            
-            if tab.isName then
-                data= self:GetPerksActivityName(tab.perksActivityID)
-            elseif tab.isDesc then
-                data= self:GetPerksActivityDesc(tab.perksActivityID)
-            else
-                data= self:GetPerksActivityData(tab.perksActivityID)--PERKS
-            end
-
-        elseif tab.vignetteID then
-            data= self:GetVignetteName(tab.vignetteID)--Vignette
-
-        elseif tab.toyID then
-            data= self:GetToySource(tab.toyID)--玩具itemID
-
-        elseif tab.speciesID then
-            data= self:GetPetDesc(tab.speciesID)--专精
-
-        elseif tab.petAbilityID then
-            data= self:GetPetAblityData(tab.petAbilityID)--宠物技能
-
-        elseif tab.skillCategoryID then
-            data= self:GetTradeSkillCategoryName(tab.skillCategoryID)--专业目录
-
-        elseif tab.spellID or tab.spellLink then
-            local spellID= tab.spellID
-            if not spellID and tab.spellLink then
-                local spellInfo = C_Spell.GetSpellInfo(tab.spellLink)
-                if spellInfo then
-                    spellID= spellInfo.spellID
-                end
-            end
-            if spellID then
-                if tab.isName then
-                    local name= self:GetSpellName(spellID)--法术名称
-                    if name then
-                        if tab.spellLink and tab.spellLink:find('|h%[.-]|h') then
-                            data= tab.spellLink:gsub('|h%[.-]|h', '|h['..name..']|h')
-                        end
-                        data= data or name
+                local name= self:GetSpellName(spellID)--法术名称
+                if name then
+                    if tab.spellLink and tab.spellLink:find('|h%[.-]|h') then
+                        data= tab.spellLink:gsub('|h%[.-]|h', '|h['..name..']|h')
                     end
-                elseif tab.isDesc then
-                    data= self:GetSpellDesc(spellID)
-                else
-                    data= self:GetSpellData(spellID)
-                    if data then
-                        for index, name2 in pairs(data) do
-                            data[index]= self:ReplaceText(name2)
-                        end
-                    end
+                    data= data or name
                 end
-            end
-
-        elseif tab.itemID or tab.itemLink then
-            local itemID= tab.itemID or C_Item.GetItemIDForItemInfo(tab.itemLink)
-            if tab.isToy then
-                data= self:GetToySource(itemID)
-            elseif tab.isHeirloom then
-                data= self:GetHeirloomSource(itemID)
-
-            elseif tab.isName then
-                local link= tab.itemLink
-                if link then
-                    local name= self:GetItemName(itemID)--物品名称
-                    if name then
-                        name= name:match('|c........(.+)|r') or name
-                        if link:find('|h%[.-]|h') then
-                            data= link:gsub('|h%[.-]|h', '|h['..name..']|h')
-                        end
-                    end
-                end
-                data= data or self:GetItemName(itemID) --物品名称
-
             elseif tab.isDesc then
-                data= self:GetHeirloomSource(itemID)--物品名称
-                
+                data= self:GetSpellDesc(spellID)
             else
-                data= self:GetItemData(itemID)--物品名称
+                data= self:GetSpellData(spellID)
                 if data then
                     for index, name2 in pairs(data) do
                         data[index]= self:ReplaceText(name2)
                     end
                 end
             end
-
-        elseif tab.skillLineAbilityID then
-            data= self:GetSkillLineAbilityName(tab.skillLineAbilityID)--专业配方,名称
-
-        elseif tab.recipeID then
-            data= self:GetRecipeSource(tab.recipeID)--专业配方,来源
-
-        elseif tab.ProfessionNodeID then
-            data= self:GetProfessionNodeDesc(tab.ProfessionNodeID)
-
-
-        elseif tab.lfgDungeonID then
-            data= self:GetLFGDungeonDesc(tab.lfgDungeonID)
-
-        elseif tab.sectionID then
-            if tab.isName then
-                data= self:GetBoosSectionName(tab.sectionID, tab.difficultyID)
-            elseif tab.isDesc then
-                data= self:GetBoosSectionDesc(tab.sectionID, tab.difficultyID)
-            else
-                data= self:GetBoosSectionData(tab.sectionID, tab.difficultyID)
-            end
-
-        elseif tab.journalEncounterID then
-            if tab.isName then
-               data= self:GetBossName(journalEncounterID)
-            elseif tab.isDesc then
-                data= self:GetBossDesc(tab.journalEncounterID)--BOOS
-            else
-                data= self:GetBossData(tab.journalEncounterID)
-            end
-
-        --[[elseif tab.instanceID then
-            data= self:GetInstanceDesc(tab.instanceID)--副本]]
-
-        elseif tab.scenarioID then
-            if tab.isName then
-                data= self:GetScenarioName(tab.scenarioID)
-            else
-                self:GetScenarioStepData(tab.scenarioID, tab.stepIndex)
-            end
-
-        elseif tab.questID then
-            if tab.isObject then
-                self:GetQuestObject(tab.questID, tab.index)
-            else
-                data= self:GetQuestData(tab.questID, tab.isName, tab.isObject, tab.isDesc)
-            end
-
-        elseif tab.npcID or tab.unit then
-            if tab.isName then
-                data= self:GetUnitName(tab.unit, tab.npcID)
-            else
-                data= self:GetUnitData(tab.unit, tab.npcID)
-            end
-
-
-        elseif tab.titleID then
-            data= self:GetTitleName(tab.titleID)
-
-        elseif tab.subTreeID then
-            data= WoWTools_ChineseMixin:Get_TraitSubTree(subTreeID, isName, isDesc)
         end
+
+    elseif tab.itemID or tab.itemLink then
+        local itemID= tab.itemID or C_Item.GetItemIDForItemInfo(tab.itemLink)
+        if tab.isToy then
+            data= self:GetToySource(itemID)
+        elseif tab.isHeirloom then
+            data= self:GetHeirloomSource(itemID)
+
+        elseif tab.isName then
+            local link= tab.itemLink
+            if link then
+                local name= self:GetItemName(itemID)--物品名称
+                if name then
+                    name= name:match('|c........(.+)|r') or name
+                    if link:find('|h%[.-]|h') then
+                        data= link:gsub('|h%[.-]|h', '|h['..name..']|h')
+                    end
+                end
+            end
+            data= data or self:GetItemName(itemID) --物品名称
+
+        elseif tab.isDesc then
+            data= self:GetHeirloomSource(itemID)--物品名称
+            
+        else
+            data= self:GetItemData(itemID)--物品名称
+            if data then
+                for index, name2 in pairs(data) do
+                    data[index]= self:ReplaceText(name2)
+                end
+            end
+        end
+
+    elseif tab.skillLineAbilityID then
+        data= self:GetSkillLineAbilityName(tab.skillLineAbilityID)--专业配方,名称
+
+    elseif tab.recipeID then
+        data= self:GetRecipeSource(tab.recipeID)--专业配方,来源
+
+    elseif tab.ProfessionNodeID then
+        data= self:GetProfessionNodeDesc(tab.ProfessionNodeID)
+
+
+    elseif tab.lfgDungeonID then
+        data= self:GetLFGDungeonDesc(tab.lfgDungeonID)
+
+    elseif tab.sectionID then
+        if tab.isName then
+            data= self:GetBoosSectionName(tab.sectionID, tab.difficultyID)
+        elseif tab.isDesc then
+            data= self:GetBoosSectionDesc(tab.sectionID, tab.difficultyID)
+        else
+            data= self:GetBoosSectionData(tab.sectionID, tab.difficultyID)
+        end
+
+    elseif tab.journalEncounterID then
+        if tab.isName then
+            data= self:GetBossName(journalEncounterID)
+        elseif tab.isDesc then
+            data= self:GetBossDesc(tab.journalEncounterID)--BOOS
+        else
+            data= self:GetBossData(tab.journalEncounterID)
+        end
+
+    --[[elseif tab.instanceID then
+        data= self:GetInstanceDesc(tab.instanceID)--副本]]
+
+    elseif tab.scenarioID then
+        if tab.isName then
+            data= self:GetScenarioName(tab.scenarioID)
+        else
+            self:GetScenarioStepData(tab.scenarioID, tab.stepIndex)
+        end
+
+    elseif tab.questID then
+        if tab.isObject then
+            self:GetQuestObject(tab.questID, tab.index)
+        else
+            data= self:GetQuestData(tab.questID, tab.isName, tab.isObject, tab.isDesc)
+        end
+
+    elseif tab.npcID or tab.unit then
+        if tab.isName then
+            data= self:GetUnitName(tab.unit, tab.npcID)
+        else
+            data= self:GetUnitData(tab.unit, tab.npcID)
+        end
+
+
+    elseif tab.titleID then
+        data= self:GetTitleName(tab.titleID)
+
+    elseif tab.subTreeID then
+        data= WoWTools_ChineseMixin:Get_TraitSubTree(subTreeID, isName, isDesc)
     end
+
     return data
 end
 

@@ -1,314 +1,240 @@
 
 
---[[
-local function set_model_tooltip(self)
-    if self then
-        local tooltip= self.tooltip and WoWTools_ChineseMixin:CN(self.tooltip)
-        if tooltip then
-            self.tooltip = tooltip
-        end
-        local tooltipText= self.tooltipText and WoWTools_ChineseMixin:CN(self.tooltipText)
-        if tooltipText then
-            self.tooltipText = tooltipText
-        end
-        local simpleTooltipLine= self.simpleTooltipLine and WoWTools_ChineseMixin:CN(self.simpleTooltipLine)
-        if simpleTooltipLine then
-            self.simpleTooltipLine= simpleTooltipLine
-        end
+local function Set_Line(tooltip)
+    for index=1, tooltip:NumLines() or 0, 1 do
+        WoWTools_ChineseMixin:SetLabel(tooltip['TextLeft'..index])
+        WoWTools_ChineseMixin:SetLabel(tooltip['TextRight'..index])
     end
-end
-local function model(self)
-    local frame= self and self.ControlFrame
-    if frame then
-        set_model_tooltip(frame.zoomInButton)
-        set_model_tooltip(frame.zoomOutButton)
-        set_model_tooltip(frame.rotateLeftButton)
-        set_model_tooltip(frame.rotateRightButton)
-        set_model_tooltip(frame.resetButton)
-
-        set_model_tooltip(frame.ResetCameraButton)
-        set_model_tooltip(frame.ZoomOutButton)
-        set_model_tooltip(frame.ZoomInButton)
-        set_model_tooltip(frame.RotateLeftButton)
-        set_model_tooltip(frame.RotateRightButton)
-    end
-end
-
-model(CharacterModelScene)
-if WardrobeTransmogFrame then
-    model(WardrobeTransmogFrame.ModelScene)
-end
-model(PetStableModelScene)]]
-
-
-
-local function get_gameTooltip_text(self)
-    WoWTools_ChineseMixin:SetLabel(self)
-    self:SetTextColor(self:GetTextColor())
-end
-
-local function set_gameTooltip_text(frame)
-    if frame and frame.GetName then
-        local name= frame:GetName()-- or 'GameTooltip'
-        if name then
-            for i=1, frame:NumLines() or 0, 1 do
-                get_gameTooltip_text(_G[name.."TextLeft"..i])
-                get_gameTooltip_text(_G[name.."TextRight"..i])
-            end
-        end
-    end
+    GameTooltip_CalculatePadding(tooltip)
 end
 
 
-local function set_GameTooltip_func(self)
-    self:HookScript('OnShow', set_gameTooltip_text)
-    self:HookScript('OnUpdate', function(frame, elapsed)
-        frame.elapsed= (frame.elapsed or TOOLTIP_UPDATE_TIME) +elapsed
-        if frame.elapsed>TOOLTIP_UPDATE_TIME and frame:IsVisible() then
-            set_gameTooltip_text(frame)
-        end
-    end)
-end
-
-local function set_pettips_func(self)--FloatingPetBattleTooltip.xml
-    if not self then
-        return
-    end
-    local function set_pet_func(frame)
-        WoWTools_ChineseMixin:SetLabel(frame.BattlePet)
-        WoWTools_ChineseMixin:SetLabel(frame.PetType)
-        local level = frame.Level:GetText():match('(%d+)')
-        if level then
-            frame.Level:SetFormattedText('等级 %s', level)
-        end
-    end
-    self:HookScript('OnShow', set_pet_func)
-end
-
---[[
-SharedTooltipTemplate
-local tabs={ GameTooltipTemplate
-    'ItemRefTooltip',
-    'RunforgeFrameTooltipTemplate',
-    'NamePlateTooltip',
-    'PerksProgramTooltip',
-    'ItemSocketingDescription',
-    'UIWidgetBaseItemEmbeddedTooltipTemplate',
-    'EncounterJournalTooltipItem1Tooltip',
-    'GarrisonMissionMechanicTooltip',
-}
-BattlePetTooltipTemplat    
-]]
-
-
-
-set_GameTooltip_func(SettingsTooltip)
-set_GameTooltip_func(GameTooltip)
-set_GameTooltip_func(ItemRefTooltip)
-set_GameTooltip_func(EmbeddedItemTooltip)
-
-set_pettips_func(BattlePetTooltip)
-set_pettips_func(FloatingBattlePetTooltip)
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---[[local function add_data(tooltip, data, info, isSpell)
-    if not tooltip:IsVisible() or not info then
-        return
-    end
-
-    if #data.lines== #info  then
-        local tipName= tooltip:GetName() or ''
-        for index, text in pairs(info) do
-            local line= tooltip['TextLeft'..index] or _G[tipName.."TextLeft"..index]
-            if line then
-                line:SetText(isSpell and WoWTools_ChineseMixin:ReplaceText(text) or text)
-                --line:SetTextColor(line:GetTextColor())
-            end
-        end
+local function add_line(tooltip, ...)
+    if tooltip.AddLine then
+        tooltip:AddLine(...)
     else
-        local add
-        for index, text in pairs(info) do
-            if text~=' ' then
-                if index==1 then
-                    tooltip.TextLeft1:SetText(isSpell and WoWTools_ChineseMixin:ReplaceText(text) or text)
-                else
-                    if not add then
-                        tooltip:AddLine(' ')
-                        add=true
-                    end
-                    tooltip:AddLine(isSpell and WoWTools_ChineseMixin:ReplaceText(text) or text, nil,nil,nil, true)
-                end
-            end
+        BattlePetTooltipTemplate_AddTextLine(tooltip, ...)
+    end
+end
+
+local function Set_Battle_Pet(tooltip, speciesID)
+    local data= WoWTools_ChineseMixin:GetPetDesc(speciesID)
+    if not data then
+        return
+    end
+
+    local companionID= select(4, C_PetJournal.GetPetInfoBySpeciesID(speciesID))
+    local name= WoWTools_ChineseMixin:GetUnitName(nil, companionID)
+    local desc=data[1]
+    local source= data[2]
+
+    if name or desc or source then
+        add_line(tooltip, ' ')
+    end
+    if name then
+        add_line(tooltip, name)
+    end
+    if desc then
+        add_line(tooltip, desc, nil, nil, nil, true)--来源提示
+    end
+    if source then
+        add_line(tooltip, source, nil, nil, nil, true)--来源提示--来源
+    end
+end
+
+
+
+
+
+
+local function Set_Quest(tooltip, questID, isShow)
+    local data= WoWTools_ChineseMixin:GetQuestData(questID)
+    if data then
+        local title= data['Title']
+        local ob= data['Objectives']
+        if title or ob then
+            tooltip:AddLine(' ')
         end
-        if add then
-            --tooltip:Show()
+        tooltip:AddLine(title, nil,nil,nil, true)
+        GameTooltip_AddColoredLine(tooltip, ob, HIGHLIGHT_FONT_COLOR)
+
+        if isShow and (title or ob )  then
+            tooltip:Show()
         end
     end
-end]]
+end
 
 
 
 
 
 
+local function Set_Spell(tooltip, spellID)
+    local desc, name= WoWTools_ChineseMixin:GetSpellDesc(spellID)
+    if desc or name then
+        tooltip:AddLine(' ')
+        tooltip:AddLine(name)
+        tooltip:AddLine(desc, nil,nil,nil, true)
+    end
+end
 
-local function set_item(tooltip, data)
+
+
+
+
+local function Set_Item(tooltip, data)
     local info= WoWTools_ChineseMixin:GetItemData(data.id)
     if not info then
         return
     end
-
+    local line, t
+    local name= tooltip:GetName() or ''
     if #data.lines== #info  then
-        local tipName= tooltip:GetName() or ''
         for index, text in pairs(info) do
-            local line= tooltip['TextLeft'..index] or _G[tipName.."TextLeft"..index]
+            line= _G[name.."TextLeft"..index]-- or tooltip['TextLeft'..index]
             if line then
-                line:SetText(text)
+                line:SetText(text or '')
             end
         end
     else
-        for index, text in pairs(info) do
-            if text~='' then
-                if index==1 and tooltip.TextLeft1 then
-                    tooltip.TextLeft1:SetText(text)
-                else
-                    tooltip:AddLine(text, nil,nil,nil, true)
+        local tab={['']=true}
+        for index=1, tooltip:NumLines() or 0, 1 do
+            line= _G[name.."TextLeft"..index]--tooltip['TextLeft'..index]
+            t= line and line:GetText()
+            if t then
+                tab[t]= true
+            end
+
+            line= _G[name.."TextRight"..index]
+            t= line and line:GetText()
+            if t then
+                tab[t]= true
+            end
+        end
+        for _, text in pairs(info) do
+            if text and not tab[text] then
+                tooltip:AddLine(text, nil,nil,nil, true)
+                tab[text]=true
+            end
+        end
+    end
+end
+
+local function Set_Unit(tooltip, unit)
+    unit= unit or select(2, TooltipUtil.GetDisplayedUnit(tooltip))
+    local name, desc= WoWTools_ChineseMixin:GetUnitName(unit, nil)
+    if name or desc then
+        Set_Line(tooltip)
+        tooltip:AddLine(name)
+        tooltip:AddLine(desc)
+    end
+end
+
+TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes, function(tooltip, data)
+    Set_Line(tooltip)
+
+    if data.type==Enum.TooltipDataType.Item then--0
+        if not GetItemData then--排除，插件 WoWeuCN_Tooltips
+            Set_Item(tooltip, data)
+            if C_Heirloom.IsItemHeirloom(data.id) then
+                local source= WoWTools_ChineseMixin:GetHeirloomSource(data.id)
+                if source and not C_Heirloom.PlayerHasHeirloom(data.id) then
+                    tooltip:AddLine(source, nil,nil,nil, true)
                 end
             end
         end
-    end
-end
-
-
-local function set_spell(tooltip, data)
-    local name = WoWTools_ChineseMixin:GetSpellName(data.id)
-    if name then
-        tooltip.TextLeft1:SetText(name)
-        local desc= WoWTools_ChineseMixin:GetSpellDesc(data.id)
-        if desc then
-            tooltip:AddLine(' ')
-            tooltip:AddLine(desc, nil,nil,nil, true)
+        if not WoWTools_TooltipMixin then
+            local speciesID = select(13, C_PetJournal.GetPetInfoByItemID(data.id))
+            Set_Battle_Pet(tooltip, speciesID)
         end
-    end
-end
+
+    elseif data.type==Enum.TooltipDataType.Spell then--1
+        if not GetSpellData then
+            Set_Spell(tooltip, data.id)
+        end
+
+    elseif data.type==Enum.TooltipDataType.Unit then--2
+        Set_Unit(tooltip)
+
+    --elseif data.type==Enum.TooltipDataType.Corpse then--3
+    --elseif data.type==Enum.TooltipDataType.Object then--4
+    --elseif data.type==Enum.TooltipDataType.Currency then--5
+    --elseif data.type==Enum.TooltipDataType.BattlePet then--6
 
 
---排除，插件 WoWeuCN_Tooltips
-if not GetItemData then
-    TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, function(tooltip, data)
-        set_item(tooltip, data)
-
-        if C_Heirloom.IsItemHeirloom(data.id) then
-            local source= WoWTools_ChineseMixin:GetHeirloomSource(data.id)
-            if source and not C_Heirloom.PlayerHasHeirloom(data.id) then
+    elseif data.type==Enum.TooltipDataType.UnitAura then--7
+        Set_Spell(tooltip, data.id)
+  --elseif data.type==Enum.TooltipDataType.AzeriteEssence then--8
+    --elseif data.type==Enum.TooltipDataType.CompanionPet then--9
+    --elseif data.type==Enum.TooltipDataType.Mount then--10
+    elseif data.type==Enum.TooltipDataType.PetAction then--11
+        local action= tooltip:GetOwner()
+        local spellID = select(7, GetPetActionInfo(action and action:GetID() or 0))
+        Set_Spell(tooltip, spellID)
+    --elseif data.type==Enum.TooltipDataType.Achievement then--12
+    --elseif data.type==Enum.TooltipDataType.EnhancedConduit then--13
+    --elseif data.type==Enum.TooltipDataType.EquipmentSet then--14
+    --elseif data.type==Enum.TooltipDataType.InstanceLock then--15
+    --elseif data.type==Enum.TooltipDataType.PvPBrawl then--16
+    --elseif data.type==Enum.TooltipDataType.RecipeRankInfo then--17
+    --elseif data.type==Enum.TooltipDataType.Totem then--18
+    elseif data.type== Enum.TooltipDataType.Toy then--19
+        Set_Item(tooltip, data)
+        if not PlayerHasToy(data.id) then
+            local source= WoWTools_ChineseMixin:GetToySource(data.id)
+            if source then
                 tooltip:AddLine(source, nil,nil,nil, true)
             end
         end
-    end)
+    --elseif data.type==Enum.TooltipDataType.CorruptionCleanser then--20
+    --elseif data.type==Enum.TooltipDataType.MinimapMouseover then--21
+    --elseif data.type==Enum.TooltipDataType.Flyout then--22
+    elseif data.type==Enum.TooltipDataType.Quest then--23
+        Set_Quest(tooltip, data.id)
+    --elseif data.type==Enum.TooltipDataType.QuestPartyProgress then--24
 
-end
-
-
-
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Toy, function(tooltip, data)
-    set_item(tooltip, data)
-    if not PlayerHasToy(data.id) then
-        local source= WoWTools_ChineseMixin:GetToySource(data.id)
-        if source then
-            tooltip:AddLine(source, nil,nil,nil, true)
+    elseif data.type== Enum.TooltipDataType.Macro then--25
+        local frame= tooltip:GetOwner()--宏 11版本
+        if frame and frame.action then
+            local type, macroID, subType= GetActionInfo(frame.action)
+            if type=='macro' and macroID and subType=='spell' then
+                Set_Spell(tooltip, macroID)
+            end
         end
+
+    --elseif data.type==Enum.TooltipDataType.Debug then--27
     end
-end)
-
-
-
-
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Macro, function(tooltip, data)
-    local frame= tooltip:GetOwner()--宏 11版本
-    if frame and frame.action then
-        local type, macroID, subType= GetActionInfo(frame.action)
-        if type=='macro' and macroID and subType=='spell' then
-            data.id= macroID
-            set_spell(tooltip, data)
-        end
-    end
-end)
-
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.UnitAura, function(tooltip, data)
-    set_spell(tooltip, data)
-end)
-
-if not GetSpellData then
-    TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Spell, function(tooltip, data)
-        set_spell(tooltip, data)
-    end)
-end
-
-
-
-
---Title Objectives Description
-local function Set_Quest_Tooltip(tooltip, questID, isShow)
-    local data= WoWTools_ChineseMixin:GetQuestData(questID)
-    if not data then
-        return
-    end
-    local title= data['Title']
-    local ob= data['Objectives']
-    if title or ob then
-        tooltip:AddLine(' ')
-    end
-    tooltip:AddLine(title, nil,nil,nil, true)
-    GameTooltip_AddColoredLine(tooltip, ob, HIGHLIGHT_FONT_COLOR)
-
-    if isShow and (title or ob )  then
-        tooltip:Show()
-    end
-end
-
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Quest, function(tooltip, data)
-    Set_Quest_Tooltip(tooltip, data.id)
 end)
 
 hooksecurefunc("QuestMapLogTitleButton_OnEnter", function(self)
-    Set_Quest_Tooltip(GameTooltip, self.questID, true)
+    Set_Quest(GameTooltip, self.questID, true)
 end)
 hooksecurefunc('GameTooltip_AddQuest', function(self, questIDArg)
     local questID = self.questID or questIDArg
-    Set_Quest_Tooltip(GameTooltip, questID, true)
+    Set_Quest(GameTooltip, questID, true)
 end)
 
 
---[[hooksecurefunc('GameTooltip_AddQuestRewardsToTooltip', function(self)--世界任务ID GameTooltip_AddQuest
-    --WoWTools_TooltipMixin:Set_Quest(self, ques)
-end)]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 --GameTooltip.lua
@@ -337,18 +263,27 @@ end
 
 
 
-
+--FloatingPetBattleTooltip.xml
+local function set_pet_func(frame)
+    WoWTools_ChineseMixin:SetLabel(frame.BattlePet)
+    WoWTools_ChineseMixin:SetLabel(frame.PetType)
+    local level = frame.Level:GetText():match('(%d+)')
+    if level then
+        frame.Level:SetFormattedText('等级 %s', level)
+    end
+end
+BattlePetTooltip:HookScript('OnShow', set_pet_func)
+FloatingBattlePetTooltip:HookScript('OnShow', set_pet_func)
 
 
 
 
 --Blizzard_FrameXML/SharedPetBattleTemplates.lua
 --战斗宠物，技能 SharedPetBattleTemplates.lua
-hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilityInfo, additionalText)
+hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilityInfo)
     local abilityID = abilityInfo:GetAbilityID()
     local info = abilityID and WoWTools_ChineseMixin:GetPetAblityData(abilityID)
     if info then
-        --local _, name, icon, _, unparsedDescription, _, petType = C_PetBattles.GetAbilityInfoByID(abilityID)
         local description = info[2] and SharedPetAbilityTooltip_ParseText(abilityInfo, info[2])
         if description then
             self.Description:SetText(description)
@@ -367,15 +302,56 @@ end)
 
 
 
+if not WoWTools_TooltipMixin then
+
+
+    hooksecurefunc("BattlePetToolTip_Show", function(speciesID)--BattlePetTooltip.lua 
+        Set_Battle_Pet(BattlePetTooltip, speciesID)
+    end)
+
+    hooksecurefunc('FloatingBattlePet_Show', function(speciesID)--FloatingPetBattleTooltip.lua
+        Set_Battle_Pet(FloatingBattlePetTooltip, speciesID)
+    end)
+    hooksecurefunc(GameTooltip, "SetCompanionPet", function(tooltip, petGUID)--设置宠物信息
+        local speciesID= petGUID and C_PetJournal.GetPetInfoByPetID(petGUID)
+        Set_Battle_Pet(tooltip, speciesID)--宠物
+    end)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local function Set_OnShow(tooltip)
+    tooltip:HookScript('OnShow', Set_Line)
+end
+
+Set_OnShow(SettingsTooltip)
+Set_OnShow(GameTooltip)
+Set_OnShow(ItemRefTooltip)
+Set_OnShow(EmbeddedItemTooltip)
 
 EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
     if arg1=='Blizzard_PerksProgram' or arg1=='Blizzard_ItemSocketingUI' then
 
         if arg1=='Blizzard_PerksProgram' then
-             set_GameTooltip_func(PerksProgramTooltip)
+            Set_OnShow(PerksProgramTooltip)
 
         elseif arg1=='Blizzard_ItemSocketingUI' then
-            set_GameTooltip_func(ItemSocketingDescription)
+            Set_OnShow(ItemSocketingDescription)
         end
 
         if C_AddOns.IsAddOnLoaded('Blizzard_PerksProgram') and  C_AddOns.IsAddOnLoaded('BlizzarBlizzard_ItemSocketingUId_ChallengesUI') then
@@ -389,44 +365,8 @@ end)
 
 
 
-
-
-
-
-
-
-
---[[不要删除了，还要用
+--[[
 TooltipDataRules.lua
 Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua
 TooltipDataRules.lua 
-    Enum.TooltipDataType = {
-		Item = 0,
-		Spell = 1,
-		Unit = 2,
-		Corpse = 3,
-		Object = 4,
-		Currency = 5,
-		BattlePet = 6,
-		UnitAura = 7,
-		AzeriteEssence = 8,
-		CompanionPet = 9,
-		Mount = 10,
-		PetAction = 11,
-		Achievement = 12,
-		EnhancedConduit = 13,
-		EquipmentSet = 14,
-		InstanceLock = 15,
-		PvPBrawl = 16,
-		RecipeRankInfo = 17,
-		Totem = 18,
-		Toy = 19,
-		CorruptionCleanser = 20,
-		MinimapMouseover = 21,
-		Flyout = 22,
-		Quest = 23,
-		QuestPartyProgress = 24,
-		Macro = 25,
-		Debug = 26,
-	},
 ]]

@@ -2171,7 +2171,7 @@ local tab={
 
 
 
---给 WoWTools 调用
+
 function WoWTools_ChineseMixin:GetPetDesc(speciesID)
     return tab[speciesID]
 end

@@ -184,7 +184,8 @@ function WoWTools_ChineseMixin:GetSpellDesc(spellID)
     end
 
     local t, t2, desc
-    local tab={[data[1]]= true}
+    local name= data[1]
+    local tab={[name]= true}
 
     for index=2, num do
         t= data[index]
@@ -198,7 +199,7 @@ function WoWTools_ChineseMixin:GetSpellDesc(spellID)
             end
         end
     end
-    return desc
+    return desc, name
 end
 
 
@@ -246,16 +247,33 @@ end
 
 
 function WoWTools_ChineseMixin:GetItemName(itemID)
-    if itemID then
-        local data= self:GetItemData(itemID)
-        if data then
-            return data[1]--self:ReplaceText(data[1])
-        end
+    local data= itemID and self:GetItemData(itemID)
+    if data then
+        return data[1]--self:ReplaceText(data[1])
     end
 end
 
 
+function WoWTools_ChineseMixin:GetItemDesc(itemID)
+    local data= itemID and self:GetItemData(itemID)
+    if not data then
+        return
+    end
 
+    local name= data[1]
+    table.remove(data, 1)
+    local tab={[name]=true}
+
+    local text
+    for _, desc in pairs(data) do
+        if desc and not tab[desc] and desc:find('[\228-\233][\128-\191][\128-\191]') then
+            tab[desc]= true
+            text= (text and text..'|n' or '')..desc--, WoWTools_ChineseMixin:ReplaceText(desc)
+        end
+    end
+
+    return text, name
+end
 
 
 
@@ -517,4 +535,6 @@ end
 if not loadEncounterData then
     WoWeuCN_Tooltips_EncounterData=nil
 end]]
+
+
 
