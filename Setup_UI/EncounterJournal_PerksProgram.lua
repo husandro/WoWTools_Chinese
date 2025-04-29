@@ -103,8 +103,9 @@ local function Init_Blizzard_PerksProgramElements()
             if wrapLeftInColor then
                 leftText = leftColor:WrapTextInColorCode(leftText);
             end
-            self.ItemSlotLeft:SetText(leftText);
+            self.ItemSlotLeft:SetText(leftText)
         end
+
         if rightText then
             local wrapRightInColor = itemSlot.rightColor and not itemSlot.rightColor:IsRGBEqualTo(WHITE_FONT_COLOR);
             if wrapRightInColor then
@@ -121,6 +122,22 @@ local function Init_Blizzard_PerksProgramElements()
         end
     end)
 
+   --[[  
+    hooksecurefunc(PerksProgramSetItemDetailsScrollHeaderMixin, 'InitHeader', function(self, setInfo)
+       
+        self.perksVendorItemID = setInfo.perksVendorItemID;
+	self.numSubItems = setInfo.numSubItems;
+	self.SetName:SetText(setInfo.name);
+       
+        local name= WoWTools_ChineseMixin:SetText(setInfo.name)
+        if name then
+            self.SetName:SetText(name)
+        end
+        info= setInfo
+        for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')1
+    end)
+ ]]
+--PerksProgramFrame.ProductsFrame.PerksProgramShoppingCartFrame.ItemList.ScrollBox.ScrollTarget.1b9162874d0.ItemSlotLeft
 
 
 
@@ -151,7 +168,6 @@ end
 
 local function set_item(self)
     if not self.itemInfo then
-        print(self.Text)
         return
     end
     local itemName= WoWTools_ChineseMixin:GetItemName(self.itemInfo.itemID)

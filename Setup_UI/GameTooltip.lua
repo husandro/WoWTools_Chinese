@@ -14,6 +14,12 @@ end
 
 
 
+
+
+
+
+
+
 local function add_line(tooltip, ...)
     if tooltip.AddLine then
         tooltip:AddLine(...)
@@ -52,6 +58,11 @@ end
 
 
 
+
+
+
+
+
 local function Set_Quest(tooltip, questID, isShow)
     local data= WoWTools_ChineseMixin:GetQuestData(questID)
     if data then
@@ -74,6 +85,11 @@ end
 
 
 
+
+
+
+
+
 local function Set_Spell(tooltip, spellID)
     local desc, name= WoWTools_ChineseMixin:GetSpellDesc(spellID)
     if desc or name then
@@ -82,6 +98,11 @@ local function Set_Spell(tooltip, spellID)
         tooltip:AddLine(desc, nil,nil,nil, true)
     end
 end
+
+
+
+
+
 
 
 
@@ -122,18 +143,61 @@ local function Set_Item(tooltip, data)
                 tab[text]=true
             end
         end
+        --tooltip:Show()
     end
 end
+
+
+
+
+
+
+
+
+
+
+
 
 local function Set_Unit(tooltip, unit)
     unit= unit or select(2, TooltipUtil.GetDisplayedUnit(tooltip))
     local name, desc= WoWTools_ChineseMixin:GetUnitName(unit, nil)
     if name or desc then
-        Set_Line(tooltip)
         tooltip:AddLine(name)
         tooltip:AddLine(desc)
     end
 end
+
+
+
+
+
+
+
+
+
+
+
+local function Set_Mount(tooltip, mountID)
+    if WoWTools_TooltipMixin then
+        return
+    end
+    local source= mountID and select(3,  C_MountJournal.GetMountInfoExtraByID(mountID))
+    source= WoWTools_ChineseMixin:CN(source)
+    if source then
+        tooltip:AddLine(' ')
+        tooltip:AddLine(source, nil,nil,nil,true)
+    end
+end
+
+
+
+
+
+
+
+
+
+
 
 TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes, function(tooltip, data)
     Set_Line(tooltip)
@@ -171,7 +235,9 @@ TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes, function(
         Set_Spell(tooltip, data.id)
   --elseif data.type==Enum.TooltipDataType.AzeriteEssence then--8
     --elseif data.type==Enum.TooltipDataType.CompanionPet then--9
-    --elseif data.type==Enum.TooltipDataType.Mount then--10
+    elseif data.type==Enum.TooltipDataType.Mount then--10
+        Set_Mount(tooltip, data.id)
+
     elseif data.type==Enum.TooltipDataType.PetAction then--11
         local action= tooltip:GetOwner()
         local spellID = select(7, GetPetActionInfo(action and action:GetID() or 0))
@@ -253,7 +319,7 @@ function GameTooltip_OnTooltipAddMoney(self, cost, maxcost)
         SetTooltipMoney(self, cost, nil, string.format("%s:", '卖价'))
     else
         GameTooltip_AddColoredLine(self, format("%s:", '卖价'), HIGHLIGHT_FONT_COLOR)
-        local indent = string.rep(" ",4)
+        local indent = string.rep(" ", 4)
         SetTooltipMoney(self, cost, nil, string.format("%s%s:", indent, '最小'))
         SetTooltipMoney(self, maxcost, nil, string.format("%s%s:", indent, '最大'))
     end
@@ -262,18 +328,6 @@ end
 
 
 
-
---FloatingPetBattleTooltip.xml
-local function set_pet_func(frame)
-    WoWTools_ChineseMixin:SetLabel(frame.BattlePet)
-    WoWTools_ChineseMixin:SetLabel(frame.PetType)
-    local level = frame.Level:GetText():match('(%d+)')
-    if level then
-        frame.Level:SetFormattedText('等级 %s', level)
-    end
-end
-BattlePetTooltip:HookScript('OnShow', set_pet_func)
-FloatingBattlePetTooltip:HookScript('OnShow', set_pet_func)
 
 
 
@@ -303,8 +357,6 @@ end)
 
 
 if not WoWTools_TooltipMixin then
-
-
     hooksecurefunc("BattlePetToolTip_Show", function(speciesID)--BattlePetTooltip.lua 
         Set_Battle_Pet(BattlePetTooltip, speciesID)
     end)
@@ -327,6 +379,18 @@ end
 
 
 
+
+--FloatingPetBattleTooltip.xml
+local function set_pet_func(frame)
+    WoWTools_ChineseMixin:SetLabel(frame.BattlePet)
+    WoWTools_ChineseMixin:SetLabel(frame.PetType)
+    local level = frame.Level:GetText():match('(%d+)')
+    if level then
+        frame.Level:SetFormattedText('等级 %s', level)
+    end
+end
+BattlePetTooltip:HookScript('OnShow', set_pet_func)
+FloatingBattlePetTooltip:HookScript('OnShow', set_pet_func)
 
 
 

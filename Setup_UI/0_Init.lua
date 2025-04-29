@@ -654,20 +654,3 @@ end
 
 
 
---[[
-hooksecurefunc(LootItemExtendedMixin, 'Init', function(self, itemLink, originalQuantity, specID, isCurrency, isUpgraded, isIconBorderShown, isIconBorderDropShadowShown, iconDrawLayer)
-    WoWTools_ChineseMixin:SetLabel(self.Label)
-
-    if itemLink then
-        local name= WoWTools_ChineseMixin:GetData(nil, {itemLink=itemLink, isName=true})
-        if name then
-            self.ItemName:SetText(name)
-        else
-            WoWTools_ChineseMixin:SetLabel(self.ItemName)
-        end
-        
-    end
-    info= self
-    for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR') for k2,v2 in pairs(v) do print(k2,v2) end print('|cffff0000---',k, '---END') else print(k,v) end end print('|cffff00ff——————————')
-end)
-]]
