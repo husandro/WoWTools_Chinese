@@ -168,10 +168,14 @@ function WoWTools_ChineseMixin:GetData(text, tab)
         end
 
     elseif tab.questID then
-        if tab.isObject then
-            self:GetQuestObject(tab.questID, tab.index)
+        if tab.isName then
+            data= self:GetQuestName(tab.questID)
+        elseif tab.isObject then
+            data= self:GetQuestObject(tab.questID)
+        elseif tab.isDesc then
+            data= self:GetQuestDesc(tab.questID)
         else
-            data= self:GetQuestData(tab.questID, tab.isName, tab.isObject, tab.isDesc)
+            data= self:GetQuestData(tab.questID)
         end
 
     elseif tab.npcID or tab.unit then
@@ -432,3 +436,10 @@ function WoWTools_ChineseMixin:SetTabSystem(frame, setFont, padding, minWidth, a
         PanelTemplates_TabResize(frame, padding or 20, absoluteSize, minWidth or 70)
     end
 end
+
+
+
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner)
+    WoWToolsChineseSave= WoWToolsChineseSave or {}
+    EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
+end)
