@@ -334,16 +334,49 @@ end
 
 --Blizzard_FrameXML/SharedPetBattleTemplates.lua
 --战斗宠物，技能 SharedPetBattleTemplates.lua
-hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilityInfo)
+hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilityInfo, additionalText)
     local abilityID = abilityInfo:GetAbilityID()
-    local desc, name= WoWTools_ChineseMixin:GetPetAblityDesc(abilityID, abilityInfo)
+    if not abilityID then
+        return
+    end
 
-    if desc then
-        self.Description:SetText(desc)
+
+	local id, name, icon, maxCooldown, unparsedDescription, numTurns, petType, noStrongWeakHints = C_PetBattles.GetAbilityInfoByID(abilityID);
+
+
+    local cnDesc, cnName= WoWTools_ChineseMixin:GetPetAblityDesc(abilityID, abilityInfo)
+
+    if cnName then
+        self.Name:SetText(cnName)
     end
-    if name then
-        self.Name:SetText(name)
+
+	if ( numTurns and numTurns > 1 ) then
+		self.Duration:SetFormattedText('%d轮技能', numTurns)
+	end
+
+
+    if ( maxCooldown > 0 ) then
+		self.MaxCooldown:SetFormattedText('%d轮冷却', maxCooldown)
+	end
+
+    local currentCooldown = abilityInfo:GetCooldown();
+	if ( currentCooldown > 0 ) then
+		self.CurrentCooldown:SetFormattedText('剩余冷却时间：%d轮', currentCooldown)
+	end
+
+    additionalText= additionalText and WoWTools_ChineseMixin:SetText(additionalText)
+    if additionalText then
+        self.AdditionalText:SetText(additionalText);
     end
+	
+
+    if cnDesc then
+        self.Description:SetText(cnDesc)
+    end
+
+    WoWTools_ChineseMixin:SetLabel(self.StrongAgainstType1Label)
+    WoWTools_ChineseMixin:SetLabel(self.WeakAgainstType1Label)
+
     --[[local info = abilityID and WoWTools_ChineseMixin:GetPetAblityData(abilityID)
     if info then
         local description = info[2] and SharedPetAbilityTooltip_ParseText(abilityInfo, info[2])
