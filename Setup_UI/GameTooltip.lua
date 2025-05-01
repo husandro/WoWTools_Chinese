@@ -221,6 +221,7 @@ TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes, function(
         if not GetSpellData then
             Set_Spell(tooltip, data.id)
         end
+        
 
     elseif data.type==Enum.TooltipDataType.Unit then--2
         Set_Unit(tooltip)
