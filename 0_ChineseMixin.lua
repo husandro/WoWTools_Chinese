@@ -59,8 +59,14 @@ function WoWTools_ChineseMixin:GetData(text, tab)
     elseif tab.speciesID then
         data= self:GetPetDesc(tab.speciesID)--专精
 
-    elseif tab.petAbilityID then
-        data= self:GetPetAblityData(tab.petAbilityID)--宠物技能
+    elseif tab.petAbilityID then--宠物技能
+        if tab.isName then
+            data= self:GetPetAblityName(tab.petAbilityID)
+        elseif tab.isDesc then
+            data= self:GetPetAblityDesc(tab.petAbilityID, tab.abilityInfo)
+        else
+            data= self:GetPetAblityData(tab.petAbilityID, tab.abilityInfo)
+        end
 
     elseif tab.skillCategoryID then
         data= self:GetTradeSkillCategoryName(tab.skillCategoryID)--专业目录

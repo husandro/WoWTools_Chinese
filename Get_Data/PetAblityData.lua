@@ -1361,8 +1361,79 @@ local tab={
 
 
 
+local PetTypeTabs={
+    [_G['BATTLE_PET_DAMAGE_NAME_1']]=  "人型",
+    [_G['BATTLE_PET_DAMAGE_NAME_1']]=  "机械",
+    [_G['BATTLE_PET_DAMAGE_NAME_1']]=  "龙类",
+    [_G['BATTLE_PET_DAMAGE_NAME_1']]=  "飞行",
+    [_G['BATTLE_PET_DAMAGE_NAME_1']]=  "亡灵",
+    [_G['BATTLE_PET_DAMAGE_NAME_1']]=  "小动物",
+    [_G['BATTLE_PET_DAMAGE_NAME_1']]=  "魔法",
+    [_G['BATTLE_PET_DAMAGE_NAME_1']]=  "元素",
+    [_G['BATTLE_PET_DAMAGE_NAME_1']]=  "野兽",
+    [_G['BATTLE_PET_DAMAGE_NAME_1']]=  "水栖",
+}
 
-
-function WoWTools_ChineseMixin:GetPetAblityData(abilityID)
-    return tab[abilityID]
+local function Type_School(text)
+    if text then
+        for en, cn in pairs(PetTypeTabs) do
+            text= text:gsub(en, cn)
+        end
+    end
+    return text
 end
+
+
+--[[
+abilityInfo={
+    speciesID= 2692
+    abiltyID= 297
+    petID= guid
+    }
+]]
+
+function WoWTools_ChineseMixin:GetPetAblityData(abilityID, abilityInfo)
+    local data=tab[abilityID]
+    if data and data[2] then
+        local cnDesc= SharedPetAbilityTooltip_ParseText(abilityInfo or PET_BATTLE_ABILITY_INFO, data[2])
+        data[2]= Type_School(cnDesc)
+    end
+
+    return data
+end
+
+
+
+function WoWTools_ChineseMixin:GetPetAblityDesc(abilityID, abilityInfo)
+    local data= self:GetPetAblityData(abilityID, abilityInfo)
+    if data then
+        return data[2], data[1]
+    end
+end
+
+function WoWTools_ChineseMixin:GetPetAblityName(abilityID)
+    local data= tab[abilityID]
+    if data then
+        return data[1]
+    end
+end
+
+
+
+
+
+
+
+--[[EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+
+    for i=1, C_PetJournal.GetNumPetTypes() do
+        local en= _G['BATTLE_PET_NAME_'..i]
+        local cn= en and WoWTools_ChineseMixin:CN(en)
+        if cn then
+            PetTypeTabs[en]= cn
+        end
+        print(en , cn)
+    end
+
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
+end)]]
