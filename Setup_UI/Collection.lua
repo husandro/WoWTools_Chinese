@@ -132,35 +132,102 @@ local function Init_Pet()
 ]]
 
 
+--CompanionListButtonTemplate
+--列表，名称
     hooksecurefunc('PetJournal_InitPetButton', function(pet)
         if not pet:IsVisible() then
             return
         end
-        local _, _, _, customName, _, _, _, _, _, _, companionID= C_PetJournal.GetPetInfoByIndex(pet.index)
+        local companionID= select(11, C_PetJournal.GetPetInfoByIndex(pet.index))
         local npcName= WoWTools_ChineseMixin:GetUnitName(nil, companionID)
-        if npcName then
-            if customName then
-                pet.subName:SetText(npcName)
-            else
-                pet.name:SetText(npcName)
+        if npcName and not pet.cnName then
+            pet.cnName= WoWTools_ChineseMixin:Cstr(pet, {layer='ARTWORK'})
+            pet.cnName:SetPoint('BOTTOMLEFT', pet.icon, 'BOTTOMRIGHT', 10, 1)
+            pet.subName:SetPoint('TOPLEFT', pet.name, 'BOTTOMLEFT', 0, 0)
+        end
+        if pet.cnName then
+            pet.cnName:SetText(npcName or '')
+        end
+    end)
+
+
+    WoWTools_ChineseMixin:SetLabel(PetJournalPetCard.CannotBattleText)--该生物无法对战。
+
+--PetCard
+    hooksecurefunc('PetJournal_UpdatePetCard', function(self)
+        if (not PetJournalPetCard.petID and not PetJournalPetCard.speciesID) then
+            self.PetInfo.name:SetText('从左侧的列表中选择一个宠物')
+            return
+        end
+
+        local speciesID, petType, canBattle, _, t
+
+        if PetJournalPetCard.petID then
+            speciesID, _, _, _, _, _, _, _, _, petType, _, _, _, _, canBattle= C_PetJournal.GetPetInfoByPetID(PetJournalPetCard.petID)
+            if ( not speciesID ) then
+                return
+            end
+            if ( canBattle ) then
+                local rarity = select(5, C_PetJournal.GetPetStats(PetJournalPetCard.petID))
+--品质
+                t= WoWTools_ChineseMixin:CN(_G["BATTLE_PET_BREED_QUALITY"..rarity])
+                if t then
+                    self.QualityFrame.quality:SetText(t)
+                end
+            end
+        else
+            speciesID = PetJournalPetCard.speciesID
+            _, _, petType, _, _, _, _, canBattle= C_PetJournal.GetPetInfoBySpeciesID(PetJournalPetCard.speciesID)
+
+        end
+--类型
+        t= WoWTools_ChineseMixin:CN(_G["BATTLE_PET_NAME_"..petType])
+        if t then
+            self.TypeInfo.type:SetText(t)
+        end
+--名称
+        if not self.PetInfo.cnName then
+            self.PetInfo.cnName= WoWTools_ChineseMixin:Cstr(self.PetInfo)
+            self.PetInfo.cnName:SetPoint('TOPLEFT', self.PetInfo.subName, 'BOTTOMLEFT', 0, -3)
+        end
+        local companionID= select(4, C_PetJournal.GetPetInfoBySpeciesID(speciesID))
+        local cnName= WoWTools_ChineseMixin:GetUnitName(nil, companionID)
+        self.PetInfo.cnName:SetText(cnName or '')
+        if cnName and cnName~='' then
+            self.PetInfo.speciesName= cnName
+        end
+
+
+        local data= WoWTools_ChineseMixin:GetPetDesc(speciesID)
+        if data then
+            local desc= data[1]
+            local source= data[2]
+            if desc and not desc~='' then
+                self.PetInfo.description=desc
+            end
+            if source and source~='' then
+                self.PetInfo.sourceText= source
             end
         end
     end)
 
+
+--PetCard 1，2，3 宠物
     hooksecurefunc('PetJournal_UpdatePetLoadOut', function()
-        for i=1,3 do
-            local loadoutPlate = PetJournal.Loadout["Pet"..i];
-            if loadoutPlate and loadoutPlate.name:IsShown() then
-                local petID = C_PetJournal.GetPetLoadOutInfo(i)
-                if petID then
-                    local _, customName, _, _, _, _, _, name = C_PetJournal.GetPetInfoByPetID(petID)
-                    if not customName then
-                        name= WoWTools_ChineseMixin:CN(name, {petID=petID})
-                        if name then
-                            loadoutPlate.name:SetText(name)
-                        end
-                    end
-                end
+        for i=1, 3 do--MAX_ACTIVE_PETS
+            local loadoutPlate = PetJournal.Loadout["Pet"..i]
+
+            local petID = loadoutPlate.name:IsShown() and C_PetJournal.GetPetLoadOutInfo(i)
+            local speciesID= petID and C_PetJournal.GetPetInfoByPetID(petID)
+            local companionID= speciesID and select(4, C_PetJournal.GetPetInfoBySpeciesID(speciesID))
+
+            local cnName= WoWTools_ChineseMixin:GetUnitName(nil, companionID)
+            if cnName and not loadoutPlate.cnName then
+                loadoutPlate.cnName= WoWTools_ChineseMixin:Cstr(loadoutPlate)
+                loadoutPlate.cnName:SetPoint('TOPLEFT', loadoutPlate.icon, 'TOPRIGHT', 10,4)
+            end
+            if loadoutPlate.cnName then
+                loadoutPlate.cnName:SetText(cnName or '')
             end
         end
     end)
