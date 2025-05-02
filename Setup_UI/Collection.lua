@@ -12,10 +12,21 @@
 
 local function Init_Mount()
     --列表，名称
-    hooksecurefunc('MountJournal_InitMountButton', function(btn)
-        --btn.DragonRidingLabel:SetText("驭空术")
-        WoWTools_ChineseMixin:SetLabel(btn.name)
+    hooksecurefunc('MountJournal_InitMountButton', function(btn, data)
+        local name=  C_MountJournal.GetDisplayedMountInfo(data.index)
+        local cn= WoWTools_ChineseMixin:CN(name)
+        if cn and not btn.cnName then
+            btn.cnName= WoWTools_ChineseMixin:Cstr(btn, {layer='ARTWORK'})
+            btn.cnName:SetPoint('BOTTOMLEFT', 5, 2)
+            btn.name:SetPoint('RIGHT')
+        end
+        if btn.cnName then
+            btn.cnName:SetText(cn or '')
+        end
     end)
+
+        --btn.DragonRidingLabel:SetText("驭空术")
+        --WoWTools_ChineseMixin:SetLabel(btn.name)
 
     WoWTools_ChineseMixin:AddDialogs("DIALOG_REPLACE_MOUNT_EQUIPMENT", {text = '你确定要替换此坐骑装备吗？已有的坐骑装备将被摧毁。', button1 = '是', button2 = '否'})
 
