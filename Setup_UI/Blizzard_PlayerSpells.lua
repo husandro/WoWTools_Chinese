@@ -16,9 +16,15 @@
 
 --法术书
 local function Init_SpellBookFrame()
-    if PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton then--11.1.7没了
+    if PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame then--11.1.7才有
+        WoWTools_ChineseMixin:CN(PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame.Label)
+
+    else--11.1.7没了
         WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton.Label)--隐藏被动技能
     end
+
+
+
     WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton.Text)
     WoWTools_ChineseMixin:SetLabel(ClassTalentLoadoutCreateDialog.Title)
     WoWTools_ChineseMixin:SetLabel(ClassTalentLoadoutCreateDialog.NameControl.Label)

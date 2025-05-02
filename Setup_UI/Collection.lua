@@ -21,7 +21,9 @@ local function Init_Mount()
 
     MountJournalSearchBox.Instructions:SetText('搜索')
     MountJournal.MountCount.Label:SetText('坐骑')
-    MountJournalSummonRandomFavoriteButton.spellname:SetText('随机召唤\n偏好坐骑')--hooksecurefunc('MountJournalSummonRandomFavoriteButton_OnLoad', function(self)
+    if MountJournalSummonRandomFavoriteButton then--11.1.7没了
+        MountJournalSummonRandomFavoriteButton.spellname:SetText('随机召唤\n偏好坐骑')--hooksecurefunc('MountJournalSummonRandomFavoriteButton_OnLoad', function(self)
+    end
     MountJournal.MountDisplay.ModelScene.TogglePlayer.TogglePlayerText:SetText('显示角色')
     hooksecurefunc('MountJournal_OnLoad', function(self)
         self.SlotRequirementLabel:SetFormattedText('坐骑装备在%s级解锁', C_MountJournal.GetMountEquipmentUnlockLevel())
@@ -119,8 +121,15 @@ local function Init_Pet()
     hooksecurefunc('PetJournalFindBattle_Update', set_PetJournalFindBattle)
     set_PetJournalFindBattle()
     PetJournal.PetCount.Label:SetText('宠物')
-    PetJournalSummonRandomFavoritePetButtonSpellName:SetText('召唤随机\n偏好战斗宠物')
-    PetJournalHealPetButtonSpellName:SetText('复活\n战斗宠物')
+
+    if PetJournal.SummonRandomPetSpellFrame then--11.1.7才有
+        PetJournal.SummonRandomPetSpellFrame.Label:SetText('召唤随机\n偏好战斗宠物')
+        PetJournal.HealPetSpellFrame.Label:SetText('复活\n战斗宠物')
+    else
+        PetJournalSummonRandomFavoritePetButtonSpellName:SetText('召唤随机\n偏好战斗宠物')
+        PetJournalHealPetButtonSpellName:SetText('复活\n战斗宠物')
+    end
+    
 
 
 --[[
