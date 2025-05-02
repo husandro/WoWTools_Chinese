@@ -2,20 +2,19 @@
 
 
 hooksecurefunc(SettingsCategoryListButtonMixin, 'Init', function(self, initializer)--列表 Blizzard_CategoryList.lua
-    local category = not InCombatLockdown() and initializer.data.category
+    local category = initializer.data.category
     if category then
         WoWTools_ChineseMixin:SetLabel(self.Label, category:GetName())
     end
 end)
 hooksecurefunc(SettingsCategoryListHeaderMixin, 'Init', function(self, initializer)
-    if not InCombatLockdown() then
+    
         WoWTools_ChineseMixin:SetLabel(self.Label, initializer.data.label)
-    end
 end)
 
 --选项
 hooksecurefunc(SettingsPanel.Container.SettingsList.ScrollBox, 'Update', function(frame)
-    if not frame:GetView() or not frame:IsVisible() or InCombatLockdown() then
+    if not frame:GetView() or not frame:IsVisible()  then
         return
     end
 
@@ -54,9 +53,7 @@ end)
 
 
 hooksecurefunc('BindingButtonTemplate_SetupBindingButton', function(_, button)--BindingUtil.lua
-    if InCombatLockdown() then
-        return
-    end
+  
     local text= button:GetText()
     if text==GRAY_FONT_COLOR:WrapTextInColorCode(NOT_BOUND) then
         button:SetText(GRAY_FONT_COLOR:WrapTextInColorCode('未设置'))
@@ -66,9 +63,8 @@ hooksecurefunc('BindingButtonTemplate_SetupBindingButton', function(_, button)--
 end)
 
 hooksecurefunc(KeyBindingFrameBindingTemplateMixin, 'Init', function(self)
-    if not InCombatLockdown() then
+    
         WoWTools_ChineseMixin:SetLabel(self.Label)
-    end
 end)
 
 WoWTools_ChineseMixin:HookLabel(SettingsPanel.OutputText)
