@@ -16,7 +16,9 @@
 
 --法术书
 local function Init_SpellBookFrame()
-    WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton.Label)--隐藏被动技能
+    if PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton then--11.1.7没了
+        WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton.Label)--隐藏被动技能
+    end
     WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton.Text)
     WoWTools_ChineseMixin:SetLabel(ClassTalentLoadoutCreateDialog.Title)
     WoWTools_ChineseMixin:SetLabel(ClassTalentLoadoutCreateDialog.NameControl.Label)
