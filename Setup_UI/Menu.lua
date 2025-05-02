@@ -57,7 +57,8 @@ end)
 
 local function set_fontString(frame)
     C_Timer.After(0.01, function()
-        WoWTools_ChineseMixin:SetLabel(frame.fontString)
+        --WoWTools_ChineseMixin:SetLabel(frame.fontString)
+        WoWTools_ChineseMixin:HookLabel(frame.fontString)--, setFont)
     end)
 end
 hooksecurefunc(MenuVariants, 'CreateFontString', set_fontString)

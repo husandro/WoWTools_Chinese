@@ -11,6 +11,11 @@
 
 
 local function Init_Mount()
+    if MountJournal.SummonRandomFavoriteSpellFrame then--11.1.7才有
+        WoWTools_ChineseMixin:SetLabel(MountJournal.SummonRandomFavoriteSpellFrame.Label)--随机召唤\n偏好坐骑
+    else
+        MountJournalSummonRandomFavoriteButton.spellname:SetText('随机召唤\n偏好坐骑')
+    end
     --列表，名称
     hooksecurefunc('MountJournal_InitMountButton', function(btn, data)
         local name=  C_MountJournal.GetDisplayedMountInfo(data.index)
@@ -32,9 +37,7 @@ local function Init_Mount()
 
     MountJournalSearchBox.Instructions:SetText('搜索')
     MountJournal.MountCount.Label:SetText('坐骑')
-    if MountJournalSummonRandomFavoriteButton then--11.1.7没了
-        MountJournalSummonRandomFavoriteButton.spellname:SetText('随机召唤\n偏好坐骑')--hooksecurefunc('MountJournalSummonRandomFavoriteButton_OnLoad', function(self)
-    end
+
     MountJournal.MountDisplay.ModelScene.TogglePlayer.TogglePlayerText:SetText('显示角色')
     hooksecurefunc('MountJournal_OnLoad', function(self)
         self.SlotRequirementLabel:SetFormattedText('坐骑装备在%s级解锁', C_MountJournal.GetMountEquipmentUnlockLevel())

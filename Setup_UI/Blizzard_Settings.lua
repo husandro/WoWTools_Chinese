@@ -20,6 +20,7 @@ hooksecurefunc(SettingsPanel.Container.SettingsList.ScrollBox, 'Update', functio
     end
 
     WoWTools_ChineseMixin:SetLabel(SettingsPanel.Container.SettingsList.Header.Title)--标提
+
     for _, btn in pairs(frame:GetFrames() or {}) do
         local lable
         if btn.Button then--按钮
@@ -112,6 +113,37 @@ hooksecurefunc(ItemQualityColorOverrideMixin, 'Init', function(self)
     for _, frame in ipairs(self.colorOverrideFrames) do
         WoWTools_ChineseMixin:SetLabel(frame.Text)
     end
+end)
+
+
+--[[hooksecurefunc(Settings, 'InitTooltip', function(name, tooltip)
+    GameTooltip_SetTitle(SettingsTooltip, WoWTools_ChineseMixin:SetText(name) or name)
+	if tooltip then
+        tooltip= type(tooltip) == "function" and tooltip() or tooltip
+        GameTooltip_AddNormalLine(SettingsTooltip, WoWTools_ChineseMixin:SetText(tooltip) or tooltip)
+	end
+end)]]
+
+
+
+
+
+hooksecurefunc(Settings, 'CreateDropdownButton', function(btn)
+   if btn.data then
+        local text= WoWTools_ChineseMixin:SetText(btn.data.text)
+        local label= WoWTools_ChineseMixin:SetText(btn.data.label)
+        local tooltip= WoWTools_ChineseMixin:SetText(btn.data.tooltip)
+        if text then
+            btn.data.text=text
+        end
+        if label then
+            btn.data.label= label
+            
+        end
+        if tooltip then
+            btn.data.tooltip= tooltip
+        end
+   end
 end)
 
 
