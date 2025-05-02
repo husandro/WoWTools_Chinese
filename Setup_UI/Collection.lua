@@ -225,21 +225,29 @@ local function Init_Pet()
     hooksecurefunc('PetJournal_UpdatePetLoadOut', function()
         for i=1, 3 do--MAX_ACTIVE_PETS
             local loadoutPlate = PetJournal.Loadout["Pet"..i]
+            if loadoutPlate.emptyslot:IsShown() then
+                loadoutPlate.emptyslot.slot:SetFormattedText('战斗宠物栏位%d', i)
+            elseif loadoutPlate.name:IsShown() then
 
-            local petID = loadoutPlate.name:IsShown() and C_PetJournal.GetPetLoadOutInfo(i)
-            local speciesID= petID and C_PetJournal.GetPetInfoByPetID(petID)
-            local companionID= speciesID and select(4, C_PetJournal.GetPetInfoBySpeciesID(speciesID))
+                local petID =C_PetJournal.GetPetLoadOutInfo(i)
+                local speciesID= petID and C_PetJournal.GetPetInfoByPetID(petID)
+                local companionID= speciesID and select(4, C_PetJournal.GetPetInfoBySpeciesID(speciesID))
 
-            local cnName= WoWTools_ChineseMixin:GetUnitName(nil, companionID)
-            if cnName and not loadoutPlate.cnName then
-                loadoutPlate.cnName= WoWTools_ChineseMixin:Cstr(loadoutPlate)
-                loadoutPlate.cnName:SetPoint('TOPLEFT', loadoutPlate.icon, 'TOPRIGHT', 10,4)
-            end
-            if loadoutPlate.cnName then
-                loadoutPlate.cnName:SetText(cnName or '')
+                local cnName= WoWTools_ChineseMixin:GetUnitName(nil, companionID)
+                if cnName and not loadoutPlate.cnName then
+                    loadoutPlate.cnName= WoWTools_ChineseMixin:Cstr(loadoutPlate)
+                    loadoutPlate.cnName:SetPoint('TOPLEFT', loadoutPlate.icon, 'TOPRIGHT', 10,4)
+                end
+                if loadoutPlate.cnName then
+                    loadoutPlate.cnName:SetText(cnName or '')
+                end
             end
         end
     end)
+
+    WoWTools_ChineseMixin:SetLabel(PetJournalLoadoutPet1EmptySlotDragHere)
+    WoWTools_ChineseMixin:SetLabel(PetJournalLoadoutPet2EmptySlotDragHere)
+    WoWTools_ChineseMixin:SetLabel(PetJournalLoadoutPet3EmptySlotDragHere)
 end
 
 
