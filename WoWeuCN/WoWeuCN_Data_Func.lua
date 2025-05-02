@@ -194,7 +194,7 @@ function WoWTools_ChineseMixin:GetSpellDesc(spellID)
 
             t2= self:ReplaceText(t)
 
-            if t2 and t2:find('[\228-\233][\128-\191][\128-\191]') then
+            if t2 and t2:find('[\228-\233]') then
                 desc= (desc and desc..'|n' or '').. t2
             end
         end
@@ -266,7 +266,7 @@ function WoWTools_ChineseMixin:GetItemDesc(itemID)
 
     local text
     for _, desc in pairs(data) do
-        if desc and not tab[desc] and desc:find('[\228-\233][\128-\191][\128-\191]') then
+        if desc and not tab[desc] and desc:find('[\228-\233]') then
             tab[desc]= true
             text= (text and text..'|n' or '')..desc--, WoWTools_ChineseMixin:ReplaceText(desc)
         end

@@ -2,9 +2,9 @@ WoWTools_ChineseMixin={
     Events={}
 }
 local CNData={}--主要，汉化
-
+--[\228-\233][\128-\191][\128-\191]--检查 UTF-8 字符
 function WoWTools_ChineseMixin:SetCN(en, cn)
-    if en and cn and cn:find("[\228-\233][\128-\191][\128-\191]") and en:gsub(' ', '')~='' then--检查 UTF-8 字符
+    if en and cn and cn:find("[\228-\233]") and en:gsub(' ', '')~='' then
         CNData[en]=cn
     end
 end
@@ -241,8 +241,8 @@ local function set_match(text, a, b)
     local a1=WoWTools_ChineseMixin:CN(a)
     local b1= WoWTools_ChineseMixin:CN(b)
 
-    local r= a1 and a1:find('[\228-\233][\128-\191][\128-\191]') and text:gsub(a, a1) or text
-    r= b1 and b1:find('[\228-\233][\128-\191][\128-\191]') and r:gsub(b, b1) or r
+    local r= a1 and a1:find('[\228-\233]') and text:gsub(a, a1) or text
+    r= b1 and b1:find('[\228-\233]') and r:gsub(b, b1) or r
 
     if text~= r then
         return r
@@ -260,7 +260,7 @@ end
 
 --( ) . % + - * ? [ ^ $
 function WoWTools_ChineseMixin:SetText(text)
-    if type(text)~='string' or text=='' or text=='%s' or text:find('[\228-\233][\128-\191][\128-\191]') then
+    if type(text)~='string' or text=='' or text=='%s' or text:find('[\228-\233]') then
         return
     end
 
@@ -309,7 +309,7 @@ function WoWTools_ChineseMixin:SetText(text)
         return set_match(s, s:match('|T.-|t (.+)') or s:match('|T.-|t(.+)'))
     end)
 
-    if text ~= text2 and text2:find('[\228-\233][\128-\191][\128-\191]') then
+    if text ~= text2 and text2:find('[\228-\233]') then
         return text2
     end
 end
