@@ -41,7 +41,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
             data= self:GetHolidayData(tab.holydayID)--节日 eventID
         end
     elseif tab.perksActivityID then
-        
+
         if tab.isName then
             data= self:GetPerksActivityName(tab.perksActivityID)
         elseif tab.isDesc then
@@ -122,7 +122,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
 
         elseif tab.isDesc then
             data= self:GetHeirloomSource(itemID)--物品名称
-            
+
         else
             data= self:GetItemData(itemID)--物品名称
             if data then
@@ -272,11 +272,11 @@ function WoWTools_ChineseMixin:SetText(text)
     text2= text:gsub('|c.-|r', function(s)--颜色
         return set_match(s, s:match('|c........(.-)|r'))
     end)
-    
+
     text2= text2:gsub('%(.-%)', function(s)-- ()
         return set_match(s, s:match('%((.-)%)'))
     end)
-    
+
     text2= text2:gsub('  .+', function(s)--双空格
         return set_match(s, s:match('  (.+)'))
     end)
@@ -386,7 +386,7 @@ end
 function WoWTools_ChineseMixin:HookButton(btn, setFont)
     if btn and btn.SetText and not btn.hook_chinese then
         self:SetButton(btn, nil, nil, setFont)
-       
+
         hooksecurefunc(btn, 'SetText', function(frame, name)
             if name and name~='' then
                 local cnName= WoWTools_ChineseMixin:SetText(name)
