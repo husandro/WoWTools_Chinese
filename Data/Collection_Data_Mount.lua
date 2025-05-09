@@ -1393,11 +1393,16 @@ local tab={
 
 
 
-do
-    for mountID, info in pairs(tab) do
-        local desc, source= select(2, C_MountJournal.GetMountInfoExtraByID(mountID))
-        WoWTools_ChineseMixin:SetCN(C_MountJournal.GetMountInfoByID(mountID), info[1])
-        WoWTools_ChineseMixin:SetCN(desc, info[2])
-        WoWTools_ChineseMixin:SetCN(source, info[3])
+
+
+EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+    do
+        for mountID, info in pairs(tab) do
+            local desc, source= select(2, C_MountJournal.GetMountInfoExtraByID(mountID))
+            WoWTools_ChineseMixin:SetCN(C_MountJournal.GetMountInfoByID(mountID), info[1])
+            WoWTools_ChineseMixin:SetCN(desc, info[2])
+            WoWTools_ChineseMixin:SetCN(source, info[3])
+        end
     end
-end
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
+end)

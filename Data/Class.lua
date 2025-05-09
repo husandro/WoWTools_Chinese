@@ -22,20 +22,28 @@ local tab= {
 }
 
 
---有男，女之分
-do
-    local className, classFile, classID
-    for id, cn in pairs(tab) do
-        className, classFile= GetClassInfo(id)
-        WoWTools_ChineseMixin:SetCN(className, cn)
-        WoWTools_ChineseMixin:SetCN(classFile, cn)
-    end
-    className, classFile, classID=  UnitClass('player', 2)--男
-    WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
-    WoWTools_ChineseMixin:SetCN(className, tab[classID])
 
-    className, classFile, classID=  UnitClass('player', 3)--女
-    WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
-    WoWTools_ChineseMixin:SetCN(className, tab[classID])
-end
-tab=nil
+
+
+--有男，女之分
+EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+    do
+        local className, classFile, classID
+        for id, cn in pairs(tab) do
+            className, classFile= GetClassInfo(id)
+            WoWTools_ChineseMixin:SetCN(className, cn)
+            WoWTools_ChineseMixin:SetCN(classFile, cn)
+        end
+        className, classFile, classID=  UnitClass('player', 2)--男
+        WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
+        WoWTools_ChineseMixin:SetCN(className, tab[classID])
+
+        className, classFile, classID=  UnitClass('player', 3)--女
+        WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
+        WoWTools_ChineseMixin:SetCN(className, tab[classID])
+    end
+    tab=nil
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
+end)
+
+

@@ -99,21 +99,26 @@ local itemTab={
 
 
 
-do
-    for categoryID, data in pairs(categoryTab) do
-        local info= C_AccountStore.GetCategoryInfo(categoryID)
-        if info and info.icon==data[2] then
-            WoWTools_ChineseMixin:SetCN(info.name, data[1])
-        end
-    end
-    for itemID, data in pairs(itemTab) do
-        local info= C_AccountStore.GetItemInfo(itemID)
-        if info then
-            WoWTools_ChineseMixin:SetCN(info.name, data[1])
-            WoWTools_ChineseMixin:SetCN(info.description, data[2])
-        end
-    end
-end
 
-itemTab=nil
-categoryTab=nil
+
+EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+    do
+        for categoryID, data in pairs(categoryTab) do
+            local info= C_AccountStore.GetCategoryInfo(categoryID)
+            if info and info.icon==data[2] then
+                WoWTools_ChineseMixin:SetCN(info.name, data[1])
+            end
+        end
+        for itemID, data in pairs(itemTab) do
+            local info= C_AccountStore.GetItemInfo(itemID)
+            if info then
+                WoWTools_ChineseMixin:SetCN(info.name, data[1])
+                WoWTools_ChineseMixin:SetCN(info.description, data[2])
+            end
+        end
+    end
+    
+    itemTab=nil
+    categoryTab=nil
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
+end)

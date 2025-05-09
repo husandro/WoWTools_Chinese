@@ -86,15 +86,18 @@ local tab={
 }
 
 
-
-
-
-do
-    for mapChallengeModeID, cnName in pairs(tab) do
-        WoWTools_ChineseMixin:SetCN(
-            C_ChallengeMode.GetMapUIInfo(mapChallengeModeID),
-            cnName
-        )
+EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+    do
+        for mapChallengeModeID, cnName in pairs(tab) do
+            WoWTools_ChineseMixin:SetCN(
+                C_ChallengeMode.GetMapUIInfo(mapChallengeModeID),
+                cnName
+            )
+        end
     end
-end
-tab= nil
+    tab= nil
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
+end)
+
+
+

@@ -51,11 +51,16 @@ local tab={
 }
 
 
-do
-    for affixID, info in pairs(tab) do
-        local name, desc = C_ChallengeMode.GetAffixInfo(affixID)
-        WoWTools_ChineseMixin:SetCN(name, info[1])
-        WoWTools_ChineseMixin:SetCN(desc, info[2])
+
+
+EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+    do
+        for affixID, info in pairs(tab) do
+            local name, desc = C_ChallengeMode.GetAffixInfo(affixID)
+            WoWTools_ChineseMixin:SetCN(name, info[1])
+            WoWTools_ChineseMixin:SetCN(desc, info[2])
+        end
     end
-end
-tab=nil
+    tab=nil
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
+end)

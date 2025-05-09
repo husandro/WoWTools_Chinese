@@ -11859,14 +11859,18 @@ local tab={
 }
 
 
-do
-    for achievementID, info in pairs(tab) do
-        local _, name, _, _, _, _, _, description, _, _, rewardText= GetAchievementInfo(achievementID)
-        do
-            WoWTools_ChineseMixin:SetCN(name, info[1])
-            WoWTools_ChineseMixin:SetCN(description, info[2])
-            WoWTools_ChineseMixin:SetCN(rewardText, info[3])
+
+EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+    do
+        for achievementID, info in pairs(tab) do
+            local _, name, _, _, _, _, _, description, _, _, rewardText= GetAchievementInfo(achievementID)
+            do
+                WoWTools_ChineseMixin:SetCN(name, info[1])
+                WoWTools_ChineseMixin:SetCN(description, info[2])
+                WoWTools_ChineseMixin:SetCN(rewardText, info[3])
+            end
         end
     end
-end
-tab= nil
+    tab= nil
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
+end)

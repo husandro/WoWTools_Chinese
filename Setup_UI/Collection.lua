@@ -43,7 +43,12 @@ local function Init_Mount()
         self.SlotRequirementLabel:SetFormattedText('坐骑装备在%s级解锁', C_MountJournal.GetMountEquipmentUnlockLevel())
     end)
     hooksecurefunc('MountJournal_InitializeEquipmentSlot', function(self, item)
-        if not item then
+        if item then
+            local itemName= WoWTools_ChineseMixin:GetItemName(item.itemID)
+            if itemName then
+                self.SlotLabel:SetText(itemName)
+            end
+        else
             self.SlotLabel:SetText('使用坐骑装备来强化你的坐骑。')
         end
     end)

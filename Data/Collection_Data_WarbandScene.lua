@@ -10,14 +10,18 @@ local tab={
 [29]= {'从偏好中随机选取', '每次登录时选取一个偏好营区。如果没有偏好营区，则会从整个收藏中选取。', nil},
 }
 
-do
-    for warbandSceneID, data in pairs(tab) do
-        local info= C_WarbandScene.GetWarbandSceneEntry(warbandSceneID)
-        if info then
-            WoWTools_ChineseMixin:SetCN(info.name, data[1])
-            WoWTools_ChineseMixin:SetCN(info.description, data[2])
-            WoWTools_ChineseMixin:SetCN(info.source, data[3])
+
+EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+    do
+        for warbandSceneID, data in pairs(tab) do
+            local info= C_WarbandScene.GetWarbandSceneEntry(warbandSceneID)
+            if info then
+                WoWTools_ChineseMixin:SetCN(info.name, data[1])
+                WoWTools_ChineseMixin:SetCN(info.description, data[2])
+                WoWTools_ChineseMixin:SetCN(info.source, data[3])
+            end
         end
     end
-end
-tab=nil
+    tab=nil
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
+end)
