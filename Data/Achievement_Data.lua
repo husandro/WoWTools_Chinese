@@ -11860,7 +11860,6 @@ local tab={
 
 
 
-EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
     do
         for achievementID, info in pairs(tab) do
             local _, name, _, _, _, _, _, description, _, _, rewardText= GetAchievementInfo(achievementID)
@@ -11872,5 +11871,3 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
         end
     end
     tab= nil
-    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
-end)

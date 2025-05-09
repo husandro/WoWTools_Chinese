@@ -26,7 +26,6 @@ local tab= {
 
 
 --有男，女之分
-EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
     do
         local className, classFile, classID
         for id, cn in pairs(tab) do
@@ -43,7 +42,3 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
         WoWTools_ChineseMixin:SetCN(className, tab[classID])
     end
     tab=nil
-    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
-end)
-
-

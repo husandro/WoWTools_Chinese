@@ -53,7 +53,6 @@ local tab={
 
 
 
-EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
     do
         for affixID, info in pairs(tab) do
             local name, desc = C_ChallengeMode.GetAffixInfo(affixID)
@@ -62,5 +61,3 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
         end
     end
     tab=nil
-    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
-end)

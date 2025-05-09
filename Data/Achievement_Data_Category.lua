@@ -238,12 +238,9 @@ local tab={
 
 
 
-EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
     do
         for categoryID, text in pairs(tab) do
             WoWTools_ChineseMixin:SetCN(GetCategoryInfo(categoryID), text)
         end
     end
     tab= nil
-    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
-end)

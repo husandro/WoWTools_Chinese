@@ -24,7 +24,7 @@ local categoryTab={
 
 local itemTab={
 
-    
+
 
 [1]= {'乐乐', '|cFF00ccff“地心之战”宠物|r|n|cFF1eff00“霸业风暴”宠物|r|n|n解锁“乐乐”宠物。在“霸业风暴”中，达卡什·暗账可以帮你召唤你的宠物。|n|n“它光是能来这儿逛逛就很兴奋了。”'},
 [2]= {'泡泡', '|cFF00ccff“地心之战”宠物|r|n|cFF1eff00“霸业风暴”宠物|r|n|n解锁“泡泡”宠物。在“霸业风暴”中，达卡什·暗账可以帮你召唤你的宠物。|n|n“它跟踪你回家了！”|n|n|cFFFFFFFF额外宠物：小钳|r|n|n|CFFa335ee经典怀旧服宠物|r|n|n解锁“巫妖王之怒”宠物：“收集者小钳”。|n|n“小心尖端！”'},
@@ -101,7 +101,6 @@ local itemTab={
 
 
 
-EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
     do
         for categoryID, data in pairs(categoryTab) do
             local info= C_AccountStore.GetCategoryInfo(categoryID)
@@ -117,8 +116,6 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
             end
         end
     end
-    
+
     itemTab=nil
     categoryTab=nil
-    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
-end)

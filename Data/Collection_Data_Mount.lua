@@ -1395,7 +1395,6 @@ local tab={
 
 
 
-EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
     do
         for mountID, info in pairs(tab) do
             local desc, source= select(2, C_MountJournal.GetMountInfoExtraByID(mountID))
@@ -1404,5 +1403,3 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
             WoWTools_ChineseMixin:SetCN(source, info[3])
         end
     end
-    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
-end)
