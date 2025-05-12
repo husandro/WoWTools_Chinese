@@ -2,7 +2,6 @@
 https://wago.tools/db2/HolidayNames?locale=zhCN
 https://wago.tools/db2/HolidayDescriptions?locale=zhCN
 https://wago.tools/db2/Holidays?locale=zhCN
-
 ]]
 local nameTab={
 [451]= '卑鄙双雄',
