@@ -1,3 +1,5 @@
+GAME_LOCALE="zhCN"
+
 WoWTools_ChineseMixin={
     Events={}
 }
