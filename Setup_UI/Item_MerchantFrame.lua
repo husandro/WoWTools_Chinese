@@ -16,7 +16,9 @@ hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
         MerchantFrame:SetTitle(npc)
     end
 
-    MerchantPageText:SetFormattedText('页数 %s/%s', MerchantFrame.page, math.ceil(GetMerchantNumItems() / MERCHANT_ITEMS_PER_PAGE))
+    if not WoWTools_MerchantMixin then--有处理这个数据
+        MerchantPageText:SetFormattedText('页数 %s/%s', MerchantFrame.page, math.ceil(GetMerchantNumItems() / MERCHANT_ITEMS_PER_PAGE))
+    end
 
     for i = 1, MERCHANT_ITEMS_PER_PAGE do
         local btn= _G['MerchantItem'..i]
