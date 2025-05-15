@@ -738,6 +738,20 @@ end
 
 
 
+function WoWTools_ChineseMixin.Events:Blizzard_ItemSocketingUI()
+   local region= select(3, ItemSocketingFrame:GetRegions())
+   if region:GetObjectType()=='FontString' then
+        WoWTools_ChineseMixin:SetLabel(region)
+   end
+   ItemSocketingSocketButton:SetText("应用")
+
+   --[[for _, region in pairs(regions) do
+        if region:GetObjectType()=='FontString' then
+            print(_, region:GetText())
+        end
+   end]]
+   
+end
 --[[function CooldownViewerBuffBarItemMixin:RefreshName()
 	local nameFontString = self:GetNameFontString();
 	if not nameFontString:IsShown() then

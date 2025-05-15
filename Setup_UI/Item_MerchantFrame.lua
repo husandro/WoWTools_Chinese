@@ -2,6 +2,8 @@
 --商人
 MerchantFrameTab1:SetText('商人')
 MerchantFrameTab2:SetText('购回')
+
+WoWTools_ChineseMixin:HookLabel(MerchantFrame.FilterDropdown.Text)
 --MerchantPageText:SetText('')
 
 

@@ -7,7 +7,22 @@ https://wago.tools/db2/GlobalStrings?&locale=zhCN
 
 
 local tab={
-
+["CURRENCY_TRANSFER_IN_PROGRESS"]= "正在转移",
+["ERR_CURRENCY_TRANSFER_DISABLED"]= "货币转移目前无法使用。",
+["ASSISTED_COMBAT_ROTATION_SPELL_INCLUDED"]= "包含在一键辅助中。",
+["ASSISTED_COMBAT_ROTATION_DRAG_HELPTIP"]= "将一键辅助拖放到你的动作条中，即可一键囊括你的整个伤害输出循环。",
+["ASSISTED_COMBAT_ROTATION_SPELLBOOK_LABEL"]= "一键|n辅助",
+["ASSISTED_COMBAT_ROTATION"]= "一键辅助",
+["ASSISTED_COMBAT_SPELL_INCLUDED"]= "包含在辅助标亮和一键辅助中。",
+["ASSISTED_COMBAT_HIGHLIGHT_SPELL_INCLUDED"]= "包含在辅助标亮中。",
+["SPELL_FAILED_CUSTOM_ERROR_1078"]= "你在小队同步期间无法参与游学探奇。",
+["ASSISTED_COMBAT_HIGHLIGHT_LABEL"]= "辅助标亮",
+["REPORTING_MINOR_CATEGORY_CSEA"]= "虐待儿童",
+["REPORTING_MINOR_CATEGORY_TVEC"]= "恐怖主义/暴力内容",
+["VOICE_CHAT_SETTING_ENABLED"] = "语音聊天已启用",
+["LOGIN_STATE_WAITFORNETWORK"] = "等待网络连接",
+["NPEV2_SELF_HEAL_P1"] = "你受伤了！使用|cFF00FFFF复原|r在未进入战斗时恢复生命值。",
+["NPEV2_SELF_HEAL_P2"] = "	施放法术时不要移动。\n\n静观你的生命值逐渐恢复。",
 ["BUG_BUTTON"]= "Bug及建议",
 ["CHARACTER_BUTTON"]= "角色信息",
 ["MAINMENU_BUTTON"]= "主菜单",

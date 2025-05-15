@@ -17,8 +17,8 @@
 --法术书
 local function Init_SpellBookFrame()
     if PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame then--11.1.7才有
-        WoWTools_ChineseMixin:CN(PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame.Label)
-        
+        WoWTools_ChineseMixin:HookLabel(PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame.Label)
+        --PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame.Label:SetText('一键|n辅助')
     else--11.1.7没了
         WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton.Label)--隐藏被动技能
     end

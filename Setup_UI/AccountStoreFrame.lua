@@ -3,7 +3,7 @@ if not AccountStoreFrame then
 end
 
 
-
+WoWTools_ChineseMixin:SetLabel(AccountStoreFrameTitleText)
 
 hooksecurefunc(AccountStoreFrame.CategoryList.ScrollBox, 'Update', function(frame)
     if not frame:GetView() then
@@ -23,6 +23,7 @@ end)
 
 --Blizzard_AccountStoreCardTemplates.lua
 hooksecurefunc(AccountStoreBaseCardMixin, 'SetItemID', function(self)
+
     local itemInfo= self.itemInfo
     if not itemInfo then
         return
@@ -56,6 +57,8 @@ hooksecurefunc(AccountStoreFrame.StoreDisplay, 'SetPage', function(self, page)
 	end
 	self.Footer.PageText:SetFormattedText('%d/%d页', page, maxPage)
 end)
+
+
 --[[
 local function GenerateAccountStoreCategoryInfo(cardTemplate, maxCards)
 	return {

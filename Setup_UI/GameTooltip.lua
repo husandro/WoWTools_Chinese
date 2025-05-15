@@ -1,13 +1,16 @@
 
 
 local function Set_Line(tooltip)
+    local name= tooltip:GetName() or 'GameTooltip'
+
     for index=1, tooltip:NumLines() or 0, 1 do
-        WoWTools_ChineseMixin:SetLabel(tooltip['TextLeft'..index])
-        WoWTools_ChineseMixin:SetLabel(tooltip['TextRight'..index])
+        WoWTools_ChineseMixin:SetLabel(_G[name..'TextLeft'..index])
+        WoWTools_ChineseMixin:SetLabel(_G[name..'TextRight'..index])
     end
     GameTooltip_CalculatePadding(tooltip)
 end
-
+--WoWTools_ChineseMixin:SetLabel(tooltip['TextLeft'..index])
+--WoWTools_ChineseMixin:SetLabel(tooltip['TextRight'..index])
 
 
 
@@ -460,7 +463,7 @@ EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1
             Set_OnShow(ItemSocketingDescription)
         end
 
-        if C_AddOns.IsAddOnLoaded('Blizzard_PerksProgram') and  C_AddOns.IsAddOnLoaded('BlizzarBlizzard_ItemSocketingUId_ChallengesUI') then
+        if C_AddOns.IsAddOnLoaded('Blizzard_PerksProgram') and  C_AddOns.IsAddOnLoaded('Blizzard_ItemSocketingUI') then
             EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
         end
     end
@@ -488,5 +491,4 @@ hooksecurefunc('BattlePetTooltipTemplate_SetBattlePet', function(tooltipFrame, d
 	    tooltipFrame.PetType:SetText(t)
     end
     tooltipFrame.Level:SetFormattedText('等级%d', data.level)
-    
 end)

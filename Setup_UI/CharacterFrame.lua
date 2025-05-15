@@ -50,7 +50,7 @@ hooksecurefunc(CharacterFrame, 'SetTitle', function(self)
             end
         end
     else
-        --WoWTools_ChineseMixin:SetLabel(CharacterFrameTitleText)
+        WoWTools_ChineseMixin:SetLabel(CharacterFrameTitleText)
     end
 end)
 
