@@ -1,14 +1,39 @@
 
 
-local function Set_Line(tooltip)
-    local name= tooltip:GetName() or 'GameTooltip'
 
-    for index=1, tooltip:NumLines() or 0, 1 do
-        WoWTools_ChineseMixin:SetLabel(_G[name..'TextLeft'..index])
-        WoWTools_ChineseMixin:SetLabel(_G[name..'TextRight'..index])
+
+local function CN_Line(line)
+    local cn= line and WoWTools_ChineseMixin:SetText(line:GetText())
+    if not cn then
+        return
     end
-    GameTooltip_CalculatePadding(tooltip)
+
+    local r,g,b,a=line:GetTextColor()
+    line:SetText(cn)
+    if r and g and b then
+        line:SetTextColor(r,g,b, a or 1)
+    end
+    return true
 end
+
+
+local function Set_Lines(tooltip)
+    local name= tooltip:GetName() or 'GameTooltip'
+    local find
+    local num= tooltip:NumLines() or 0
+    for index=1, num do
+        if CN_Line(_G[name..'TextLeft'..index]) then
+            find= true
+        end
+        if CN_Line(_G[name..'TextRight'..index]) then
+            find=true
+        end
+    end
+    if find then
+        GameTooltip_CalculatePadding(tooltip)
+    end
+end
+
 --WoWTools_ChineseMixin:SetLabel(tooltip['TextLeft'..index])
 --WoWTools_ChineseMixin:SetLabel(tooltip['TextRight'..index])
 
@@ -203,7 +228,7 @@ end
 
 
 TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes, function(tooltip, data)
-    Set_Line(tooltip)
+    Set_Lines(tooltip)
 
     if data.type==Enum.TooltipDataType.Item then--0
         if not GetItemData then--排除，插件 WoWeuCN_Tooltips
@@ -445,7 +470,7 @@ FloatingBattlePetTooltip:HookScript('OnShow', set_pet_func)
 
 
 local function Set_OnShow(tooltip)
-    tooltip:HookScript('OnShow', Set_Line)
+    tooltip:HookScript('OnShow', Set_Lines)
 end
 
 Set_OnShow(SettingsTooltip)
