@@ -455,7 +455,7 @@ PlayerCastingBarFrame:HookScript('OnEvent', function(self, event, _, _, spellID)
                 self.Text:SetText(name)
             end
         else
-            WoWTools_ChineseMixin:SetLabel(self.Text)            
+            WoWTools_ChineseMixin:SetLabel(self.Text)
         end
     end
 end)
@@ -474,7 +474,7 @@ OverlayPlayerCastingBarFrame:HookScript('OnEvent', function(self, event, _, _, s
                 self.Text:SetText(name)
             end
         else
-            WoWTools_ChineseMixin:SetLabel(self.Text)            
+            WoWTools_ChineseMixin:SetLabel(self.Text)
         end
     end
 end)
@@ -535,7 +535,7 @@ C_Timer.After(4, function()
 
 
 
-    
+
     --[[Blizzard_FrameXMLBase/Constants.lua
     local function set_table(data)
         for index, name in pairs(_G[data] or {}) do
@@ -652,3 +652,29 @@ end
 
 
 
+--公会，签名
+WoWTools_ChineseMixin:HookLabel(PetitionFrameInstructions)
+WoWTools_ChineseMixin:HookLabel(PetitionFrameCharterTitle)
+WoWTools_ChineseMixin:HookLabel(PetitionFrameMasterTitle)
+WoWTools_ChineseMixin:HookLabel(PetitionFrameRenameButton)
+WoWTools_ChineseMixin:SetLabel(PetitionFrameRequestButtonText)
+WoWTools_ChineseMixin:SetLabel(PetitionFrameCancelButtonText)
+WoWTools_ChineseMixin:SetLabel(PetitionFrameMemberTitle)
+PetitionFrameNpcNameText:SetParent(PetitionFrame.TitleContainer)
+
+hooksecurefunc('PetitionFrame_Update', function()
+	local petitionType, title, _, _, _, _, _ = GetPetitionInfo();
+
+	if ( petitionType == "guild" ) then
+		PetitionFrameNpcNameText:SetFormattedText('%s公会登记表', title)
+	end
+	local memberText;
+	local numNames = GetNumPetitionNames();
+
+	for i=1, minSignatures do
+		memberText = _G["PetitionFrameMemberName"..i];
+		if ( i > numNames ) then
+			memberText:SetText('<未被签名>');
+		end
+	end
+end)

@@ -344,6 +344,7 @@ function WoWTools_ChineseMixin:GetUnitData(unit, npcID)
 end
 
 function WoWTools_ChineseMixin:GetUnitName(unit, npcID)
+    unit= unit or 'npc'
     local data= self:GetUnitData(unit, npcID)
     if data then
         return data[1], data[2]
