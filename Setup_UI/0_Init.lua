@@ -120,7 +120,29 @@ end)
 GhostFrameContentsFrameText:SetText('返回墓地')
 
 --宠物对战
+--Blizzard_PetBattleUI.lua
+WoWTools_ChineseMixin:AddDialogs("PET_BATTLE_FORFEIT", {text = '确定要放弃比赛吗？你的对手将被判定获胜，你的宠物也将损失百分之%d的生命值。', button1 = '确定', button2 = '取消',})
+WoWTools_ChineseMixin:AddDialogs("PET_BATTLE_FORFEIT_NO_PENALTY", {text = '确定要放弃比赛吗？你的对手将被判定获胜。', button1 = '确定', button2 = '取消',})
 PetBattleFrame.BottomFrame.TurnTimer.SkipButton:SetText('待命')
+
+WoWTools_ChineseMixin:SetLabel(PetBattlePrimaryUnitTooltip.StatsLabel)
+WoWTools_ChineseMixin:SetLabel(PetBattlePrimaryUnitTooltip.AbilitiesLabel)
+WoWTools_ChineseMixin:SetLabel(PetBattlePrimaryUnitTooltip.WeakToLabel)
+WoWTools_ChineseMixin:SetLabel(PetBattlePrimaryUnitTooltip.ResistantToLabel)
+WoWTools_ChineseMixin:SetLabel(PetBattlePrimaryUnitTooltip.SpeedAdvantage)
+
+hooksecurefunc('PetBattleUnitTooltip_UpdateForUnit', function(self, petOwner, petIndex)
+    local abilityID, name
+    for i=1, NUM_BATTLE_PET_ABILITIES do
+        abilityID= C_PetBattles.GetAbilityInfo(petOwner, petIndex, i)
+        name= WoWTools_ChineseMixin:GetPetAblityName(abilityID)
+        if name then
+            self['AbilityName'..i]:SetText(name)
+        end
+    end
+end)
+
+
 
 
 QuestInfoRequiredMoneyText:SetText('需要金钱：')

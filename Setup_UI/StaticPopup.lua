@@ -699,9 +699,6 @@ WoWTools_ChineseMixin:AddDialogs("EXTERNAL_LINK", {text = '你正被重新定向
 --LFGFrame.lua
 WoWTools_ChineseMixin:AddDialogs("LFG_QUEUE_EXPAND_DESCRIPTION", {text = '你正被重新定向到：\n|cffffd200%s|r\n点击“确定”，以在你的网页浏览器中打开此链接。', button1 = '是', button2= '否'})
 
---Blizzard_PetBattleUI.lua
-WoWTools_ChineseMixin:AddDialogs("PET_BATTLE_FORFEIT", {text = '确定要放弃比赛吗？你的对手将被判定获胜，你的宠物也将损失百分之%d的生命值。', button1 = '确定', button2 = '取消',})
-WoWTools_ChineseMixin:AddDialogs("PET_BATTLE_FORFEIT_NO_PENALTY", {text = '确定要放弃比赛吗？你的对手将被判定获胜。', button1 = '确定', button2 = '取消',})
 
 --TextToSpeechFrame.lua
 WoWTools_ChineseMixin:AddDialogs("TTS_CONFIRM_SAVE_SETTINGS", {text= '你想让这个角色使用已经在这台电脑上保存的文字转语音设置吗？如果你从另一台电脑上登入，此设置会保存并覆盖之前你拥有的任何设定。', button1= '是', button2= '取消'})
