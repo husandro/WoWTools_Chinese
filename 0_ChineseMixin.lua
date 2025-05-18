@@ -61,6 +61,16 @@ function WoWTools_ChineseMixin:GetData(text, tab)
     elseif tab.speciesID then
         data= self:GetPetDesc(tab.speciesID)--专精
 
+    elseif tab.petSpeciesID or tab.companionID then
+        local companionID= tab.companionID or select(4, C_PetJournal.GetPetInfoBySpeciesID(tab.petSpeciesID))
+        if companionID then
+            if tab.isName then
+                data= self:GetUnitName(nil, companionID)
+            else
+                data= self:GetUnitData(nil, companionID)
+            end
+        end
+
     elseif tab.petAbilityID then--宠物技能
         if tab.isName then
             data= self:GetPetAblityName(tab.petAbilityID)

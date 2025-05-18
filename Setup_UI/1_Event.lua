@@ -167,7 +167,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ArtifactUI()
                 frame.ArtifactName:SetText(name);
             end
         end
-    end)    
+    end)
 end
 
 
@@ -311,7 +311,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ClickBindingUI()
         GameTooltip_SetTitle(GameTooltip, '宏')
         GameTooltip:Show()
     end)
-    
+
     local function NameAndIconFromElementData(elementData)
         if elementData.bindingInfo then
             local bindingInfo = elementData.bindingInfo
@@ -793,6 +793,105 @@ function WoWTools_ChineseMixin.Events:Blizzard_GuildRename()
     self:SetLabel(TabardFrameCancelButtonText)
 
 end
+
+
+
+
+
+
+--宠物对战
+function WoWTools_ChineseMixin.Events:Blizzard_PetBattleUI()
+    self:AddDialogs("PET_BATTLE_FORFEIT", {text = '确定要放弃比赛吗？你的对手将被判定获胜，你的宠物也将损失百分之%d的生命值。', button1 = '确定', button2 = '取消',})
+    self:AddDialogs("PET_BATTLE_FORFEIT_NO_PENALTY", {text = '确定要放弃比赛吗？你的对手将被判定获胜。', button1 = '确定', button2 = '取消',})
+    PetBattleFrame.BottomFrame.TurnTimer.SkipButton:SetText('待命')
+
+    --self:HookLabel(PetBattlePrimaryUnitTooltip.CollectedText)
+    self:SetLabel(PetBattlePrimaryUnitTooltip.StatsLabel)
+    self:SetLabel(PetBattlePrimaryUnitTooltip.AbilitiesLabel)
+    self:SetLabel(PetBattlePrimaryUnitTooltip.WeakToLabel)
+    self:SetLabel(PetBattlePrimaryUnitTooltip.ResistantToLabel)
+    self:SetLabel(PetBattlePrimaryUnitTooltip.SpeedAdvantage)
+    self:SetLabel(PetBattlePrimaryUnitTooltip.TopVersusText)
+
+    hooksecurefunc('PetBattleUnitTooltip_UpdateForUnit', function(frame, petOwner, petIndex)
+--名称
+        local speciesID= C_PetBattles.GetPetSpeciesID(petOwner, petIndex)
+        local companionID= speciesID or select(4, C_PetJournal.GetPetInfoBySpeciesID(speciesID))
+        local cnName= self:GetUnitName(nil, companionID)
+        if cnName then
+            frame.Name:SetText(cnName)
+        end
+--技能，名称
+        local abilityID, name
+        for i=1, NUM_BATTLE_PET_ABILITIES do
+            abilityID= C_PetBattles.GetAbilityInfo(petOwner, petIndex, i)
+            name= self:GetPetAblityName(abilityID)
+            if name then
+                frame['AbilityName'..i]:SetText(name)
+            end
+        end
+--收集
+        if frame.CollectedText:IsShown() then
+            --speciesID = C_PetBattles.GetPetSpeciesID(Enum.BattlePetOwner.Enemy, petIndex)
+            local numOwned, maxAllowed = C_PetJournal.GetNumCollectedInfo(speciesID)
+            if (numOwned < maxAllowed) then
+                frame.CollectedText:SetText(GREEN_FONT_COLOR_CODE..format('已收集（%d/%d）', numOwned, maxAllowed)..FONT_COLOR_CODE_CLOSE);
+            else
+                frame.CollectedText:SetText(RED_FONT_COLOR_CODE..format('已收集（%d/%d）', numOwned, maxAllowed)..FONT_COLOR_CODE_CLOSE);
+            end
+        end
+    end)
+
+
+    hooksecurefunc('PetBattleUnitFrame_UpdateDisplay', function(frame)
+        local petOwner = frame.petOwner;
+        local petIndex = frame.petIndex;
+        if not petOwner
+            or not petIndex
+            or not frame.Name
+            or frame==PetBattlePrimaryUnitTooltip
+            or petIndex > C_PetBattles.GetNumPets(petOwner)
+        then
+            return
+        end
+
+        local speciesID= C_PetBattles.GetPetSpeciesID(petOwner, petIndex)
+        local companionID= speciesID or select(4, C_PetJournal.GetPetInfoBySpeciesID(speciesID))
+        local cnName= self:GetUnitName(nil, companionID)        
+        if cnName then
+            if not frame.cnName then
+                frame.cnName=  WoWTools_ChineseMixin:Cstr(frame)
+                if petOwner==Enum.BattlePetOwner.Ally then
+                    frame.cnName:SetPoint('BOTTOMLEFT', frame.Name, 'TOPLEFT')
+                else
+                    frame.cnName:SetPoint('BOTTOMRIGHT', frame.Name, 'TOPRIGHT')
+                end
+            end
+            frame.cnName:SetText(cnName)
+        end
+    end)
+
+--右击图像，菜单
+    Menu.ModifyMenu("MENU_PET_BATTLE_PET", function(frame, root)
+        local speciesID= C_PetBattles.GetPetSpeciesID(frame.petOwner, frame.petIndex)
+        local companionID= speciesID or select(4, C_PetJournal.GetPetInfoBySpeciesID(speciesID))
+        local cnName= self:GetUnitName(nil, companionID)
+        if cnName then
+            root:CreateTitle(cnName)
+        end
+    end)
+
+--PetBattleUnitTooltip_OnLoad(self)
+    PetBattlePrimaryUnitTooltip.healthTextFormat = "生命值：%d/%d";
+	PetBattlePrimaryUnitTooltip.xpTextFormat = '经验值：%d/%d'
+end
+
+
+
+
+
+
+
 
 
 --[[function CooldownViewerBuffBarItemMixin:RefreshName()
