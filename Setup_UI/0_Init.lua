@@ -119,6 +119,8 @@ end)
 --死亡
 GhostFrameContentsFrameText:SetText('返回墓地')
 
+
+
 --宠物对战
 --Blizzard_PetBattleUI.lua
 WoWTools_ChineseMixin:AddDialogs("PET_BATTLE_FORFEIT", {text = '确定要放弃比赛吗？你的对手将被判定获胜，你的宠物也将损失百分之%d的生命值。', button1 = '确定', button2 = '取消',})
