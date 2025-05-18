@@ -370,7 +370,7 @@ hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilit
     end
 
 
-	local id, name, icon, maxCooldown, unparsedDescription, numTurns, petType, noStrongWeakHints = C_PetBattles.GetAbilityInfoByID(abilityID);
+	local _, _, _, maxCooldown, _, numTurns = C_PetBattles.GetAbilityInfoByID(abilityID);
 
 
     local cnDesc, cnName= WoWTools_ChineseMixin:GetPetAblityDesc(abilityID, abilityInfo)
@@ -397,7 +397,6 @@ hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilit
     if additionalText then
         self.AdditionalText:SetText(additionalText);
     end
-	
 
     if cnDesc then
         self.Description:SetText(cnDesc)
@@ -405,17 +404,6 @@ hooksecurefunc('SharedPetBattleAbilityTooltip_SetAbility', function(self, abilit
 
     WoWTools_ChineseMixin:SetLabel(self.StrongAgainstType1Label)
     WoWTools_ChineseMixin:SetLabel(self.WeakAgainstType1Label)
-
-    --[[local info = abilityID and WoWTools_ChineseMixin:GetPetAblityData(abilityID)
-    if info then
-        local description = info[2] and SharedPetAbilityTooltip_ParseText(abilityInfo, info[2])
-        if description then
-            self.Description:SetText(description)
-        end
-        if info[1] then
-            self.Name:SetText(info[1])
-        end
-    end]]
 end)
 
 

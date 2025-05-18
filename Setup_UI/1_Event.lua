@@ -884,6 +884,16 @@ function WoWTools_ChineseMixin.Events:Blizzard_PetBattleUI()
 --PetBattleUnitTooltip_OnLoad(self)
     PetBattlePrimaryUnitTooltip.healthTextFormat = "生命值：%d/%d";
 	PetBattlePrimaryUnitTooltip.xpTextFormat = '经验值：%d/%d'
+
+    hooksecurefunc('PetBattleWeatherFrame_Update', function(frame)
+        local auraID = frame:IsShown() and C_PetBattles.GetAuraInfo(Enum.BattlePetOwner.Weather, PET_BATTLE_PAD_INDEX, 1)
+        local abilityID = auraID and C_PetBattles.GetAbilityInfoByID(auraID)
+        local cnName= self:GetPetAblityName(abilityID)
+        if cnName then
+            frame.Name:SetText(cnName)
+        end
+        self:SetLabel(frame.Label)
+    end)
 end
 
 
