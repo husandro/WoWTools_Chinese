@@ -83,7 +83,16 @@ local function set_text(line)
         end
    end
 end
+--[[
 
+	QuestScrollFrame.titleFramePool:ReleaseAll();
+	QuestScrollFrame.objectiveFramePool:ReleaseAll();
+	QuestScrollFrame.headerFramePool:ReleaseAll();
+	QuestScrollFrame.campaignHeaderFramePool:ReleaseAll();
+	QuestScrollFrame.campaignHeaderMinimalFramePool:ReleaseAll();
+	QuestScrollFrame.covenantCallingsHeaderFramePool:ReleaseAll();
+	QuestScrollFrame.Contents:ResetUsage();
+]]
 hooksecurefunc("QuestLogQuests_Update", function()
     for line in QuestScrollFrame.headerFramePool:EnumerateActive() do
         set_text(line)
