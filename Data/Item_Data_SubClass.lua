@@ -208,6 +208,7 @@ local classTab={
 
 }
 
+
 do
     for _, info in pairs(tab) do
         WoWTools_ChineseMixin:SetCN(C_Item.GetItemSubClassInfo(info[3], info[4]), info[2] or info[1])
