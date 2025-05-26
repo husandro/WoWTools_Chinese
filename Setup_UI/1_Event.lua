@@ -795,6 +795,16 @@ function WoWTools_ChineseMixin.Events:Blizzard_GuildRename()
 end
 
 
+--帮助提示 HelpPlateCanvas HelpPlateTooltipMixin
+function WoWTools_ChineseMixin.Events:Blizzard_HelpPlate()
+    hooksecurefunc(HelpPlateTooltip, 'Init', function(frame, _, tooltipText)
+        local cn= self:CN(tooltipText)
+        if cn then
+            frame.Text:SetText(cn)
+            frame:SetHeight(self.Text:GetHeight() + 30)
+        end
+    end)
+end
 
 
 
