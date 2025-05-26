@@ -801,7 +801,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HelpPlate()
         local cn= self:CN(tooltipText)
         if cn then
             frame.Text:SetText(cn)
-            frame:SetHeight(self.Text:GetHeight() + 30)
+            frame:SetHeight(frame.Text:GetHeight() + 30)
         end
     end)
 end
