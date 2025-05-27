@@ -69,9 +69,22 @@ local function Init_SpellBookFrame()
         end
     end)
 
+--Header Blizzard_SpellBookTemplates.lua
+    hooksecurefunc(PlayerSpellsFrame.SpellBookFrame, 'UpdateDisplayedSpells',function(self)
+        for _, btn in pairs(self.PagedSpellsFrame:GetFrames() or {}) do
+            if btn.Text then
+                WoWTools_ChineseMixin:SetLabel(btn.Text)
+            end
+        end
+    end)
 
-
-
+    hooksecurefunc(PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls, 'SetCurrentPage',function(self)
+        for _, btn in pairs(self:GetParent():GetFrames() or {}) do
+            if btn.Text then
+                WoWTools_ChineseMixin:SetLabel(btn.Text)
+            end
+        end
+    end)
 end
 
 
