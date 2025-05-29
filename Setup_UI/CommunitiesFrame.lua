@@ -373,7 +373,7 @@
 
 
     --奖励, 物品，GuildRewards.lua
-    hooksecurefunc(CommunitiesGuildRewardsButtonMixin, 'Init', function(self, data)
+    hooksecurefunc(CommunitiesGuildRewardsButtonMixin, 'Init', function(self)
         local achievementID, itemID, itemName, _, repLevel = GetGuildRewardInfo(self.index)
         local name= WoWTools_ChineseMixin:GetItemName(itemID) or WoWTools_ChineseMixin:CN(itemName)
         if name then
