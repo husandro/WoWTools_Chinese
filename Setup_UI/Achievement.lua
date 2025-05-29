@@ -96,7 +96,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
     end)
 
     --列表
-    hooksecurefunc(AchievementFrameCategories.ScrollBox, 'Update', function(frame)
+    hooksecurefunc(AchievementCategoryTemplateMixin, 'Init', function(f)
+        WoWTools_ChineseMixin:SetLabel(f.Button.Label, f.Button.name)
+    end)
+    --[[hooksecurefunc(AchievementFrameCategories.ScrollBox, 'Update', function(frame)
         if not frame:GetView() then
             return
         end
@@ -105,7 +108,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
                 WoWTools_ChineseMixin:SetLabel(btn.Button.Label, btn.Button.name)
             end
         end
-    end)
+    end)]]
     hooksecurefunc(AchievementCategoryTemplateMixin, 'Init', function(frame, info)
         if info.id == 81 then
             frame.Button.text = "对于许多玩家来说，“光辉事迹”中的成就几乎不可能完成，至少是极端困难的。它们并不奖励成就点数，而是你在艾泽拉斯世界曾经创下的丰功伟绩的纪录。"
