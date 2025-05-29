@@ -64,7 +64,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
                     else
                         tAchievements = ACHIEVEMENTUI_DEFAULTSUMMARYACHIEVEMENTS
                     end
-                    for i=defaultAchievementCount, ACHIEVEMENTUI_MAX_SUMMARY_ACHIEVEMENTS do
+                    for i2=defaultAchievementCount, ACHIEVEMENTUI_MAX_SUMMARY_ACHIEVEMENTS do
                         achievementID = tAchievements[defaultAchievementCount]
                         if ( not achievementID ) then
                             break
@@ -99,16 +99,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
     hooksecurefunc(AchievementCategoryTemplateMixin, 'Init', function(f)
         WoWTools_ChineseMixin:SetLabel(f.Button.Label, f.Button.name)
     end)
-    --[[hooksecurefunc(AchievementFrameCategories.ScrollBox, 'Update', function(frame)
-        if not frame:GetView() then
-            return
-        end
-        for _, btn in pairs(frame:GetFrames() or {}) do
-            if btn.Button then
-                WoWTools_ChineseMixin:SetLabel(btn.Button.Label, btn.Button.name)
-            end
-        end
-    end)]]
+
     hooksecurefunc(AchievementCategoryTemplateMixin, 'Init', function(frame, info)
         if info.id == 81 then
             frame.Button.text = "对于许多玩家来说，“光辉事迹”中的成就几乎不可能完成，至少是极端困难的。它们并不奖励成就点数，而是你在艾泽拉斯世界曾经创下的丰功伟绩的纪录。"
@@ -165,8 +156,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
         end
         local textStrings, metas = 0, 0
         for i = 1, numCriteria do
-            --local criteriaString, criteriaType, _, _, _, _, flags, assetID = GetAchievementCriteriaInfo(ID, i)
-            local criteriaString, criteriaType, completed, quantity, reqQuantity, charName, flags, assetID, quantityString, criteriaID, eligible, duration, elapsed= GetAchievementCriteriaInfo(ID, i)
+            local criteriaString, criteriaType, _, _, _, _, flags, assetID = GetAchievementCriteriaInfo(ID, i)
+            --local criteriaString, criteriaType, completed, quantity, reqQuantity, charName, flags, assetID, quantityString, criteriaID, eligible, duration, elapsed= GetAchievementCriteriaInfo(ID, i)
             
             if ( criteriaType == CRITERIA_TYPE_ACHIEVEMENT and assetID ) then
                 metas = metas + 1
@@ -242,7 +233,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
     hooksecurefunc(AchievementStatTemplateMixin, 'Init', function(frame, elementData)
         if elementData then
             local category = elementData.id
-            local colorIndex = elementData.colorIndex
+            --local colorIndex = elementData.colorIndex
             if elementData.header then
                 local text
                 if ( category == ACHIEVEMENT_COMPARISON_STATS_SUMMARY_ID ) then
