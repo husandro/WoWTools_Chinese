@@ -466,4 +466,5 @@ WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.GuildMemberDetailFrame.OnlineLab
 WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.GuildMemberDetailFrame.NoteLabel)
 WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.GuildMemberDetailFrame.NoteBackground.PersonalNoteText)
 
+
 WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.PostingExpirationText.ExpiredText)
