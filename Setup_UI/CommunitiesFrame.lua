@@ -118,24 +118,6 @@
     end)
 
 
-    --CommunitiesMemberList.lua
-    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Owner] = '拥有者'
-    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Leader] = '管理员'
-    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Moderator] = '协管员'
-    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Member] = '成员'
-    hooksecurefunc(CommunitiesFrame.MemberList, 'UpdateMemberCount', function(self)
-        local numOnlineMembers = 0
-        for i, memberInfo in ipairs(self.allMemberList) do
-            if memberInfo.presence == Enum.ClubMemberPresence.Online or
-                memberInfo.presence == Enum.ClubMemberPresence.Away or
-                memberInfo.presence == Enum.ClubMemberPresence.Busy then
-                numOnlineMembers = numOnlineMembers + 1
-            end
-        end
-        self.MemberCount:SetFormattedText('%s/%s人在线', AbbreviateNumbers(numOnlineMembers), AbbreviateNumbers(#self.allMemberList))
-    end)
-
-    CommunitiesFrame.MemberList.ShowOfflineButton.Text:SetText('显示离线成员')
     CommunitiesFrame.GuildBenefitsFrame.Rewards.TitleText:SetText('公会奖励')
     CommunitiesFrame.GuildBenefitsFrame.GuildRewardsTutorialButton:HookScript('OnEnter', function()--GuildRewards.xml
         GameTooltip:SetText('访问任一主城中的公会商人以购买奖励', nil, nil, nil, nil, true)
@@ -426,9 +408,9 @@
         WoWTools_ChineseMixin:HookLabel(btn and btn.label)
     end
 
-    WoWTools_ChineseMixin:SetLabel(CommunitiesFrameGuildDetailsFrameNews.TitleText)--公会新闻
+    --WoWTools_ChineseMixin:SetLabel(CommunitiesFrameGuildDetailsFrameNews.TitleText)--公会新闻
     WoWTools_ChineseMixin:SetLabel(CommunitiesFrameGuildDetailsFrameNews.SetFiltersButton)
-
+    WoWTools_ChineseMixin:SetRegions(CommunitiesFrameGuildDetailsFrameNews)
     --公会新闻过滤
     if CommunitiesGuildNewsFiltersFrame then--CommunitiesGuildNewsFiltersFrame_OnLoad
         WoWTools_ChineseMixin:SetLabel(CommunitiesGuildNewsFiltersFrame.Title)
@@ -465,6 +447,35 @@ WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.GuildMemberDetailFrame.RankLabel
 WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.GuildMemberDetailFrame.OnlineLabel)
 WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.GuildMemberDetailFrame.NoteLabel)
 WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.GuildMemberDetailFrame.NoteBackground.PersonalNoteText)
+WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.GuildBenefitsFrame.FactionFrame.Bar.Label)
 
+--成员列表，标题 CommunitiesMemberListEntryMixin
+--[[hooksecurefunc(CommunitiesMemberListEntryMixin, 'Init', function(frame, elementData, expanded)
+    local cn= WoWTools_ChineseMixin:CN(text)
+    print(f, text)
+    if cn then
+        f.NameFrame.Name:SetText(cn)
+    end
+end)]]
 
-WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.PostingExpirationText.ExpiredText)
+--CommunitiesMemberList.lua
+    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Owner] = '拥有者'
+    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Leader] = '管理员'
+    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Moderator] = '协管员'
+    COMMUNITY_MEMBER_ROLE_NAMES[Enum.ClubRoleIdentifier.Member] = '成员'
+    hooksecurefunc(CommunitiesFrame.MemberList, 'UpdateMemberCount', function(self)
+        local numOnlineMembers = 0
+        for i, memberInfo in ipairs(self.allMemberList) do
+            if memberInfo.presence == Enum.ClubMemberPresence.Online or
+                memberInfo.presence == Enum.ClubMemberPresence.Away or
+                memberInfo.presence == Enum.ClubMemberPresence.Busy then
+                numOnlineMembers = numOnlineMembers + 1
+            end
+        end
+        self.MemberCount:SetFormattedText('%s/%s人在线', AbbreviateNumbers(numOnlineMembers), AbbreviateNumbers(#self.allMemberList))
+    end)
+
+    CommunitiesFrame.MemberList.ShowOfflineButton.Text:SetText('显示离线成员')
+    WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.PostingExpirationText.ExpiredText)
+
+--WoWTools_ChineseMixin:SetFrame(CommunitiesFrame.MemberList.ColumnDisplay)

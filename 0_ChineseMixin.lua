@@ -415,35 +415,56 @@ end
 
 
 function WoWTools_ChineseMixin:SetRegions(frame, setFont, isHook, notAfter)
-    if frame and not frame.region_chinese then
-        if isHook then
+    if not frame or frame.region_chinese then
+        return
+    end
+
+    if isHook then
+        for _, region in pairs({frame:GetRegions()}) do
+            if region:GetObjectType()=='FontString' then
+                self:HookLabel(region, setFont)
+            end
+        end
+
+    else
+        if notAfter then
             for _, region in pairs({frame:GetRegions()}) do
                 if region:GetObjectType()=='FontString' then
-                    self:HookLabel(region, setFont)
+                    self:SetLabel(region, setFont)
                 end
             end
-
         else
-            if notAfter then
+            C_Timer.After(2, function()
                 for _, region in pairs({frame:GetRegions()}) do
                     if region:GetObjectType()=='FontString' then
                         self:SetLabel(region, setFont)
                     end
                 end
-            else
-                C_Timer.After(2, function()
-                    for _, region in pairs({frame:GetRegions()}) do
-                        if region:GetObjectType()=='FontString' then
-                            self:SetLabel(region, setFont)
-                        end
-                    end
-                end)
-            end
+            end)
         end
-        frame.region_chinese=true
     end
+    frame.region_chinese=true
 end
 
+--[[function WoWTools_ChineseMixin:SetFrame(frame, setFont, isHook, notAfter)
+    if not frame or frame.frame_chinese then
+        return
+    end
+    local t
+    print(frame:GetChildren())
+    for _, f in pairs({frame:GetChildren()}) do
+        t= f:GetObjectType()
+        print(t)
+        if t=='Frame' or t=='Button' then
+            self:SetRegions(f, setFont, isHook, notAfter)
+        elseif t=='FontString' then
+            self:SetLabel(label, text, affer, setFont)
+        end
+    end
+    frame.frame_chinese=true
+end
+--/dump WoWTools_ChineseMixin:SetFrame(CommunitiesFrame.MemberList.ColumnDisplay)
+--/dump CommunitiesFrame.MemberList.ColumnDisplay:GetChildren()]]
 
 --PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
 function WoWTools_ChineseMixin:SetTabSystem(frame, setFont, padding, minWidth, absoluteSize)
