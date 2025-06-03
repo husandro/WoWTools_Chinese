@@ -492,12 +492,6 @@ TooltipDataRules.lua
 Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua
 TooltipDataRules.lua 
 ]]
-
-
-
-
-
-
 hooksecurefunc('BattlePetTooltipTemplate_SetBattlePet', function(tooltipFrame, data)
     local t= WoWTools_ChineseMixin:CN(_G["BATTLE_PET_NAME_"..data.petType])
     if t then

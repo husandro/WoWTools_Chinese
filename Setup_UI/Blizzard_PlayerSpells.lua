@@ -32,12 +32,12 @@ local function Init_SpellBookFrame()
     WoWTools_ChineseMixin:SetLabel(ClassTalentLoadoutCreateDialog.CancelButton)
 
 --TabSys
-    for _, tabID in pairs(PlayerSpellsFrame.SpellBookFrame:GetTabSet() or {}) do
+    --[[for _, tabID in pairs(PlayerSpellsFrame.SpellBookFrame:GetTabSet() or {}) do
         local btn= PlayerSpellsFrame.SpellBookFrame:GetTabButton(tabID)
         if btn then
             WoWTools_ChineseMixin:SetLabel(btn.Text)
         end
-    end
+    end]]
 
 --名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateVisuals', function(self)

@@ -685,3 +685,14 @@ hooksecurefunc('PetitionFrame_Update', function()
 		end
 	end
 end)
+
+
+--TabSystem/TabSystemTemplates.lua
+hooksecurefunc(TabSystemButtonMixin, 'Init', function(btn, _, tabText)
+    local cn= WoWTools_ChineseMixin:CN(tabText)
+    if cn then
+        print(cn)
+        btn:SetText(cn)
+        PanelTemplates_TabResize(btn, 0)
+    end
+end)

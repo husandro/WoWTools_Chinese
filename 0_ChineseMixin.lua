@@ -464,17 +464,17 @@ end
     frame.frame_chinese=true
 end
 --/dump WoWTools_ChineseMixin:SetFrame(CommunitiesFrame.MemberList.ColumnDisplay)
---/dump CommunitiesFrame.MemberList.ColumnDisplay:GetChildren()]]
+--/dump CommunitiesFrame.MemberList.ColumnDisplay:GetChildren()
 
 --PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
-function WoWTools_ChineseMixin:SetTabSystem(frame, setFont, padding, minWidth, absoluteSize)
+--function WoWTools_ChineseMixin:SetTabSystem(frame, setFont, padding, minWidth, absoluteSize)
     for _, tabID in pairs(frame:GetTabSet() or {}) do
         local btn= frame:GetTabButton(tabID)
         self:SetLabel(btn.Text or btn, nil, nil, setFont)
 
         PanelTemplates_TabResize(frame, padding or 20, absoluteSize, minWidth or 70)
     end
-end
+end]]
 
 
 

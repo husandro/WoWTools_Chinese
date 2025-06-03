@@ -1056,14 +1056,17 @@ function WoWTools_ChineseMixin.Events:Blizzard_Professions()
         local recipesTab = frame:GetTabButton(frame.recipesTabID)
         WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
         recipesTab.Text:SetText('配方')
+        PanelTemplates_TabResize(recipesTab, 0)
 
         recipesTab = frame:GetTabButton(frame.specializationsTabID)
         WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
         recipesTab.Text:SetText('专精')
+        PanelTemplates_TabResize(recipesTab, 0)
 
         recipesTab = frame:GetTabButton(frame.craftingOrdersTabID )
         WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
         recipesTab.Text:SetText('制造订单')
+        PanelTemplates_TabResize(recipesTab, 0)
     end)
 
 
