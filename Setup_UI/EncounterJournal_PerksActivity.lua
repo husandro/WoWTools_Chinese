@@ -118,8 +118,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
         local desc= set_desc_event(info[2], data)
         if desc then
             frame.ConditionsText:SetText(desc)
-            frame.ConditionsText:SetPoint('RIGHT', -30,0)
-            frame:SetPoint('RIGHT', -30)
+            --frame.ConditionsText:SetPoint('RIGHT', -30,0)
+            --frame:SetPoint('RIGHT', -30)
         end
     end)
 

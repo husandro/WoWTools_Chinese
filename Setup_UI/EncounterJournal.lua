@@ -287,14 +287,23 @@ local function Init_EncounterJournal()
 
 
     --物品，掉落，列表
-    hooksecurefunc(EncounterJournal.LootJournalItems.ItemSetsFrame.ScrollBox, 'Update', function(self)
+
+    --套装
+    hooksecurefunc(LootJournalItemSetButtonMixin, 'Init', function(btn, data)
+        local name= WoWTools_ChineseMixin:CN(data.name)
+        if name then
+            btn.SetName:SetText(name)
+        end
+	    btn.ItemLevel:SetFormattedText('物品等级%d', data.itemLevel)
+    end)
+    --[[hooksecurefunc(EncounterJournal.LootJournalItems.ItemSetsFrame.ScrollBox, 'Update', function(self)
         if not self:GetView() then
             return
         end
         for _, btn in pairs(self:GetFrames() or {}) do
             WoWTools_ChineseMixin:SetLabel(btn.SetName)
         end
-    end)
+    end)]]
 
 
 
@@ -306,7 +315,7 @@ local function Init_EncounterJournal()
     end)
 
     --副本，数据
-    hooksecurefunc('EncounterJournal_DisplayInstance', function(instanceID)
+    hooksecurefunc('EncounterJournal_DisplayInstance', function()
         local self= EncounterJournal.encounter
         local instanceName, description = EJ_GetInstanceInfo()
 
