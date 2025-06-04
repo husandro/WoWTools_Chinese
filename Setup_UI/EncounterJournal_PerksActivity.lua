@@ -124,7 +124,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
     end)
 
     --任务，提示
-    hooksecurefunc( MonthlyActivitiesButtonMixin, 'ShowTooltip', function(frame)
+    hooksecurefunc(MonthlyActivitiesButtonMixin, 'ShowTooltip', function(frame)
         local data = frame:GetData() or {}
         local info= WoWTools_ChineseMixin:GetPerksActivityData(data.ID)
         if not info then
