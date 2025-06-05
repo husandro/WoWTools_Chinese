@@ -163,6 +163,9 @@ local function Init_EncounterJournal()
 
     --BOSS，掉落
     hooksecurefunc(EncounterJournalItemMixin,'Init', function(self)--Blizzard_EncounterJournal.lua
+        if not self:IsVisible() then
+            return
+        end
         local itemInfo = C_EncounterJournal.GetLootInfoByIndex(self.index)
         if ( itemInfo and itemInfo.name ) then
             local name= WoWTools_ChineseMixin:GetItemName(itemInfo.itemID) or WoWTools_ChineseMixin:CN(itemInfo.name)
