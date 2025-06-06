@@ -23,7 +23,7 @@ local function set_Checkboxes(frame)
     local name= frame:GetName()
     WoWTools_ChineseMixin:SetLabel(_G[name.."Title"])
     WoWTools_ChineseMixin:SetLabel(_G[name.."ColorHeader"])
-    
+
     local check = name.."Checkbox"
 	for index in pairs(frame.checkBoxTable or {}) do
 		local checkBoxName = check..index
@@ -46,6 +46,7 @@ local function set_TieredCheckboxes(frame)
 	for index, value in ipairs(frame.checkBoxTable or {}) do
 		checkBoxName = checkBoxNameString..index
         WoWTools_ChineseMixin:SetLabel(_G[checkBoxName.."Text"])
+        print(_G[checkBoxName.."Text"]:GetText())
         if ( value.subTypes ) then
             subCheckboxNameString = checkBoxName.."_"
             for k in ipairs(value.subTypes) do
@@ -78,7 +79,7 @@ hooksecurefunc('CombatConfig_Colorize_Update', function()
     if ( not CHATCONFIG_SELECTED_FILTER.settings ) then
 		return
 	end
-    WoWTools_ChineseMixin:SetLabel(CombatConfigColorsExampleString1)    
+    WoWTools_ChineseMixin:SetLabel(CombatConfigColorsExampleString1)
     WoWTools_ChineseMixin:SetLabel(CombatConfigColorsExampleString2)
 end)
 hooksecurefunc('CombatConfig_Formatting_Update', function()
@@ -113,6 +114,7 @@ hooksecurefunc('TextToSpeechFrame_UpdateMessageCheckboxes', function(frame)--Tex
         local check= _G[checkBoxNameString..index]
         if check then
             WoWTools_ChineseMixin:SetLabel(check.text)
+            print(check.text:GetText())
         end
     end
 end)
