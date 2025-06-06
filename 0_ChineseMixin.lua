@@ -168,7 +168,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
 
     elseif tab.journalEncounterID then
         if tab.isName then
-            data= self:GetBossName(journalEncounterID)
+            data= self:GetBossName(tab.journalEncounterID)
         elseif tab.isDesc then
             data= self:GetBossDesc(tab.journalEncounterID)--BOOS
         else
