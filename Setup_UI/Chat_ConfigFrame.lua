@@ -17,7 +17,7 @@ COMBAT_CONFIG_MESSAGESOURCES_TO[1].text = function () return ( UsesGUID("SOURCE"
 
 
 local function set_Checkboxes(frame)
-    if not FCF_GetCurrentChatFrame() then
+    if not FCF_GetCurrentChatFrame() or not frame:IsVisible() then
         return
     end
     local name= frame:GetName()
@@ -38,7 +38,7 @@ hooksecurefunc('ChatConfig_UpdateCheckboxes', set_Checkboxes)
 
 
 local function set_TieredCheckboxes(frame)
-    if not FCF_GetCurrentChatFrame() then
+    if not FCF_GetCurrentChatFrame() or not frame:IsVisible() then
         return
     end
     local checkBoxNameString = frame:GetName().."Checkbox"
@@ -48,7 +48,7 @@ local function set_TieredCheckboxes(frame)
         WoWTools_ChineseMixin:SetLabel(_G[checkBoxName.."Text"])
         if ( value.subTypes ) then
             subCheckboxNameString = checkBoxName.."_"
-            for k, v in ipairs(value.subTypes) do
+            for k in ipairs(value.subTypes) do
                 subCheckboxName = subCheckboxNameString..k
                 WoWTools_ChineseMixin:SetLabel(_G[subCheckboxName.."Text"])
             end
@@ -66,7 +66,7 @@ local function set_ColorSwatches(frame)
     local frameName= frame:GetName()
     WoWTools_ChineseMixin:SetLabel(_G[frameName.."Title"])
     local nameString = frameName.."Swatch"
-    for index, _ in pairs(frame.swatchTable or {}) do
+    for index in pairs(frame.swatchTable or {}) do
         WoWTools_ChineseMixin:SetLabel(_G[nameString..index.."Text"])
     end
 end
