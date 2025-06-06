@@ -38,7 +38,7 @@ hooksecurefunc('ChatConfig_UpdateCheckboxes', set_Checkboxes)
 
 
 local function set_TieredCheckboxes(frame)
-    if not FCF_GetCurrentChatFrame() or not frame:IsVisible() then
+    if not FCF_GetCurrentChatFrame()  then
         return
     end
     local checkBoxNameString = frame:GetName().."Checkbox"
@@ -46,7 +46,6 @@ local function set_TieredCheckboxes(frame)
 	for index, value in ipairs(frame.checkBoxTable or {}) do
 		checkBoxName = checkBoxNameString..index
         WoWTools_ChineseMixin:SetLabel(_G[checkBoxName.."Text"])
-        print(_G[checkBoxName.."Text"]:GetText())
         if ( value.subTypes ) then
             subCheckboxNameString = checkBoxName.."_"
             for k in ipairs(value.subTypes) do
@@ -101,6 +100,7 @@ hooksecurefunc(ChatWindowTabMixin, 'SetChatWindowIndex', function(self, chatWind
     end
     if text then
         self.Text:SetText(text)
+        PanelTemplates_TabResize(self, 0)
     end
 end)
 
@@ -114,7 +114,6 @@ hooksecurefunc('TextToSpeechFrame_UpdateMessageCheckboxes', function(frame)--Tex
         local check= _G[checkBoxNameString..index]
         if check then
             WoWTools_ChineseMixin:SetLabel(check.text)
-            print(check.text:GetText())
         end
     end
 end)
