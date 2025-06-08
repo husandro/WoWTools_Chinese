@@ -446,6 +446,11 @@ function WoWTools_ChineseMixin:SetRegions(frame, setFont, isHook, notAfter)
     frame.region_chinese=true
 end
 
+
+function WoWTools_ChineseMixin:SetTabButton(btn, text)
+    self:SetLabel(btn.Text, text)
+    PanelTemplates_TabResize(btn, btn:GetParent().tabPadding or 0, nil, btn:GetParent().minTabWidth, btn:GetParent().maxTabWidth)
+end
 --[[function WoWTools_ChineseMixin:SetFrame(frame, setFont, isHook, notAfter)
     if not frame or frame.frame_chinese then
         return

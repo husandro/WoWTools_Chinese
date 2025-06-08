@@ -689,11 +689,9 @@ end)
 
 --TabSystem/TabSystemTemplates.lua
 hooksecurefunc(TabSystemButtonMixin, 'Init', function(btn, _, tabText)
-    WoWTools_ChineseMixin:SetLabel(btn.Text, tabText)
-    PanelTemplates_TabResize(btn, btn:GetParent().tabPadding or 0, nil, btn:GetParent().minTabWidth, btn:GetParent().maxTabWidth)
+     WoWTools_ChineseMixin:SetTabButton(btn, tabText)
 end)
 
 hooksecurefunc(PanelTabButtonMixin, 'OnLoad', function(btn)
-    WoWTools_ChineseMixin:SetLabel(btn.Text)
-    PanelTemplates_TabResize(btn, btn:GetParent().tabPadding or 0, nil, btn:GetParent().minTabWidth, btn:GetParent().maxTabWidth)
+    WoWTools_ChineseMixin:SetTabButton(btn)
 end)

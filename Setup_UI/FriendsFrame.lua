@@ -247,8 +247,10 @@ RaidFrameAllAssistCheckButton:HookScript('OnEnter', function(self)
     end
     GameTooltip:Show()
 end)
+
 WhoFrameColumnHeader1:SetText('名称')
 WhoFrameColumnHeader4:SetText('职业')
+
 hooksecurefunc('WhoList_Update', function()
     local _, totalCount = C_FriendList.GetNumWhoResults()
     local displayedText = ""
