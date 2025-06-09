@@ -649,13 +649,47 @@ function WoWTools_ChineseMixin.Events:Blizzard_MajorFactions()
 end
 
 
+function WoWTools_ChineseMixin.Events:Blizzard_CustomizationUI()
+    hooksecurefunc(CustomizationOptionCheckButtonMixin, 'SetupOption', function(btn, optionData)
+        local cn= WoWTools_ChineseMixin:CN(optionData.name)
+        if cn then
+            btn.Label:SetText(cn)
+        end
+    end)
 
+    hooksecurefunc(CustomizationDropdownWithSteppersAndLabelMixin, 'SetupOption', function(lable, optionData)
+        local cn= WoWTools_ChineseMixin:CN(optionData.name)
+        if cn then
+            lable:SetText(cn)
+        end
+    end)
+
+    hooksecurefunc(CustomizationDropdownElementDetailsMixin, 'UpdateText', function(region, choiceData)
+	    if region.SelectionName:IsShown() and choiceData then
+            local cn= WoWTools_ChineseMixin:CN(choiceData.name)
+            if cn then
+		        region.SelectionName:SetText(cn)
+            end
+        end
+    end)
+
+    hooksecurefunc(CustomizationDropdownElementDetailsMixin, 'Init', function(region, _, index)
+        if not index then
+            region.SelectionName:SetText('-选择-');
+        end
+    end)
+end
 
 --飞龙，制定界面
 function WoWTools_ChineseMixin.Events:Blizzard_CharacterCustomize()
     CharCustomizeFrame.RandomizeAppearanceButton.simpleTooltipLine= '随机外观'
 end
-
+--理发店
+function WoWTools_ChineseMixin.Events:Blizzard_BarbershopUI()
+    BarberShopFrame.CancelButton:SetText('取消')
+    BarberShopFrame.ResetButton:SetText('重置')
+    BarberShopFrame.AcceptButton:SetText('接受')
+end
 
 
 --FSTACK
@@ -698,12 +732,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ScrappingMachineUI()
     C_Timer.After(0.3, function() ScrappingMachineFrameTitleText:SetText('拆解大师Mk1型') end)
 end
 
---理发店
-function WoWTools_ChineseMixin.Events:Blizzard_BarbershopUI()
-    BarberShopFrame.CancelButton:SetText('取消')
-    BarberShopFrame.ResetButton:SetText('重置')
-    BarberShopFrame.AcceptButton:SetText('接受')
-end
+
 
 
 
