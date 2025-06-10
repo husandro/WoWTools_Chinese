@@ -18,6 +18,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_TrainerUI()
         local skillIndex = elementData.skillIndex
         local isTradeSkill = elementData.isTradeSkill
         local serviceName, serviceType, _, reqLevel = GetTrainerServiceInfo(skillIndex)
+        print(GetTrainerServiceInfo(skillIndex))
         if ( not serviceName ) then
             serviceName = '未知'
         else
@@ -26,8 +27,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_TrainerUI()
                 local itemLink= GetTrainerServiceItemLink(skillIndex)
                 local itemID= itemLink and C_Item.GetItemInfoInstant(itemLink)
                 if itemID then
-                    local itemName= C_Item.GetItemNameByID(itemLink)
-                    name= WoWTools_ChineseMixin:GetItemName(itemID) or WoWTools_ChineseMixin:CN(itemName)
+                    
+                    name= WoWTools_ChineseMixin:GetItemName(itemID) or WoWTools_ChineseMixin:CN(C_Item.GetItemNameByID(itemLink))
                 end
                 if not name then
                     local data= C_TooltipInfo.GetTrainerService(skillIndex)

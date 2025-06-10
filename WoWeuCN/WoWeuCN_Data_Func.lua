@@ -249,7 +249,7 @@ end
 function WoWTools_ChineseMixin:GetItemName(itemID)
     local data= itemID and self:GetItemData(itemID)
     if data then
-        return data[1]--self:ReplaceText(data[1])
+        return self:ReplaceText(data[1])
     end
 end
 
@@ -268,7 +268,7 @@ function WoWTools_ChineseMixin:GetItemDesc(itemID)
     for _, desc in pairs(data) do
         if desc and not tab[desc] and desc:find('[\228-\233]') then
             tab[desc]= true
-            text= (text and text..'|n' or '')..desc--, WoWTools_ChineseMixin:ReplaceText(desc)
+            text= (text and text..'|n' or '').. self:ReplaceText(desc)
         end
     end
 
