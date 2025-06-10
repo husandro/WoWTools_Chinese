@@ -18,6 +18,7 @@ local tab_G={
 ['GENERAL']= "综合",
 ['COLOR']= "颜色",
 ['POI_FOCUS'] = "焦点",
+['PROFESSIONS_SPECIALIZATIONS_TAB_NAME'] = "专精",
 }
 
 

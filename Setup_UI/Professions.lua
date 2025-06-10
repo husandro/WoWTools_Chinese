@@ -1051,22 +1051,17 @@ function WoWTools_ChineseMixin.Events:Blizzard_Professions()
     end)
 
 
-
+  
+    
+    --[[hooksecurefunc( ProfessionsFrame.SpecPage, 'UpdateTabs', function(frame)
+        for tab, _ in frame.tabsPool:EnumerateActive() do
+            print(WoWTools_ChineseMixin:CN(tab.Text:GetText()))
+            WoWTools_ChineseMixin:SetTabButton(tab)
+	    end
+    end)]]
+    WoWTools_ChineseMixin:SetTabButton(ProfessionsFrame)
     hooksecurefunc(ProfessionsFrame, 'UpdateTabs', function(frame)
-        local recipesTab = frame:GetTabButton(frame.recipesTabID)
-        WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
-        recipesTab.Text:SetText('配方')
-        PanelTemplates_TabResize(recipesTab, 0)
-
-        recipesTab = frame:GetTabButton(frame.specializationsTabID)
-        WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
-        recipesTab.Text:SetText('专精')
-        PanelTemplates_TabResize(recipesTab, 0)
-
-        recipesTab = frame:GetTabButton(frame.craftingOrdersTabID )
-        WoWTools_ChineseMixin:SetCNFont(recipesTab.Text)
-        recipesTab.Text:SetText('制造订单')
-        PanelTemplates_TabResize(recipesTab, 0)
+        WoWTools_ChineseMixin:SetTabButton(frame)
     end)
 
 

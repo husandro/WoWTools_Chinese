@@ -208,7 +208,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
         data= self:GetTitleName(tab.titleID)
 
     elseif tab.subTreeID then
-        data= WoWTools_ChineseMixin:Get_TraitSubTree(subTreeID, isName, isDesc)
+        data= self:Get_TraitSubTree(subTreeID, isName, isDesc)
     end
 
     return data
@@ -352,7 +352,7 @@ function WoWTools_ChineseMixin:SetButton(btn, text, affer, setFont)
         if label then
             self:SetLabel(label, text, affer, setFont)
         elseif btn.GetText and btn.SetText then
-            WoWTools_ChineseMixin:SetLabel(btn, text, affer, setFont)
+            self:SetLabel(btn, text, affer, setFont)
         end
     end
 end
@@ -401,7 +401,7 @@ function WoWTools_ChineseMixin:HookButton(btn, setFont)
 
         hooksecurefunc(btn, 'SetText', function(frame, name)
             if name and name~='' then
-                local cnName= WoWTools_ChineseMixin:SetText(name)
+                local cnName= self:SetText(name)
                 if cnName then
                     frame:SetText(cnName)
                 end
@@ -447,9 +447,30 @@ function WoWTools_ChineseMixin:SetRegions(frame, setFont, isHook, notAfter)
 end
 
 
-function WoWTools_ChineseMixin:SetTabButton(btn, text)
-    self:SetLabel(btn.Text, text)
-    PanelTemplates_TabResize(btn, btn:GetParent().tabPadding or 0, nil, btn:GetParent().minTabWidth, btn:GetParent().maxTabWidth)
+function WoWTools_ChineseMixin:SetTabButton(frame, text, isSetCNFont)
+    if not frame then
+        return
+    end
+    local padding= frame:GetParent().tabPadding or 0
+    local minW= frame:GetParent().minTabWidth
+    local maxW= frame:GetParent().maxTabWidth
+    
+
+    if frame.GetTabSet then
+        for _, tabID in pairs(frame:GetTabSet()) do
+            local btn= frame:GetTabButton(tabID)
+            if btn then
+                self:SetLabel(btn.Text, text, nil, isSetCNFont)
+                PanelTemplates_TabResize(btn, padding , nil, minW, maxW)
+            end
+        end
+    else
+        local label= frame.Text or (btn.GetFontString and btn:GetFontString())
+        if label then
+            self:SetLabel(label, text, nil, isSetCNFont)
+            PanelTemplates_TabResize(frame, padding , nil, minW, maxW)
+        end
+    end
 end
 --[[function WoWTools_ChineseMixin:SetFrame(frame, setFont, isHook, notAfter)
     if not frame or frame.frame_chinese then
