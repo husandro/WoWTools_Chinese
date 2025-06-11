@@ -96,6 +96,7 @@ local function set_objectives(questID)
 	if waypointText then
 		numVisibleObjectives = numVisibleObjectives + 1
 		objective = objectivesTable[numVisibleObjectives]
+		
 		if objective then
 			local cn=  WoWTools_ChineseMixin:SetText(waypointText)
 			if not cn then
