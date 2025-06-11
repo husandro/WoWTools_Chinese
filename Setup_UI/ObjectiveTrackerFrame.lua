@@ -107,7 +107,7 @@ hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', set_quest)
 
 
 --旅行者日志 MonthlyActivitiesObjectiveTracker
---MonthlyActivitiesObjectiveTracker:HookScript('OnShow', set_objective_header)
+--MonthlyActivitiesObjectiveTracker:HookScript('OnShow', )
 hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'AddBlock', function(_, block)
     local data= WoWTools_ChineseMixin:GetPerksActivityData(block.id)
@@ -146,7 +146,7 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
                 local text= WoWTools_ChineseMixin:CN(criteriaString)
                 if description and bit.band(flags, EVALUATION_TREE_FLAG_PROGRESS_BAR) == EVALUATION_TREE_FLAG_PROGRESS_BAR then
                     local desc= WoWTools_ChineseMixin:CN(description)
-                   
+
                     if desc then-- progress bar                    
                         if string.find(strlower(quantityString), "interface\\moneyframe") then	-- no easy way of telling it's a money progress bar
                             text = quantityString.."\n"..desc
@@ -158,7 +158,7 @@ hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, ach
                     if ( criteriaType == CRITERIA_TYPE_ACHIEVEMENT and assetID ) then --for meta criteria look up the achievement name
                         text = WoWTools_ChineseMixin:CN(select(2, GetAchievementInfo(assetID)))
                     end
-                    
+
                 end
                 if text then
                     block:SetStringText(line.Text, text, nil, colorStyle, block.isHighlighted)
@@ -223,27 +223,19 @@ end)
 --ScenarioObjectiveTrackerStageMixin
 --内容
 ScenarioObjectiveTracker.StageBlock.Name:SetPoint('RIGHT', -20, 0)
-hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function(self, scenarioID, scenarioType, widgetSetID, textureKit, flags, currentStage, stageName, numStages)
+hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function(self, _, _, _, _, flags, currentStage, _, numStages)
     if bit.band(flags, SCENARIO_FLAG_SUPRESS_STAGE_TEXT) == SCENARIO_FLAG_SUPRESS_STAGE_TEXT then
-        local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage)
-        local name= data and data[2] or WoWTools_ChineseMixin:CN(stageName)
-        if name then
-            self.Stage:SetText(name)
-        end
+        WoWTools_ChineseMixin:SetLabel(self.Stage)
 	else
 		if currentStage == numStages then
 			self.Stage:SetText('|cnGREEN_FONT_COLOR:最终阶段|r')
 		else
 			self.Stage:SetFormattedText('阶段 %d', currentStage)
 		end
-        local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage)
-        local name= data and data[2] or WoWTools_ChineseMixin:CN(stageName)
-        if name then
-            self.Name:SetText(name)
-        end
-        
 	end
+    WoWTools_ChineseMixin:SetLabel(self.Name)
 end)
+
 hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'SetupStageTransition', function(self, hasNewStage, scenarioCompleted)
     if self.WidgetContainer:IsShown() then
         return
@@ -259,38 +251,10 @@ hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'SetupStageTransition', func
     else
         self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:阶段完成|r')
     end
-
 end)
 
 
-ScenarioObjectiveTracker.StageBlock:HookScript('OnEnter', function()
-    local _, currentStage, numStages, _, _, _, _, _, _, _, _, _, scenarioID = C_Scenario.GetInfo()
-    local data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, currentStage) or {}
-    local desc, name= data[1], data[2]
-    if name or desc then
-        GameTooltip:AddLine(' ')
-        if name then
-            GameTooltip:AddLine('|cffffffff'..currentStage..') '..name..'|r', nil,nil,nil, true)
-        end
-        if desc then
-            GameTooltip:AddLine('|cnGREEN_FONT_COLOR:'..desc..'|r', nil,nil,nil, true)
-        end
-        if numStages and currentStage< numStages then
-            for index= currentStage+1, numStages, 1 do
-                data= WoWTools_ChineseMixin:GetScenarioStepData(scenarioID, index) or {}
-                desc, name= data[1], data[2]
-                if name then
-                    GameTooltip:AddLine('|cffffffff'..index..') '..name..'|r', nil,nil,nil, true)
-                end
-                if desc then
-                    GameTooltip:AddLine('|cnGREEN_FONT_COLOR:'..desc..'|r', nil,nil,nil, true)
-                end
 
-            end
-        end
-        GameTooltip:Show()
-    end
-end)
 
 
 
@@ -298,7 +262,7 @@ end)
 
 
 --奖励目标
-hooksecurefunc(BonusObjectiveTracker, 'LayoutContents', set_objective_header)
+hooksecurefunc(BonusObjectiveTracker, 'LayoutContents',  set_objective_header)
 
 
 

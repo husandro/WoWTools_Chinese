@@ -391,7 +391,10 @@ local tab={
 
 do
     for skillLineID, info in pairs(tab) do
-        WoWTools_ChineseMixin:SetCN(C_TradeSkillUI.GetTradeSkillDisplayName(skillLineID), info[1])
+        WoWTools_ChineseMixin:SetCN(
+            C_TradeSkillUI.GetTradeSkillDisplayName(skillLineID),
+            info[1]
+        )
     end
 end
 tab=nil

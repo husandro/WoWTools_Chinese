@@ -4,9 +4,17 @@ WoWTools_ChineseMixin={
     Events={}
 }
 local CNData={}--主要，汉化
+
 --[\228-\233][\128-\191][\128-\191]--检查 UTF-8 字符
+function WoWTools_ChineseMixin:IsCN(text)
+    if text and text:find("[\228-\233]") and text~='' then
+        return text
+    end
+
+end
 function WoWTools_ChineseMixin:SetCN(en, cn)
-    if en and cn and cn:find("[\228-\233]") and en:gsub(' ', '')~='' then
+    cn= en and en~='' and self:IsCN(cn)
+    if cn then
         CNData[en]=cn
     end
 end
@@ -181,8 +189,8 @@ function WoWTools_ChineseMixin:GetData(text, tab)
     elseif tab.scenarioID then
         if tab.isName then
             data= self:GetScenarioName(tab.scenarioID)
-        else
-            self:GetScenarioStepData(tab.scenarioID, tab.stepIndex)
+        --else
+            --self:GetScenarioStepData(tab.scenarioID, tab.stepIndex)
         end
 
     elseif tab.questID then

@@ -7,6 +7,7 @@ https://wago.tools/db2/Achievement_Category?locale=zhCN
 
 
 local tab={
+[15552]= '游学探奇',
 [15550]= '卑鄙双雄',
 [15549]= '世界事件',
 [15546]= '重访恩佐斯的幻象',

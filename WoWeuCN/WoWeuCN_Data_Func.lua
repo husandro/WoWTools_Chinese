@@ -88,7 +88,7 @@ local replacement = {
 }
 
 function WoWTools_ChineseMixin:ReplaceText(s)
-    if s and s~='' then
+    if s and self:IsCN(s) then
         for new, origin in pairs(replacement) do
             s = s:gsub(origin, new)
         end
@@ -171,9 +171,7 @@ end
 
 function WoWTools_ChineseMixin:GetSpellName(spellID)
     local data= self:GetSpellData(spellID)
-    if data then
-        return data[1]--self:ReplaceText(data[1])
-    end
+    return data and self:ReplaceText(data[1])
 end
 
 function WoWTools_ChineseMixin:GetSpellDesc(spellID)
@@ -194,11 +192,14 @@ function WoWTools_ChineseMixin:GetSpellDesc(spellID)
 
             t2= self:ReplaceText(t)
 
-            if t2 and t2:find('[\228-\233]') then
+            if t2 then
                 desc= (desc and desc..'|n' or '').. t2
             end
         end
     end
+
+    name= self:ReplaceText(name)
+
     return desc, name
 end
 
@@ -248,9 +249,7 @@ end
 
 function WoWTools_ChineseMixin:GetItemName(itemID)
     local data= itemID and self:GetItemData(itemID)
-    if data then
-        return data[1]--self:ReplaceText(data[1])
-    end
+    return data and self:ReplaceText(data[1])
 end
 
 
@@ -264,13 +263,15 @@ function WoWTools_ChineseMixin:GetItemDesc(itemID)
     table.remove(data, 1)
     local tab={[name]=true}
 
-    local text
+    local text, t
     for _, desc in pairs(data) do
-        if desc and not tab[desc] and desc:find('[\228-\233]') then
+        t= not tab[desc] and self:ReplaceText(desc)
+        if t then
             tab[desc]= true
-            text= (text and text..'|n' or '')..desc--, WoWTools_ChineseMixin:ReplaceText(desc)
+            text= (text and text..'|n' or '')..t
         end
     end
+    name= self:ReplaceText(name)
 
     return text, name
 end

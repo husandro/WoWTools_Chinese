@@ -97,7 +97,7 @@ Get_Data\VignetteName.lua
 Get_Data\TitleName.lua
 
 ##场景
-Get_Data\ScenarioStepData.lua
+Data\ScenarioStepData.lua
 Get_Data\ScenarioName.lua
 
 ##任务目标
