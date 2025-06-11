@@ -144,7 +144,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_PerksProgram()
 
     self:SetLabel(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.NameSortButton.Label)
     self:SetLabel(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.PriceSortButton.Label)
-
+    self:SetLabel(PerksProgramFrame.ProductsFrame.ProductsScrollBoxContainer.PerksProgramHoldFrame.FrozenProductContainer.ProductButton.FrozenContentContainer.InstructionsText)
 
     -- Blizzard_PerksProgramFooter.lua
     --PerksProgramFooterFrameMixin
@@ -168,6 +168,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_PerksProgram()
         end
     end)
 
+
+    
 end
 
 
