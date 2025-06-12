@@ -456,6 +456,9 @@ end
 
 
 --local TRANSMOGRIFY_TOOLTIP_APPEARANCE_KNOWN_CHECKMARK = "|A:common-icon-checkmark:16:16:0:-1|a 你已经收藏过此外观了"
+
+WoWTools_ChineseMixin:SetLabel(DressUpFrameOutfitDropdown.Text)
+
 --试衣间
 hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'OnEnter', function(self)--DressUpFrames.lua
     if not self.transmogID or (self.item and not self.item:IsItemDataCached()) then
