@@ -137,28 +137,28 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
             frame.Tracked.is_set= true
         end
     end)
-
-    hooksecurefunc('AchievementObjectives_DisplayCriteria', function(objectivesFrame, ID)--条件
-        if not objectivesFrame or not ID then
+--条件
+    hooksecurefunc('AchievementObjectives_DisplayCriteria', function(objectivesFrame, achievementID)
+        if not objectivesFrame or not achievementID then
             return
         end
         local requiresRep, repLevel, _
         if ( not objectivesFrame.completed ) then
-            requiresRep, _, repLevel = GetAchievementGuildRep(ID)
+            requiresRep, _, repLevel = GetAchievementGuildRep(achievementID)
             if ( requiresRep and repLevel) then
                 local factionStandingtext = GetText("FACTION_STANDING_LABEL"..repLevel, UnitSex("player"))
                 objectivesFrame.RepCriteria:SetFormattedText('|cffffffff需要公会声望：|r %s', WoWTools_ChineseMixin:CN(factionStandingtext) or factionStandingtext)
             end
         end
-        local numCriteria = GetAchievementNumCriteria(ID) or 0
+        local numCriteria = GetAchievementNumCriteria(achievementID) or 0
         if numCriteria==0 and not requiresRep then
             return
         end
         local textStrings, metas = 0, 0
         for i = 1, numCriteria do
-            local criteriaString, criteriaType, _, _, _, _, flags, assetID = GetAchievementCriteriaInfo(ID, i)
+            local criteriaString, criteriaType, _, _, _, _, flags, assetID, _, criteriaID = GetAchievementCriteriaInfo(achievementID, i)
             --local criteriaString, criteriaType, completed, quantity, reqQuantity, charName, flags, assetID, quantityString, criteriaID, eligible, duration, elapsed= GetAchievementCriteriaInfo(ID, i)
-            
+
             if ( criteriaType == CRITERIA_TYPE_ACHIEVEMENT and assetID ) then
                 metas = metas + 1
                 local achievementName = WoWTools_ChineseMixin:CN(select(2, GetAchievementInfo(assetID)))
@@ -173,6 +173,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
                 criteriaString= WoWTools_ChineseMixin:CN(criteriaString)
                 if criteriaString then
                     local criteria = objectivesFrame:GetCriteria(textStrings)
+                   -- AchievementButton_GetCriteria(textStrings)
                     if criteria then
                         criteria.Name:SetText("- "..criteriaString)
                     end
