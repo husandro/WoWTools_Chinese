@@ -398,29 +398,18 @@ self:AddDialogs("BATTLE_PET_RENAME", {text = '重命名', button1 = '接受', bu
 
 
 
-
-
---试衣间
-    DressUpFrameTitleText:SetText('试衣间')
-    DressUpFrame.LinkButton:SetText('外观方案链接')
-    DressUpFrameResetButton:SetText('重置')
-    DressUpFrameCancelButton:SetText('关闭')
-    DressUpFrame.ToggleOutfitDetailsButton:HookScript('OnEnter', function()
-        GameTooltip_SetTitle(GameTooltip, '外观列表')
-        GameTooltip:Show()
-    end)
-    self:SetLabel(DressUpFrameOutfitDropdown.SaveButton)
-
 --试衣间，套装
     WarbandSceneJournal.IconsFrame.Icons.Controls.ShowOwned.Text:SetText('只显示已获得的')
     hooksecurefunc(WarbandSceneEntryMixin, 'UpdateWarbandSceneData', function(frame)
         if frame.warbandSceneInfo then
-            local name= self:CN(frame.warbandSceneInfo.name)
+            local name= WoWTools_ChineseMixin:CN(frame.warbandSceneInfo.name)
             if name then
                 frame.Name:SetText(name)
             end
         end
     end)
+
+
 end
 
 
@@ -429,37 +418,21 @@ end
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---local TRANSMOGRIFY_TOOLTIP_APPEARANCE_KNOWN_CHECKMARK = "|A:common-icon-checkmark:16:16:0:-1|a 你已经收藏过此外观了"
-
-WoWTools_ChineseMixin:SetLabel(DressUpFrameOutfitDropdown.Text)
-
 --试衣间
+
+WoWTools_ChineseMixin:HookLabel(DressUpFrameOutfitDropdown.Text)
+DressUpFrameTitleText:SetText('试衣间')
+DressUpFrame.LinkButton:SetText('外观方案链接')
+DressUpFrameResetButton:SetText('重置')
+DressUpFrameCancelButton:SetText('关闭')
+DressUpFrame.ToggleOutfitDetailsButton:HookScript('OnEnter', function()
+    GameTooltip_SetTitle(GameTooltip, '外观列表')
+    GameTooltip:Show()
+end)
+WoWTools_ChineseMixin:SetLabel(DressUpFrameOutfitDropdown.SaveButton)
+
+
+--[[试衣间
 hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'OnEnter', function(self)--DressUpFrames.lua
     if not self.transmogID or (self.item and not self.item:IsItemDataCached()) then
         return
@@ -525,7 +498,13 @@ hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'SetAppearance', function(self, sl
         end
     end
 end)
-hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'RefreshAppearanceTooltip', function(self)
+hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'RefreshAppearanceTooltip', function()
     GameTooltip_AddColoredLine(GameTooltip, '|cnRED_FONT_COLOR:你尚未收藏过此外观', LIGHTBLUE_FONT_COLOR)
     GameTooltip:Show()
 end)
+
+
+hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'SetDetails', function(self, transmogID, icon, name, useSmallIcon, slotState, isHiddenVisual)
+    print(name, WoWTools_ChineseMixin:CN(name))
+end)
+]]
