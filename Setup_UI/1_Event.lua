@@ -132,6 +132,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_InspectUI()
             end
         end)
     InspectFrameTab3:SetText('公会')
+
+    self:SetFrames(InspectPVPFrame)
+    --self:SetLabel(InspectPVPFrame.RatedBG.RatingLabel)
+    
 end
 
 

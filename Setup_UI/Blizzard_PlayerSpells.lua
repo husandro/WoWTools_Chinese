@@ -1,120 +1,64 @@
+function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---法术书
-local function Init_SpellBookFrame()
-    if PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame then--11.1.7才有
-        WoWTools_ChineseMixin:HookLabel(PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame.Label)
-        --PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame.Label:SetText('一键|n辅助')
-    else--11.1.7没了
-        WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton.Label)--隐藏被动技能
-    end
-
-
-
-    WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton.Text)
-    WoWTools_ChineseMixin:SetLabel(ClassTalentLoadoutCreateDialog.Title)
-    WoWTools_ChineseMixin:SetLabel(ClassTalentLoadoutCreateDialog.NameControl.Label)
-    WoWTools_ChineseMixin:SetLabel(ClassTalentLoadoutCreateDialog.AcceptButton)
-    WoWTools_ChineseMixin:SetLabel(ClassTalentLoadoutCreateDialog.CancelButton)
-
---TabSys
-    --[[for _, tabID in pairs(PlayerSpellsFrame.SpellBookFrame:GetTabSet() or {}) do
-        local btn= PlayerSpellsFrame.SpellBookFrame:GetTabButton(tabID)
+    self:HookLabel(PlayerSpellsFrameTitleText)--标题
+    self:SetButton(PlayerSpellsFrame.TalentsFrame.InspectCopyButton)
+    for _, tabID in pairs(PlayerSpellsFrame:GetTabSet() or {}) do
+        local btn= PlayerSpellsFrame:GetTabButton(tabID)
         if btn then
-            WoWTools_ChineseMixin:SetLabel(btn.Text)
+            self:SetLabel(btn.Text)
         end
-    end]]
-
---名称
-    hooksecurefunc(SpellBookItemMixin, 'UpdateVisuals', function(self)
-        local name= WoWTools_ChineseMixin:GetData(self.spellBookItemInfo.name, {spellID=self.spellBookItemInfo.actionID, isName=true})
-        if name then
-            self.Name:SetText(name)
-        end
-        if self.isUnlearned and self.RequiredLevel:IsShown() then
-            local levelLearned = C_SpellBook.GetSpellBookItemLevelLearned(self.slotIndex, self.spellBank)
-            local subtext
-            if not self.isOffSpec and IsCharacterNewlyBoosted() then
-                subtext = '暂时锁定'
-            elseif levelLearned and levelLearned > UnitLevel("player") then
-                subtext = string.format('%d级', levelLearned)
-            elseif not self.isOffSpec then
-                subtext = '访问你的训练师'
-            end
-            if subtext then
-                self.RequiredLevel:SetText(subtext)
-            end
-        end
-    end)
-
---子，名称
-    hooksecurefunc(SpellBookItemMixin, 'UpdateSubName', function(self, subNameText)
-        local name= WoWTools_ChineseMixin:SetText(subNameText)
-        if name then
-            self.SubName:SetText(name)
-        end
-    end)
-
---Header Blizzard_SpellBookTemplates.lua
-    hooksecurefunc(PlayerSpellsFrame.SpellBookFrame, 'UpdateDisplayedSpells',function(self)
-        for _, btn in pairs(self.PagedSpellsFrame:GetFrames() or {}) do
-            if btn.Text then
-                WoWTools_ChineseMixin:SetLabel(btn.Text)
-            end
-        end
-    end)
-
-    hooksecurefunc(PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls, 'SetCurrentPage',function(self)
-        for _, btn in pairs(self:GetParent():GetFrames() or {}) do
-            if btn.Text then
-                WoWTools_ChineseMixin:SetLabel(btn.Text)
-            end
-        end
-    end)
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
---Blizzard_SharedTalentFrameTemplates.lua
-hooksecurefunc(TalentFrameGateMixin, 'OnEnter', function(self)
-    if (self.condInfo.condID) then
-        local condInfo = self:GetTalentFrame():GetAndCacheCondInfo(self.condInfo.condID)
-        --GameTooltip:SetOwner(self, "ANCHOR_LEFT", 4, -4)
-        GameTooltip:ClearLines()
-        GameTooltip_AddErrorLine(GameTooltip, format('"再花费%d点天赋才能解锁此行', condInfo.spentAmountRequired))
-        GameTooltip:Show()
     end
-end)
 
+
+
+
+
+
+
+
+
+--专精
+    hooksecurefunc(PlayerSpellsFrame.SpecFrame, 'UpdateSpecContents', function(frame)--, index, sex, frameWidth, numSpecs)
+        if frame.isInitialized or not C_SpecializationInfo.IsInitialized() then
+            return
+        end
+        frame.isInitialized = true
+
+        local numSpecs = GetNumSpecializations(false, false)
+        frame.numSpecs = numSpecs
+        if numSpecs == 0 then
+            return
+        end
+        local sex = UnitSex("player")
+        local specContentWidth = frame:GetWidth() / numSpecs
+
+        -- set spec infos
+        frame.SpecContentFramePool:ReleaseAll()
+        for i = 1, numSpecs do
+            local contentFrame = frame.SpecContentFramePool:Acquire()
+            contentFrame:Setup(i, sex, specContentWidth, numSpecs)
+        end
+        frame:Layout()
+    end)
+
+    local sex= UnitSex('player')
+    for frame in PlayerSpellsFrame.SpecFrame.SpecContentFramePool:EnumerateActive() do
+        self:HookLabel(frame.SpecName)
+        self:HookLabel(frame.RoleName)
+        self:HookLabel(frame.ActivatedText)
+        self:HookLabel(frame.ActivateButton)
+        self:HookLabel(frame.SampleAbilityText)
+
+        local _, _, description, _, _, primaryStat = GetSpecializationInfo(frame.specIndex, false, false, nil, sex)
+        if description then
+            local spec= SPEC_STAT_STRINGS[primaryStat]
+            frame.Description:SetText(
+                self:CN(description) or description
+                .."|n"
+                ..format('主要属性：%s', self:CN(spec) or spec or '')
+            )
+        end
+    end
 
 
 
@@ -126,19 +70,18 @@ end)
 
 
 --天赋
-local function Init_TalentsFrame()
-    WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.TalentsFrame.ApplyButton)--:SetText('应用改动')
-    WoWTools_ChineseMixin:HookLabel(PlayerSpellsFrame.TalentsFrame.LoadSystem.Dropdown.Text)
-    WoWTools_ChineseMixin:SetLabel(PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton.Text)
+    self:SetLabel(PlayerSpellsFrame.TalentsFrame.ApplyButton)--:SetText('应用改动')
+    self:HookLabel(PlayerSpellsFrame.TalentsFrame.LoadSystem.Dropdown.Text)
+    self:SetLabel(PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton.Text)
     --专精，名称
-    hooksecurefunc(PlayerSpellsFrame.TalentsFrame, 'RefreshCurrencyDisplay', function(self)
-        local className = WoWTools_ChineseMixin:SetText(self:GetClassName()) or WoWTools_ChineseMixin:CN(PlayerUtil.GetClassName())
+    hooksecurefunc(PlayerSpellsFrame.TalentsFrame, 'RefreshCurrencyDisplay', function(frame)
+        local className = self:SetText(frame:GetClassName()) or self:CN(PlayerUtil.GetClassName())
         if className then
-            self.ClassCurrencyDisplay:SetPointTypeText(className)
+            frame.ClassCurrencyDisplay:SetPointTypeText(className)
         end
-        local specName= WoWTools_ChineseMixin:CN(self:GetSpecName())
+        local specName= self:CN(frame:GetSpecName())
         if specName then
-            self.SpecCurrencyDisplay:SetPointTypeText(specName)
+            frame.SpecCurrencyDisplay:SetPointTypeText(specName)
         end
     end)
 
@@ -147,18 +90,18 @@ local function Init_TalentsFrame()
     PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer.LockedLabel1:SetText('英雄天赋')
     PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer.LockedLabel2:SetText('达到%d级后解锁')
 
-    hooksecurefunc(PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer, 'UpdateHeroSpecButton', function(self)
-        if self:IsDisplayingActiveHeroSpec() then
-            local name= WoWTools_ChineseMixin:CN(self.activeSubTreeInfo.name)
+    hooksecurefunc(PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer, 'UpdateHeroSpecButton', function(frame)
+        if frame:IsDisplayingActiveHeroSpec() then
+            local name= self:CN(frame.activeSubTreeInfo.name)
             if name then
-                self.HeroSpecLabel:SetText(name)
+                frame.HeroSpecLabel:SetText(name)
             end
-        elseif not self:IsDisplayingHeroSpecChoices() and self:IsDisplayingPreviewSpecs() then
-            self.LockedLabel2:SetFormattedText('达到%d级后解锁', self.heroSpecsRequiredLevel)
+        elseif not frame:IsDisplayingHeroSpecChoices() and frame:IsDisplayingPreviewSpecs() then
+            frame.LockedLabel2:SetFormattedText('达到%d级后解锁', frame.heroSpecsRequiredLevel)
         end
     end)
 
-    PlayerSpellsFrame.TalentsFrame.WarmodeButton:HookScript('OnEnter', function(self)
+    PlayerSpellsFrame.TalentsFrame.WarmodeButton:HookScript('OnEnter', function(frame)
         local wrap = true
         local warModeRewardBonus = C_PvP.GetWarModeRewardBonus()
         GameTooltip:AddLine(' ')
@@ -173,7 +116,6 @@ local function Init_TalentsFrame()
         GameTooltip:Show()
     end)
 
-
     hooksecurefunc(PlayerSpellsFrame.TalentsFrame.PvPTalentList.ScrollBox, 'Update', function(frame)
         if not frame:GetView() then
             return
@@ -181,135 +123,127 @@ local function Init_TalentsFrame()
         for _, btn in pairs(frame:GetFrames() or {}) do
             local info= btn.talentInfo
             if info then
-                local name= WoWTools_ChineseMixin:GetData(nil, {spellID=info.spellID, isName=true})
+                local name= self:GetData(nil, {spellID=info.spellID, isName=true})
                 if name then
                     btn.Name:SetText(name)
                 end
             end
         end
     end)
-end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-local function Init_SpecFrame()
-
-    hooksecurefunc(PlayerSpellsFrame.SpecFrame, 'UpdateSpecContents', function(self)--, index, sex, frameWidth, numSpecs)
-        if self.isInitialized or not C_SpecializationInfo.IsInitialized() then
-            return
+--Blizzard_SharedTalentFrameTemplates.lua
+    hooksecurefunc(TalentFrameGateMixin, 'OnEnter', function(self)
+        if (self.condInfo.condID) then
+            local condInfo = self:GetTalentFrame():GetAndCacheCondInfo(self.condInfo.condID)
+            --GameTooltip:SetOwner(self, "ANCHOR_LEFT", 4, -4)
+            GameTooltip:ClearLines()
+            GameTooltip_AddErrorLine(GameTooltip, format('"再花费%d点天赋才能解锁此行', condInfo.spentAmountRequired))
+            GameTooltip:Show()
         end
-        self.isInitialized = true
-
-        local numSpecs = GetNumSpecializations(false, false)
-        self.numSpecs = numSpecs
-        if numSpecs == 0 then
-            return
-        end
-        local sex = UnitSex("player")
-        local specContentWidth = self:GetWidth() / numSpecs
-
-        -- set spec infos
-        self.SpecContentFramePool:ReleaseAll()
-        for i = 1, numSpecs do
-            local contentFrame = self.SpecContentFramePool:Acquire()
-            contentFrame:Setup(i, sex, specContentWidth, numSpecs)
-        end
-        self:Layout()
     end)
 
 
-
-
-    local sex= UnitSex('player')
-    for frame in PlayerSpellsFrame.SpecFrame.SpecContentFramePool:EnumerateActive() do
-        WoWTools_ChineseMixin:HookLabel(frame.SpecName)
-        WoWTools_ChineseMixin:HookLabel(frame.RoleName)
-        WoWTools_ChineseMixin:HookLabel(frame.ActivatedText)
-        WoWTools_ChineseMixin:HookLabel(frame.ActivateButton)
-        WoWTools_ChineseMixin:HookLabel(frame.SampleAbilityText)
-
-        local _, _, description, _, _, primaryStat = GetSpecializationInfo(frame.specIndex, false, false, nil, sex)
-        if description then
-            local spec= SPEC_STAT_STRINGS[primaryStat]
-            frame.Description:SetText(
-                WoWTools_ChineseMixin:CN(description) or description
-                .."|n"
-                ..format('主要属性：%s', WoWTools_ChineseMixin:CN(spec) or spec or '')
-            )
-        end
-    end
-end
-
-
-
-
-
-
-
-local function Blizzard_HeroTalentsSelectionDialog()
-    hooksecurefunc(HeroTalentSpecContentMixin, 'Setup', function(self)
-        local specName= WoWTools_ChineseMixin:GetTraitSubTree(self.subTreeID, true, false)
+--英雄天赋
+    hooksecurefunc(HeroTalentSpecContentMixin, 'Setup', function(frame)
+        local specName= self:GetTraitSubTree(frame.subTreeID, true, false)
         if specName then
-            self.SpecName:SetText(specName)
+            frame.SpecName:SetText(specName)
         end
-        local desc= WoWTools_ChineseMixin:GetTraitSubTree(self.subTreeID, false, true)
+        local desc= self:GetTraitSubTree(frame.subTreeID, false, true)
         if desc then
-            self.Description:SetText(desc)
+            frame.Description:SetText(desc)
         end
-        WoWTools_ChineseMixin:SetButton(self.ActivateButton)
-        WoWTools_ChineseMixin:SetButton(self.ApplyChangesButton)
-        WoWTools_ChineseMixin:SetButton(self.ApplyChangesButton)
-  
-        WoWTools_ChineseMixin:SetLabel(self.CurrencyFrame.LabelText)
-        --WoWTools_ChineseMixin:SetLabel(self.CurrencyFrame.ActivatedText)
-        WoWTools_ChineseMixin:SetLabel(self.ActivatedText)
-        WoWTools_ChineseMixin:SetLabel(self.LabelText)
+        self:SetButton(frame.ActivateButton)
+        self:SetButton(frame.ApplyChangesButton)
+        self:SetButton(frame.ApplyChangesButton)
+
+        self:SetLabel(frame.CurrencyFrame.LabelText)
+        self:SetLabel(frame.ActivatedText)
+        self:SetLabel(frame.LabelText)
     end)
 
-    --HeroTalentsContainerMixin
-    hooksecurefunc(PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer, 'UpdateHeroSpecButton', function(self)
-
-        if self.HeroSpecLabel:IsShown() and self.activeSubTreeInfo and self.activeSubTreeInfo then
-            local specName= WoWTools_ChineseMixin:GetTraitSubTree(self.activeSubTreeInfo.ID, true, false)
+--HeroTalentsContainerMixin
+    hooksecurefunc(PlayerSpellsFrame.TalentsFrame.HeroTalentsContainer, 'UpdateHeroSpecButton', function(frame)
+        if frame.HeroSpecLabel:IsShown() and frame.activeSubTreeInfo and frame.activeSubTreeInfo then
+            local specName= self:GetTraitSubTree(frame.activeSubTreeInfo.ID, true, false)
             if specName then
-                self.HeroSpecLabel:SetText(specName)
+                frame.HeroSpecLabel:SetText(specName)
             end
         end
     end)
-end
 
 
 
-function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
-    Init_SpellBookFrame()
-    Init_TalentsFrame()
-    Init_SpecFrame()
-    Blizzard_HeroTalentsSelectionDialog()
 
-    WoWTools_ChineseMixin:HookLabel(PlayerSpellsFrameTitleText)--标题
 
-    for _, tabID in pairs(PlayerSpellsFrame:GetTabSet() or {}) do
-        local btn= PlayerSpellsFrame:GetTabButton(tabID)
-        if btn then
-            WoWTools_ChineseMixin:SetLabel(btn.Text)
-        end
+
+
+
+
+
+
+
+--法术书
+    if PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame then--11.1.7才有
+        self:HookLabel(PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame.Label)
+        --PlayerSpellsFrame.SpellBookFrame.AssistedCombatRotationSpellFrame.Label:SetText('一键|n辅助')
+    else--11.1.7没了
+        self:SetLabel(PlayerSpellsFrame.SpellBookFrame.HidePassivesCheckButton.Label)--隐藏被动技能
     end
+
+
+
+    self:SetLabel(PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton.Text)
+    self:SetLabel(ClassTalentLoadoutCreateDialog.Title)
+    self:SetLabel(ClassTalentLoadoutCreateDialog.NameControl.Label)
+    self:SetLabel(ClassTalentLoadoutCreateDialog.AcceptButton)
+    self:SetLabel(ClassTalentLoadoutCreateDialog.CancelButton)
+
+
+--名称
+    hooksecurefunc(SpellBookItemMixin, 'UpdateVisuals', function(frame)
+        local name= self:GetData(frame.spellBookItemInfo.name, {spellID=frame.spellBookItemInfo.actionID, isName=true})
+        if name then
+            frame.Name:SetText(name)
+        end
+        if frame.isUnlearned and frame.RequiredLevel:IsShown() then
+            local levelLearned = C_SpellBook.GetSpellBookItemLevelLearned(frame.slotIndex, frame.spellBank)
+            local subtext
+            if not frame.isOffSpec and IsCharacterNewlyBoosted() then
+                subtext = '暂时锁定'
+            elseif levelLearned and levelLearned > UnitLevel("player") then
+                subtext = string.format('%d级', levelLearned)
+            elseif not frame.isOffSpec then
+                subtext = '访问你的训练师'
+            end
+            if subtext then
+                frame.RequiredLevel:SetText(subtext)
+            end
+        end
+    end)
+
+--子，名称
+    hooksecurefunc(SpellBookItemMixin, 'UpdateSubName', function(frame, subNameText)
+        local name= self:SetText(subNameText)
+        if name then
+            frame.SubName:SetText(name)
+        end
+    end)
+
+--Header Blizzard_SpellBookTemplates.lua
+    hooksecurefunc(PlayerSpellsFrame.SpellBookFrame, 'UpdateDisplayedSpells',function(frame)
+        for _, btn in pairs(frame.PagedSpellsFrame:GetFrames() or {}) do
+            if btn.Text then
+                self:SetLabel(btn.Text)
+            end
+        end
+    end)
+
+    hooksecurefunc(PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls, 'SetCurrentPage',function(frame)
+        for _, btn in pairs(frame:GetParent():GetFrames() or {}) do
+            if btn.Text then
+                self:SetLabel(btn.Text)
+            end
+        end
+    end)
 end

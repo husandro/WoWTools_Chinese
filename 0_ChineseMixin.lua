@@ -486,28 +486,52 @@ function WoWTools_ChineseMixin:SetTabButton(frame, text, isSetCNFont)
         end
     end
 end
---[[function WoWTools_ChineseMixin:SetFrame(frame, setFont, isHook, notAfter)
-    if not frame or frame.frame_chinese then
+function WoWTools_ChineseMixin:SetFrame(frame, setFont, isHook, affer)
+    if not frame or not frame.GetRegions then
         return
     end
+
     local t
-    print(frame:GetChildren())
-    for _, f in pairs({frame:GetChildren()}) do
+    for _, f in pairs({frame:GetRegions()}) do
         t= f:GetObjectType()
-        print(t)
-        if t=='Frame' or t=='Button' then
-            self:SetRegions(f, setFont, isHook, notAfter)
+        if t=='Button' then
+            if isHook then
+                self:HookButton(f, setFont)
+            else
+                self:SetButton(f, nil, affer, setFont)
+            end
         elseif t=='FontString' then
-            self:SetLabel(label, text, affer, setFont)
+            if isHook then
+                self:HookLabel(f, setFont)
+            else
+                self:SetLabel(f, nil, affer, setFont)
+            end
         end
     end
-    frame.frame_chinese=true
 end
+
+function WoWTools_ChineseMixin:SetFrames(frame, setFont, isHook, affer)
+    if not frame or not frame.GetChildren then
+        return
+    end
+
+    local t
+    for _, f in pairs({frame:GetChildren()}) do
+        t= f:GetObjectType()
+        if t=='Frame' then
+            self:SetFrame(f, setFont, isHook, affer)
+        elseif t=='Button' then
+            self:SetButton(f, nil, affer, setFont)
+        end
+    end
+end
+
+
 --/dump WoWTools_ChineseMixin:SetFrame(CommunitiesFrame.MemberList.ColumnDisplay)
 --/dump CommunitiesFrame.MemberList.ColumnDisplay:GetChildren()
 
 --PanelTemplates_TabResize(tab, padding, absoluteSize, minWidth, maxWidth, absoluteTextSize)
---function WoWTools_ChineseMixin:SetTabSystem(frame, setFont, padding, minWidth, absoluteSize)
+--[[function WoWTools_ChineseMixin:SetTabSystem(frame, setFont, padding, minWidth, absoluteSize)
     for _, tabID in pairs(frame:GetTabSet() or {}) do
         local btn= frame:GetTabButton(tabID)
         self:SetLabel(btn.Text or btn, nil, nil, setFont)
