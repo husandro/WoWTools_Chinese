@@ -1532,7 +1532,9 @@ local tab={
 
 
 
-local descTab={}
+local descTab={
+    --[2025]= "前往湾林镇开始冒险。"
+}
 do
     local desc
     for dungeonID, info in pairs(tab) do
@@ -1544,6 +1546,7 @@ do
     end
 end
 tab= nil
+
 
 function WoWTools_ChineseMixin:GetLFGDungeonDesc(lfgDungeonID)
     return self:IsCN(descTab[lfgDungeonID])

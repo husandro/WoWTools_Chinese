@@ -496,6 +496,7 @@ function WoWTools_ChineseMixin:GetProfessionNodeName(nodeID)
 end
 
 function WoWTools_ChineseMixin:GetProfessionNodeDesc(nodeID)
+     local data= tab[nodeID]
     if data then
         return self:IsCN(data[2])
     end
