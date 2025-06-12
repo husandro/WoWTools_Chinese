@@ -7,7 +7,7 @@ local CNData={}--主要，汉化
 
 --[\228-\233][\128-\191][\128-\191]--检查 UTF-8 字符
 function WoWTools_ChineseMixin:IsCN(text)
-    if text and text:find("[\228-\233]") and text~='' then
+    if text and string.find(text, '[\228-\233]') then
         return text
     end
 

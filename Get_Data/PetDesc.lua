@@ -2173,7 +2173,7 @@ local tab={
 
 
 function WoWTools_ChineseMixin:GetPetDesc(speciesID)
-    return self:IsCN(tab[speciesID])
+    return tab[speciesID]
 end
 
 

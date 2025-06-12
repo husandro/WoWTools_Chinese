@@ -263,7 +263,7 @@
 
 
 
-        
+
     hooksecurefunc(CommunitiesListEntryMixin, 'SetAddCommunity', function(self)
         self.Name:SetText('加入或创建社区')
     end)
@@ -402,7 +402,7 @@
     CommunitiesFrameGuildDetailsFrameInfo.TitleText:SetText('信息')
     WoWTools_ChineseMixin:SetLabel(CommunitiesFrameGuildDetailsFrameInfoHeader1Label)
     WoWTools_ChineseMixin:SetLabel(CommunitiesFrameGuildDetailsFrameInfo.Header2Label)
-    
+
     for i=1, 4 do
         local btn= _G['CommunitiesFrameGuildDetailsFrameInfoChallenge'..i]
         WoWTools_ChineseMixin:HookLabel(btn and btn.label)
@@ -478,4 +478,6 @@ end)]]
     CommunitiesFrame.MemberList.ShowOfflineButton.Text:SetText('显示离线成员')
     WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.PostingExpirationText.ExpiredText)
 
---WoWTools_ChineseMixin:SetFrame(CommunitiesFrame.MemberList.ColumnDisplay)
+CommunitiesFrame.MemberList.ColumnDisplay:HookScript('OnShow', function(frame)
+    WoWTools_ChineseMixin:SetFrames(frame)
+end)

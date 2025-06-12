@@ -695,3 +695,4 @@ end)
 hooksecurefunc(PanelTabButtonMixin, 'OnLoad', function(btn)
     WoWTools_ChineseMixin:SetTabButton(btn)
 end)
+
