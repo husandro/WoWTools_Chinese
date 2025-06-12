@@ -44,9 +44,7 @@ hooksecurefunc(CharacterFrame, 'SetTitle', function(self)
         if titleID and titleID>0 then
             local title= WoWTools_ChineseMixin:GetTitleName(titleID)
             if title then
-                local name= NORMAL_FONT_COLOR:WrapTextInColorCode(UnitName("player"))
-                name= format(title, name)
-                CharacterFrameTitleText:SetText(name)
+                CharacterFrameTitleText:SetFormattedText(title, NORMAL_FONT_COLOR:WrapTextInColorCode(UnitName("player")))
             end
         end
     else
@@ -75,30 +73,33 @@ end)
 hooksecurefunc(PaperDollFrame.TitleManagerPane.ScrollBox, 'Update', function(frame)
     for _, btn in pairs(frame:GetFrames() or {}) do
         if not btn.get_name then
+
             function btn:get_name()
                 local name= self.titleId==-1 and '无头衔' or WoWTools_ChineseMixin:GetTitleName(self.titleId)
                 return name
             end
+
             WoWTools_ChineseMixin:SetCNFont(btn:GetFontString())
+
             btn:HookScript('OnLeave', GameTooltip_Hide)
+
             btn:HookScript('OnEnter', function(self)
                 if self.titleId==-1 then
                     return
                 end
                 local name= self:get_name()
-                if not name then
-                    return
+                if name then
+                    GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+                    GameTooltip_SetTitle(GameTooltip, format(name, UnitName('player')), nil)
+                    GameTooltip_AddNormalLine(GameTooltip, GetTitleName(self.titleId), nil)
+                    GameTooltip:Show()
                 end
-                GameTooltip:SetOwner(self, "ANCHOR_LEFT")
-                local title= format(name, UnitName('player'))
-                GameTooltip_SetTitle(GameTooltip, title)
-                GameTooltip_AddNormalLine(GameTooltip, (GetTitleName(self.titleId) or '')..' ')
-                GameTooltip:Show()
             end)
         end
+
         local name= btn:get_name()
         if name then
-            btn:SetText(name:gsub('%%s', ''))
+            btn:SetText(format(name, ''))
         end
     end
 end)

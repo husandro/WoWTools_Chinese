@@ -22,7 +22,7 @@ local tab={
 [620]= "预备兵 %s",
 [619]= "新兵 %s",
 [618]= "%s, 转轮高手",
-[617]= "%s, 月度最佳“员工”",
+[617]= "%s, 月度最佳员工",
 [616]= "兼职工 %s",
 [613]= "渣客大师 %s",
 [612]= "%s, 重头戏",
@@ -344,7 +344,7 @@ local tab={
 [287]= "假面笑星 %s",
 [286]= "%s, 乌瑞恩之剑",
 [285]= "%s, 沃金之矛",
-[284]= "“环保主义者” %s",
+[284]= "环保主义者 %s",
 [283]= "高等祭司 %s",
 [282]= "霜狼氏族的%s",
 [281]= "%s, 南海镇煞星",
@@ -631,6 +631,7 @@ local tab={
 
 
 
-function WoWTools_ChineseMixin:GetTitleName(titleID)
-    return tab[titleID]
+function WoWTools_ChineseMixin:GetTitleName(titleMaskID)
+    return self:IsCN(tab[titleMaskID])
 end
+--GetTitleName(1)
