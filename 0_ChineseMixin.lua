@@ -159,7 +159,13 @@ function WoWTools_ChineseMixin:GetData(text, tab)
         data= self:GetRecipeSource(tab.recipeID)--专业配方,来源
 
     elseif tab.ProfessionNodeID then
-        data= self:GetProfessionNodeDesc(tab.ProfessionNodeID)
+        if tab.isName then
+            data= self:GetProfessionNodeName(tab.ProfessionNodeID)
+        elseif tab.isDesc then
+            data= self:GetProfessionNodeDesc(tab.ProfessionNodeID)
+        else
+            data= self:GetProfessionNodeData(tab.ProfessionNodeID)
+        end
 
 
     elseif tab.lfgDungeonID then
@@ -213,7 +219,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
 
 
     elseif tab.titleID then
-        data= self:GetTitleName(tab.titleID)
+        data= self:GetTitleName(tab.titleID, tab.sex)
 
     elseif tab.subTreeID then
         data= self:Get_TraitSubTree(subTreeID, isName, isDesc)

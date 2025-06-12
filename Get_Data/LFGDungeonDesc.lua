@@ -1534,15 +1534,17 @@ local tab={
 
 local descTab={}
 do
+    local desc
     for dungeonID, info in pairs(tab) do
         WoWTools_ChineseMixin:SetCN(GetLFGDungeonInfo(dungeonID), info[1])
-        if info[2] and info[2]:find("[\228-\233]") then
-            descTab[dungeonID]= info[2]
+        desc= WoWTools_ChineseMixin:IsCN(info[2])
+        if desc then
+            descTab[dungeonID]= desc
         end
     end
 end
 tab= nil
 
 function WoWTools_ChineseMixin:GetLFGDungeonDesc(lfgDungeonID)
-    return descTab[lfgDungeonID]
+    return self:IsCN(descTab[lfgDungeonID])
 end

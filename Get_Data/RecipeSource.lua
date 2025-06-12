@@ -11072,6 +11072,7 @@ local faction= UnitFactionGroup('player')=='Alliance' and 'x0' or 'x1'
 
 function WoWTools_ChineseMixin:GetRecipeSource(recipeID)
     if recipeID then
-        return tab[recipeID..faction] or tab[recipeID..'x-1']
+        local source= tab[recipeID..faction] or tab[recipeID..'x-1']
+        return self:IsCN(source)
     end
 end

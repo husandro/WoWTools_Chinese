@@ -1225,6 +1225,6 @@ local tab={
 
 
 function WoWTools_ChineseMixin:GetScenarioName(scenarioID)
-    return tab[scenarioID]
+    return self:IsCN(tab[scenarioID])
 end
 --C_ScenarioInfo. Information

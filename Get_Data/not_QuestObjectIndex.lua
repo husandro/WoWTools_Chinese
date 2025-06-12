@@ -4026,5 +4026,5 @@ function WoWTools_ChineseMixin:GetQuestIndexObject(questID, index)
     end
     local desc= tab[questID..'x'..(index-1)] or tab[questID..'x'..index]
 
-    return desc
+    return self:IsCN(desc)
 end

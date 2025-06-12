@@ -445,12 +445,8 @@ local function Init_SpecPage()
 
     --ProfessionsSpecFrameMixin
     hooksecurefunc(ProfessionsFrame.SpecPage, 'UpdateDetailedPanel', function(self)
-        local data= WoWTools_ChineseMixin:GetProfessionNodeDesc(self:GetDetailedPanelNodeID())
-        local name= data and data[1]
-        if not name then
-            local detailedViewPath = self:GetDetailedPanelPath();
-            name= WoWTools_ChineseMixin:CN(detailedViewPath:GetName())
-        end
+        local name=WoWTools_ChineseMixin:GetProfessionNodeName(self:GetDetailedPanelNodeID())
+                    or WoWTools_ChineseMixin:CN(self:GetDetailedPanelPath():GetName())
         if name then
             self.DetailedView.PathName:SetText(name)
         end
@@ -459,26 +455,28 @@ local function Init_SpecPage()
 
     --专精，技能，提示
     local function on_enter(self)
-        local data= WoWTools_ChineseMixin:GetProfessionNodeDesc(self.nodeID)
-        if data then
-            if data[1] then
-                GameTooltipTextLeft1:SetText(data[1])
-            end
-            local currRank, maxRank = self:GetRanks();
-            if currRank and maxRank then
-                GameTooltipTextLeft5:SetText('等级 '..currRank..'/'..maxRank)
-            end
-            if data[2] then
-                GameTooltipTextLeft5:SetText(data[2])
-            end
-            GameTooltip:Show()
+        local name=WoWTools_ChineseMixin:GetProfessionNodeName(self.nodeID)
+        local desc= WoWTools_ChineseMixin:GetProfessionNodeDesc(self.nodeID)
+
+        if name then
+            GameTooltipTextLeft1:SetText(name)
         end
+        local currRank, maxRank = self:GetRanks();
+        if currRank and maxRank then
+            GameTooltipTextLeft5:SetText('等级 '..currRank..'/'..maxRank)
+        end
+        if desc then
+            GameTooltipTextLeft5:SetText(desc)
+        end
+        GameTooltip:Show()
     end
-    --[[GameTooltip:AddLine(' ')
-    GameTooltip:AddLine('|cff00ff00'..data[2]..'|r', nil,nil,nil,  true)
-    GameTooltip:Show()]]
-    ProfessionsFrame.SpecPage.DetailedView.Path:HookScript('OnEnter', on_enter)
-    hooksecurefunc(ProfessionsSpecPathMixin, 'OnEnter', on_enter)
+
+    ProfessionsFrame.SpecPage.DetailedView.Path:HookScript('OnEnter', function(self)
+        on_enter(self)
+    end)
+    hooksecurefunc(ProfessionsSpecPathMixin, 'OnEnter', function(self)
+        on_enter(self)
+    end)
 
 
 
@@ -499,8 +497,6 @@ local function Init_SpecPage()
             self.Text:SetText(name);
         end
     end)
-
-
 end
 
 

@@ -1406,14 +1406,14 @@ end
 function WoWTools_ChineseMixin:GetPetAblityDesc(abilityID, abilityInfo)
     local data= self:GetPetAblityData(abilityID, abilityInfo)
     if data then
-        return data[2], data[1]
+        return self:IsCN(data[2]), self:IsCN(data[1])
     end
 end
 
 function WoWTools_ChineseMixin:GetPetAblityName(abilityID)
     local data= tab[abilityID]
     if data then
-        return data[1]
+        return self:IsCN(data[1])
     end
 end
 

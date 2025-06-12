@@ -472,7 +472,7 @@ local tab={
 [101872]= {"凡图斯符文", "提高你制作凡图斯符文的能力。在制作凡图斯符文时，每有一点此副专精，获得+1 技能。"},
 [101873]= {"公函", "提高你制作公函的能力。在制作公函时，每有一点此副专精，获得+1 技能。"},
 [101874]= {"合约", "提高你制作合约的能力。每有一点此副专精+1技能。"},
-[101875]= {"", "符文研究提升你创造各种文书的能力，从而提升你与其他阵营的声望，集中装备的力量，准备迎战最强大的敌人。每有一点此专精+1技能。"},
+[101875]= {nil, "符文研究提升你创造各种文书的能力，从而提升你与其他阵营的声望，集中装备的力量，准备迎战最强大的敌人。每有一点此专精+1技能。"},
 [101876]= {"暗月徽记：扬升", "研究并提升你操控暗月卡片：扬升的能力，每有一点此专精+1技能。"},
 [101877]= {"暗月徽记：盎溢", "研究并提升你操控暗月卡片：盎溢的能力，每有一点此专精+1技能。"},
 [101878]= {"暗月徽记：共生", "研究并提升你操控暗月卡片：共生的能力，每有一点此专精+1技能。"},
@@ -484,7 +484,19 @@ local tab={
 
 }
 
+function WoWTools_ChineseMixin:GetProfessionNodeData(nodeID)
+    return tab[nodeID]
+end
+
+function WoWTools_ChineseMixin:GetProfessionNodeName(nodeID)
+    local data= tab[nodeID]
+    if data then
+        return self:IsCN(data[1])
+    end
+end
 
 function WoWTools_ChineseMixin:GetProfessionNodeDesc(nodeID)
-    return tab[nodeID]
+    if data then
+        return self:IsCN(data[2])
+    end
 end
