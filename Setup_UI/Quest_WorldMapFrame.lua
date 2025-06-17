@@ -2,7 +2,10 @@
 
 WoWTools_ChineseMixin:SetLabel(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
 WoWTools_ChineseMixin:SetLabel(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
+
 WoWTools_ChineseMixin:SetLabel(QuestScrollFrame.SearchBox.Instructions)
+WoWTools_ChineseMixin:SetLabel(QuestScrollFrame.NoSearchResultsText)
+
 if  QuestMapFrame.QuestsFrame.DetailsFrame and QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame and QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice then--11.1
     WoWTools_ChineseMixin:SetLabel(QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text)
     QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text:SetTextColor(0,1,0)
