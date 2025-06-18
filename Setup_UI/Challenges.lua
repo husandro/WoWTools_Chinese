@@ -9,7 +9,11 @@ function WoWTools_ChineseMixin.Events:Blizzard_WeeklyRewards()
     WoWTools_ChineseMixin:HookLabel(WeeklyRewardsFrame.RaidFrame.Name)
     WoWTools_ChineseMixin:HookLabel(WeeklyRewardsFrame.MythicFrame.Name)
 
-    WoWTools_ChineseMixin:SetCNFont(WeeklyRewardsFrame.HeaderFrame.Text)
+    WeeklyRewardsFrame.WorldFrame.Name:SetText('世界')
+    WoWTools_ChineseMixin:HookLabel(WeeklyRewardsFrame.WorldFrame.Name)
+
+    --WoWTools_ChineseMixin:SetCNFont(WeeklyRewardsFrame.HeaderFrame.Text)
+    
 
 
     hooksecurefunc(WeeklyRewardsFrame, 'UpdateOverlay', function(frame)--Blizzard_WeeklyRewards.lua
