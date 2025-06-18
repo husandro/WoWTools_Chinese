@@ -284,9 +284,10 @@ end
 
 
 
+
 --( ) . % + - * ? [ ^ $
 function WoWTools_ChineseMixin:SetText(text)
-    if type(text)~='string' or text=='' or text=='%s' or text:find('[\228-\233]') then
+    if type(text)~='string' or text=='' or text=='%s' or self:IsCN(text) then
         return
     end
 

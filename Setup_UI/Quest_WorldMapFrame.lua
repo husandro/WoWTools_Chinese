@@ -96,6 +96,7 @@ end
 	QuestScrollFrame.covenantCallingsHeaderFramePool:ReleaseAll();
 	QuestScrollFrame.Contents:ResetUsage();
 ]]
+
 hooksecurefunc("QuestLogQuests_Update", function()
     for line in QuestScrollFrame.headerFramePool:EnumerateActive() do
         set_text(line)
@@ -125,11 +126,40 @@ hooksecurefunc("QuestLogQuests_Update", function()
 
 
 
+--[[
+function QuestLogScrollFrameMixin:OnLoad()
+	ScrollFrame_OnLoad(self);
+
+	self:RegisterCallback("OnVerticalScroll", function(offset)
+		self:UpdateBottomShadow(offset);
+	end);
+
+	self:RegisterCallback("OnScrollRangeChanged", function(offset)
+		self:UpdateBottomShadow(offset);
+	end);
+
+	local contentsFrame = QuestMapFrame.QuestsFrame.ScrollFrame.Contents;
+
+	self.titleFramePool = CreateFramePool("BUTTON", contentsFrame, "QuestLogTitleTemplate", function(framePool, frame)
+		Pool_HideAndClearAnchors(framePool, frame);
+		frame.info = nil;
+	end);
+
+	self.objectiveFramePool = CreateFramePool("FRAME", contentsFrame, "QuestLogObjectiveTemplate");
+	self.headerFramePool = CreateFramePool("BUTTON", contentsFrame, "QuestLogHeaderTemplate");
+	self.campaignHeaderFramePool = CreateFramePool("FRAME", contentsFrame, "CampaignHeaderTemplate");
+	self.campaignHeaderMinimalFramePool = CreateFramePool("BUTTON", contentsFrame, "CampaignHeaderMinimalTemplate");
+	self.covenantCallingsHeaderFramePool = CreateFramePool("BUTTON", contentsFrame, "CovenantCallingsHeaderTemplate");
+	self.CampaignTooltip = CreateFrame("Frame", nil, UIParent, "CampaignTooltipTemplate");
+
+	self.SearchBox.Instructions:SetText(SEARCH_QUEST_LOG);
+
+	EventRegistry:RegisterCallback("MapCanvas.QuestPin.OnEnter", self.OnMapCanvasPinEnter, self);
+	EventRegistry:RegisterCallback("MapCanvas.QuestPin.OnLeave", self.OnMapCanvasPinLeave, self);
+end
+]]
 
 
-
-
- 
 
 
 
@@ -209,3 +239,6 @@ LimitedCategoryData = nil
 ActivitiesCategoryData = nil
 MovementCategoryData = nil
 MapLegendData = nil
+
+
+

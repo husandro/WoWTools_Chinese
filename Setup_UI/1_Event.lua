@@ -937,11 +937,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_PetBattleUI()
         end
         self:SetLabel(frame.Label)
     end)
+
 end
-
-
-
-
 
 
 

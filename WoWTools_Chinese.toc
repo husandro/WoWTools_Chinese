@@ -48,7 +48,8 @@ Data\Faction_Data_Friend.lua
 ##货币
 Data\Currency_Data.lua
 
-
+##战役，章节
+Data\CampaignChapter.lua
 
 
 

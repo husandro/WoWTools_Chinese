@@ -419,7 +419,6 @@ end
 
 
 --试衣间
-
 WoWTools_ChineseMixin:HookLabel(DressUpFrameOutfitDropdown.Text)
 DressUpFrameTitleText:SetText('试衣间')
 DressUpFrame.LinkButton:SetText('外观方案链接')
@@ -503,8 +502,10 @@ hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'RefreshAppearanceTooltip', functi
     GameTooltip:Show()
 end)
 
-
-hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'SetDetails', function(self, transmogID, icon, name, useSmallIcon, slotState, isHiddenVisual)
-    print(name, WoWTools_ChineseMixin:CN(name))
-end)
 ]]
+hooksecurefunc(DressUpOutfitDetailsSlotMixin, 'SetDetails', function(self, _, _, name)
+    local cn= WoWTools_ChineseMixin:SetText(name) or WoWTools_ChineseMixin:GetItemName(self.item and self.item.itemID)
+    if cn then
+        self.Name:SetText(cn)
+    end
+end)
