@@ -399,7 +399,14 @@ hooksecurefunc('CompactRaidFrameManager_UpdateLabel', function()
     CompactRaidFrameManager.displayFrame.label:SetText(IsInRaid() and '团员' or '队员')
 end)
 --WoWTools_ChineseMixin:SetLabel(parentBottomButtonsLeavePartyButton)
-parentBottomButtonsLeavePartyButton:SetText('离开队伍')
+if parentBottomButtonsLeavePartyButton then--11.2没有了
+    parentBottomButtonsLeavePartyButton:SetText('离开队伍')
+else
+    WoWTools_ChineseMixin:SetLabel(CompactRaidFrameManagerDisplayFrame.RestrictPingsLabel)
+    WoWTools_ChineseMixin:SetLabel(CompactRaidFrameManagerLeavePartyButtonText)
+    WoWTools_ChineseMixin:HookButton(CompactRaidFrameManagerLeaveInstanceGroupButton)
+end
+
 --WoWTools_ChineseMixin:SetLabel(parentBottomButtonsLeaveInstanceGroupButton)
 WoWTools_ChineseMixin:HookLabel(parentBottomButtonsLeaveInstanceGroupButton)--:SetText('离开副本队伍')
 

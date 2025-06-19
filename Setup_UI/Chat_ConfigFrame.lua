@@ -1,6 +1,5 @@
 
 
-
 ChatConfigCombatSettings:HookScript('OnShow', function()
     for index, value in pairs(COMBAT_CONFIG_TABS) do--ChatConfigCombat_OnLoad()
         local tab = _G[CHAT_CONFIG_COMBAT_TAB_NAME..index]
@@ -90,7 +89,7 @@ hooksecurefunc('ChatConfigCombat_InitButton', function(button)
     WoWTools_ChineseMixin:SetLabel(button.NormalText)
 end)
 
-hooksecurefunc(ChatWindowTabMixin, 'SetChatWindowIndex', function(self, chatWindowIndex)
+hooksecurefunc(ChatWindowTabMixin, 'SetChatWindowIndex', function(frame, chatWindowIndex)
     local text
     if chatWindowIndex ~= VOICE_WINDOW_ID then
         local chatTab = _G["ChatFrame"..chatWindowIndex.."Tab"]
@@ -99,8 +98,8 @@ hooksecurefunc(ChatWindowTabMixin, 'SetChatWindowIndex', function(self, chatWind
         text= '文本转语音'
     end
     if text then
-        self.Text:SetText(text)
-        PanelTemplates_TabResize(self, 0)
+        frame.Text:SetText(text)
+        PanelTemplates_TabResize(frame, 0)
     end
 end)
 
@@ -189,21 +188,36 @@ ChatConfigCombatSettingsFiltersAddFilterButton:SetText('添加')
 ChatConfigCombatSettingsFiltersDeleteButton:SetText('删除')
 CombatConfigSettingsSaveButton:SetText('保存')
 
-TextToSpeechFramePlaySampleAlternateButton:SetText('播放样本')
-TextToSpeechFramePlaySampleButton:SetText('播放样本')
+if TextToSpeechFramePlaySampleAlternateButton then--11.2 没有了
+    TextToSpeechFramePlaySampleAlternateButton:SetText('播放样本')
+    TextToSpeechFramePlaySampleButton:SetText('播放样本')
+    TextToSpeechFrameTtsVoiceDropdownLabel:SetText('语音设置"')
+    TextToSpeechFrameTtsVoiceDropdownMoreVoicesLabel:SetText('更多信息请查阅|cff00aaff|HurlIndex:56|h支持页面|h|r')
+    TextToSpeechFrameAdjustRateSliderLabel:SetText('调节讲话速度')
+    TextToSpeechFrameAdjustVolumeSliderLabel:SetText('音量')
+    TextToSpeechFrameAdjustRateSliderLow:SetText('慢')
+    TextToSpeechFrameAdjustRateSliderHigh:SetText('快')
+
+else
+    WoWTools_ChineseMixin:SetButton(TextToSpeechFramePanelContainer.PlaySampleButton)
+    WoWTools_ChineseMixin:SetButton(TextToSpeechFramePanelContainer.PlaySampleAlternateButton)
+    WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainer.VoiceOptionsLabel)
+    WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainer.MoreVoicesURLContainer.Text)
+    WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainer.AdjustRateSlider.Text)
+    WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainer.AdjustRateSlider.Low)
+    WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainer.AdjustRateSlider.High)
+    WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainer.UseAlternateVoiceForSystemMessagesCheckButton.text)
+    WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainer.AdjustVolumeSlider.Text)
+end
 
 TextToSpeechFramePanelContainer.PlaySoundSeparatingChatLinesCheckButton.text:SetText('每条新信息之间播放声音')
 TextToSpeechFramePanelContainer.PlayActivitySoundWhenNotFocusedCheckButton.text:SetText('某个聊天窗口有活动，而且不是当前焦点窗口时，播放一个音效')
 TextToSpeechFramePanelContainer.AddCharacterNameToSpeechCheckButton.text:SetText('在语音中添加<角色名说>')
 TextToSpeechFramePanelContainer.NarrateMyMessagesCheckButton.text:SetText('大声朗读我自己的信息')
-TextToSpeechFrameTtsVoiceDropdownLabel:SetText('语音设置"')
-TextToSpeechFrameTtsVoiceDropdownMoreVoicesLabel:SetText('更多信息请查阅|cff00aaff|HurlIndex:56|h支持页面|h|r')
-TextToSpeechFramePanelContainerText:SetText('使用另一个声音来朗读系统信息')
-TextToSpeechFrameAdjustRateSliderLabel:SetText('调节讲话速度')
-TextToSpeechFrameAdjustVolumeSliderLabel:SetText('音量')
+
+WoWTools_ChineseMixin:SetLabel(ChatConfigTextToSpeechMessageSettingsSubTitle)
+WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainerText)--使用另一个声音来朗读系统信息
 ChatConfigTextToSpeechMessageSettingsSubTitle:SetText('对特定信息开启文字转语音')
-TextToSpeechFrameAdjustRateSliderLow:SetText('慢')
-TextToSpeechFrameAdjustRateSliderHigh:SetText('快')
 
 TextToSpeechButton:HookScript('OnEnter', function()--TextToSpeech.lua
     GameTooltip_SetTitle(GameTooltip, '文字转语音选项')

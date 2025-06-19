@@ -53,9 +53,19 @@ hooksecurefunc(CurrencyTransferMenu, 'RefreshMenuTitle', function(self)
     end
     self:SetTitle(format('转移货币 - %s', name or ""));
 end)
---CurrencyTransferMenu:SetTitle('转移货币')
-CurrencyTransferMenu.SourceSelector.SourceLabel:SetText('寄送人')
-CurrencyTransferMenu.AmountSelector.TransferAmountLabel:SetText('转移量')
+
+if CurrencyTransferMenu.SourceSelector then--11.2 没了
+    CurrencyTransferMenu.SourceSelector.SourceLabel:SetText('寄送人')
+    CurrencyTransferMenu.AmountSelector.TransferAmountLabel:SetText('转移量')
+    CurrencyTransferMenu.ConfirmButton:SetText('转移')
+    CurrencyTransferMenu.CancelButton:SetText('取消')
+else
+    WoWTools_ChineseMixin:SetLabel(CurrencyTransferMenu.Content.SourceSelector.SourceLabel)
+    WoWTools_ChineseMixin:SetLabel(CurrencyTransferMenu.Content.AmountSelector.TransferAmountLabel)
+    WoWTools_ChineseMixin:SetButton(CurrencyTransferMenu.Content.AmountSelector.MaxQuantityButton)
+    WoWTools_ChineseMixin:SetButton(CurrencyTransferMenu.Content.ConfirmButton)
+    WoWTools_ChineseMixin:SetButton(CurrencyTransferMenu.Content.CancelButton)
+end
 
 --[[hooksecurefunc(CurrencyTransferMenu.SourceBalancePreview, 'SetCharacterName', function(self, characterName)
     self.Label:SetFormattedText('%s |cnRED_FONT_COLOR:的新余额|r' , characterName or "")
@@ -64,8 +74,7 @@ hooksecurefunc(CurrencyTransferMenu.PlayerBalancePreview, 'SetCharacterName', fu
     self.Label:SetFormattedText('%s |cnGREEN_FONT_COLOR:的新余额|r' , characterName or "")
 end)]]
 
-CurrencyTransferMenu.ConfirmButton:SetText('转移')
-CurrencyTransferMenu.CancelButton:SetText('取消')
+
 
 WoWTools_ChineseMixin:SetLabel(CurrencyTransferLogTitleText)
 WoWTools_ChineseMixin:SetLabel(CurrencyTransferLog.EmptyLogMessage)

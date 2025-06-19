@@ -35,6 +35,8 @@ FriendsFrameTab1:SetText('好友')
     FriendsFrameBattlenetFrame.BroadcastFrame.UpdateButton:SetText('更新')
     FriendsFrameBattlenetFrame.BroadcastFrame.CancelButton:SetText('取消')
     FriendsFrameAddFriendButton:SetText('添加好友')
+--添加好友
+    if AddFriendEntryFrameTopTitle then--11.2没了
         AddFriendEntryFrameTopTitle:SetText('添加好友')
         AddFriendEntryFrameOrLabel:SetText('或')
         hooksecurefunc('AddFriendFrame_ShowEntry', function()
@@ -65,6 +67,19 @@ FriendsFrameTab1:SetText('好友')
         AddFriendNameEditBox:ClearAllPoints()--移动，输入框
         AddFriendNameEditBox:SetPoint('BOTTOMLEFT', AddFriendEntryFrameAcceptButton, 'TOPLEFT', 0, 4)
         AddFriendInfoFrameContinueButton:SetText('继续')
+    else
+        WoWTools_ChineseMixin:SetLabel(AddFriendInfoFrame.InfoContainer.LeftTextContainer.Description)
+        WoWTools_ChineseMixin:SetLabel(AddFriendInfoFrame.InfoContainer.RightTextContainer.Description)
+        WoWTools_ChineseMixin:SetButton(AddFriendInfoFrame.ContinueButton)
+
+        WoWTools_ChineseMixin:SetLabel(AddFriendEntryFrame.TitleContainer.Title)
+        WoWTools_ChineseMixin:HookLabel(AddFriendNameEditBoxFill)
+        WoWTools_ChineseMixin:HookLabel(AddFriendEntryFrame.OptionsContainer.LeftTextContainer.Description)
+        WoWTools_ChineseMixin:HookLabel(AddFriendEntryFrame.OptionsContainer.RightTextContainer.Description)
+        WoWTools_ChineseMixin:HookButton(AddFriendEntryFrameAcceptButton)
+        WoWTools_ChineseMixin:SetLabel(AddFriendEntryFrameCancelButtonText)
+    end
+        
 
     FriendsTabHeaderTab1:SetText('好友')
     FriendsTabHeaderTab2:SetText('屏蔽')
@@ -235,6 +250,11 @@ WhoFrameWhoButton:SetText('刷新')
 WhoFrameAddFriendButton:SetText('添加好友')
 WhoFrameGroupInviteButton:SetText('组队邀请')
 
+if WhoFrameEditBox then--11.2
+    WoWTools_ChineseMixin:SetLabel(WhoFrameEditBox.Instructions)
+    WoWTools_ChineseMixin:SetLabel(WhoFrameDropdown.Text)
+end
+
 
 
 
@@ -333,7 +353,13 @@ hooksecurefunc('RaidFrame_OnShow', function(self)
 end)
 RaidInfoCancelButton:SetText('关闭')
 RaidFrameConvertToRaidButton:SetText('转化为团队')
-RaidFrameRaidDescription:SetText('团队是超过5个人的队伍，这是为了击败高等级的特定挑战而准备的大型队伍模式。\n\n|cffffffff- 团队成员无法获得非团队任务所需的物品或者杀死怪物的纪录。\n\n- 在团队中，你通过杀死怪物获得的经验值相对普通小队要少。\n\n- 团队让你可以赢得用其它方法根本无法通过的挑战。|r')
+
+if RaidFrameRaidDescription then--11.2
+    WoWTools_ChineseMixin:SetLabel(RaidFrameRaidDescription or RaidFrameNotInRaid.ScrollingDescription)
+else
+    WoWTools_ChineseMixin:HookLabel(RaidFrameNotInRaid.ScrollingDescription)
+end
+
 
 
 
