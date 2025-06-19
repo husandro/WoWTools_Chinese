@@ -355,9 +355,9 @@ RaidInfoCancelButton:SetText('关闭')
 RaidFrameConvertToRaidButton:SetText('转化为团队')
 
 if RaidFrameRaidDescription then--11.2
-    WoWTools_ChineseMixin:SetLabel(RaidFrameRaidDescription or RaidFrameNotInRaid.ScrollingDescription)
+    WoWTools_ChineseMixin:SetLabel(RaidFrameRaidDescription)
 else
-    WoWTools_ChineseMixin:HookLabel(RaidFrameNotInRaid.ScrollingDescription)
+    RaidFrameNotInRaid.ScrollingDescription:SetText('团队是超过5个人的队伍，这是为了击败高等级的特定挑战而准备的大型队伍模式。\n\n|cffffffff- 团队成员无法获得非团队任务所需的物品或者杀死怪物的纪录。\n\n- 在团队中，你通过杀死怪物获得的经验值相对普通小队要少。\n\n- 团队让你可以赢得用其它方法根本无法通过的挑战。|r')
 end
 
 

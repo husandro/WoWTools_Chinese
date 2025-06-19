@@ -178,7 +178,9 @@ CombatConfigSettingsPartyText:SetText('小队')
 CombatConfigSettingsRaidText:SetText('团队')
 
 ChatConfigFrameDefaultButton:SetText('聊天默认')
-ChatConfigFrameRedockButton:SetText('重置聊天窗口位置')
+
+WoWTools_ChineseMixin:SetButton(ChatConfigFrameRedockButton, nil, nil, nil, true)--:SetText('重置聊天窗口位置')
+
 ChatConfigFrameOkayButton:SetText('确定')
 CombatLogDefaultButton:SetText('战斗记录默认')
 TextToSpeechDefaultButton:SetText('文字转语音默认设置')

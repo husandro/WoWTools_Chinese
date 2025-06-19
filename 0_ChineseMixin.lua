@@ -361,14 +361,21 @@ function WoWTools_ChineseMixin:SetLabel(label, text, affer, setFont)
     end
 end
 
-function WoWTools_ChineseMixin:SetButton(btn, text, affer, setFont)
+function WoWTools_ChineseMixin:SetButton(btn, text, affer, setFont, isRestWidth)
+    local label, find
     if btn and not btn.hook_chinese then
-        local label= btn:GetFontString()
+        label= btn:GetFontString() or btn.Text or btn.text
         if label then
             self:SetLabel(label, text, affer, setFont)
+            find=true
         elseif btn.GetText and btn.SetText then
             self:SetLabel(btn, text, affer, setFont)
+            find=true
         end
+    end
+    if find and isRestWidth and label then
+        local s= math.max(label:GetStringWidth()+40, btn:GetWidth())
+        btn:SetWidth(s)
     end
 end
 

@@ -217,6 +217,8 @@
         --set(ClubFinderFilterDropdown.Label, '过滤器')
         --set(ClubFinderSortByDropdown.Label, '排序')
         --WoWTools_ChineseMixin:SetLabel(ClubFinderSizeDropdown.Label)
+        WoWTools_ChineseMixin:SetLabel(ClubFinderCommunityAndGuildFinderFrame.OptionsList.ClubFilterDropdown.Label)
+        WoWTools_ChineseMixin:SetLabel(ClubFinderCommunityAndGuildFinderFrame.OptionsList.SortByDropdown.Label)
         ClubFinderCommunityAndGuildFinderFrame.OptionsList.Search:SetText('搜索')
         ClubFinderGuildFinderFrame.OptionsList.Search:SetText('搜索')
         hooksecurefunc(ClubFinderCommunityAndGuildFinderFrame, 'UpdateType', function(self)-- ClubFinderGuildAndCommunityMixin:UpdateType()
@@ -481,3 +483,10 @@ end)]]
 CommunitiesFrame.MemberList.ColumnDisplay:HookScript('OnShow', function(frame)
     WoWTools_ChineseMixin:SetFrames(frame)
 end)
+
+
+
+
+
+
+WoWTools_ChineseMixin:SetLabel(CommunitiesFrame.StreamDropdown.Text)
