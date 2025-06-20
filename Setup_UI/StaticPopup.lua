@@ -31,7 +31,7 @@ end
 
 
 
-hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
+--[[hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
     local info = StaticPopupDialogs[which];
     if not info then
         return
@@ -178,7 +178,7 @@ hooksecurefunc('StaticPopup_Show', function(which, text_arg1, text_arg2, data)
 
 	StaticPopup_Resize(dialog, which)
 end)
-
+]]
 
 
 
