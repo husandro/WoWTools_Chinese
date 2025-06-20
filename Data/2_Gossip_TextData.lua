@@ -1,6 +1,5 @@
 --插件 WoWTools 对话替换数据
 WoWTools_ChineseMixin_GossipTextData_Tabs={
-
 [27998]={icon=nil, name="拍卖行", hex=nil},
 [27999]={icon=nil, name="铁炉堡银行", hex=nil},
 [28000]={icon=nil, name="其他大陆", hex=nil},
@@ -344,6 +343,7 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [120910]={icon=nil, name="告诉我可以飞到哪里去。", hex=nil},
 [120914]={icon=nil, name="将这座旅店设为你的家。", hex=nil},
 [121503]={icon=nil, name="我想要看看你卖的货物。", hex=nil},
+[122661]={icon=nil, name="<查看物品和修理装备。>", hex=nil},
 [122782]={icon="Vehicle-SilvershardMines-Arrow", name="物品升级", hex=nil},
 [122783]={icon="poi-transmogrifier", name="幻化师", hex=nil},
 [122784]={icon="WildBattlePet-Tracker", name="兽栏管理员", hex=nil},
@@ -380,8 +380,10 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [124502]={icon=nil, name="跟我说说工匠商盟。", hex=nil},
 [124504]={icon=nil, name="跟我说说制造订单。", hex=nil},
 [125297]={icon=nil, name="请告诉我更高难度的地下堡中能找到什么全新的宝藏。", hex=nil},
+[125466]={icon=nil, name="<示意你的伙伴到你的位置集合。>", hex=nil},
 [131429]={icon=nil, name="你怎么当上船团的军需官了？", hex=nil},
 [131430]={icon=nil, name="我要的东西你弄来了吗？", hex=nil},
+[131677]={icon=nil, name="<查看伙伴补给。>", hex=nil},
 [132483]={icon=nil, name="给我看看钥石和珍玩！", hex=nil},
 [132484]={icon=nil, name="塔克-雷桑深渊", hex=nil},
 [132485]={icon=nil, name="幽暗要塞", hex=nil},
@@ -403,6 +405,8 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [133138]={icon=nil, name="传奇故事漫游", hex=nil},
 [133139]={icon=nil, name="传奇故事漫游", hex=nil},
 [133151]={icon=nil, name="游学者是什么人？为什么会来到这座城？", hex=nil},
+[134417]={icon=nil, name="<查看伙伴补给。>", hex=nil},
+
 
 
 
