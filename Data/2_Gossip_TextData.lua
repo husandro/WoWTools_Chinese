@@ -1,5 +1,11 @@
 --插件 WoWTools 对话替换数据
 WoWTools_ChineseMixin_GossipTextData_Tabs={
+
+
+
+
+
+
 [27998]={icon=nil, name="拍卖行", hex=nil},
 [27999]={icon=nil, name="铁炉堡银行", hex=nil},
 [28000]={icon=nil, name="其他大陆", hex=nil},
@@ -286,6 +292,11 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [48501]={icon=nil, name="银行", hex=nil},
 [49022]={icon=nil, name="你能让我看看这场战争之前的黑海岸是什么样吗？", hex=nil},
 [49023]={icon=nil, name="这里发生了什么？", hex=nil},
+[53056]={icon=nil, name="我需要帮忙。（冷却时间1小时）", hex=nil},
+[53057]={icon=nil, name="我有个特殊需求。（冷却时间4小时）", hex=nil},
+[53058]={icon=nil, name="告诉我的朋友他们有多棒！（冷却时间1天）", hex=nil},
+[53059]={icon=nil, name="你能为我演唱一曲吗？", hex=nil},
+[53064]={icon=nil, name="谢谢你。再见！", hex=nil},
 [53423]={icon=nil, name="飞地", hex=nil},
 [53424]={icon=nil, name="幻化", hex=nil},
 [53425]={icon=nil, name="银行", hex=nil},
@@ -376,11 +387,13 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [123525]={icon=nil, name="我该如何获取附魔卷轴？", hex=nil},
 [123745]={icon=nil, name="什么是地下堡？什么是地下堡行者总部？", hex=nil},
 [123984]={icon="trading-post-minimap-icon", name="商栈", hex=nil},
+[124311]={icon=nil, name="（游学探奇）你能讲什么故事？", hex=nil},
 [124426]={icon="gficon-chest-evergreen-greatvault-collect", name="宏伟宝库", hex=nil},
 [124502]={icon=nil, name="跟我说说工匠商盟。", hex=nil},
 [124504]={icon=nil, name="跟我说说制造订单。", hex=nil},
 [125297]={icon=nil, name="请告诉我更高难度的地下堡中能找到什么全新的宝藏。", hex=nil},
 [125466]={icon=nil, name="<示意你的伙伴到你的位置集合。>", hex=nil},
+[125563]={icon=nil, name="什么是游学探奇？", hex=nil},
 [131429]={icon=nil, name="你怎么当上船团的军需官了？", hex=nil},
 [131430]={icon=nil, name="我要的东西你弄来了吗？", hex=nil},
 [131677]={icon=nil, name="<查看伙伴补给。>", hex=nil},
@@ -406,11 +419,6 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [133139]={icon=nil, name="传奇故事漫游", hex=nil},
 [133151]={icon=nil, name="游学者是什么人？为什么会来到这座城？", hex=nil},
 [134417]={icon=nil, name="<查看伙伴补给。>", hex=nil},
-
-
-
-
-
 
 
 
