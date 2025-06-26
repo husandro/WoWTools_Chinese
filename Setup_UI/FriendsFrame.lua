@@ -226,6 +226,13 @@ FriendsFrameTab1:SetText('好友')
 
         WoWTools_ChineseMixin:SetLabel(FriendsFriendsFrame.SendRequestButton)
         WoWTools_ChineseMixin:SetLabel(FriendsFriendsFrame.CloseButton)
+
+        hooksecurefunc('FriendsFriendsFrame_Show', function()
+            local accountInfo = C_BattleNet.GetAccountInfoByID(bnetIDAccount);
+            if accountInfo then
+                FriendsFriendsFrameTitle:SetFormattedText('%s的好友', FRIENDS_BNET_NAME_COLOR_CODE..accountInfo.accountName..FONT_COLOR_CODE_CLOSE);
+            end
+        end)
         
 
         
