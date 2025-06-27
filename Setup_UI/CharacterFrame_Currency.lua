@@ -1,15 +1,7 @@
 
 
-hooksecurefunc(TokenFrame.ScrollBox, 'Update', function(f)
-    if not f:GetView() then
-        return
-    end
-    for _, frame in pairs(f:GetFrames() or {}) do
-
-    end
-end)
 hooksecurefunc(TokenHeaderMixin, 'Initialize', function(self)
-        if self.elementData.name then
+    if self.elementData.name then
         local name= WoWTools_ChineseMixin:CN(self.elementData.name)
         if name then
             self.Name:SetText(name)
