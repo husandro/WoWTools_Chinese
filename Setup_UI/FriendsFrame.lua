@@ -6,8 +6,10 @@
 
 
 
-
-
+--屏蔽列表
+hooksecurefunc('IgnoreList_Update', function()
+    WoWTools_ChineseMixin:SetLabel(IgnoreListFrameTitle)
+end)
 
 --好友
 hooksecurefunc('FriendsFrame_Update', function()
@@ -79,7 +81,7 @@ FriendsFrameTab1:SetText('好友')
         WoWTools_ChineseMixin:HookButton(AddFriendEntryFrameAcceptButton)
         WoWTools_ChineseMixin:SetLabel(AddFriendEntryFrameCancelButtonText)
     end
-        
+
 
     FriendsTabHeaderTab1:SetText('好友')
     FriendsTabHeaderTab2:SetText('屏蔽')
@@ -227,15 +229,15 @@ FriendsFrameTab1:SetText('好友')
         WoWTools_ChineseMixin:SetLabel(FriendsFriendsFrame.SendRequestButton)
         WoWTools_ChineseMixin:SetLabel(FriendsFriendsFrame.CloseButton)
 
-        hooksecurefunc('FriendsFriendsFrame_Show', function()
-            local accountInfo = C_BattleNet.GetAccountInfoByID(bnetIDAccount);
+        hooksecurefunc('FriendsFriendsFrame_Show', function(bnetIDAccount)
+            local accountInfo = C_BattleNet.GetAccountInfoByID(bnetIDAccount)
             if accountInfo then
                 FriendsFriendsFrameTitle:SetFormattedText('%s的好友', FRIENDS_BNET_NAME_COLOR_CODE..accountInfo.accountName..FONT_COLOR_CODE_CLOSE);
             end
         end)
-        
 
-        
+
+
 
 --FriendsFrame.xml
 BattleTagInviteFrame.InfoText:SetText('当他们接受你的好友请求后，就会被加入你的好友名单。')
