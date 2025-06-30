@@ -477,7 +477,6 @@ function WoWTools_ChineseMixin:SetTabButton(frame, text, isSetCNFont)
     local minW= frame:GetParent().minTabWidth
     local maxW= frame:GetParent().maxTabWidth
     
-
     if frame.GetTabSet then
         for _, tabID in pairs(frame:GetTabSet()) do
             local btn= frame:GetTabButton(tabID)
