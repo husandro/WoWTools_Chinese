@@ -1,5 +1,5 @@
 
-    
+
 
 
 
@@ -19,7 +19,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
 
 
     --目录，列表
-    hooksecurefunc('AuctionHouseFilterButton_SetUp', function(btn, info)        
+    hooksecurefunc('AuctionHouseFilterButton_SetUp', function(btn, info)
         WoWTools_ChineseMixin:SetLabel(btn, info.name)
     end)
 
@@ -66,7 +66,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     --Blizzard_AuctionHouseUI
     WoWTools_ChineseMixin:HookLabel(AuctionHouseFrame.ItemSellFrame.PriceInput.Label)--一口价
 
-    hooksecurefunc(AuctionHouseFrame.ItemSellFrame, 'SetSecondaryPriceInputEnabled', function(frame, enabled)        
+    hooksecurefunc(AuctionHouseFrame.ItemSellFrame, 'SetSecondaryPriceInputEnabled', function(frame, enabled)
         if enabled then
             frame.PriceInput:SetSubtext('|cff777777(可选)|r')--AUCTION_HOUSE_BUYOUT_OPTIONAL_LABEL
         end
@@ -201,8 +201,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     --Blizzard_AuctionHouseWoWTokenFrame.lua
     WoWTools_ChineseMixin:AddDialogs("TOKEN_NONE_FOR_SALE", {text = '目前没有可售的魔兽世界时光徽章。请稍后再来查看。', button1 = '确定'})
     WoWTools_ChineseMixin:AddDialogs("TOKEN_AUCTIONABLE_TOKEN_OWNED", {text = '你必须先将从商城购得的魔兽世界时光徽章售出后才能从拍卖行中购买新的徽章。', button1 = '确定'})
-   
-    
+
+
     hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'Update', function(frame)
         if not frame:GetView() then
             return
