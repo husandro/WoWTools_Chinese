@@ -5,7 +5,6 @@
 --[[
 [ID]= Description
 https://wago.tools/db2/JournalInstance?locale=zhCN
-11.0.5.56646
 ]]
 
 

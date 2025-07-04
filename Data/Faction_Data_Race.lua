@@ -5,7 +5,7 @@ https://wago.tools/db2/ChrRaces?locale=zhCN
 ]]
 
 local tab= {
-
+[92]= {'虚灵飞船', nil, nil},
 [90]= {'地下堡行者的地精疾行器', nil, nil},
 [87]= {'地下堡行者的飞船', nil, nil},
 [86]= {'哈籁尼尔', '哈籁尼尔', nil},

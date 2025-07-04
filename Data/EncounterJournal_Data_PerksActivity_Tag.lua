@@ -3,7 +3,6 @@
 https://warcraft.wiki.gg/wiki/API_C_PerksProgram.GetCategoryInfo
 
 https://wago.tools/db2/PerksVendorCategory?locale=zhCN
-11.0.2.55789
 ]]
 
 local categoryTab={
