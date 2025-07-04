@@ -1,13 +1,12 @@
 --[[
-没有找到源，只能手动输入，烦人
-[TraitNodeID]= {"名称", "描述"},
-https://wago.tools/db2/ProfTraitPathNode?locale=zhCN
-[TraitNodeID]
-
 https://www.wowhead.com/cn/profession-trait/81119
 ]]
 
 
+--[[
+[TraitNodeID]= {"名称", "描述"},
+https://wago.tools/db2/ProfTraitPathNode?locale=zhCN
+]]
 local tab={
 [19487]= {"药水精通", "提高制作药水和相关炼金石的能力，每有一点此专精，获得+1 技能。"},
 [19486]= {"冰霜公式药水", "提高制作以活力或觉醒之霜作为基础材料的药水的能力，每有一点此专精，获得+1 技能。"},

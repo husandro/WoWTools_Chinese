@@ -30,8 +30,8 @@ local function Init_Blizzard_PerksProgramElements()
 
         if self.data.speciesID and self.data.speciesID>0 then
             local petData= WoWTools_ChineseMixin:GetPetDesc(self.data.speciesID)
-            if petData and petData[1] then
-                desc= petData[1]..(petData[2] and '|n|n'..petData[2] or '')
+            if petData and (petData[1] or petData[2]) then
+                desc= (petData[1] or '')..(petData[2] and '|n|n'..petData[2] or '')
             end
         end
         if desc then
