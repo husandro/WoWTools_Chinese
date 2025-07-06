@@ -1,4 +1,8 @@
-GAME_LOCALE = "zhCN"
+GAME_LOCALE= "zhCN"
+--[[LOCALE_zhCN= true
+GetLocale=function()
+    return "zhCN"
+end]]
 
 WoWTools_ChineseMixin={
     Events={}
