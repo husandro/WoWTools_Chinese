@@ -195,14 +195,28 @@ end)
 WoWTools_ChineseMixin:HookDialog('GAME_SETTINGS_TIMED_CONFIRMATION', 'OnUpdate', function(self, elapsed)
     local duration = self.duration - elapsed
     local time = math.max(duration + 1, 1)
-    self.text:SetFormattedText('接受新选项？\n\n|cnGREEN_FONT_COLOR:%d|r 秒后|cnGREEN_FONT_COLOR:恢复。|r', time)
+    local t=self.text or self:GetTextFontString()
+    t:SetFormattedText('接受新选项？\n\n|cnGREEN_FONT_COLOR:%d|r 秒后|cnGREEN_FONT_COLOR:恢复。|r', time)
     StaticPopup_Resize(self, "GAME_SETTINGS_TIMED_CONFIRMATION")
 end)
 
 
 --StaticPopup.lua
-WoWTools_ChineseMixin:HookDialog("GENERIC_CONFIRMATION", 'OnShow', function(self, data)--StaticPopup.lua
-    if data.text==HUD_EDIT_MODE_DELETE_LAYOUT_DIALOG_TITLE then
+WoWTools_ChineseMixin:HookDialog("GENERIC_CONFIRMATION", 'OnShow', function(frame, data)--StaticPopup.lua
+    local cnText=  WoWTools_ChineseMixin:CN(data.text)
+    if cnText then
+        (frame.text or frame:GetTextFontString()):SetFormattedText(cnText, data.text_arg1, data.text_arg2);
+    end
+    cnText=  WoWTools_ChineseMixin:CN(data.acceptText or YES)
+    if cnText then
+        (frame.button1 or frame:GetButton1()):SetText(cnText)
+    end
+    cnText=  WoWTools_ChineseMixin:CN(data.cancelText or NO)
+    if cnText then
+        (frame.button2 or frame:GetButton2()):SetText(cnText)
+    end
+end)
+    --[[if data.text==HUD_EDIT_MODE_DELETE_LAYOUT_DIALOG_TITLE then
         self.text:SetFormattedText('你确定要删除布局|n|cnGREEN_FONT_COLOR:%s|r吗？', data.text_arg1, data.text_arg2)
 
     elseif data.text==SELL_ALL_JUNK_ITEMS_POPUP then
@@ -258,33 +272,32 @@ WoWTools_ChineseMixin:HookDialog("GENERIC_CONFIRMATION", 'OnShow', function(self
 
     elseif data.cancelText==CANCEL then
         self.button2:SetText('取消')
-    end
+    end]]
 
-end)
 
 WoWTools_ChineseMixin:HookDialog("GENERIC_INPUT_BOX", 'OnShow', function(self, data)
     if data.text==HUD_EDIT_MODE_RENAME_LAYOUT_DIALOG_TITLE then
         self.text:SetFormattedText('为布局|cnGREEN_FONT_COLOR:%s|r输入新名称', data.text_arg1, data.text_arg2)
     end
-
+    local b1= self.button1 or self:GetButton1()
     if not data.acceptText then
-        self.button1:SetText('完成')
+        b1:SetText('完成')
 
     elseif data.acceptText==OKAY then
-        self.button1:SetText('确定')
+        b1:SetText('确定')
 
     elseif data.acceptText==SAVE then
-        self.button1:SetText('保存')
+        b1:SetText('保存')
 
     elseif data.acceptText==ACCEPT then
-            self.button1:SetText('接受')
+            b1:SetText('接受')
 
     elseif data.acceptText==CONTINUE then
-        self.button1:SetText('继续')
+        b1:SetText('继续')
     end
 
     if not data.cancelText then
-        self.button2:SetText('取消')
+        (self.button2 or self:GetButton2()):SetText('取消')
     end
 end)
 
@@ -307,12 +320,12 @@ WoWTools_ChineseMixin:AddDialogs("CONFIRM_DELETE_EQUIPMENT_SET", {text = '你确
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_GLYPH_PLACEMENT",{button1 = '是', button2 = '否'})
 
 WoWTools_ChineseMixin:HookDialog("CONFIRM_GLYPH_PLACEMENT", 'OnShow', function(self)
-    self.text:SetFormattedText('你确定要使用|cnGREEN_FONT_COLOR:%s|r铭文吗？这将取代|cnGREEN_FONT_COLOR:%s|r。', self.data.name, self.data.currentName)
+    (self.text or self:GetTextFontString()):SetFormattedText('你确定要使用|cnGREEN_FONT_COLOR:%s|r铭文吗？这将取代|cnGREEN_FONT_COLOR:%s|r。', self.data.name, self.data.currentName)
 end)
 
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_GLYPH_REMOVAL",{button1 = '是', button2 = '否'})
 WoWTools_ChineseMixin:HookDialog("CONFIRM_GLYPH_REMOVAL", 'OnShow', function(self)
-    self.text:SetFormattedText('你确定要移除|cnGREEN_FONT_COLOR:%s|r吗？', self.data.name)
+    (self.text or self:GetTextFontString()):SetFormattedText('你确定要移除|cnGREEN_FONT_COLOR:%s|r吗？', self.data.name)
 end)
 
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_RESET_TEXTTOSPEECH_SETTINGS", {text = '确定将所有文字转语音设定重置为默认值吗？', button1 = '接受', button2 = '取消'})
@@ -323,9 +336,9 @@ WoWTools_ChineseMixin:AddDialogs("CONFIRM_PURCHASE_NONREFUNDABLE_ITEM", {text = 
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_UPGRADE_ITEM", {button1 = '是', button2 = '否'})
 WoWTools_ChineseMixin:HookDialog("CONFIRM_UPGRADE_ITEM", 'OnShow', function(self, data)
     if data.isItemBound then
-        self.text:SetFormattedText('你确定要花费|cnGREEN_FONT_COLOR:%s|r升级下列物品吗？', data.costString)
+        (self.text or self:GetTextFontString()):SetFormattedText('你确定要花费|cnGREEN_FONT_COLOR:%s|r升级下列物品吗？', data.costString)
     else
-        self.text:SetFormattedText('你确定要花费|cnGREEN_FONT_COLOR:%s|r升级下列物品吗？升级会将该物品变成灵魂绑定物品。', data.costString)
+        (self.text or self:GetTextFontString()):SetFormattedText('你确定要花费|cnGREEN_FONT_COLOR:%s|r升级下列物品吗？升级会将该物品变成灵魂绑定物品。', data.costString)
     end
 end)
 
@@ -423,9 +436,9 @@ WoWTools_ChineseMixin:AddDialogs("SET_COMMUNITY_MEMBER_NOTE", {text = '为%s设�
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_REMOVE_COMMUNITY_MEMBER", {text = '你确定要将%s从群组中移除吗？', button1 = '是', button2 = '否'})
 WoWTools_ChineseMixin:HookDialog("CONFIRM_REMOVE_COMMUNITY_MEMBER", 'OnShow', function(self, data)
     if data.clubType == Enum.ClubType.Character then
-        self.text:SetFormattedText('你确定要将%s从社区中移除吗？', data.name)
+        (self.text or self:GetTextFontString()):SetFormattedText('你确定要将%s从社区中移除吗？', data.name)
     else
-        self.text:SetFormattedText('你确定要将%s从群组中移除吗？', data.name)
+        (self.text or self:GetTextFontString()):SetFormattedText('你确定要将%s从群组中移除吗？', data.name)
     end
 end)
 
@@ -434,17 +447,17 @@ WoWTools_ChineseMixin:AddDialogs("CONFIRM_DESTROY_COMMUNITY_STREAM", {text = '�
 WoWTools_ChineseMixin:HookDialog("CONFIRM_DESTROY_COMMUNITY_STREAM", 'OnShow', function(self, data)
     local streamInfo = C_Club.GetStreamInfo(data.clubId, data.streamId)
     if streamInfo then
-        self.text:SetFormattedText('你确定要删除频道%s吗', streamInfo.name)
+        (self.text or self:GetTextFontString()):SetFormattedText('你确定要删除频道%s吗', streamInfo.name)
     end
 end)
 
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_LEAVE_AND_DESTROY_COMMUNITY", {text = '确定要退出并删除群组吗？', subText = '退出后群组会被删除。你确定要删除群组吗？此操作无法撤销。', button1 = '接受', button2 = '取消'})
 WoWTools_ChineseMixin:HookDialog("CONFIRM_LEAVE_AND_DESTROY_COMMUNITY", 'OnShow', function(self, clubInfo)
     if clubInfo.clubType == Enum.ClubType.Character then
-        self.text:SetText('确定要退出并删除社区吗？')
+        (self.text or self:GetTextFontString()):SetText('确定要退出并删除社区吗？')
         self.SubText:SetText('退出后社区会被删除。你确定要删除社区吗？此操作无法撤销。')
     else
-        self.text:SetText('确定要退出并删除群组吗？')
+        (self.text or self:GetTextFontString()):SetText('确定要退出并删除群组吗？')
         self.SubText:SetText('退出后群组会被删除。你确定要删除群组吗？此操作无法撤销。')
     end
 end)
@@ -452,10 +465,10 @@ end)
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_LEAVE_COMMUNITY", {text = '退出群组？', subText = '你确定要退出%s吗？', button1 = '接受', button2 = '取消'})
 WoWTools_ChineseMixin:HookDialog("CONFIRM_LEAVE_COMMUNITY", 'OnShow', function(self, clubInfo)
     if clubInfo.clubType == Enum.ClubType.Character then
-        self.text:SetText('退出社区？')
+        (self.text or self:GetTextFontString()):SetText('退出社区？')
         self.SubText:SetFormattedText('你确定要退出%s吗？', clubInfo.name)
     else
-        self.text:SetText('退出群组？')
+        (self.text or self:GetTextFontString()):SetText('退出群组？')
         self.SubText:SetFormattedText('你确定要退出%s吗？', clubInfo.name)
     end
 end)
@@ -463,9 +476,9 @@ end)
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_DESTROY_COMMUNITY", {button1 = '接受', button2 = '取消'})
 WoWTools_ChineseMixin:HookDialog("CONFIRM_DESTROY_COMMUNITY", 'OnShow', function(self, clubInfo)
     if clubInfo.clubType == Enum.ClubType.BattleNet then
-        self.text:SetFormattedText('你确定要删除群组\"%s\"吗？此操作无法撤销。|n|n请在输入框中输入\"'..COMMUNITIES_DELETE_CONFIRM_STRING ..'\"以确认。', clubInfo.name)
+        (self.text or self:GetTextFontString()):SetFormattedText('你确定要删除群组\"%s\"吗？此操作无法撤销。|n|n请在输入框中输入\"'..COMMUNITIES_DELETE_CONFIRM_STRING ..'\"以确认。', clubInfo.name)
     else
-        self.text:SetFormattedText('你确定要删除社区\"%s\"吗？此操作无法撤销。|n|n请在输入框中输入\"'..COMMUNITIES_DELETE_CONFIRM_STRING ..'\"以确认。', clubInfo.name)
+        (self.text or self:GetTextFontString()):SetFormattedText('你确定要删除社区\"%s\"吗？此操作无法撤销。|n|n请在输入框中输入\"'..COMMUNITIES_DELETE_CONFIRM_STRING ..'\"以确认。', clubInfo.name)
     end
 end)
 
@@ -477,7 +490,7 @@ WoWTools_ChineseMixin:AddDialogs("LFG_LIST_AUTO_ACCEPT_CONVERT_TO_RAID", {text =
 WoWTools_ChineseMixin:AddDialogs("REMOVE_GUILDMEMBER", {text = format('确定想要从公会中移除%s吗？', "XXX"), button1 = '是', button2 = '否'})
 WoWTools_ChineseMixin:HookDialog("REMOVE_GUILDMEMBER", 'OnShow', function(self, data)
     if data then
-        self.text:SetFormattedText('你确定想要从公会中移除%s吗？', data.name)
+        (self.text or self:GetTextFontString()):SetFormattedText('你确定想要从公会中移除%s吗？', data.name)
     end
 end)
 
@@ -487,7 +500,7 @@ WoWTools_ChineseMixin:AddDialogs("SET_GUILDOFFICERNOTE", {text = '设置公会�
 WoWTools_ChineseMixin:AddDialogs("SET_GUILD_COMMUNITIY_NOTE", {text = '设置玩家信息', button1 = '接受', button2 = '取消'})
 WoWTools_ChineseMixin:HookDialog("SET_GUILD_COMMUNITIY_NOTE", 'OnShow', function(self, data)
     if data then
-        self.text:SetText(data.isPublic and '设置玩家信息' or '设置公会官员信息')
+        (self.text or self:GetTextFontString()):SetText(data.isPublic and '设置玩家信息' or '设置公会官员信息')
     end
 end)
 
@@ -548,13 +561,14 @@ WoWTools_ChineseMixin:AddDialogs("WEB_PROXY_FAILED", {text = '在配置浏览器
 WoWTools_ChineseMixin:AddDialogs("WEB_ERROR", {text = '错误：%d|n浏览器无法完成你的请求。请重试。', button1 = '确定'})
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_REMOVE_FRIEND", {button1 = '接受', button2 = '取消'})
 WoWTools_ChineseMixin:HookDialog("CONFIRM_REMOVE_FRIEND", 'OnShow', function(self)
-    local text= self.text:GetText() or ''
+    local t= self.text or self:GetTextFontString()
+    local text= t:GetText() or ''
     local name= text:match(WoWTools_ChineseMixin:Magic(BATTLETAG_REMOVE_FRIEND_CONFIRMATION))
     local name2= text:match(WoWTools_ChineseMixin:Magic(REMOVE_FRIEND_CONFIRMATION))
     if name then
-        self.text:SetFormattedText('你确定要将  |cnRED_FONT_COLOR:%s|r 移出|cff82c5ff战网昵称|r好友名单吗？', name)
+        t:SetFormattedText('你确定要将  |cnRED_FONT_COLOR:%s|r 移出|cff82c5ff战网昵称|r好友名单吗？', name)
     elseif name2 then
-        self.text:SetFormattedText('你确定要将 |cnRED_FONT_COLOR:%s|r 移出|cnGREEN_FONT_COLOR:实名|r好友名单？', name2)
+        t:SetFormattedText('你确定要将 |cnRED_FONT_COLOR:%s|r 移出|cnGREEN_FONT_COLOR:实名|r好友名单？', name2)
     end
 end)
 WoWTools_ChineseMixin:AddDialogs("PICKUP_MONEY", {text = '提取总额', button1 = '接受', button2 = '取消'})
@@ -570,38 +584,39 @@ WoWTools_ChineseMixin:AddDialogs("CONFIRM_LAUNCH_URL", {text = '点击“确定�
 
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_LEAVE_INSTANCE_PARTY", {button1 = '是', button2 = '取消'})
 StaticPopupDialogs["CONFIRM_LEAVE_INSTANCE_PARTY"].OnShow= function(self)
-    local text= self.text:GetText()
+    local text= (self.text or self:GetTextFontString()):GetText()
     if text== CONFIRM_LEAVE_BATTLEFIELD then
-        self.text:SetText('确定要离开战场吗？')
+        (self.text or self:GetTextFontString()):SetText('确定要离开战场吗？')
     elseif text== CONFIRM_LEAVE_INSTANCE_PARTY then
-        self.text:SetText('确定要离开副本队伍吗？\n\n一旦离开队伍，你将无法返回该副本。')
+        (self.text or self:GetTextFontString()):SetText('确定要离开副本队伍吗？\n\n一旦离开队伍，你将无法返回该副本。')
     end
 end
 
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_LEAVE_BATTLEFIELD", {text = '确定要离开战场吗？', button1 = '是', button2 = '取消'})
 WoWTools_ChineseMixin:HookDialog("CONFIRM_LEAVE_BATTLEFIELD", 'OnShow', function(self)
     local ratedDeserterPenalty = C_PvP.GetPVPActiveRatedMatchDeserterPenalty()
+    local t= self.text or self:GetTextFontString()
     if ( ratedDeserterPenalty ) then
         local ratingChange = math.abs(ratedDeserterPenalty.personalRatingChange)
         local queuePenaltySpellLink, queuePenaltyDuration = C_Spell.GetSpellLink(ratedDeserterPenalty.queuePenaltySpellID), SecondsToTime(ratedDeserterPenalty.queuePenaltyDuration)
-        self.text:SetFormattedText('现在离开比赛会使你失去至少|cnORANGE_FONT_COLOR:%1$d|r点评级分数，而且你会受到%3$s的影响，持续%2$s。|n|n如果你现在离开，你将无法获得你完成的回合的荣誉或征服点数。|n|n你确定要离开比赛吗？', ratingChange, queuePenaltyDuration, queuePenaltySpellLink)
+        t:SetFormattedText('现在离开比赛会使你失去至少|cnORANGE_FONT_COLOR:%1$d|r点评级分数，而且你会受到%3$s的影响，持续%2$s。|n|n如果你现在离开，你将无法获得你完成的回合的荣誉或征服点数。|n|n你确定要离开比赛吗？', ratingChange, queuePenaltyDuration, queuePenaltySpellLink)
     elseif ( IsActiveBattlefieldArena() and not C_PvP.IsInBrawl() ) then
-        self.text:SetText('确定要离开竞技场吗？')
+        t:SetText('确定要离开竞技场吗？')
     else
-        self.text:SetText('确定要离开战场吗？')
+        t:SetText('确定要离开战场吗？')
     end
 end)
 
 WoWTools_ChineseMixin:AddDialogs("CONFIRM_SURRENDER_ARENA", {text= '放弃？', button1 = '是', button2 = '取消'})
 WoWTools_ChineseMixin:HookDialog("CONFIRM_SURRENDER_ARENA", 'OnShow', function(self)
-    self.text:SetText('放弃？')
+    (self.text or self:GetTextFontString()):SetText('放弃？')
 end)
 
 
 WoWTools_ChineseMixin:AddDialogs("SAVED_VARIABLES_TOO_LARGE", {text = '你的计算机内存不足，无法加载下列插件设置。请关闭部分插件。\n\n|cffffd200%s|r', button1 = '确定'})
 WoWTools_ChineseMixin:AddDialogs("PRODUCT_ASSIGN_TO_TARGET_FAILED", {text = '获取物品错误。请重试一次。', button1 = '确定'})
 WoWTools_ChineseMixin:HookDialog("BATTLEFIELD_BORDER_WARNING", 'OnUpdate', function(self)
-    self.text:SetFormattedText('你已经脱离了%s的战斗。\n\n为你保留的位置将在%s后失效。', self.data.name, SecondsToTime(self.timeleft, false, true))
+    (self.text or self:GetTextFontString()):SetFormattedText('你已经脱离了%s的战斗。\n\n为你保留的位置将在%s后失效。', self.data.name, SecondsToTime(self.timeleft, false, true))
 end)
 WoWTools_ChineseMixin:AddDialogs("LFG_LIST_ENTRY_EXPIRED_TOO_MANY_PLAYERS", {text = '针对此项活动，你的队伍人数已满，将被移出列表。', button1 = '确定'})
 WoWTools_ChineseMixin:AddDialogs("LFG_LIST_ENTRY_EXPIRED_TIMEOUT", {text = '你的队伍由于长期处于非活跃状态，已被移出列表。如果你还需要寻找申请者，请重新加入列表。', button1 = '确定'})
@@ -620,7 +635,7 @@ WoWTools_ChineseMixin:AddDialogs("PREMADE_GROUP_SEARCH_DELIST_WARNING", {text = 
 
 WoWTools_ChineseMixin:AddDialogs("PREMADE_GROUP_LEADER_CHANGE_DELIST_WARNING", {text = '你已经被提升为队伍领袖|TInterface\\GroupFrame\\UI-Group-LeaderIcon:0:0:0:-1|t |n|n|cffffd200你想以此队名重新列出队伍吗？|r|n%s|n', subText = '|n%s后自动从列表移除', button1 = '列出我的队伍', button2 = '我想编辑队名', button3 = '不列出我的队伍'})
 WoWTools_ChineseMixin:HookDialog("PREMADE_GROUP_LEADER_CHANGE_DELIST_WARNING", 'OnShow', function(self, data)
-    self.text:SetFormattedText('你已经被提升为队伍领袖|TInterface\\GroupFrame\\UI-Group-LeaderIcon:0:0:0:-1|t |n|n|cffffd200你想以此队名重新列出队伍吗？|r|n%s|n', data.listingTitle)
+    (self.text or self:GetTextFontString()):SetFormattedText('你已经被提升为队伍领袖|TInterface\\GroupFrame\\UI-Group-LeaderIcon:0:0:0:-1|t |n|n|cffffd200你想以此队名重新列出队伍吗？|r|n%s|n', data.listingTitle)
 end)
 
 WoWTools_ChineseMixin:AddDialogs("PREMADE_GROUP_INSECURE_SEARCH", {text= '你的队伍已被移出列表，要搜索|n%s吗？', button1 = '是', button2 = '否'})
@@ -630,12 +645,14 @@ WoWTools_ChineseMixin:AddDialogs("CLIENT_INVENTORY_FULL_OVERFLOW", {text= '你�
 
 WoWTools_ChineseMixin:AddDialogs("LEAVING_TUTORIAL_AREA", {button2 = '结束教程"'})
 WoWTools_ChineseMixin:HookDialog("LEAVING_TUTORIAL_AREA", 'OnShow', function(self)
+    local t= self.text or self:GetTextFontString()
+    local b1= self.button1 or self:GetButton1()
     if UnitFactionGroup("player") == "Horde" then
-        self.button1:SetText('返回')
-        self.text:SetText('你距离奥格瑞玛太远了。|n |n如果你继续走的话，就会脱离教程。|n |n你想返回奥格瑞玛吗？|n |n |n')
+        b1:SetText('返回')
+        t:SetText('你距离奥格瑞玛太远了。|n |n如果你继续走的话，就会脱离教程。|n |n你想返回奥格瑞玛吗？|n |n |n')
     else
-        self.button1:SetText('返回')
-        self.text:SetText('你距离暴风城太远了。|n |n如果你继续走的话，就会脱离教程。|n |n你想返回暴风城吗？|n |n |n')
+        b1:SetText('返回')
+        t:SetText('你距离暴风城太远了。|n |n如果你继续走的话，就会脱离教程。|n |n你想返回暴风城吗？|n |n |n')
     end
 end)
 
@@ -646,19 +663,21 @@ WoWTools_ChineseMixin:HookDialog("INVITE_COMMUNITY_MEMBER", 'OnShow', function(s
     local clubInfo = C_Club.GetClubInfo(data.clubId) or {}
     if clubInfo.clubType == Enum.ClubType.BattleNet then
         self.SubText:SetText('输入一位战网好友名称')
-        self.editBox.Instructions:SetText('实名好友或战网昵称')
+        local edit= self.editBox or self:GetEditBox()
+        edit.Instructions:SetText('实名好友或战网昵称')
     else
         self.SubText:SetText('输入角色名-服务器名。')
     end
-    self.button1:SetScript("OnEnter", function(self2)
+    (self.button1 or self:GetButton1()):SetScript("OnEnter", function(self2)
         if(not self2:IsEnabled()) then
             GameTooltip:SetOwner(self2, "ANCHOR_BOTTOMRIGHT")
             GameTooltip_AddColoredLine(GameTooltip, '已经达到最大人数。移除一名玩家后才能进行邀请。', RED_FONT_COLOR, true)
             GameTooltip:Show()
         end
     end)
-    if (self.extraButton) then
-        self.extraButton:SetScript("OnEnter", function(self2)
+    local extra= self.extraButton or self.ExtraButton
+    if (extra) then
+        extra:SetScript("OnEnter", function(self2)
             if(not self2:IsEnabled()) then
                 GameTooltip:SetOwner(self2, "ANCHOR_BOTTOMRIGHT")
                 GameTooltip_AddColoredLine(GameTooltip, '已经达到最大人数。移除一名玩家后才能进行邀请。', RED_FONT_COLOR, true)
@@ -687,7 +706,7 @@ WoWTools_ChineseMixin:HookDialog("RETURNING_PLAYER_PROMPT", 'OnShow', function(s
     local playerFactionGroup = UnitFactionGroup("player")
     local factionCity = playerFactionGroup and factionMajorCities[playerFactionGroup] or nil
     if factionCity then
-        self.text:SetFormattedText('我们有好一阵子没见到你了！|n|n在%s可以开始全新的冒险之旅！|n|n你希望传送到那里吗？', factionCity)
+        (self.text or self:GetTextFontString()):SetFormattedText('我们有好一阵子没见到你了！|n|n在%s可以开始全新的冒险之旅！|n|n你希望传送到那里吗？', factionCity)
     end
 end)
 

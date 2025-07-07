@@ -6,10 +6,11 @@ function WoWTools_ChineseMixin.Events:Blizzard_TrainerUI()
     WoWTools_ChineseMixin:AddDialogs("CONFIRM_PROFESSION", {text = format('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', "XXX"), button1 = '接受', button2 = '取消'})
     WoWTools_ChineseMixin:HookDialog("CONFIRM_PROFESSION", 'OnShow', function(frame)
         local prof1, prof2 = GetProfessions()
+        local t= frame.text or frame:GetTextFontString()
         if ( prof1 and not prof2 ) then
-            frame.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第二个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
+            t:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第二个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
         elseif ( not prof1 ) then
-            frame.text:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
+            t:SetFormattedText('你只能学习两个专业。你要学习|cffffd200%s|r作为你的第一个专业吗？', GetTrainerServiceSkillLine(ClassTrainerFrame.selectedService))
         end
     end)
     ClassTrainerTrainButton:SetText('训练')

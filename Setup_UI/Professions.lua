@@ -406,8 +406,9 @@ local function Init_SpecPage()
         local headerText = HIGHLIGHT_FONT_COLOR:WrapTextInColorCode(format('学习%s？', pecName).."\n\n")
         local bodyKey = info.hasAnyConfigChanges and '所有待定的改动都会在解锁此专精后进行应用。您确定要学习%s副专精吗？' or '您确定想学习%s专精吗？您将来可以在%s专业里更加精进后选择额外的专精。'
         local bodyText = NORMAL_FONT_COLOR:WrapTextInColorCode(format(bodyKey, specName, WoWTools_ChineseMixin:CN(info.profName) or info.profName))
-        self.text:SetText(headerText..bodyText)
-        self.text:Show()
+        local t= self.text or self:GetTextFontString()
+        t:SetText(headerText..bodyText)
+       StaticPopup_Resize(self, "PROFESSIONS_SPECIALIZATION_CONFIRM_PURCHASE_TAB")
     end)
     --Blizzard_ProfessionsFrame.lua
     WoWTools_ChineseMixin:AddDialogs("PROFESSIONS_SPECIALIZATION_CONFIRM_CLOSE", {text = '你想在离开前应用改动吗？', button1 = '是', button2 = '否',})

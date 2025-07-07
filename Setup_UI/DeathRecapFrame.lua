@@ -5,15 +5,16 @@
 WoWTools_ChineseMixin:AddDialogs("DEATH", {text = '%d%s后释放灵魂', button1 = '释放灵魂', button2 = '复活', button3 = '复活', button4 = '摘要'})
 
 WoWTools_ChineseMixin:HookDialog("DEATH", 'OnShow', function(self)
+    local t= self.text or self:GetTextFontString()
     if ( IsActiveBattlefieldArena() and not C_PvP.IsInBrawl() ) then
-        self.text:SetText('你死亡了。释放灵魂后将进入观察模式。')
+        t:SetText('你死亡了。释放灵魂后将进入观察模式。')
     elseif ( self.timeleft == -1 ) then
-        self.text:SetText('你死亡了。要释放灵魂到最近的墓地吗？')
+        t:SetText('你死亡了。要释放灵魂到最近的墓地吗？')
     end
-    WoWTools_ChineseMixin:SetLabel(self.button1)
-    WoWTools_ChineseMixin:SetLabel(self.button2)
-    WoWTools_ChineseMixin:SetLabel(self.button3)
-    WoWTools_ChineseMixin:SetLabel(self.button4)
+    WoWTools_ChineseMixin:SetLabel(self.button1 or self:GetButton1())
+    WoWTools_ChineseMixin:SetLabel(self.button2 or self:GetButton2())
+    WoWTools_ChineseMixin:SetLabel(self.button3 or self:GetButton3())
+    WoWTools_ChineseMixin:SetLabel(self.button4 or self:GetButton4())
 end)
 
 
@@ -45,26 +46,28 @@ WoWTools_ChineseMixin:HookDialog("DEATH", 'OnUpdate', function(self)
     if ( IsFalling() and not IsOutOfBounds()) then
         return
     end
-    local b1_enabled = self.button1:IsEnabled()
+    local b1= self.button1 or self:GetButton1()
+    local b1_enabled = b1:IsEnabled()
     local encounterSupressRelease = IsEncounterSuppressingRelease()
     if ( encounterSupressRelease ) then
-        self.button1:SetText('释放灵魂')
+        (b1 or self:GetButton1()):SetText('释放灵魂')
     else
         local hasNoReleaseAura, _, hasUntilCancelledDuration = HasNoReleaseAura()
         if ( hasNoReleaseAura ) then
             if hasUntilCancelledDuration then
-                self.button1:SetText('释放灵魂')
+                b1:SetText('释放灵魂')
             end
         else
-            self.button1:SetText('释放灵魂')
+            b1:SetText('释放灵魂')
         end
     end
-    if ( b1_enabled ~= self.button1:IsEnabled() ) then
+    if ( b1_enabled ~= b1:IsEnabled() ) then
         if ( b1_enabled ) then
+            local t= self.text or self:GetTextFontString()
             if ( encounterSupressRelease ) then
-                self.text:SetText('你队伍中有一名成员正在战斗中。')
+                t:SetText('你队伍中有一名成员正在战斗中。')
             else
-                self.text:SetText('现在无法释放。')
+                t:SetText('现在无法释放。')
             end
         end
     end
@@ -81,12 +84,12 @@ WoWTools_ChineseMixin:HookDialog("DEATH", 'OnUpdate', function(self)
 
     local name = get_spell_name(option1)
     if name then
-        self.button2:SetText(name)
+        (self.button2 or self:GetButton2()):SetText(name)
     end
 
-    local name = get_spell_name(option2)
+    name = get_spell_name(option2)
     if name then
-        self.button3:SetText(name)
+        (self.button3 or self:GetButton3()):SetText(name)
     end
 end)
 

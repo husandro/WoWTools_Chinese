@@ -190,7 +190,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_CovenantSanctum()
     self:HookDialog("CONFIRM_ARTIFACT_RESPEC", 'OnShow', function(frame, data)
         if data then
             local costString = GetGarrisonTalentCostString(data.talent)
-            frame.text:SetFormattedText('把|cff20ff20%s|r升到%d级会花费|n%s', data.talent.name, data.talent.tier + 1, costString)
+            local t= frame.text or frame:GetTextFontString()
+            t:SetFormattedText('把|cff20ff20%s|r升到%d级会花费|n%s', data.talent.name, data.talent.tier + 1, costString)
         end
     end)
 end
@@ -217,7 +218,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_GarrisonUI()
         local name = FOLLOWER_QUALITY_COLORS[quality].hex..C_Garrison.GetFollowerName(frame.data)..FONT_COLOR_CODE_CLOSE
         local cost = GetMoneyString(C_Garrison.GetFollowerActivationCost())
         local uses = C_Garrison.GetNumFollowerDailyActivations()
-        frame.text:SetFormattedText('确定要遣散|n%s吗？|n|n重新激活一名追随者需要花费%s。|n你每天可重新激活%d名追随者。', name, cost, uses)
+        local t= frame.text or frame:GetTextFontString()
+        t:SetFormattedText('确定要遣散|n%s吗？|n|n重新激活一名追随者需要花费%s。|n你每天可重新激活%d名追随者。', name, cost, uses)
     end)
 
     self:AddDialogs("ACTIVATE_FOLLOWER", {button1 = '是', button2 = '否'})
@@ -226,7 +228,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_GarrisonUI()
         local name = FOLLOWER_QUALITY_COLORS[quality].hex..C_Garrison.GetFollowerName(frame.data)..FONT_COLOR_CODE_CLOSE
         local cost = GetMoneyString(C_Garrison.GetFollowerActivationCost())
         local uses = C_Garrison.GetNumFollowerDailyActivations()
-        frame.text:SetFormattedText('确定要激活|n%s吗？|n|n你今天还能激活%d名追随者，这将花费：', name, cost, uses)
+        local t= frame.text or frame:GetTextFontString()
+        t:SetFormattedText('确定要激活|n%s吗？|n|n你今天还能激活%d名追随者，这将花费：', name, cost, uses)
     end)
 
     self:AddDialogs("CONFIRM_RECRUIT_FOLLOWER", {text  = '确定要招募%s吗？', button1 = '是', button2 = '否'})
@@ -234,7 +237,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_GarrisonUI()
     self:AddDialogs("DANGEROUS_MISSIONS", {button1 = '确定', button2 = '取消'})
     self:HookDialog("DANGEROUS_MISSIONS", 'OnShow', function(frame)
         local warningIconText = "|T" .. STATICPOPUP_TEXTURE_ALERT .. ":15:15:0:-2|t"
-        frame.text:SetFormattedText('|n %s |cffff2020警告！|r %s |n|n你即将执行一项高危行动。如果行动失败，所有参与任务的舰船都有一定几率永久损毁。', warningIconText, warningIconText)
+        local t= frame.text or frame:GetTextFontString()
+        t:SetFormattedText('|n %s |cffff2020警告！|r %s |n|n你即将执行一项高危行动。如果行动失败，所有参与任务的舰船都有一定几率永久损毁。', warningIconText, warningIconText)
     end)
 
     self:AddDialogs("GARRISON_SHIP_RENAME", {text  = '输入你想要的名字：', button1 = '接受', button2 = '取消', button3= '默认'})
@@ -243,7 +247,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_GarrisonUI()
     self:HookDialog("GARRISON_SHIP_DECOMMISSION", 'OnShow', function(frame)
         local quality = C_Garrison.GetFollowerQuality(frame.data.followerID)
         local name = FOLLOWER_QUALITY_COLORS[quality].hex..C_Garrison.GetFollowerName(frame.data.followerID)..FONT_COLOR_CODE_CLOSE
-        frame.text:SetFormattedText('你确定要永久报废|n%s吗？|n|n你将无法重新获得这艘舰船。', name)
+        local t= frame.text or frame:GetTextFontString()
+        t:SetFormattedText('你确定要永久报废|n%s吗？|n|n你将无法重新获得这艘舰船。', name)
     end)
 
     self:AddDialogs("GARRISON_CANCEL_UPGRADE_BUILDING", {text  = '确定要取消这次建筑升级吗？升级的费用将被退还。', button1 = '是', button2 = '否'})
@@ -263,14 +268,21 @@ end
 function WoWTools_ChineseMixin.Events:Blizzard_RuneforgeUI()
     self:AddDialogs("CONFIRM_RUNEFORGE_LEGENDARY_CRAFT", {button1 = '是', button2 = '否'})
     self:HookDialog("CONFIRM_RUNEFORGE_LEGENDARY_CRAFT", 'OnShow', function(frame, data)
-        frame.text:SetText(data.title)
-        local text= data and data.title or ''
-        local a= string.match(text, self:Magic(RUNEFORGE_LEGENDARY_UPGRADING_CONFIRMATION))
-        local b= string.match(text, self:Magic(RUNEFORGE_LEGENDARY_CRAFTING_CONFIRMATION))
-        if a then
-            frame.text:SetFormattedText('你确定要花费%s给这件传说装备升级吗？', a)
-        elseif b then
-            frame.text:SetFormattedText('你确定要花费%s打造这件传说装备吗？', b)
+        local t= frame.text or frame:GetTextFontString()
+        local cn= WoWTools_ChineseMixin:CN(data.title)
+        if cn then
+           t:SetText(cn)
+        else
+            local text= data and data.title
+            if text then
+                local a= string.match(text, self:Magic(RUNEFORGE_LEGENDARY_UPGRADING_CONFIRMATION))
+                local b= string.match(text, self:Magic(RUNEFORGE_LEGENDARY_CRAFTING_CONFIRMATION))
+                if a then
+                    t:SetFormattedText('你确定要花费%s给这件传说装备升级吗？', a)
+                elseif b then
+                    t:SetFormattedText('你确定要花费%s打造这件传说装备吗？', b)
+                end
+            end
         end
     end)
 end
@@ -453,9 +465,10 @@ end
 function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsTemplates()
     self:AddDialogs("PROFESSIONS_RECRAFT_REPLACE_OPTIONAL_REAGENT", {button1 = '接受', button2 = '取消'})
     self:HookDialog("PROFESSIONS_RECRAFT_REPLACE_OPTIONAL_REAGENT", 'OnShow', function(frame, data)
-        frame.text:SetFormattedText('你想替换%s吗？\n它会在再造时被摧毁。',
-        self:GetData(data.itemName, {itemID=data.itemID or C_Item.GetItemInfoInstant(data.itemName) }) or data.itemName or ''
-    )
+        (frame.text or frame:GetTextFontString()):SetFormattedText(
+            '你想替换%s吗？\n它会在再造时被摧毁。',
+            self:GetData(data.itemName, {itemID=data.itemID or C_Item.GetItemInfoInstant(data.itemName) }) or data.itemName or ''
+        )
     end)
 end
 

@@ -182,16 +182,17 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
 
     WoWTools_ChineseMixin:AddDialogs("PURCHASE_AUCTION_UNIQUE", {text = '出价为：', button1 = '确定', button2 = '取消',})
     WoWTools_ChineseMixin:HookDialog("PURCHASE_AUCTION_UNIQUE", 'OnShow', function(frame, data)
-        frame.text:SetFormattedText('|cffffd200此物品属于“%s”。|n|n你同时只能装备一件拥有此标签的装备。|r', data.categoryName)
+        (frame.text or frame:GetTextFontString()):SetFormattedText('|cffffd200此物品属于“%s”。|n|n你同时只能装备一件拥有此标签的装备。|r', data.categoryName)
     end)
 
     WoWTools_ChineseMixin:AddDialogs("CANCEL_AUCTION", {text = '取消拍卖将使你失去保证金。', button1 = '接受', button2 = '取消'})
     WoWTools_ChineseMixin:HookDialog("CANCEL_AUCTION", 'OnShow', function(frame)
         local cancelCost = C_AuctionHouse.GetCancelCost(frame.data.auctionID)
+        local t= frame.text or frame:GetTextFontString()
         if cancelCost > 0 then
-            frame.text:SetText('取消拍卖会没收你所有的保证金和：')
+            t:SetText('取消拍卖会没收你所有的保证金和：')
         else
-            frame.text:SetText('取消拍卖将使你失去保证金。')
+            t:SetText('取消拍卖将使你失去保证金。')
         end
     end)
 
