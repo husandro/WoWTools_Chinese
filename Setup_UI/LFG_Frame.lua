@@ -275,8 +275,6 @@ end)
 
 hooksecurefunc('LFGInvitePopup_Update', function(inviter, _, _, _, _, isQuestSessionActive)
     local titleMarkup = isQuestSessionActive and CreateAtlasMarkup("QuestSharing-QuestLog-Replay", 19, 16) or ""
-    local playerName= e.GetPlayerInfo({name=inviter, reName=true, reRealm=true})
-    playerName= playerName=='' and inviter or playerName
     LFGInvitePopupText:SetFormattedText(titleMarkup ..'%s邀请你加入队伍', inviter)
     local tankButton = LFGInvitePopupRoleButtonTank
     if tankButton.disabledTooltip and WoWTools_ChineseMixin:CN(tankButton.disabledTooltip) then

@@ -156,13 +156,7 @@ BagItemSearchBox.Instructions:SetText('搜索')
 --SharedReportFrame.xml
 ReportFrame.TitleText:SetText('《魔兽世界》客户支持')
 hooksecurefunc(ReportFrame, 'InitiateReportInternal', function(self, reportInfo, playerName, playerLocation, isBnetReport, sendReportWithoutDialog)--SharedReportFrame.lua
-    local name
-    local guid= playerLocation and playerLocation.guid
-    if guid then
-        name= e.GetPlayerInfo({guid=guid, reName=true, reRealm=true})
-    end
-    name= name and name~='' and name or playerName
-    self.ReportString:SetFormattedText('举报 %s', name)
+    self.ReportString:SetFormattedText('举报 %s', playerName)
 end)
 ReportFrame.ReportingMajorCategoryDropdown.Label:SetText('选择理由')
 
