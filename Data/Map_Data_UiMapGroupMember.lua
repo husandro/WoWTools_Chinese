@@ -796,7 +796,6 @@ local tab={
 do
     for _, data in pairs(tab) do
         if data[2] and data[3] then
-            print(data[2],data[3])
             for _, member in pairs(C_Map.GetMapGroupMembersInfo(data[2])) do
                 if member and member.mapID==data[3] then
                     WoWTools_ChineseMixin:SetCN(member.name, data[1])
