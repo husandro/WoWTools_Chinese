@@ -45,6 +45,9 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
     tabItem=nil
 
     WoWTools_ChineseMixin:SetCN(EJ_GetTierInfo(2), '燃烧远征')
+    WoWTools_ChineseMixin:SetCN('Alliance', '联盟')
+    WoWTools_ChineseMixin:SetCN('Horde', '部落')
+    WoWTools_ChineseMixin:SetCN('Neutral', '中立')
 
     EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
 end)
