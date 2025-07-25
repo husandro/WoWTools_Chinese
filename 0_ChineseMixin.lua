@@ -5,7 +5,8 @@ GetLocale=function()
 end]]
 
 WoWTools_ChineseMixin={
-    Events={}
+    Events={},
+    Frames={},
 }
 local CNData={}--主要，汉化
 
@@ -498,27 +499,43 @@ function WoWTools_ChineseMixin:SetTabButton(frame, text, isSetCNFont)
     end
 end
 function WoWTools_ChineseMixin:SetFrame(frame, setFont, isHook, affer)
-    if not frame or not frame.GetRegions then
+    if not frame then
         return
     end
 
-    local t
-    for _, f in pairs({frame:GetRegions()}) do
-        t= f:GetObjectType()
-        if t=='Button' then
-            if isHook then
-                self:HookButton(f, setFont)
-            else
-                self:SetButton(f, nil, affer, setFont)
-            end
-        elseif t=='FontString' then
-            if isHook then
-                self:HookLabel(f, setFont)
-            else
-                self:SetLabel(f, nil, affer, setFont)
+    
+    if frame.GetRegions then
+        for _, f in ipairs({frame:GetRegions()}) do
+            local t= f:GetObjectType()
+            if t=='Button' then
+                if isHook then
+                    self:HookButton(f, setFont)
+                else
+                    self:SetButton(f, nil, affer, setFont)
+                end
+            elseif t=='FontString' then
+                if isHook then
+                    self:HookLabel(f, setFont)
+                else
+                    self:SetLabel(f, nil, affer, setFont)
+                end
             end
         end
     end
+
+    --[[if frame.GetChildren then
+        for _, f in ipairs({frame:GetChildren()}) do
+            local t= f:GetObjectType()
+            if t=='CheckButton' then
+                  if isHook then
+                    self:HookLabel(f.Text, setFont)
+                else
+                    self:SetLabel(f.Text, nil, affer, setFont)
+                end
+            end
+        end
+    end]]
+
 end
 
 function WoWTools_ChineseMixin:SetFrames(frame, setFont, isHook, affer)

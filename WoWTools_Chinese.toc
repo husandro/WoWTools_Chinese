@@ -145,6 +145,7 @@ Setup_UI\StaticPopup.lua
 
 Setup_UI\0_Init.lua
 Setup_UI\1_Event.lua
+Setup_UI\2_Frames.lua
 
 Setup_UI\AccountStoreFrame.lua
 Setup_UI\Achievement.lua
@@ -176,6 +177,7 @@ Setup_UI\CharacterFrame_Faction.lua
 Setup_UI\CharacterFrame_Currency.lua
 
 Setup_UI\Bank_BankFrame.lua
+Setup_UI\BankFrame.lua
 Setup_UI\Bank_AuctionHouse.lua
 
 Setup_UI\Chat_ConfigFrame.lua

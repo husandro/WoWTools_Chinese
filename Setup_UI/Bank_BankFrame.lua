@@ -1,4 +1,6 @@
-
+if not BankFrameTab1 then--11.2 没有了
+    return
+end
 
 
 --银行
