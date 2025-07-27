@@ -48,10 +48,11 @@ function WoWTools_ChineseMixin.Frames:BankFrame(f)
     f:HookLabel(BankFrameTitleText)
 end
 
+print('bbbbbbbbbbbbbbbbbbbbbbbbbbbb')
 
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner)
+EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     for name, func in pairs(WoWTools_ChineseMixin.Frames) do
+        print('a')
         do
             if _G[name] then
                 func(WoWTools_ChineseMixin)
@@ -59,5 +60,5 @@ EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner)
         end
         WoWTools_MoveMixin.Frames[name]= nil
     end
-    EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
+    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
 end)
