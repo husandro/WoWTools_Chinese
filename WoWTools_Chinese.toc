@@ -177,7 +177,6 @@ Setup_UI\CharacterFrame_Faction.lua
 Setup_UI\CharacterFrame_Currency.lua
 
 Setup_UI\Bank_BankFrame.lua
-Setup_UI\BankFrame.lua
 Setup_UI\Bank_AuctionHouse.lua
 
 Setup_UI\ChatConfig.lua
