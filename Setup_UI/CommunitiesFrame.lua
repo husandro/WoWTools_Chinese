@@ -478,7 +478,12 @@ end)]]
     end)
 
     CommunitiesFrame.MemberList.ShowOfflineButton.Text:SetText('显示离线成员')
-    WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.PostingExpirationText.ExpiredText)
+    
+    WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.PostingExpirationText.ExpiredText)--11.2没有了
+    WoWTools_ChineseMixin:HookLabel(CommunitiesFrame.PostingExpirationText.ExpirationTimeText)
+    WoWTools_ChineseMixin:HookLabel(ClubFinderGuildFinderFrame.OptionsList.PendingTextFrame.Text)
+    WoWTools_ChineseMixin:HookLabel(ClubFinderGuildFinderFrame.InsetFrame.GuildDescription)
+    
 
 CommunitiesFrame.MemberList.ColumnDisplay:HookScript('OnShow', function(frame)
     WoWTools_ChineseMixin:SetFrames(frame)
