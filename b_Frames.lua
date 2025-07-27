@@ -1,4 +1,4 @@
-print('bbbbbbbbbbbbbbbbbbbbbbbbbbbb')
+
 --公会银行
 function WoWTools_ChineseMixin.Frames:BankFrame()
 
