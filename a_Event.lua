@@ -998,29 +998,26 @@ end
 
 
 
-local function Init_Event(name)
-    do
-        WoWTools_ChineseMixin.Events[name](WoWTools_ChineseMixin)
-    end
-    WoWTools_ChineseMixin.Events[name]= nil
-end
-
-
-local function Init()
-    for name in pairs(WoWTools_ChineseMixin.Events) do
-        if C_AddOns.IsAddOnLoaded(name) then
-           Init_Event(name)
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner)
+    if name=='WoWTools_Chinese' then
+        for name in pairs(WoWTools_ChineseMixin.Events) do
+            if C_AddOns.IsAddOnLoaded(name) then
+                 do
+                    WoWTools_ChineseMixin.Events[name](WoWTools_ChineseMixin)
+                end
+                WoWTools_ChineseMixin.Events[name]= nil
+            end
         end
+        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
     end
-    Init=function()end
-end
-
+end)
 
 EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(_, name)
     if WoWTools_ChineseMixin.Events[name] then
-       Init_Event(name)
-    else
-        Init()
+        do
+            WoWTools_ChineseMixin.Events[name](WoWTools_ChineseMixin)
+        end
+        WoWTools_ChineseMixin.Events[name]= nil
     end
 end)
 
