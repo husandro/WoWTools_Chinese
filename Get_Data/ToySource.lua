@@ -4,6 +4,12 @@ https://wago.tools/db2/Toy?locale=zhCN
 ]]
 
 local tab={
+[250722]= "|cFFFFD200商人出售：|r莎德安妮丝|n|cFFFFD200地区：|r卡雷什|n|cFFFFD200价格：|r3|Hcurrency:3303|h|TInterface\\ICONS\\INV_Misc_Coin_08.blp:0|t|h",
+[249713]= "|cFFFFD200任务：|r同道中人|n|cFFFFD200阵营：|r法力熔炉破袭队",
+[246908]= "|cFFFFD200商人出售：|r莎德安妮丝|n|cFFFFD200地区：|r卡雷什|n|cFFFFD200价格：|r3|Hcurrency:3303|h|TInterface\\ICONS\\INV_Misc_Coin_08.blp:0|t|h",
+[246907]= "|cFFFFD200商人出售：|r莎德安妮丝|n|cFFFFD200地区：|r卡雷什|n|cFFFFD200价格：|r3|Hcurrency:3303|h|TInterface\\ICONS\\INV_Misc_Coin_08.blp:0|t|h",
+[246905]= "|cFFFFD200商人出售：|r莎德安妮丝|n|cFFFFD200地区：|r卡雷什|n|cFFFFD200价格：|r3|Hcurrency:3303|h|TInterface\\ICONS\\INV_Misc_Coin_08.blp:0|t|h",
+[246903]= "|cFFFFD200商人出售：|r莎德安妮丝|n|cFFFFD200地区：|r卡雷什|n|cFFFFD200价格：|r3|Hcurrency:3303|h|TInterface\\ICONS\\INV_Misc_Coin_08.blp:0|t|h",
 
 [246565]= "|cFFFFD200掉落：|r诸界吞噬者迪门修斯|n|cFFFFD200地区：|r法力熔炉：欧米伽",
 [246227]= "|cFFFFD200商人出售：|r彻布鲁|n|cFFFFD200地区：|r祖达萨|n|cFFFFD200价格：|r1000|Hcurrency:1166|h|TInterface\\ICONS\\PVECurrency-Justice.blp:0|t|h|n|n|cFFFFD200商人出售：|r彻布鲁|n|cFFFFD200地区：|r伯拉勒斯港|n|cFFFFD200价格：|r1000|Hcurrency:1166|h|TInterface\\ICONS\\PVECurrency-Justice.blp:0|t|h",

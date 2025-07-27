@@ -71,9 +71,17 @@ local tab={
 
 do
     for specID, data in pairs(tab) do
-        local name, description= select(2, GetSpecializationInfoByID(specID))
-        WoWTools_ChineseMixin:SetCN(name, data[1])
-        WoWTools_ChineseMixin:SetCN(description, data[2])
+        local name, description
+        local cn= data[1]
+        if cn then
+            for _, sex in pairs(Enum.UnitSex) do
+                name, description= select(2, GetSpecializationInfoByID(specID, sex))
+                WoWTools_ChineseMixin:SetCN(name, cn)
+            end
+        end
+        if description and data[2] then
+            WoWTools_ChineseMixin:SetCN(description, data[2])
+        end
     end
 end
 tab=nil

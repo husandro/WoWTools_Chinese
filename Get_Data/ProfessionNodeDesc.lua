@@ -1,9 +1,6 @@
 --[[
 https://www.wowhead.com/cn/profession-trait/81119
-]]
 
-
---[[
 [TraitNodeID]= {"名称", "描述"},
 https://wago.tools/db2/ProfTraitPathNode?locale=zhCN
 ]]

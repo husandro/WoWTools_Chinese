@@ -1,7 +1,6 @@
 --[[
 [ID]= 'Name_lang',
 https://wago.tools/db2/Achievement_Category?locale=zhCN
-11.1.0.58221
 ]]
 
 

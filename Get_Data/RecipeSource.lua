@@ -9,7 +9,12 @@ https://wago.tools/db2/SourceInfo?locale=zhCN
 
 
 local tab={
-    
+
+["1249469x-1"]= "|cFFFFD200阵营：|r法力熔炉破袭队|n|cFFFFD200名望：|r8|n|cFFFFD200地区：|r暗影营",
+["1249468x-1"]= "|cFFFFD200阵营：|r法力熔炉破袭队|n|cFFFFD200名望：|r8|n|cFFFFD200地区：|r暗影营",
+["1249466x-1"]= "|cFFFFD200阵营：|r法力熔炉破袭队|n|cFFFFD200名望：|r8|n|cFFFFD200地区：|r暗影营",
+["1249463x-1"]= "|cFFFFD200阵营：|r法力熔炉破袭队|n|cFFFFD200名望：|r8|n|cFFFFD200地区：|r暗影营",
+["1246966x-1"]= "|cFFFFD200商人出售：|r欧·西里克|n|cFFFFD200地区：|r卡雷什|n|cFFFFD200价格：|r150|Hitem:210814|h|TInterface\\ICONS\\INV_10_GearCraft_ArtisansMettle_Color3.BLP:0|t|h",
 ["1243994x-1"]= "|cFFFFD200商人出售：|r佐·法尔|n|cFFFFD200地区：|r卡雷什|n|cFFFFD200价格：|r500|TINTERFACE\\MONEYFRAME\\UI-GOLDICON.BLP:0|t",
 ["1238010x-1"]= "|cFFFFD200商人出售：|r欧·西里克|n|cFFFFD200地区：|r卡雷什|n|cFFFFD200价格：|r150|Hitem:210814|h|TInterface\\ICONS\\INV_10_GearCraft_ArtisansMettle_Color3.BLP:0|t|h",
 ["1236908x-1"]= "|cFFFFD200商人出售：|r欧·西里克|n|cFFFFD200地区：|r卡雷什|n|cFFFFD200价格：|r150|Hitem:210814|h|TInterface\\ICONS\\INV_10_GearCraft_ArtisansMettle_Color3.BLP:0|t|h",

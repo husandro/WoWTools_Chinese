@@ -1,7 +1,6 @@
 --[[
 [ID]= {'Name_lang', 'Description_lang'},
 https://wago.tools/db2/CurrencyTypes?locale=zhCN
-11.0.5.56646
 ]]
 
 local tab={
