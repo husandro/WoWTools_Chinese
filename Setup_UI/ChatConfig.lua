@@ -199,7 +199,7 @@ if TextToSpeechFramePlaySampleAlternateButton then--11.2 没有了
     TextToSpeechFrameAdjustVolumeSliderLabel:SetText('音量')
     TextToSpeechFrameAdjustRateSliderLow:SetText('慢')
     TextToSpeechFrameAdjustRateSliderHigh:SetText('快')
-
+    WoWTools_ChineseMixin:SetLabel(ChatConfigTextToSpeechMessageSettingsSubTitle)
 else
     WoWTools_ChineseMixin:SetButton(TextToSpeechFramePanelContainer.PlaySampleButton)
     WoWTools_ChineseMixin:SetButton(TextToSpeechFramePanelContainer.PlaySampleAlternateButton)
@@ -210,6 +210,7 @@ else
     WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainer.AdjustRateSlider.High)
     WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainer.UseAlternateVoiceForSystemMessagesCheckButton.text)
     WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainer.AdjustVolumeSlider.Text)
+    WoWTools_ChineseMixin:SetLabel(ChatConfigTextToSpeechMessageSettings.SubTitle)
 end
 
 TextToSpeechFramePanelContainer.PlaySoundSeparatingChatLinesCheckButton.text:SetText('每条新信息之间播放声音')
@@ -219,7 +220,9 @@ TextToSpeechFramePanelContainer.NarrateMyMessagesCheckButton.text:SetText('大�
 
 WoWTools_ChineseMixin:SetLabel(ChatConfigTextToSpeechMessageSettingsSubTitle)
 WoWTools_ChineseMixin:SetLabel(TextToSpeechFramePanelContainerText)--使用另一个声音来朗读系统信息
-ChatConfigTextToSpeechMessageSettingsSubTitle:SetText('对特定信息开启文字转语音')
+
+
+
 
 TextToSpeechButton:HookScript('OnEnter', function()--TextToSpeech.lua
     GameTooltip_SetTitle(GameTooltip, '文字转语音选项')

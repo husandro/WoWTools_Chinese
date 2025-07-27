@@ -180,7 +180,7 @@ Setup_UI\Bank_BankFrame.lua
 Setup_UI\BankFrame.lua
 Setup_UI\Bank_AuctionHouse.lua
 
-Setup_UI\Chat_ConfigFrame.lua
+Setup_UI\ChatConfig.lua
 
 Setup_UI\Quest.lua
 Setup_UI\Quest_GossipFrame.lua
