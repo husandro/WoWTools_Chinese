@@ -110,6 +110,14 @@ function WoWTools_ChineseMixin.Events:Blizzard_GuildBankUI()
     GuildBankFrameTab3:SetText('金币记录')
     GuildBankFrameTab4:SetText('信息')
     GuildBankInfoSaveButton:SetText('保存改变')
+
+    self:SetLabel(GuildBankPopupFrame.BorderBox.EditBoxHeaderText)
+    self:SetLabel(GuildBankPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconHeader)
+    GuildBankPopupFrame.BorderBox.OkayButton:SetText('确定')
+    GuildBankPopupFrame.BorderBox.CancelButton:SetText('取消')
+
+    self:SetLabel(GuildBankFrame.BuyInfo.TabText)
+    self:SetButton(GuildBankFrame.BuyInfo.PurchaseButton)
 end
 
 
@@ -952,7 +960,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_PetBattleUI()
     end)
 
 end
-
 
 
 

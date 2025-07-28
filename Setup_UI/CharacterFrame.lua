@@ -27,7 +27,7 @@ PaperDollFrameSaveSetText:SetText('保存')
 
 GearManagerPopupFrame.BorderBox.EditBoxHeaderText:SetText('输入方案名称（最多16个字符）：')
 GearManagerPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconHeader:SetText('选择一个图标：')
-GearManagerPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconDescription:SetText('点击在列表中浏览')
+WoWTools_ChineseMixin:HookLabel(GearManagerPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconDescription)
 GearManagerPopupFrame.BorderBox.OkayButton:SetText('确认')
 GearManagerPopupFrame.BorderBox.CancelButton:SetText('取消')
 hooksecurefunc('PaperDollEquipmentManagerPane_InitButton', function(button, elementData)
@@ -38,8 +38,8 @@ end)
 
 
 
-hooksecurefunc(CharacterFrame, 'SetTitle', function(self)
-    if self.activeSubframe== 'PaperDollFrame' then
+hooksecurefunc(CharacterFrame, 'SetTitle', function(frame)
+    if frame.activeSubframe== 'PaperDollFrame' then
         local titleID = GetCurrentTitle()
         if titleID and titleID>0 then
             local title= WoWTools_ChineseMixin:GetTitleName(titleID)

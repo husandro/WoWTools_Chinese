@@ -35,6 +35,7 @@ function WoWTools_ChineseMixin.Frames:BankFrame()
     self:SetButton(BankCleanUpConfirmationPopup.CancelButton)
 
 
+
     if WoWTools_BankMixin then
         return
     end
