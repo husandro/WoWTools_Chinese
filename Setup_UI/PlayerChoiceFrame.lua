@@ -80,8 +80,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerChoice()
     hooksecurefunc(PlayerChoiceNormalOptionTemplateMixin, 'SetupSubHeader', set_sub_header)
 
     hooksecurefunc(PlayerChoiceFrame, 'SetupOptions', function(frame)
-        for frame in frame.optionPools:EnumerateActiveByTemplate(frame.optionFrameTemplate) do
-            set_optionText(frame)
+        for f in frame.optionPools:EnumerateActiveByTemplate(frame.optionFrameTemplate) do
+            set_optionText(f)
         end
     end)
 
@@ -114,3 +114,4 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerChoice()
         end
     end)
 end
+
