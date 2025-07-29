@@ -7,43 +7,6 @@ WoWTools_ChineseMixin:HookLabel(MerchantFrame.FilterDropdown.Text)
 --MerchantPageText:SetText('')
 
 
---卖
-hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
-    if not MerchantFrame:IsShown() then
-        return
-    end
-
-    local npc= WoWTools_ChineseMixin:GetUnitName('npc')
-    if npc then
-        MerchantFrame:SetTitle(npc)
-    end
-
-    if not WoWTools_MerchantMixin then--有处理这个数据
-        MerchantPageText:SetFormattedText('页数 %s/%s', MerchantFrame.page, math.ceil(GetMerchantNumItems() / MERCHANT_ITEMS_PER_PAGE))
-    end
-
-    for i = 1, MERCHANT_ITEMS_PER_PAGE do
-        local btn= _G['MerchantItem'..i]
-        local label= _G['MerchantItem'..i..'Name']
-        if btn and btn.ItemButton.hasItem and label then
-            local itemID= GetMerchantItemID(btn.ItemButton:GetID())
-            local itemName= WoWTools_ChineseMixin:GetItemName(itemID)
-            if itemName then
-                itemName= itemName:match('^|c........(.+)|r$') or itemName                
-                label:SetText(itemName)
-            end
-        end
-    end
-
-    
-    local itemID= C_MerchantFrame.GetBuybackItemID(GetNumBuybackItems() or 0)
-    local itemName= WoWTools_ChineseMixin:GetItemName(itemID)
-    if itemName then
-        itemName= itemName:match('^|c........(.+)|r$') or itemName
-        MerchantBuyBackItemName:SetText(itemName)
-    end
-end)
-
 --回购
 hooksecurefunc('MerchantFrame_UpdateBuybackInfo', function()
     if not MerchantFrame:IsShown() then
@@ -93,3 +56,50 @@ end)
 
 StackSplitFrame.OkayButton:SetText('确定')
 StackSplitFrame.CancelButton:SetText('取消')
+
+
+
+--卖
+hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
+    if not MerchantFrame:IsShown() then
+        return
+    end
+
+    local npc= WoWTools_ChineseMixin:GetUnitName('npc')
+    if npc then
+        MerchantFrame:SetTitle(npc)
+    end
+
+    if WoWTools_MerchantMixin then--有处理这个数据
+        return
+    end
+
+    MerchantPageText:SetFormattedText('页数 %s/%s', MerchantFrame.page, math.ceil(GetMerchantNumItems() / MERCHANT_ITEMS_PER_PAGE))
+
+
+    for i = 1, MERCHANT_ITEMS_PER_PAGE do
+        local btn= _G['MerchantItem'..i]
+        local label= _G['MerchantItem'..i..'Name']
+        if btn and btn.ItemButton.hasItem and label then
+            local itemID= GetMerchantItemID(btn.ItemButton:GetID())
+            local itemName= WoWTools_ChineseMixin:GetItemName(itemID)
+            if itemName then
+                itemName= itemName:match('^|c........(.+)|r$') or itemName
+--截取 :(.+)
+                itemName= itemName:match('%：(.+)') or itemName
+                itemName= itemName:match('%：(.+)') or itemName
+                itemName= itemName:match('%-(.+)') or itemName
+                label:SetText(itemName)
+            end
+        end
+    end
+
+
+    local itemID= C_MerchantFrame.GetBuybackItemID(GetNumBuybackItems() or 0)
+    local itemName= WoWTools_ChineseMixin:GetItemName(itemID)
+    if itemName then
+        itemName= itemName:match('^|c........(.+)|r$') or itemName
+        itemName= itemName:match('%：(.+)') or itemName
+        MerchantBuyBackItemName:SetText(itemName)
+    end
+end)

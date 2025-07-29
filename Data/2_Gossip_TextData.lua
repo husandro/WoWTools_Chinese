@@ -419,7 +419,7 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [133139]={icon=nil, name="传奇故事漫游", hex=nil},
 [133151]={icon=nil, name="游学者是什么人？为什么会来到这座城？", hex=nil},
 [134417]={icon=nil, name="<查看伙伴补给。>", hex=nil},
-
+[134852]={icon=nil, name="那面旗帜是哪方的？", hex=nil},
 
 
 

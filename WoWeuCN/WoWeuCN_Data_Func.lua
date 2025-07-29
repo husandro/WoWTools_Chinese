@@ -247,7 +247,8 @@ else
 end
 
 
-function WoWTools_ChineseMixin:GetItemName(itemID)
+function WoWTools_ChineseMixin:GetItemName(itemID, itemLink)
+    itemID= itemID or (itemLink and C_Item.GetItemInfoInstant(itemLink))
     local data= itemID and self:GetItemData(itemID)
     return data and self:ReplaceText(data[1])
 end

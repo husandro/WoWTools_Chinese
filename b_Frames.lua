@@ -51,6 +51,143 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+--AlertFrameSystems.lua AlertFrames.xml
+function WoWTools_ChineseMixin.Frames:AlertFrame()
+    hooksecurefunc('GuildChallengeAlertFrame_SetUp', function(frame)
+        self:SetLabe(frame.Type)
+    end)
+    hooksecurefunc('DungeonCompletionAlertFrame_SetUp', function(frame)
+        self:SetLabe(frame.instanceName)
+    end)
+    hooksecurefunc('ScenarioAlertFrame_SetUp', function(frame)
+        self:SetLabe(frame.dungeonName)
+    end)
+    hooksecurefunc('ScenarioLegionInvasionAlertFrame_SetUp', function(frame)
+        self:SetLabe(frame.ZoneName)
+    end)
+    hooksecurefunc('AchievementAlertFrame_SetUp', function(frame)
+        self:SetLabel(frame.Name)
+        self:SetLabel(frame.Unlocked)
+    end)
+    hooksecurefunc('CriteriaAlertFrame_SetUp', function(frame)
+        self:SetLabel(frame.Name)
+    end)
+    hooksecurefunc('LootUpgradeFrame_SetUp', function(frame)
+        WoWTools_ItemMixin:SetItemStats(frame, frame.hyperlink, {point=frame.Icon})
+    end)
+    hooksecurefunc('LootWonAlertFrame_SetUp', function(frame, originalLink, originalQuantity, rollType, roll, specID, isCurrency, showFactionBG, lootSource)
+        self:SetLabel(frame.Label)
+	    local itemName, itemTexture, quantity, itemRarity, itemLink = ItemUtil.GetItemDetails(originalLink, originalQuantity, isCurrency, lootSource)
+        local cn= self:GetItemName(nil, itemLink) or self:CN(itemName)
+        if cn then
+            frame.ItemName:SetText(cn)
+        end
+    end)
+    hooksecurefunc('LootUpgradeFrame_SetUp', function(frame, itemLink, quantity, specID, baseQuality)
+        local itemName, itemHyperLink, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(itemLink)
+        local cn= self:GetItemName(nil, itemLink) or self:CN(itemName)
+        if cn then
+            cn= cn:match('|c........(.-)|r') or cn
+            frame.BaseQualityItemName:SetText(cn);
+            frame.UpgradeQualityItemName:SetText(cn);
+            frame.WhiteText:SetText(cn);
+            frame.WhiteText2:SetText(cn);
+        end
+        if itemRarity then
+            frame.TitleText:SetText(format('奖励升级为%s品质！', self:CN(_G["ITEM_QUALITY"..itemRarity.."_DESC"])))
+        end
+    end)
+
+    hooksecurefunc('DigsiteCompleteToastFrame_SetUp', function(frame)
+        self:SetLabel(frame.DigsiteType)
+    end)
+    hooksecurefunc('EntitlementDeliveredAlertFrame_SetUp', function(frame)
+        self:SetLabel(frame.Title)
+    end)
+    hooksecurefunc('GarrisonMissionAlertFrame_SetUp', function(frame)
+        self:SetLabel(frame.Name)
+        self:SetLabel(frame.Title)
+    end)
+    hooksecurefunc('GarrisonCommonFollowerAlertFrame_SetUp', function(frame)
+        self:SetLabel(frame.Name)
+    end)
+    hooksecurefunc('GarrisonFollowerAlertFrame_SetUp', function(frame)
+        self:SetLabel(frame.Title)
+    end)
+    hooksecurefunc('GarrisonShipFollowerAlertFrame_SetUp', function(frame)
+        self:SetLabel(frame.Title)
+    end)
+    hooksecurefunc('GarrisonTalentAlertFrame_SetUp', function(frame)
+        self:SetLabel(frame.Title)
+    end)
+    hooksecurefunc('NewRecipeLearnedAlertFrame_SetUp', function(frame)
+        self:SetLabel(frame.Title)
+        self:SetLabel(frame.Name)
+    end)
+    hooksecurefunc('WorldQuestCompleteAlertFrame_SetUp', function(frame)
+        self:SetLabel(frame.QuestName)
+        self:SetLabel(frame.ToastText)
+    end)
+    hooksecurefunc('LegendaryItemAlertFrame_SetUp', function(frame, itemLink)
+        local cn= self:GetItemName(nil, itemLink)
+        if cn then
+             cn= cn:match('|c........(.-)|r') or cn
+             frame.ItemName:SetText(cn)
+        end
+    end)
+    hooksecurefunc('MonthlyActivityAlertFrame_SetUp', function(frame)
+        self:SetLabel(frame.Name)
+    end)
+end
+
+--AlertFrameSystems.lua
+hooksecurefunc(ItemAlertFrameMixin, 'SetUpDisplay', function(frame, icon, itemQuality, name, label, overlayAtlas)
+    local cn= self:GetItemName(frame.itemID, frame.itemLink) or self:CN(name)
+    if cn then
+        cn= cn:match('|c........(.-)|r') or cn
+        local colorData = ColorManager.GetColorDataForItemQuality(itemQuality);
+        if colorData then
+            cn = colorData.hex..cn.."|r"
+        end
+        frame.Name:SetText(cn)
+    else
+        self:SetLabel(frame.Name)
+    end
+    self:SetLabel(frame.Label)
+end)
+hooksecurefunc(SkillLineSpecsUnlockedAlertFrameMixin, 'SetUp', function(frame)
+    self:SetLabel(frame.Title)
+end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     for name, func in pairs(WoWTools_ChineseMixin.Frames) do
         do
@@ -62,3 +199,4 @@ EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(ow
     end
     EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
 end)
+

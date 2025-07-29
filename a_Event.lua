@@ -999,14 +999,54 @@ end
 
 
 
+function WoWTools_ChineseMixin.Events:Blizzard_FrameXML()
+
+    --boss掉落，物品, 可能，会留下 StaticPopup1 框架
+    hooksecurefunc('BossBanner_ConfigureLootFrame', function(lootFrame, data)--LevelUpDisplay.lua data= { itemID = itemID, quantity = quantity, playerName = playerName, className = className, itemLink = itemLink }
+        --local itemName, itemLink, itemRarity, _, _, _, _, _, _, itemTexture, _, _, _, _, _, setID = C_Item.GetItemInfo(data.itemLink)
+        local itemName= self:GetItemName(data.itemID)
+        if itemName then
+	        lootFrame.ItemName:SetText(itemName);
+        end
+    end)
+
+        --拾取时, 弹出, 物品提示，信息, 战利品
 
 
 
 
 
 
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner)
-    if name=='WoWTools_Chinese' then
+
+
+
+
+
+
+
+
+    hooksecurefunc('DungeonCompletionAlertFrameReward_SetRewardItem', function(frame, itemLink)
+        WoWTools_ItemMixin:SetItemStats(frame, frame.itemLink or itemLink , {point=frame.texture})
+    end)
+
+
+    hooksecurefunc('LegendaryItemAlertFrame_SetUp', function(frame)
+        WoWTools_ItemMixin:SetItemStats(frame, frame.hyperlink, {point= frame.Icon})
+    end)
+
+
+    hooksecurefunc(LootItemExtendedMixin, 'Init', function(frame, itemLink2, originalQuantity, _, isCurrency)--ItemDisplay.lua
+        local _, _, _, _, itemLink = ItemUtil.GetItemDetails(itemLink2, originalQuantity, isCurrency)
+        WoWTools_ItemMixin:SetItemStats(frame, itemLink, {point= frame.Icon})
+    end)
+end
+
+
+
+
+
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
+    if arg1=='WoWTools_Chinese' then
         for name in pairs(WoWTools_ChineseMixin.Events) do
             if C_AddOns.IsAddOnLoaded(name) then
                  do
