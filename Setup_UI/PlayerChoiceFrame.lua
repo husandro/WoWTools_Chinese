@@ -113,5 +113,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerChoice()
             frame.TimerText:SetText("剩余时间："..SecondsToClock(remainingTime))
         end
     end)
-end
 
+
+--    hooksecurefunc(PlayerChoiceBaseOptionRewardsMixin, 'Setup', function(frame, optionInfo, fontColor)
+
+end
