@@ -70,19 +70,27 @@ hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
         MerchantFrame:SetTitle(npc)
     end
 
+    local itemID= C_MerchantFrame.GetBuybackItemID(GetNumBuybackItems() or 0)
+    local itemName= WoWTools_ChineseMixin:GetItemName(itemID)
+    if itemName then
+        itemName= itemName:match('^|c........(.+)|r$') or itemName
+        itemName= itemName:match('%：(.+)') or itemName
+        itemName= itemName:match('：(.+)') or itemName
+        MerchantBuyBackItemName:SetText(itemName)
+    end
+
     if WoWTools_MerchantMixin then--有处理这个数据
         return
     end
 
     MerchantPageText:SetFormattedText('页数 %s/%s', MerchantFrame.page, math.ceil(GetMerchantNumItems() / MERCHANT_ITEMS_PER_PAGE))
 
-
     for i = 1, MERCHANT_ITEMS_PER_PAGE do
         local btn= _G['MerchantItem'..i]
         local label= _G['MerchantItem'..i..'Name']
         if btn and btn.ItemButton.hasItem and label then
-            local itemID= GetMerchantItemID(btn.ItemButton:GetID())
-            local itemName= WoWTools_ChineseMixin:GetItemName(itemID)
+            itemID= GetMerchantItemID(btn.ItemButton:GetID())
+            itemName= WoWTools_ChineseMixin:GetItemName(itemID)
             if itemName then
                 itemName= itemName:match('^|c........(.+)|r$') or itemName
 --截取 :(.+)
@@ -92,14 +100,5 @@ hooksecurefunc('MerchantFrame_UpdateMerchantInfo', function()
                 label:SetText(itemName)
             end
         end
-    end
-
-
-    local itemID= C_MerchantFrame.GetBuybackItemID(GetNumBuybackItems() or 0)
-    local itemName= WoWTools_ChineseMixin:GetItemName(itemID)
-    if itemName then
-        itemName= itemName:match('^|c........(.+)|r$') or itemName
-        itemName= itemName:match('%：(.+)') or itemName
-        MerchantBuyBackItemName:SetText(itemName)
     end
 end)
