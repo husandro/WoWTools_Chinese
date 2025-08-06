@@ -2,10 +2,6 @@
 --公会银行
 function WoWTools_ChineseMixin.Frames:BankFrame()
 
-    if BankFrameTab1 then--11.2没了
-        return
-    end
-
     self:SetFrame(BankPanel.PurchasePrompt, nil, true)
     self:SetLabel(BankPanel.PurchasePrompt.TabCostFrame.TabCost)
     self:SetButton(BankPanel.PurchasePrompt.TabCostFrame.PurchaseButton)
@@ -34,7 +30,7 @@ function WoWTools_ChineseMixin.Frames:BankFrame()
     self:SetButton(BankCleanUpConfirmationPopup.AcceptButton)
     self:SetButton(BankCleanUpConfirmationPopup.CancelButton)
 
-
+    self:HookLabel(BankPanel.LockPrompt.PromptText)
 
     if WoWTools_BankMixin then
         return
