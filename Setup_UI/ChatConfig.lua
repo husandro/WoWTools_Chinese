@@ -103,6 +103,13 @@ hooksecurefunc(ChatWindowTabMixin, 'SetChatWindowIndex', function(frame, chatWin
     end
 end)
 
+hooksecurefunc('FCF_MinimizeFrame', function(chatFrame)
+    local cn= WoWTools_ChineseMixin:CN(chatFrame.name)
+    if cn then
+	    chatFrame.minFrame:SetText(cn)
+    end
+end)
+
 
 
 
