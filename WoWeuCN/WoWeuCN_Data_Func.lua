@@ -1,23 +1,3 @@
-
---[[do
-if select(4, C_AddOns.GetAddOnInfo('WoWeuCN_Tooltips')) then
-    
-    
-    loadEncounterData()
-    loadItemData0()
-    loadItemData100000()
-    loadItemData200000()
-    loadSpellData0()
-    loadSpellData100000()
-    loadSpellData200000()
-    loadSpellData300000()
-    loadSpellData400000()
-    loadUnitData0()
-    loadUnitData100000()
-    loadUnitData200000()
-  
-end
-end]]
 --[[
 因无法找到数据来源，
 只能导入别的插件数据，
@@ -28,8 +8,6 @@ end]]
 网站 https://www.curseforge.com/wow/addons/tooltips-translator-chinese
 插件 Quest Translator - Chinese (WoWeuCN_Quest)
 https://www.curseforge.com/wow/addons/quest-chinese-translator
-
-如果已加 载WoWeuCN_Tooltips, 不会再次加载数据
 
 
 WoWTools_ChineseMixin:ReplaceText(string)
@@ -109,6 +87,23 @@ do
     loadUnitData200000()
 end
 loadUnitData200000=function()end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
