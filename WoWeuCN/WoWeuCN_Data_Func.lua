@@ -230,8 +230,19 @@ end
 
 
 function WoWTools_ChineseMixin:GetSpellName(spellID)
+    if not spellID then
+        return
+    end
     local data= self:GetSpellData(spellID)
-    return data and self:ReplaceText(data[1])
+    if data then
+        return self:ReplaceText(data[1])
+    else
+        local name= C_Spell.GetSpellName(spellID)
+        local cn= name and self:CN(name)
+        if cn then
+            return cn
+        end
+    end
 end
 
 function WoWTools_ChineseMixin:GetSpellDesc(spellID)
