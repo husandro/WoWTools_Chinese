@@ -45,6 +45,71 @@ WoWTools_ChineseMixin:GetBossDesc(journalEncounterID)
 WoWTools_ChineseMixin:GetBossName(journalEncounterID)
 ]]
 
+do
+loadEncounterData()
+end
+loadEncounterData=function()end
+
+do
+    loadItemData0()
+end
+loadItemData0=function()end
+do
+    loadItemData100000()
+end
+loadItemData100000=function()end
+do
+    loadItemData200000()
+end
+loadItemData200000=function()end
+
+
+
+
+do
+    loadSpellData0()
+end
+loadSpellData0=function()end
+
+do
+    loadSpellData100000()
+end
+loadSpellData100000=function()end
+
+do
+    loadSpellData200000()
+end
+loadSpellData200000=function()end
+
+do
+    loadSpellData300000()
+end
+loadSpellData300000=function()end
+
+do
+    loadSpellData400000()
+end
+loadSpellData400000=function()end
+
+
+
+
+
+do
+    loadUnitData0()
+end
+loadUnitData0=function()end
+
+do
+    loadUnitData100000()
+end
+loadUnitData100000=function()end
+
+do
+    loadUnitData200000()
+end
+loadUnitData200000=function()end
+
 
 
 local function split(s, delimiter)

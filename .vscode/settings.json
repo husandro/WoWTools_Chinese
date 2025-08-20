@@ -11,7 +11,19 @@
         "WoWToolsSave_Chinese_Chinese",
         "WoWToolsSave_Chinese",
         "ITEM_UPGRADE_TOOLTIP_FORMAT_STRING",
-        "ENCHANTED_TOOLTIP_LINE"
+        "ENCHANTED_TOOLTIP_LINE",
+        "loadEncounterData",
+        "loadItemData0",
+        "loadItemData100000",
+        "loadItemData200000",
+        "loadSpellData0",
+        "loadSpellData100000",
+        "loadSpellData200000",
+        "loadSpellData300000",
+        "loadSpellData400000",
+        "loadUnitData0",
+        "loadUnitData100000",
+        "loadUnitData200000"
     ],
     "Lua.diagnostics.disable": [
         "undefined-global",
