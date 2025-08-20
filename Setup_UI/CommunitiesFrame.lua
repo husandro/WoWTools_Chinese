@@ -288,7 +288,7 @@
         local count = 0;
         for i = 1, numClasses do
             local _, _, classID = GetClassInfo(i);
-            for i2 = 1, GetNumSpecializationsForClassID(classID) do
+            for i2 = 1, C_SpecializationInfo.GetNumSpecializationsForClassID(classID) do
                 count = count + 1
             end
         end

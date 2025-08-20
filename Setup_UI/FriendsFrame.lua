@@ -83,11 +83,18 @@ FriendsFrameTab1:SetText('好友')
     end
 
 
-    FriendsTabHeaderTab1:SetText('好友')
-    FriendsTabHeaderTab2:SetText('屏蔽')
-        FriendsFrameIgnorePlayerButton:SetText('添加')
-        FriendsFrameUnsquelchButton:SetText('移除')
-    FriendsTabHeaderTab3:SetText('招募战友')
+    if FriendsTabHeaderTab1 then--11.2.5没有了
+        FriendsTabHeaderTab1:SetText('好友')
+        FriendsTabHeaderTab2:SetText('屏蔽')
+            FriendsFrameIgnorePlayerButton:SetText('添加')
+            FriendsFrameUnsquelchButton:SetText('移除')
+        FriendsTabHeaderTab3:SetText('招募战友')
+    else
+        for _, btn in pairs(FriendsTabHeader.TabSystem.tabs) do--TabSystemMixin
+            WoWTools_ChineseMixin:SetButton(btn)
+        end
+    end
+
         if RecruitAFriendFrame then
             local function set_UpdateRAFInfo(self, rafInfo)
                 if self.rafEnabled and rafInfo and #rafInfo.versions > 0 then

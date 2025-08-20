@@ -72,7 +72,12 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
 --天赋
     self:SetLabel(PlayerSpellsFrame.TalentsFrame.ApplyButton)--:SetText('应用改动')
     self:HookLabel(PlayerSpellsFrame.TalentsFrame.LoadSystem.Dropdown.Text)
-    self:SetLabel(PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton.Text)
+
+    if PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton then--11.2.5没了
+        self:SetLabel(PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton.Text)
+    else
+
+    end
     --专精，名称
     hooksecurefunc(PlayerSpellsFrame.TalentsFrame, 'RefreshCurrencyDisplay', function(frame)
         local className = self:SetText(frame:GetClassName()) or self:CN(PlayerUtil.GetClassName())
@@ -192,8 +197,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
     end
 
 
-
-    self:SetLabel(PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton.Text)
+    if PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton then--11.2.5没了
+        self:SetLabel(PlayerSpellsFrame.SpellBookFrame.SearchPreviewContainer.DefaultResultButton.Text)
+    end
     self:SetLabel(ClassTalentLoadoutCreateDialog.Title)
     self:SetLabel(ClassTalentLoadoutCreateDialog.NameControl.Label)
     self:SetLabel(ClassTalentLoadoutCreateDialog.AcceptButton)

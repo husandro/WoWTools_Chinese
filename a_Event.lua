@@ -776,7 +776,31 @@ function WoWTools_ChineseMixin.Events:Blizzard_CooldownViewer()
 	            nameFontString:SetText(cn)
             end
         end
-   end)
+    end)
+
+    if not CooldownViewerSettings then--冷却设置 11.2.5
+        return
+    end
+
+    hooksecurefunc(CooldownViewerSettingsCategoryMixin, 'Init', function(frame)
+        self:SetLabel(frame.Header.Name)
+    end)
+
+    hooksecurefunc(CooldownViewerSettingsBarItemMixin, 'RefreshData', function(frame)
+        if not frame:IsEmptyCategory() then
+            local spellID = frame:GetSpellID()
+            if spellID then
+                local cn= self:GetSpellName(spellID)
+                if cn then
+                    frame.Bar.Name:SetText(cn)
+                end
+            end
+        end
+    end)
+
+    self:SetButton(CooldownViewerSettings.SaveLayoutButton)
+    self:SetLabel(CooldownViewerSettingsTitleText)
+    self:SetLabel(CooldownViewerSettings.SearchBox.Instructions)
 end
 
 
@@ -1000,7 +1024,6 @@ end
 
 
 function WoWTools_ChineseMixin.Events:Blizzard_FrameXML()
-
     --boss掉落，物品, 可能，会留下 StaticPopup1 框架
     hooksecurefunc('BossBanner_ConfigureLootFrame', function(lootFrame, data)--LevelUpDisplay.lua data= { itemID = itemID, quantity = quantity, playerName = playerName, className = className, itemLink = itemLink }
         --local itemName, itemLink, itemRarity, _, _, _, _, _, _, itemTexture, _, _, _, _, _, setID = C_Item.GetItemInfo(data.itemLink)
@@ -1010,36 +1033,42 @@ function WoWTools_ChineseMixin.Events:Blizzard_FrameXML()
         end
     end)
 
-        --拾取时, 弹出, 物品提示，信息, 战利品
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--拾取时, 弹出, 物品提示，信息, 战利品
     hooksecurefunc('DungeonCompletionAlertFrameReward_SetRewardItem', function(frame, itemLink)
         WoWTools_ItemMixin:SetItemStats(frame, frame.itemLink or itemLink , {point=frame.texture})
     end)
 
-
     hooksecurefunc('LegendaryItemAlertFrame_SetUp', function(frame)
         WoWTools_ItemMixin:SetItemStats(frame, frame.hyperlink, {point= frame.Icon})
     end)
-
 
     hooksecurefunc(LootItemExtendedMixin, 'Init', function(frame, itemLink2, originalQuantity, _, isCurrency)--ItemDisplay.lua
         local _, _, _, _, itemLink = ItemUtil.GetItemDetails(itemLink2, originalQuantity, isCurrency)
         WoWTools_ItemMixin:SetItemStats(frame, itemLink, {point= frame.Icon})
     end)
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

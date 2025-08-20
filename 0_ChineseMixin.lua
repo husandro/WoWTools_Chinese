@@ -8,6 +8,10 @@ WoWTools_ChineseMixin={
     Events={},
     Frames={},
 }
+
+
+
+
 local CNData={}--主要，汉化
 
 --[\228-\233][\128-\191][\128-\191]--检查 UTF-8 字符
@@ -587,8 +591,3 @@ end
 end]]
 
 
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner)
-    WoWToolsChineseSave= WoWToolsChineseSave or {}
-    EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-end)
