@@ -133,7 +133,7 @@ local function set_objectives(questID)
 					name= name or WoWTools_ChineseMixin:SetText(desc) or desc
 				end
 				if ( finished ) then
-					name = name.." （完成）"
+					name = name.."|cnGREEN_FONT_COLOR:（完成）"
 				end
 				if desc~=name then
 					objective:SetText(name)
