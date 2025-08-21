@@ -88,7 +88,7 @@ local function set_objectives(questID)
 
 
 	local objectivesTable = QuestInfoObjectivesFrame.Objectives or {}
-	local numObjectives = GetNumQuestLeaderBoards() or #objectivesTables or 0
+	local numObjectives = GetNumQuestLeaderBoards() or #objectivesTables
 	local objective
 	local desc, obType, finished
 	local numVisibleObjectives = 0
@@ -120,8 +120,6 @@ local function set_objectives(questID)
 			numVisibleObjectives = numVisibleObjectives+1
 			objective = objectivesTable[numVisibleObjectives]
 
-			print(index, numObjectives, numVisibleObjectives, objective)
-
 			if objective then
 				local name
 				if ( not desc or strlen(desc) == 0 ) then
@@ -130,7 +128,6 @@ local function set_objectives(questID)
 				else
 					local new= WoWTools_ChineseMixin:GetQuestIndexObject(questID, i)--无法找到
 					if new then
-						print(new)
 						name= desc:gsub('%d+/%d+ (.+)', new)
 					end
 					name= name or WoWTools_ChineseMixin:SetText(desc) or desc
@@ -163,7 +160,9 @@ end
 
 local function set_quest_item(questID)
 	local rewardsFrame = QuestInfoFrame.rewardsFrame
+
 	questID= questID or WoWTools_ChineseMixin:GetQuestID()
+
 	if not rewardsFrame:IsShown() or not questID then
 		return
 	end
@@ -229,6 +228,10 @@ local function set_quest_item(questID)
 
 	WoWTools_ChineseMixin:SetLabel(rewardsFrame.HonorFrame.Name)
 	WoWTools_ChineseMixin:SetLabel(rewardsFrame.TitleFrame.Name)
+
+	for header in rewardsFrame.spellHeaderPool:EnumerateActive() do
+		WoWTools_ChineseMixin:SetLabel(header)
+	end
 end
 
 
@@ -286,8 +289,12 @@ local function set_quest_info()
 end
 
 
-hooksecurefunc('QuestInfo_ShowRewards', set_quest_info)
-hooksecurefunc('QuestInfo_Display', set_quest_info)
+hooksecurefunc('QuestInfo_ShowRewards', function()
+	set_quest_info()
+end)
+hooksecurefunc('QuestInfo_Display', function()
+	set_quest_info()
+end)
 
 
 

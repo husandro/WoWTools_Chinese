@@ -122,14 +122,17 @@ QuestMapFrame.DetailsFrame.WaypointMapButton.tooltipText= '显示旅行路径'
 --setRegion(QuestMapFrame.DetailsFrame.RewardsFrame)
 
 
-MapQuestInfoRewardsFrame.ItemChooseText:SetText('你可以从这些奖励品中选择一件：')
+--[[MapQuestInfoRewardsFrame.ItemChooseText:SetText('你可以从这些奖励品中选择一件：')
 MapQuestInfoRewardsFrame.PlayerTitleText:SetText('新头衔： %s')
 MapQuestInfoRewardsFrame.QuestSessionBonusReward:SetText('在小队同步状态下完成此任务有可能获得奖励：')
-QuestInfoRequiredMoneyText:SetText('需要金钱：')
+
 QuestInfoRewardsFrame.ItemChooseText:SetText('你可以从这些奖励品中选择一件：')
 QuestInfoRewardsFrame.PlayerTitleText:SetText('新头衔： %s')
-QuestInfoRewardsFrame.QuestSessionBonusReward:SetText('在小队同步状态下完成此任务有可能获得奖励：')
+QuestInfoRewardsFrame.QuestSessionBonusReward:SetText('在小队同步状态下完成此任务有可能获得奖励：')]]
+WoWTools_ChineseMixin:SetFrame(QuestInfoRewardsFrame)
 
+
+QuestInfoRequiredMoneyText:SetText('需要金钱：')
 
 hooksecurefunc(WorldMapFrame, 'SetupTitle', function(self)
     self.BorderFrame:SetTitle('地图和任务日志')

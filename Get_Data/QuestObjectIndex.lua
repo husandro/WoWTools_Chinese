@@ -4098,9 +4098,15 @@ function WoWTools_ChineseMixin:GetQuestIndexObject(questID, index)
         return
     end
 
+    --[[if tab[questID..'x0'] or tab[questID..'x1'] or tab[questID..'x2'] or tab[questID..'x3'] then
+        print (tab[questID..'x0'] or tab[questID..'x1'] or tab[questID..'x2'] or tab[questID..'x3'])
+    end
+    return tab[questID..'x0'] or tab[questID..'x1'] or tab[questID..'x2'] or tab[questID..'x3']]
+
     index= math.max(0, (index or 1)-1)
-
     local desc= tab[questID..'x'..index]
-
+    if desc and WoWTools_DataMixin and WoWTools_DataMixin.Player.husandro then
+        print('|cnGREEN_FONT_COLOR:', desc)
+    end
     return self:IsCN(desc)
 end
