@@ -126,10 +126,10 @@ local function set_objectives(questID)
 					name= WoWTools_ChineseMixin:SetText(obType) or obType
 					desc= obType
 				else
-					local new= WoWTools_ChineseMixin:GetQuestIndexObject(questID, i)--无法找到
+					--[[local new= WoWTools_ChineseMixin:GetQuestIndexObject(questID, i)--无法找到
 					if new then
 						name= desc:gsub('%d+/%d+ (.+)', new)
-					end
+					end]]
 					name= name or WoWTools_ChineseMixin:SetText(desc) or desc
 				end
 				if ( finished ) then
