@@ -5,6 +5,10 @@ https://wago.tools/db2/CharTitles?locale=zhCN
 ]]
 
 local tab={
+
+[659]= "永恒混乱的 %s",
+[658]= "狱火使者 %s",
+
 [650]= "地下堡行者 %s",
 [649]= "欧·%s",
 [648]= "佐·%s",

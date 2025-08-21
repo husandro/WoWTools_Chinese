@@ -4,6 +4,7 @@ https://wago.tools/db2/Vignette?locale=zhCN
 
 ]]
 local tab={
+[7327] ="威·娜莉",
 [7307]= "名望军需官",
 [7146]= "升行界门",
 [7145]= "降行界门",

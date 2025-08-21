@@ -5,6 +5,7 @@ https://wago.tools/db2/UiMap?&locale=zhCN
 
 
 local tab={
+[2484]= "虚空之锋庇护所",
 [2477]= "虚空之痕洞窟",
 [2476]= "档案馆突袭",
 [2472]= "塔扎维什",

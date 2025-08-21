@@ -4,6 +4,7 @@ https://wago.tools/db2/BattlePetAbility?locale=zhCN
 ]]
 
 local tab={
+[2539]= {'邪能新星', '[StandardAccuracy(1,1)] |cffffffff命中几率|r 召唤邪能冲击波，对所有敌方宠物造成[StandardDamage(1,1)]点[School()]伤害。'},
 [2528]= {'虚空爆炸', '[StandardAccuracy(1,1)]|cffffffff命中几率|r|n|n立即造成[StandardDamage(1,1)]点[School()]伤害，在黑暗天气下外加[StandardDamage(1,3)]点伤害。随后，使用者必须重新充能2轮。|n|n在充能过程中，你无法做出任何其它动作。'},
 [2527]= {'黑暗涌动', '[StandardAccuracy(1,1)]|cffffffff命中几率|r|n|n用喷涌的黑暗能量冲击对手，造成[StandardDamage(1,1)]点[School()]伤害，并有[accuracy(1,3)]%的几率使目标昏迷[duration(1,3)]轮。|n|n如果天气处于太阳光状态，则昏迷几率提高至100%。'},
 [2526]= {'冲击钻', '[StandardAccuracy(1,2)] |cffffffff命中几率|r|n|n对敌人的宠物造成[StandardDamage(1,2)*4]点[School()]伤害。|n|n冲击钻会击碎敌方目标身上的固定数值伤害减免效果。'},
