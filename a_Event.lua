@@ -1020,7 +1020,10 @@ function CooldownViewerBuffBarItemMixin:SetBarContent(barContent)
 end
 ]]
 
-
+function WoWTools_ChineseMixin.Events:Blizzard_RemixArtifactUI()
+    self:HookLabel(RemixArtifactFrame.Header.Title)
+    self:SetButton(RemixArtifactFrame.CommitConfigControls.CommitButton)
+end
 
 
 function WoWTools_ChineseMixin.Events:Blizzard_FrameXML()
