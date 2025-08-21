@@ -70,7 +70,7 @@ Get_Data\TitleName.lua
 Data\ScenarioStepData.lua
 Get_Data\ScenarioName.lua
 ##任务目标
-##Get_Data\QuestObjectIndex.lua
+Get_Data\QuestObjectIndex.lua
 ##专业
 Get_Data\TradeSkillCategoryName.lua
 Get_Data\RecipeSource.lua

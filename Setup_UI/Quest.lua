@@ -81,28 +81,29 @@ end)
 --任务，目标
 local function set_objectives(questID)
 	questID= questID or WoWTools_ChineseMixin:GetQuestID()
-	
+
 	if not questID then
 		return
 	end
 
-	local numObjectives = GetNumQuestLeaderBoards() or 0
+
+	local objectivesTable = QuestInfoObjectivesFrame.Objectives or {}
+	local numObjectives = GetNumQuestLeaderBoards() or #objectivesTables or 0
 	local objective
 	local desc, obType, finished
-	local objectivesTable = QuestInfoObjectivesFrame.Objectives
 	local numVisibleObjectives = 0
 
 	local waypointText = C_QuestLog.GetNextWaypointText(questID)
 	if waypointText then
 		numVisibleObjectives = numVisibleObjectives + 1
 		objective = objectivesTable[numVisibleObjectives]
-		
+
 		if objective then
 			local cn=  WoWTools_ChineseMixin:SetText(waypointText)
 			if not cn then
 				local mapID= C_QuestLog.GetNextWaypoint(questID)
-				local mapInfo= C_Map.GetMapInfo(mapID)
-				cn= WoWTools_ChineseMixin:CN(mapInfo and mapInfo.name)
+				local mapInfo= C_Map.GetMapInfo(mapID) or {}
+				cn= WoWTools_ChineseMixin:CN(mapInfo.name)
 				if cn then
 					cn= '前往|A:common-icon-rotateright:0:0|a'..cn..'|A:common-icon-rotateleft:0:0|a'
 				end
@@ -111,22 +112,27 @@ local function set_objectives(questID)
 			objective:SetFormattedText('0/1 %s （可选）', cn or waypointText)
 		end
 	end
-	
+
 	for i = 1, numObjectives do
 		desc, obType, finished = GetQuestLogLeaderBoard(i)
 		if (obType ~= "spell" and obType ~= "log" and numVisibleObjectives < MAX_OBJECTIVES) then
+
 			numVisibleObjectives = numVisibleObjectives+1
 			objective = objectivesTable[numVisibleObjectives]
+
+			print(index, numObjectives, numVisibleObjectives, objective)
+
 			if objective then
 				local name
 				if ( not desc or strlen(desc) == 0 ) then
 					name= WoWTools_ChineseMixin:SetText(obType) or obType
 					desc= obType
 				else
-					--[[local new= WoWTools_ChineseMixin:GetQuestIndexObject(questID, i)--无法找到
+					local new= WoWTools_ChineseMixin:GetQuestIndexObject(questID, i)--无法找到
 					if new then
+						print(new)
 						name= desc:gsub('%d+/%d+ (.+)', new)
-					end]]
+					end
 					name= name or WoWTools_ChineseMixin:SetText(desc) or desc
 				end
 				if ( finished ) then
