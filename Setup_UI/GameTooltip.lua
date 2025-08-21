@@ -57,7 +57,7 @@ local function add_line(tooltip, ...)
 end
 
 local function Set_Battle_Pet(tooltip, speciesID)
-    local data= WoWTools_ChineseMixin:GetPetDesc(speciesID)
+    local data= speciesID and WoWTools_ChineseMixin:GetPetDesc(speciesID)
     if not data then
         return
     end
@@ -92,7 +92,7 @@ end
 
 
 local function Set_Quest(tooltip, questID, isShow)
-    local data= WoWTools_ChineseMixin:GetQuestData(questID)
+    local data= questID and WoWTools_ChineseMixin:GetQuestData(questID)
     if data then
         local title= data['Title']
         local ob= data['Objectives']
@@ -119,11 +119,13 @@ end
 
 
 local function Set_Spell(tooltip, spellID)
-    local desc, name= WoWTools_ChineseMixin:GetSpellDesc(spellID)
-    if desc or name then
-        tooltip:AddLine(' ')
-        tooltip:AddLine(name)
-        tooltip:AddLine(desc, nil,nil,nil, true)
+    if spellID then
+        local desc, name= WoWTools_ChineseMixin:GetSpellDesc(spellID)
+        if desc or name then
+            tooltip:AddLine(' ')
+            tooltip:AddLine(name)
+            tooltip:AddLine(desc, nil,nil,nil, true)
+        end
     end
 end
 
@@ -137,7 +139,7 @@ end
 
 
 local function Set_Item(tooltip, data)
-    local info= WoWTools_ChineseMixin:GetItemData(data.id)
+    local info= data and data.id and WoWTools_ChineseMixin:GetItemData(data.id)
     if not info then
         return
     end
@@ -206,7 +208,7 @@ end
 
 
 local function Set_Mount(tooltip, mountID)
-    if WoWTools_TooltipMixin then
+    if WoWTools_TooltipMixin or not mountID then
         return
     end
     local source= mountID and select(3,  C_MountJournal.GetMountInfoExtraByID(mountID))
@@ -233,7 +235,7 @@ TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes, function(
     if data.type==Enum.TooltipDataType.Item then--0
         if not GetItemData then--排除，插件 WoWeuCN_Tooltips
             Set_Item(tooltip, data)
-            if C_Heirloom.IsItemHeirloom(data.id) then
+            if data.id and C_Heirloom.IsItemHeirloom(data.id) then
                 local source= WoWTools_ChineseMixin:GetHeirloomSource(data.id)
                 if source and not C_Heirloom.PlayerHasHeirloom(data.id) then
                     tooltip:AddLine(source, nil,nil,nil, true)
@@ -249,7 +251,7 @@ TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes, function(
         if not GetSpellData then
             Set_Spell(tooltip, data.id)
         end
-        
+
 
     elseif data.type==Enum.TooltipDataType.Unit then--2
         Set_Unit(tooltip)
