@@ -61,20 +61,20 @@ end
 
 --有男，女之分
 
-    local className, classFile, classID
+    local className, classID
     for id, cn in pairs(tab) do
-        className, classFile= GetClassInfo(id)
+        className= GetClassInfo(id)
         WoWTools_ChineseMixin:SetCN(className, cn)
-        WoWTools_ChineseMixin:SetCN(classFile, cn)
+        --WoWTools_ChineseMixin:SetCN(classFile, cn)
     end
 
-    className, classFile, classID=  UnitClass('player', 2)--男
-    WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
+    className, _, classID=  UnitClass('player', 2)--男
+    --WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
     WoWTools_ChineseMixin:SetCN(className, tab[classID])
 
 
-    className, classFile, classID=  UnitClass('player', 3)--女
-    WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
+    className, _, classID=  UnitClass('player', 3)--女
+    --WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
     WoWTools_ChineseMixin:SetCN(className, tab[classID])
 end
 
