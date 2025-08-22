@@ -27,7 +27,8 @@ WoWTools_ChineseMixin:SetTabButton(PVEFrameTab3)--:SetText('史诗钥石地下�
 WoWTools_ChineseMixin:SetTabButton(PVEFrameTab4)--:SetText('地下堡')
 
 WoWTools_ChineseMixin:SetLabel(LFDQueueFrameRandomScrollFrameChildFrameXPLabel)
-hooksecurefunc('LFDQueueFrameFindGroupButton_Update', function()--LFDFrame.lua
+WoWTools_ChineseMixin:HookButton(LFDQueueFrameFindGroupButton)
+--[[hooksecurefunc('LFDQueueFrameFindGroupButton_Update', function()--LFDFrame.lua
     local mode = GetLFGMode(LE_LFG_CATEGORY_LFD)
     if ( mode == "queued" or mode == "rolecheck" or mode == "proposal" or mode == "suspended" ) then
         LFDQueueFrameFindGroupButton:SetText('离开队列')
@@ -63,7 +64,7 @@ hooksecurefunc('LFDQueueFrameFindGroupButton_Update', function()--LFDFrame.lua
     if ( lfgListDisabled ) then
         LFDQueueFrameFindGroupButton.tooltip = lfgListDisabled
     end
-end)
+end)]]
 
 LFDRoleCheckPopupAcceptButton:SetText('接受')
 LFDRoleCheckPopupDeclineButton:SetText('拒绝')

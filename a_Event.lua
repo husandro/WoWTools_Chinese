@@ -716,9 +716,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_BarbershopUI()
     BarberShopFrame.ResetButton:SetText('重置')
     BarberShopFrame.AcceptButton:SetText('接受')
 
-    hooksecurefunc(BarberShopMixin, 'SetCustomizationChoice', function(f, optionID, choiceID)
-        
-    end)
+    --hooksecurefunc(BarberShopMixin, 'SetCustomizationChoice', function(f, optionID, choiceID)
 end
 
 
