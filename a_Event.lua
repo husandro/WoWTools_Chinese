@@ -711,9 +711,14 @@ function WoWTools_ChineseMixin.Events:Blizzard_CharacterCustomize()
 end
 --理发店
 function WoWTools_ChineseMixin.Events:Blizzard_BarbershopUI()
+    
     BarberShopFrame.CancelButton:SetText('取消')
     BarberShopFrame.ResetButton:SetText('重置')
     BarberShopFrame.AcceptButton:SetText('接受')
+
+    hooksecurefunc(BarberShopMixin, 'SetCustomizationChoice', function(f, optionID, choiceID)
+        
+    end)
 end
 
 
@@ -751,10 +756,12 @@ function WoWTools_ChineseMixin.Events:Blizzard_EventTrace()
     EventTrace.Filter.Bar.CheckAllButton.Label:SetText('全部选取')
 end
 
---分解
+--拆解大师Mk1型, 分解
 function WoWTools_ChineseMixin.Events:Blizzard_ScrappingMachineUI()
-    ScrappingMachineFrame.ScrapButton:SetText('拆解')
-    C_Timer.After(0.3, function() ScrappingMachineFrameTitleText:SetText('拆解大师Mk1型') end)
+    self:SetButton(ScrappingMachineFrame.ScrapButton)
+    ScrappingMachineFrame:HookScript('OnShow', function(f)
+        f:SetTitle(self:CN(C_ScrappingMachineUI.GetScrappingMachineName()) or '拆解大师Mk1型')
+    end)
 end
 
 
