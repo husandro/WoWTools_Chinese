@@ -20,25 +20,64 @@ local tab= {
 [14] ='冒险者',
 
 }
+do
+    for classID, name in pairs(tab) do
+        local classFilename= select(2, GetClassInfo(classID))
+        local hex=classFilename and select(4, GetClassColor(classFilename))
+        if hex then
+            tab[classID]=(
+                    classFilename~='EVOKER'
+                    and '|A:groupfinder-icon-class-'..classFilename..':0:0|a'
+                    or '|A:UI-HUD-UnitFrame-Player-Portrait-ClassIcon-Evoker:0:0|a'
+                )
+                ..'|c'..hex..name..'|r'
+        end
+    end
+end
+do
 
+--英文
+for index, name in pairs({
+    'Warrior',
+    'Paladin',
+    'Hunter',
+    'Rogue',
+    'Priest',
+    'Death Knight',
+    'Shaman',
+    'Mage',
+    'Warlock',
+    'Monk',
+    'Druid',
+    'Demon Hunter',
+    'Evoker',
+}) do
+    WoWTools_ChineseMixin:SetCN(name,  tab[index])
+
+end
 
 
 
 
 --有男，女之分
-    do
-        local className, classFile, classID
-        for id, cn in pairs(tab) do
-            className, classFile= GetClassInfo(id)
-            WoWTools_ChineseMixin:SetCN(className, cn)
-            WoWTools_ChineseMixin:SetCN(classFile, cn)
-        end
-        className, classFile, classID=  UnitClass('player', 2)--男
-        WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
-        WoWTools_ChineseMixin:SetCN(className, tab[classID])
 
-        className, classFile, classID=  UnitClass('player', 3)--女
-        WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
-        WoWTools_ChineseMixin:SetCN(className, tab[classID])
+    local className, classFile, classID
+    for id, cn in pairs(tab) do
+        className, classFile= GetClassInfo(id)
+        WoWTools_ChineseMixin:SetCN(className, cn)
+        WoWTools_ChineseMixin:SetCN(classFile, cn)
     end
-    tab=nil
+
+    className, classFile, classID=  UnitClass('player', 2)--男
+    WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
+    WoWTools_ChineseMixin:SetCN(className, tab[classID])
+
+
+    className, classFile, classID=  UnitClass('player', 3)--女
+    WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
+    WoWTools_ChineseMixin:SetCN(className, tab[classID])
+end
+
+tab=nil
+
+

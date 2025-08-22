@@ -161,7 +161,7 @@ end
 
 
 
-
+--[[
     function WoWTools_ChineseMixin:GetPlayerInfo(unit, guid, name, tab)
         if type(unit)=='table' then
             tab= unit
@@ -261,7 +261,7 @@ end
 
         return text or ''
     end
-
+]]
 
 
 

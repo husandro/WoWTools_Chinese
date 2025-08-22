@@ -28,12 +28,15 @@ local tabString={
 [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_ONLINE, FRIENDS_LIST_AVAILABLE)]= "|TInterface\\FriendsFrame\\StatusIcon-Online:16:16|t 有空",
 [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_AFK, FRIENDS_LIST_AWAY)]= "|TInterface\\FriendsFrame\\StatusIcon-Away:16:16|t 离开",
 [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_DND, FRIENDS_LIST_BUSY)]= "|TInterface\\FriendsFrame\\StatusIcon-DnD:16:16|t 忙碌",
+
+[CURRENCY_FILTER_TYPE_CHARACTER:format(UnitName('player'))] = "仅限|A:auctionhouse-icon-favorite:0:0|a我"
 }
 
 
 local tabItem= {
     [6948]= '炉石',
 }
+
 
 
 EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
@@ -47,20 +50,10 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
     WoWTools_ChineseMixin:SetCN(EJ_GetTierInfo(2), '燃烧远征')
     WoWTools_ChineseMixin:SetCN('Alliance', '联盟')
     WoWTools_ChineseMixin:SetCN('Horde', '部落')
-    WoWTools_ChineseMixin:SetCN('Neutral', '中立')
-    WoWTools_ChineseMixin:SetCN('Warrior', '战士')
-    WoWTools_ChineseMixin:SetCN('Paladin', '圣骑士')
-    WoWTools_ChineseMixin:SetCN('Hunter', '猎人')
-    WoWTools_ChineseMixin:SetCN('Rogue', '潜行者')
-    WoWTools_ChineseMixin:SetCN('Priest', '牧师')
-    WoWTools_ChineseMixin:SetCN('Death Knight', '死亡骑士')
-    WoWTools_ChineseMixin:SetCN('Shaman', '萨满')
-    WoWTools_ChineseMixin:SetCN('Mage', '法师')
-    WoWTools_ChineseMixin:SetCN('Warlock', '术士')
-    WoWTools_ChineseMixin:SetCN('Monk', '武僧')
-    WoWTools_ChineseMixin:SetCN('Druid', '德鲁伊')
-    WoWTools_ChineseMixin:SetCN('Demon Hunter', '恶魔猎手')
-    WoWTools_ChineseMixin:SetCN('Evoker', '唤魔师')
+
+
+
+
 
     EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
 end)
