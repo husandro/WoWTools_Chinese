@@ -40,3 +40,12 @@ hooksecurefunc(StableFrame.StabledPetList.ScrollBox, 'Update', function(frame)
         WoWTools_ChineseMixin:SetLabel(btn.Type)
     end
 end)
+
+--替换 原生
+function StableFrame:SetupPetCounter()
+	self.StabledPetList.ListCounter.Count:SetFormattedText(
+        '%1d/%2d',
+        #self.StabledPetList.pets + math.min(#self.ActivePetList.pets, Constants.PetConsts_PostCata.MAX_SUMMONABLE_HUNTER_PETS),
+        Constants.PetConsts_PostCata.NUM_PET_SLOTS_HUNTER
+    )
+end
