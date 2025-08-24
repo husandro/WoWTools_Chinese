@@ -8,6 +8,11 @@ function WoWTools_ChineseMixin.Events:Blizzard_MacroUI()
     MacroNewButton:SetText('新建')
     MacroExitButton:SetText('退出')
     self:AddDialogs("CONFIRM_DELETE_SELECTED_MACRO", {text= '确定要删除这个宏吗？', button1= '是', button2= '取消'})
+
+    self:SetLabel(MacroPopupFrame.BorderBox.EditBoxHeaderText)
+    self:SetLabel(MacroPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconHeader)
+    self:SetButton(MacroPopupFrame.BorderBox.CancelButton)
+    self:SetButton(MacroPopupFrame.BorderBox.OkayButton)
 end
 
 
