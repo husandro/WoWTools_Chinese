@@ -21,10 +21,7 @@ Data\0_zhCN.lua
 Data\2_Gossip_TextData.lua
 ##商店
 Data\AccountStore.lua
-##法术
-Data\Spell_Data_Flyout.lua
-Data\Spell_Data_Add.lua
-Data\Spell_Data_Specialization.lua
+
 ##成就
 Data\Achievement_Data_Category.lua
 Data\Achievement_Data.lua
@@ -91,7 +88,10 @@ Get_Data\PetAblityData.lua
 ##传家宝, desc
 Get_Data\HeirloomSource.lua
 
-
+##法术
+Data\Spell_Data_Flyout.lua
+Data\Spell_Data_Add.lua
+Data\Spell_Data_Specialization.lua
 
 
 a_Event.lua
