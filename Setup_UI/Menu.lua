@@ -11,12 +11,14 @@
 --MenuTemplates.lua
 hooksecurefunc('GetWowStyle1ArrowButtonState', function(self)
     WoWTools_ChineseMixin:HookLabel(self.Text)
+
 end)
 hooksecurefunc(DropdownTextMixin, 'OnLoad', function(self)
     WoWTools_ChineseMixin:HookLabel(self.Text)
 end)
 hooksecurefunc(DropdownTextMixin, 'UpdateText', function(self)
 	WoWTools_ChineseMixin:SetLabel(self.Text)
+    
 	if self.resizeToText then
         local newWidth = self.Text:GetUnboundedStringWidth();
         if self.resizeToTextPadding then
@@ -55,18 +57,15 @@ end)
 
 
 
-local function set_fontString(frame)
-    C_Timer.After(0.01, function()
-        --WoWTools_ChineseMixin:SetLabel(frame.fontString)
-        WoWTools_ChineseMixin:HookLabel(frame.fontString)--, setFont)
-    end)
-end
-hooksecurefunc(MenuVariants, 'CreateFontString', set_fontString)
+
+hooksecurefunc(MenuVariants, 'CreateFontString', function(frame)
+    WoWTools_ChineseMixin:HookLabel(frame.fontString)
+end)
 hooksecurefunc(MenuVariants, 'CreateCheckbox', function(_, frame)
-    set_fontString(frame)
+    WoWTools_ChineseMixin:HookLabel(frame.fontString)
 end)
 hooksecurefunc(MenuVariants, 'CreateRadio', function(_, frame)
-    set_fontString(frame)
+    WoWTools_ChineseMixin:HookLabel(frame.fontString)
 end)
 
 
