@@ -314,4 +314,11 @@ function WoWTools_ChineseMixin.Events:Blizzard_DelvesCompanionConfiguration()
             end
         end
     end)
+
+--职责，选择，列表， 第一个栏
+    hooksecurefunc(CompanionConfigListButtonMixin, 'OnShow', function(btn)
+        self:SetLabel(btn.Name)
+    end)
+--职责，选择，菜单
+    self:HookLabel(DelvesCompanionAbilityListFrame.DelvesCompanionRoleDropdown.Text)
 end
