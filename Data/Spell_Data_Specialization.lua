@@ -66,6 +66,9 @@ do
                 name, description, icon, role= select(2, GetSpecializationInfoByID(specID, sex))
                 if name then
                     icon= icon or data[5]
+                    if specID==251 or specID==64 then
+                        name= name..specID
+                    end
                     WoWTools_ChineseMixin:SetCN(
                         name,
 

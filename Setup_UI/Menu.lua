@@ -1,14 +1,31 @@
+--Blizzard_Menu/MenuUtil.lua
+hooksecurefunc(MenuUtil, 'SetElementText', function(desc, text)
+    if text then
+        if type(desc.data)=='table' and (desc.data.specID==251 or desc.data.specID==64) then--251 DK 专精 冰霜
+            text= text..desc.data.specID
+        end
+        local cn= WoWTools_ChineseMixin:SetText(text)
+        if cn then
+            desc:AddInitializer(function(btn)
+                btn.fontString:SetText(cn)
+            end)
+        end
+    end
+end)
 
---Blizzard_Menu
 
+hooksecurefunc(WowStyle1DropdownMixin, 'SetText', function(self, text)
+    WoWTools_ChineseMixin:SetLabel(self.Text, text)
+end)
 
-
-
-
-
-
-
---MenuTemplates.lua
+hooksecurefunc(WowStyle1FilterDropdownMixin, 'UpdateText', function(self, text)
+    WoWTools_ChineseMixin:SetLabel(self.Text, self.text)
+end)
+--[[
+hooksecurefunc(WowStyle1FilterDropdownMixin, 'SetText', function(self, text)
+    WoWTools_ChineseMixin:SetLabel(self.Text, text)
+end)
+MenuTemplates.lua
 hooksecurefunc('GetWowStyle1ArrowButtonState', function(self)
     WoWTools_ChineseMixin:HookLabel(self.Text)
 
@@ -70,8 +87,6 @@ end)
 
 
 
-
-
 hooksecurefunc(MenuUtil, 'SetElementText', function(elementDescription, text)
     local name= WoWTools_ChineseMixin:SetText(text)
     if name and name~=text then
@@ -79,7 +94,7 @@ hooksecurefunc(MenuUtil, 'SetElementText', function(elementDescription, text)
     end
 end)
 
---[[elementDescription:AddInitializer(function(button)
+elementDescription:AddInitializer(function(button)
     button.Text:SetText(name)
 end)]]
 
