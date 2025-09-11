@@ -812,7 +812,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_CooldownViewer()
     end)
 
     --self:HookButton(CooldownViewerSettings.SaveLayoutButton)
-    self:HookButton(CooldownViewerSettings.UndoButton)
+    --self:HookButton(CooldownViewerSettings.UndoButton)
+    CooldownViewerSettings.UndoButton:SetCustomTextFormatter(function(_, enabled)
+		return "恢复 " .. CreateAtlasMarkup(enabled and "common-icon-undo" or "common-icon-undo-disable");
+	end);
     self:SetLabel(CooldownViewerSettingsTitleText)
     self:SetLabel(CooldownViewerSettings.SearchBox.Instructions)
 end
@@ -1062,6 +1065,16 @@ function WoWTools_ChineseMixin.Events:Blizzard_FrameXML()
     hooksecurefunc(LootItemExtendedMixin, 'Init', function(frame, itemLink2, originalQuantity, _, isCurrency)--ItemDisplay.lua
         local _, _, _, _, itemLink = ItemUtil.GetItemDetails(itemLink2, originalQuantity, isCurrency)
         WoWTools_ItemMixin:SetItemStats(frame, itemLink, {point= frame.Icon})
+    end)
+
+--新, 选项面板，常用
+    hooksecurefunc(NewFeatureLabelMixin, 'OnLoad', function(frame)
+        local cn= self:CN(frame.label)
+        if cn then
+            frame.label= cn
+        	frame.BGLabel:SetTextToFit(frame.label);
+            frame.Label:SetTextToFit(frame.label);
+        end
     end)
 end
 
