@@ -3,8 +3,8 @@
 
 
 
-hooksecurefunc(ReputationBarMixin, 'TryShowReputationStandingText', function(self)
-    local text= self.reputationStandingText
+hooksecurefunc(ReputationBarMixin, 'TryShowReputationStandingText', function(frame)
+    local text= frame.reputationStandingText
     if text then
         local cnName= WoWTools_ChineseMixin:CN(text)
         if not cnName and text:find('(.-) %d') then
@@ -15,41 +15,43 @@ hooksecurefunc(ReputationBarMixin, 'TryShowReputationStandingText', function(sel
             end
         end
         if cnName then
-            self.BarText:SetText(cnName)
+            frame.BarText:SetText(cnName)
         end
     end
 end)
+
+WoWTools_ChineseMixin:HookLabel(ReputationFrame.filterDropdown.Text)
 ReputationFrame.ReputationDetailFrame.ViewRenownButton:SetText('浏览名望')--ReputationFrame.xml
 ReputationFrame.ReputationDetailFrame.WatchFactionCheckbox.Label:SetText('显示为经验条')
 ReputationFrame.ReputationDetailFrame.MakeInactiveCheckbox.Label:SetText('隐藏')
 ReputationFrame.ReputationDetailFrame.AtWarCheckbox.Label:SetText('交战状态')
-hooksecurefunc(ReputationHeaderMixin, 'Initialize', function(self)
-    if self.elementData.name then
-        local cnName= WoWTools_ChineseMixin:CN(self.elementData.name)
+hooksecurefunc(ReputationHeaderMixin, 'Initialize', function(frame)
+    if frame.elementData.name then
+        local cnName= WoWTools_ChineseMixin:CN(frame.elementData.name)
         if cnName then
-            self.Name:SetText(cnName)
+            frame.Name:SetText(cnName)
         end
     end
 end)
-hooksecurefunc(ReputationEntryMixin, 'Initialize', function(self)
-    if self.elementData.name then
-        local cnName= WoWTools_ChineseMixin:CN(self.elementData.name)
+hooksecurefunc(ReputationEntryMixin, 'Initialize', function(frame)
+    if frame.elementData.name then
+        local cnName= WoWTools_ChineseMixin:CN(frame.elementData.name)
         if cnName then
-            self.Content.Name:SetText(cnName)
+            frame.Content.Name:SetText(cnName)
         end
     end
 end)
 
 WoWTools_ChineseMixin:HookLabel(ReputationFrame.ReputationDetailFrame.Title)
 WoWTools_ChineseMixin:HookLabel(ReputationFrame.ReputationDetailFrame.Description)
-    --hooksecurefunc(ReputationFrame.ReputationDetailFrame, 'Refresh', function(self)
+    --hooksecurefunc(ReputationFrame.ReputationDetailFrame, 'Refresh', function(frame)
 
 
-    --[[hooksecurefunc(ReputationFrame.ScrollBox, 'Update', function(self)
-        if not self:GetView() then
+    --[[hooksecurefunc(ReputationFrame.ScrollBox, 'Update', function(frame)
+        if not frame:GetView() then
             return
         end
-        for _, frame in pairs(self:GetFrames() or {}) do
+        for _, frame in pairs(frame:GetFrames() or {}) do
             WoWTools_ChineseMixin:SetLabel(frame.Container.Name)
 
             local bar=frame.Container.ReputationBar

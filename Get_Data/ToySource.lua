@@ -4,6 +4,7 @@ https://wago.tools/db2/Toy?locale=zhCN
 ]]
 
 local tab={
+[254666]= "|cFFFFD200特殊：|r“燃烧的远征”",
 [250722]= "|cFFFFD200商人出售：|r莎德安妮丝|n|cFFFFD200地区：|r卡雷什|n|cFFFFD200价格：|r3|Hcurrency:3303|h|TInterface\\ICONS\\INV_Misc_Coin_08.blp:0|t|h",
 [249713]= "|cFFFFD200任务：|r同道中人|n|cFFFFD200阵营：|r法力熔炉破袭队",
 [246908]= "|cFFFFD200商人出售：|r莎德安妮丝|n|cFFFFD200地区：|r卡雷什|n|cFFFFD200价格：|r3|Hcurrency:3303|h|TInterface\\ICONS\\INV_Misc_Coin_08.blp:0|t|h",
