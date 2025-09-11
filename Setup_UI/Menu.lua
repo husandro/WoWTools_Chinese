@@ -26,7 +26,7 @@ end)
 
 --下拉菜单
 hooksecurefunc(WowStyle2DropdownMixin, 'SetText', function(frame, text)
-    local cn= self:CN(text)
+    local cn= WoWTools_ChineseMixin:CN(text)
     if frame.Text and cn then
         frame.Text:SetText(cn)
     end
