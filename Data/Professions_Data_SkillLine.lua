@@ -1,5 +1,5 @@
 --[[
-[skillLineID]= {DisplayName_lang, AlternateVerb_lang, Description_lang}
+[ID]= {DisplayName_lang, AlternateVerb_lang, Description_lang}
 https://wago.tools/db2/SkillLine?locale=zhCN
 ]]
 

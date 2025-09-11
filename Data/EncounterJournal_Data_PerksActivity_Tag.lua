@@ -21,6 +21,8 @@ https://wago.tools/db2/PerksActivityTag?locale=zhCN
 [ID]= 'TagName_lang',
 ]]
 local PerksActivityTag={
+[33]= '军团再临：幻境新生',
+
 [1]= '任务',
 [2]= 'PvP',
 [3]= '地下城和团队副本',
