@@ -737,7 +737,7 @@ local tab={
 
 do
     for factionID, info in pairs(tab) do
-        local data= C_Reputation.GetFactionDataByID(factionID) or {}
+        local data= C_Reputation.GetFactionDataByID(factionID)
         if data then
             WoWTools_ChineseMixin:SetCN(data.name, info[1])
             WoWTools_ChineseMixin:SetCN(data.description, info[2])

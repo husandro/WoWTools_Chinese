@@ -68,38 +68,59 @@ CharacterFrameTab3:HookScript('OnEnter', function()
 end)
 
 
+    hooksecurefunc('PaperDollTitlesPane_InitButton', function(btn)
+        if not btn.OnEnter then
+            WoWTools_ChineseMixin:SetCNFont(btn:GetFontString())
 
---
-hooksecurefunc(PaperDollFrame.TitleManagerPane.ScrollBox, 'Update', function(frame)
+            btn:SetScript('OnLeave', function() GameTooltip:Hide() end)
+
+            btn:HookScript('OnEnter', function(f)
+                if not f.titleId or f.titleId<0 then
+                    return
+                end
+
+                local cn= WoWTools_ChineseMixin:GetTitleName(f.titleId)
+                if cn then
+                    GameTooltip:SetOwner(f, "ANCHOR_LEFT")
+                    GameTooltip_SetTitle(GameTooltip, format(cn, UnitName('player')), nil)
+                    GameTooltip_AddNormalLine(GameTooltip, GetTitleName(f.titleId), nil)
+                    GameTooltip:Show()
+                end
+            end)
+            btn.get_name= true
+        end
+
+        local name= btn.titleId==-1 and '无头衔' or WoWTools_ChineseMixin:GetTitleName(btn.titleId)
+        if name then
+            btn:SetText(format(name, ''))
+        end
+    end)
+
+--[[hooksecurefunc(PaperDollFrame.TitleManagerPane.ScrollBox, 'Update', function(frame)
     for _, btn in pairs(frame:GetFrames() or {}) do
         if not btn.get_name then
-
-            function btn:get_name()
-                local name= self.titleId==-1 and '无头衔' or WoWTools_ChineseMixin:GetTitleName(self.titleId)
-                return name
-            end
-
             WoWTools_ChineseMixin:SetCNFont(btn:GetFontString())
 
             btn:HookScript('OnLeave', GameTooltip_Hide)
 
-            btn:HookScript('OnEnter', function(self)
-                if self.titleId==-1 then
+            btn:HookScript('OnEnter', function(f)
+                if f.titleId==-1 then
                     return
                 end
-                local name= self:get_name()
+                local name= f.titleId==-1 and '无头衔' or WoWTools_ChineseMixin:GetTitleName(f.titleId)
                 if name then
-                    GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+                    GameTooltip:SetOwner(f, "ANCHOR_LEFT")
                     GameTooltip_SetTitle(GameTooltip, format(name, UnitName('player')), nil)
-                    GameTooltip_AddNormalLine(GameTooltip, GetTitleName(self.titleId), nil)
+                    GameTooltip_AddNormalLine(GameTooltip, GetTitleName(f.titleId), nil)
                     GameTooltip:Show()
                 end
             end)
+            btn.get_name= true
         end
 
-        local name= btn:get_name()
+        local name= btn.titleId==-1 and '无头衔' or WoWTools_ChineseMixin:GetTitleName(btn.titleId)
         if name then
             btn:SetText(format(name, ''))
         end
     end
-end)
+end)]]

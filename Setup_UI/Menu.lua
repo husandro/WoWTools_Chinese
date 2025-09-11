@@ -7,55 +7,65 @@ hooksecurefunc(MenuUtil, 'SetElementText', function(desc, text)
         local cn= WoWTools_ChineseMixin:SetText(text)
         if cn then
             desc:AddInitializer(function(btn)
-                btn.fontString:SetText(cn)
+                if btn.fontString then
+                    btn.fontString:SetText(cn)
+                end
             end)
         end
     end
 end)
 
 
-hooksecurefunc(WowStyle1DropdownMixin, 'SetText', function(self, text)
-    WoWTools_ChineseMixin:SetLabel(self.Text, text)
+hooksecurefunc(WowStyle1DropdownMixin, 'SetText', function(frame, text)
+    WoWTools_ChineseMixin:SetLabel(frame.Text, text)
 end)
 
-hooksecurefunc(WowStyle1FilterDropdownMixin, 'UpdateText', function(self, text)
-    WoWTools_ChineseMixin:SetLabel(self.Text, self.text)
+hooksecurefunc(WowStyle1FilterDropdownMixin, 'UpdateText', function(frame, text)
+    WoWTools_ChineseMixin:SetLabel(frame.Text, text)
 end)
---[[
-hooksecurefunc(WowStyle1FilterDropdownMixin, 'SetText', function(self, text)
-    WoWTools_ChineseMixin:SetLabel(self.Text, text)
-end)
-MenuTemplates.lua
-hooksecurefunc('GetWowStyle1ArrowButtonState', function(self)
-    WoWTools_ChineseMixin:HookLabel(self.Text)
 
-end)
-hooksecurefunc(DropdownTextMixin, 'OnLoad', function(self)
-    WoWTools_ChineseMixin:HookLabel(self.Text)
-end)
-hooksecurefunc(DropdownTextMixin, 'UpdateText', function(self)
-	WoWTools_ChineseMixin:SetLabel(self.Text)
-    
-	if self.resizeToText then
-        local newWidth = self.Text:GetUnboundedStringWidth();
-        if self.resizeToTextPadding then
-            newWidth = newWidth + self.resizeToTextPadding;
-        end
-        if self.resizeToTextMaxWidth then
-            newWidth = math.min(self.resizeToTextMaxWidth, newWidth);
-        end
-        if self.resizeToTextMinWidth then
-            newWidth = math.max(self.resizeToTextMinWidth, newWidth);
-        end
-        self:SetWidth(newWidth);
+--下拉菜单
+hooksecurefunc(WowStyle2DropdownMixin, 'SetText', function(frame, text)
+    local cn= self:CN(text)
+    if frame.Text and cn then
+        frame.Text:SetText(cn)
     end
 end)
-hooksecurefunc(DropdownSelectionTextMixin, 'OverrideText', function(self)
-    WoWTools_ChineseMixin:HookLabel(self.Text)
+--[[
+hooksecurefunc(WowStyle1FilterDropdownMixin, 'SetText', function(frame, text)
+    WoWTools_ChineseMixin:SetLabel(frame.Text, text)
 end)
-hooksecurefunc(DropdownSelectionTextMixin, 'UpdateToMenuSelections', function(self)
-    --WoWTools_ChineseMixin:SetLabel(self.Text)
-    WoWTools_ChineseMixin:HookLabel(self.Text)
+MenuTemplates.lua
+hooksecurefunc('GetWowStyle1ArrowButtonState', function(frame)
+    WoWTools_ChineseMixin:HookLabel(frame.Text)
+
+end)
+hooksecurefunc(DropdownTextMixin, 'OnLoad', function(frame)
+    WoWTools_ChineseMixin:HookLabel(frame.Text)
+end)
+hooksecurefunc(DropdownTextMixin, 'UpdateText', function(frame)
+	WoWTools_ChineseMixin:SetLabel(frame.Text)
+    
+	if frame.resizeToText then
+        local newWidth = frame.Text:GetUnboundedStringWidth();
+        if frame.resizeToTextPadding then
+            newWidth = newWidth + frame.resizeToTextPadding;
+        end
+        if frame.resizeToTextMaxWidth then
+            newWidth = math.min(frame.resizeToTextMaxWidth, newWidth);
+        end
+        if frame.resizeToTextMinWidth then
+            newWidth = math.max(frame.resizeToTextMinWidth, newWidth);
+        end
+        frame:SetWidth(newWidth);
+    end
+end)
+hooksecurefunc(DropdownSelectionTextMixin, 'OverrideText', function(frame)
+    WoWTools_ChineseMixin:HookLabel(frame.Text)
+end)
+hooksecurefunc(DropdownSelectionTextMixin, 'UpdateToMenuSelections', function(frame)
+    --WoWTools_ChineseMixin:SetLabel(frame.Text)
+    WoWTools_ChineseMixin:HookLabel(frame.Text)
 end)
 
 
@@ -68,8 +78,8 @@ end)
 
 
 
-hooksecurefunc(DropdownButtonMixin, 'SetupMenu', function(self)
-    WoWTools_ChineseMixin:SetLabel(self.Text)
+hooksecurefunc(DropdownButtonMixin, 'SetupMenu', function(frame)
+    WoWTools_ChineseMixin:SetLabel(frame.Text)
 end)
 
 
