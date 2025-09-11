@@ -792,8 +792,11 @@ function WoWTools_ChineseMixin.Events:Blizzard_CooldownViewer()
         return
     end
 
-    hooksecurefunc(CooldownViewerSettingsCategoryMixin, 'Init', function(frame)
-        self:SetLabel(frame.Header.Name)
+    hooksecurefunc(CooldownViewerSettingsCategoryMixin, 'Init', function(frame, categoryObj)
+        local cn= self:CN(categoryObj:GetTitle())
+        if cn then
+            frame.Header:SetHeaderText(cn)
+        end
     end)
 
     hooksecurefunc(CooldownViewerSettingsBarItemMixin, 'RefreshData', function(frame)
@@ -808,7 +811,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_CooldownViewer()
         end
     end)
 
-    self:SetButton(CooldownViewerSettings.SaveLayoutButton)
+    --self:HookButton(CooldownViewerSettings.SaveLayoutButton)
+    self:HookButton(CooldownViewerSettings.UndoButton)
     self:SetLabel(CooldownViewerSettingsTitleText)
     self:SetLabel(CooldownViewerSettings.SearchBox.Instructions)
 end
@@ -1060,16 +1064,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_FrameXML()
         WoWTools_ItemMixin:SetItemStats(frame, itemLink, {point= frame.Icon})
     end)
 end
-
-
-
-
-
-
-
-
-
-
 
 
 
