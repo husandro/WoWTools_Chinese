@@ -60,22 +60,30 @@ end
 
 
 --有男，女之分
-
-    local className, classID
+--[[
+	local numClasses = GetNumClasses();
+	local count = 0;
+	for i = 1, numClasses do
+		local _, _, classID = GetClassInfo(i);
+		for j = 1, C_SpecializationInfo.GetNumSpecializationsForClassID(classID) do
+			count = count + 1
+		end
+	end
+]]
+    
     for id, cn in pairs(tab) do
-        className= GetClassInfo(id)
-        WoWTools_ChineseMixin:SetCN(className, cn)
+        WoWTools_ChineseMixin:SetCN(GetClassInfo(id), cn)
         --WoWTools_ChineseMixin:SetCN(classFile, cn)
     end
 
-    className, _, classID=  UnitClass('player', 2)--男
+    local className, _, classID=  UnitClass('player')--男
     --WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
     WoWTools_ChineseMixin:SetCN(className, tab[classID])
 
 
-    className, _, classID=  UnitClass('player', 3)--女
+    --[[className, _, classID=  UnitClass('player', 3)--女
     --WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
-    WoWTools_ChineseMixin:SetCN(className, tab[classID])
+    WoWTools_ChineseMixin:SetCN(className, tab[classID])]]
 end
 
 tab=nil
