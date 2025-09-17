@@ -28,14 +28,17 @@ loadEncounterData()
 end
 loadEncounterData=function()end
 
+
 do
     loadItemData0()
 end
 loadItemData0=function()end
+
 do
     loadItemData100000()
 end
 loadItemData100000=function()end
+
 do
     loadItemData200000()
 end
