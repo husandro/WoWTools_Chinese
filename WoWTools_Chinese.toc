@@ -94,8 +94,9 @@ Data\Spell_Data_Flyout.lua
 Data\Spell_Data_Add.lua
 Data\Spell_Data_Specialization.lua
 
+SC_Data\Encounter.lua
 SC_Data\SectionEncounter.lua
-SC_Data\Init.lua
+SC_Data\z_Init.lua
 
 a_Event.lua
 b_Frames.lua
