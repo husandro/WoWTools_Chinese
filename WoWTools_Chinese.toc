@@ -6,7 +6,7 @@
 ## X-Wago-ID: QN5mWXNB
 ## X-Category: Plugins
 ## Notes: |A:Icon-WoW:0:0|aWoW |cff28a3ff中文化|r|n|cffffd100|A:communities-icon-invitemail:0:0|ahusandro@qq.com|r|n|A:WoWShare-TwitterLogo:0:0|a|cff00ccffhttps://www.curseforge.com/wow/addons/wowtools_chinese|r
-## SavedVariables: WoWToolsChineseSave
+## SavedVariables: WoWTools_SC, WoWTools_SC_Spell0, WoWTools_SC_Spell100000, WoWTools_SC_Spell200000, WoWTools_SC_Spell300000, WoWTools_SC_Spell400000, WoWTools_SC_Item0, WoWTools_SC_Item100000, WoWTools_SC_Item200000, WoWTools_SC_Unit0, WoWTools_SC_Unit100000, WoWTools_SC_Unit200000, WoWTools_SC_Achivements0, WoWTools_SC_Quest, WoWTools_SC_Encounter, WoWTools_SC_SectionEncounter
 ## DefaultState: Enabled
 ## IconTexture: Interface\AddOns\WoWTools_Chinese\Source\WoWtools.tga
 
@@ -94,6 +94,8 @@ Data\Spell_Data_Flyout.lua
 Data\Spell_Data_Add.lua
 Data\Spell_Data_Specialization.lua
 
+SC_Data\SectionEncounter.lua
+SC_Data\Init.lua
 
 a_Event.lua
 b_Frames.lua
@@ -159,7 +161,6 @@ WoWeuCN\ItemData_cn.lua
 WoWeuCN\SpellData_cn.lua
 WoWeuCN\QuestData_cn.lua
 WoWeuCN\UnitData_cn.lua
-WoWeuCN\EncounterData_cn.lua
 WoWeuCN\WoWeuCN_Data_Func.lua
 
 ##放最后
