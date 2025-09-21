@@ -25,11 +25,11 @@ end
 
 
 
---任务
+--[[任务
 local Player_Sex= UnitSex("player")
 local Player_Name= UnitName('player')
 local Player_Race= UnitRace('player')
-local Player_Class=  UnitClass('player')
+local Player_Class= UnitClass('player')
 EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner)
     Player_Race=  WoWTools_ChineseMixin:CN(Player_Race) or Player_Race
     Player_Class=  WoWTools_ChineseMixin:CN(Player_Class) or Player_Class
@@ -56,29 +56,38 @@ local function expand_text(msg)-- function WoWeuCN_Quests_ExpandUnitInfo(desc)
    msg= msg:gsub("{class}", Player_Class)
    return msg;
 end
+]]
 
 
 
 
 
-
-
+--任务
 --Title Objectives Description
-
+-- expand_text(data and data["S"])
 function WoWTools_ChineseMixin:GetQuestData(questID)
-    return WoWTools_SC_Quest[questID]
+    if questID then
+        return WoWTools_SC_Quest[questID]
+    end
 end
 function WoWTools_ChineseMixin:GetQuestName(questID)
     local data=self:GetQuestData(questID)
-    return expand_text(data and data["T"])
+    if data then
+        return data.T
+    end
 end
 function WoWTools_ChineseMixin:GetQuestDesc(questID)
     local data=self:GetQuestData(questID)
-    return expand_text(data and data["O"])
+    if data then
+        return data.O
+    end
 end
 function WoWTools_ChineseMixin:GetQuestObject(questID)
     local data=self:GetQuestData(questID)
-    return expand_text(data and data["S"])
+    if data then
+        return data.S
+    end
+        
 end
 
 

@@ -48,11 +48,11 @@ local function UpdateEncounterJournalHeaders()
                 local difficultyID = EJ_GetDifficulty()
                 local data = WoWTools_ChineseMixin:GetBoosSectionData(infoHeader.myID, difficultyID)--difficultyID and WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
                 if data then
-                    if data.Title then
-                        infoHeader.button.title:SetText(data.Title)
+                    if data.T then
+                        infoHeader.button.title:SetText(data.T)
                     end
-                    if data.Description then
-                        infoHeader.description:SetText(data.Description)
+                    if data.D then
+                        infoHeader.description:SetText(data.D)
                     end
                     EncounterJournal_ShiftHeaders(index)
                 end
@@ -65,20 +65,6 @@ end
 
 
 
-
-
-
-local function get_encounter_name(encounterID)
-    if encounterID then
-        local name= WoWTools_ChineseMixin:GetBossName(encounterID)
-        if name then
-            return name
-        else
-            name= EJ_GetEncounterInfo(encounterID)
-            return WoWTools_ChineseMixin:CN(name) or name
-        end
-    end
-end
 
 
 
@@ -191,24 +177,26 @@ local function Init_EncounterJournal()
 
             local numEncounters = EJ_GetNumEncountersForLootByIndex(self.index)
 
+            local bossName= itemInfo.encounterID and EJ_GetEncounterInfo(itemInfo.encounterID)
+            bossName= WoWTools_ChineseMixin:CN(bossName) or bossName
+
             if ( numEncounters == 1 ) then
-                local name2= get_encounter_name(itemInfo.encounterID)
-                if name2 then
-                    self.boss:SetFormattedText('首领：%s', name2)
+                if bossName then
+                    self.boss:SetFormattedText('首领：%s', bossName)
                 end
 
             elseif ( numEncounters == 2) then
                 local itemInfoSecond = C_EncounterJournal.GetLootInfoByIndex(self.index, 2)
                 local secondEncounterID = itemInfoSecond and itemInfoSecond.encounterID
-                local name1, name2= get_encounter_name(itemInfo.encounterID), get_encounter_name(secondEncounterID)
-                if name1 and name2 then
-                    self.boss:SetFormattedText('首领：%s，%s', name1 or '', name2)
+                local bossName2= secondEncounterID and EJ_GetEncounterInfo(secondEncounterID)
+                bossName2= WoWTools_ChineseMixin:CN(bossName2) or bossName2
+                if bossName or bossName2 then
+                    self.boss:SetFormattedText('首领：%s，%s', bossName or '', bossName2)
                 end
 
             elseif ( numEncounters > 2 ) then
-                local name2= get_encounter_name(itemInfo.encounterID)
-                if name2 then
-                    self.boss:SetFormattedText('首领：%s及其他', name)
+                if bossName then
+                    self.boss:SetFormattedText('首领：%s及其他', bossName)
                 end
             end
         else
@@ -274,11 +262,7 @@ local function Init_EncounterJournal()
             return
         end
         for _, btn in pairs(self:GetFrames()) do
-            local data= btn:GetData()
-            local name= data and WoWTools_ChineseMixin:GetBossName(data.bossID)
-            if name then
-                btn.text:SetText(name)
-            end
+            WoWTools_ChineseMixin:SetLabel(btn.text)
         end
     end)
 
@@ -388,7 +372,7 @@ local function Init_WoWeuCN()
 
     hooksecurefunc("EncounterJournal_DisplayEncounter", function(encounterID)
         local self = EncounterJournal.encounter
-        local ename, description, _, rootSectionID = EJ_GetEncounterInfo(encounterID)
+        local ename, description= EJ_GetEncounterInfo(encounterID)
         local title= WoWTools_ChineseMixin:CN(ename)
         local desc= WoWTools_ChineseMixin:CN(description)
         if title then
@@ -404,9 +388,9 @@ local function Init_WoWeuCN()
             end
         end
 
-        if title or desc then
-            UpdateEncounterJournalHeaders()
-        end
+        
+        UpdateEncounterJournalHeaders()
+        
     end)
 
         --[[local info= WoWTools_ChineseMixin:GetBossData(encounterID)
@@ -451,8 +435,8 @@ local function Init_WoWeuCN()
         local data = infoHeader and WoWTools_ChineseMixin:GetBoosSectionData(infoHeader.sectionID)
         if data then
 
-            local title= data.Title
-            local desc= data.Description
+            local title= data.T
+            local desc= data.D
             if title then
                 infoHeader.button.title:SetText(title)
             end

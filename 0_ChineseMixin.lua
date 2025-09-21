@@ -29,7 +29,9 @@ function WoWTools_ChineseMixin:SetCN(en, cn)
 end
 
 function WoWTools_ChineseMixin:CN(text)
-    return CNData[text]
+    if text then
+        return CNData[text]
+    end
 end
 
 
@@ -207,7 +209,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
             data= self:GetBoosSectionData(tab.sectionID, tab.difficultyID)
         end
 
-    elseif tab.journalEncounterID then
+    --[[elseif tab.journalEncounterID then
         if tab.isName then
             data= self:GetBossName(tab.journalEncounterID)
         elseif tab.isDesc then
@@ -216,7 +218,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
             data= self:GetBossData(tab.journalEncounterID)
         end
 
-    --[[elseif tab.instanceID then
+    elseif tab.instanceID then
         data= self:GetInstanceDesc(tab.instanceID)--副本]]
 
     elseif tab.scenarioID then
