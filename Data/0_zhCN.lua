@@ -7,6 +7,9 @@ https://wago.tools/db2/GlobalStrings?&locale=zhCN
 
 
 local tab={
+["CATALOG_SHOP_TRY_AGAIN_LATER"]= "请稍候再确认。",
+["CATALOG_SHOP_NOT_AVAILABLE"]= "商城不可用",
+["COOLDOWN_VIEWER_SETTINGS_EMPTY_SLOT_TOOLTIP"]= "空栏位",
 
 ["BUG_BUTTON"]= "Bug及建议",
 ["CHARACTER_BUTTON"]= "角色信息",
@@ -23238,7 +23241,6 @@ local tab={
 ["CATALOG_SHOP_TOKEN_IN_GAME_ONLY"]= "你必须使用一个角色登录游戏才能购买魔兽世界时光徽章。",
 ["CATALOG_SHOP_DISCOUNT_FORMAT"]= "-%s%%",
 ["CATALOG_SHOP_TYPE_MOUNT_FLYING_AQUATIC"]= "飞行水栖坐骑",
-["COOLDOWN_VIEWER_SETTINGS_EMPTY_SLOT_TOOLTIP"]= "Empty Slot",
 ["KIOSK_SESSION_STARTED_BODY"]= "新的世界之树在梦境中盛放。|n菲莱克需要圣泉的力量|n才能夺取巨树之心，|n并将他的烈焰散播到整个艾泽拉斯。",
 ["KIOSK_SESSION_EXPIRED_SUBTITLE"]= "梦境守护者",
 
