@@ -268,9 +268,9 @@ local function set_quest_info()
 		QuestInfoTitleHeader:SetText(title)
     end
 
-    
+
 	set_objectives(questID, object)
-    
+
 	WoWTools_ChineseMixin:SetLabel(QuestInfoObjectivesText)
 
 

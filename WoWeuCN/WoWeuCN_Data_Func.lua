@@ -11,10 +11,6 @@ https://www.curseforge.com/wow/addons/quest-chinese-translator
 
 
 WoWTools_ChineseMixin:ReplaceText(string)
-法术 WoWTools_ChineseMixin:GetSpellData(spellID)
-物品 WoWTools_ChineseMixin:GetItemData(itemID)
-任务 WoWTools_ChineseMixin:GetQuestData(questID, isName, isObject, isDesc)
-
 ]]
 
 
