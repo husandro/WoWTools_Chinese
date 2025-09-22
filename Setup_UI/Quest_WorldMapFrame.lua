@@ -99,7 +99,7 @@ end
     QuestLogQuests_AddQuestButton
 ]]
 
-hooksecurefunc("QuestLogQuests_Update", function()
+local function Set_Quest_Line()
     for line in QuestScrollFrame.titleFramePool:EnumerateActive() do
         set_text(line)
         WoWTools_ChineseMixin:SetLabel(line.ButtonText)
@@ -138,9 +138,7 @@ hooksecurefunc("QuestLogQuests_Update", function()
                             line.Text:SetText(name)
                             line:SetHeight(line.Text:GetStringHeight())
                         else
-                            if line then
-                                print(i, name, line.Text:GetText())
-                            end
+                            break
                         end
                     end
                 end
@@ -155,7 +153,6 @@ hooksecurefunc("QuestLogQuests_Update", function()
         end
     end
     
-
     for line in QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
        WoWTools_ChineseMixin:SetLabel(line.Text)
        WoWTools_ChineseMixin:SetLabel(line.Progress)
@@ -184,8 +181,15 @@ hooksecurefunc("QuestLogQuests_Update", function()
 		end
 		QuestScrollFrame.Contents.StoryHeader.Progress:SetFormattedText('|cffffd200故事进度：|r %d/%d章', completedCriteria, numCriteria)
 	end
- end)
+end
 
+
+hooksecurefunc("QuestLogQuests_Update", function()
+    Set_Quest_Line()
+end)
+QuestScrollFrame:HookScript('OnShow', function()
+    Set_Quest_Line()
+end)
 
 
 

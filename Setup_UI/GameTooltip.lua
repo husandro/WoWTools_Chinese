@@ -102,9 +102,9 @@ local function Set_Quest(tooltip, questID, isShow)
             tooltip:AddLine('|cffffffff'..data.O, nil, nil, nil, true)
         end
         if data.S then
-            
+
             local questLogIndex= C_QuestLog.GetLogIndexForQuestID(questID)
-            
+
             for i, name in pairs(data.S) do
                 local text, _, finished = GetQuestLogLeaderBoard(i, questLogIndex)
                 local num, per
@@ -118,7 +118,7 @@ local function Set_Quest(tooltip, questID, isShow)
                     name= name..per
                 end
                 local col= questLogIndex and finished and '|cff626262' or '|cff00d8ff'
-                
+
                 tooltip:AddLine(' - '..col..name)
             end
         end
