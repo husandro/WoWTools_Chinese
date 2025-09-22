@@ -242,7 +242,7 @@ hooksecurefunc('LFGListEntryCreation_UpdateValidState', function(self)
     end
 end)
 
-local function LFGListUtil_GetQuestDescription(questID)
+local function LFGListUtil_GetQuestObjectTextription(questID)
     local descriptionFormat = '完成任务[%s]。'
     if ( QuestUtils_IsQuestWorldQuest(questID) ) then
         descriptionFormat = '完成世界任务[%s]。'
@@ -259,7 +259,7 @@ hooksecurefunc('LFGListEntryCreation_SetEditMode', function(self)--LFGList.lua
         local activeEntryInfo = C_LFGList.GetActiveEntryInfo()
         assert(activeEntryInfo)
         if ( activeEntryInfo.questID ) then
-            self.Description.EditBox.Instructions:SetText(LFGListUtil_GetQuestDescription(activeEntryInfo.questID))
+            self.Description.EditBox.Instructions:SetText(LFGListUtil_GetQuestObjectTextription(activeEntryInfo.questID))
         else
             self.Description.EditBox.Instructions:SetText(descInstructions or '关于你的队伍的更多细节（可选）')
         end

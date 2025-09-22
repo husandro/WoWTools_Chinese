@@ -182,26 +182,3 @@ hooksecurefunc(CampaignNextObjectiveMixin, 'Set', function(self, failureReason)
 		end
 	end
 end)
-
-hooksecurefunc("QuestLogQuests_Update", function()
-	local mapID = QuestMapFrame:GetParent():GetMapID();
-	local storyAchievementID, storyMapID = C_QuestLog.GetZoneStoryInfo(mapID);
-
-	if storyAchievementID then
-		local mapInfo = C_Map.GetMapInfo(storyMapID);
-		local map= mapInfo and WoWTools_ChineseMixin:CN(mapInfo.name) or nil
-		if map then
-			QuestScrollFrame.Contents.StoryHeader.Text:SetText(amp)
-		end
-
-		local numCriteria = GetAchievementNumCriteria(storyAchievementID);
-		local completedCriteria = 0;
-		for i = 1, numCriteria do
-			local _, _, completed = GetAchievementCriteriaInfo(storyAchievementID, i);
-			if ( completed ) then
-				completedCriteria = completedCriteria + 1;
-			end
-		end
-		QuestScrollFrame.Contents.StoryHeader.Progress:SetFormattedText('|cffffd200故事进度：|r %d/%d章', completedCriteria, numCriteria);
-	end
-end)

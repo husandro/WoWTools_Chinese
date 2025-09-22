@@ -94,22 +94,35 @@ end
 local function Set_Quest(tooltip, questID, isShow)
     local data= WoWTools_ChineseMixin:GetQuestData(questID)
     if data then
-        local title= data['T']
-        local desc= data['O']
-        local obj= data['S']
-        if title or desc or obj then
-            tooltip:AddLine(' ')
+        tooltip:AddLine(' ')
+        if data.T then
+            tooltip:AddLine('|cffff761b'..data.T)
         end
-        GameTooltip_AddColoredLine(tooltip, title, YELLOW_THREAT_COLOR)
-        GameTooltip_AddColoredLine(tooltip, desc, HIGHLIGHT_FONT_COLOR, true)
-
-        if obj then
-            for _, name in pairs(obj) do
-                GameTooltip_AddColoredLine(tooltip, name, HIGHLIGHT_FONT_COLOR)
+        if data.O then
+            tooltip:AddLine('|cffffffff'..data.O, nil, nil, nil, true)
+        end
+        if data.S then
+            
+            local questLogIndex= C_QuestLog.GetLogIndexForQuestID(questID)
+            
+            for i, name in pairs(data.S) do
+                local text, _, finished = GetQuestLogLeaderBoard(i, questLogIndex)
+                local num, per
+                if text then
+                    num= text:match('(%d+/%d+ )')
+                    per= text:match('( %(%d+%%)%)')
+                end
+                if num then
+                    name= num..name
+                elseif per then
+                    name= name..per
+                end
+                local col= questLogIndex and finished and '|cff626262' or '|cff00d8ff'
+                
+                tooltip:AddLine(' - '..col..name)
             end
         end
-
-        if isShow and (title or ob )  then
+        if isShow then
             tooltip:Show()
         end
     end

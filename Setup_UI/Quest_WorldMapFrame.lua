@@ -88,24 +88,73 @@ local function set_text(line)
 end
 --[[
 
-	QuestScrollFrame.titleFramePool:ReleaseAll();
-	QuestScrollFrame.objectiveFramePool:ReleaseAll();
-	QuestScrollFrame.headerFramePool:ReleaseAll();
-	QuestScrollFrame.campaignHeaderFramePool:ReleaseAll();
-	QuestScrollFrame.campaignHeaderMinimalFramePool:ReleaseAll();
-	QuestScrollFrame.covenantCallingsHeaderFramePool:ReleaseAll();
-	QuestScrollFrame.Contents:ResetUsage();
+	QuestScrollFrame.titleFramePool:ReleaseAll()
+	QuestScrollFrame.objectiveFramePool:ReleaseAll()
+	QuestScrollFrame.headerFramePool:ReleaseAll()
+	QuestScrollFrame.campaignHeaderFramePool:ReleaseAll()
+	QuestScrollFrame.campaignHeaderMinimalFramePool:ReleaseAll()
+	QuestScrollFrame.covenantCallingsHeaderFramePool:ReleaseAll()
+	QuestScrollFrame.Contents:ResetUsage()
+
+    QuestLogQuests_AddQuestButton
 ]]
 
 hooksecurefunc("QuestLogQuests_Update", function()
+    for line in QuestScrollFrame.titleFramePool:EnumerateActive() do
+        set_text(line)
+        WoWTools_ChineseMixin:SetLabel(line.ButtonText)
+    end
+
     for line in QuestScrollFrame.headerFramePool:EnumerateActive() do
         set_text(line)
     end
 
-    for line in QuestScrollFrame.titleFramePool:EnumerateActive() do
-        set_text(line)
-       WoWTools_ChineseMixin:SetLabel(line.ButtonText)
+
+    local Lines= {}
+    for line in QuestScrollFrame.objectiveFramePool:EnumerateActive() do
+        Lines[line.questID]= Lines[line.questID] or {lines={}, questLogIndex= line.questLogIndex}
+        table.insert(Lines[line.questID].lines, line)
     end
+    for questID, tab in pairs(Lines) do
+        local numObjectives = GetNumQuestLeaderBoards(tab.questLogIndex) or 0
+        if numObjectives>0 then
+            local data= WoWTools_ChineseMixin:GetQuestObject(questID)
+            if data then
+                local index=0
+                for i= 1, numObjectives do
+                    local text, _, finished = GetQuestLogLeaderBoard(i, questLogIndex)
+                    if text and not finished then
+                        index= index+1
+                        local name= data[i]
+                        local line= tab.lines[index]
+                        if name and line then
+                            local num= text:match('(%d+/%d+ )')
+                            local per= text:match('( %(%d+%%)%)')
+                            if num then
+                                name= num..name
+                            elseif per then
+                                name= name..per
+                            end
+                            line.Text:SetText(name)
+                            line:SetHeight(line.Text:GetStringHeight())
+                        else
+                            if line then
+                                print(i, name, line.Text:GetText())
+                            end
+                        end
+                    end
+                end
+            end
+        else
+            local obj= WoWTools_ChineseMixin:GetQuestObjectText(questID)
+            local line= tab.lines[1]
+            if obj and line then
+                line.Text:SetText(obj)
+                line:SetHeight(line.Text:GetStringHeight())
+            end
+        end
+    end
+    
 
     for line in QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
        WoWTools_ChineseMixin:SetLabel(line.Text)
@@ -115,6 +164,26 @@ hooksecurefunc("QuestLogQuests_Update", function()
     for line in QuestScrollFrame.covenantCallingsHeaderFramePool:EnumerateActive() do--没测试
         set_text(line)
     end
+
+    local mapID = QuestMapFrame:GetParent():GetMapID()
+	local storyAchievementID, storyMapID = C_QuestLog.GetZoneStoryInfo(mapID)
+	if storyAchievementID then
+		local mapInfo = C_Map.GetMapInfo(storyMapID)
+		local map= mapInfo and WoWTools_ChineseMixin:CN(mapInfo.name) or nil
+		if map then
+			QuestScrollFrame.Contents.StoryHeader.Text:SetText(amp)
+		end
+
+		local numCriteria = GetAchievementNumCriteria(storyAchievementID)
+		local completedCriteria = 0
+		for i = 1, numCriteria do
+			local _, _, completed = GetAchievementCriteriaInfo(storyAchievementID, i)
+			if ( completed ) then
+				completedCriteria = completedCriteria + 1
+			end
+		end
+		QuestScrollFrame.Contents.StoryHeader.Progress:SetFormattedText('|cffffd200故事进度：|r %d/%d章', completedCriteria, numCriteria)
+	end
  end)
 
 
@@ -128,34 +197,34 @@ hooksecurefunc("QuestLogQuests_Update", function()
 
 --[[
 function QuestLogScrollFrameMixin:OnLoad()
-	ScrollFrame_OnLoad(self);
+	ScrollFrame_OnLoad(self)
 
 	self:RegisterCallback("OnVerticalScroll", function(offset)
-		self:UpdateBottomShadow(offset);
-	end);
+		self:UpdateBottomShadow(offset)
+	end)
 
 	self:RegisterCallback("OnScrollRangeChanged", function(offset)
-		self:UpdateBottomShadow(offset);
-	end);
+		self:UpdateBottomShadow(offset)
+	end)
 
-	local contentsFrame = QuestMapFrame.QuestsFrame.ScrollFrame.Contents;
+	local contentsFrame = QuestMapFrame.QuestsFrame.ScrollFrame.Contents
 
 	self.titleFramePool = CreateFramePool("BUTTON", contentsFrame, "QuestLogTitleTemplate", function(framePool, frame)
-		Pool_HideAndClearAnchors(framePool, frame);
-		frame.info = nil;
-	end);
+		Pool_HideAndClearAnchors(framePool, frame)
+		frame.info = nil
+	end)
 
-	self.objectiveFramePool = CreateFramePool("FRAME", contentsFrame, "QuestLogObjectiveTemplate");
-	self.headerFramePool = CreateFramePool("BUTTON", contentsFrame, "QuestLogHeaderTemplate");
-	self.campaignHeaderFramePool = CreateFramePool("FRAME", contentsFrame, "CampaignHeaderTemplate");
-	self.campaignHeaderMinimalFramePool = CreateFramePool("BUTTON", contentsFrame, "CampaignHeaderMinimalTemplate");
-	self.covenantCallingsHeaderFramePool = CreateFramePool("BUTTON", contentsFrame, "CovenantCallingsHeaderTemplate");
-	self.CampaignTooltip = CreateFrame("Frame", nil, UIParent, "CampaignTooltipTemplate");
+	self.objectiveFramePool = CreateFramePool("FRAME", contentsFrame, "QuestLogObjectiveTemplate")
+	self.headerFramePool = CreateFramePool("BUTTON", contentsFrame, "QuestLogHeaderTemplate")
+	self.campaignHeaderFramePool = CreateFramePool("FRAME", contentsFrame, "CampaignHeaderTemplate")
+	self.campaignHeaderMinimalFramePool = CreateFramePool("BUTTON", contentsFrame, "CampaignHeaderMinimalTemplate")
+	self.covenantCallingsHeaderFramePool = CreateFramePool("BUTTON", contentsFrame, "CovenantCallingsHeaderTemplate")
+	self.CampaignTooltip = CreateFrame("Frame", nil, UIParent, "CampaignTooltipTemplate")
 
-	self.SearchBox.Instructions:SetText(SEARCH_QUEST_LOG);
+	self.SearchBox.Instructions:SetText(SEARCH_QUEST_LOG)
 
-	EventRegistry:RegisterCallback("MapCanvas.QuestPin.OnEnter", self.OnMapCanvasPinEnter, self);
-	EventRegistry:RegisterCallback("MapCanvas.QuestPin.OnLeave", self.OnMapCanvasPinLeave, self);
+	EventRegistry:RegisterCallback("MapCanvas.QuestPin.OnEnter", self.OnMapCanvasPinEnter, self)
+	EventRegistry:RegisterCallback("MapCanvas.QuestPin.OnLeave", self.OnMapCanvasPinLeave, self)
 end
 ]]
 

@@ -123,7 +123,6 @@ local function set_objectives(questID, obs)
 					if new then
 						local num= desc:match('(%d+/%d+ )')
 						local per= desc:match(' %((%d+%%)%)')
-						
 						if num then
 							name= num..new
 						elseif per then

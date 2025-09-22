@@ -76,7 +76,7 @@ function WoWTools_ChineseMixin:GetQuestName(questID)
         return data.T
     end
 end
-function WoWTools_ChineseMixin:GetQuestDesc(questID)
+function WoWTools_ChineseMixin:GetQuestObjectText(questID)
     local data=self:GetQuestData(questID)
     if data then
         return data.O
@@ -87,9 +87,13 @@ function WoWTools_ChineseMixin:GetQuestObject(questID)
     if data then
         return data.S
     end
-        
 end
-
+function WoWTools_ChineseMixin:GetQuestDesc(questID)
+    local data=self:GetQuestData(questID)
+    if data then
+        return data.D
+    end
+end
 
 
 
