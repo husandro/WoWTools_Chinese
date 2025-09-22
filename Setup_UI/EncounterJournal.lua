@@ -388,12 +388,34 @@ local function Init_WoWeuCN()
 
     hooksecurefunc("EncounterJournal_DisplayEncounter", function(encounterID)
         local self = EncounterJournal.encounter
-        local info= WoWTools_ChineseMixin:GetBossData(encounterID)
+        local ename, description, _, rootSectionID = EJ_GetEncounterInfo(encounterID)
+        local title= WoWTools_ChineseMixin:CN(ename)
+        local desc= WoWTools_ChineseMixin:CN(description)
+        if title then
+            self.info.encounterTitle:SetText(title)
+            set_navButton(EncounterJournal.navBar, title)--导航条
+        end
+         if desc then
+            self.overviewFrame.loreDescription:SetText(desc)
+            self.infoFrame.description:SetText(desc)
+            self.infoFrame.descriptionHeight = self.infoFrame.description:GetHeight()
+            if self.usedHeaders[1] then
+                self.usedHeaders[1]:SetPoint("TOPRIGHT", 0 , -8 - EncounterJournal.encounter.infoFrame.descriptionHeight - 6)
+            end
+        end
+
+        if title or desc then
+            UpdateEncounterJournalHeaders()
+        end
+    end)
+
+        --[[local info= WoWTools_ChineseMixin:GetBossData(encounterID)
         if info then
             local title= info.Title
             local desc= info.Description
 --技能，列表
             if title then
+                
                 self.info.encounterTitle:SetText(title)
                 set_navButton(EncounterJournal.navBar, title)--导航条
 
@@ -416,8 +438,7 @@ local function Init_WoWeuCN()
         end
         if des or info then
             UpdateEncounterJournalHeaders()
-        end
-    end)
+        end]]
 
     hooksecurefunc("EncounterJournal_ToggleHeaders", function(object)
         if (object == EncounterJournal.encounter.overviewFrame) then

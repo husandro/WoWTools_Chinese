@@ -121,7 +121,16 @@ local function set_objectives(questID, obs)
 				else
 					local new= obs and obs[i]--无法找到
 					if new then
-						name= desc:gsub('%d+/%d+ (.+)', new)
+						local num= desc:match('(%d+/%d+ )')
+						local per= desc:match(' %((%d+%%)%)')
+						
+						if num then
+							name= num..new
+						elseif per then
+							name= per..' '..new
+						else
+							name= desc..' '..new
+						end
 					end
 					name= name or WoWTools_ChineseMixin:SetText(desc) or desc
 				end
@@ -253,12 +262,12 @@ local function set_quest_info()
 	end
 
     local data= WoWTools_ChineseMixin:GetQuestData(questID)
-	local title, object, desc
+	local title, objects, obj
 
 	if data then
 		title= data["T"]
-		object= data["O"]
-		desc= data["D"]
+		obj= data["O"]
+		objects= data["S"]
 	end
 
     if title then
@@ -269,11 +278,15 @@ local function set_quest_info()
     end
 
 
-	set_objectives(questID, object)
+	set_objectives(questID, objects)
 
-    if desc then
-       QuestInfoDescriptionText:SetText(desc)
+    if obj then
+		info= obj
+		for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR|r') for k2,v2 in pairs(v) do print('|cffffff00',k2,v2, '|r') end print('|cffff0000---',k, '---END|r') else print(k,v) end end print('|cffff00ff——————————|r')
+		--QuestInfoObjectivesText:SetText(obj)
     end
+
+--QuestInfoDescriptionText:SetText()
 
 	set_quest_item(questID)
 end
@@ -365,7 +378,7 @@ hooksecurefunc('QuestInfo_ShowTitle', function()
 	local questID= WoWTools_ChineseMixin:GetQuestID()
 	if questID then
 		local data= questID and WoWTools_ChineseMixin:GetQuestData(questID)
-		set_objectives(questID, data and data.O)
+		set_objectives(questID, data and data.S)
 	end
  end)
 

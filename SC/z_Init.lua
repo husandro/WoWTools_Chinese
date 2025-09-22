@@ -1,24 +1,5 @@
 
 
-function WoWTools_ChineseMixin:GetBossData(journalEncounterID)
-    return WoWTools_SC_Encounter[journalEncounterID]
-end
-
-function WoWTools_ChineseMixin:GetBossDesc(journalEncounterID)
-    local data= self:GetBossData(journalEncounterID)
-    if data then
-        return data.D
-    end
-end
-
-function WoWTools_ChineseMixin:GetBossName(journalEncounterID)
-    local data= self:GetBossData(journalEncounterID)
-    if data then
-        return data.T
-    end
-end
-
-
 
 
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
@@ -93,9 +74,38 @@ function WoWTools_ChineseMixin:GetQuestName(questID)
 end
 function WoWTools_ChineseMixin:GetQuestDesc(questID)
     local data=self:GetQuestData(questID)
-    return expand_text(data and data["D"])
+    return expand_text(data and data["O"])
 end
 function WoWTools_ChineseMixin:GetQuestObject(questID)
     local data=self:GetQuestData(questID)
-    return expand_text(data and data["O"])
+    return expand_text(data and data["S"])
 end
+
+
+
+
+do
+    for journalEncounterID, data in pairs(WoWTools_SC_Encounter) do
+        local name, desc= EJ_GetEncounterInfo(journalEncounterID)
+        WoWTools_ChineseMixin:SetCN(name, data.T)
+        WoWTools_ChineseMixin:SetCN(desc, data.D)
+    end
+end
+WoWTools_SC_Encounter= nil
+--[[function WoWTools_ChineseMixin:GetBossData(journalEncounterID)
+    return WoWTools_SC_Encounter[journalEncounterID]
+end
+
+function WoWTools_ChineseMixin:GetBossDesc(journalEncounterID)
+    local data= self:GetBossData(journalEncounterID)
+    if data then
+        return data.D
+    end
+end
+
+function WoWTools_ChineseMixin:GetBossName(journalEncounterID)
+    local data= self:GetBossData(journalEncounterID)
+    if data then
+        return data.T
+    end
+end]]

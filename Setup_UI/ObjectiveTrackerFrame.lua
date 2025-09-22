@@ -31,10 +31,17 @@ end
 
 local function set_quest(_, block)
     local questID= block.id and tonumber(block.id)
-    if questID then
-        local name= WoWTools_ChineseMixin:GetQuestName(questID)
-        if name then
-            block:SetHeader(name)
+    local data= WoWTools_ChineseMixin:GetQuestData(questID)
+    if not data then
+        return
+    end
+
+    local name= WoWTools_ChineseMixin:GetQuestName(questID)
+    if name then
+        block:SetHeader(name)
+    end
+    for index, line in pairs(block.usedLines or {}) do
+        if type(index)=='number' then
         end
     end
 end
@@ -42,20 +49,15 @@ end
 
 
 
---[[
-hooksecurefunc(QuestObjectiveTracker, 'UpdateSingle', set_quest)
-local questID = quest:GetID()
-local block = Get_Block(self, questID)    
-local name= WoWTools_ChineseMixin:GetQuestName(questID)
-if block and name then
-    block:SetHeader(name)
-end
-]]
 
 --任务 QuestObjectiveTracker QuestObjectiveTrackerMixin
 hooksecurefunc(QuestObjectiveTracker, 'LayoutContents', set_objective_header)
 --QuestObjectiveTracker:HookScript('OnShow', set_objective_header)
 hooksecurefunc(QuestObjectiveTracker, 'AddBlock', set_quest)
+
+
+
+
 
 
 hooksecurefunc(AutoQuestPopupBlockMixin, 'Update', function(self, questTitle, questID, popUpType)
@@ -394,3 +396,4 @@ hooksecurefunc(UIWidgetObjectiveTracker, 'LayoutContents', function(self)
         end
 	end
 end)
+
