@@ -94,13 +94,13 @@ end
 local function Set_Quest(tooltip, questID, isShow)
     local data= questID and WoWTools_ChineseMixin:GetQuestData(questID)
     if data then
-        local title= data['Title']
-        local ob= data['Objectives']
-        if title or ob then
+        local title= data['T']
+        local desc= data['D']
+        if title or desc then
             tooltip:AddLine(' ')
         end
         tooltip:AddLine(title, nil,nil,nil, true)
-        GameTooltip_AddColoredLine(tooltip, ob, HIGHLIGHT_FONT_COLOR)
+        GameTooltip_AddColoredLine(tooltip, desc, HIGHLIGHT_FONT_COLOR)
 
         if isShow and (title or ob )  then
             tooltip:Show()

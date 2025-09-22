@@ -78,15 +78,8 @@ end)
 
 
 
---任务，目标
-local function set_objectives(questID)
-	questID= questID or WoWTools_ChineseMixin:GetQuestID()
-
-	if not questID then
-		return
-	end
-
-
+--任务，目标 QuestInfo_ShowObjectives()
+local function set_objectives(questID, obs)
 	local objectivesTable = QuestInfoObjectivesFrame.Objectives or {}
 	local numObjectives = GetNumQuestLeaderBoards() or #objectivesTables
 	local objective
@@ -126,10 +119,10 @@ local function set_objectives(questID)
 					name= WoWTools_ChineseMixin:SetText(obType) or obType
 					desc= obType
 				else
-					--[[local new= WoWTools_ChineseMixin:GetQuestIndexObject(questID, i)--无法找到
+					local new= obs and obs[i]--无法找到
 					if new then
 						name= desc:gsub('%d+/%d+ (.+)', new)
-					end]]
+					end
 					name= name or WoWTools_ChineseMixin:SetText(desc) or desc
 				end
 				if ( finished ) then
@@ -263,9 +256,9 @@ local function set_quest_info()
 	local title, object, desc
 
 	if data then
-		title= data["Title"]
-		object= data["Objectives"]
-		desc= data["Description"]
+		title= data["T"]
+		object= data["O"]
+		desc= data["D"]
 	end
 
     if title then
@@ -275,11 +268,11 @@ local function set_quest_info()
 		QuestInfoTitleHeader:SetText(title)
     end
 
-    if object then
-       QuestInfoObjectivesText:SetText(object)
-    end
+    
+	set_objectives(questID, object)
+    
+	WoWTools_ChineseMixin:SetLabel(QuestInfoObjectivesText)
 
-	set_objectives(questID)
 
     if desc then
        QuestInfoDescriptionText:SetText(desc)
@@ -372,7 +365,11 @@ hooksecurefunc('QuestInfo_ShowTitle', function()
 
 
  hooksecurefunc('QuestInfo_ShowObjectives', function()
-	 set_objectives()
+	local questID= WoWTools_ChineseMixin:GetQuestID()
+	if questID then
+		local data= questID and WoWTools_ChineseMixin:GetQuestData(questID)
+		set_objectives(questID, data and data.O)
+	end
  end)
 
 
