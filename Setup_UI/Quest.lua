@@ -271,11 +271,8 @@ local function set_quest_info()
 
 	set_objectives(questID, object)
 
-	WoWTools_ChineseMixin:SetLabel(QuestInfoObjectivesText)
-
-
     if desc then
-       QuestInfoDescriptionText:SetText(desc)
+       QuestInfoObjectivesText:SetText(desc)
     end
 
 	set_quest_item(questID)
