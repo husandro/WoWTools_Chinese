@@ -272,7 +272,7 @@ local function set_quest_info()
 	set_objectives(questID, object)
 
     if desc then
-       QuestInfoObjectivesText:SetText(desc)
+       QuestInfoDescriptionText:SetText(desc)
     end
 
 	set_quest_item(questID)
