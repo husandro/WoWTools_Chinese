@@ -256,19 +256,10 @@ LFGDungeonReadyDialogRewardsFrameLabel:SetText('奖励')
 LFGDungeonReadyStatusLabel:SetText('就位确认')
 
 LFGDungeonReadyDialogRandomInProgressFrameStatusText:SetText('该地下城正在进行中。')
-RaidFinderQueueFrameScrollFrameChildFrameRewardsLabel:SetText('奖励')
+
 LFDQueueFrameRandomScrollFrameChildFrameRewardsLabel:SetText('奖励')
 
-RaidFinderQueueFrameScrollFrameChildFrameEncounterList:HookScript('OnEnter', function(self)
-    if self.dungeonID then
-        local numEncounters, numCompleted = GetLFGDungeonNumEncounters(self.dungeonID)
-        if ( numCompleted > 0 ) then
-            GameTooltip:AddLine(' ')
-            GameTooltip:AddLine(format('|cnHIGHLIGHT_FONT_COLOR:物品已经被拾取（%d/%d）', numCompleted, numEncounters))
-            GameTooltip:Show()
-        end
-    end
-end)
+
 
 
 
@@ -294,11 +285,8 @@ hooksecurefunc('LFGInvitePopup_Update', function(inviter, _, _, _, _, isQuestSes
     end
 end)
 
+WoWTools_ChineseMixin:HookLabel(LFGListFrame.ApplicationViewer.DescriptionFrame.Text)
 
-C_Timer.After(2, function()
-    WoWTools_ChineseMixin:HookLabel(RaidFinderQueueFrameSelectionDropDownName)
-    WoWTools_ChineseMixin:HookLabel(LFGListFrame.ApplicationViewer.DescriptionFrame.Text)
-end)
 
 
 
@@ -352,25 +340,3 @@ end)
 
 
 
-hooksecurefunc('RaidFinderQueueFrameIneligibleFrame_UpdateFrame', function(self)
-    if ( self.queueRestriction ) then
-		if ( self.queueRestriction == "lfd" ) then
-			self.description:SetText('你无法在排队加入随机地下城时排队加入随机团队副本的队列。');
-			self.leaveQueueButton:SetText('离开队列');
-		else
-			self.description:SetText('处于其他团队列表时无法加入团队副本队列。');
-			if ( IsInGroup() ) then
-				self.leaveQueueButton:SetText('不列出我的队伍');
-			else
-				self.leaveQueueButton:SetText('不列出我的名字');
-			end
-		end
-	elseif ( self.ineligibleGroup ) then
-		self.description:SetText('你的队伍不能通过团队查找器加入任何随机团队副本。');
-		self.leaveQueueButton:Hide();
-		self:Show();
-		return true;
-	elseif ( self.ineligiblePlayer ) then
-		self.description:SetText('你不能通过团队查找器排队加入任何随机团队副本。');
-	end
-end)

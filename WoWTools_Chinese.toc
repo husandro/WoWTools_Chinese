@@ -153,7 +153,6 @@ Setup_UI\LFG_QueueFrame.lua
 ##团队查找器
 Setup_UI\LFG_Frame.lua
 Setup_UI\LFG_ListFrame.lua
-Setup_UI\LFG_RaidFinderQueueFrame.lua
 ## PvP查找器
 Setup_UI\LFG_PVP.lua
 

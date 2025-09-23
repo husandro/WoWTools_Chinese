@@ -1,20 +1,19 @@
 --Blizzard_Menu/MenuUtil.lua
-hooksecurefunc(MenuUtil, 'SetElementText', function(desc, text)
-    if text then
+hooksecurefunc(MenuUtil, 'SetElementText', function(desc)
+    desc:AddInitializer(function(btn)
+        WoWTools_ChineseMixin:HookLabel(btn.fontString)
+    end)
+end)
+    --[[if text then
         if type(desc.data)=='table' and (desc.data.specID==251 or desc.data.specID==64) then--251 DK 专精 冰霜
             text= text..desc.data.specID
         end
         local cn= WoWTools_ChineseMixin:SetText(text)
         if cn then
-            desc:AddInitializer(function(btn)
-                if btn.fontString then
-                    btn.fontString:SetText(cn)
-                end
-            end)
+            desc.text= cn
+            
         end
-    end
-end)
-
+    end]]
 
 hooksecurefunc(WowStyle1DropdownMixin, 'SetText', function(frame, text)
     WoWTools_ChineseMixin:SetLabel(frame.Text, text)
@@ -26,10 +25,7 @@ end)
 
 --下拉菜单
 hooksecurefunc(WowStyle2DropdownMixin, 'SetText', function(frame, text)
-    local cn= WoWTools_ChineseMixin:CN(text)
-    if frame.Text and cn then
-        frame.Text:SetText(cn)
-    end
+    WoWTools_ChineseMixin:SetLabel(frame.Text, text)
 end)
 --[[
 hooksecurefunc(WowStyle1FilterDropdownMixin, 'SetText', function(frame, text)

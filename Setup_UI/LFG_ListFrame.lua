@@ -1,17 +1,6 @@
 
 
 --预创建队伍
-
-
-
-
-
-
-
-
-
-
-
 local function LFGListUtil_GetDecoratedCategoryName(categoryName, filter, useColors)
     categoryName= WoWTools_ChineseMixin:CN(categoryName) or categoryName
 	if ( filter == 0 ) then
@@ -62,8 +51,8 @@ end
 LFGListFrame.CategorySelection.Label:SetText('预创建队伍')
 
 
-hooksecurefunc('LFGListCategorySelection_AddButton', function(self, btnIndex, categoryID, filters)--LFGList.lua
-    local baseFilters = self:GetParent().baseFilters
+hooksecurefunc('LFGListCategorySelection_AddButton', function(frame, btnIndex, categoryID, filters)--LFGList.lua
+    local baseFilters = frame:GetParent().baseFilters
     local allFilters = bit.bor(baseFilters, filters)
     if ( filters ~= 0 and #C_LFGList.GetAvailableActivities(categoryID, nil, allFilters) == 0) then
         return
@@ -71,7 +60,7 @@ hooksecurefunc('LFGListCategorySelection_AddButton', function(self, btnIndex, ca
     local categoryInfo = C_LFGList.GetLfgCategoryInfo(categoryID)
     local text=LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, filters, true)
     
-    local btn= self.CategoryButtons[btnIndex]
+    local btn= frame.CategoryButtons[btnIndex]
     if text and btn then
         WoWTools_ChineseMixin:SetCNFont(btn:GetFontString())
         local name= text:match('%- (.+)')
@@ -107,6 +96,8 @@ end)
         LFGListFrame.ApplicationViewer.RoleColumnHeader.Label:SetText('职责', nil, true)
         LFGListFrame.ApplicationViewer.ItemLevelColumnHeader.Label:SetText('装等', nil, true)
         LFGApplicationViewerRatingColumnHeader.Label:SetText('分数', nil, true)
+
+        WoWTools_ChineseMixin:SetLabel(LFGListFrame.EntryCreation.ActivityFinder.Dialog.EntryBox.Instructions)
 
 LFGListApplicationDialog.Label:SetText('选择你的角色')
 LFGListApplicationDialogDescription.EditBox.Instructions:SetText('给队长留言（可选）')
@@ -153,37 +144,41 @@ local function LFGListUtil_GetActiveQueueMessage(isApplication)--LFGList.lua
         end
     end
 end
-hooksecurefunc('LFGListCategorySelection_UpdateNavButtons', function(self)--LFGList.lua
-    if ( not self.selectedCategory ) then
-        self.FindGroupButton.tooltip = '做出选择。'
-        self.StartGroupButton.tooltip = '做出选择。'
+hooksecurefunc('LFGListCategorySelection_UpdateNavButtons', function(frame)--LFGList.lua
+    if ( not frame.selectedCategory ) then
+        frame.FindGroupButton.tooltip = '做出选择。'
+        frame.StartGroupButton.tooltip = '做出选择。'
     end
     if ( IsInGroup(LE_PARTY_CATEGORY_HOME) and not UnitIsGroupLeader("player", LE_PARTY_CATEGORY_HOME) ) then
-        self.StartGroupButton.tooltip = '只有队长才能这么做。'
+        frame.StartGroupButton.tooltip = '只有队长才能这么做。'
     end
     local messageStart = LFGListUtil_GetActiveQueueMessage(false)
     if ( messageStart ) then
-        self.StartGroupButton.tooltip = messageStart
+        frame.StartGroupButton.tooltip = messageStart
     end
     local findError, findErrorText = GetFindGroupRestriction()
     if ( findError ~= nil ) then
-        self.FindGroupButton.tooltip = findErrorText
-        self.StartGroupButton.tooltip = findErrorText
+        frame.FindGroupButton.tooltip = findErrorText
+        frame.StartGroupButton.tooltip = findErrorText
     end
 end)
 
-hooksecurefunc('LFGListNothingAvailable_Update', function(self)--LFGList.lua
+hooksecurefunc('LFGListNothingAvailable_Update', function(frame)--LFGList.lua
     if ( IsRestrictedAccount() ) then
-        self.Label:SetText('免费试玩账号无法使用此功能。')
+        frame.Label:SetText('免费试玩账号无法使用此功能。')
     elseif ( C_LFGList.HasActivityList() ) then
-        self.Label:SetText('你无法加入任何队伍。')
+        frame.Label:SetText('你无法加入任何队伍。')
     else
-        self.Label:SetText('加载中…')
+        frame.Label:SetText('加载中…')
     end
 end)
 
-hooksecurefunc('LFGListEntryCreation_Select', function(self, filters, categoryID, groupID, activityID)
-    filters, categoryID, groupID, activityID = LFGListUtil_AugmentWithBest(bit.bor(self.baseFilters or 0, filters or 0), categoryID, groupID, activityID)
+WoWTools_ChineseMixin:HookLabel(LFGListEntryCreationGroupDropdown.Text)
+WoWTools_ChineseMixin:HookLabel(LFGListEntryCreationActivityDropdown.Text)
+WoWTools_ChineseMixin:HookLabel(LFGListEntryCreationPlayStyleDropdown.Text)
+
+hooksecurefunc('LFGListEntryCreation_Select', function(frame, filters, categoryID, groupID, activityID)
+    filters, categoryID, groupID, activityID = LFGListUtil_AugmentWithBest(bit.bor(frame.baseFilters or 0, filters or 0), categoryID, groupID, activityID)
     local activityInfo = C_LFGList.GetActivityInfoTable(activityID)
     if(not activityInfo) then
         return
@@ -194,17 +189,17 @@ hooksecurefunc('LFGListEntryCreation_Select', function(self, filters, categoryID
                 or (englishFaction=="Horde" and '部落')
                 or (englishFaction=="Neutral" and '中立')
                 or localizedFaction
-    self.CrossFactionGroup.Label:SetFormattedText('仅限%s', faction)
-    self.CrossFactionGroup.tooltip = format('只有%s玩家会看到你的队伍。|n|n这可能会减少你收到的申请人数量。', faction)
-    self.CrossFactionGroup.disableTooltip = format('这项活动不支持跨阵营队伍。|n|n你的队伍将只对%s玩家显示。', faction)
+    frame.CrossFactionGroup.Label:SetFormattedText('仅限%s', faction)
+    frame.CrossFactionGroup.tooltip = format('只有%s玩家会看到你的队伍。|n|n这可能会减少你收到的申请人数量。', faction)
+    frame.CrossFactionGroup.disableTooltip = format('这项活动不支持跨阵营队伍。|n|n你的队伍将只对%s玩家显示。', faction)
     if ( activityInfo.ilvlSuggestion ~= 0 ) then
-        self.ItemLevel.EditBox.Instructions:SetFormattedText('推荐%d级', activityInfo.ilvlSuggestion)
+        frame.ItemLevel.EditBox.Instructions:SetFormattedText('推荐%d级', activityInfo.ilvlSuggestion)
     else
-        self.ItemLevel.EditBox.Instructions:SetText('物品等级')
+        frame.ItemLevel.EditBox.Instructions:SetText('物品等级')
     end
 end)
 
-hooksecurefunc('LFGListEntryCreation_SetPlaystyleLabelTextFromActivityInfo', function(self, activityInfo)--LFGList.lua
+hooksecurefunc('LFGListEntryCreation_SetPlaystyleLabelTextFromActivityInfo', function(frame, activityInfo)--LFGList.lua
     if(not activityInfo) then
         return
     end
@@ -216,29 +211,29 @@ hooksecurefunc('LFGListEntryCreation_SetPlaystyleLabelTextFromActivityInfo', fun
     else
         labelText = '游戏风格'--LFG_PLAYSTYLE_LABEL_PVE_MYTHICZERO
     end
-    self.PlayStyleLabel:SetText(labelText)
+    frame.PlayStyleLabel:SetText(labelText)
 end)
 
-hooksecurefunc('LFGListEntryCreation_UpdateValidState', function(self)
+hooksecurefunc('LFGListEntryCreation_UpdateValidState', function(frame)
     local errorText
-    local activityInfo = C_LFGList.GetActivityInfoTable(self.selectedActivity)
+    local activityInfo = C_LFGList.GetActivityInfoTable(frame.selectedActivity)
     local maxNumPlayers = activityInfo and  activityInfo.maxNumPlayers or 0
-    local mythicPlusDisableActivity = not C_LFGList.IsPlayerAuthenticatedForLFG(self.selectedActivity) and (activityInfo.isMythicPlusActivity and not C_LFGList.GetKeystoneForActivity(self.selectedActivity))
+    local mythicPlusDisableActivity = not C_LFGList.IsPlayerAuthenticatedForLFG(frame.selectedActivity) and (activityInfo.isMythicPlusActivity and not C_LFGList.GetKeystoneForActivity(frame.selectedActivity))
     if ( maxNumPlayers > 0 and GetNumGroupMembers(LE_PARTY_CATEGORY_HOME) >= maxNumPlayers ) then
         errorText = string.format('针对此项活动，你的队伍人数已满（%d）。', maxNumPlayers)
     elseif (mythicPlusDisableActivity) then
         errorText = '|cffff0000你只有给自己的账号添加战网安全令和短信安全保护功能后才能在没有钥石时发布一个史诗钥石队伍|r|n|cff1eff00<点击显示更多信息>|r'
-    elseif ( LFGListEntryCreation_GetSanitizedName(self) == "" ) then
+    elseif ( LFGListEntryCreation_GetSanitizedName(frame) == "" ) then
         errorText = '你必须为你的队伍输入一个名字。'
-    elseif  not self.ItemLevel.warningText
-        and not self.PvpItemLevel.warningText
-        and not self.MythicPlusRating.warningText
-        and not self.PVPRating.warningText
+    elseif  not frame.ItemLevel.warningText
+        and not frame.PvpItemLevel.warningText
+        and not frame.MythicPlusRating.warningText
+        and not frame.PVPRating.warningText
     then
         errorText = LFGListUtil_GetActiveQueueMessage(false)
     end
     if errorText then
-        self.ListGroupButton.errorText = errorText
+        frame.ListGroupButton.errorText = errorText
     end
 end)
 
@@ -249,29 +244,29 @@ local function LFGListUtil_GetQuestObjectTextription(questID)
     end
     return format(descriptionFormat, QuestUtils_GetQuestName(questID))
 end
-hooksecurefunc('LFGListEntryCreation_SetEditMode', function(self)--LFGList.lua
+hooksecurefunc('LFGListEntryCreation_SetEditMode', function(frame)--LFGList.lua
     local descInstructions = nil
-    local isAccountSecured = C_LFGList.IsPlayerAuthenticatedForLFG(self:GetParent().selectedActivity)
+    local isAccountSecured = C_LFGList.IsPlayerAuthenticatedForLFG(frame:GetParent().selectedActivity)
     if (not isAccountSecured) then
         descInstructions = '给自己的账号添加安全令和和短信安全保护功能后才能解锁此栏'
     end
-    if self.editMode then
+    if frame.editMode then
         local activeEntryInfo = C_LFGList.GetActiveEntryInfo()
         assert(activeEntryInfo)
         if ( activeEntryInfo.questID ) then
-            self.Description.EditBox.Instructions:SetText(LFGListUtil_GetQuestObjectTextription(activeEntryInfo.questID))
+            frame.Description.EditBox.Instructions:SetText(LFGListUtil_GetQuestObjectTextription(activeEntryInfo.questID))
         else
-            self.Description.EditBox.Instructions:SetText(descInstructions or '关于你的队伍的更多细节（可选）')
+            frame.Description.EditBox.Instructions:SetText(descInstructions or '关于你的队伍的更多细节（可选）')
         end
-        self.ListGroupButton:SetText('编辑完毕')
+        frame.ListGroupButton:SetText('编辑完毕')
     else
-        self.Description.EditBox.Instructions:SetText(descInstructions or '关于你的队伍的更多细节（可选）')
-        self.ListGroupButton:SetText('列出队伍')
+        frame.Description.EditBox.Instructions:SetText(descInstructions or '关于你的队伍的更多细节（可选）')
+        frame.ListGroupButton:SetText('列出队伍')
     end
 end)
 
 
-hooksecurefunc('LFGListApplicationViewer_UpdateInfo', function(self)
+hooksecurefunc('LFGListApplicationViewer_UpdateInfo', function(frame)
     local activeEntryInfo = C_LFGList.GetActiveEntryInfo()
     assert(activeEntryInfo)
     if not activeEntryInfo or not activeEntryInfo.activityID then
@@ -283,28 +278,28 @@ hooksecurefunc('LFGListApplicationViewer_UpdateInfo', function(self)
         return
     end
 
-    WoWTools_ChineseMixin:SetLabel(self.EntryName, activeEntryInfo.name)
+    WoWTools_ChineseMixin:SetLabel(frame.EntryName, activeEntryInfo.name)
 
-    local activityName= WoWTools_ChineseMixin:CN(self.DescriptionFrame.activityName)
+    local activityName= WoWTools_ChineseMixin:CN(frame.DescriptionFrame.activityName)
     if ( activeEntryInfo.comment == "" ) then
-        WoWTools_ChineseMixin:SetLabel(self.DescriptionFrame.Text, activityName)
+        WoWTools_ChineseMixin:SetLabel(frame.DescriptionFrame.Text, activityName)
     else
         local comment= WoWTools_ChineseMixin:CN(activeEntryInfo.comment)
         if comment or activityName then
-            self.DescriptionFrame.Text:SetFormattedText("%s |cff888888- %s|r", activityName or self.DescriptionFrame.activityName, comment or self.DescriptionFrame.comment)
+            frame.DescriptionFrame.Text:SetFormattedText("%s |cff888888- %s|r", activityName or frame.DescriptionFrame.activityName, comment or frame.DescriptionFrame.comment)
         end
     end
     if activityInfo.isPvpActivity then
         if activeEntryInfo.requiredItemLevel ~= 0 then
-            self.ItemLevel:SetFormattedText('PvP物品等级：%d', activeEntryInfo.requiredItemLevel)
+            frame.ItemLevel:SetFormattedText('PvP物品等级：%d', activeEntryInfo.requiredItemLevel)
         end
     else
         if activeEntryInfo.requiredItemLevel ~= 0 then
-            self.ItemLevel:SetFormattedText('物品等级：|cffffffff%d|r', activeEntryInfo.requiredItemLevel)
+            frame.ItemLevel:SetFormattedText('物品等级：|cffffffff%d|r', activeEntryInfo.requiredItemLevel)
         end
     end
     if activeEntryInfo.privateGroup then
-        self.PrivateGroup:SetText('个人')
+        frame.PrivateGroup:SetText('个人')
     end
 end)
 
@@ -312,9 +307,9 @@ LFGListFrame.ApplicationViewer.RefreshButton:HookScript('OnEnter', function()
     GameTooltip:SetText('刷新', HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
 end)
 
-hooksecurefunc('LFGListApplicationViewer_UpdateAvailability', function(self)
+hooksecurefunc('LFGListApplicationViewer_UpdateAvailability', function(frame)
     if IsRestrictedAccount() then
-        self.EditButton.tooltip = '免费试玩账号无法使用此功能。'
+        frame.EditButton.tooltip = '免费试玩账号无法使用此功能。'
     end
 end)
 
@@ -337,92 +332,92 @@ hooksecurefunc('LFGListApplicationViewer_UpdateApplicant', function(button, appl
     end
 end)
 
-hooksecurefunc('LFGListSearchPanel_UpdateButtonStatus', function(self)
-    local resultID = self.selectedResult
+hooksecurefunc('LFGListSearchPanel_UpdateButtonStatus', function(frame)
+    local resultID = frame.selectedResult
     local _, numActiveApplications = C_LFGList.GetNumApplications()
     local messageApply = LFGListUtil_GetActiveQueueMessage(true)
     local availTank, availHealer, availDPS = C_LFGList.GetAvailableRoles()
     if not messageApply then
         if ( not LFGListUtil_IsAppEmpowered() ) then
-            self.SignUpButton.tooltip = '你不是队长。'
+            frame.SignUpButton.tooltip = '你不是队长。'
         elseif ( IsInGroup(LE_PARTY_CATEGORY_HOME) and C_LFGList.IsCurrentlyApplying() ) then
-            self.SignUpButton.tooltip = '你正在申请加入另一支队伍。'
+            frame.SignUpButton.tooltip = '你正在申请加入另一支队伍。'
         elseif ( numActiveApplications >= MAX_LFG_LIST_APPLICATIONS ) then
-            self.SignUpButton.tooltip = string.format('你只能同时发出%d份有效申请。', MAX_LFG_LIST_APPLICATIONS)
+            frame.SignUpButton.tooltip = string.format('你只能同时发出%d份有效申请。', MAX_LFG_LIST_APPLICATIONS)
         elseif ( GetNumGroupMembers(LE_PARTY_CATEGORY_HOME) > MAX_PARTY_MEMBERS + 1 ) then
-            self.SignUpButton.tooltip = '你的队伍中队员太多，无法申请。\n（最多不能超过5个）'
+            frame.SignUpButton.tooltip = '你的队伍中队员太多，无法申请。\n（最多不能超过5个）'
         elseif ( not (availTank or availHealer or availDPS) ) then
-            self.SignUpButton.tooltip = '你必须有至少一项专精才能申请加入该队伍。'
+            frame.SignUpButton.tooltip = '你必须有至少一项专精才能申请加入该队伍。'
         elseif ( GroupHasOfflineMember(LE_PARTY_CATEGORY_HOME) ) then
-            self.SignUpButton.tooltip = '有一个或更多的队员处于离线状态。'
+            frame.SignUpButton.tooltip = '有一个或更多的队员处于离线状态。'
         elseif not ( resultID ) then
-            self.SignUpButton.tooltip = '选择一个搜索结果。'
+            frame.SignUpButton.tooltip = '选择一个搜索结果。'
         end
-    elseif self.SignUpButton.tooltip and WoWTools_ChineseMixin:CN(self.SignUpButton.tooltip) then
-        self.SignUpButton.tooltip= WoWTools_ChineseMixin:CN(self.SignUpButton.tooltip)
+    elseif frame.SignUpButton.tooltip and WoWTools_ChineseMixin:CN(frame.SignUpButton.tooltip) then
+        frame.SignUpButton.tooltip= WoWTools_ChineseMixin:CN(frame.SignUpButton.tooltip)
     end
     local isPartyLeader = UnitIsGroupLeader("player", LE_PARTY_CATEGORY_HOME)
     local canBrowseWhileQueued = C_LFGList.HasActiveEntryInfo() and isPartyLeader
     if ( IsInGroup(LE_PARTY_CATEGORY_HOME) and not isPartyLeader ) then
-        self.ScrollBox.StartGroupButton:Disable()
-        self.ScrollBox.StartGroupButton.tooltip = '只有队长才能这么做。'
+        frame.ScrollBox.StartGroupButton:Disable()
+        frame.ScrollBox.StartGroupButton.tooltip = '只有队长才能这么做。'
     else
         local messageStart = LFGListUtil_GetActiveQueueMessage(false)
         local startError, errorText = GetStartGroupRestriction()
         if ( messageStart ) then
-            self.ScrollBox.StartGroupButton.tooltip = messageStart
+            frame.ScrollBox.StartGroupButton.tooltip = messageStart
         elseif ( startError ~= nil ) then
-            self.ScrollBox.StartGroupButton.tooltip = errorText
+            frame.ScrollBox.StartGroupButton.tooltip = errorText
         elseif (canBrowseWhileQueued) then
-            self.ScrollBox.StartGroupButton.tooltip = '你不能在你的队伍出现在预创建队伍列表中时那样做。'
+            frame.ScrollBox.StartGroupButton.tooltip = '你不能在你的队伍出现在预创建队伍列表中时那样做。'
         end
     end
 
 end)
 
-hooksecurefunc('LFGListSearchEntry_Update', function(self)
-    if not C_LFGList.HasSearchResultInfo(self.resultID) then
+hooksecurefunc('LFGListSearchEntry_Update', function(frame)
+    if not C_LFGList.HasSearchResultInfo(frame.resultID) then
         return
     end
-    local _, appStatus, pendingStatus = C_LFGList.GetApplicationInfo(self.resultID)
+    local _, appStatus, pendingStatus = C_LFGList.GetApplicationInfo(frame.resultID)
     local isApplication = (appStatus ~= "none" or pendingStatus)
     if not LFGListUtil_IsAppEmpowered() then
-        self.CancelButton.tooltip = '你不是队长。'
+        frame.CancelButton.tooltip = '你不是队长。'
         if ( pendingStatus == "applied" and C_LFGList.GetRoleCheckInfo() ) then
-            self.PendingLabel:SetText('职责确认')
+            frame.PendingLabel:SetText('职责确认')
         elseif ( pendingStatus == "cancelled" or appStatus == "cancelled" or appStatus == "failed" ) then
-            self.PendingLabel:SetText('|cffff0000已取消|r')
+            frame.PendingLabel:SetText('|cffff0000已取消|r')
         elseif ( appStatus == "declined" or appStatus == "declined_full" or appStatus == "declined_delisted" ) then
-            self.PendingLabel:SetText(appStatus == "declined_full" and ' "满"' or '已拒绝')
+            frame.PendingLabel:SetText(appStatus == "declined_full" and ' "满"' or '已拒绝')
         elseif ( appStatus == "timedout" ) then
-            self.PendingLabel:SetText('已过期')
+            frame.PendingLabel:SetText('已过期')
         elseif ( appStatus == "invited" ) then
-            self.PendingLabel:SetText('已邀请')
+            frame.PendingLabel:SetText('已邀请')
         elseif ( appStatus == "inviteaccepted" ) then
-            self.PendingLabel:SetText('已加入')
+            frame.PendingLabel:SetText('已加入')
         elseif ( appStatus == "invitedeclined" ) then
-            self.PendingLabel:SetText('拒绝邀请')
+            frame.PendingLabel:SetText('拒绝邀请')
         elseif ( isApplication and pendingStatus ~= "applied" ) then
-            self.PendingLabel:SetText('待定|cff40bf40-|r')
+            frame.PendingLabel:SetText('待定|cff40bf40-|r')
         end
-        local searchResultInfo = C_LFGList.GetSearchResultInfo(self.resultID)
+        local searchResultInfo = C_LFGList.GetSearchResultInfo(frame.resultID)
         if WoWTools_ChineseMixin:CN(searchResultInfo.voiceChat) then
-            self.VoiceChat.tooltip = WoWTools_ChineseMixin:CN(searchResultInfo.voiceChat)
+            frame.VoiceChat.tooltip = WoWTools_ChineseMixin:CN(searchResultInfo.voiceChat)
         end
     end
 end)
 
-hooksecurefunc('LFGListInviteDialog_UpdateOfflineNotice', function(self)
+hooksecurefunc('LFGListInviteDialog_UpdateOfflineNotice', function(frame)
     if ( GroupHasOfflineMember(LE_PARTY_CATEGORY_HOME) ) then
-        self.OfflineNotice:SetText('有一名队伍成员处于离线状态，将无法收到邀请。')
+        frame.OfflineNotice:SetText('有一名队伍成员处于离线状态，将无法收到邀请。')
     else
-        self.OfflineNotice:SetText('所有队伍成员都为在线状态。')
+        frame.OfflineNotice:SetText('所有队伍成员都为在线状态。')
     end
 end)
 
-hooksecurefunc('LFGListEntryCreation_Show', function(self, _, selectedCategory)
+hooksecurefunc('LFGListEntryCreation_Show', function(frame, _, selectedCategory)
     local categoryInfo = C_LFGList.GetLfgCategoryInfo(selectedCategory)
-    WoWTools_ChineseMixin:SetLabel(self.Label,categoryInfo.name)
+    WoWTools_ChineseMixin:SetLabel(frame.Label,categoryInfo.name)
 end)
 
 LFGListFrame.ApplicationViewer.AutoAcceptButton.Label:SetText('自动邀请')
@@ -439,9 +434,9 @@ LFGListFrame.SearchPanel.ScrollBox.StartGroupButton:SetText('创建队伍')
 LFGListFrame.SearchPanel.RefreshButton:HookScript('OnEnter', function()
     GameTooltip:SetText('重新搜索', HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
 end)
-hooksecurefunc('LFGListSearchPanel_UpdateResults', function(self)
-    if self.ScrollBox.NoResultsFound:IsShown() and self.totalResults == 0 then
-        self.ScrollBox.NoResultsFound:SetText(self.searchFailed and '搜索失败。请稍后再试。' or '未找到队伍。如果你找不到想要的队伍，可以自己创建一支。')
+hooksecurefunc('LFGListSearchPanel_UpdateResults', function(frame)
+    if frame.ScrollBox.NoResultsFound:IsShown() and frame.totalResults == 0 then
+        frame.ScrollBox.NoResultsFound:SetText(frame.searchFailed and '搜索失败。请稍后再试。' or '未找到队伍。如果你找不到想要的队伍，可以自己创建一支。')
     end
 end)
 
@@ -450,9 +445,9 @@ LFGListFrame.EntryCreation.VoiceChat.EditBox.Instructions:SetText('语音聊天�
 
 LFGListCreationDescription.EditBox.Instructions:SetText('关于你的队伍的更多细节（可选）')
 LFGListFrame.EntryCreation.Name.Instructions:SetText('你的队伍在列表中显示的描述性名称')
-LFGListCreationDescription:HookScript('OnShow', function(self)--LFGListCreationDescriptionMixin
-    local isAccountSecured = C_LFGList.IsPlayerAuthenticatedForLFG(self:GetParent().selectedActivity)
-    self.EditBox.Instructions:SetText(isAccountSecured and '关于你的队伍的更多细节（可选）' or '给自己的账号添加安全令和和短信安全保护功能后才能解锁此栏')
+LFGListCreationDescription:HookScript('OnShow', function(frame)--LFGListCreationDescriptionMixin
+    local isAccountSecured = C_LFGList.IsPlayerAuthenticatedForLFG(frame:GetParent().selectedActivity)
+    frame.EditBox.Instructions:SetText(isAccountSecured and '关于你的队伍的更多细节（可选）' or '给自己的账号添加安全令和和短信安全保护功能后才能解锁此栏')
 end)
 
 
@@ -460,22 +455,22 @@ end)
 
 
 
-hooksecurefunc('LFGListInviteDialog_Show', function(self, resultID, kstringGroupName)
+hooksecurefunc('LFGListInviteDialog_Show', function(frame, resultID, kstringGroupName)
     local searchResultInfo = C_LFGList.GetSearchResultInfo(resultID) or {}
     local activityName = C_LFGList.GetActivityFullName(searchResultInfo.activityID, nil, searchResultInfo.isWarMode)
     local _, status, _, _, role = C_LFGList.GetApplicationInfo(resultID)
     local name= kstringGroupName or searchResultInfo.name
     if WoWTools_ChineseMixin:CN(name) then
-        self.GroupName:SetText(WoWTools_ChineseMixin:CN(name))
+        frame.GroupName:SetText(WoWTools_ChineseMixin:CN(name))
     end
     if WoWTools_ChineseMixin:CN(activityName) then
-        self.ActivityName:SetText(WoWTools_ChineseMixin:CN(activityName))
+        frame.ActivityName:SetText(WoWTools_ChineseMixin:CN(activityName))
     end
     role= _G[role]
     if WoWTools_ChineseMixin:CN(role) then
-        self.Role:SetText(WoWTools_ChineseMixin:CN(role))
+        frame.Role:SetText(WoWTools_ChineseMixin:CN(role))
     end
-    self.Label:SetText(status ~= "invited" and '你已经加入了一支队伍：' or '你收到了一支队伍的邀请：')
+    frame.Label:SetText(status ~= "invited" and '你已经加入了一支队伍：' or '你收到了一支队伍的邀请：')
 end)
 LFGListInviteDialog.Label:SetText('你收到了一支队伍的邀请：')
 LFGListInviteDialog.RoleDescription:SetText('你的职责')
@@ -522,7 +517,7 @@ hooksecurefunc('LFGListEntryCreationActivityFinder_InitButton', function(btn)
         btn:SetText(name)
     end
 end)
---LFGListFrame.EntryCreation.ActivityFinder.Dialog.ScrollBox
+
 
 
 
@@ -540,9 +535,9 @@ end)
 
 
 --LFGList.lua
-hooksecurefunc('LFGListSearchPanel_SetCategory', function(self)--, categoryID, filters)
-	local categoryInfo = C_LFGList.GetLfgCategoryInfo(self.categoryID);
-	self.SearchBox.Instructions:SetText(WoWTools_ChineseMixin:CN(categoryInfo.searchPromptOverride) or '过滤器');
-	local name = LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, self.filters, false);
-	self.CategoryName:SetText(name)
+hooksecurefunc('LFGListSearchPanel_SetCategory', function(frame)--, categoryID, filters)
+	local categoryInfo = C_LFGList.GetLfgCategoryInfo(frame.categoryID);
+	frame.SearchBox.Instructions:SetText(WoWTools_ChineseMixin:CN(categoryInfo.searchPromptOverride) or '过滤器');
+	local name = LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, frame.filters, false);
+	frame.CategoryName:SetText(name)
 end)

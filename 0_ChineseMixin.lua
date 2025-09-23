@@ -526,8 +526,6 @@ function WoWTools_ChineseMixin:SetFrame(frame, setFont, isHook, affer)
     if not frame then
         return
     end
-
-    
     if frame.GetRegions then
         for _, f in ipairs({frame:GetRegions()}) do
             local t= f:GetObjectType()
@@ -546,20 +544,6 @@ function WoWTools_ChineseMixin:SetFrame(frame, setFont, isHook, affer)
             end
         end
     end
-
-    --[[if frame.GetChildren then
-        for _, f in ipairs({frame:GetChildren()}) do
-            local t= f:GetObjectType()
-            if t=='CheckButton' then
-                  if isHook then
-                    self:HookLabel(f.Text, setFont)
-                else
-                    self:SetLabel(f.Text, nil, affer, setFont)
-                end
-            end
-        end
-    end]]
-
 end
 
 function WoWTools_ChineseMixin:SetFrames(frame, setFont, isHook, affer)

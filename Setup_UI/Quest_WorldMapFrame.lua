@@ -110,7 +110,7 @@ local function Set_Quest_Line()
     end
 
 
-    local Lines= {}
+    --[[local Lines= {}
     for line in QuestScrollFrame.objectiveFramePool:EnumerateActive() do
         Lines[line.questID]= Lines[line.questID] or {lines={}, questLogIndex= line.questLogIndex}
         table.insert(Lines[line.questID].lines, line)
@@ -151,7 +151,7 @@ local function Set_Quest_Line()
                 line:SetHeight(line.Text:GetStringHeight())
             end
         end
-    end
+    end]]
     
     for line in QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
        WoWTools_ChineseMixin:SetLabel(line.Text)
@@ -187,13 +187,15 @@ end
 hooksecurefunc("QuestLogQuests_Update", function()
     Set_Quest_Line()
 end)
-QuestScrollFrame:HookScript('OnShow', function()
+--[[QuestScrollFrame:HookScript('OnShow', function()
     Set_Quest_Line()
 end)
 
 
-
-
+hooksecurefunc(QuestMapFrame, 'Refresh', function ()
+    Set_Quest_Line()
+end)
+]]
 
 
 

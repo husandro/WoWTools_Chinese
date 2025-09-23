@@ -112,22 +112,22 @@ local brawlTab={
 
 
 --快速比赛
-local function Init_HonorFrame()
+local function Init_HonorFrame(self)
     --按钮，列表, OnEnter
-    BONUS_BUTTON_TOOLTIPS.RandomBG.func= function(self)
-        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+    BONUS_BUTTON_TOOLTIPS.RandomBG.func= function(frame)
+        GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
         GameTooltip:SetText('随机战场', 1, 1, 1)
         GameTooltip:AddLine('在随机战场上与敌对阵营竞争。', nil, nil, nil, true)
         GameTooltip:Show()
     end
-    BONUS_BUTTON_TOOLTIPS.EpicBattleground.func = function(self)
-        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+    BONUS_BUTTON_TOOLTIPS.EpicBattleground.func = function(frame)
+        GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
         GameTooltip:SetText('随机史诗战场', 1, 1, 1)
         GameTooltip:AddLine('在40人的大型战场上与敌对阵营竞争。', nil, nil, nil, true)
         GameTooltip:Show()
     end
-    HonorFrame.BonusFrame.Arena1Button:SetScript('OnEnter', function(self)
-        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+    HonorFrame.BonusFrame.Arena1Button:SetScript('OnEnter', function(frame)
+        GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
 		GameTooltip:SetText('练习赛', 1, 1, 1)
 		GameTooltip:AddLine('- 2v2或3v3死斗大赛|n- 站到最后的队伍获胜|n- 治疗者只能参与3v3比赛', nil, nil, nil, true)
 		GameTooltip:Show()
@@ -162,7 +162,7 @@ local function Init_HonorFrame()
         local name
         if (brawlInfo and brawlInfo.canQueue) then
             local data= brawlTab[brawlInfo.brawlID]
-            name = data and data[1] or WoWTools_ChineseMixin:CN(brawlInfo.name)
+            name = data and data[1] or self:CN(brawlInfo.name)
         else
             local timeUntilNext = brawlInfo and brawlInfo.timeLeftUntilNextChange or 0
             if (timeUntilNext == 0) then
@@ -180,7 +180,7 @@ local function Init_HonorFrame()
         if (brawlInfo) then
             if (brawlInfo and brawlInfo.canQueue) then
                 local data= brawlTab[brawlInfo.brawlID]
-                specName = data and data[1] or WoWTools_ChineseMixin:CN(brawlInfo.name)
+                specName = data and data[1] or self:CN(brawlInfo.name)
             else
                 specName= '乱斗（已关闭）'
             end
@@ -305,8 +305,11 @@ local function Init_HonorFrame()
 
 
 
-    --宏伟宝库
-    WoWTools_ChineseMixin:HookLabel(PVPQueueFrame.HonorInset.CasualPanel.HKLabel)
+    
+    self:HookLabel(PVPQueueFrame.HonorInset.CasualPanel.HKLabel)
+    self:SetFrame(PVPQueueFrame.NewSeasonPopup)
+    self:HookButton(HonorFrameQueueButton)
+
 if PVPQueueFrame.HonorInset.CasualPanel.WeeklyChest then
     PVPQueueFrame.HonorInset.CasualPanel.WeeklyChest:HookScript('OnEnter', function()
         if not ConquestFrame_HasActiveSeason() then
@@ -339,9 +342,9 @@ end
 
 
     --荣誉等级
-    hooksecurefunc(PVPQueueFrame.HonorInset.CasualPanel.HonorLevelDisplay, 'Update', function(self)
+    hooksecurefunc(PVPQueueFrame.HonorInset.CasualPanel.HonorLevelDisplay, 'Update', function(frame)
         local honorLevel = UnitHonorLevel("player")
-        self.LevelLabel:SetFormattedText('荣誉等级 %d', honorLevel)
+        frame.LevelLabel:SetFormattedText('荣誉等级 %d', honorLevel)
     end)
     PVPQueueFrame.HonorInset.CasualPanel.HonorLevelDisplay:HookScript('OnEnter', function()
         GameTooltip_SetTitle(GameTooltip, '生涯荣誉')
@@ -354,14 +357,14 @@ end
     end)
 
     --随机战场，指定
-    hooksecurefunc('HonorFrame_InitSpecificButton', function(self, data)
-        WoWTools_ChineseMixin:SetLabel(self.NameText, data.localizedName)
-        WoWTools_ChineseMixin:SetLabel(self.InfoText, data.gameType)
-        if self.set_enter then
+    hooksecurefunc('HonorFrame_InitSpecificButton', function(frame, data)
+        self:SetLabel(frame.NameText, data.localizedName)
+        self:SetLabel(frame.InfoText, data.gameType)
+        if frame.set_enter then
             return
         end
-        self.set_enter=true
-        self:HookScript('OnEnter', function(frame)
+        frame.set_enter=true
+        frame:HookScript('OnEnter', function(frame)
             local info= brawlTab[frame.bgID] or {}
             if info[2] or info[3] then
                 GameTooltip:AddLine(' ')
@@ -371,6 +374,8 @@ end
             end
         end)
     end)
+
+    Init_HonorFrame=function()end
 end
 
 
@@ -413,15 +418,15 @@ end
 
 
 
-local function conquestFrameButton_OnEnter(self)--hooksecurefunc('ConquestFrameButton_OnEnter', function(self)--Blizzard_PVPUI.lua
+local function conquestFrameButton_OnEnter(frame)--hooksecurefunc('ConquestFrameButton_OnEnter', function(frame)--Blizzard_PVPUI.lua
     local tooltip = ConquestTooltip
 
-	local rating, seasonBest, weeklyBest, seasonPlayed, seasonWon, weeklyPlayed, weeklyWon, lastWeeksBest, hasWon, pvpTier, ranking, roundsSeasonPlayed, roundsSeasonWon, roundsWeeklyPlayed, roundsWeeklyWon = GetPersonalRatedInfo(self.bracketIndex)
+	local rating, seasonBest, weeklyBest, seasonPlayed, seasonWon, weeklyPlayed, weeklyWon, lastWeeksBest, hasWon, pvpTier, ranking, roundsSeasonPlayed, roundsSeasonWon, roundsWeeklyPlayed, roundsWeeklyWon = GetPersonalRatedInfo(frame.bracketIndex)
 
-	WoWTools_ChineseMixin:SetLabel(tooltip.Title, self.toolTipTitle)
+	WoWTools_ChineseMixin:SetLabel(tooltip.Title, frame.toolTipTitle)
 
-	local isSoloShuffle = self.id == 1--RATED_SOLO_SHUFFLE_BUTTON_ID
-	local isRatedBGBlitz = self.id == 2--RATED_BG_BLITZ_BUTTON_ID
+	local isSoloShuffle = frame.id == 1--RATED_SOLO_SHUFFLE_BUTTON_ID
+	local isRatedBGBlitz = frame.id == 2--RATED_BG_BLITZ_BUTTON_ID
 	local tierInfo = pvpTier and C_PvP.GetPvpTierInfo(pvpTier)
 	local tierName = tierInfo and tierInfo.pvpTierEnum and PVPUtil.GetTierName(tierInfo.pvpTierEnum)
 	local hasSpecRank = tierName and ranking and (isSoloShuffle or isRatedBGBlitz)
@@ -458,8 +463,8 @@ local function conquestFrameButton_OnEnter(self)--hooksecurefunc('ConquestFrameB
 		tooltip.SeasonMostPlayedSpec:SetFormattedText('使用最多：%s (%d)', WoWTools_ChineseMixin:CN(spec) or spec or '', seasonStat)
 	end
 
-    if self.modeDescription then
-        local desc= WoWTools_ChineseMixin:CN(self.modeDescription)
+    if frame.modeDescription then
+        local desc= WoWTools_ChineseMixin:CN(frame.modeDescription)
         if desc then
             desc= desc:gsub('。', '。|n')
             tooltip.ModeDescription:SetText(desc)
@@ -508,17 +513,17 @@ end
 
 
 --评级
-local function Init_ConquestFrame()
-    WoWTools_ChineseMixin:SetLabel(ConquestFrame.RatedSoloShuffle.TeamSizeText)--单人
-    WoWTools_ChineseMixin:SetLabel(ConquestFrame.RatedSoloShuffle.TeamTypeText)--竞技场
-    WoWTools_ChineseMixin:SetLabel(ConquestFrame.Arena2v2.TeamTypeText)
-    WoWTools_ChineseMixin:SetLabel(ConquestFrame.Arena3v3.TeamTypeText)
-    WoWTools_ChineseMixin:SetLabel(ConquestFrame.RatedBG.TeamTypeText)--战场
+local function Init_ConquestFrame(self)
+    self:SetLabel(ConquestFrame.RatedSoloShuffle.TeamSizeText)--单人
+    self:SetLabel(ConquestFrame.RatedSoloShuffle.TeamTypeText)--竞技场
+    self:SetLabel(ConquestFrame.Arena2v2.TeamTypeText)
+    self:SetLabel(ConquestFrame.Arena3v3.TeamTypeText)
+    self:SetLabel(ConquestFrame.RatedBG.TeamTypeText)--战场
 
 
     --Blizzard_PVPUI.xml
-    WoWTools_ChineseMixin:SetLabel(ConquestTooltip.WeeklyLabel)--第周统计
-    WoWTools_ChineseMixin:SetLabel(ConquestTooltip.SeasonLabel)--赛季统计
+    self:SetLabel(ConquestTooltip.WeeklyLabel)--第周统计
+    self:SetLabel(ConquestTooltip.SeasonLabel)--赛季统计
 
     --PVPRatedActivityButtonTemplate
     ConquestFrame.RatedSoloShuffle:HookScript('OnEnter', conquestFrameButton_OnEnter)--单人模式
@@ -528,8 +533,8 @@ local function Init_ConquestFrame()
 
     if ConquestFrame.RatedBGBlitz then--11新模式
         ConquestFrame.RatedBGBlitz:HookScript('OnEnter', conquestFrameButton_OnEnter)
-        WoWTools_ChineseMixin:SetLabel(ConquestFrame.RatedBGBlitz.TeamSizeText)
-        WoWTools_ChineseMixin:SetLabel(ConquestFrame.RatedBGBlitz.TeamTypeText)
+        self:SetLabel(ConquestFrame.RatedBGBlitz.TeamSizeText)
+        self:SetLabel(ConquestFrame.RatedBGBlitz.TeamTypeText)
     end
 
     --加入战斗，按钮
@@ -634,19 +639,19 @@ local function Init_ConquestFrame()
             end
         end
     end)
-    WoWTools_ChineseMixin:HookLabel(ConquestJoinButtonText)--ConquestJoinButton:SetText('加入战斗')
+    self:HookLabel(ConquestJoinButtonText)--ConquestJoinButton:SetText('加入战斗')
 
 
-    WoWTools_ChineseMixin:HookLabel(PVPQueueFrame.HonorInset.RatedPanel.Label)--宏伟宝库
+    self:HookLabel(PVPQueueFrame.HonorInset.RatedPanel.Label)--宏伟宝库
 
     --赛季最高
-    WoWTools_ChineseMixin:HookLabel(PVPQueueFrame.HonorInset.RatedPanel.Tier.Title)
+    self:HookLabel(PVPQueueFrame.HonorInset.RatedPanel.Tier.Title)
 
-    PVPQueueFrame.HonorInset.RatedPanel.Tier:HookScript('OnEnter', function(self)--PVPRatedTier_OnEnter(self)
-        local tierName = self.tierInfo and self.tierInfo.pvpTierEnum and PVPUtil.GetTierName(self.tierInfo.pvpTierEnum)
+    PVPQueueFrame.HonorInset.RatedPanel.Tier:HookScript('OnEnter', function(frame)--PVPRatedTier_OnEnter(frame)
+        local tierName = frame.tierInfo and frame.tierInfo.pvpTierEnum and PVPUtil.GetTierName(frame.tierInfo.pvpTierEnum)
         if tierName then
-            GameTooltip_SetTitle(GameTooltip, WoWTools_ChineseMixin:CN(tierName) or tierName)
-            local _, weeklyItemLevel = C_PvP.GetRewardItemLevelsByTierEnum(self.tierInfo.pvpTierEnum)
+            GameTooltip_SetTitle(GameTooltip, self:CN(tierName) or tierName)
+            local _, weeklyItemLevel = C_PvP.GetRewardItemLevelsByTierEnum(frame.tierInfo.pvpTierEnum)
             if weeklyItemLevel > 0 then
                 GameTooltip_AddColoredLine(GameTooltip, format('在此类别中获胜后，你可以从宏伟宝库获得物品等级为%d的奖励。', weeklyItemLevel), NORMAL_FONT_COLOR)
             end
@@ -655,16 +660,16 @@ local function Init_ConquestFrame()
     end)
 
     --下一级
-    PVPQueueFrame.HonorInset.RatedPanel.Tier.NextTier:HookScript('OnEnter', function(self)-- NextTier_OnEnter(self)
-        local tierName = self.tierInfo and self.tierInfo.pvpTierEnum and PVPUtil.GetTierName(self.tierInfo.pvpTierEnum)
+    PVPQueueFrame.HonorInset.RatedPanel.Tier.NextTier:HookScript('OnEnter', function(frame)-- NextTier_OnEnter(frame)
+        local tierName = frame.tierInfo and frame.tierInfo.pvpTierEnum and PVPUtil.GetTierName(frame.tierInfo.pvpTierEnum)
         if tierName then
-            GameTooltip_SetTitle(GameTooltip, format('下一级：%s', WoWTools_ChineseMixin:CN(tierName) or tierName))
-            local tierDescription = PVPUtil.GetTierDescription(self.tierInfo.pvpTierEnum)
+            GameTooltip_SetTitle(GameTooltip, format('下一级：%s', self:CN(tierName) or tierName))
+            local tierDescription = PVPUtil.GetTierDescription(frame.tierInfo.pvpTierEnum)
             if tierDescription then
                 GameTooltip:SetMinimumWidth(270)--260
-                GameTooltip_AddNormalLine(GameTooltip, WoWTools_ChineseMixin:CN(tierDescription) or tierDescription)
+                GameTooltip_AddNormalLine(GameTooltip, self:CN(tierDescription) or tierDescription)
             end
-            local activityItemLevel, weeklyItemLevel = C_PvP.GetRewardItemLevelsByTierEnum(self.tierInfo.pvpTierEnum)
+            local activityItemLevel, weeklyItemLevel = C_PvP.GetRewardItemLevelsByTierEnum(frame.tierInfo.pvpTierEnum)
             if activityItemLevel > 0 then
                 GameTooltip_AddBlankLineToTooltip(GameTooltip)
                 GameTooltip_AddColoredLine(GameTooltip, format('在此类别中获胜可以将你的宏伟宝库的奖励的物品等级提升到%d。', weeklyItemLevel), NORMAL_FONT_COLOR)
@@ -676,7 +681,7 @@ local function Init_ConquestFrame()
     --赛季奖励
     for _, label in pairs({PVPQueueFrame.HonorInset.RatedPanel.SeasonRewardFrame:GetRegions()}) do
         if label:GetObjectType()=='FontString' then
-            WoWTools_ChineseMixin:SetLabel(label)
+            self:SetLabel(label)
         end
     end
     PVPQueueFrame.HonorInset.CasualPanel.HonorLevelDisplay.NextRewardLevel:HookScript('OnEnter', function()
@@ -687,7 +692,7 @@ local function Init_ConquestFrame()
             local rewardText = select(11, GetAchievementInfo(rewardInfo.achievementRewardedID))
             if rewardText and rewardText ~= "" then
                 GameTooltip:SetText(format('到达荣誉等级%d级后可获得下一个奖励', nextHonorLevelForReward))
-                GameTooltip_AddColoredLine(GameTooltip, WoWTools_ChineseMixin:CN(rewardText) or rewardText, HIGHLIGHT_FONT_COLOR, true)
+                GameTooltip_AddColoredLine(GameTooltip, self:CN(rewardText) or rewardText, HIGHLIGHT_FONT_COLOR, true)
                 GameTooltip:Show()
             end
         end
@@ -739,7 +744,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_PVPUI()
         GameTooltip:Show()
     end)
 
-
-    Init_HonorFrame()
-    Init_ConquestFrame()
+    Init_HonorFrame(self)
+    Init_ConquestFrame(self)
 end

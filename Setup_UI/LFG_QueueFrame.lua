@@ -1,4 +1,63 @@
+function WoWTools_ChineseMixin.Events:Blizzard_GroupFinder()
 
+    self:SetLabel(RaidFinderQueueFrameSelectionDropdownName)
+    self:SetLabel(RaidFinderQueueFrameScrollFrameChildFrameRewardsLabel)
+    self:HookLabel(RaidFinderQueueFrameSelectionDropdown.Text)
+    RaidFinderQueueFrameScrollFrameChildFrameEncounterList:HookScript('OnEnter', function(frame)
+        if frame.dungeonID then
+            local numEncounters, numCompleted = GetLFGDungeonNumEncounters(frame.dungeonID)
+            if ( numCompleted > 0 ) then
+                GameTooltip:AddLine(' ')
+                GameTooltip:AddLine(format('|cnHIGHLIGHT_FONT_COLOR:物品已经被拾取（%d/%d）', numCompleted, numEncounters))
+                GameTooltip:Show()
+            end
+        end
+    end)
+
+    hooksecurefunc('RaidFinderQueueFrameIneligibleFrame_UpdateFrame', function(frame)
+        if ( frame.queueRestriction ) then
+            if ( frame.queueRestriction == "lfd" ) then
+                frame.description:SetText('你无法在排队加入随机地下城时排队加入随机团队副本的队列。')
+                frame.leaveQueueButton:SetText('离开队列')
+            else
+                frame.description:SetText('处于其他团队列表时无法加入团队副本队列。')
+                if ( IsInGroup() ) then
+                    frame.leaveQueueButton:SetText('不列出我的队伍')
+                else
+                    frame.leaveQueueButton:SetText('不列出我的名字')
+                end
+            end
+        elseif ( frame.ineligibleGroup ) then
+            frame.description:SetText('你的队伍不能通过团队查找器加入任何随机团队副本。')
+            frame.leaveQueueButton:Hide()
+            frame:Show()
+            return true
+        elseif ( frame.ineligiblePlayer ) then
+            frame.description:SetText('你不能通过团队查找器排队加入任何随机团队副本。')
+        end
+    end)
+
+--加入，按钮
+
+    self:HookButton(RaidFinderFrameFindRaidButton)
+    --[[hooksecurefunc('RaidFinderFrameFindRaidButton_Update', function()
+        local mode = GetLFGMode(LE_LFG_CATEGORY_RF, RaidFinderQueueFrame.raid)
+        if ( mode == "queued" or mode == "rolecheck" or mode == "proposal" or mode == "suspended" ) then
+            RaidFinderFrameFindRaidButton:SetText('离开队列')
+        else
+            if ( IsInGroup() and GetNumGroupMembers() > 1 ) then
+                RaidFinderFrameFindRaidButton:SetText('小队加入')
+            else
+                RaidFinderFrameFindRaidButton:SetText('寻找组队')
+            end
+        end
+    end)]]
+
+
+
+
+
+end
 
 --地下城查找器
 
@@ -18,9 +77,8 @@ end)
 
 
 WoWTools_ChineseMixin:SetLabel(LFDQueueFrameTypeDropdownName)
-WoWTools_ChineseMixin:SetLabel(RaidFinderQueueFrameSelectionDropdownName)
 
-
+WoWTools_ChineseMixin:HookLabel(LFDQueueFrameTypeDropdown.Text)
 
 
 
