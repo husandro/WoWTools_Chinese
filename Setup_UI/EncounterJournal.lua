@@ -44,6 +44,7 @@ end
 local function UpdateEncounterJournalHeaders()
     for index, infoHeader in pairs(EncounterJournal.encounter.usedHeaders or {}) do
         if infoHeader.myID and infoHeader.button then
+            
             if infoHeader.description then
                 local difficultyID = EJ_GetDifficulty()
                 local data = WoWTools_ChineseMixin:GetBoosSectionData(infoHeader.myID, difficultyID)--difficultyID and WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
@@ -55,6 +56,7 @@ local function UpdateEncounterJournalHeaders()
                         infoHeader.description:SetText(data.D)
                     end
                     EncounterJournal_ShiftHeaders(index)
+                    print(data.T, data.D)
                 end
             end
 
@@ -379,7 +381,7 @@ local function Init_WoWeuCN()
             self.info.encounterTitle:SetText(title)
             set_navButton(EncounterJournal.navBar, title)--导航条
         end
-         if desc then
+        if desc then
             self.overviewFrame.loreDescription:SetText(desc)
             self.infoFrame.description:SetText(desc)
             self.infoFrame.descriptionHeight = self.infoFrame.description:GetHeight()
@@ -387,10 +389,13 @@ local function Init_WoWeuCN()
                 self.usedHeaders[1]:SetPoint("TOPRIGHT", 0 , -8 - EncounterJournal.encounter.infoFrame.descriptionHeight - 6)
             end
         end
-
         
+        desc= WoWTools_ChineseMixin:GetBoosSectionDesc(self.overviewFrame.rootOverviewSectionID)
+        if desc then
+            self.overviewFrame.overviewDescription.Text:SetText(desc)
+            self.overviewFrame.overviewDescription.descriptionHeight = self.overviewFrame.overviewDescription:GetHeight()
+        end
         UpdateEncounterJournalHeaders()
-        
     end)
 
         --[[local info= WoWTools_ChineseMixin:GetBossData(encounterID)
