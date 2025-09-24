@@ -1,5 +1,9 @@
 
-
+local function Get_Quest_Obbjective(obj)
+    if obj then
+        return obj:match('(%d+/%d+ )'), obj:match('( %(%d+%%)%)')
+    end
+end
 
 
 
@@ -32,18 +36,22 @@ end
 local function set_quest(_, block)
     local questID= block.id and tonumber(block.id)
     local data= WoWTools_ChineseMixin:GetQuestData(questID)
-    if not data then
+    if not data or not data.T then
         return
     end
 
-    local name= WoWTools_ChineseMixin:GetQuestName(questID)
-    if name then
-        block:SetHeader(name)
+    block:SetHeader(data.T)
+
+    --[[if not data.S then
+        return
     end
     for index, line in pairs(block.usedLines or {}) do
+        info= line.info
+        for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR|r') for k2,v2 in pairs(v) do print('|cffffff00',k2,v2, '|r') end print('|cffff0000---',k, '---END|r') else print(k,v) end end print('|cffff00ff——————————|r')
+
         if type(index)=='number' then
         end
-    end
+    end]]
 end
 
 
@@ -51,12 +59,42 @@ end
 
 
 --任务 QuestObjectiveTracker QuestObjectiveTrackerMixin
-hooksecurefunc(QuestObjectiveTracker, 'LayoutContents', set_objective_header)
---QuestObjectiveTracker:HookScript('OnShow', set_objective_header)
-hooksecurefunc(QuestObjectiveTracker, 'AddBlock', set_quest)
+hooksecurefunc(QuestObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
+--QuestObjectiveTracker:HookScript('OnShow', function(...) set_objective_header(...) end)
+hooksecurefunc(QuestObjectiveTracker, 'AddBlock', function(...) set_quest(...) end)
 
+hooksecurefunc(QuestObjectiveLineMixin, 'UpdateModule', function(...)
+    print(...)
+end)
 
+hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, questCompleted, questSequenced, isExistingBlock, useFullHeight)
+    local questID = block.id
+    local data= WoWTools_ChineseMixin:GetQuestObject(questID)
+    if not data then
+        return
+    end
 
+	local questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID)
+	local numObjectives = GetNumQuestLeaderBoards(questLogIndex)
+	local suppressProgressPercentageInObjectiveText = true
+
+	for objectiveIndex = 1, numObjectives do
+		local text= GetQuestLogLeaderBoard(objectiveIndex, questLogIndex, suppressProgressPercentageInObjectiveText)
+        
+        local line = text and block:GetExistingLine(objectiveIndex)
+        local obj= line and data[objectiveIndex]
+        if obj then
+            local num, per= Get_Quest_Obbjective(text)
+            if num then
+                obj= num..obj
+            elseif per then
+                obj= obj..per
+            end
+            line.Text:SetText(obj)
+            line:SetHeight(line.Text:GetStringHeight())
+        end
+	end
+end)
 
 
 
@@ -85,10 +123,10 @@ end)
 
 
 --战役，任务 CampaignQuestObjectiveTracker
---CampaignQuestObjectiveTracker:HookScript('OnShow', set_objective_header)
---hooksecurefunc(CampaignQuestObjectiveTracker, 'UpdateSingle', set_quest)
-hooksecurefunc(CampaignQuestObjectiveTracker, 'LayoutContents', set_objective_header)
-hooksecurefunc(CampaignQuestObjectiveTracker, 'AddBlock', set_quest)
+--CampaignQuestObjectiveTracker:HookScript('OnShow', function(...) set_objective_header(...) end)
+--hooksecurefunc(CampaignQuestObjectiveTracker, 'UpdateSingle', function(...) set_quest(...) end)
+hooksecurefunc(CampaignQuestObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
+hooksecurefunc(CampaignQuestObjectiveTracker, 'AddBlock', function(...) set_quest(...) end)
 
 
 
@@ -97,9 +135,9 @@ hooksecurefunc(CampaignQuestObjectiveTracker, 'AddBlock', set_quest)
 
 
 --世界，任务 WorldQuestObjectiveTracker
---WorldQuestObjectiveTracker:HookScript('OnShow', set_objective_header)
-hooksecurefunc(WorldQuestObjectiveTracker, 'LayoutContents', set_objective_header)
-hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', set_quest)
+--WorldQuestObjectiveTracker:HookScript('OnShow', function(...) set_objective_header(...) end)
+hooksecurefunc(WorldQuestObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
+hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', function(...) set_quest(...) end)
 
 
 
@@ -110,7 +148,7 @@ hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', set_quest)
 
 --旅行者日志 MonthlyActivitiesObjectiveTracker
 --MonthlyActivitiesObjectiveTracker:HookScript('OnShow', )
-hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'LayoutContents', set_objective_header)
+hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
 hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'AddBlock', function(_, block)
     local data= WoWTools_ChineseMixin:GetPerksActivityData(block.id)
     if data and data[1] then
@@ -123,8 +161,8 @@ end)
 --成就
 --AchievementObjectiveTracker
 --AchievementObjectiveTrackerMixin
---AchievementObjectiveTracker:HookScript('OnShow', set_objective_header)
-hooksecurefunc(AchievementObjectiveTracker, 'LayoutContents', set_objective_header)
+--AchievementObjectiveTracker:HookScript('OnShow', function(...) set_objective_header(...) end)
+hooksecurefunc(AchievementObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
 hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, achievementID, achievementName, description)
     local block = self.usedBlocks[self.blockTemplate] and self.usedBlocks[self.blockTemplate][achievementID]
 
@@ -264,7 +302,7 @@ end)
 
 
 --奖励目标
-hooksecurefunc(BonusObjectiveTracker, 'LayoutContents',  set_objective_header)
+hooksecurefunc(BonusObjectiveTracker, 'LayoutContents',  function(...) set_objective_header(...) end)
 
 
 
@@ -290,8 +328,8 @@ hooksecurefunc(BonusObjectiveTracker, 'LayoutContents',  set_objective_header)
 
 
 --专业技能 ProfessionsRecipeTracker
---ProfessionsRecipeTracker:HookScript('OnShow', set_objective_header)
-hooksecurefunc(ProfessionsRecipeTracker, 'LayoutContents', set_objective_header)
+--ProfessionsRecipeTracker:HookScript('OnShow', function(...) set_objective_header(...) end)
+hooksecurefunc(ProfessionsRecipeTracker, 'LayoutContents', function(...) set_objective_header(...) end)
 hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, isRecraft)
     local blockID = NegateIf(recipeID, isRecraft)
     local block = Get_Block(self, blockID)
@@ -362,7 +400,7 @@ end)
 
 
 
-hooksecurefunc(AdventureObjectiveTracker, 'LayoutContents', set_objective_header)
+hooksecurefunc(AdventureObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
 
 
 
@@ -372,7 +410,7 @@ hooksecurefunc(AdventureObjectiveTracker, 'LayoutContents', set_objective_header
 
 
 --ObjectiveTrackerFrame
-hooksecurefunc(ObjectiveTrackerFrame, 'Init', set_objective_header)
+hooksecurefunc(ObjectiveTrackerFrame, 'Init', function(...) set_objective_header(...) end)
 
 
 
