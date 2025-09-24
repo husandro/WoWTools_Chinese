@@ -45,6 +45,8 @@ Data\Collection_Data_WarbandScene.lua
 ##挑战
 Data\Challenges_Data_MapChallengeMode.lua
 Data\Challenges_Dada_Affix.lua
+##LFG
+Data\GroupFinderCategory.lua
 ##地图
 Data\Map_Data_UiMap.lua
 Data\Map_Data_UiMapGroupMember.lua

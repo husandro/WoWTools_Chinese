@@ -285,7 +285,7 @@ hooksecurefunc('LFGInvitePopup_Update', function(inviter, _, _, _, _, isQuestSes
     end
 end)
 
-WoWTools_ChineseMixin:HookLabel(LFGListFrame.ApplicationViewer.DescriptionFrame.Text)
+
 
 
 

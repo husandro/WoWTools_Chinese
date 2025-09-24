@@ -58,21 +58,21 @@ hooksecurefunc('LFGListCategorySelection_AddButton', function(frame, btnIndex, c
         return
     end
     local categoryInfo = C_LFGList.GetLfgCategoryInfo(categoryID)
-    local text=LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, filters, true)
-    
+    local text= LFGListUtil_GetDecoratedCategoryName(categoryInfo.name, filters, true)
+
     local btn= frame.CategoryButtons[btnIndex]
     if text and btn then
         WoWTools_ChineseMixin:SetCNFont(btn:GetFontString())
         local name= text:match('%- (.+)')
-        local cnName= name and WoWTools_ChineseMixin:CN(name)
-        if cnName then
-            text= text:gsub(name, cnName)
+        local cn= name and WoWTools_ChineseMixin:CN(name)
+        if cn then
+            text= text:gsub(name, cn)
         end
         btn:SetText(text)
     end
 end)
 
-    
+
 
     LFGListFrame.CategorySelection.StartGroupButton:SetText('创建队伍')
     LFGListFrame.CategorySelection.FindGroupButton:SetText('寻找队伍')
@@ -88,16 +88,22 @@ end)
 
         LFGListFrame.EntryCreation.PrivateGroup.Label:SetText('个人')
         LFGListFrame.EntryCreation.PrivateGroup.tooltip= '仅对已在队伍中的好友和公会成员可见。'
+        WoWTools_ChineseMixin:SetLabel(LFGListFrame.EntryCreation.PVPRating.Label)
+
+        WoWTools_ChineseMixin:SetLabel(LFGListFrame.EntryCreation.PvpItemLevel.EditBox.Instructions)
 
         WoWTools_ChineseMixin:SetCNFont(LFGListFrame.ApplicationViewer.ItemLevelColumnHeader.Label)
         WoWTools_ChineseMixin:SetCNFont(LFGListFrame.ApplicationViewer.RoleColumnHeader.Label)
         WoWTools_ChineseMixin:SetCNFont(LFGListFrame.ApplicationViewer.NameColumnHeader.Label)
+        WoWTools_ChineseMixin:HookLabel(LFGListFrame.ApplicationViewer.DescriptionFrame.Text)
+
         LFGListFrame.ApplicationViewer.NameColumnHeader.Label:SetText('名称', nil, true)
         LFGListFrame.ApplicationViewer.RoleColumnHeader.Label:SetText('职责', nil, true)
         LFGListFrame.ApplicationViewer.ItemLevelColumnHeader.Label:SetText('装等', nil, true)
         LFGApplicationViewerRatingColumnHeader.Label:SetText('分数', nil, true)
 
         WoWTools_ChineseMixin:SetLabel(LFGListFrame.EntryCreation.ActivityFinder.Dialog.EntryBox.Instructions)
+
 
 LFGListApplicationDialog.Label:SetText('选择你的角色')
 LFGListApplicationDialogDescription.EditBox.Instructions:SetText('给队长留言（可选）')
