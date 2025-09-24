@@ -27,28 +27,17 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     AuctionHouseFrame.SearchBar.FilterButton:SetText('过滤器')
 
 
-    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList, 'SetState', function(frame, state)
-        if state == 1 then
-            local searchResultsText = frame.searchStartedFunc and select(2, frame.searchStartedFunc())
-            if searchResultsText== AUCTION_HOUSE_BROWSE_FAVORITES_TIP then
-                frame.ResultsText:SetText('小窍门：右键点击物品可以设置偏好。偏好的物品会在你打开拍卖行时立即出现。')
-            end
-        elseif state == 2 then
-            frame.ResultsText:SetText('未发现物品')
-        end
-    end)
 
     AuctionHouseFrameSellTab.Text:SetText('出售')
     AuctionHouseFrameAuctionsTab.Text:SetText('拍卖')
     AuctionHouseFrameAuctionsFrame.CancelAuctionButton:SetText('取消拍卖')
+    
+    self:HookLabel(AuctionHouseFrameAuctionsFrame.AllAuctionsList.ResultsText)
+
+    self:HookLabel(AuctionHouseFrameAuctionsFrame.BidsList.ResultsText)
     AuctionHouseFrameAuctionsFrameAuctionsTab.Text:SetText('拍卖')
     AuctionHouseFrameAuctionsFrameBidsTab.Text:SetText('竞标')
     AuctionHouseFrameAuctionsFrameBidsTab.Text:SetText('竞标')
-    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList, 'SetDataProvider', function(frame)
-        if frame.ResultsText and frame.ResultsText:IsShown() then
-            frame.ResultsText:SetText('小窍门：右键点击物品可以设置偏好。偏好的物品会在你打开拍卖行时立即出现。')
-        end
-    end)
 
     AuctionHouseFrame.SearchBar.SearchButton:SetText('搜索')
 
@@ -99,17 +88,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     AuctionHouseFrame.ItemBuyFrame.BidFrame.BidButton:SetText('竞标')
     AuctionHouseFrame.ItemBuyFrame.BuyoutFrame.BuyoutButton:SetText('一口价')
 
-    AuctionHouseFrame.CommoditiesSellList.RefreshFrame.RefreshButton:HookScript('OnEnter', function()
-        GameTooltip_SetTitle(GameTooltip, '刷新')
-        GameTooltip:Show()
-    end)
-    AuctionHouseFrame.ItemSellList.RefreshFrame.RefreshButton:HookScript('OnEnter', function()
-        GameTooltip_SetTitle(GameTooltip, '刷新')
-        GameTooltip:Show()
-    end)
 
 
     --Blizzard_AuctionHouseSharedTemplates.lua
+
     hooksecurefunc(AuctionHouseFrame.ItemSellList.RefreshFrame, 'SetQuantity', function(frame, totalQuantity)
         if totalQuantity ~= 0 then
             frame.TotalQuantity:SetFormattedText('可购买数量：|cnGREEN_FONT_COLOR:%s|r', WoWTools_ChineseMixin:MK(totalQuantity, 0))
@@ -163,10 +145,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
 
     AuctionHouseFrame.WoWTokenResults.Buyout:SetText('一口价')
     AuctionHouseFrame.WoWTokenResults.BuyoutLabel:SetText('一口价')
-    AuctionHouseFrame.WoWTokenResults.HelpButton:HookScript('OnEnter', function()
-        GameTooltip:AddLine('关于魔兽世界时光徽章')
-        GameTooltip:Show()
-    end)
+    self:HookLabel(AuctionHouseFrame.WoWTokenResults.BuyoutPrice)
+
+
 
 
     AuctionHouseFrame.BuyDialog.BuyNowButton:SetText('立即购买')
@@ -204,6 +185,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     WoWTools_ChineseMixin:AddDialogs("TOKEN_AUCTIONABLE_TOKEN_OWNED", {text = '你必须先将从商城购得的魔兽世界时光徽章售出后才能从拍卖行中购买新的徽章。', button1 = '确定'})
 
 
+    self:HookLabel(AuctionHouseFrame.BrowseResultsFrame.ItemList.ResultsText)
+
     hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'Update', function(frame)
         if not frame:GetView() then
             return
@@ -223,9 +206,14 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
             end
         end
     end)
+
+
+
+    hooksecurefunc(AuctionHouseTableHeaderStringMixin, 'Init', function(btn, _, headerText)
+        self:SetLabel(btn.Text, headerText)
+    end)
+
 end
-
-
 
 
 

@@ -72,7 +72,7 @@ end
 hooksecurefunc('ChatConfig_CreateColorSwatches', set_ColorSwatches)
 hooksecurefunc('ChatConfig_UpdateSwatches', set_ColorSwatches)
 
-
+--[[
 hooksecurefunc('CombatConfig_Colorize_Update', function()
     if ( not CHATCONFIG_SELECTED_FILTER.settings ) then
 		return
@@ -81,9 +81,18 @@ hooksecurefunc('CombatConfig_Colorize_Update', function()
     WoWTools_ChineseMixin:SetLabel(CombatConfigColorsExampleString2)
 end)
 hooksecurefunc('CombatConfig_Formatting_Update', function()
-    WoWTools_ChineseMixin:SetLabel(CombatConfigFormattingExampleString1)
-	WoWTools_ChineseMixin:SetLabel(CombatConfigFormattingExampleString2)
-end)
+    --WoWTools_ChineseMixin:SetLabel(CombatConfigFormattingExampleString1)
+	--WoWTools_ChineseMixin:SetLabel(CombatConfigFormattingExampleString2)
+    local text, r, g, b = CombatLog_OnEvent(CHATCONFIG_SELECTED_FILTER, 0, "SPELL_DAMAGE", false, 0x0000000000000001, UnitName("player"), 0x511, 0, 0xF13000012B000820, '怪物', 0x10a28, 0, 116, '寒冰箭', Enum.Damageclass.MaskFrost, 27, Enum.Damageclass.MaskFrost, nil, nil, nil, 1, nil, nil)
+    if text then
+        CombatConfigFormattingExampleString1:SetText(text)
+    end
+
+    text = CombatLog_OnEvent(CHATCONFIG_SELECTED_FILTER, 0, "SPELL_DAMAGE", false, 0xF13000024D002914, '怪物', 0x10a48, 0, 0x0000000000000001, UnitName("player"), 0x511, 0, 20793, '火球术', Enum.Damageclass.MaskFire, 68, Enum.Damageclass.MaskFire, nil, nil, nil, nil, nil, nil)
+    if text then
+        CombatConfigFormattingExampleString2:SetText(text)
+    end
+end)]]
 
 hooksecurefunc('ChatConfigCombat_InitButton', function(button)
     WoWTools_ChineseMixin:SetLabel(button.NormalText)
@@ -183,6 +192,8 @@ CombatConfigSettingsShowQuickButton.tooltip= '在聊天窗口中放置一个该�
 CombatConfigSettingsSoloText:SetText('独身')
 CombatConfigSettingsPartyText:SetText('小队')
 CombatConfigSettingsRaidText:SetText('团队')
+
+WoWTools_ChineseMixin:SetFrame(CombatConfigSettingsNameEditBox)
 
 ChatConfigFrameDefaultButton:SetText('聊天默认')
 

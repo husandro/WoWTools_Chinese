@@ -315,7 +315,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ClickBindingUI()
     self:AddDialogs("CONFIRM_LOSE_UNSAVED_CLICK_BINDINGS", {text  = '你有未保存的点击施法按键绑定。如果你现在关闭，会丢失所有改动。', button1 = '确定', button2 = '取消'})
     self:AddDialogs("CONFIRM_RESET_CLICK_BINDINGS", {text  = '确定将所有点击施法按键绑定重置为默认值吗？\n', button1 = '确定', button2 = '取消'})
 
-
+    self:SetLabel(ClickBindingFrame.MouseoverCastKeyDropdown.Label)
     ClickBindingFrameTitleText:SetText('关于点击施法按键绑定')
     ClickBindingFrame.TutorialFrame:SetTitle('关于点击施法按键绑定')
 
