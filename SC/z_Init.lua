@@ -1,4 +1,47 @@
 
+--单位
+local function Get_NPC_ID(unit)--NPC ID
+    if UnitExists(unit) then
+        local guid=UnitGUID(unit)
+        if guid then
+            return select(6,  strsplit("-", guid))
+        end
+    end
+end
+--npcID 为字符
+function WoWTools_ChineseMixin:GetUnitData(unit, npcID)
+    npcID= npcID or Get_NPC_ID(unit)
+    npcID= type(npcID)=='number' and tostring(npcID)  or npcID
+    if npcID then
+        return WoWTools_SC_Unit(npcID)
+    end
+end
+
+function WoWTools_ChineseMixin:GetUnitName(unit, npcID)
+    unit= unit or 'npc'
+    local data= self:GetUnitData(unit, npcID)
+    if data then
+        return data.T, data.D
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -122,3 +165,6 @@ function WoWTools_ChineseMixin:GetBossName(journalEncounterID)
         return data.T
     end
 end]]
+
+
+

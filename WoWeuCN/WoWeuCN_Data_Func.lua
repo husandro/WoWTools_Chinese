@@ -356,62 +356,6 @@ end
 
 
 
---单位 WoWTools_ChineseMixin:GetUnitName(tab.unit, tab.npcID)
-local function Get_NPC_ID(unit)--NPC ID
-    if UnitExists(unit) then
-        local guid=UnitGUID(unit)
-        if guid then
-            return select(6,  strsplit("-", guid))
-        end
-    end
-end
-
-local Get_Unit_Data= GetUnitData or function(npcID)
-    if not WoWeuCN_Tooltips_UnitIndexData_0 then
-        return
-    end
-    local num_id = npcID and tonumber(npcID)
-    if not num_id then
-        return
-    end
-
-    local dataIndex
-    if (num_id >= 0 and num_id < 100000) then
-        dataIndex = WoWeuCN_Tooltips_UnitIndexData_0[num_id]
-    elseif (num_id >= 100000 and num_id < 200000) then
-        dataIndex = WoWeuCN_Tooltips_UnitIndexData_100000[num_id - 100000]
-    elseif (num_id >= 200000 and num_id < 300000) then
-        dataIndex = WoWeuCN_Tooltips_UnitIndexData_200000[num_id - 200000]
-    end
-
-    if not dataIndex then
-        return
-    end
-
-    if (num_id >= 0 and num_id < 100000) then
-        return split(WoWeuCN_Tooltips_UnitData_0[dataIndex], '£')
-
-    elseif (num_id >= 100000 and num_id < 200000) then
-        return split(WoWeuCN_Tooltips_UnitData_100000[dataIndex], '£')
-
-    elseif (num_id >= 200000 and num_id < 300000) then
-        return split(WoWeuCN_Tooltips_UnitData_200000[dataIndex], '£')
-    end
-end
-
-
-function WoWTools_ChineseMixin:GetUnitData(unit, npcID)
-    npcID= npcID or Get_NPC_ID(unit)
-    return Get_Unit_Data(npcID)
-end
-
-function WoWTools_ChineseMixin:GetUnitName(unit, npcID)
-    unit= unit or 'npc'
-    local data= self:GetUnitData(unit, npcID)
-    if data then
-        return data[1], data[2]
-    end
-end
 
 
 

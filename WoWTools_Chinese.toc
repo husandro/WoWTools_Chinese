@@ -96,9 +96,7 @@ Data\Spell_Data_Flyout.lua
 Data\Spell_Data_Add.lua
 Data\Spell_Data_Specialization.lua
 
-SC\Encounter.lua
-SC\SectionEncounter.lua
-SC\Quest.lua
+SC\WoWTools_Chinese_Scanner.lua
 SC\z_Init.lua
 
 a_Event.lua
@@ -163,7 +161,7 @@ Setup_UI\LFG_PVP.lua
 WoWeuCN\ItemData_cn.lua
 WoWeuCN\SpellData_cn.lua
 ##WoWeuCN\QuestData_cn.lua
-WoWeuCN\UnitData_cn.lua
+##WoWeuCN\UnitData_cn.lua
 WoWeuCN\WoWeuCN_Data_Func.lua
 
 ##放最后
