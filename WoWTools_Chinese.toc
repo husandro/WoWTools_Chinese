@@ -23,7 +23,7 @@ Data\AccountStore.lua
 
 ##成就
 Data\Achievement_Data_Category.lua
-Data\Achievement_Data.lua
+##Data\Achievement_Data.lua
 ##冒险指南
 Data\EncounterJournal_Data_PerksActivity_Tag.lua
 Data\EncounterJournal_Data_Instance.lua

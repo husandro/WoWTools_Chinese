@@ -139,15 +139,38 @@ function WoWTools_ChineseMixin:GetQuestDesc(questID)
 end
 
 
-
-do
-    for journalEncounterID, data in pairs(WoWTools_SC_Encounter) do
-        local name, desc= EJ_GetEncounterInfo(journalEncounterID)
-        WoWTools_ChineseMixin:SetCN(name, data.T)
-        WoWTools_ChineseMixin:SetCN(desc, data.D)
+EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
+    do
+        for journalEncounterID, data in pairs(WoWTools_SC_Encounter) do
+            local name, desc= EJ_GetEncounterInfo(journalEncounterID)
+            WoWTools_ChineseMixin:SetCN(name, data.T)
+            WoWTools_ChineseMixin:SetCN(desc, data.D)
+        end
     end
-end
-WoWTools_SC_Encounter= nil
+    WoWTools_SC_Encounter= nil
+
+    do
+        for achievementID, data in pairs(WoWTools_SC_Achievement) do
+            local _, title, _, _, _, _, _, desc, _, _, reward = GetAchievementInfo(achievementID)
+            WoWTools_ChineseMixin:SetCN(title, data.T)
+            WoWTools_ChineseMixin:SetCN(desc, data.D)
+            WoWTools_ChineseMixin:SetCN(reward, data.R)
+
+            local numCriteria= GetAchievementNumCriteria(achievementID)
+            if data.S and numCriteria>0 then
+                for index = 1, numCriteria do
+                    local criteriaString = GetAchievementCriteriaInfo(achievementID, index)
+                    WoWTools_ChineseMixin:SetCN(criteriaString, data.S[index])
+                end
+            end
+        end
+    end
+    WoWTools_SC_Achievement=nil
+
+    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
+end)
+
+
 --[[function WoWTools_ChineseMixin:GetBossData(journalEncounterID)
     return WoWTools_SC_Encounter[journalEncounterID]
 end
