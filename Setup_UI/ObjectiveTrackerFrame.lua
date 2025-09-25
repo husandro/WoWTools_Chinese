@@ -60,7 +60,7 @@ end)]]
 
 hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, questCompleted, questSequenced, isExistingBlock, useFullHeight)
     local questID = block.id
-    local data= WoWTools_ChineseMixin:GetQuestObject(questID)
+    local data= not questCompleted and WoWTools_ChineseMixin:GetQuestObject(questID)
     if not data then
         return
     end
@@ -81,6 +81,7 @@ hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, qu
             elseif per then
                 obj= obj..per
             end
+            print(text, obj)
             line.Text:SetText(obj)
             line:SetHeight(line.Text:GetStringHeight())
         end
