@@ -1,3 +1,4 @@
+--Blizzard_ObjectiveTrackerBlock.lua
 
 local function Get_Quest_Obbjective(obj)
     if obj then
@@ -58,37 +59,63 @@ hooksecurefunc(QuestObjectiveTracker, 'AddBlock', function(...) set_quest(...) e
     print(...)
 end)]]
 
-hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, questCompleted, questSequenced, isExistingBlock, useFullHeight)
+hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, questCompleted)--, questSequenced, isExistingBlock, useFullHeight)
     local questID = block.id
-    local data= not questCompleted and WoWTools_ChineseMixin:GetQuestObject(questID)
-    if not data then
-        return
-    end
 
-	local questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID)
-	local numObjectives = GetNumQuestLeaderBoards(questLogIndex)
-	local suppressProgressPercentageInObjectiveText = true
+    local questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID)
+	local numObjectives = GetNumQuestLeaderBoards(questLogIndex) or 0
 
-	for objectiveIndex = 1, numObjectives do
-		local text= GetQuestLogLeaderBoard(objectiveIndex, questLogIndex, suppressProgressPercentageInObjectiveText)
-        
-        local line = text and block:GetExistingLine(objectiveIndex)
-        local obj= line and data[objectiveIndex]
-        if obj then
-            local num, per= Get_Quest_Obbjective(text)
-            if num then
-                obj= num..obj
-            elseif per then
-                obj= obj..per
-            end
-            print(text, obj)
-            line.Text:SetText(obj)
-            line:SetHeight(line.Text:GetStringHeight())
+    if numObjectives>0 then
+        local data= WoWTools_ChineseMixin:GetQuestObject(questID)
+        if not data or not data[1] then
+            return
         end
-	end
+
+	    for objectiveIndex = 1, numObjectives do
+            local text= GetQuestLogLeaderBoard(objectiveIndex, questLogIndex, true)-- local suppressProgressPercentageInObjectiveText = true
+            local line = text and block:GetExistingLine(objectiveIndex)
+            local obj= line and data[objectiveIndex]
+            if obj then
+                local num, per= Get_Quest_Obbjective(text)
+                if num then
+                    obj= num..obj
+                elseif per then
+                    obj= obj..per
+                end
+                line.Text:SetText(obj)
+                line:SetHeight(line.Text:GetStringHeight())
+            end
+        end
+
+    else
+        local obj= WoWTools_ChineseMixin:GetQuestObjectText(questID)
+        if obj then
+            block:ForEachUsedLine(function(line, objectiveKey)
+                C_Timer.After(0.3, function()
+                    line.Text:SetText(obj)
+                    line:SetHeight(line.Text:GetStringHeight())
+                end)
+                
+            end)
+        end
+    end
 end)
 
+--[[hooksecurefunc(QuestObjectiveTracker, 'UpdateSingle', function(self, quest)
+		local questID = quest:GetID();
+	    local isComplete = quest:IsComplete()
+       -- local block, isExistingBlock = self:GetBlock(questID);
+    print( block, isExistingBlock, questID  )
 
+    --[[local obj= isComplete and WoWTools_ChineseMixin:GetQuestObjectText(questID)
+    if obj then
+        block:ForEachUsedLine(function(line, objectiveKey)
+            print(objectiveKey)
+            line.Text:SetText(obj)
+            line:SetHeight(line.Text:GetStringHeight())
+        end)
+    end]]
+end)]]
 
 hooksecurefunc(AutoQuestPopupBlockMixin, 'Update', function(self, questTitle, questID, popUpType)
     local contents = self.Contents
