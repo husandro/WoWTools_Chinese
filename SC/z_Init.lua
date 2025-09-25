@@ -220,7 +220,6 @@ end
 
 
 
-
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
         for journalEncounterID, data in pairs(WoWTools_SC_Encounter) do

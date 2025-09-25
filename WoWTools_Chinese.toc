@@ -96,8 +96,15 @@ Data\Spell_Data_Flyout.lua
 Data\Spell_Data_Add.lua
 Data\Spell_Data_Specialization.lua
 
-SC\WoWTools_Chinese_Scanner.lua
-SC\z_Init.lua
+##插件 WoWTools_Chinese_Scanner 中的数据
+SC\Achievement.lua
+SC\Encounter.lua
+SC\Item.lua
+SC\Quest.lua
+SC\SectionEncounter.lua
+SC\Spell.lua
+SC\Unit.lua
+
 
 a_Event.lua
 b_Frames.lua
@@ -159,3 +166,4 @@ Setup_UI\LFG_PVP.lua
 
 ##放最后
 Data\1_zhCN_Add.lua
+SC\z_Init.lua
