@@ -1,4 +1,3 @@
-
 WoWTools_SC_Achievement = {
 ["13341"] = {
 ["D"] = "祭拜库尔提拉斯的火焰。",
