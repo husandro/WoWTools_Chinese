@@ -107,14 +107,14 @@ end)
        -- local block, isExistingBlock = self:GetBlock(questID);
     print( block, isExistingBlock, questID  )
 
-    --[[local obj= isComplete and WoWTools_ChineseMixin:GetQuestObjectText(questID)
+    local obj= isComplete and WoWTools_ChineseMixin:GetQuestObjectText(questID)
     if obj then
         block:ForEachUsedLine(function(line, objectiveKey)
             print(objectiveKey)
             line.Text:SetText(obj)
             line:SetHeight(line.Text:GetStringHeight())
         end)
-    end]]
+    end
 end)]]
 
 hooksecurefunc(AutoQuestPopupBlockMixin, 'Update', function(self, questTitle, questID, popUpType)
