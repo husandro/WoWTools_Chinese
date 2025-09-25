@@ -157,12 +157,5 @@ Setup_UI\LFG_ListFrame.lua
 ## PvP查找器
 Setup_UI\LFG_PVP.lua
 
-##调用其它插件，数据
-##WoWeuCN\ItemData_cn.lua
-##WoWeuCN\SpellData_cn.lua
-##WoWeuCN\QuestData_cn.lua
-##WoWeuCN\UnitData_cn.lua
-##WoWeuCN\WoWeuCN_Data_Func.lua
-
 ##放最后
 Data\1_zhCN_Add.lua
