@@ -107,7 +107,7 @@ end
 
 --任务
 function WoWTools_ChineseMixin:GetQuestData(questID)
-    questID= questID  and tonumber(questID)
+    questID= questID and tostring(questID)
     if questID then
         return WoWTools_SC_Quest[questID]
     end
