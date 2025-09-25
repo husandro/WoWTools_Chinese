@@ -61,11 +61,19 @@ end)]]
 
 hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, questCompleted)--, questSequenced, isExistingBlock, useFullHeight)
     local questID = block.id
-
-    local questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID)
-	local numObjectives = GetNumQuestLeaderBoards(questLogIndex) or 0
-
-    if numObjectives>0 then
+    if questCompleted then
+        local obj= WoWTools_ChineseMixin:GetQuestObjectText(questID)
+        if obj then
+            block:ForEachUsedLine(function(line)--, objectiveKey) --objectiveKey=='QuestComplete'
+                C_Timer.After(0.3, function()
+                    line.Text:SetText(obj)
+                    line:SetHeight(line.Text:GetStringHeight())
+                end)
+            end)
+        end
+    else
+        local questLogIndex = C_QuestLog.GetLogIndexForQuestID(questID)
+	    local numObjectives = GetNumQuestLeaderBoards(questLogIndex) or 0
         local data= WoWTools_ChineseMixin:GetQuestObject(questID)
         if not data or not data[1] then
             return
@@ -85,19 +93,7 @@ hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, qu
                 line.Text:SetText(obj)
                 line:SetHeight(line.Text:GetStringHeight())
             end
-        end
-
-    else
-        local obj= WoWTools_ChineseMixin:GetQuestObjectText(questID)
-        if obj then
-            block:ForEachUsedLine(function(line, objectiveKey)
-                C_Timer.After(0.3, function()
-                    line.Text:SetText(obj)
-                    line:SetHeight(line.Text:GetStringHeight())
-                end)
-                
-            end)
-        end
+        end        
     end
 end)
 
