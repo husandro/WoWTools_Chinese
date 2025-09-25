@@ -109,6 +109,7 @@ end
 --Title Objectives Description
 -- expand_text(data and data["S"])
 function WoWTools_ChineseMixin:GetQuestData(questID)
+    questID= questID  and tonumber(questID)
     if questID then
         return WoWTools_SC_Quest[questID]
     end
@@ -139,6 +140,18 @@ function WoWTools_ChineseMixin:GetQuestDesc(questID)
 end
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
         for journalEncounterID, data in pairs(WoWTools_SC_Encounter) do
@@ -151,6 +164,7 @@ EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(ow
 
     do
         for achievementID, data in pairs(WoWTools_SC_Achievement) do
+            achievementID= tonumber(achievementID)
             local _, title, _, _, _, _, _, desc, _, _, reward = GetAchievementInfo(achievementID)
             WoWTools_ChineseMixin:SetCN(title, data.T)
             WoWTools_ChineseMixin:SetCN(desc, data.D)
