@@ -53,3 +53,11 @@
 ## wago.io 主页
 >
 > ### <https://wago.io/p/husandro2>
+
+
+
+# WoWTools_Chinese_Scanner
+>
+> ## 专为 WoWTools_Chinese 插件 
+> ## 收集（更新）数据
+> ## https://github.com/husandro/WoWTools_Chinese_Scanner
