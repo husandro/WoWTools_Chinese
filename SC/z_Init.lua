@@ -106,8 +106,6 @@ end
 
 
 --任务
---Title Objectives Description
--- expand_text(data and data["S"])
 function WoWTools_ChineseMixin:GetQuestData(questID)
     questID= questID  and tonumber(questID)
     if questID then
@@ -152,6 +150,77 @@ end
 
 
 
+
+
+
+
+
+
+
+
+function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
+    if not itemID and itemLink then
+        itemID= C_Item.GetItemInfoInstant(itemLink)
+    end
+    if itemID then
+        return WoWTools_SC_Item[tostring(itemID)]
+    end
+end
+
+
+function WoWTools_ChineseMixin:GetItemName(itemID, itemLink)
+    local data= self:GetItemData(itemID, itemLink)
+    if data then
+        return data.T, data.D
+    end
+end
+
+function WoWTools_ChineseMixin:GetItemDesc(itemID, itemLink)
+    local data= self:GetItemData(itemID, itemLink)
+    if data then
+        return data.D, data.T
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
+function WoWTools_ChineseMixin:GetSpellData(spellID)
+    if spellID then
+        return WoWTools_SC_Spell[tostring(spellID)]
+    end
+end
+
+function WoWTools_ChineseMixin:GetSpellName(spellID)
+    local data= self:GetSpellData(spellID)
+    if data then
+        return data.T, data.D
+    end
+end
+
+function WoWTools_ChineseMixin:GetSpellDesc(spellID)
+    local data= self:GetSpellData(spellID)
+    if data then
+        return data.D, data.T
+    end
+end
+
+
+
+
+
+
+
+
+
+
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
         for journalEncounterID, data in pairs(WoWTools_SC_Encounter) do
@@ -184,24 +253,6 @@ EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(ow
     EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
 end)
 
-
---[[function WoWTools_ChineseMixin:GetBossData(journalEncounterID)
-    return WoWTools_SC_Encounter[journalEncounterID]
-end
-
-function WoWTools_ChineseMixin:GetBossDesc(journalEncounterID)
-    local data= self:GetBossData(journalEncounterID)
-    if data then
-        return data.D
-    end
-end
-
-function WoWTools_ChineseMixin:GetBossName(journalEncounterID)
-    local data= self:GetBossData(journalEncounterID)
-    if data then
-        return data.T
-    end
-end]]
 
 
 
