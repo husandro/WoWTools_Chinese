@@ -1051,14 +1051,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_Professions()
     end)
 
 
-  
-    
-    --[[hooksecurefunc( ProfessionsFrame.SpecPage, 'UpdateTabs', function(frame)
-        for tab, _ in frame.tabsPool:EnumerateActive() do
-            print(self:CN(tab.Text:GetText()))
-            self:SetTabButton(tab)
-	    end
-    end)]]
+
     self:SetTabButton(ProfessionsFrame)
     hooksecurefunc(ProfessionsFrame, 'UpdateTabs', function(frame)
         self:SetTabButton(frame)

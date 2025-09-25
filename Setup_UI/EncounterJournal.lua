@@ -56,7 +56,6 @@ local function UpdateEncounterJournalHeaders()
                         infoHeader.description:SetText(data.D)
                     end
                     EncounterJournal_ShiftHeaders(index)
-                    print(data.T, data.D)
                 end
             end
 

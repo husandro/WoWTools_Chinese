@@ -42,16 +42,7 @@ local function set_quest(_, block)
 
     block:SetHeader(data.T)
 
-    --[[if not data.S then
-        return
-    end
-    for index, line in pairs(block.usedLines or {}) do
-        info= line.info
-        for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR|r') for k2,v2 in pairs(v) do print('|cffffff00',k2,v2, '|r') end print('|cffff0000---',k, '---END|r') else print(k,v) end end print('|cffff00ff——————————|r')
 
-        if type(index)=='number' then
-        end
-    end]]
 end
 
 
@@ -63,9 +54,9 @@ hooksecurefunc(QuestObjectiveTracker, 'LayoutContents', function(...) set_object
 --QuestObjectiveTracker:HookScript('OnShow', function(...) set_objective_header(...) end)
 hooksecurefunc(QuestObjectiveTracker, 'AddBlock', function(...) set_quest(...) end)
 
-hooksecurefunc(QuestObjectiveLineMixin, 'UpdateModule', function(...)
+--[[hooksecurefunc(QuestObjectiveLineMixin, 'UpdateModule', function(...)
     print(...)
-end)
+end)]]
 
 hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, questCompleted, questSequenced, isExistingBlock, useFullHeight)
     local questID = block.id

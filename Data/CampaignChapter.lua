@@ -126,10 +126,6 @@ local tab={
 
 
 
---[[hooksecurefunc(QuestScrollFrame.CampaignTooltip, 'SetWarCampaign', function(tooltip, campaign)
-    print('SetWarCampaign')
-end)]]
-
 --CampaignUtil
 
 

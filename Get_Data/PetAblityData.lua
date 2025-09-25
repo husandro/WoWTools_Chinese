@@ -1420,20 +1420,3 @@ end
 
 
 
-
-
-
-
---[[EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
-
-    for i=1, C_PetJournal.GetNumPetTypes() do
-        local en= _G['BATTLE_PET_NAME_'..i]
-        local cn= en and WoWTools_ChineseMixin:CN(en)
-        if cn then
-            PetTypeTabs[en]= cn
-        end
-        print(en , cn)
-    end
-
-    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
-end)]]

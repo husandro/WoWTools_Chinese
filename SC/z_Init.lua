@@ -13,7 +13,7 @@ function WoWTools_ChineseMixin:GetUnitData(unit, npcID)
     npcID= npcID or Get_NPC_ID(unit)
     npcID= type(npcID)=='number' and tostring(npcID)  or npcID
     if npcID then
-        return WoWTools_SC_Unit(npcID)
+        --return WoWTools_SC_Unit(npcID)
     end
 end
 
@@ -163,7 +163,7 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
         itemID= C_Item.GetItemInfoInstant(itemLink)
     end
     if itemID then
-        return WoWTools_SC_Item[tostring(itemID)]
+        --return WoWTools_SC_Item[tostring(itemID)]
     end
 end
 
@@ -194,7 +194,7 @@ end
 
 function WoWTools_ChineseMixin:GetSpellData(spellID)
     if spellID then
-        return WoWTools_SC_Spell[tostring(spellID)]
+        --return WoWTools_SC_Spell[tostring(spellID)]
     end
 end
 
