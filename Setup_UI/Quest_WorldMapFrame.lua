@@ -110,23 +110,25 @@ local function Set_Quest_Line()
     end
 
 
-    --[[local Lines= {}
+    local Lines= {}
+
     for line in QuestScrollFrame.objectiveFramePool:EnumerateActive() do
-        Lines[line.questID]= Lines[line.questID] or {lines={}, questLogIndex= line.questLogIndex}
-        table.insert(Lines[line.questID].lines, line)
+        Lines[line.questID]= Lines[line.questID] or {}
+        table.insert(Lines[line.questID], line)
     end
-    for questID, tab in pairs(Lines) do
-        local numObjectives = GetNumQuestLeaderBoards(tab.questLogIndex) or 0
-        if numObjectives>0 then
-            local data= WoWTools_ChineseMixin:GetQuestObject(questID)
+
+    for questID, lines in pairs(Lines) do
+        local isComplete = C_QuestLog.IsComplete(questID)
+        if not isComplete then
+            local data= WoWTools_ChineseMixin:GetQuestObject(questID)            
             if data then
-                local index=0
+                local questLogIndex= C_QuestLog.GetLogIndexForQuestID(questID)
+                local numObjectives = GetNumQuestLeaderBoards(questLogIndex) or 0
                 for i= 1, numObjectives do
-                    local text, _, finished = GetQuestLogLeaderBoard(i, questLogIndex)
-                    if text and not finished then
-                        index= index+1
+                    local text= GetQuestLogLeaderBoard(i, questLogIndex)
+                    if text  then
                         local name= data[i]
-                        local line= tab.lines[index]
+                        local line= lines[i]
                         if name and line then
                             local num= text:match('(%d+/%d+ )')
                             local per= text:match('( %(%d+%%)%)')
@@ -145,13 +147,13 @@ local function Set_Quest_Line()
             end
         else
             local obj= WoWTools_ChineseMixin:GetQuestObjectText(questID)
-            local line= tab.lines[1]
+            local line= lines[1]
             if obj and line then
                 line.Text:SetText(obj)
                 line:SetHeight(line.Text:GetStringHeight())
             end
         end
-    end]]
+    end
     
     for line in QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
        WoWTools_ChineseMixin:SetLabel(line.Text)
