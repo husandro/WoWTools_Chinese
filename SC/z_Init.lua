@@ -53,7 +53,7 @@ end
 
 
 --法术 [字符spellID]={T=, D=}
-function WoWTools_ChineseMixin:GetSpellData(spellID, spellLink)
+function WoWTools_ChineseMixin:GetSpellData(spellID)
     if spellID and WoWTools_SC_Spell then
         return WoWTools_SC_Spell[spellID]
     end
@@ -63,13 +63,6 @@ function WoWTools_ChineseMixin:GetSpellName(spellID)
     local data= self:GetSpellData(spellID)
     if data then
         return data.T, data.D
-    end
-end
-
-function WoWTools_ChineseMixin:GetSpellDesc(spellID)
-    local data= self:GetSpellData(spellID)
-    if data then
-        return data.D, data.T
     end
 end
 
@@ -153,8 +146,7 @@ end
 
 --任务
 function WoWTools_ChineseMixin:GetQuestData(questID)
-    questID= questID and tostring(questID)
-    if questID then
+    if questID and WoWTools_SC_Quest then
         return WoWTools_SC_Quest[questID]
     end
 end
@@ -232,32 +224,26 @@ end
 
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
-        for id, data in pairs(WoWTools_SC_Encounter or {}) do
-            local journalEncounterID= tonumber(id)
-            if id then
-                local name, desc= EJ_GetEncounterInfo(journalEncounterID)
-                WoWTools_ChineseMixin:SetCN(name, data.T)
-                WoWTools_ChineseMixin:SetCN(desc, data.D)
-            end
+        for journalEncounterID, data in pairs(WoWTools_SC_Encounter or {}) do
+            local name, desc= EJ_GetEncounterInfo(journalEncounterID)
+            WoWTools_ChineseMixin:SetCN(name, data.T)
+            WoWTools_ChineseMixin:SetCN(desc, data.D)
         end
     end
     WoWTools_SC_Encounter= nil
 
     do
-        for id, data in pairs(WoWTools_SC_Achievement or {}) do
-            local achievementID= tonumber(id)
-            if achievementID then
-                local _, title, _, _, _, _, _, desc, _, _, reward = GetAchievementInfo(achievementID)
-                WoWTools_ChineseMixin:SetCN(title, data.T)
-                WoWTools_ChineseMixin:SetCN(desc, data.D)
-                WoWTools_ChineseMixin:SetCN(reward, data.R)
+        for achievementID, data in pairs(WoWTools_SC_Achievement or {}) do
+            local _, title, _, _, _, _, _, desc, _, _, reward = GetAchievementInfo(achievementID)
+            WoWTools_ChineseMixin:SetCN(title, data.T)
+            WoWTools_ChineseMixin:SetCN(desc, data.D)
+            WoWTools_ChineseMixin:SetCN(reward, data.R)
 
-                local numCriteria= GetAchievementNumCriteria(achievementID)
-                if data.S and numCriteria>0 then
-                    for index = 1, numCriteria do
-                        local criteriaString = GetAchievementCriteriaInfo(achievementID, index)
-                        WoWTools_ChineseMixin:SetCN(criteriaString, data.S[index])
-                    end
+            local numCriteria= GetAchievementNumCriteria(achievementID)
+            if data.S and numCriteria>0 then
+                for index = 1, numCriteria do
+                    local criteriaString = GetAchievementCriteriaInfo(achievementID, index)
+                    WoWTools_ChineseMixin:SetCN(criteriaString, data.S[index])
                 end
             end
         end

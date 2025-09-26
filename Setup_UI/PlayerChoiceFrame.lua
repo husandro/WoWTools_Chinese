@@ -41,7 +41,7 @@ local function set_optionText(self)
     if not data or not self.OptionText:IsShown() then
         return
     end
-    local desc= WoWTools_ChineseMixin:CN(data.description) or WoWTools_ChineseMixin:GetSpellDesc(data.spellID)
+    local desc= WoWTools_ChineseMixin:CN(data.description) or select(2, WoWTools_ChineseMixin:GetSpellName(data.spellID))
     local quality= rarityToString[data.rarity]
     if desc or quality then
         desc= (quality or '')..(desc or '')

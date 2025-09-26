@@ -176,7 +176,7 @@ end
 
 
 
-EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
         local find
         for spellID, info in pairs(tab) do
@@ -196,5 +196,5 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
         end
     end
     tab=nil
-    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
+    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
 end)

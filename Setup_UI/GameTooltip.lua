@@ -140,11 +140,15 @@ end
 
 local function Set_Spell(tooltip, spellID)
     if spellID then
-        local desc, name= WoWTools_ChineseMixin:GetSpellDesc(spellID)
+        local name, desc= WoWTools_ChineseMixin:GetSpellName(spellID)
         if desc or name then
             tooltip:AddLine(' ')
-            tooltip:AddLine(name)
-            tooltip:AddLine(desc, nil,nil,nil, true)
+            if name then
+                tooltip:AddLine(name)
+            end
+            if desc then
+                tooltip:AddLine(desc, nil,nil,nil, true)
+            end
         end
     end
 end

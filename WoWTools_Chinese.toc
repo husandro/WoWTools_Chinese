@@ -93,7 +93,7 @@ Get_Data\HeirloomSource.lua
 
 ##法术
 Data\Spell_Data_Flyout.lua
-Data\Spell_Data_Add.lua
+##Data\Spell_Data_Add.lua
 Data\Spell_Data_Specialization.lua
 
 ##插件 WoWTools_Chinese_Scanner 中的数据
