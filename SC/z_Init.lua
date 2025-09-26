@@ -5,12 +5,8 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
     end
     if itemID then
         itemID= C_Item.GetItemInfoInstant(itemID) or itemID
-
-        local va= math.modf(itemID/100000)
-        va= math.min(2, va)
-
-        if _G['WoWTools_SC_Item'..va] then
-            return _G['WoWTools_SC_Item'..va][tostring(itemID)]
+        if WoWTools_SC_Item then
+            return WoWTools_SC_Item[itemID]
         end
     end
 end
@@ -20,13 +16,6 @@ function WoWTools_ChineseMixin:GetItemName(itemID, itemLink)
         return data.T, data.D
     end
 end
-function WoWTools_ChineseMixin:GetItemDesc(itemID, itemLink)
-    local data= self:GetItemData(itemID, itemLink)
-    if data then
-        return data.D, data.T
-    end
-end
-
 
 
 
@@ -45,17 +34,10 @@ end
 --Unit 单位 [字符npcID]={T=, D=}
 function WoWTools_ChineseMixin:GetUnitData(unit, npcID)
     npcID= npcID or Get_NPC_ID(unit)
-    npcID= npcID and tostring(npcID)
-
     local id= npcID and tonumber(npcID)
-    if id then
-        local va= math.modf(id/100000)
-        va= math.min(2, va)
-        if _G['WoWTools_SC_Unit'..va] then
-            return _G['WoWTools_SC_Unit'..va][npcID]
-        end
+    if id and WoWTools_SC_Unit then
+        return WoWTools_SC_Unit[id]
     end
-
 end
 
 function WoWTools_ChineseMixin:GetUnitName(unit, npcID)
@@ -71,13 +53,9 @@ end
 
 
 --法术 [字符spellID]={T=, D=}
-function WoWTools_ChineseMixin:GetSpellData(spellID)
-    if spellID then
-        local va= math.modf(spellID/100000)
-        va= math.min(4, va)
-        if _G['WoWTools_SC_Spell'..va] then
-            return _G['WoWTools_SC_Spell'..va][tostring(spellID)]
-        end
+function WoWTools_ChineseMixin:GetSpellData(spellID, spellLink)
+    if spellID and WoWTools_SC_Spell then
+        return WoWTools_SC_Spell[spellID]
     end
 end
 

@@ -22,7 +22,7 @@ local function Init_Blizzard_PerksProgramElements()
         end
 
 
-        local desc, name= WoWTools_ChineseMixin:GetItemDesc(self.data.itemID)
+        local name, desc= WoWTools_ChineseMixin:GetItemName(self.data.itemID)
         name= name or WoWTools_ChineseMixin:CN(self.data.name)
         if name then
             self.ProductNameText:SetText(name)

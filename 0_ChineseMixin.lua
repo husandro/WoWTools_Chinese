@@ -138,14 +138,9 @@ function WoWTools_ChineseMixin:GetData(text, tab)
                     data= data or name
                 end
             elseif tab.isDesc then
-                data= self:GetSpellDesc(spellID)
+                data= select(2, self:GetSpellName(spellID))
             else
                 data= self:GetSpellData(spellID)
-                if data then
-                    for index, name2 in pairs(data) do
-                        data[index]= self:ReplaceText(name2)
-                    end
-                end
             end
         end
 
@@ -174,11 +169,6 @@ function WoWTools_ChineseMixin:GetData(text, tab)
 
         else
             data= self:GetItemData(itemID)--物品名称
-            if data then
-                for index, name2 in pairs(data) do
-                    data[index]= self:ReplaceText(name2)
-                end
-            end
         end
 
     elseif tab.skillLineAbilityID then

@@ -354,18 +354,11 @@ local function Init_CraftingPage_SchematicForm(self)
         local spell = Spell:CreateFromSpellID(f.currentRecipeInfo.recipeID);
         local spellID= spell:GetSpellID()
         if spellID then
-            local desc
-            for i, text in pairs(self:GetSpellData(spellID) or {}) do
-                if i>1 then
-                    if not desc or #text> #desc then
-                        desc= text
-                    end
-                end
-            end
-            desc= self:ReplaceText(desc)
-            if desc and desc ~= "" then
-                f.Description:SetText(desc);
-                f.Description:SetHeight(600);
+            local desc= selct(2, self:GetSpellName())
+            if desc then
+                f.Description:SetText(desc)
+                local h= math.mix(600, f.Description:GetStringHeight())
+                f.Description:SetHeight(h)
                 f.Description:SetHeight(f.Description:GetStringHeight() + 1)
             end
         end
