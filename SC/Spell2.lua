@@ -1,0 +1,1 @@
+WoWTools_SC_Spell2={}
