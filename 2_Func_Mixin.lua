@@ -121,8 +121,8 @@ function WoWTools_ChineseMixin:MK(number, bit)
     bit = bit or 1
 
     local text= ''
-    if number>=1e6 then
-        number= number/1e6
+    if number>=1e8 then
+        number= number/1e8
         text= 'm'
     elseif number>= 1e4 then
         number= number/1e4
