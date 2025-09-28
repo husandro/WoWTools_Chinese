@@ -54,8 +54,17 @@ end
 
 --法术 [spellID]={T=, D=}
 function WoWTools_ChineseMixin:GetSpellData(spellID)
-    if spellID and WoWTools_SC_Spell then
-        return WoWTools_SC_Spell[spellID]
+    spellID= spellID and tonumber(spellID)
+    if spellID then
+        if spellID>=1200000 then
+            if WoWTools_SC_Spell2 then
+                return WoWTools_SC_Spell2[spellID]
+            end
+        elseif WoWTools_SC_Spell then
+        end
+        if spellID and WoWTools_SC_Spell then
+            return WoWTools_SC_Spell[spellID]
+        end
     end
 end
 
