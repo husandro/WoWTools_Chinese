@@ -141,14 +141,16 @@ end
 local function Set_Spell(tooltip, spellID)
     if spellID then
         local name, desc= WoWTools_ChineseMixin:GetSpellName(spellID)
-        if desc or name then
-            tooltip:AddLine(' ')
-            if name then
+        if name then
+            local line= _G[(tooltip:GetName() or 'Gametooltip').."TextLeft1"]
+            if line and line:IsVisible() then
+                line:SetText(name)
+            else
                 tooltip:AddLine(name)
             end
-            if desc then
-                tooltip:AddLine(desc, nil,nil,nil, true)
-            end
+        end
+        if desc then
+            tooltip:AddLine(desc, nil,nil,nil, true)
         end
     end
 end
@@ -162,45 +164,21 @@ end
 
 
 
-local function Set_Item(tooltip, data)
-    local info= data and data.id and WoWTools_ChineseMixin:GetItemData(data.id)
-    if not info then
-        return
+local function Set_Item(tooltip, info)
+    local title, desc= WoWTools_ChineseMixin:GetItemName(info.id)
+    if title then
+        local name= tooltip:GetName() or 'Gametooltip'
+        local line= (name=='ShoppingTooltip1' or name=='ShoppingTooltip2') and _G[name.."TextLeft2"] or _G[name.."TextLeft1"]
+        if line and line:IsVisible() then
+           line:SetText(title)
+        else
+            tooltip:AddLine(title)
+        end
     end
-    local line, t
-    local name= tooltip:GetName() or ''
-    if #data.lines== #info  then
-        for index, text in pairs(info) do
-            line= _G[name.."TextLeft"..index]-- or tooltip['TextLeft'..index]
-            if line then
-                line:SetText(text or '')
-            end
-        end
-    else
-        local tab={['']=true}
-        for index=1, tooltip:NumLines() or 0, 1 do
-            line= _G[name.."TextLeft"..index]--tooltip['TextLeft'..index]
-            t= line and line:GetText()
-            if t then
-                tab[t]= true
-            end
-
-            line= _G[name.."TextRight"..index]
-            t= line and line:GetText()
-            if t then
-                tab[t]= true
-            end
-        end
-        for _, text in pairs(info) do
-            if text and not tab[text] then
-                tooltip:AddLine(text, nil,nil,nil, true)
-                tab[text]=true
-            end
-        end
-        --tooltip:Show()
+    if desc then
+        tooltip:AddLine(desc, nil,nil,nil, true)
     end
 end
-
 
 
 

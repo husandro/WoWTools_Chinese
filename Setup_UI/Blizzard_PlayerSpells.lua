@@ -208,7 +208,11 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
 
 --名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateVisuals', function(frame)
-        local name= self:GetData(frame.spellBookItemInfo.name, {spellID=frame.spellBookItemInfo.actionID, isName=true})
+        if not frame.spellBookItemInfo or not frame.spellBookItemInfo.actionID then
+            return
+        end
+        local name= self:GetSpellName(frame.spellBookItemInfo.actionID) --= self:GetData(frame.spellBookItemInfo.name, {spellID=frame.spellBookItemInfo.actionID, isName=true})
+        name= name or self:SetText(frame.spellBookItemInfo.name)
         if name then
             frame.Name:SetText(name)
         end
@@ -230,10 +234,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
 
 --子，名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateSubName', function(frame, subNameText)
-        local name= self:SetText(subNameText)
-        if name then
-            frame.SubName:SetText(name)
-        end
+        self:SetLabel(frame.SubName, subNameText)
     end)
 
 --Header Blizzard_SpellBookTemplates.lua
