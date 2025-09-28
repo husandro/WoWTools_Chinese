@@ -103,6 +103,7 @@ SC\Quest.lua
 SC\SectionEncounter.lua
 SC\Item.lua
 SC\Spell.lua
+SC\Spell2.lua
 SC\Unit.lua
 SC\z_Init.lua
 

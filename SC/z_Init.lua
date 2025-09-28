@@ -1,4 +1,4 @@
---Item 物品[字符itemID]={T=, D=}
+--Item 物品[itemID]={T=, D=}
 function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
     if not itemID and itemLink then
         itemID= C_Item.GetItemInfoInstant(itemLink)
@@ -31,7 +31,7 @@ local function Get_NPC_ID(unit)--NPC ID
         end
     end
 end
---Unit 单位 [字符npcID]={T=, D=}
+--Unit 单位 [npcID]={T=, D=}
 function WoWTools_ChineseMixin:GetUnitData(unit, npcID)
     npcID= npcID or Get_NPC_ID(unit)
     local id= npcID and tonumber(npcID)
@@ -52,7 +52,7 @@ end
 
 
 
---法术 [字符spellID]={T=, D=}
+--法术 [spellID]={T=, D=}
 function WoWTools_ChineseMixin:GetSpellData(spellID)
     if spellID and WoWTools_SC_Spell then
         return WoWTools_SC_Spell[spellID]
@@ -83,10 +83,14 @@ end
 
 
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
-    if WoWTools_SC_SectionEncounter then
-        difficultyID = difficultyID or EJ_GetDifficulty()
-        if difficultyID and sectionID then
-            return WoWTools_SC_SectionEncounter[sectionID .. 'x' .. difficultyID]
+    if sectionID and difficultyID and WoWTools_SC_SectionEncounter then
+        sectionID, difficultyID= tonumber(sectionID), tonumber(difficultyID)
+        local data= WoWTools_SC_SectionEncounter[sectionID]
+        if data and (data.T or data.S) then
+            return {
+                ['T']= data.T,
+                ['D']= data.S and data.S[difficultyID]
+            }
         end
     end
 end
@@ -99,7 +103,7 @@ function WoWTools_ChineseMixin:GetBoosSectionName(sectionID, difficultyID)
 end
 function WoWTools_ChineseMixin:GetBoosSectionDesc(sectionID, difficultyID)
     local data= self:GetBoosSectionData(sectionID, difficultyID)
-    if data then
+    if data and data.D and data.D~=false then
         return data.D
     end
 end
