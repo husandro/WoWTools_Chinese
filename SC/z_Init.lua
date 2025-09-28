@@ -92,20 +92,8 @@ end
 
 
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
-    sectionID= sectionID and tonumber(sectionID)
-    difficultyID= difficultyID and tonumber(difficultyID)
     if sectionID and difficultyID and WoWTools_SC_SectionEncounter then
-        local data= WoWTools_SC_SectionEncounter[sectionID]
-        if data and (data.T or data.S) then
-            local desc
-            if data.S then
-                desc= data.S[difficultyID]
-            end
-            return {
-                ['T']= data.T,
-                ['D']= desc,
-            }
-        end
+        return WoWTools_SC_SectionEncounter[sectionID..'x'..difficultyID]
     end
 end
 
