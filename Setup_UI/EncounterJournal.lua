@@ -384,7 +384,7 @@ local function Init_WoWeuCN()
             end
         end
 
-        desc= WoWTools_ChineseMixin:GetBoosSectionDesc(self.overviewFrame.rootOverviewSectionID)
+        desc= select(2, WoWTools_ChineseMixin:GetBoosSectionName(self.overviewFrame.rootOverviewSectionID))
         if desc then
             self.overviewFrame.overviewDescription.Text:SetText(desc)
             self.overviewFrame.overviewDescription.descriptionHeight = self.overviewFrame.overviewDescription:GetHeight()

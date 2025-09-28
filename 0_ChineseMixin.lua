@@ -194,7 +194,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
         if tab.isName then
             data= self:GetBoosSectionName(tab.sectionID, tab.difficultyID)
         elseif tab.isDesc then
-            data= self:GetBoosSectionDesc(tab.sectionID, tab.difficultyID)
+            data= select(2, self:GetBoosSectionName(tab.sectionID, tab.difficultyID))
         else
             data= self:GetBoosSectionData(tab.sectionID, tab.difficultyID)
         end
