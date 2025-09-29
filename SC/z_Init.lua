@@ -90,19 +90,22 @@ end
 
 
 
-
+--[[
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
     sectionID= sectionID and tonumber(sectionID)
     difficultyID= difficultyID and tonumber(difficultyID)
 
     if sectionID and difficultyID then--and WoWTools_SC_SectionEncounter then
         local data= WoWTools_SC_SectionEncounter[sectionID]
-        print(data,sectionID, difficultyID)
         if data then
             local desc
             if WoWTools_SC_SectionEncounter[sectionID].S then
                 desc= WoWTools_SC_SectionEncounter[sectionID].S[difficultyID]
             end
+            if not WoWTools_SC_SectionEncounter[sectionID].S then
+                print(data.T,sectionID, difficultyID)
+            end
+
             return {
                 T= data.T,
                 D= desc,
@@ -117,13 +120,12 @@ function WoWTools_ChineseMixin:GetBoosSectionName(sectionID, difficultyID)
         return data.T, data.D
     end
 end
+]]
 
---[[
 
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
     if sectionID and difficultyID and WoWTools_SC_SectionEncounter then
-        
-        return WoWTools_SC_SectionEncounter[sectionID..'x'..difficultyID]
+        return WoWTools_SC_SectionEncounter[difficultyID..'x'..sectionID]
     end
 end
 
@@ -133,7 +135,7 @@ function WoWTools_ChineseMixin:GetBoosSectionName(sectionID, difficultyID)
         return data.T, data.D
     end
 end
-]]
+
 
 
 --[[任务
