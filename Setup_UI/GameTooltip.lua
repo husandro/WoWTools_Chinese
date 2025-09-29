@@ -66,11 +66,13 @@ local function Set_Battle_Pet(tooltip, speciesID)
     local name= WoWTools_ChineseMixin:GetUnitName(nil, companionID)
     local desc=data[1]
     local source= data[2]
-
-    if name or desc or source then
-        add_line(tooltip, ' ')
-    end
-    if name then
+    local line= _G[(tooltip:GetName() or 'Gametooltip').."TextLeft1"]
+    if line then
+        if tooltip.textLeft then
+            tooltip.textLeft:SetText(line:GetText() or '')
+        end
+        line:SetText(name)
+    else
         add_line(tooltip, name)
     end
     if desc then
@@ -93,38 +95,47 @@ end
 
 local function Set_Quest(tooltip, questID, isShow)
     local data= WoWTools_ChineseMixin:GetQuestData(questID)
-    if data then
-        tooltip:AddLine(' ')
-        if data.T then
+    if not data then
+        return
+    end
+    if data.T then
+        local name= tooltip:GetName() or 'Gametooltip'
+        local line= (name=='ShoppingTooltip1' or name=='ShoppingTooltip2') and _G[name.."TextLeft2"] or _G[name.."TextLeft1"]
+        if line then
+            if tooltip.textLeft then
+                tooltip.textLeft:SetText(line:GetText() or '')
+            end
+            line:SetText(data.T)
+        else
             tooltip:AddLine('|cffff761b'..data.T)
         end
-        if data.O then
-            tooltip:AddLine('|cffffffff'..data.O, nil, nil, nil, true)
-        end
-        if data.S then
+    end
 
-            local questLogIndex= C_QuestLog.GetLogIndexForQuestID(questID)
+    if data.O then
+        tooltip:AddLine('|cffffffff'..data.O, nil, nil, nil, true)
+    end
+    if data.S then
+        local questLogIndex= C_QuestLog.GetLogIndexForQuestID(questID)
 
-            for i, name in pairs(data.S) do
-                local text, _, finished = GetQuestLogLeaderBoard(i, questLogIndex)
-                local num, per
-                if text then
-                    num= text:match('(%d+/%d+ )')
-                    per= text:match('( %(%d+%%)%)')
-                end
-                if num then
-                    name= num..name
-                elseif per then
-                    name= name..per
-                end
-                local col= questLogIndex and finished and '|cff626262' or '|cff00d8ff'
-
-                tooltip:AddLine(' - '..col..name)
+        for i, name in pairs(data.S) do
+            local text, _, finished = GetQuestLogLeaderBoard(i, questLogIndex)
+            local num, per
+            if text then
+                num= text:match('(%d+/%d+ )')
+                per= text:match('( %(%d+%%)%)')
             end
+            if num then
+                name= num..name
+            elseif per then
+                name= name..per
+            end
+            local col= questLogIndex and finished and '|cff626262' or '|cff00d8ff'
+
+            tooltip:AddLine(' - '..col..name)
         end
-        if isShow then
-            tooltip:Show()
-        end
+    end
+    if isShow then
+        tooltip:Show()
     end
 end
 
@@ -144,8 +155,8 @@ local function Set_Spell(tooltip, spellID)
         if name then
             local line= _G[(tooltip:GetName() or 'Gametooltip').."TextLeft1"]
             if line then
-                if tooltip.leftText then
-                    tooltip.leftText:SetText(line:GetText() or '')
+                if tooltip.textLeft then
+                    tooltip.textLeft:SetText(line:GetText() or '')
                 end
                 line:SetText(name)
             else
@@ -173,7 +184,7 @@ local function Set_Item(tooltip, info)
         local name= tooltip:GetName() or 'Gametooltip'
         local line= (name=='ShoppingTooltip1' or name=='ShoppingTooltip2') and _G[name.."TextLeft2"] or _G[name.."TextLeft1"]
         if line then
-           line:SetText(title)
+            line:SetText(title)
         else
             tooltip:AddLine(title)
         end
@@ -199,6 +210,9 @@ local function Set_Unit(tooltip, unit)
     if name then
         local line= _G[(tooltip:GetName() or 'Gametooltip').."TextLeft1"]
         if line then
+            if tooltip.textLeft then
+                tooltip.textLeft:SetText(line:GetText() or '')
+            end
             line:SetText(name)
         else
             tooltip:AddLine(name)
@@ -223,10 +237,9 @@ local function Set_Mount(tooltip, mountID)
     if WoWTools_TooltipMixin or not mountID then
         return
     end
-    local source= mountID and select(3,  C_MountJournal.GetMountInfoExtraByID(mountID))
+    local source= mountID and select(3, C_MountJournal.GetMountInfoExtraByID(mountID))
     source= WoWTools_ChineseMixin:CN(source)
     if source then
-        tooltip:AddLine(' ')
         tooltip:AddLine(source, nil,nil,nil,true)
     end
 end
