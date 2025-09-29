@@ -143,7 +143,10 @@ local function Set_Spell(tooltip, spellID)
         local name, desc= WoWTools_ChineseMixin:GetSpellName(spellID)
         if name then
             local line= _G[(tooltip:GetName() or 'Gametooltip').."TextLeft1"]
-            if line and line:IsVisible() then
+            if line then
+                if tooltip.leftText then
+                    tooltip.leftText:SetText(line:GetText() or '')
+                end
                 line:SetText(name)
             else
                 tooltip:AddLine(name)
@@ -169,7 +172,7 @@ local function Set_Item(tooltip, info)
     if title then
         local name= tooltip:GetName() or 'Gametooltip'
         local line= (name=='ShoppingTooltip1' or name=='ShoppingTooltip2') and _G[name.."TextLeft2"] or _G[name.."TextLeft1"]
-        if line and line:IsVisible() then
+        if line then
            line:SetText(title)
         else
             tooltip:AddLine(title)
@@ -193,8 +196,15 @@ end
 local function Set_Unit(tooltip, unit)
     unit= unit or select(2, TooltipUtil.GetDisplayedUnit(tooltip))
     local name, desc= WoWTools_ChineseMixin:GetUnitName(unit, nil)
-    if name or desc then
-        tooltip:AddLine(name)
+    if name then
+        local line= _G[(tooltip:GetName() or 'Gametooltip').."TextLeft1"]
+        if line then
+            line:SetText(name)
+        else
+            tooltip:AddLine(name)
+        end
+    end
+    if desc then
         tooltip:AddLine(desc)
     end
 end
