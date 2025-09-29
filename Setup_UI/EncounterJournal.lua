@@ -400,6 +400,8 @@ local function Init_WoWeuCN()
     end)
 
     hooksecurefunc("EncounterJournal_SetDescriptionWithBullets", function(infoHeader)
+        info=infoHeader
+        for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR|r') for k2,v2 in pairs(v) do print('|cffffff00',k2,v2, '|r') end print('|cffff0000---',k, '---END|r') else print(k,v) end end print('|cffff00ff——————————|r')
         local data = infoHeader and WoWTools_ChineseMixin:GetBoosSectionData(infoHeader.sectionID)
         if data then
 
