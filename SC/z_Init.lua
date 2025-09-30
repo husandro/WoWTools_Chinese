@@ -3,11 +3,9 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
     if not itemID and itemLink then
         itemID= C_Item.GetItemInfoInstant(itemLink)
     end
-    if itemID then
+    if itemID and WoWTools_SC_Item then
         itemID= C_Item.GetItemInfoInstant(itemID) or itemID
-        if WoWTools_SC_Item then
-            return WoWTools_SC_Item[itemID]
-        end
+        return WoWTools_SC_Item[itemID]
     end
 end
 function WoWTools_ChineseMixin:GetItemName(itemID, itemLink)

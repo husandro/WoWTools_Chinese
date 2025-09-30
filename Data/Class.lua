@@ -18,7 +18,6 @@ local tab= {
 [12] ='恶魔猎手',
 [13] ='唤魔师',
 [14] ='冒险者',
-
 }
 do
     for classID, name in pairs(tab) do

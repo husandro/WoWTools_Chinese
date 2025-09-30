@@ -75,6 +75,9 @@ local function Set_Battle_Pet(tooltip, speciesID)
     else
         add_line(tooltip, name)
     end
+    if desc or source then
+        add_line(tooltip, ' ')
+    end
     if desc then
         add_line(tooltip, desc, nil, nil, nil, true)--来源提示
     end
@@ -164,6 +167,7 @@ local function Set_Spell(tooltip, spellID)
             end
         end
         if desc then
+            tooltip:AddLine(' ')
             tooltip:AddLine(desc, nil,nil,nil, true)
         end
     end
@@ -190,6 +194,7 @@ local function Set_Item(tooltip, info)
         end
     end
     if desc then
+        tooltip:AddLine(' ')
         tooltip:AddLine(desc, nil,nil,nil, true)
     end
 end
@@ -219,6 +224,7 @@ local function Set_Unit(tooltip, unit)
         end
     end
     if desc then
+        tooltip:AddLine(' ')
         tooltip:AddLine(desc)
     end
 end
@@ -240,6 +246,7 @@ local function Set_Mount(tooltip, mountID)
     local source= mountID and select(3, C_MountJournal.GetMountInfoExtraByID(mountID))
     source= WoWTools_ChineseMixin:CN(source)
     if source then
+        tooltip:AddLine(' ')
         tooltip:AddLine(source, nil,nil,nil,true)
     end
 end
