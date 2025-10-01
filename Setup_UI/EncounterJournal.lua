@@ -133,6 +133,8 @@ local function Init_EncounterJournal()
     EncounterJournalEncounterFrameInstanceFrameMapButtonText:SetText('显示\n地图')
     EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildTitle:SetText('综述')
 
+     EncounterJournal.instanceSelect.ScrollBox:HookScript('Update', function()
+     end)
 
     hooksecurefunc('EncounterJournal_ListInstances', function()
         local frame= EncounterJournal.instanceSelect.ScrollBox
@@ -140,6 +142,7 @@ local function Init_EncounterJournal()
             return
         end
         for _, button in pairs(frame:GetFrames()) do
+            print(button.name:GetText())
             WoWTools_ChineseMixin:SetLabel(button.name)
             local tooltiptext=  WoWTools_ChineseMixin:CN(button.tooltiptext)
             if tooltiptext then
@@ -439,11 +442,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
     Init_WoWeuCN()
 
     hooksecurefunc('EJSuggestFrame_RefreshDisplay', function()
-
-
         local frame = EncounterJournal.suggestFrame;
-
-
         local num= #frame.suggestions
         if  num== 0 then
             return
@@ -452,8 +451,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
                 local suggestion = frame["Suggestion"..i]
 		        local data = frame.suggestions[i]
                 if not suggestion or not data then
-                    break;
+                    break
                 end
+
                 WoWTools_ChineseMixin:SetLabel(suggestion.centerDisplay.title.text, data.title)
                 WoWTools_ChineseMixin:SetLabel(suggestion.centerDisplay.description.text, data.description)
                 if suggestion.centerDisplay then
