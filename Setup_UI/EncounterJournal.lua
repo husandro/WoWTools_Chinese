@@ -102,7 +102,53 @@ end
 
 
 
-local function Init_EncounterJournal()
+
+
+
+
+
+
+
+
+
+--[[导航条
+local function set_navButton(navBar, text)
+    if not navBar or not navBar.navList then
+        return
+    end
+    local navButton = navBar.navList[#navBar.navList]
+    if navButton then
+        WoWTools_ChineseMixin:SetCNFont(navButton.text)
+        navButton:SetText(text)
+        local buttonExtraWidth
+        if navButton.listFunc  and not navBar.oldStyle then
+            buttonExtraWidth = 53
+        else
+            buttonExtraWidth = 30
+        end
+        navButton:SetWidth(navButton.text:GetStringWidth() + buttonExtraWidth)
+    end
+end]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
     EncounterJournalTitleText:SetText('冒险指南')
     EncounterJournalSuggestTab:SetText('推荐玩法')
@@ -133,92 +179,89 @@ local function Init_EncounterJournal()
     EncounterJournalEncounterFrameInstanceFrameMapButtonText:SetText('显示\n地图')
     EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildTitle:SetText('综述')
 
-     EncounterJournal.instanceSelect.ScrollBox:HookScript('Update', function()
-     end)
 
-    hooksecurefunc('EncounterJournal_ListInstances', function()
-        local frame= EncounterJournal.instanceSelect.ScrollBox
+    --hooksecurefunc('EncounterJournal_ListInstances', function()
+    --EncounterInstanceButtonTemplate
+    hooksecurefunc(EncounterJournal.instanceSelect.ScrollBox, 'Update', function(frame)
+        frame= frame or EncounterJournal.instanceSelect.ScrollBox
         if not frame:GetView() then
             return
         end
         for _, button in pairs(frame:GetFrames()) do
-            print(button.name:GetText())
-            WoWTools_ChineseMixin:SetLabel(button.name)
-            local tooltiptext=  WoWTools_ChineseMixin:CN(button.tooltiptext)
-            if tooltiptext then
-                button.tooltiptext= tooltiptext
-            end
+            self:SetLabel(button.name)
         end
     end)
 
+    
+
     --BOSS，掉落
-    hooksecurefunc(EncounterJournalItemMixin,'Init', function(self)--Blizzard_EncounterJournal.lua
-        if not self:IsVisible() then
+    hooksecurefunc(EncounterJournalItemMixin,'Init', function(frame)--Blizzard_EncounterJournal.lua
+        if not frame:IsVisible() then
             return
         end
-        local itemInfo = C_EncounterJournal.GetLootInfoByIndex(self.index)
+        local itemInfo = C_EncounterJournal.GetLootInfoByIndex(frame.index)
         if ( itemInfo and itemInfo.name ) then
-            local name= WoWTools_ChineseMixin:GetItemName(itemInfo.itemID) or WoWTools_ChineseMixin:CN(itemInfo.name)
+            local name= self:GetItemName(itemInfo.itemID) or self:CN(itemInfo.name)
             if name then
-                self.name:SetText(WrapTextInColorCode(name, itemInfo.itemQuality))
+                frame.name:SetText(WrapTextInColorCode(name, itemInfo.itemQuality))
             end
-            local slot= WoWTools_ChineseMixin:CN(itemInfo.slot)
-            if slot and self.slot then
+            local slot= self:CN(itemInfo.slot)
+            if slot and frame.slot then
                 if itemInfo.handError then
-                    self.slot:SetText(INVALID_EQUIPMENT_COLOR:WrapTextInColorCode(slot))
+                    frame.slot:SetText(INVALID_EQUIPMENT_COLOR:WrapTextInColorCode(slot))
                 else
-                    self.slot:SetText(slot)
+                    frame.slot:SetText(slot)
                 end
             end
-            local armorType= WoWTools_ChineseMixin:CN(itemInfo.armorType)
-            if armorType and self.armorType then
+            local armorType= self:CN(itemInfo.armorType)
+            if armorType and frame.armorType then
                 if itemInfo.weaponTypeError then
-                    self.armorType:SetText(INVALID_EQUIPMENT_COLOR:WrapTextInColorCode(armorType))
+                    frame.armorType:SetText(INVALID_EQUIPMENT_COLOR:WrapTextInColorCode(armorType))
                 else
-                    self.armorType:SetText(armorType)
+                    frame.armorType:SetText(armorType)
                 end
             end
 
-            local numEncounters = EJ_GetNumEncountersForLootByIndex(self.index)
+            local numEncounters = EJ_GetNumEncountersForLootByIndex(frame.index)
 
             local bossName= itemInfo.encounterID and EJ_GetEncounterInfo(itemInfo.encounterID)
-            bossName= WoWTools_ChineseMixin:CN(bossName) or bossName
+            bossName= self:CN(bossName) or bossName
 
             if ( numEncounters == 1 ) then
                 if bossName then
-                    self.boss:SetFormattedText('首领：%s', bossName)
+                    frame.boss:SetFormattedText('首领：%s', bossName)
                 end
 
             elseif ( numEncounters == 2) then
-                local itemInfoSecond = C_EncounterJournal.GetLootInfoByIndex(self.index, 2)
+                local itemInfoSecond = C_EncounterJournal.GetLootInfoByIndex(frame.index, 2)
                 local secondEncounterID = itemInfoSecond and itemInfoSecond.encounterID
                 local bossName2= secondEncounterID and EJ_GetEncounterInfo(secondEncounterID)
-                bossName2= WoWTools_ChineseMixin:CN(bossName2) or bossName2
+                bossName2= self:CN(bossName2) or bossName2
                 if bossName or bossName2 then
-                    self.boss:SetFormattedText('首领：%s，%s', bossName or '', bossName2)
+                    frame.boss:SetFormattedText('首领：%s，%s', bossName or '', bossName2)
                 end
 
             elseif ( numEncounters > 2 ) then
                 if bossName then
-                    self.boss:SetFormattedText('首领：%s及其他', bossName)
+                    frame.boss:SetFormattedText('首领：%s及其他', bossName)
                 end
             end
         else
-            self.name:SetText('正在获取物品信息')
+            frame.name:SetText('正在获取物品信息')
         end
     end)
 
-    hooksecurefunc(EncounterJournalItemHeaderMixin, 'Init', function(self, elementData)
-        local name= WoWTools_ChineseMixin:CN(elementData.text)
+    hooksecurefunc(EncounterJournalItemHeaderMixin, 'Init', function(frame, elementData)
+        local name= self:CN(elementData.text)
         if name then
-            self.name:SetText(name)
+            frame.name:SetText(name)
         end
     end)
 
-    hooksecurefunc(EncounterBossButtonMixin, 'Init', function(self, elementData)
-        local name= WoWTools_ChineseMixin:CN(elementData.name)
+    hooksecurefunc(EncounterBossButtonMixin, 'Init', function(frame, elementData)
+        local name= self:CN(elementData.name)
         if name then
-            self:SetText(name)
+            frame:SetText(name)
         end
     end)
 
@@ -234,7 +277,7 @@ local function Init_EncounterJournal()
                 name = classInfo.className
             end
         end
-        name= WoWTools_ChineseMixin:CN(name) or name
+        name= self:CN(name) or name
         if name then
             EncounterJournal.encounter.info.LootContainer.classClearFilter.text:SetFormattedText('职业筛选：%s', name)
         end
@@ -251,7 +294,7 @@ local function Init_EncounterJournal()
         for _, str in pairs (btnTab) do
             local button= EncounterJournal.encounter.info[str]
             if button then
-                local tooltip= WoWTools_ChineseMixin:CN(button.tooltip)
+                local tooltip= self:CN(button.tooltip)
                 if tooltip then
                     button.tooltip= tooltip
                 end
@@ -261,45 +304,52 @@ local function Init_EncounterJournal()
 
 
 
-    hooksecurefunc(EncounterJournal.encounter.info.BossesScrollBox, 'Update', function(self)
-        if not self:GetView() then
+    hooksecurefunc(EncounterJournal.encounter.info.BossesScrollBox, 'Update', function(frame)
+        if not frame:GetView() then
             return
         end
-        for _, btn in pairs(self:GetFrames()) do
-            WoWTools_ChineseMixin:SetLabel(btn.text)
+        for _, btn in pairs(frame:GetFrames()) do
+            self:SetLabel(btn.text)
         end
     end)
 
 
 
 
+    
 
 
 
 
-    --物品，掉落，列表
+
+
+
+
+
+
+--物品，掉落，列表
 
     --套装
     hooksecurefunc(LootJournalItemSetButtonMixin, 'Init', function(btn, data)
-        local name= WoWTools_ChineseMixin:CN(data.name)
+        local name= self:CN(data.name)
         if name then
             btn.SetName:SetText(name)
         end
 	    btn.ItemLevel:SetFormattedText('物品等级%d', data.itemLevel)
     end)
-    --[[hooksecurefunc(EncounterJournal.LootJournalItems.ItemSetsFrame.ScrollBox, 'Update', function(self)
-        if not self:GetView() then
+    --[[hooksecurefunc(EncounterJournal.LootJournalItems.ItemSetsFrame.ScrollBox, 'Update', function(frame)
+        if not frame:GetView() then
             return
         end
-        for _, btn in pairs(self:GetFrames() or {}) do
-            WoWTools_ChineseMixin:SetLabel(btn.SetName)
+        for _, btn in pairs(frame:GetFrames() or {}) do
+            self:SetLabel(btn.SetName)
         end
     end)]]
 
 
 
-    hooksecurefunc('EncounterJournal_SetUpOverview', function(self, overviewSectionID, index)
-        local infoHeader= self.overviews[index]
+    hooksecurefunc('EncounterJournal_SetUpOverview', function(frame, overviewSectionID, index)
+        local infoHeader= frame.overviews[index]
         if infoHeader and infoHeader.button and overviewSectionID then
             EncounterJournal_SetupIconFlags(overviewSectionID, infoHeader.button, index)
         end
@@ -307,26 +357,25 @@ local function Init_EncounterJournal()
 
     --副本，数据
     hooksecurefunc('EncounterJournal_DisplayInstance', function()
-        local self= EncounterJournal.encounter
+        local frame= EncounterJournal.encounter
         local instanceName, description = EJ_GetInstanceInfo()
 
-        WoWTools_ChineseMixin:SetLabel(self.instance.title, instanceName)
-        WoWTools_ChineseMixin:SetLabel(self.info.instanceTitle, instanceName)
-        WoWTools_ChineseMixin:SetLabel(self.instance.LoreScrollingFont, description)
+        self:SetLabel(frame.instance.title, instanceName)
+        self:SetLabel(frame.info.instanceTitle, instanceName)
+        self:SetLabel(frame.instance.LoreScrollingFont, description)
 
-        local tooltip= WoWTools_ChineseMixin:CN(self.info['overviewTab'].tooltip)
+        local tooltip= self:CN(frame.info['overviewTab'].tooltip)
         if tooltip then
-            self.info['overviewTab'].tooltip= tooltip
+            frame.info['overviewTab'].tooltip= tooltip
         end
-        --[[local desc= WoWTools_ChineseMixin:GetInstanceDesc(instanceID)
+        --[[local desc= self:GetInstanceDesc(instanceID)
         if desc then
             EncounterJournal.encounter.instance.LoreScrollingFont:SetText(desc)
         end]]
     end)
 
-    WoWTools_ChineseMixin:HookButton(EncounterJournalEncounterFrameInfoSlotFilterToggle)
-    WoWTools_ChineseMixin:HookButton(EncounterJournalEncounterFrameInfoDifficulty)
-end
+    self:HookButton(EncounterJournalEncounterFrameInfoSlotFilterToggle)
+    self:HookButton(EncounterJournalEncounterFrameInfoDifficulty)
 
 
 
@@ -334,63 +383,29 @@ end
 
 
 
-
-
-
-
-
-
-
---导航条
-local function set_navButton(navBar, text)
-    if not navBar or not navBar.navList then
-        return
-    end
-    local navButton = navBar.navList[#navBar.navList]
-    if navButton then
-        WoWTools_ChineseMixin:SetCNFont(navButton.text)
-        navButton:SetText(text)
-        local buttonExtraWidth
-        if navButton.listFunc  and not navBar.oldStyle then
-            buttonExtraWidth = 53
-        else
-            buttonExtraWidth = 30
-        end
-        navButton:SetWidth(navButton.text:GetStringWidth() + buttonExtraWidth)
-    end
-end
-
-
-
-
-
-
-
-
-
-local function Init_WoWeuCN()
     hooksecurefunc("EncounterJournal_DisplayEncounter", function(encounterID)
-        local self = EncounterJournal.encounter
+        local frame = EncounterJournal.encounter
         local ename, description= EJ_GetEncounterInfo(encounterID)
-        local title= WoWTools_ChineseMixin:CN(ename)
+
+        self:SetLabel(frame.info.encounterTitle, ename)
+
         local desc= WoWTools_ChineseMixin:CN(description)
-        if title then
-            self.info.encounterTitle:SetText(title)
-            set_navButton(EncounterJournal.navBar, title)--导航条
-        end
+        
+        --set_navButton(EncounterJournal.navBar, title)--导航条
+        
         if desc then
-            self.overviewFrame.loreDescription:SetText(desc)
-            self.infoFrame.description:SetText(desc)
-            self.infoFrame.descriptionHeight = self.infoFrame.description:GetHeight()
-            if self.usedHeaders[1] then
-                self.usedHeaders[1]:SetPoint("TOPRIGHT", 0 , -8 - EncounterJournal.encounter.infoFrame.descriptionHeight - 6)
+            frame.overviewFrame.loreDescription:SetText(desc)
+            frame.infoFrame.description:SetText(desc)
+            frame.infoFrame.descriptionHeight = frame.infoFrame.description:GetHeight()
+            if frame.usedHeaders[1] then
+                frame.usedHeaders[1]:SetPoint("TOPRIGHT", 0 , -8 - EncounterJournal.encounter.infoFrame.descriptionHeight - 6)
             end
         end
 
-        desc= select(2, WoWTools_ChineseMixin:GetBoosSectionName(self.overviewFrame.rootOverviewSectionID))
+        desc= select(2, WoWTools_ChineseMixin:GetBoosSectionName(frame.overviewFrame.rootOverviewSectionID))
         if desc then
-            self.overviewFrame.overviewDescription.Text:SetText(desc)
-            self.overviewFrame.overviewDescription.descriptionHeight = self.overviewFrame.overviewDescription:GetHeight()
+            frame.overviewFrame.overviewDescription.Text:SetText(desc)
+            frame.overviewFrame.overviewDescription.descriptionHeight = frame.overviewFrame.overviewDescription:GetHeight()
         end
         UpdateEncounterJournalHeaders()
     end)
@@ -416,8 +431,6 @@ local function Init_WoWeuCN()
         end
     end)
 
-    Init_WoWeuCN=function()end
-end
 
 
 
@@ -437,9 +450,19 @@ end
 
 
 
-function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
-    Init_EncounterJournal()
-    Init_WoWeuCN()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     hooksecurefunc('EJSuggestFrame_RefreshDisplay', function()
         local frame = EncounterJournal.suggestFrame;
