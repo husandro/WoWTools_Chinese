@@ -12,17 +12,19 @@ local function calendar_Uptate()
     local info= indexInfo and C_Calendar.GetDayEvent(indexInfo.offsetMonths, indexInfo.monthDay, indexInfo.eventIndex) or {}
 
     if info.eventID then
-        local data= WoWTools_ChineseMixin:GetData(nil, {holydayID= info.eventID}) or {}
-        local head= data[1]
-        local desc= data[2]
-        if head then
-            CalendarViewHolidayFrame.Header:Setup(head)
-        end
-        if desc then
-            if (info.startTime and info.endTime) then
-                desc = format('%1$s|n|n开始：%2$s %3$s|n结束：%4$s %5$s', desc, FormatShortDate(info.startTime.monthDay, info.startTime.month, 0), GameTime_GetFormattedTime(info.startTime.hour, info.startTime.minute, true), FormatShortDate(info.endTime.monthDay, info.endTime.month), GameTime_GetFormattedTime(info.endTime.hour, info.endTime.minute, true));
+        --local data= WoWTools_ChineseMixin:GetData(nil, {holydayID= info.eventID}) or {}
+        local data= WoWTools_ChineseMixin:GetHolidayData(info.eventID)
+        if data then
+            if data.T then
+                CalendarViewHolidayFrame.Header:Setup(data.T)
             end
-            CalendarViewHolidayFrame.ScrollingFont:SetText(desc)
+            local desc= data.D
+            if desc then
+                if (info.startTime and info.endTime) then
+                    desc = format('%1$s|n|n开始：%2$s %3$s|n结束：%4$s %5$s', desc, FormatShortDate(info.startTime.monthDay, info.startTime.month, 0), GameTime_GetFormattedTime(info.startTime.hour, info.startTime.minute, true), FormatShortDate(info.endTime.monthDay, info.endTime.month), GameTime_GetFormattedTime(info.endTime.hour, info.endTime.minute, true));
+                end
+                CalendarViewHolidayFrame.ScrollingFont:SetText(desc)
+            end
         end
     end
 end
