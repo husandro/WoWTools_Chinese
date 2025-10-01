@@ -79,10 +79,10 @@ local function Set_Battle_Pet(tooltip, speciesID)
         add_line(tooltip, ' ')
     end
     if desc then
-        add_line(tooltip, desc, nil, nil, nil, true)--来源提示
+        add_line(tooltip, NORMAL_FONT_COLOR:WrapTextInColorCode(desc), nil, nil, nil, true)--来源提示
     end
     if source then
-        add_line(tooltip, source, nil, nil, nil, true)--来源提示--来源
+        add_line(tooltip, NORMAL_FONT_COLOR:WrapTextInColorCode(source), nil, nil, nil, true)--来源提示--来源
     end
 end
 
@@ -171,7 +171,7 @@ local function Set_Spell(tooltip, spellID)
         end
         if desc then
             tooltip:AddLine(' ')
-            tooltip:AddLine(desc, nil,nil,nil, true)
+            tooltip:AddLine(NORMAL_FONT_COLOR:WrapTextInColorCode(desc), nil,nil,nil, true)
         end
     end
 end
@@ -198,7 +198,7 @@ local function Set_Item(tooltip, info)
     end
     if desc then
         tooltip:AddLine(' ')
-        tooltip:AddLine(desc, nil,nil,nil, true)
+        tooltip:AddLine(NORMAL_FONT_COLOR:WrapTextInColorCode(desc), nil,nil,nil, true)
     end
 end
 
@@ -250,7 +250,7 @@ local function Set_Mount(tooltip, mountID)
     source= WoWTools_ChineseMixin:CN(source)
     if source then
         tooltip:AddLine(' ')
-        tooltip:AddLine(source, nil,nil,nil,true)
+        tooltip:AddLine(NORMAL_FONT_COLOR:WrapTextInColorCode(source), nil,nil,nil,true)
     end
 end
 
