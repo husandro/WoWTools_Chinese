@@ -114,6 +114,9 @@ local function Set_Quest(tooltip, questID, isShow)
         end
     end
 
+    if data.O or data.S then
+        tooltip:AddLine(' ')
+    end
     if data.O then
         tooltip:AddLine('|cffffffff'..data.O, nil, nil, nil, true)
     end

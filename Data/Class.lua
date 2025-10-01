@@ -59,16 +59,15 @@ end
 
 
 --有男，女之分
---[[
-	local numClasses = GetNumClasses();
-	local count = 0;
-	for i = 1, numClasses do
+
+
+	--[[for i = 1, GetNumClasses() do
 		local _, _, classID = GetClassInfo(i);
-		for j = 1, C_SpecializationInfo.GetNumSpecializationsForClassID(classID) do
-			count = count + 1
+		for specIndex = 1, C_SpecializationInfo.GetNumSpecializationsForClassID(classID) or 0 do
+            local specID= GetSpecializationInfoForClassID(classID, specIndex)
 		end
-	end
-]]
+	end]]
+
     
     for id, cn in pairs(tab) do
         WoWTools_ChineseMixin:SetCN(GetClassInfo(id), cn)

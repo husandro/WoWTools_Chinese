@@ -1,21 +1,50 @@
---Item 物品[itemID]={T=, D=}
+--Item 物品[itemID]={T=, D=, S={specID=}}
 function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
-    if not itemID and itemLink then
-        itemID= C_Item.GetItemInfoInstant(itemLink)
+    itemID= (itemID or itemLink) and C_Item.GetItemInfoInstant(itemLink or itemID)
+    if not itemID  then
+        return
     end
-    if itemID and WoWTools_SC_Item then
-        itemID= C_Item.GetItemInfoInstant(itemID) or itemID
-        return WoWTools_SC_Item[itemID]
+
+    local title, desc
+
+    local data= WoWTools_SC_Item and WoWTools_SC_Item[itemID]
+    if data then
+        title= data.T
+        desc= data.D
+    end
+
+    if WoWTools_SC_SetsItem then
+        local setID= select(16, C_Item.GetItemInfo(itemID))
+        if setID then
+            data= WoWTools_SC_SetsItem[setID]
+            if data then
+                local specID= PlayerUtil.GetCurrentSpecID()
+                if data[specID] then
+                    desc=data[specID]
+                else
+                    local specs= C_Item.GetItemSpecInfo(itemID)
+                    if specs and specs[1] and data[specs[1]] then
+                        desc= data[specs[1]]
+                    end
+                end
+            end
+        end
+    end
+
+    if title or desc then
+        return {
+                T= title,
+                D= desc,
+            }
     end
 end
+
 function WoWTools_ChineseMixin:GetItemName(itemID, itemLink)
     local data= self:GetItemData(itemID, itemLink)
     if data then
         return data.T, data.D
     end
 end
-
-
 
 
 

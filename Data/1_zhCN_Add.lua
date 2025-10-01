@@ -15,10 +15,10 @@ local tab_G={
 ['EMOTE67_CMD1']= "/不"    ,
 ['GRAPHICS_LABEL']= "图形",
 ['SPELLBOOK']= "法术书",
-['GENERAL']= "综合",
 ['COLOR']= "颜色",
 ['POI_FOCUS'] = "焦点",
 ['PROFESSIONS_SPECIALIZATIONS_TAB_NAME'] = "专精",
+['GENERAL_LABEL'] = "综合",
 }
 
 
