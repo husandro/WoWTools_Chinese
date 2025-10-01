@@ -16,7 +16,7 @@ local function calendar_Uptate()
         local data= WoWTools_ChineseMixin:GetHolidayData(info.eventID)
         if data then
             if data[1] then
-                CalendarViewHolidayFrame.Header:Setup(data.T)
+                CalendarViewHolidayFrame.Header:Setup(data[1])
             end
             local desc= data[2]
             if desc then

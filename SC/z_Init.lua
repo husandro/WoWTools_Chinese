@@ -221,7 +221,7 @@ end
 
 
 
-
+--[[
 
 function WoWTools_ChineseMixin:GetHolidayData(eventID)
     if WoWTools_SC_Holyday then
@@ -235,7 +235,7 @@ function WoWTools_ChineseMixin:GetHoliDayName(eventID)
         return data.T, data.D
     end
 end
-
+]]
 
 
 
