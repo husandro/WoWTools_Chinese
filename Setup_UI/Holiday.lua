@@ -15,10 +15,10 @@ local function calendar_Uptate()
         --local data= WoWTools_ChineseMixin:GetData(nil, {holydayID= info.eventID}) or {}
         local data= WoWTools_ChineseMixin:GetHolidayData(info.eventID)
         if data then
-            if data.T then
+            if data[1] then
                 CalendarViewHolidayFrame.Header:Setup(data.T)
             end
-            local desc= data.D
+            local desc= data[2]
             if desc then
                 if (info.startTime and info.endTime) then
                     desc = format('%1$s|n|n开始：%2$s %3$s|n结束：%4$s %5$s', desc, FormatShortDate(info.startTime.monthDay, info.startTime.month, 0), GameTime_GetFormattedTime(info.startTime.hour, info.startTime.minute, true), FormatShortDate(info.endTime.monthDay, info.endTime.month), GameTime_GetFormattedTime(info.endTime.hour, info.endTime.minute, true));
