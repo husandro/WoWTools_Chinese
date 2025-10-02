@@ -196,6 +196,10 @@ local function Set_Item(tooltip, info)
             tooltip:AddLine(title)
         end
     end
+    if not desc then
+        local spellID= C_Item.GetItemSpell(info.id)
+        desc= select(2, WoWTools_ChineseMixin:GetSpellName(spellID))
+    end
     if desc then
         tooltip:AddLine(' ')
         tooltip:AddLine(NORMAL_FONT_COLOR:WrapTextInColorCode(desc), nil,nil,nil, true)
