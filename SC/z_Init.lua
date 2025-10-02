@@ -31,6 +31,13 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
         end
     end
 
+    if not desc then
+        local spellID= C_Item.GetItemSpell(itemID)
+        if spellID then
+            desc= select(2, WoWTools_ChineseMixin:GetSpellName(spellID))
+        end
+    end
+
     if title or desc then
         return {
                 T= title,
