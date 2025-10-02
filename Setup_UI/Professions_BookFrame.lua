@@ -6,11 +6,7 @@
 
 
 
-local function Set_UpdateButton(frame)
-    WoWTools_ChineseMixin:SetLabel(frame.spellString)
-    WoWTools_ChineseMixin:SetLabel(frame.subSpellString)
-    WoWTools_ChineseMixin:SetLabel(frame.subSpellString)
-end
+
 
 
 
@@ -24,20 +20,20 @@ end
 
 
 function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsBook()
-    WoWTools_ChineseMixin:SetLabel(ProfessionsBookFrameTitleText)
+    self:SetLabel(ProfessionsBookFrameTitleText)
 
-    WoWTools_ChineseMixin:SetLabel(PrimaryProfession1Missing)
-    WoWTools_ChineseMixin:SetLabel(PrimaryProfession1.missingText)
-    WoWTools_ChineseMixin:SetLabel(PrimaryProfession2Missing)
-    WoWTools_ChineseMixin:SetLabel(PrimaryProfession2.missingText)
+    self:SetLabel(PrimaryProfession1Missing)
+    self:SetLabel(PrimaryProfession1.missingText)
+    self:SetLabel(PrimaryProfession2Missing)
+    self:SetLabel(PrimaryProfession2.missingText)
 
-    WoWTools_ChineseMixin:SetLabel(SecondaryProfession1Missing)
-    WoWTools_ChineseMixin:SetLabel(SecondaryProfession2Missing)
-    WoWTools_ChineseMixin:SetLabel(SecondaryProfession3Missing)
+    self:SetLabel(SecondaryProfession1Missing)
+    self:SetLabel(SecondaryProfession2Missing)
+    self:SetLabel(SecondaryProfession3Missing)
 
-    WoWTools_ChineseMixin:SetLabel(SecondaryProfession1.missingText)
-    WoWTools_ChineseMixin:SetLabel(SecondaryProfession2.missingText)
-    WoWTools_ChineseMixin:SetLabel(SecondaryProfession3.missingText)
+    self:SetLabel(SecondaryProfession1.missingText)
+    self:SetLabel(SecondaryProfession2.missingText)
+    self:SetLabel(SecondaryProfession3.missingText)
 
 
     local tab={
@@ -48,6 +44,28 @@ function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsBook()
         "SecondaryProfession3",
     }
 
+    local function Set_UpdateButton(btn)
+        local parent = btn:GetParent()
+        if not parent.professionInitialized then
+            return
+        end
+        local activeSpellBank = Enum.SpellBookSpellBank.Player
+        local spellIndex = btn:GetID() + parent.spellOffset
+        local spellBookItemInfo = C_SpellBook.GetSpellBookItemInfo(spellIndex, activeSpellBank)
+        local name
+        if spellBookItemInfo.spellID then
+            name= self:GetSpellName(spellBookItemInfo.spellID)
+        end
+        if name then
+            btn.spellString:SetText(name)
+        else
+            self:SetLabel(btn.spellString)
+        end
+
+        self:SetLabel(btn.subSpellString)
+        self:SetLabel(btn.subSpellString)
+    end
+
     for _, name in pairs(tab) do
         local frame= _G[name]
         if frame then
@@ -56,8 +74,12 @@ function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsBook()
         end
     end
 
+    hooksecurefunc(ProfessionSpellButtonMixin, 'UpdateButton', function(btn, index)
+        print('a')
+    end)
+
     hooksecurefunc('FormatProfession', function(frame)
-        WoWTools_ChineseMixin:SetLabel(frame.rank)
-        WoWTools_ChineseMixin:HookLabel(frame.professionName, frame.skillName)
+        self:SetLabel(frame.rank)
+        self:HookLabel(frame.professionName, frame.skillName)
     end)
 end

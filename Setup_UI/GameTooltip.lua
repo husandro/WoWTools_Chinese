@@ -196,7 +196,6 @@ local function Set_Item(tooltip, info)
             tooltip:AddLine(title)
         end
     end
-
     if desc then
         tooltip:AddLine(' ')
         tooltip:AddLine(NORMAL_FONT_COLOR:WrapTextInColorCode(desc), nil,nil,nil, true)

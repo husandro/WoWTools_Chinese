@@ -29,46 +29,78 @@ local tabString={
 [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_AFK, FRIENDS_LIST_AWAY)]= "|TInterface\\FriendsFrame\\StatusIcon-Away:16:16|t 离开",
 [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_DND, FRIENDS_LIST_BUSY)]= "|TInterface\\FriendsFrame\\StatusIcon-DnD:16:16|t 忙碌",
 
-[CURRENCY_FILTER_TYPE_CHARACTER:format(UnitName('player'))] = "仅限|A:auctionhouse-icon-favorite:0:0|a我"
+[CURRENCY_FILTER_TYPE_CHARACTER:format(UnitName('player'))] = "仅限|A:auctionhouse-icon-favorite:0:0|a我",
+    --['Alliance', '联盟')
+    --'Horde', '部落')
 }
 
 
 local tabItem= {
     [6948]= '炉石',
+    [5956]= '铁匠锤',
+    [6256]= '鱼竿',
+    [211806]= '鎏金之瓶',
+    [3868]= '附魔羊皮纸',
+    [85663]= '草药师的铲子',
+    [226204]= '刚做的羊皮纸',
+    [39505]= '学者的书写工具',
+    [2901]= '矿工锄',
+    [210828]= '稀释溶液',
+    [212754]= '晶铸大锅',
+    [227208]= '铋棒',
+    [222700]= '香料颗粒',
+    [222701]= '面粉块',
+    [6218]= '符文铜棒',
+    [20815]= '珠宝匠的工具套装',
+    [6219]= '弧光扳手',
+    [10498]= '侏儒微调器',
+    [64670]= '褪魔粉',
+    [109253]= '终极版侏儒军刀',
+    [219948]= '风暴之尘',
 }
 
 
 
+
+
+
+
+
+
+
+
+
+
+do
+    for itemID, text in pairs(tabItem) do
+        ItemEventListener:AddCancelableCallback(itemID, function()
+             WoWTools_ChineseMixin:SetCN(C_Item.GetItemNameByID(itemID), text)
+        end)
+    end
+end
+tabItem=nil
+
+
 EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+    WoWTools_ChineseMixin:SetCN(EJ_GetTierInfo(2), '燃烧远征')
+    WoWTools_ChineseMixin:SetCN(EJ_GetTierInfo(EJ_GetNumTiers()), '本赛季')
+
     do
-        for itemID, text in pairs(tabItem) do
-            WoWTools_ChineseMixin:SetCN(C_Item.GetItemNameByID(itemID), text)
+        for en, cn in pairs(tab_G) do
+            WoWTools_ChineseMixin:SetCN(_G[en], cn)
+        end
+
+        for en, cn in pairs(tabString) do
+            WoWTools_ChineseMixin:SetCN(en, cn)
         end
     end
-    tabItem=nil
 
-    WoWTools_ChineseMixin:SetCN(EJ_GetTierInfo(2), '燃烧远征')
-    WoWTools_ChineseMixin:SetCN('Alliance', '联盟')
-    WoWTools_ChineseMixin:SetCN('Horde', '部落')
-
-
-
-
+    tab_G=nil
+    tabString=nil
 
     EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
 end)
 
 
 
-do
-    for en, cn in pairs(tab_G) do
-        WoWTools_ChineseMixin:SetCN(_G[en], cn)
-    end
 
-    for en, cn in pairs(tabString) do
-        WoWTools_ChineseMixin:SetCN(en, cn)
-    end
-end
-
-tab_G=nil
-tabString=nil

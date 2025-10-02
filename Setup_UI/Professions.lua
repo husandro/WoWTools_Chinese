@@ -1,15 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
 local FailValidationReason = EnumUtil.MakeEnum("Cooldown", "InsufficientReagents", "PrerequisiteReagents", "Disabled", "Requirement", "LockedReagentSlot", "RecraftOptionalReagentLimit")
 local FailValidationTooltips = {
     [FailValidationReason.Cooldown] = '配方冷却中。',
@@ -32,7 +20,21 @@ local function SetTextToFit(fontString, text, maxWidth, multiline)
 end
 
 
-
+local RequirementTypeToString =
+{
+	[Enum.RecipeRequirementType.SpellFocus] = "SpellFocusRequirement",
+	[Enum.RecipeRequirementType.Totem] = "TotemRequirement",
+	[Enum.RecipeRequirementType.Area] = "AreaRequirement",
+}
+local function FormatRequirements(requirements)
+	local formattedRequirements = {}
+	for _, recipeRequirement in ipairs(requirements) do
+        local name= WoWTools_ChineseMixin:CN(recipeRequirement.name) or recipeRequirement.name
+		table.insert(formattedRequirements, LinkUtil.FormatLink(RequirementTypeToString[recipeRequirement.type], name))
+		table.insert(formattedRequirements, recipeRequirement.met)
+	end
+	return formattedRequirements
+end
 
 
 
@@ -220,14 +222,16 @@ end
 
 
 
+
+
 local function Init_CraftingPage_SchematicForm(self)
     local frame= ProfessionsFrame.CraftingPage.SchematicForm
 
     self:HookLabel(frame.RecraftingDescription)
     if frame.AllocateBestQualityCheckbox then
         frame:HookScript('OnShow', function(f)
-            f.AllocateBestQualityCheckbox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'));
-            f.TrackRecipeCheckbox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'));
+            f.AllocateBestQualityCheckbox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('使用最高品质材料'))
+            f.TrackRecipeCheckbox.text:SetText(LIGHTGRAY_FONT_COLOR:WrapTextInColorCode('追踪配方'))
         end)
     end
 
@@ -337,6 +341,26 @@ local function Init_CraftingPage_SchematicForm(self)
                 end)
             end
         end
+
+        if not f.isInspection then
+            if #C_TradeSkillUI.GetRecipeRequirements(recipeID) > 0 then
+                local fontString = isRecraft and f.RecraftingRequiredTools or f.RequiredTools
+                fontString:Show()
+                f.UpdateRequiredTools = function()
+                    local requirements = C_TradeSkillUI.GetRecipeRequirements(recipeID)
+                    if (#requirements > 0) then
+                        
+                        local requirementsText = BuildColoredListString(unpack(FormatRequirements(requirements)))
+                        local maxWidth = minimized and 250 or 800
+                        local multiline = minimized
+                        SetTextToFit(fontString, format('|cnNORMAL_FONT_COLOR:需要：|r %s', requirementsText), maxWidth, multiline)
+                    else
+                        fontString:SetText("")
+                    end
+                end
+                f.UpdateRequiredTools()
+            end
+        end
     end)
 
 
@@ -351,7 +375,7 @@ local function Init_CraftingPage_SchematicForm(self)
         if not f.Description:IsShown() then
             return
         end
-        local spell = Spell:CreateFromSpellID(f.currentRecipeInfo.recipeID);
+        local spell = Spell:CreateFromSpellID(f.currentRecipeInfo.recipeID)
         local spellID= spell:GetSpellID()
         if spellID then
             local desc= select(2, self:GetSpellName())
@@ -363,10 +387,11 @@ local function Init_CraftingPage_SchematicForm(self)
             end
         end
     end)
+
+    
+
+    Init_CraftingPage_SchematicForm=function()end
 end
-
-
-
 
 
 
@@ -460,7 +485,7 @@ local function Init_SpecPage(self)
         if name then
             GameTooltipTextLeft1:SetText(name)
         end
-        local currRank, maxRank = f:GetRanks();
+        local currRank, maxRank = f:GetRanks()
         if currRank and maxRank then
             GameTooltipTextLeft5:SetText('等级 '..currRank..'/'..maxRank)
         end
@@ -485,21 +510,18 @@ local function Init_SpecPage(self)
             local name= f:GetParent().professionInfo.professionName
             name= self:CN(name) or name
             GameTooltip_AddNormalLine(GameTooltip, format('你可以选择一个新的专精|n|cnGREEN_FONT_COLOR:%s|r', name))
-            GameTooltip:Show();
+            GameTooltip:Show()
         end)
     end)
 
     hooksecurefunc(ProfessionSpecTabMixin, 'SetState', function(f, state)
         local name= self:CN(f.tabInfo.name)
         if name then
-            name = (state ~= Enum.ProfessionsSpecTabState.Locked) and name or DISABLED_FONT_COLOR:WrapTextInColorCode(name);
-            f.Text:SetText(name);
+            name = (state ~= Enum.ProfessionsSpecTabState.Locked) and name or DISABLED_FONT_COLOR:WrapTextInColorCode(name)
+            f.Text:SetText(name)
         end
     end)
 end
-
-
-
 
 
 
