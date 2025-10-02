@@ -291,6 +291,7 @@ local function Init_CraftingPage_SchematicForm(self)
         local isRecraft
         local recipeID = recipeInfo.recipeID
         f.recipeID= recipeID
+        local minimized = ProfessionsUtil.IsCraftingMinimized()
 
         local reagents = f.transaction:CreateCraftingReagentInfoTbl()
         local outputItemInfo = C_TradeSkillUI.GetRecipeOutputItemData(recipeID, reagents, f.transaction:GetAllocationItemGUID()) or {}
@@ -304,7 +305,6 @@ local function Init_CraftingPage_SchematicForm(self)
             isRecraft= true
         end
         if name then
-            local minimized = ProfessionsUtil.IsCraftingMinimized()
             local maxWidth = minimized and 250 or 800
             local multiline = minimized
             if f.RecraftingOutputText:IsShown() then
@@ -345,7 +345,6 @@ local function Init_CraftingPage_SchematicForm(self)
         if not f.isInspection then
             if #C_TradeSkillUI.GetRecipeRequirements(recipeID) > 0 then
                 local fontString = isRecraft and f.RecraftingRequiredTools or f.RequiredTools
-                fontString:Show()
                 f.UpdateRequiredTools = function()
                     local requirements = C_TradeSkillUI.GetRecipeRequirements(recipeID)
                     if (#requirements > 0) then
