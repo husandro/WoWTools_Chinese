@@ -23,7 +23,6 @@ end)
 
 --Blizzard_AccountStoreCardTemplates.lua
 hooksecurefunc(AccountStoreBaseCardMixin, 'SetItemID', function(self)
-
     local itemInfo= self.itemInfo
     if not itemInfo then
         return
