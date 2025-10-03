@@ -210,12 +210,19 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
 --名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateVisuals', function(frame)
         local info= frame.spellBookItemInfo
-        if not info or not info.spellID then
+        if not info then
             return
         end
-        local name= self:GetSpellName(info.spellID) -- actionID= self:GetData(info.name, {spellID=info.actionID, isName=true})
-        if name then
-            frame.Name:SetText(name)
+
+        local spellID= info.spellID or (info.actionID and C_ActionBar.GetSpell(info.actionID))
+        if not spellID then
+            return
+        end
+        local cn= self:GetSpellName(spellID) -- actionID= self:GetData(info.name, {spellID=info.actionID, isName=true})
+        if cn then
+            frame.Name:SetText(cn)
+        else
+            self:SetLabel(frame.Name, info.name)
         end
         if frame.isUnlearned and frame.RequiredLevel:IsShown() then
             local levelLearned = C_SpellBook.GetSpellBookItemLevelLearned(frame.slotIndex, frame.spellBank)
@@ -241,6 +248,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
         end
         if cn then
             frame.SubName:SetText(cn)
+        else
+            self:SetLabel(frame.SubName, subNameText)
         end
     end)
 
