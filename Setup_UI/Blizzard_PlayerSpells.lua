@@ -206,13 +206,14 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
     self:SetLabel(ClassTalentLoadoutCreateDialog.CancelButton)
 
 
+
 --名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateVisuals', function(frame)
-        if not frame.spellBookItemInfo or not frame.spellBookItemInfo.actionID then
+        local info= frame.spellBookItemInfo
+        if not info or not info.spellID then
             return
         end
-        local name= self:GetSpellName(frame.spellBookItemInfo.actionID) --= self:GetData(frame.spellBookItemInfo.name, {spellID=frame.spellBookItemInfo.actionID, isName=true})
-        name= name or self:SetText(frame.spellBookItemInfo.name)
+        local name= self:GetSpellName(info.spellID) -- actionID= self:GetData(info.name, {spellID=info.actionID, isName=true})
         if name then
             frame.Name:SetText(name)
         end
@@ -234,22 +235,34 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
 
 --子，名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateSubName', function(frame, subNameText)
-        self:SetLabel(frame.SubName, subNameText)
+        local cn= self:CN(subNameText)
+        if frame.spellBookItemInfo and not cn then
+            cn= select(3, self:GetSpellName(frame.spellBookItemInfo.spellID))
+        end
+        if cn then
+            frame.SubName:SetText(cn)
+        end
     end)
 
 --Header Blizzard_SpellBookTemplates.lua
     hooksecurefunc(PlayerSpellsFrame.SpellBookFrame, 'UpdateDisplayedSpells',function(frame)
         for _, btn in pairs(frame.PagedSpellsFrame:GetFrames() or {}) do
-            if btn.Text then
-                self:SetLabel(btn.Text)
+            local cn = btn.Text and self:SetText(btn.Text:GetText())
+            if cn then
+                cn= cn:gsub('|c........', '')
+                cn= cn:gsub('|r', '')
+                btn.Text:SetText(cn)
             end
         end
     end)
 
     hooksecurefunc(PlayerSpellsFrame.SpellBookFrame.PagedSpellsFrame.PagingControls, 'SetCurrentPage',function(frame)
         for _, btn in pairs(frame:GetParent():GetFrames() or {}) do
-            if btn.Text then
-                self:SetLabel(btn.Text)
+            local cn = btn.Text and self:SetText(btn.Text:GetText())
+            if cn then
+                cn= cn:gsub('|c........', '')
+                cn= cn:gsub('|r', '')
+                btn.Text:SetText(cn)
             end
         end
     end)

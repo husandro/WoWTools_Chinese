@@ -271,12 +271,9 @@ local function set(self, text)
     end
 
     text= text or self:GetText()
-
-    if text then
-        local cn= WoWTools_ChineseMixin:SetText(text)
-        if cn and cn~=text then
-            self:SetText(cn)
-        end
+    local cn= WoWTools_ChineseMixin:SetText(text)
+    if cn and cn~=text then
+        self:SetText(cn)
     end
 end
 
