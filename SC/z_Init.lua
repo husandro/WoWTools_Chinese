@@ -1,13 +1,21 @@
+local function GetValueID(id)
+    if id then
+        return tonumber(id)
+    end
+end
+
 --Item 物品[itemID]={T=, D=, S={specID=}}
 function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
-    itemID= (itemID or itemLink) and C_Item.GetItemInfoInstant(itemLink or itemID)
+    --itemID= (itemID or itemLink) and C_Item.GetItemInfoInstant(itemLink or itemID
+    itemID= itemID or (itemLink and C_Item.GetItemInfoInstant(itemID))
+    itemID= GetValueID(itemID)
     if not itemID  then
         return
     end
 
     local title, desc
 
-    local data= WoWTools_SC_Item and WoWTools_SC_Item[tostring(itemID)]
+    local data= WoWTools_SC_Item and WoWTools_SC_Item[itemID]
     if data then
         title= data.T
         desc= data.D
@@ -76,10 +84,9 @@ local function Get_NPC_ID(unit)--NPC ID
 end
 --Unit 单位 [npcID]={T=, D=}
 function WoWTools_ChineseMixin:GetUnitData(unit, npcID)
-    npcID= npcID or Get_NPC_ID(unit)
-    local id= npcID and tostring(npcID)
-    if id and WoWTools_SC_Unit then
-        return WoWTools_SC_Unit[id]
+    npcID= GetValueID(npcID or Get_NPC_ID(unit))
+    if npcID and WoWTools_SC_Unit then
+        return WoWTools_SC_Unit[npcID]
     end
 end
 
@@ -101,21 +108,20 @@ end
 
 --法术 [spellID]={T=, D=}
 function WoWTools_ChineseMixin:GetSpellData(spellID)
-    local ID
-    if spellID then
-        ID= tostring(spellID)
-        spellID= tonumber(spellID)
-    end
-    if not spellID then
+    spellID= spellID and tonumber(spellID)
+    local ID= GetValueID(spellID)
+    if not ID then
         return
     end
+
     local data
+
     if spellID>=1200000 then
         if WoWTools_SC_Spell2 then
             data= WoWTools_SC_Spell2[ID]
         end
     elseif WoWTools_SC_Spell then
-        data= WoWTools_SC_Spell[tostring(spellID)]
+        data= WoWTools_SC_Spell[ID]
     end
     if data then
         return data
@@ -206,8 +212,9 @@ end
 
 --任务
 function WoWTools_ChineseMixin:GetQuestData(questID)
+    questID= GetValueID(questID)
     if questID and WoWTools_SC_Quest then
-        return WoWTools_SC_Quest[tostring(questID)]
+        return WoWTools_SC_Quest[questID]
     end
 end
 function WoWTools_ChineseMixin:GetQuestName(questID)
@@ -248,7 +255,8 @@ end
 --[[
 
 function WoWTools_ChineseMixin:GetHolidayData(eventID)
-    if WoWTools_SC_Holyday then
+    eventID= GetValueID(id)
+    if eventID and WoWTools_SC_Holyday then
         return WoWTools_SC_Holyday[eventID]
     end
 end
