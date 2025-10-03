@@ -7,7 +7,7 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
 
     local title, desc
 
-    local data= WoWTools_SC_Item and WoWTools_SC_Item[itemID]
+    local data= WoWTools_SC_Item and WoWTools_SC_Item[tostring(itemID)]
     if data then
         title= data.T
         desc= data.D
@@ -56,6 +56,15 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
 --单位
 local function Get_NPC_ID(unit)--NPC ID
     if UnitExists(unit) and not UnitIsPlayer(unit) then
@@ -68,7 +77,7 @@ end
 --Unit 单位 [npcID]={T=, D=}
 function WoWTools_ChineseMixin:GetUnitData(unit, npcID)
     npcID= npcID or Get_NPC_ID(unit)
-    local id= npcID and tonumber(npcID)
+    local id= npcID and tostring(npcID)
     if id and WoWTools_SC_Unit then
         return WoWTools_SC_Unit[id]
     end
@@ -86,6 +95,10 @@ end
 
 
 
+
+
+
+
 --法术 [spellID]={T=, D=}
 function WoWTools_ChineseMixin:GetSpellData(spellID)
     spellID= spellID and tonumber(spellID)
@@ -95,10 +108,10 @@ function WoWTools_ChineseMixin:GetSpellData(spellID)
     local data
     if spellID>=1200000 then
         if WoWTools_SC_Spell2 then
-            data= WoWTools_SC_Spell2[spellID]
+            data= WoWTools_SC_Spell2[tostring(spellID)]
         end
     elseif WoWTools_SC_Spell then
-        data= WoWTools_SC_Spell[spellID]
+        data= WoWTools_SC_Spell[tostring(spellID)]
     end
     if data then
         return data
@@ -190,33 +203,23 @@ end
 --任务
 function WoWTools_ChineseMixin:GetQuestData(questID)
     if questID and WoWTools_SC_Quest then
-        return WoWTools_SC_Quest[questID]
+        return WoWTools_SC_Quest[tostring(questID)]
     end
 end
 function WoWTools_ChineseMixin:GetQuestName(questID)
     local data=self:GetQuestData(questID)
     if data then
-        return data.T
+        return data.T, data.D, data.O
     end
 end
-function WoWTools_ChineseMixin:GetQuestObjectText(questID)
-    local data=self:GetQuestData(questID)
-    if data then
-        return data.O
-    end
-end
+
 function WoWTools_ChineseMixin:GetQuestObject(questID)
     local data=self:GetQuestData(questID)
     if data then
         return data.S
     end
 end
-function WoWTools_ChineseMixin:GetQuestDesc(questID)
-    local data=self:GetQuestData(questID)
-    if data then
-        return data.D
-    end
-end
+
 
 
 

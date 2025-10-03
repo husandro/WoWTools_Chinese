@@ -224,7 +224,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
         elseif tab.isObject then
             data= self:GetQuestObject(tab.questID)
         elseif tab.isDesc then
-            data= self:GetQuestDesc(tab.questID)
+            data= select(2, self:GetQuestName(tab.questID))
         else
             data= self:GetQuestData(tab.questID)
         end

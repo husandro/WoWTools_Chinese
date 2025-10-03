@@ -357,7 +357,8 @@ hooksecurefunc('QuestInfo_ShowTitle', function()
 
 
  hooksecurefunc('QuestInfo_ShowDescriptionText', function()
-	local desc=  WoWTools_ChineseMixin:GetQuestDesc(WoWTools_ChineseMixin:GetQuestID())
+	local questID= WoWTools_ChineseMixin:GetQuestID()
+	local desc= select(2,WoWTools_ChineseMixin:GetQuestName(questID))
 	if desc then
 	   QuestInfoDescriptionText:SetText(desc)
 	end

@@ -120,7 +120,7 @@ local function Set_Quest_Line()
     for questID, lines in pairs(Lines) do
         local isComplete = C_QuestLog.IsComplete(questID)
         if not isComplete then
-            local data= WoWTools_ChineseMixin:GetQuestObject(questID)            
+            local data= WoWTools_ChineseMixin:GetQuestObject(questID)
             if data then
                 local questLogIndex= C_QuestLog.GetLogIndexForQuestID(questID)
                 local numObjectives = GetNumQuestLeaderBoards(questLogIndex) or 0
@@ -146,7 +146,7 @@ local function Set_Quest_Line()
                 end
             end
         else
-            local obj= WoWTools_ChineseMixin:GetQuestObjectText(questID)
+            local obj= select(3, WoWTools_ChineseMixin:GetQuestName(questID))
             local line= lines[1]
             if obj and line then
                 line.Text:SetText(obj)
@@ -154,7 +154,7 @@ local function Set_Quest_Line()
             end
         end
     end
-    
+
     for line in QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
        WoWTools_ChineseMixin:SetLabel(line.Text)
        WoWTools_ChineseMixin:SetLabel(line.Progress)

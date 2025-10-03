@@ -62,7 +62,7 @@ end)]]
 hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, questCompleted)--, questSequenced, isExistingBlock, useFullHeight)
     local questID = block.id
     if questCompleted then
-        local obj= WoWTools_ChineseMixin:GetQuestObjectText(questID)
+        local obj= select(3, WoWTools_ChineseMixin:GetQuestName(questID))
         if obj then
             block:ForEachUsedLine(function(line)--, objectiveKey) --objectiveKey=='QuestComplete'
                 C_Timer.After(0.3, function()
