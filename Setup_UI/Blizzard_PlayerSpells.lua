@@ -218,6 +218,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
         if not spellID then
             return
         end
+        
         local cn= self:GetSpellName(spellID) -- actionID= self:GetData(info.name, {spellID=info.actionID, isName=true})
         if cn then
             frame.Name:SetText(cn)
