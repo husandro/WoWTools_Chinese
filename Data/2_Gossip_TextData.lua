@@ -2,8 +2,6 @@
 WoWTools_ChineseMixin_GossipTextData_Tabs={
 
 
-
-
 [27998]={icon=nil, name="拍卖行", hex=nil},
 [27999]={icon=nil, name="铁炉堡银行", hex=nil},
 [28000]={icon=nil, name="其他大陆", hex=nil},
@@ -467,7 +465,6 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [133151]={icon=nil, name="游学者是什么人？为什么会来到这座城？", hex=nil},
 [134417]={icon=nil, name="<查看伙伴补给。>", hex=nil},
 [134852]={icon=nil, name="那面旗帜是哪方的？", hex=nil},
-
 
 
 
