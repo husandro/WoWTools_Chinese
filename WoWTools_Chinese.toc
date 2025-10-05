@@ -106,7 +106,6 @@ SC\Sets.lua
 SC\Spell.lua
 SC\Spell2.lua
 SC\Unit.lua
-SC\Holyday.lua
 SC\z_Init.lua
 
 a_Event.lua
