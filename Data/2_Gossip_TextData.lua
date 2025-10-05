@@ -469,7 +469,7 @@ end
 
 
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
-    if not WoWTools_GossipMixin:Get_GossipData() then
+    if not WoWTools_GossipMixin then
         Init()
     else
         Init=function()end
