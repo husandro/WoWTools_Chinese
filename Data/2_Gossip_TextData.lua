@@ -4,8 +4,6 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 
 
 
-
-
 [27998]={icon=nil, name="拍卖行", hex=nil},
 [27999]={icon=nil, name="铁炉堡银行", hex=nil},
 [28000]={icon=nil, name="其他大陆", hex=nil},
@@ -123,11 +121,20 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [34720]={icon=nil, name="战场军官", hex=nil},
 [34721]={icon=nil, name="炼金实验室", hex=nil},
 [34722]={icon=nil, name="宝石商人", hex=nil},
+[34814]={icon=nil, name="你的疯狂眼镜有什么用？", hex=nil},
+[34815]={icon=nil, name="本月美酒俱乐部？", hex=nil},
+[34816]={icon=nil, name="奖券兑换", hex=nil},
+[34817]={icon=nil, name="让我看看你的货物。", hex=nil},
 [36048]={icon=nil, name="让我看看你的货物。", hex=nil},
 [36056]={icon=nil, name="我把成就战袍弄丢了。", hex=nil},
 [36058]={icon=nil, name="我把探索者战袍弄丢了。", hex=nil},
 [36060]={icon=nil, name="我把夏日天空战袍弄丢了。", hex=nil},
 [36061]={icon=nil, name="我把夏日烈焰战袍弄丢了。", hex=nil},
+[36610]={icon=nil, name="我能免费得到一匹坐骑？", hex=nil},
+[36611]={icon=nil, name="我要怎么样才能让山羊跑得更快些？", hex=nil},
+[36612]={icon=nil, name="速度有什么区别？", hex=nil},
+[36613]={icon=nil, name="我的山羊会筋疲力尽吗？", hex=nil},
+[36614]={icon=nil, name="听上去很复杂……", hex=nil},
 [36816]={icon=nil, name="我想寄养宠物。", hex=nil},
 [36817]={icon=nil, name="我在寻找走失的小伙伴。", hex=nil},
 [36818]={icon=nil, name="我要治疗和复活我的战斗宠物。", hex=nil},
@@ -181,6 +188,21 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [41485]={icon=nil, name="帮助卡拉克西有什么奖励？", hex=nil},
 [41486]={icon=nil, name="加入云端翔龙骑士团意味着什么？", hex=nil},
 [41487]={icon=nil, name="在云端翔龙骑士团中获得晋升会有什么奖励？", hex=nil},
+[41689]={icon=nil, name="战斗宠物训练师", hex=nil},
+[41690]={icon=nil, name="幻化", hex=nil},
+[41692]={icon=nil, name="拍卖行", hex=nil},
+[41693]={icon=nil, name="银行", hex=nil},
+[41694]={icon=nil, name="理发师", hex=nil},
+[41695]={icon=nil, name="战场军官", hex=nil},
+[41696]={icon=nil, name="职业训练师", hex=nil},
+[41697]={icon=nil, name="双足飞龙管理员", hex=nil},
+[41698]={icon=nil, name="公会注册员及公会商人", hex=nil},
+[41699]={icon=nil, name="旅店", hex=nil},
+[41700]={icon=nil, name="军官的休息室", hex=nil},
+[41701]={icon=nil, name="其他大陆", hex=nil},
+[41702]={icon=nil, name="专业训练师", hex=nil},
+[41703]={icon=nil, name="兽栏管理员", hex=nil},
+[41704]={icon=nil, name="飞艇管理员", hex=nil},
 [41992]={icon=nil, name="银行", hex=nil},
 [41993]={icon=nil, name="飞行管理员", hex=nil},
 [41994]={icon=nil, name="飞行训练师", hex=nil},
@@ -292,6 +314,11 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [48501]={icon=nil, name="银行", hex=nil},
 [49022]={icon=nil, name="你能让我看看这场战争之前的黑海岸是什么样吗？", hex=nil},
 [49023]={icon=nil, name="这里发生了什么？", hex=nil},
+[50206]={icon=nil, name="什么是合成酿酒护目镜？", hex=nil},
+[50207]={icon=nil, name="我想要一副合成酿酒护目镜。", hex=nil},
+[50208]={icon=nil, name="你刚才说什么？", hex=nil},
+[50361]={icon=nil, name="要怎么玩？", hex=nil},
+[50362]={icon=nil, name="我很愿意拿走自己的战利品。", hex=nil},
 [53056]={icon=nil, name="我需要帮忙。（冷却时间1小时）", hex=nil},
 [53057]={icon=nil, name="我有个特殊需求。（冷却时间4小时）", hex=nil},
 [53058]={icon=nil, name="告诉我的朋友他们有多棒！（冷却时间1天）", hex=nil},
@@ -341,6 +368,9 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [55449]={icon=nil, name="商栈", hex=nil},
 [55658]={icon=nil, name="我想谈谈别的事情。", hex=nil},
 [55661]={icon=nil, name="我想谈谈别的事情。", hex=nil},
+[56232]={icon=nil, name="教我烹饪", hex=nil},
+[56233]={icon=nil, name="教我钓鱼", hex=nil},
+[63888]={icon=nil, name="哦，不……", hex=nil},
 [104166]={icon=nil, name="我想寄养宠物。", hex=nil},
 [104167]={icon=nil, name="我要治疗和复活我的战斗宠物。", hex=nil},
 [104169]={icon=nil, name="我听说你能够找回走失宠物，还会提供幼龙自定义。", hex=nil},
@@ -351,9 +381,26 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 [107460]={icon=nil, name="幻形讲坛", hex=nil},
 [107602]={icon=nil, name="制造订单", hex=nil},
 [107765]={icon=nil, name="物品升级", hex=nil},
+[111407]={icon=nil, name="我想要看看你卖的货物。", hex=nil},
+[111408]={icon=nil, name="教我钓鱼", hex=nil},
+[111409]={icon=nil, name="教我烹饪", hex=nil},
+[111410]={icon=nil, name="教我裁缝", hex=nil},
+[111411]={icon=nil, name="教我剥皮", hex=nil},
+[111412]={icon=nil, name="教我采矿", hex=nil},
+[111413]={icon=nil, name="教我制皮", hex=nil},
+[111414]={icon=nil, name="教我珠宝加工", hex=nil},
+[111415]={icon=nil, name="教我铭文", hex=nil},
+[111416]={icon=nil, name="教我草药学", hex=nil},
+[111417]={icon=nil, name="教我工程学", hex=nil},
+[111418]={icon=nil, name="教我附魔", hex=nil},
+[111419]={icon=nil, name="教我锻造", hex=nil},
+[111420]={icon=nil, name="教我炼金", hex=nil},
 [120910]={icon=nil, name="告诉我可以飞到哪里去。", hex=nil},
 [120914]={icon=nil, name="将这座旅店设为你的家。", hex=nil},
 [121503]={icon=nil, name="我想要看看你卖的货物。", hex=nil},
+[121958]={icon=nil, name="我想传送到一个“地心之战”地下城。", hex=nil},
+[122010]={icon=nil, name="我想传送到赎罪大厅（地下城）。", hex=nil},
+[122011]={icon=nil, name="我想传送到塔扎维什（地下城）。", hex=nil},
 [122661]={icon=nil, name="<查看物品和修理装备。>", hex=nil},
 [122782]={icon="Vehicle-SilvershardMines-Arrow", name="物品升级", hex=nil},
 [122783]={icon="poi-transmogrifier", name="幻化师", hex=nil},
@@ -425,6 +472,7 @@ WoWTools_ChineseMixin_GossipTextData_Tabs={
 
 
 
+
 }
 
 
@@ -458,7 +506,7 @@ local function Init()
     hooksecurefunc(GossipSharedAvailableQuestButtonMixin, 'Setup', function(...)
         Set_Gossip_Text(...)
     end)
-    WoWTools_DataMixin:Hook(GossipSharedActiveQuestButtonMixin, 'Setup', function(...)
+    hooksecurefunc(GossipSharedActiveQuestButtonMixin, 'Setup', function(...)
         Set_Gossip_Text(...)
     end)
 
