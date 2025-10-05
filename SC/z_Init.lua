@@ -261,21 +261,6 @@ end
 
 
 
-function WoWTools_ChineseMixin:GetHolidayData(eventID)
-    if WoWTools_SC_Holyday then
-        return WoWTools_SC_Holyday[GetValueID(eventID)]
-    end
-end
-
-function WoWTools_ChineseMixin:GetHoliDayName(eventID)
-    local data= self:GetHolidayData(eventID)
-    if data then
-        return data.T, data.D
-    end
-end
-
-
-
 
 
 
