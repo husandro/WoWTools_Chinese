@@ -434,19 +434,20 @@ local function Set_Gossip_Text(self, info)
     local id= info and info.gossipOptionID
     local data= id and WoWTools_ChineseMixin_GossipTextData_Tabs[id]
     local text= data and data.name
-    if text then
-        if data.icon then
-            if C_Texture.GetAtlasInfo(data.icon) then
-                text= '|A:'..data.icon..':0:0|a'
-            else
-                text= '|T'..data.icon..':0|t'
-            end
-        end
-        if hex then
-            text= hex..text..'|r'
-        end
-        self:SetText(text)
+    if not text then
+        return
     end
+    if data.icon then
+        if C_Texture.GetAtlasInfo(data.icon) then
+            text= '|A:'..data.icon..':0:0|a'
+        else
+            text= '|T'..data.icon..':0|t'
+        end
+    end
+    if hex then
+        text= hex..text..'|r'
+    end
+    self:SetText(text)
 end
 local function Init()
 
