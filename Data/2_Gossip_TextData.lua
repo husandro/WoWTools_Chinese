@@ -497,9 +497,9 @@ local function Set_Gossip_Text(self, info)
     end
     self:SetText(text)
 end
+
+
 local function Init()
-
-
     hooksecurefunc(GossipOptionButtonMixin, 'Setup', function(...)--GossipFrameShared.lua
         Set_Gossip_Text(...)
     end)
@@ -509,9 +509,6 @@ local function Init()
     hooksecurefunc(GossipSharedActiveQuestButtonMixin, 'Setup', function(...)
         Set_Gossip_Text(...)
     end)
-
-
-
     Init=function()end
 end
 
