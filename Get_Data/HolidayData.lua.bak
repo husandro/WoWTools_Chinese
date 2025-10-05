@@ -1124,11 +1124,3 @@ function WoWTools_ChineseMixin:GetHoliDayName(eventID)
         return self:IsCN(nameTab[index])
     end
 end
-
-function WoWTools_ChineseMixin:GetHoliDayDesc(eventID)
-    local data= Get_Index(eventID)
-    local index= data and data[2]
-    if index and index>0 then
-        return self:IsCN(descTab[index])
-    end
-end

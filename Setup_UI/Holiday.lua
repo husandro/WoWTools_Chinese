@@ -12,7 +12,6 @@ local function calendar_Uptate()
     local info= indexInfo and C_Calendar.GetDayEvent(indexInfo.offsetMonths, indexInfo.monthDay, indexInfo.eventIndex)
     local data= info and WoWTools_ChineseMixin:GetHolidayData(info.eventID)
     if data then
-        print(data.T, data.D)
         if data.T then
             CalendarViewHolidayFrame.Header:Setup(data.T)
         end

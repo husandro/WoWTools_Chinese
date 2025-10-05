@@ -75,7 +75,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
         if tab.isName then
             data= self:GetHoliDayName(tab.holydayID)
         elseif tab.isDesc then
-            data= self:GetHoliDayDesc(tab.holydayID)
+            data= select(2, self:GetHoliDayName(tab.holydayID))
         else
             data= self:GetHolidayData(tab.holydayID)--节日 eventID
         end
