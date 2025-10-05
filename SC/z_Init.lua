@@ -6,16 +6,15 @@ end
 
 --Item 物品[itemID]={T=, D=, S={specID=}}
 function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
-    --itemID= (itemID or itemLink) and C_Item.GetItemInfoInstant(itemLink or itemID
     itemID= itemID or (itemLink and C_Item.GetItemInfoInstant(itemID))
-    itemID= GetValueID(itemID)
+    itemID= WoWTools_SC_Item and GetValueID(itemID)
     if not itemID  then
         return
     end
 
     local title, desc
 
-    local data= WoWTools_SC_Item and WoWTools_SC_Item[itemID]
+    local data= WoWTools_SC_Item[itemID]
     if data then
         title= data.T
         desc= data.D
