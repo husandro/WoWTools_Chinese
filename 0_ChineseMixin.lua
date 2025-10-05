@@ -79,7 +79,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
             elseif tab.isDesc then
                 data= d.D
             else
-                data= data
+                data= d
             end
         end
     elseif tab.perksActivityID then
