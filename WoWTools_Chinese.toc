@@ -79,7 +79,7 @@ Get_Data\ProfessionNodeDesc.lua
 ##LFG
 Get_Data\LFGDungeonDesc.lua
 ##节日
-Get_Data\HolidayData.lua
+##Get_Data\HolidayData.lua
 ##冒险指南
 Get_Data\PerksActivityData.lua
 ##玩具，来原
@@ -106,6 +106,7 @@ SC\Sets.lua
 SC\Spell.lua
 SC\Spell2.lua
 SC\Unit.lua
+SC\Holyday.lua
 SC\z_Init.lua
 
 a_Event.lua

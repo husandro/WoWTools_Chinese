@@ -259,13 +259,11 @@ end
 
 
 
---[[
+
+
 
 function WoWTools_ChineseMixin:GetHolidayData(eventID)
-    eventID= GetValueID(id)
-    if eventID and WoWTools_SC_Holyday then
-        return WoWTools_SC_Holyday[eventID]
-    end
+    return WoWTools_SC_Holyday and WoWTools_SC_Holyday[GetValueID(eventID)]
 end
 
 function WoWTools_ChineseMixin:GetHoliDayName(eventID)
@@ -274,14 +272,13 @@ function WoWTools_ChineseMixin:GetHoliDayName(eventID)
         return data.T, data.D
     end
 end
-]]
 
-
-
-
-
-
-
+function WoWTools_ChineseMixin:GetHoliDayDesc(eventID)
+    local data= self:GetHolidayData(eventID)
+    if data then
+        return data.D, data.T
+    end
+end
 
 
 

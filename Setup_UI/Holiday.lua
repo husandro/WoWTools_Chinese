@@ -9,22 +9,19 @@
 
 local function calendar_Uptate()
     local indexInfo = C_Calendar.GetEventIndex()
-    local info= indexInfo and C_Calendar.GetDayEvent(indexInfo.offsetMonths, indexInfo.monthDay, indexInfo.eventIndex) or {}
-
-    if info.eventID then
-        --local data= WoWTools_ChineseMixin:GetData(nil, {holydayID= info.eventID}) or {}
-        local data= WoWTools_ChineseMixin:GetHolidayData(info.eventID)
-        if data then
-            if data[1] then
-                CalendarViewHolidayFrame.Header:Setup(data[1])
+    local info= indexInfo and C_Calendar.GetDayEvent(indexInfo.offsetMonths, indexInfo.monthDay, indexInfo.eventIndex)
+    local data= info and WoWTools_ChineseMixin:GetHolidayData(info.eventID)
+    if data then
+        print(data.T, data.D)
+        if data.T then
+            CalendarViewHolidayFrame.Header:Setup(data.T)
+        end
+        local desc= data.D
+        if desc then
+            if (info.startTime and info.endTime) then
+                desc = format('%1$s|n|n开始：%2$s %3$s|n结束：%4$s %5$s', desc, FormatShortDate(info.startTime.monthDay, info.startTime.month, 0), GameTime_GetFormattedTime(info.startTime.hour, info.startTime.minute, true), FormatShortDate(info.endTime.monthDay, info.endTime.month), GameTime_GetFormattedTime(info.endTime.hour, info.endTime.minute, true));
             end
-            local desc= data[2]
-            if desc then
-                if (info.startTime and info.endTime) then
-                    desc = format('%1$s|n|n开始：%2$s %3$s|n结束：%4$s %5$s', desc, FormatShortDate(info.startTime.monthDay, info.startTime.month, 0), GameTime_GetFormattedTime(info.startTime.hour, info.startTime.minute, true), FormatShortDate(info.endTime.monthDay, info.endTime.month), GameTime_GetFormattedTime(info.endTime.hour, info.endTime.minute, true));
-                end
-                CalendarViewHolidayFrame.ScrollingFont:SetText(desc)
-            end
+            CalendarViewHolidayFrame.ScrollingFont:SetText(desc)
         end
     end
 end
@@ -90,8 +87,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_Calendar()
     end)
 
 
-    hooksecurefunc(CalendarViewHolidayFrame, 'update', calendar_Uptate)--提示节目ID    
-    hooksecurefunc('CalendarViewHolidayFrame_Update', calendar_Uptate)
+    hooksecurefunc(CalendarViewHolidayFrame, 'update', function(...) calendar_Uptate(...) end)--提示节目ID
+    hooksecurefunc('CalendarViewHolidayFrame_Update', function(...) calendar_Uptate(...) end)
 
 
     WoWTools_ChineseMixin:HookLabel(CalendarTexturePickerFrame.Header.Text)
