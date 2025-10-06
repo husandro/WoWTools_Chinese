@@ -272,12 +272,24 @@ end
 
 
 
+hooksecurefunc(GossipSharedQuestButtonMixin, 'UpdateTitleForQuest', function(self, questID, titleText, isIgnored, isTrivial)
+    local cn= WoWTools_ChineseMixin:GetQuestName(questID)
+    titleText= cn or titleText
+    if isIgnored then
+        self:SetFormattedText('|cff000000%s（忽略）|r', titleText)
+        self:Resize()
+    elseif isTrivial then
+        self:SetFormattedText('|cff000000%s （低等级）|r', titleText)
+        self:Resize()
+    elseif cn then
+        self:SetFormattedText('|cff000000%s|r', titleText)
+        self:Resize()
+    end
+end)
 
 
-
-
-
-
+--hooksecurefunc(GossipSharedAvailableQuestButtonMixin, 'Setup', Set_Gossip_Text)
+--hooksecurefunc(GossipSharedActiveQuestButtonMixin, 'Setup', Set_Gossip_Text)
 
 
 
@@ -288,18 +300,14 @@ end
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     if WoWTools_SC_Gossip and not WoWTools_GossipMixin then
 --自定义，对话，文本
-        local function Set_Gossip_Text(self, info)
+        hooksecurefunc(GossipOptionButtonMixin, 'Setup', function(self, info)
             if info and info.gossipOptionID then
                 local text= WoWTools_SC_Gossip[info.gossipOptionID]
-                print(info.gossipOptionID, text)
                 if text then
                     self:SetText(text)
                 end
             end
-        end
-        hooksecurefunc(GossipOptionButtonMixin, 'Setup', Set_Gossip_Text)
-        hooksecurefunc(GossipSharedAvailableQuestButtonMixin, 'Setup', Set_Gossip_Text)
-        hooksecurefunc(GossipSharedActiveQuestButtonMixin, 'Setup', Set_Gossip_Text)
+        end)
     end
 
 
