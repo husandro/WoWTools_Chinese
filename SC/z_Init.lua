@@ -273,6 +273,40 @@ end
 
 
 
+--自定义，对话，文本
+if WoWTools_SC_Gossip then
+    local function Set_Gossip_Text(self, info)
+        if info and info.gossipOptionID then
+            local text= WoWTools_SC_Gossip[info.gossipOptionID]
+            if text then
+                print(info.gossipOptionID, text)
+                self:SetText(text)
+            end
+        end
+    end
+
+    hooksecurefunc(GossipOptionButtonMixin, 'Setup', function(...)--GossipFrameShared.lua
+        Set_Gossip_Text(...)
+    end)
+    hooksecurefunc(GossipSharedAvailableQuestButtonMixin, 'Setup', function(...)
+        Set_Gossip_Text(...)
+    end)
+    hooksecurefunc(GossipSharedActiveQuestButtonMixin, 'Setup', function(...)
+        Set_Gossip_Text(...)
+    end)
+end
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
