@@ -505,7 +505,7 @@ end
 
 
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
-    if not WoWTools_GossipMixin then
+    if not WoWTools_GossipMixina then
         Init()
     else
         Init=function()end

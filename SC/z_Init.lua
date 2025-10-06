@@ -273,24 +273,6 @@ end
 
 
 
---自定义，对话，文本
-if WoWTools_SC_Gossip then
-    local function Set_Gossip_Text(self, info)
-        if info and info.gossipOptionID then
-            local text= WoWTools_SC_Gossip[info.gossipOptionID]
-            if text then
-                print(info.gossipOptionID, text)
-                self:SetText(text)
-            end
-        end
-    end
-
-    hooksecurefunc(GossipOptionButtonMixin, 'Setup', Set_Gossip_Text)
-    hooksecurefunc(GossipSharedAvailableQuestButtonMixin, 'Setup', Set_Gossip_Text)
-    hooksecurefunc(GossipSharedActiveQuestButtonMixin, 'Setup', Set_Gossip_Text)
-end
-
-
 
 
 
@@ -304,6 +286,23 @@ end
 
 
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
+    if WoWTools_SC_Gossip and not WoWTools_GossipMixin then
+--自定义，对话，文本
+        local function Set_Gossip_Text(self, info)
+            if info and info.gossipOptionID then
+                local text= WoWTools_SC_Gossip[info.gossipOptionID]
+                if text then
+                    print(info.gossipOptionID, text)
+                    self:SetText(text)
+                end
+            end
+        end
+        hooksecurefunc(GossipOptionButtonMixin, 'Setup', Set_Gossip_Text)
+        hooksecurefunc(GossipSharedAvailableQuestButtonMixin, 'Setup', Set_Gossip_Text)
+        hooksecurefunc(GossipSharedActiveQuestButtonMixin, 'Setup', Set_Gossip_Text)
+    end
+
+
     do
         for journalEncounterID, data in pairs(WoWTools_SC_Encounter or {}) do
             local name, desc= EJ_GetEncounterInfo(journalEncounterID)
