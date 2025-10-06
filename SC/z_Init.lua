@@ -291,8 +291,8 @@ EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(ow
         local function Set_Gossip_Text(self, info)
             if info and info.gossipOptionID then
                 local text= WoWTools_SC_Gossip[info.gossipOptionID]
+                print(info.gossipOptionID, text)
                 if text then
-                    print(info.gossipOptionID, text)
                     self:SetText(text)
                 end
             end
