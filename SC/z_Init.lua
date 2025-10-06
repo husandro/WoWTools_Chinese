@@ -285,15 +285,9 @@ if WoWTools_SC_Gossip then
         end
     end
 
-    hooksecurefunc(GossipOptionButtonMixin, 'Setup', function(...)--GossipFrameShared.lua
-        Set_Gossip_Text(...)
-    end)
-    hooksecurefunc(GossipSharedAvailableQuestButtonMixin, 'Setup', function(...)
-        Set_Gossip_Text(...)
-    end)
-    hooksecurefunc(GossipSharedActiveQuestButtonMixin, 'Setup', function(...)
-        Set_Gossip_Text(...)
-    end)
+    hooksecurefunc(GossipOptionButtonMixin, 'Setup', Set_Gossip_Text)
+    hooksecurefunc(GossipSharedAvailableQuestButtonMixin, 'Setup', Set_Gossip_Text)
+    hooksecurefunc(GossipSharedActiveQuestButtonMixin, 'Setup', Set_Gossip_Text)
 end
 
 
