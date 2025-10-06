@@ -119,8 +119,14 @@ tabItem=nil
 
 
 EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
-    WoWTools_ChineseMixin:SetCN(EJ_GetTierInfo(2), '燃烧远征')
-    WoWTools_ChineseMixin:SetCN(EJ_GetTierInfo(EJ_GetNumTiers()), '本赛季')
+    local name= EJ_GetTierInfo(2)
+    if not WoWTools_ChineseMixin:CN(name) then
+        WoWTools_ChineseMixin:SetCN(name, '燃烧远征')
+    end
+    name= EJ_GetTierInfo(EJ_GetNumTiers())
+    if not WoWTools_ChineseMixin:CN(name) then
+        WoWTools_ChineseMixin:SetCN(name, '本赛季')
+    end
 
     do
         for en, cn in pairs(tab_G) do
@@ -137,7 +143,3 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
 
     EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
 end)
-
-
-
-

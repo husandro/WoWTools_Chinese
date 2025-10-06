@@ -269,8 +269,9 @@ end
 
 
 
-
-
+hooksecurefunc(QuestPinMixin, 'OnMouseEnter', function(self)
+    WoWTools_ChineseMixin:Set_Quest(GameTooltip, self:GetQuestID(), true)
+end)
 
 hooksecurefunc(GossipSharedQuestButtonMixin, 'UpdateTitleForQuest', function(self, questID, titleText, isIgnored, isTrivial)
     local cn= WoWTools_ChineseMixin:GetQuestName(questID)

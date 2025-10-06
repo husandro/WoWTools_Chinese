@@ -553,6 +553,57 @@ function WoWTools_ChineseMixin:SetFrames(frame, setFont, isHook, affer)
 end
 
 
+
+function WoWTools_ChineseMixin:Set_Quest(tooltip, questID, isShow)
+    local data= questID and self:GetQuestData(questID)
+    if not data then
+        return
+    end
+    tooltip= tooltip or GameTooltip
+    if data.T then
+        local name= tooltip:GetName() or 'Gametooltip'
+        local line= (name=='ShoppingTooltip1' or name=='ShoppingTooltip2') and _G[name.."TextLeft2"] or _G[name.."TextLeft1"]
+        if line then
+            if tooltip.textLeft then
+                tooltip.textLeft:SetText(line:GetText() or '')
+            end
+            line:SetText(data.T)
+        else
+            tooltip:AddLine('|cffff761b'..data.T)
+        end
+    end
+
+    if data.O or data.S then
+        tooltip:AddLine(' ')
+    end
+    if data.O then
+        tooltip:AddLine('|cffffffff'..data.O, nil, nil, nil, true)
+    end
+    if data.S then
+        local questLogIndex= C_QuestLog.GetLogIndexForQuestID(questID)
+
+        for i, name in pairs(data.S) do
+            local text, _, finished = GetQuestLogLeaderBoard(i, questLogIndex)
+            local num, per
+            if text then
+                num= text:match('(%d+/%d+ )')
+                per= text:match('( %(%d+%%)%)')
+            end
+            if num then
+                name= num..name
+            elseif per then
+                name= name..per
+            end
+            local col= questLogIndex and finished and '|cff626262' or '|cff00d8ff'
+
+            tooltip:AddLine(' - '..col..name)
+        end
+    end
+    if isShow then
+        tooltip:Show()
+    end
+end
+
 --/dump WoWTools_ChineseMixin:SetFrame(CommunitiesFrame.MemberList.ColumnDisplay)
 --/dump CommunitiesFrame.MemberList.ColumnDisplay:GetChildren()
 

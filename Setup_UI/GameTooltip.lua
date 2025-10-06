@@ -96,56 +96,6 @@ end
 
 
 
-local function Set_Quest(tooltip, questID, isShow)
-    local data= WoWTools_ChineseMixin:GetQuestData(questID)
-    if not data then
-        return
-    end
-    if data.T then
-        local name= tooltip:GetName() or 'Gametooltip'
-        local line= (name=='ShoppingTooltip1' or name=='ShoppingTooltip2') and _G[name.."TextLeft2"] or _G[name.."TextLeft1"]
-        if line then
-            if tooltip.textLeft then
-                tooltip.textLeft:SetText(line:GetText() or '')
-            end
-            line:SetText(data.T)
-        else
-            tooltip:AddLine('|cffff761b'..data.T)
-        end
-    end
-
-    if data.O or data.S then
-        tooltip:AddLine(' ')
-    end
-    if data.O then
-        tooltip:AddLine('|cffffffff'..data.O, nil, nil, nil, true)
-    end
-    if data.S then
-        local questLogIndex= C_QuestLog.GetLogIndexForQuestID(questID)
-
-        for i, name in pairs(data.S) do
-            local text, _, finished = GetQuestLogLeaderBoard(i, questLogIndex)
-            local num, per
-            if text then
-                num= text:match('(%d+/%d+ )')
-                per= text:match('( %(%d+%%)%)')
-            end
-            if num then
-                name= num..name
-            elseif per then
-                name= name..per
-            end
-            local col= questLogIndex and finished and '|cff626262' or '|cff00d8ff'
-
-            tooltip:AddLine(' - '..col..name)
-        end
-    end
-    if isShow then
-        tooltip:Show()
-    end
-end
-
-
 
 
 
@@ -327,7 +277,7 @@ TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes, function(
     --elseif data.type==Enum.TooltipDataType.MinimapMouseover then--21
     --elseif data.type==Enum.TooltipDataType.Flyout then--22
     elseif data.type==Enum.TooltipDataType.Quest then--23
-        Set_Quest(tooltip, data.id)
+        WoWTools_ChineseMixin:Set_Quest(tooltip, data.id)
     --elseif data.type==Enum.TooltipDataType.QuestPartyProgress then--24
 
     elseif data.type== Enum.TooltipDataType.Macro then--25
@@ -344,11 +294,11 @@ TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes, function(
 end)
 
 hooksecurefunc("QuestMapLogTitleButton_OnEnter", function(self)
-    Set_Quest(GameTooltip, self.questID, true)
+    WoWTools_ChineseMixin:Set_Quest(GameTooltip, self.questID, true)
 end)
 hooksecurefunc('GameTooltip_AddQuest', function(self, questIDArg)
     local questID = self.questID or questIDArg
-    Set_Quest(GameTooltip, questID, true)
+    WoWTools_ChineseMixin:Set_Quest(GameTooltip, questID, true)
 end)
 
 
