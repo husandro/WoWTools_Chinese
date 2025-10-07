@@ -2,6 +2,7 @@
 
 
 --插件
+
 AddonListTitleText:SetText('插件列表')
 
 
@@ -31,3 +32,18 @@ AddonListTitleText:SetText('插件列表')
     C_Timer.After(2, function()
         WoWTools_ChineseMixin:SetRegions(AddonListForceLoad)
     end)
+
+    WoWTools_ChineseMixin:HookLabel(AddonList.Dropdown.Text)
+
+--替换原生
+function AddonList:UpdatePerformance()
+    local enabled = C_AddOnProfiler.IsEnabled()
+	local showPerfUI = enabled and not InGlue()
+	if not showPerfUI then
+		return
+	end
+    local perfUI = self.Performance
+	self:UpdateOverallMetric(perfUI.Current, '当前CPU：%s', Enum.AddOnProfilerMetric.RecentAverageTime)
+	self:UpdateOverallMetric(perfUI.Average, '平均CPU：%s', Enum.AddOnProfilerMetric.SessionAverageTime)
+	self:UpdateOverallMetric(perfUI.Peak, '峰值CPU：%s', Enum.AddOnProfilerMetric.PeakTime)
+end
