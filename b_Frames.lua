@@ -186,6 +186,8 @@ end)
 
 function WoWTools_ChineseMixin.Frames:CatalogShopFrame()--Blizzard_CatalogShop
     self:SetLabel(CatalogShopFrameTitleText)
+    self:SetLabel(CatalogShopFrame.HeaderFrame.SearchBox.Instructions)
+    
     self:SetButton(CatalogShopFrame.CatalogShopDetailsFrame.ButtonContainer.DetailsButton)
     self:HookLabel(CatalogShopFrame.CatalogShopDetailsFrame.ProductType)
     self:HookLabel(CatalogShopFrame.CatalogShopDetailsFrame.ProductName)
@@ -195,55 +197,9 @@ function WoWTools_ChineseMixin.Frames:CatalogShopFrame()--Blizzard_CatalogShop
     self:HookLabel(CatalogShopFrame.ProductDetailsContainerFrame.DetailsProductContainerFrame.ProductsHeader.ProductName)
     self:HookLabel(CatalogShopFrame.ProductDetailsContainerFrame.DetailsProductContainerFrame.ProductsHeader.ProductDescription)
     self:HookLabel(CatalogShopFrame.ProductDetailsContainerFrame.DetailsProductContainerFrame.ProductsHeader.LegalDisclaimerText)
-
-    --[[if CatalogShopFrame.HeaderFrame.CatalogShopNavBar.NavButtonScrollBox:GetView() then
-    
-        for _, frame in pairs(CatalogShopFrame.HeaderFrame.CatalogShopNavBar.NavButtonScrollBox:GetFrames() or {}) do
-            if frame.sectionInfo and frame.sectionInfo.ID then
-                local info= C_CatalogShop.GetCategoryInfo(frame.sectionInfo.ID)
-                local name = info and info.displayName
-                local cn = name and (name:sub(1, 1):upper() .. name:sub(2):lower())
-                cn = self:CN(cn)
-                if cn then
-                    info= frame.Label
-                    for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR|r') for k2,v2 in pairs(v) do print('|cffffff00',k2,v2, '|r') end print('|cffff0000---',k, '---END|r') else print(k,v) end end print('|cffff00ff——————————|r')
-                    print(cn , frame.Label)
-
-                    --frame.Label:SetText(cn)
-                end
-            end
-        end]]
 end
 
 
-
-
---[[
-function CatalogShopProductContainerFrameMixin:SetupProductHeaderFrame(headerData)
-	-- Set up ProductsHeader
-	if headerData.Name then
-		self.ProductsHeader.ProductName:Show();
-		self.ProductsHeader.ProductName:SetText(headerData.Name);
-	else
-		self.ProductsHeader.ProductName:Hide();
-	end
-	if headerData.Type then
-		self.ProductsHeader.ProductType:Show();
-		self.ProductsHeader.ProductType:SetText(headerData.Type);
-	else
-		self.ProductsHeader.ProductType:Hide();
-	end
-	if headerData.Description then
-		self.ProductsHeader.ProductDescription:Show();
-		self.ProductsHeader.ProductDescription:SetText(headerData.Description);
-	else
-		self.ProductsHeader.ProductDescription:Hide();
-	end
-	self.ProductsHeader.LegalDisclaimerText:SetShown(headerData.showLegal or false);
-
-end
-
-]]
 
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     for name, func in pairs(WoWTools_ChineseMixin.Frames) do
