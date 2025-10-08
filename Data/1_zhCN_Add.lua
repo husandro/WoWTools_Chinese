@@ -9,7 +9,6 @@ local tab_G={
 ['AUCTION_HOUSE_DROPDOWN_REMOVE_FAVORITE']= "从偏好中移除",
 ['AUCTION_HOUSE_DROPDOWN_SET_FAVORITE']= "设置为偏好",
 ['TOOLTIP_BATTLE_PET']= "战斗宠物",
-['COMBAT_LOG']= "战斗记录",
 ['GRAPHICS_HEADER']= "图形",
 ['ADDON_DISABLED']= "禁用",
 ['EMOTE67_CMD1']= "/不"    ,
@@ -19,8 +18,11 @@ local tab_G={
 ['POI_FOCUS'] = "焦点",
 ['PROFESSIONS_SPECIALIZATIONS_TAB_NAME'] = "专精",
 ['GENERAL_LABEL'] = "综合",
+['COMBAT_LOG'] = "战斗记录",
 }
-
+for en, cn in pairs(tab_G) do
+    WoWTools_ChineseMixin:SetCN(_G[en], cn)
+end
 
 
 
@@ -111,7 +113,7 @@ local tabItem= {
 do
     for itemID, text in pairs(tabItem) do
         ItemEventListener:AddCancelableCallback(itemID, function()
-             WoWTools_ChineseMixin:SetCN(C_Item.GetItemNameByID(itemID), text)
+            WoWTools_ChineseMixin:SetCN(C_Item.GetItemNameByID(itemID), text)
         end)
     end
 end
