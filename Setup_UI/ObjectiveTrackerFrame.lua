@@ -56,7 +56,7 @@ hooksecurefunc(QuestObjectiveTracker, 'LayoutContents', function(...) set_object
 hooksecurefunc(QuestObjectiveTracker, 'AddBlock', function(...) set_quest(...) end)
 
 --[[hooksecurefunc(QuestObjectiveLineMixin, 'UpdateModule', function(...)
-    print(...)
+
 end)]]
 
 hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, questCompleted)--, questSequenced, isExistingBlock, useFullHeight)
@@ -101,12 +101,12 @@ end)
 		local questID = quest:GetID();
 	    local isComplete = quest:IsComplete()
        -- local block, isExistingBlock = self:GetBlock(questID);
-    print( block, isExistingBlock, questID  )
+
 
     local obj= isComplete and WoWTools_ChineseMixin:GetQuestObjectText(questID)
     if obj then
         block:ForEachUsedLine(function(line, objectiveKey)
-            print(objectiveKey)
+
             line.Text:SetText(obj)
             line:SetHeight(line.Text:GetStringHeight())
         end)

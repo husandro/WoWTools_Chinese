@@ -74,9 +74,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_ProfessionsBook()
         end
     end
 
-    hooksecurefunc(ProfessionSpellButtonMixin, 'UpdateButton', function(btn, index)
-        print('a')
-    end)
+    --hooksecurefunc(ProfessionSpellButtonMixin, 'UpdateButton', function(btn, index)
+      
 
     hooksecurefunc('FormatProfession', function(frame)
         self:SetLabel(frame.rank)
