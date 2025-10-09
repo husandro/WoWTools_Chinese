@@ -938,11 +938,11 @@ local CampaignLine= {
 --CampaignUtil
 
 
-local function GetSingleChapterText(index, chapterID, lineSpacing)
+local function GetSingleChapterText(campaignID, index, chapterID, lineSpacing)
 	local chapter = CampaignChapterCache:Get(chapterID);
 	local name= WoWTools_ChineseMixin:CN(chapter.name)
-	if not name then
-		local questLineID= CampaignLine[campaign..'x'..index]
+	if not name and campaignID then
+		local questLineID= CampaignLine[campaignID..'x'..index]
 		name= WoWTools_ChineseMixin:GetCampaignChapterLine(questLineID)
 	end
 	name= name or chapter.name
@@ -958,7 +958,7 @@ end
 local function BuildAllChaptersText(campaign, lineSpacing)
 	local chapterText = {}
 	for index, chapterID in ipairs(campaign.chapterIDs) do
-		table.insert(chapterText, GetSingleChapterText(index, chapterID, lineSpacing))
+		table.insert(chapterText, GetSingleChapterText(campaign.campaignID, index, chapterID, lineSpacing))
 	end
 
 	return table.concat(chapterText, "|n");
