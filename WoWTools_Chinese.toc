@@ -36,6 +36,7 @@ Data\Faction_Data_Friend.lua
 ##货币
 Data\Currency_Data.lua
 ##战役，章节
+Get_Data\CampaignChapterLine.lua
 Data\CampaignChapter.lua
 ##专业
 Data\Professions_Data_SkillLine.lua
@@ -69,8 +70,7 @@ Get_Data\TitleName.lua
 ##场景
 Data\ScenarioStepData.lua
 Get_Data\ScenarioName.lua
-##任务目标
-##Get_Data\QuestObjectIndex.lua
+
 ##专业
 Get_Data\TradeSkillCategoryName.lua
 Get_Data\RecipeSource.lua
