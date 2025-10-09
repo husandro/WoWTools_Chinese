@@ -4,7 +4,7 @@
 ## Version: @project-version@
 ## X-Curse-Project-ID: 1361141
 ## X-Wago-ID: QN5mWXNB
-## X-Category: Data Export
+## X-Category: Plugins
 ## Notes: |A:Icon-WoW:0:0|aWoW |cff28a3ff中文化|r|n|A:WoWShare-TwitterLogo:0:0|a|cff00ccffhttps://www.curseforge.com/wow/addons/wowtools_chinese|r
 ## DefaultState: Enabled
 ## IconTexture: Interface\AddOns\WoWTools_Chinese\Source\WoWtools.tga
