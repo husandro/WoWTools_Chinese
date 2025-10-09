@@ -201,15 +201,4 @@ end
 
 
 
-EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
-    for name, func in pairs(WoWTools_ChineseMixin.Frames) do
-        do
-            if _G[name] then
-                func(WoWTools_ChineseMixin)
-            end
-        end
-        WoWTools_ChineseMixin.Frames[name]= nil
-    end
-    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
-end)
 

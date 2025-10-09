@@ -8,7 +8,34 @@ WoWTools_ChineseMixin={
     Events={},
     Frames={},
 }
-
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(_, arg1)
+    if arg1=='WoWTools_Chinese' then
+        for name in pairs(WoWTools_ChineseMixin.Events) do
+            if C_AddOns.IsAddOnLoaded(name) then
+                 do
+                    WoWTools_ChineseMixin.Events[name](WoWTools_ChineseMixin)
+                end
+                WoWTools_ChineseMixin.Events[name]= nil
+            end
+        end
+    elseif WoWTools_ChineseMixin.Events[arg1] then
+        do
+            WoWTools_ChineseMixin.Events[arg1](WoWTools_ChineseMixin)
+        end
+        WoWTools_ChineseMixin.Events[arg1]= nil
+    end
+end)
+EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
+    for name, func in pairs(WoWTools_ChineseMixin.Frames) do
+        do
+            if _G[name] then
+                func(WoWTools_ChineseMixin)
+            end
+        end
+        WoWTools_ChineseMixin.Frames[name]= nil
+    end
+    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
+end)
 
 
 

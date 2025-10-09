@@ -1065,33 +1065,21 @@ function WoWTools_ChineseMixin.Events:Blizzard_AlliedRacesUI()
 end
 
 
-
-
-
-
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
-    if arg1=='WoWTools_Chinese' then
-        for name in pairs(WoWTools_ChineseMixin.Events) do
-            if C_AddOns.IsAddOnLoaded(name) then
-                 do
-                    WoWTools_ChineseMixin.Events[name](WoWTools_ChineseMixin)
-                end
-                WoWTools_ChineseMixin.Events[name]= nil
-            end
-        end
-        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
-    end
+function WoWTools_ChineseMixin.Events:Blizzard_NewPlayerExperience()
+--print(TutorialWalk_Frame, )
+print(TutorialWalk_Frame)
+hooksecurefunc(TutorialWalk_Frame, '_SetContent', function(...)
+    print(...)
 end)
 
-EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(_, name)
-    if WoWTools_ChineseMixin.Events[name] then
-        do
-            WoWTools_ChineseMixin.Events[name](WoWTools_ChineseMixin)
-        end
-        WoWTools_ChineseMixin.Events[name]= nil
-    end
+hooksecurefunc(TutorialMainFrameMixin, '_SetContent', function(...)
+    print(...)
 end)
+
+end
+
+
+
+
+
 
