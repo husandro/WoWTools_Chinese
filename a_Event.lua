@@ -1049,6 +1049,7 @@ end
 
 
 
+
 --local info = C_AlliedRaces.GetAllRacialAbilitiesFromID(raceID)
 function WoWTools_ChineseMixin.Events:Blizzard_AlliedRacesUI()
     self:HookLabel(AlliedRacesFrameTitleText)
@@ -1065,21 +1066,23 @@ function WoWTools_ChineseMixin.Events:Blizzard_AlliedRacesUI()
 end
 
 
-function WoWTools_ChineseMixin.Events:Blizzard_NewPlayerExperience()
---print(TutorialWalk_Frame, )
-print(TutorialWalk_Frame)
-hooksecurefunc(TutorialWalk_Frame, '_SetContent', function(...)
-    print(...)
-end)
-
-hooksecurefunc(TutorialMainFrameMixin, '_SetContent', function(...)
-    print(...)
-end)
-
+function WoWTools_ChineseMixin.Events:Blizzard_TutorialManager()
+    hooksecurefunc(TutorialPointerFrame, 'Show', function(f, _, _, anchorFrame)
+        local frame = f:_GetFrame(anchorFrame)
+        if frame then
+            self:HookLabel(frame.Content.Text)
+        end
+    end)
+    self:HookLabel(TutorialMainFrame_Frame.ContainerFrame.Text)--TutorialMainFrameMixin
+    self:HookLabel(TutorialSingleKey_Frame.ContainerFrame.Text)--TutorialSingleKeyMixin
 end
 
 
+function WoWTools_ChineseMixin.Events:Blizzard_NewPlayerExperience()
+    self:HookLabel(TutorialKeyboardMouseFrame_Frame.Text)--TutorialKeyboardMouseFrameMixin
+    self:HookLabel(KeyboardMouseConfirmButtonText)
 
-
+    self:HookLabel(TutorialWalk_Frame.ContainerFrame.Text)--TutorialWalkMixin
+end
 
 

@@ -143,7 +143,6 @@ Setup_UI\CharacterFrame_Faction.lua
 Setup_UI\Bank_AuctionHouse.lua
 Setup_UI\ChatConfig.lua
 Setup_UI\Quest.lua
-Setup_UI\Quest_GossipFrame.lua
 Setup_UI\Quest_Map.lua
 Setup_UI\Quest_Map_ZoneText.lua
 Setup_UI\Quest_WorldMapFrame.lua

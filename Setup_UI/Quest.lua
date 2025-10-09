@@ -431,3 +431,16 @@ hooksecurefunc('QuestInfo_ShowTitle', function()
  end)
 
 
+
+
+
+
+
+
+
+
+
+
+ 
+--任务对话框
+GossipFrame.GreetingPanel.GoodbyeButton:SetText('再见')
