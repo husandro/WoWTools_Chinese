@@ -193,6 +193,7 @@ function WoWTools_ChineseMixin.Frames:CatalogShopFrame()--Blizzard_CatalogShop
     self:HookLabel(CatalogShopFrame.CatalogShopDetailsFrame.ProductName)
     self:HookLabel(CatalogShopFrame.CatalogShopDetailsFrame.ProductDescription)
     self:HookLabel(CatalogShopFrame.CatalogShopDetailsFrame.LegalDisclaimerText)
+    self:SetButton(CatalogShopFrame.ProductDetailsContainerFrame.BackButton)
 
     self:HookLabel(CatalogShopFrame.ProductDetailsContainerFrame.DetailsProductContainerFrame.ProductsHeader.ProductName)
     self:HookLabel(CatalogShopFrame.ProductDetailsContainerFrame.DetailsProductContainerFrame.ProductsHeader.ProductDescription)
