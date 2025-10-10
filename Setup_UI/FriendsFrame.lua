@@ -139,13 +139,13 @@ function WoWTools_ChineseMixin.Events:Blizzard_FriendsFrame()
 
 
     RaidFrameAllAssistCheckButtonText:SetText('所有|TInterface\\GroupFrame\\UI-Group-AssistantIcon:12:12:0:1|t')
-    --[[RaidFrameAllAssistCheckButton:HookScript('OnEnter', function(frame)
+    RaidFrameAllAssistCheckButton:HookScript('OnEnter', function(frame)
         --GameTooltip:AddLine('钩选此项可使所有团队成员都获得团队助理权限', nil, nil, nil, true)
         if ( not frame:IsEnabled() ) then
             GameTooltip:AddLine('|cnRED_FONT_COLOR:只有团队领袖才能更改此项设置。', nil, nil, nil, true)
             GameTooltip:Show()
         end
-    end)]]
+    end)
 
     WhoFrameColumnHeader1:SetText('名称')
     WhoFrameColumnHeader4:SetText('职业')
