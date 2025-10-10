@@ -187,7 +187,7 @@ end)
 function WoWTools_ChineseMixin.Frames:CatalogShopFrame()--Blizzard_CatalogShop
     self:SetLabel(CatalogShopFrameTitleText)
     self:SetLabel(CatalogShopFrame.HeaderFrame.SearchBox.Instructions)
-    
+
     self:SetButton(CatalogShopFrame.CatalogShopDetailsFrame.ButtonContainer.DetailsButton)
     self:HookLabel(CatalogShopFrame.CatalogShopDetailsFrame.ProductType)
     self:HookLabel(CatalogShopFrame.CatalogShopDetailsFrame.ProductName)
@@ -196,7 +196,6 @@ function WoWTools_ChineseMixin.Frames:CatalogShopFrame()--Blizzard_CatalogShop
 
     self:HookLabel(CatalogShopFrame.ProductDetailsContainerFrame.DetailsProductContainerFrame.ProductsHeader.ProductName)
     self:HookLabel(CatalogShopFrame.ProductDetailsContainerFrame.DetailsProductContainerFrame.ProductsHeader.ProductDescription)
-    self:HookLabel(CatalogShopFrame.ProductDetailsContainerFrame.DetailsProductContainerFrame.ProductsHeader.LegalDisclaimerText)
 end
 
 
