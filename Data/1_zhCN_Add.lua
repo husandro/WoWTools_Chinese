@@ -20,6 +20,7 @@ local tab_G={
 ['GENERAL_LABEL'] = "综合",
 ['COMBAT_LOG'] = "战斗记录",
 ['CATALOG_SHOP_BACK'] = "返回",
+['IGNORE'] = "屏蔽",
 }
 for en, cn in pairs(tab_G) do
     WoWTools_ChineseMixin:SetCN(_G[en], cn)
