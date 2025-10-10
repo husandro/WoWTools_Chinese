@@ -2,11 +2,10 @@
 --好友列表
 function WoWTools_ChineseMixin.Events:Blizzard_FriendsFrame()
 
-    --屏蔽列表
+    --屏蔽列表 FriendsIgnoreListMixin
     self:SetButton(FriendsFrame.IgnoreListWindow.UnignorePlayerButton)
-    hooksecurefunc(FriendsFrame.IgnoreListWindow, 'InitializeFrameVisuals', function()--FriendsIgnoreListMixin
-        print('FriendsIgnoreListMixin:InitializeFrameVisuals()')
-    end)
+    FriendsFrame.IgnoreListWindow:SetTitle('屏蔽列表')
+
 
     --好友
     hooksecurefunc('FriendsFrame_Update', function()
@@ -80,146 +79,13 @@ function WoWTools_ChineseMixin.Events:Blizzard_FriendsFrame()
         end
 
 
-        if FriendsTabHeaderTab1 then--11.2.5没有了
-            FriendsTabHeaderTab1:SetText('好友')
-            FriendsTabHeaderTab2:SetText('屏蔽')
-                FriendsFrameIgnorePlayerButton:SetText('添加')
-                FriendsFrameUnsquelchButton:SetText('移除')
-            FriendsTabHeaderTab3:SetText('招募战友')
-        else
             for _, btn in pairs(FriendsTabHeader.TabSystem.tabs) do--TabSystemMixin
                 self:SetButton(btn)
             end
-        end
 
-            if RecruitAFriendFrame then
-                local function set_UpdateRAFInfo(frame, rafInfo)
-                    if frame.rafEnabled and rafInfo and #rafInfo.versions > 0 then
-                        local latestRAFVersionInfo = frame:GetLatestRAFVersionInfo()
-                        if (latestRAFVersionInfo.numRecruits == 0) and (latestRAFVersionInfo.monthCount.lifetimeMonths == 0) then
-                            frame.RewardClaiming.MonthCount:SetText('招募战友即可开始！')
-                        else
-                            frame.RewardClaiming.MonthCount:SetFormattedText('招募战友已奖励%d个月', latestRAFVersionInfo.monthCount.lifetimeMonths)
-                        end
-                    end
-                end
-                hooksecurefunc(RecruitAFriendFrame, 'UpdateRAFInfo', set_UpdateRAFInfo)
-                set_UpdateRAFInfo(RecruitAFriendFrame, RecruitAFriendFrame.rafInfo)
+            
 
-                local function set_UpdateNextReward(frame, nextReward)--C_RecruitAFriend.GetRAFInfo()
-                    if nextReward then
-                        if nextReward.canClaim then
-                            frame.RewardClaiming.EarnInfo:SetText('你获得了：')
-                        elseif nextReward.monthCost > 1 then
-                            frame.RewardClaiming.EarnInfo:SetFormattedText('下一个奖励 (|cnGREEN_FONT_COLOR:%d|r/%d个月)：', nextReward.monthCost - nextReward.availableInMonths, nextReward.monthCost)
-                        elseif nextReward.monthsRequired == 0 then
-                            frame.RewardClaiming.EarnInfo:SetText('第一个奖励：')
-                        else
-                            frame.RewardClaiming.EarnInfo:SetText('下一个奖励：')
-                        end
-
-                        if not nextReward.petInfo and not nextReward.appearanceInfo and not nextReward.appearanceSetInfo and not nextReward.illusionInfo then
-                            if nextReward.titleInfo then
-                                local titleName = TitleUtil.GetNameFromTitleMaskID(nextReward.titleInfo.titleMaskID)
-                                if titleName then
-                                    frame:SetNextRewardName(format('新头衔：|cnGREEN_FONT_COLOR:%s|r', titleName), nextReward.repeatableClaimCount, nextReward.rewardType)
-                                end
-                            else
-                                frame:SetNextRewardName('30天免费游戏时间', nextReward.repeatableClaimCount, nextReward.rewardType)
-                            end
-                        end
-                    end
-                end
-                hooksecurefunc(RecruitAFriendFrame, 'UpdateNextReward', set_UpdateNextReward)
-                if RecruitAFriendFrame.rafEnabled and RecruitAFriendFrame.rafInfo and #RecruitAFriendFrame.rafInfo.versions > 0 then
-                    local latestRAFVersionInfo = RecruitAFriendFrame:GetLatestRAFVersionInfo() or {}
-                    set_UpdateNextReward(RecruitAFriendFrame, latestRAFVersionInfo.nextReward)
-                end
-
-                hooksecurefunc(RecruitAFriendFrame.RewardClaiming.ClaimOrViewRewardButton, 'Update', function(frame)
-                    if frame.haveUnclaimedReward then
-                        frame:SetText('获取奖励')
-                    else
-                        frame:SetText('查看所有奖励')
-                    end
-                end)
-                if RecruitAFriendFrame.RewardClaiming.ClaimOrViewRewardButton.haveUnclaimedReward then
-                    RecruitAFriendFrame.RewardClaiming.ClaimOrViewRewardButton:SetText('获取奖励')
-                else
-                    RecruitAFriendFrame.RewardClaiming.ClaimOrViewRewardButton:SetText('查看所有奖励')
-                end
-
-                RecruitAFriendFrame.RecruitList.Header.RecruitedFriends:SetText('已招募的战友')
-                RecruitAFriendFrame.RecruitList.NoRecruitsDesc:SetText('|cffffd200招募战友后，战友每充值一个月的游戏时间，你就能获得一次奖励。|n|n若战友一次充值的游戏时间超过一个月，奖励会逐月进行发放。|n|n一起游戏还能解锁额外奖励！|r|n|n更多信息：|n|HurlIndex:49|h|cff82c5ff访问我们的战友招募网站|r|h')
-                RecruitAFriendFrame.RecruitmentButton:SetText('招募')
-                RecruitAFriendFrame.RewardClaiming.NextRewardInfoButton:HookScript('OnEnter', function()
-                    GameTooltip_AddNormalLine(GameTooltip, '招募好友后，当好友开始订阅时，你就能开始获得奖励。')
-                    GameTooltip:Show()
-                end)
-
-
-
-                RecruitAFriendRewardsFrame.Title:SetText('战友招募奖励')
-                self:SetLabel(RecruitAFriendRewardsFrame.Description)
-                hooksecurefunc(RecruitAFriendRewardsFrame, 'UpdateDescription', function(frame, selectedRAFVersionInfo)
-                    frame.Description:SetText((selectedRAFVersionInfo.rafVersion == frame:GetRecruitAFriendFrame():GetLatestRAFVersion()) and '每名拥有可用的游戏时间的被招募者|n每30天可以为你提供一份月度奖励。' or '不能再为旧版招募活动再招募新的战友，但是旧版现有的被招募的战友还会继续提供战友招募奖励。')
-                end)
-
-
-                RecruitAFriendRewardsFrame.VersionInfoButton:HookScript('OnEnter', function(frame)
-                    local recruitAFriendFrame = frame:GetRecruitAFriendFrame()
-                    local selectedVersionInfo = recruitAFriendFrame:GetSelectedRAFVersionInfo()
-                    local helpText = recruitAFriendFrame:IsLegacyRAFVersion(selectedVersionInfo.rafVersion) and '当前激活的旧版招募战友：|cnHIGHLIGHT_FONT_COLOR:%d|r|n尚未领取的奖励：|cnHIGHLIGHT_FONT_COLOR:%d|r' or '当前激活的招募战友：|cnHIGHLIGHT_FONT_COLOR:%d|r|n尚未领取的奖励：|cnHIGHLIGHT_FONT_COLOR:%d|r'
-                    GameTooltip_AddNormalLine(GameTooltip, ' ')
-                    GameTooltip_AddNormalLine(GameTooltip, helpText:format(selectedVersionInfo.numRecruits, selectedVersionInfo.numAffordableRewards))
-                    GameTooltip:Show()
-                end)
-
-                RecruitAFriendRecruitmentFrame.Title:SetText('招募')
-
-                hooksecurefunc(RecruitAFriendRecruitmentFrame, 'UpdateRecruitmentInfo', function(frame, recruitmentInfo, recruitsAreMaxed)
-                    local maxRecruits = 0
-                    local maxRecruitLinkUses = 0
-                    local daysInCycle = 0
-                    local rafSystemInfo = C_RecruitAFriend.GetRAFSystemInfo()
-                    if rafSystemInfo then
-                        maxRecruits = rafSystemInfo.maxRecruits
-                        maxRecruitLinkUses = rafSystemInfo.maxRecruitmentUses
-                        daysInCycle = rafSystemInfo.daysInCycle
-                    end
-
-                    if recruitmentInfo then
-                        local expireDate = date("*t", recruitmentInfo.expireTime)
-                        recruitmentInfo.expireDateString = FormatShortDate(expireDate.day, expireDate.month, expireDate.year)
-
-                        frame.Description:SetFormattedText('招募战友，与你一起游玩《魔兽世界》！|n你每%2$d天可以邀请%1$d个战友。', recruitmentInfo.totalUses, daysInCycle)
-
-                        if recruitmentInfo.sourceFaction ~= "" then
-                            local region= e.Get_Region(recruitmentInfo.sourceRealm)
-                            local reaml= (region and region.col or '')..(recruitmentInfo.sourceRealm or '')
-                            frame.FactionAndRealm:SetFormattedText('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', self:CN(recruitmentInfo.sourceFaction) or recruitmentInfo.sourceFaction, reaml)
-                        end
-                    else
-                        local PLAYER_FACTION_NAME= UnitFactionGroup('player')=='Alliance' and PLAYER_FACTION_COLOR_ALLIANCE:WrapTextInColorCode('联盟') or (UnitFactionGroup('player')=='Horde' and PLAYER_FACTION_COLOR_HORDE:WrapTextInColorCode('部落')) or '中立'
-                        frame.Description:SetFormattedText('招募战友，与你一起游玩《魔兽世界》！|n你每%2$d天可以邀请%1$d个战友。', maxRecruitLinkUses, daysInCycle)
-                        frame.FactionAndRealm:SetFormattedText('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', PLAYER_FACTION_NAME, GetRealmName())
-                    end
-
-                    if recruitsAreMaxed then
-                        frame.InfoText1:SetFormattedText('"%d/%d 已招募的战友。已达到最大招募数量。', maxRecruits, maxRecruits)
-                    elseif recruitmentInfo then
-                        if recruitmentInfo.remainingUses > 0 then
-                            frame.InfoText:SetFormattedText('此链接会在|cnGREEN_FONT_COLOR:%s|r后过期', recruitmentInfo.expireDateString)
-                        else
-                            frame.InfoText1:SetFormattedText('你在|cnGREEN_FONT_COLOR:%s|r后即可创建一个新链接', recruitmentInfo.expireDateString)
-                        end
-
-
-                        local timesUsed = recruitmentInfo.totalUses - recruitmentInfo.remainingUses
-                        frame.InfoText2:SetFormattedText('%d/%d 名朋友已经使用了这个链接。', timesUsed, recruitmentInfo.totalUses)
-                    end
-                end)
-            end
+ 
 
             hooksecurefunc(RecruitAFriendRecruitmentFrame.GenerateOrCopyLinkButton, 'Update', function(frame, recruitmentInfo)
                 recruitmentInfo= recruitmentInfo or frame.recruitmentInfo
@@ -383,5 +249,180 @@ function WoWTools_ChineseMixin.Events:Blizzard_FriendsFrame()
         self:SetRegions(FriendsFrameBattlenetFrame.BroadcastFrame)--, '通告', 1)
         self:SetRegions(BattleTagInviteFrame)--, '发送一个|cff82c5ff战网昵称|r请求给：', 1)
     end)
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--好友召募
+function WoWTools_ChineseMixin.Events:Blizzard_RecruitAFriend()
+    local function set_UpdateRAFInfo(frame, rafInfo)
+        if frame.rafEnabled and rafInfo and #rafInfo.versions > 0 then
+            local latestRAFVersionInfo = frame:GetLatestRAFVersionInfo()
+            if (latestRAFVersionInfo.numRecruits == 0) and (latestRAFVersionInfo.monthCount.lifetimeMonths == 0) then
+                frame.RewardClaiming.MonthCount:SetText('招募战友即可开始！')
+            else
+                frame.RewardClaiming.MonthCount:SetFormattedText('招募战友已奖励%d个月', latestRAFVersionInfo.monthCount.lifetimeMonths)
+            end
+        end
+    end
+    hooksecurefunc(RecruitAFriendFrame, 'UpdateRAFInfo', set_UpdateRAFInfo)
+    set_UpdateRAFInfo(RecruitAFriendFrame, RecruitAFriendFrame.rafInfo)
+
+    local function set_UpdateNextReward(frame, nextReward)--C_RecruitAFriend.GetRAFInfo()
+        if not nextReward then
+            return
+        end
+        if nextReward.canClaim then
+            frame.RewardClaiming.EarnInfo:SetText('你获得了：')
+        elseif nextReward.monthCost > 1 then
+            frame.RewardClaiming.EarnInfo:SetFormattedText('下一个奖励 (|cnGREEN_FONT_COLOR:%d|r/%d个月)：', nextReward.monthCost - nextReward.availableInMonths, nextReward.monthCost)
+        elseif nextReward.monthsRequired == 0 then
+            frame.RewardClaiming.EarnInfo:SetText('第一个奖励：')
+        else
+            frame.RewardClaiming.EarnInfo:SetText('下一个奖励：')
+        end
+
+        if not nextReward.petInfo and not nextReward.appearanceInfo and not nextReward.appearanceSetInfo and not nextReward.illusionInfo then
+            if nextReward.titleInfo then
+                local titleName = TitleUtil.GetNameFromTitleMaskID(nextReward.titleInfo.titleMaskID)
+                if titleName then
+                    frame:SetNextRewardName(format('新头衔：|cnGREEN_FONT_COLOR:%s|r', titleName), nextReward.repeatableClaimCount, nextReward.rewardType)
+                end
+            else
+                frame:SetNextRewardName('30天免费游戏时间', nextReward.repeatableClaimCount, nextReward.rewardType)
+            end
+        end
+        local name= WoWTools_ChineseMixin:GetItemName(nextReward.itemID)
+        if name then
+            frame.RewardClaiming.NextRewardName.Text:SetText(name)
+        else
+            self:SetLabel(frame.RewardClaiming.NextRewardName.Text)
+        end
+    end
+    hooksecurefunc(RecruitAFriendFrame, 'UpdateNextReward', function(...) set_UpdateNextReward(...) end)
+    if RecruitAFriendFrame.rafEnabled and RecruitAFriendFrame.rafInfo and #RecruitAFriendFrame.rafInfo.versions > 0 then
+        local latestRAFVersionInfo = RecruitAFriendFrame:GetLatestRAFVersionInfo() or {}
+        set_UpdateNextReward(RecruitAFriendFrame, latestRAFVersionInfo.nextReward)
+    end
+
+    hooksecurefunc(RecruitAFriendFrame.RewardClaiming.ClaimOrViewRewardButton, 'Update', function(frame)
+        if frame.haveUnclaimedReward then
+            frame:SetText('获取奖励')
+        else
+            frame:SetText('查看所有奖励')
+        end
+    end)
+    if RecruitAFriendFrame.RewardClaiming.ClaimOrViewRewardButton.haveUnclaimedReward then
+        RecruitAFriendFrame.RewardClaiming.ClaimOrViewRewardButton:SetText('获取奖励')
+    else
+        RecruitAFriendFrame.RewardClaiming.ClaimOrViewRewardButton:SetText('查看所有奖励')
+    end
+
+    RecruitAFriendFrame.RecruitList.Header.RecruitedFriends:SetText('已招募的战友')
+    RecruitAFriendFrame.RecruitList.NoRecruitsDesc:SetText('|cffffd200招募战友后，战友每充值一个月的游戏时间，你就能获得一次奖励。|n|n若战友一次充值的游戏时间超过一个月，奖励会逐月进行发放。|n|n一起游戏还能解锁额外奖励！|r|n|n更多信息：|n|HurlIndex:49|h|cff82c5ff访问我们的战友招募网站|r|h')
+    RecruitAFriendFrame.RecruitmentButton:SetText('招募')
+    RecruitAFriendFrame.RewardClaiming.NextRewardInfoButton:HookScript('OnEnter', function()
+        GameTooltip_AddNormalLine(GameTooltip, '招募好友后，当好友开始订阅时，你就能开始获得奖励。')
+        GameTooltip:Show()
+    end)
+
+
+
+    RecruitAFriendRewardsFrame.Title:SetText('战友招募奖励')
+    self:SetLabel(RecruitAFriendRewardsFrame.Description)
+    hooksecurefunc(RecruitAFriendRewardsFrame, 'UpdateDescription', function(frame, selectedRAFVersionInfo)
+        frame.Description:SetText((selectedRAFVersionInfo.rafVersion == frame:GetRecruitAFriendFrame():GetLatestRAFVersion()) and '每名拥有可用的游戏时间的被招募者|n每30天可以为你提供一份月度奖励。' or '不能再为旧版招募活动再招募新的战友，但是旧版现有的被招募的战友还会继续提供战友招募奖励。')
+    end)
+
+
+    RecruitAFriendRewardsFrame.VersionInfoButton:HookScript('OnEnter', function(frame)
+        local recruitAFriendFrame = frame:GetRecruitAFriendFrame()
+        local selectedVersionInfo = recruitAFriendFrame:GetSelectedRAFVersionInfo()
+        local helpText = recruitAFriendFrame:IsLegacyRAFVersion(selectedVersionInfo.rafVersion) and '当前激活的旧版招募战友：|cnHIGHLIGHT_FONT_COLOR:%d|r|n尚未领取的奖励：|cnHIGHLIGHT_FONT_COLOR:%d|r' or '当前激活的招募战友：|cnHIGHLIGHT_FONT_COLOR:%d|r|n尚未领取的奖励：|cnHIGHLIGHT_FONT_COLOR:%d|r'
+        GameTooltip_AddNormalLine(GameTooltip, ' ')
+        GameTooltip_AddNormalLine(GameTooltip, helpText:format(selectedVersionInfo.numRecruits, selectedVersionInfo.numAffordableRewards))
+        GameTooltip:Show()
+    end)
+
+    RecruitAFriendRecruitmentFrame.Title:SetText('招募')
+
+    hooksecurefunc(RecruitAFriendRecruitmentFrame, 'UpdateRecruitmentInfo', function(frame, recruitmentInfo, recruitsAreMaxed)
+        local maxRecruits = 0
+        local maxRecruitLinkUses = 0
+        local daysInCycle = 0
+        local rafSystemInfo = C_RecruitAFriend.GetRAFSystemInfo()
+        if rafSystemInfo then
+            maxRecruits = rafSystemInfo.maxRecruits
+            maxRecruitLinkUses = rafSystemInfo.maxRecruitmentUses
+            daysInCycle = rafSystemInfo.daysInCycle
+        end
+
+        if recruitmentInfo then
+            local expireDate = date("*t", recruitmentInfo.expireTime)
+            recruitmentInfo.expireDateString = FormatShortDate(expireDate.day, expireDate.month, expireDate.year)
+
+            frame.Description:SetFormattedText('招募战友，与你一起游玩《魔兽世界》！|n你每%2$d天可以邀请%1$d个战友。', recruitmentInfo.totalUses, daysInCycle)
+
+            if recruitmentInfo.sourceFaction ~= "" then
+                local region= e.Get_Region(recruitmentInfo.sourceRealm)
+                local reaml= (region and region.col or '')..(recruitmentInfo.sourceRealm or '')
+                frame.FactionAndRealm:SetFormattedText('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', self:CN(recruitmentInfo.sourceFaction) or recruitmentInfo.sourceFaction, reaml)
+            end
+        else
+            local PLAYER_FACTION_NAME= UnitFactionGroup('player')=='Alliance' and PLAYER_FACTION_COLOR_ALLIANCE:WrapTextInColorCode('联盟') or (UnitFactionGroup('player')=='Horde' and PLAYER_FACTION_COLOR_HORDE:WrapTextInColorCode('部落')) or '中立'
+            frame.Description:SetFormattedText('招募战友，与你一起游玩《魔兽世界》！|n你每%2$d天可以邀请%1$d个战友。', maxRecruitLinkUses, daysInCycle)
+            frame.FactionAndRealm:SetFormattedText('我们会鼓励你的战友在%2$s服务器创建一个%1$s角色，从而加入你的冒险。', PLAYER_FACTION_NAME, GetRealmName())
+        end
+
+        if recruitsAreMaxed then
+            frame.InfoText1:SetFormattedText('"%d/%d 已招募的战友。已达到最大招募数量。', maxRecruits, maxRecruits)
+        elseif recruitmentInfo then
+            if recruitmentInfo.remainingUses > 0 then
+                frame.InfoText:SetFormattedText('此链接会在|cnGREEN_FONT_COLOR:%s|r后过期', recruitmentInfo.expireDateString)
+            else
+                frame.InfoText1:SetFormattedText('你在|cnGREEN_FONT_COLOR:%s|r后即可创建一个新链接', recruitmentInfo.expireDateString)
+            end
+
+
+            local timesUsed = recruitmentInfo.totalUses - recruitmentInfo.remainingUses
+            frame.InfoText2:SetFormattedText('%d/%d 名朋友已经使用了这个链接。', timesUsed, recruitmentInfo.totalUses)
+        end
+    end)
+
 
 end
