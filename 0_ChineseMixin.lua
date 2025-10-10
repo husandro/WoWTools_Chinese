@@ -333,7 +333,7 @@ end
 
 --( ) . % + - * ? [ ^ $
 function WoWTools_ChineseMixin:SetText(text)
-    if type(text)~='string' or text=='' or text=='%s' or self:IsCN(text) then
+    if type(text)~='string' or not text:find('[%a]') or self:IsCN(text) then
         return
     end
 
