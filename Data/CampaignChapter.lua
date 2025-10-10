@@ -134,32 +134,26 @@ local tab={
 
 
 --CampaignUtil
-
-
-local function GetSingleChapterText(campaignID, index, chapterID, lineSpacing)
+local function GetSingleChapterText(chapterID, lineSpacing)
 	local chapter = CampaignChapterCache:Get(chapterID)
 	if not chapter then
 		return
 	end
-	
-	local name= WoWTools_ChineseMixin:CN(chapter.name)
-	if not name and campaignID then
-		name= WoWTools_ChineseMixin:GetCampaignChapterLine(campaignID, index)
-	end
-	name= name or chapter.name
+
+	local name= WoWTools_ChineseMixin:CN(chapter.name) or chapter.name
 	if chapter:IsComplete() then
 		return CreateTextureMarkup("Interface/Scenarios/ScenarioIcon-Check", 16, 16, 16, 16, 0, 1, 0, 1, 0, -lineSpacing)
                 .. " " .. GREEN_FONT_COLOR:WrapTextInColorCode(name)
 	else
-		local color = chapter:IsInProgress() and HIGHLIGHT_FONT_COLOR or LIGHTGRAY_FONT_COLOR;
+		local color = chapter:IsInProgress() and HIGHLIGHT_FONT_COLOR or LIGHTGRAY_FONT_COLOR
 		return color:WrapTextInColorCode(name)
 	end
 end
 
 local function BuildAllChaptersText(campaign, lineSpacing)
 	local chapterText = {}
-	for index, chapterID in ipairs(campaign.chapterIDs) do
-		table.insert(chapterText, GetSingleChapterText(campaign.campaignID, index, chapterID, lineSpacing))
+	for _, chapterID in ipairs(campaign.chapterIDs) do
+		table.insert(chapterText, GetSingleChapterText(chapterID, lineSpacing))
 	end
 
 	return table.concat(chapterText, "|n");
@@ -183,7 +177,7 @@ hooksecurefunc(CampaignNextObjectiveMixin, 'Set', function(self, failureReason)
 	--self.mapID = failureReason.mapID;
 	--self.questID = failureReason.questID;
 	if failureReason.text then
-		local t= WoWTools_ChineseMixin:CN(failureReason.xt)
+		local t= WoWTools_ChineseMixin:CN(failureReason.text)
 		if t then
 			self.Text:SetText(t)
 		end

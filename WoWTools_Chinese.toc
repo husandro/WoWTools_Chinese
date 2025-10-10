@@ -36,7 +36,6 @@ Data\Faction_Data_Friend.lua
 ##货币
 Data\Currency_Data.lua
 ##战役，章节
-Get_Data\CampaignChapterLine.lua
 Data\CampaignChapter.lua
 ##专业
 Data\Professions_Data_SkillLine.lua
