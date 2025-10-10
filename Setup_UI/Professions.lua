@@ -58,6 +58,7 @@ end
 
 
 local function Init_CraftingPage(self)
+    self:SetLabel(ProfessionsFrame.CraftingPage.RecipeList.NoResultsText)
     ProfessionsFrame.CraftingPage.ViewGuildCraftersButton:SetText('查看工匠')
 
     hooksecurefunc(ProfessionsFrame.CraftingPage, 'Init', function(frame)--Blizzard_ProfessionsCrafting.lua
