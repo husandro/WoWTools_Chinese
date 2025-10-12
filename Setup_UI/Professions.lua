@@ -556,7 +556,6 @@ local function Init_OrdersPage(self)
     self:SetCNFont(frame.BrowseFrame.PersonalOrdersButton.Text)
 
     ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.SearchBox.Instructions:SetText('搜索')
-    --ProfessionsFrame.OrdersPage.BrowseFrame.RecipeList.FilterButton:SetText('过滤器')
 
     frame.BrowseFrame.OrdersRemainingDisplay:HookScript('OnEnter', function()
         local claimInfo = C_CraftingOrders.GetOrderClaimInfo(ProfessionsFrame.OrdersPage.professionInfo.profession)
@@ -1075,7 +1074,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_Professions()
 
      --目录，列表，标题
      ProfessionsFrame.CraftingPage.RecipeList.SearchBox.Instructions:SetText('搜索')
-     --ProfessionsFrame.CraftingPage.RecipeList.FilterDropdown.Text:SetText('过滤器')
      hooksecurefunc(ProfessionsRecipeListCategoryMixin, 'Init', function(frame, node)
         local info= node:GetData().categoryInfo
         if info then
@@ -1090,6 +1088,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_Professions()
     --列表，目录
     hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'Init', function(frame, node)
         local elementData = node:GetData()
+        if elementData.isDivider then
+            print('isDivider')
+        end
         local recipeInfo = Professions.GetHighestLearnedRecipe(elementData.recipeInfo) or elementData.recipeInfo
         local name= self:GetRecipeName(recipeInfo, nil)
         if name then
