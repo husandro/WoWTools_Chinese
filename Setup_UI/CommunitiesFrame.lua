@@ -487,12 +487,6 @@ self:HookLabel(CommunitiesFrame.GuildBenefitsFrame.FactionFrame.Bar.Label)
 
 
 
-
-
-
     self:HookLabel(CommunitiesFrame.StreamDropdown.Text)
-
-
-
 end
 
