@@ -69,6 +69,8 @@ Get_Data\TitleName.lua
 ##场景
 Data\ScenarioStepData.lua
 Get_Data\ScenarioName.lua
+##AreaPOI
+Get_Data\AreaPOI.lua
 
 ##专业
 Get_Data\TradeSkillCategoryName.lua

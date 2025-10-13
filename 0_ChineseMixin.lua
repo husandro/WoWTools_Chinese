@@ -89,7 +89,7 @@ end
 
 
 function WoWTools_ChineseMixin:GetData(text, tab)
-    local data= self:SetText(text)
+    local data= self:CN(text)
     if data then
         return data
     end
@@ -98,7 +98,13 @@ function WoWTools_ChineseMixin:GetData(text, tab)
         return
     end
 
-    if tab.holydayID then
+    if tab.areaPoiID then
+        if tab.isName then
+            data= self:GetAreaPOIName(tab.areaPoiID)
+        else
+            data= self:GetAreaPOIData(tab.areaPoiID)
+        end
+    elseif tab.holydayID then
         local d= self:GetHolidayData(tab.holydayID)
         if d then
             if tab.isName then
