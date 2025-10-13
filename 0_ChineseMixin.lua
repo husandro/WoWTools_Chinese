@@ -388,6 +388,10 @@ function WoWTools_ChineseMixin:SetText(text)
         return set_match(s, s:match('|T.-|t (.+)') or s:match('|T.-|t(.+)'))
     end)
 
+    text2= text2:gsub('.-'..PLAYER_LIST_DELIMITER, function(s)
+        return set_match(s, s:match('(.-)'..PLAYER_LIST_DELIMITER))
+    end)
+
     if text ~= text2 and text2:find('[\228-\233]') then
         return text2
     end

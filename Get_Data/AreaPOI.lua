@@ -3603,3 +3603,103 @@ function WoWTools_ChineseMixin:GetAreaPOIName(areaPoiID)
         return name, desc
     end
 end
+
+
+
+hooksecurefunc(AreaPOIPinMixin, 'OnMouseEnter', function(self)
+    local poiInfo= self.poiInfo
+    if not poiInfo then
+        return
+    end
+
+    local name, desc= WoWTools_ChineseMixin:GetAreaPOIName(self.poiInfo.areaPoiID)
+    name= name or WoWTools_ChineseMixin:CN(self.poiInfo.name)
+    desc= desc or WoWTools_ChineseMixin:CN(self.poiInfo.description)
+
+    if not name and not desc then
+        return
+    end
+
+    name= name or poiInfo.name or self:GetDisplayName()
+    desc= desc or poiInfo.description or self.description
+
+    local hasDescription = poiInfo.description and poiInfo.description ~= ""
+    local isTimed, hideTimer = C_AreaPoiInfo.IsAreaPOITimed(poiInfo.areaPoiID)
+    local showTimer = poiInfo.secondsLeft or (isTimed and not hideTimer)
+    local hasWidgetSet = poiInfo.tooltipWidgetSet ~= nil
+
+    local hasTooltip = hasDescription or showTimer or hasWidgetSet
+    if hasTooltip then
+        if name or desc then
+            local tooltip= GetAppropriateTooltip()
+            if name then
+                tooltip:AddLine('|cffffffff'..name)
+            end
+            if desc then
+                tooltip:AddLine('|cffffd200'..desc, nil, nil, nil, true)
+            end
+            GameTooltip_CalculatePadding(tooltip)
+        end
+    else
+        self:GetMap():TriggerEvent("SetAreaLabel", MAP_AREA_LABEL_TYPE.POI, name, desc)
+    end
+end)
+
+
+
+
+
+
+--飞行地图，提示 
+function WoWTools_ChineseMixin.Events:Blizzard_FlightMap()
+    self:HookLabel(FlightMapFrameTitleText)
+    hooksecurefunc(FlightMap_FlightPointPinMixin, 'OnMouseEnter', function(f)
+        if GameTooltip:IsShown() then
+            local name= f.taxiNodeData and f.taxiNodeData.name and self:SetText(f.taxiNodeData.name..PLAYER_LIST_DELIMITER)
+            if name then
+                name= name:gsub(PLAYER_LIST_DELIMITER..'$', '')
+                _G['GameTooltipTextLeft1']:SetText(name)
+                GameTooltip_CalculatePadding(GameTooltip)
+            end
+        end
+    end)
+end
+--飞行地图，地图名称 
+hooksecurefunc(ZoneLabelDataProviderMixin, 'EvaluateBestAreaTrigger', function(self)
+    if self.ZoneLabel then
+        WoWTools_ChineseMixin:SetLabel(self.ZoneLabel.Text)
+    end
+end)
+
+
+hooksecurefunc(DungeonEntrancePinMixin, 'OnMouseEnter', function(self)
+    if not self.poiInfo then
+        return
+    end
+
+    local d= WoWTools_ChineseMixin:GetAreaPOIName(self.poiInfo.areaPoiID) or {}
+    local name= WoWTools_ChineseMixin:CN(self.poiInfo.name) or d[1]
+    local desc= WoWTools_ChineseMixin:CN(self.poiInfo.description) or d[2]
+
+    if name or desc then
+        name= name or self.poiInfo.name or self:GetDisplayName()
+        desc= desc or self.poiInfo.description or self.description
+        self:GetMap():TriggerEvent("SetAreaLabel", MAP_AREA_LABEL_TYPE.POI, name , desc)
+    end
+end)
+
+hooksecurefunc(FlightPointPinMixin, 'OnMouseEnter', function(self)
+    if not self.poiInfo or not self.poiInfo.name then
+        return
+    end
+    local name= WoWTools_ChineseMixin:SetText(self.poiInfo.name..PLAYER_LIST_DELIMITER)
+    local desc= WoWTools_ChineseMixin:SetText(self.poiInfo.description)
+    if name or desc then
+        name= name and name:gsub(PLAYER_LIST_DELIMITER..'$', '') or self.poiInfo.name
+        desc= desc or self.poiInfo.description
+        self:GetMap():TriggerEvent("SetAreaLabel", MAP_AREA_LABEL_TYPE.POI, name , desc)
+    end
+end)
+hooksecurefunc(GroupMembersPinMixin , 'OnMouseEnter', function(self)
+    print('InvasionPinMixin')
+end)

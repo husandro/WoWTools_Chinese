@@ -95,12 +95,10 @@ MinimapCluster.ZoneTextButton:HookScript('OnEvent', function(self)
     self.tooltipText = MicroButtonTooltipText('世界地图', "TOGGLEWORLDMAP")
 end)
 
---飞行地图，地图名称
-hooksecurefunc(ZoneLabelDataProviderMixin, 'EvaluateBestAreaTrigger', function(self)
-    WoWTools_ChineseMixin:SetLabel(self.ZoneLabel and self.ZoneLabel.Text)
-end)
 
---QuestMapFrame.DetailsFrame.BackFrame.BackButton:SetText('返回')
+
+
+
 QuestMapFrame.DetailsFrame.AbandonButton:SetText('放弃')
 
 hooksecurefunc('QuestMapFrame_UpdateQuestDetailsButtons', function()
@@ -119,16 +117,6 @@ QuestMapFrame.DetailsFrame.ShareButton:SetText('共享')
 QuestMapFrame.DetailsFrame.DestinationMapButton.tooltipText= '显示最终目的地'
 QuestMapFrame.DetailsFrame.WaypointMapButton.tooltipText= '显示旅行路径'
 
---setRegion(QuestMapFrame.DetailsFrame.RewardsFrame)
-
-
---[[MapQuestInfoRewardsFrame.ItemChooseText:SetText('你可以从这些奖励品中选择一件：')
-MapQuestInfoRewardsFrame.PlayerTitleText:SetText('新头衔： %s')
-MapQuestInfoRewardsFrame.QuestSessionBonusReward:SetText('在小队同步状态下完成此任务有可能获得奖励：')
-
-QuestInfoRewardsFrame.ItemChooseText:SetText('你可以从这些奖励品中选择一件：')
-QuestInfoRewardsFrame.PlayerTitleText:SetText('新头衔： %s')
-QuestInfoRewardsFrame.QuestSessionBonusReward:SetText('在小队同步状态下完成此任务有可能获得奖励：')]]
 WoWTools_ChineseMixin:SetFrame(QuestInfoRewardsFrame)
 
 
@@ -147,7 +135,3 @@ end)
 WoWTools_ChineseMixin:SetCNFont(WorldMapFrameHomeButtonText)
 WorldMapFrameHomeButtonText:SetText('世界')
 
-
-
---WorldMapBountyBoard.lua
---hooksecurefunc(WorldMapBountyBoardMixin, 'SetLockedType', function(self)

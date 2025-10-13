@@ -1084,5 +1084,3 @@ function WoWTools_ChineseMixin.Events:Blizzard_NewPlayerExperience()
 
     self:HookLabel(TutorialWalk_Frame.ContainerFrame.Text)--TutorialWalkMixin
 end
-
-

@@ -77,6 +77,8 @@ Get_Data\TradeSkillCategoryName.lua
 Get_Data\RecipeSource.lua
 Get_Data\SkillLineAbilityName.lua
 Get_Data\ProfessionNodeDesc.lua
+Get_Data\DigSite.lua
+
 ##LFG
 Get_Data\LFGDungeonDesc.lua
 ##节日
