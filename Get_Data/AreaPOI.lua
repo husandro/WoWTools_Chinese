@@ -3700,6 +3700,8 @@ hooksecurefunc(FlightPointPinMixin, 'OnMouseEnter', function(self)
         self:GetMap():TriggerEvent("SetAreaLabel", MAP_AREA_LABEL_TYPE.POI, name , desc)
     end
 end)
-hooksecurefunc(GroupMembersPinMixin , 'OnMouseEnter', function(self)
-    print('InvasionPinMixin')
-end)
+
+
+for _, frame in ipairs(WorldMapFrame.overlayFrames or {}) do
+    WoWTools_ChineseMixin:HookLabel(frame.Text)
+end
