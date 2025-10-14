@@ -142,16 +142,13 @@ Setup_UI\Challenges.lua
 Setup_UI\Holiday.lua
 Setup_UI\CharacterFrame.lua
 Setup_UI\CharacterFrame_Faction.lua
-
 Setup_UI\Bank_AuctionHouse.lua
 Setup_UI\ChatConfig.lua
 Setup_UI\Quest.lua
-Setup_UI\WorldMapFrame.lua
 Setup_UI\Professions.lua
 Setup_UI\Professions_BookFrame.lua
 Setup_UI\Professions_CustomerOrders.lua
 Setup_UI\Professions_ClassTrainerFrame.lua
-
 ##冒险指南
 Setup_UI\EncounterJournal.lua
 Setup_UI\EncounterJournal_PerksProgram.lua

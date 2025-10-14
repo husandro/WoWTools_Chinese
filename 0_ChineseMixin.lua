@@ -597,22 +597,14 @@ function WoWTools_ChineseMixin:Set_Quest(tooltip, questID, isShow)
         return
     end
     tooltip= tooltip or GameTooltip
-    if data.T then
-        local name= tooltip:GetName() or 'Gametooltip'
-        local line= (name=='ShoppingTooltip1' or name=='ShoppingTooltip2') and _G[name.."TextLeft2"] or _G[name.."TextLeft1"]
-        if line then
-            if tooltip.textLeft then
-                tooltip.textLeft:SetText(line:GetText() or '')
-            end
-            line:SetText(data.T)
-        else
-            tooltip:AddLine('|cffff761b'..data.T)
-        end
-    end
-
-    if data.O or data.S then
+    if data then
         tooltip:AddLine(' ')
     end
+
+    if data.T then
+        tooltip:AddLine('|cffff761b'..data.T)
+    end
+
     if data.O then
         tooltip:AddLine('|cffffffff'..data.O, nil, nil, nil, true)
     end

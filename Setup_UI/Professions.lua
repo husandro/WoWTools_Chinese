@@ -1088,9 +1088,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_Professions()
     --列表，目录
     hooksecurefunc(ProfessionsRecipeListRecipeMixin, 'Init', function(frame, node)
         local elementData = node:GetData()
-        if elementData.isDivider then
-            print('isDivider')
-        end
         local recipeInfo = Professions.GetHighestLearnedRecipe(elementData.recipeInfo) or elementData.recipeInfo
         local name= self:GetRecipeName(recipeInfo, nil)
         if name then

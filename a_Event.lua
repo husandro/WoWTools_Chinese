@@ -1107,6 +1107,15 @@ function WoWTools_ChineseMixin.Events:Blizzard_Minimap()
             end
         end
     end)
-    
     WoWTools_ChineseMixin:HookLabel(MinimapZoneText)
+end
+
+
+function WoWTools_ChineseMixin.Events:Blizzard_WorldMap()
+    for _, frame in ipairs(WorldMapFrame.overlayFrames or {}) do
+        self:HookLabel(frame.Text)
+    end
+    self:HookLabel(WorldMapFrameTitleText)
+    self:SetCNFont(WorldMapFrameHomeButtonText)
+    WorldMapFrameHomeButtonText:SetText('世界')
 end

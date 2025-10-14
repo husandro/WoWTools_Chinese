@@ -1,8 +1,139 @@
 
-function WoWTools_ChineseMixin.Frames:QuestFrame()
-	--任务对话框
-	GossipFrame.GreetingPanel.GoodbyeButton:SetText('再见')
 
+function WoWTools_ChineseMixin.Frames:QuestMapFrame()
+    self:SetLabel(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
+
+    self:SetLabel(QuestScrollFrame.SearchBox.Instructions)
+    self:SetLabel(QuestScrollFrame.NoSearchResultsText)
+    self:SetLabel(QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text)
+    QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text:SetTextColor(0,1,0)
+    self:SetLabel(QuestMapFrame.MapLegend.TitleText)
+    self:SetFrame(QuestInfoRewardsFrame)
+    self:SetButton(QuestMapFrame.DetailsFrame.BackButton)--:SetText('返回')
+    self:SetButton(QuestMapFrame.DetailsFrame.AbandonButton)--:SetText('放弃')]]
+    self:SetButton(QuestMapFrame.DetailsFrame.ShareButton)--:SetText('共享'))
+    --QuestMapFrame.DetailsFrame.DestinationMapButton.tooltipText= '显示最终目的地'
+    --QuestMapFrame.DetailsFrame.WaypointMapButton.tooltipText= '显示旅行路径'
+    self:SetLabel(QuestInfoRequiredMoneyText)--:SetText('需要金钱：')
+    self:HookButton(QuestMapFrame.DetailsFrame.TrackButton)
+    self:HookButton(QuestLogPopupDetailFrame.TrackButton)
+
+    self:SetRegions(QuestMapFrame.DetailsFrame.RewardsFrame)--, '奖励')
+    self:SetLabel(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
+
+    local function set_text(line)
+        self:SetLabel(line.ButtonText)
+        if line.Text then
+            local name = self:GetQuestName(line.questID)
+            if name then
+                line.Text:SetText(name)
+            else
+                self:SetLabel(line.Text)
+            end
+        end
+    end
+
+    hooksecurefunc("QuestLogQuests_Update", function()
+        for line in QuestScrollFrame.titleFramePool:EnumerateActive() do
+            set_text(line)
+        end
+
+        for line in QuestScrollFrame.headerFramePool:EnumerateActive() do
+            set_text(line)
+        end
+
+        local Lines= {}
+
+        for line in QuestScrollFrame.objectiveFramePool:EnumerateActive() do
+            Lines[line.questID]= Lines[line.questID] or {}
+            table.insert(Lines[line.questID], line)
+        end
+
+        for questID, lines in pairs(Lines) do
+            local isComplete = C_QuestLog.IsComplete(questID)
+            if not isComplete then
+                local data= self:GetQuestObject(questID)
+                if data then
+                    local questLogIndex= C_QuestLog.GetLogIndexForQuestID(questID)
+                    local numObjectives = GetNumQuestLeaderBoards(questLogIndex) or 0
+                    for i= 1, numObjectives do
+                        local text= GetQuestLogLeaderBoard(i, questLogIndex)
+                        if text  then
+                            local name= data[i]
+                            local line= lines[i]
+                            if name and line then
+                                local num= text:match('(%d+/%d+ )')
+                                local per= text:match('( %(%d+%%)%)')
+                                if num then
+                                    name= num..name
+                                elseif per then
+                                    name= name..per
+                                end
+                                line.Text:SetText(name)
+                                line:SetHeight(line.Text:GetStringHeight())
+                            else
+                                break
+                            end
+                        end
+                    end
+                end
+            else
+                local obj= select(3, self:GetQuestName(questID))
+                local line= lines[1]
+                if obj and line then
+                    line.Text:SetText(obj)
+                    line:SetHeight(line.Text:GetStringHeight())
+                end
+            end
+        end
+
+        for line in QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
+        self:SetLabel(line.Text)
+        self:SetLabel(line.Progress)
+        end
+
+        for line in QuestScrollFrame.covenantCallingsHeaderFramePool:EnumerateActive() do--没测试
+            set_text(line)
+        end
+
+        local mapID = QuestMapFrame:GetParent():GetMapID()
+        local storyAchievementID, storyMapID = C_QuestLog.GetZoneStoryInfo(mapID)
+        if storyAchievementID then
+            local mapInfo = C_Map.GetMapInfo(storyMapID)
+            local map= mapInfo and self:CN(mapInfo.name) or nil
+            if map then
+                QuestScrollFrame.Contents.StoryHeader.Text:SetText(amp)
+            end
+
+            local numCriteria = GetAchievementNumCriteria(storyAchievementID)
+            local completedCriteria = 0
+            for i = 1, numCriteria do
+                local _, _, completed = GetAchievementCriteriaInfo(storyAchievementID, i)
+                if ( completed ) then
+                    completedCriteria = completedCriteria + 1
+                end
+            end
+            QuestScrollFrame.Contents.StoryHeader.Progress:SetFormattedText('|cffffd200故事进度：|r %d/%d章', completedCriteria, numCriteria)
+        end
+    end)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function WoWTools_ChineseMixin.Frames:QuestFrame()
+	self:HookLabel(QuestFrame.AccountCompletedNotice.Text)
 	self:SetLabel(QuestFrameAcceptButton)--:SetText('接受')
 	self:SetLabel(QuestFrameGreetingGoodbyeButton)--:SetText('再见')
 	self:SetLabel(QuestFrameCompleteQuestButton)--:SetText('完成任务')
@@ -20,15 +151,20 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 	self:SetLabel(QuestInfoXPFrame.ReceiveText)
 	self:HookLabel(QuestInfoAccountCompletedNotice)
 
-	QuestFrame:HookScript('OnShow', function()
-		if not UnitExists('questnpc') then
-		return
-		end
-		local name, name2= self:GetUnitName('questnpc', nil, true)
+	hooksecurefunc('QuestFrame_SetPortrait', function()
+		local name= self:GetUnitName('questnpc') or self:CN(UnitName("questnpc"))
 		if name then
-		QuestFrame:SetTitle(name..(name2 and ' - '..name2 or ''))
+			QuestFrame:SetTitle(name)
 		end
 	end)
+	--[[QuestFrame:HookScript('OnShow', function(frame)
+		if UnitExists('questnpc') then
+			local name= self:GetUnitName('questnpc')
+			if name then
+				frame:SetTitle(name)
+			end
+		end
+	end)]]
 
 	--任务，目标 QuestInfo_ShowObjectives()
 	local function set_objectives(questID, obs)
@@ -258,7 +394,7 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 		local questID= self:GetQuestID()
 		local desc= select(2,self:GetQuestName(questID))
 		if desc then
-		QuestInfoDescriptionText:SetText(desc)
+			QuestInfoDescriptionText:SetText(desc)
 		end
 	end)
 
@@ -339,4 +475,61 @@ end
 
 
 
- 
+
+
+
+
+
+function WoWTools_ChineseMixin.Frames:GossipFrame()
+	hooksecurefunc(GossipFrame, 'SetGossipTitle', function(frame, title)
+		local name= WoWTools_ChineseMixin:GetUnitName("npc") or self:CN(title)
+		if name then
+			frame:SetTitle(name)
+		end
+	end)
+	GossipFrame.GreetingPanel.GoodbyeButton:SetText('再见')
+    --自定义，对话，文本
+    if WoWTools_SC_Gossip and not WoWTools_GossipMixin then
+        hooksecurefunc(GossipOptionButtonMixin, 'Setup', function(btn, info)
+            if info and info.gossipOptionID then
+                local text= WoWTools_SC_Gossip[info.gossipOptionID]
+                if text then
+                    btn:SetText(text)
+                end
+            end
+        end)
+    end
+
+	
+    --可接任务,多个任务GossipFrameShared.lua questInfo.questID, questInfo.title, questInfo.isIgnored, questInfo.isTrivial
+    hooksecurefunc(GossipSharedAvailableQuestButtonMixin, 'Setup', function(btn, info)-- questID, titleText, isIgnored, isTrivial)
+		local name= WoWTools_ChineseMixin:GetQuestName(info.questID) or self:SetText(info.title)
+        if name then
+			if info.isIgnored then
+				btn:SetFormattedText('|cff000000%s（忽略）|r', name)
+			elseif info.isTrivial then
+				btn:SetFormattedText('|cff000000%s （低等级）|r', name)
+			else
+				btn:SetFormattedText('|cff000000%s|r', name)
+			end
+			btn:Resize()
+		end
+    end)
+
+    --已激活任务,多个任务GossipFrameShared.lua
+    hooksecurefunc(GossipSharedActiveQuestButtonMixin, 'Setup', function(btn, info)
+        local name= WoWTools_ChineseMixin:GetQuestName(info.questID) or self:SetText(info.title)
+        if name then
+			if info.isIgnored then
+				btn:SetFormattedText('|cff000000%s（忽略）|r', name)
+			elseif info.isTrivial then
+				btn:SetFormattedText('|cff000000%s （低等级）|r', name)
+			else
+				btn:SetFormattedText('|cff000000%s|r', name)
+			end
+			btn:Resize()
+		end
+    end)
+
+end
+
