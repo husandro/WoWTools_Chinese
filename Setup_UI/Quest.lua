@@ -1,25 +1,33 @@
 
 
 function WoWTools_ChineseMixin.Frames:QuestMapFrame()
-    self:SetLabel(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
+    
 
     self:SetLabel(QuestScrollFrame.SearchBox.Instructions)
     self:SetLabel(QuestScrollFrame.NoSearchResultsText)
-    self:SetLabel(QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text)
-    QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text:SetTextColor(0,1,0)
+    
+    
     self:SetLabel(QuestMapFrame.MapLegend.TitleText)
     self:SetFrame(QuestInfoRewardsFrame)
-    self:SetButton(QuestMapFrame.DetailsFrame.BackButton)--:SetText('返回')
-    self:SetButton(QuestMapFrame.DetailsFrame.AbandonButton)--:SetText('放弃')]]
-    self:SetButton(QuestMapFrame.DetailsFrame.ShareButton)--:SetText('共享'))
-    --QuestMapFrame.DetailsFrame.DestinationMapButton.tooltipText= '显示最终目的地'
-    --QuestMapFrame.DetailsFrame.WaypointMapButton.tooltipText= '显示旅行路径'
-    self:SetLabel(QuestInfoRequiredMoneyText)--:SetText('需要金钱：')
-    self:HookButton(QuestMapFrame.DetailsFrame.TrackButton)
-    self:HookButton(QuestLogPopupDetailFrame.TrackButton)
+	if QuestMapFrame.QuestsFrame then
+		self:SetButton(QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.BackButton)
+		self:SetLabel(QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text)
+		QuestMapFrame.QuestsFrame.DetailsFrame.BackFrame.AccountCompletedNotice.Text:SetTextColor(0,1,0)
+		QuestMapFrame.QuestsFrame.DetailsFrame.AbandonButton:SetText('放弃')
+	end
 
-    self:SetRegions(QuestMapFrame.DetailsFrame.RewardsFrame)--, '奖励')
-    self:SetLabel(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
+	if QuestMapFrame.DetailsFrame then
+		self:SetButton(QuestMapFrame.DetailsFrame.ShareButton)--:SetText('共享')
+		self:SetLabel(QuestMapFrame.DetailsFrame.BackFrame.BackButton)
+		self:SetButton(QuestMapFrame.DetailsFrame.AbandonButton)--:SetText('放弃')
+		self:HookButton(QuestMapFrame.DetailsFrame.TrackButton)
+		self:SetRegions(QuestMapFrame.DetailsFrame.RewardsFrame)--, '奖励')
+		self:SetLabel(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
+	end
+    
+    self:SetLabel(QuestInfoRequiredMoneyText)--:SetText('需要金钱：')
+
+    self:HookButton(QuestLogPopupDetailFrame.TrackButton)
 
     local function set_text(line)
         self:SetLabel(line.ButtonText)
@@ -417,26 +425,26 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 
 	hooksecurefunc('QuestInfo_ShowSpecialObjectives', function()
 		if not QuestInfoSpellObjectiveFrame:IsShown() then
-		return
+			return
 		end
 		local spellID, finished, spellName
 		if ( QuestInfoFrame.questLog) then
-		spellID, spellName, _, finished = GetQuestLogCriteriaSpell()
+			spellID, spellName, _, finished = GetQuestLogCriteriaSpell()
 		else
-		spellID, spellName, _, finished = GetCriteriaSpell()
+			spellID, spellName, _, finished = GetCriteriaSpell()
 		end
 		if not spellID then
-		return
+			return
 		end
-		spellName = self:CN(spellName) or self:GetSpellName(spellID)
+		spellName = self:GetSpellName(spellID) or self:CN(spellName)
 		if spellName then
-		QuestInfoSpellObjectiveFrame.Name:SetText(spellName)
+			QuestInfoSpellObjectiveFrame.Name:SetText(spellName)
 		end
 
 		if (finished and QuestInfoFrame.questLog) then -- don't show as completed for the initial offer, as it won't update properly
-		QuestInfoSpellObjectiveLearnLabel:SetText("学习法术：(完成)")
+			QuestInfoSpellObjectiveLearnLabel:SetText("学习法术：(完成)")
 		else
-		QuestInfoSpellObjectiveLearnLabel:SetText('学习法术：')
+			QuestInfoSpellObjectiveLearnLabel:SetText('学习法术：')
 		end
 	end)
 
@@ -451,7 +459,7 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 
 	hooksecurefunc('QuestInfo_ShowGroupSize', function()
 		if not QuestInfoGroupSize:IsShown() then
-		return
+			return
 		end
 		local groupNum
 		if QuestInfoFrame.questLog then
@@ -463,6 +471,19 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 			QuestInfoGroupSize:SetFormattedText('建议玩家人数：[%d]', groupNum)
 		end
 	end)
+
+	hooksecurefunc('QuestFrameProgressItems_Update', function()
+		local data= self:GetQuestData(GetQuestID())
+		if data then
+			if data.T then
+				QuestProgressTitleText:SetText(data.T..'|n'..GetTitleText())
+			end
+			if data.O then
+				QuestProgressText:SetText(data.O..'|n'..GetProgressText())
+			end
+		end
+	end)
+
 end
 
 
