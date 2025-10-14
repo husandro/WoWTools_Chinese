@@ -3650,6 +3650,13 @@ end)
 
 
 
+
+--飞行地图，地图名称 
+hooksecurefunc(ZoneLabelDataProviderMixin, 'EvaluateBestAreaTrigger', function(self)
+    if self.ZoneLabel then
+        WoWTools_ChineseMixin:SetLabel(self.ZoneLabel.Text)
+    end
+end)
 --飞行地图，提示 
 function WoWTools_ChineseMixin.Events:Blizzard_FlightMap()
     self:HookLabel(FlightMapFrameTitleText)
@@ -3664,12 +3671,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_FlightMap()
         end
     end)
 end
---飞行地图，地图名称 
-hooksecurefunc(ZoneLabelDataProviderMixin, 'EvaluateBestAreaTrigger', function(self)
-    if self.ZoneLabel then
-        WoWTools_ChineseMixin:SetLabel(self.ZoneLabel.Text)
-    end
-end)
 
 
 hooksecurefunc(DungeonEntrancePinMixin, 'OnMouseEnter', function(self)
@@ -3702,6 +3703,3 @@ hooksecurefunc(FlightPointPinMixin, 'OnMouseEnter', function(self)
 end)
 
 
-for _, frame in ipairs(WorldMapFrame.overlayFrames or {}) do
-    WoWTools_ChineseMixin:HookLabel(frame.Text)
-end

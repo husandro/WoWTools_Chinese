@@ -138,17 +138,9 @@ QuestInfoRewardsFrame.QuestSessionBonusReward:SetText('在小队同步状态下�
 
 
 
-hooksecurefunc('MinimapMailFrameUpdate', function()
-    local senders = { GetLatestThreeSenders() }
-    local headerText = #senders >= 1 and '未读邮件来自：' or '你有未阅读的邮件'
-    for i, sender in ipairs(senders) do
-        headerText = headerText.."\n"..(WoWTools_ChineseMixin:SetText(sender) or sender)
-    end
-    GameTooltip:SetText(headerText)
-    GameTooltip:Show()
-end)
 
---WoWTools_ChineseMixin:HookLabel(MinimapZoneText)
+
+
 
 --背包
 BagItemSearchBox.Instructions:SetText('搜索')

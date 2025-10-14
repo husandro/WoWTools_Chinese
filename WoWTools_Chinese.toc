@@ -146,9 +146,7 @@ Setup_UI\CharacterFrame_Faction.lua
 Setup_UI\Bank_AuctionHouse.lua
 Setup_UI\ChatConfig.lua
 Setup_UI\Quest.lua
-Setup_UI\Quest_Map.lua
-Setup_UI\Quest_Map_ZoneText.lua
-Setup_UI\Quest_WorldMapFrame.lua
+Setup_UI\WorldMapFrame.lua
 Setup_UI\Professions.lua
 Setup_UI\Professions_BookFrame.lua
 Setup_UI\Professions_CustomerOrders.lua

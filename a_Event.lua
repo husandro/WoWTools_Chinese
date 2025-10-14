@@ -148,7 +148,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_InspectUI()
 
     self:SetFrames(InspectPVPFrame)
     --self:SetLabel(InspectPVPFrame.RatedBG.RatingLabel)
-    
+
 end
 
 
@@ -716,7 +716,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_CharacterCustomize()
 end
 --理发店
 function WoWTools_ChineseMixin.Events:Blizzard_BarbershopUI()
-    
+
     BarberShopFrame.CancelButton:SetText('取消')
     BarberShopFrame.ResetButton:SetText('重置')
     BarberShopFrame.AcceptButton:SetText('接受')
@@ -962,7 +962,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_PetBattleUI()
 
         local speciesID= C_PetBattles.GetPetSpeciesID(petOwner, petIndex)
         local companionID= speciesID or select(4, C_PetJournal.GetPetInfoBySpeciesID(speciesID))
-        local cnName= self:GetUnitName(nil, companionID)        
+        local cnName= self:GetUnitName(nil, companionID)
         if cnName then
             if not frame.cnName then
                 frame.cnName=  WoWTools_ChineseMixin:Cstr(frame)
@@ -1083,4 +1083,30 @@ function WoWTools_ChineseMixin.Events:Blizzard_NewPlayerExperience()
     self:HookLabel(KeyboardMouseConfirmButtonText)
 
     self:HookLabel(TutorialWalk_Frame.ContainerFrame.Text)--TutorialWalkMixin
+end
+
+
+function WoWTools_ChineseMixin.Events:Blizzard_Minimap()
+    MinimapCluster.ZoneTextButton.tooltipText = MicroButtonTooltipText('世界地图', "TOGGLEWORLDMAP")
+    MinimapCluster.ZoneTextButton:HookScript('OnEvent', function(btn)
+        btn.tooltipText = MicroButtonTooltipText('世界地图', "TOGGLEWORLDMAP")
+    end)
+
+    hooksecurefunc('Minimap_SetTooltip', function(pvpType, factionName)
+        if
+            GameTooltip:IsOwned(MinimapCluster.ZoneTextButton)
+            and (factionName and factionName ~= "")
+        then
+            factionName= self:CN(factionName) or factionName
+            if pvpType == "friendly" then
+                GameTooltip:AddLine(format('（%s领地）', factionName), 0.1, 1.0, 0.1)
+                GameTooltip:Show()
+            elseif pvpType == "hostile" then
+                GameTooltip:AddLine(format('（%s领地）', factionName), 1.0, 0.1, 0.1)
+                GameTooltip:Show()
+            end
+        end
+    end)
+    
+    WoWTools_ChineseMixin:HookLabel(MinimapZoneText)
 end

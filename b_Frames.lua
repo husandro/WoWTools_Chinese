@@ -48,18 +48,6 @@ end
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 --AlertFrameSystems.lua AlertFrames.xml
 function WoWTools_ChineseMixin.Frames:AlertFrame()
     hooksecurefunc('GuildChallengeAlertFrame_SetUp', function(frame)
@@ -153,9 +141,6 @@ end
 
 
 
-
-
-
 --AlertFrameSystems.lua
 hooksecurefunc(ItemAlertFrameMixin, 'SetUpDisplay', function(frame, icon, itemQuality, name, label, overlayAtlas)
     local cn= self:GetItemName(frame.itemID, frame.itemLink) or self:CN(name)
@@ -199,6 +184,125 @@ function WoWTools_ChineseMixin.Frames:CatalogShopFrame()--Blizzard_CatalogShop
     self:HookLabel(CatalogShopFrame.ProductDetailsContainerFrame.DetailsProductContainerFrame.ProductsHeader.ProductDescription)
 end
 
+
+
+
+--屏幕，上方区域提示
+function WoWTools_ChineseMixin.Frames:ZoneTextFrame()
+    ZoneTextFrame:HookScript('OnEvent', function()--ZoneText_OnEvent
+        WoWTools_ChineseMixin:SetLabel(SubZoneTextString)
+        WoWTools_ChineseMixin:SetLabel(ZoneTextString)
+    end)
+
+    hooksecurefunc('SetZoneText', function()
+        local pvpType, isSubZonePvP, factionName = C_PvP.GetZonePVPInfo()
+        local pvpTextString = PVPInfoTextString
+        if ( isSubZonePvP ) then
+            pvpTextString = PVPArenaTextString
+        end
+        if ( pvpType == "sanctuary" ) then
+            pvpTextString:SetText('（安全区域）')
+        elseif ( pvpType == "arena" ) then
+            pvpTextString:SetText('（PvP区域）')
+        elseif ( pvpType == "friendly" or  pvpType == "hostile" ) then
+            if (factionName and factionName ~= "") then
+                pvpTextString:SetFormattedText('（%s领地）', WoWTools_ChineseMixin:CN(factionName) or factionName)
+            end
+        elseif ( pvpType == "contested" ) then
+            pvpTextString:SetText('（争夺中的领土）')
+        elseif ( pvpType == "combat" ) then
+            PVPArenaTextString:SetText('（战斗区域）')
+        end
+    end)
+
+--ZoneText.lua
+    hooksecurefunc('AutoFollowStatus_OnEvent', function(self, event, ...)
+        if ( event == "AUTOFOLLOW_BEGIN" ) then
+            AutoFollowStatusText:SetFormattedText('正在跟随%s', self.unit)
+        end
+        if ( event == "AUTOFOLLOW_END" ) then
+            AutoFollowStatusText:SetFormattedText('已停止跟随%s。', self.unit)
+        end
+    end)
+end
+
+
+
+
+
+
+
+--地图图例
+function WoWTools_ChineseMixin.Frames:MapLegendScrollFrame()
+    for _, layout in pairs(MapLegendScrollFrame.ScrollChild:GetLayoutChildren() or {}) do
+        self:SetLabel(layout.TitleText)
+        for _, text in pairs(layout:GetLayoutChildren() or {}) do
+            self:SetLabel(text, text.nameText)
+        end
+    end
+
+--MapLegendMixin
+    local QuestsCategoryData = {
+        {Name = MAP_LEGEND_CAMPAIGN,   Tooltip = MAP_LEGEND_CAMPAIGN_TOOLTIP},
+        {Name = MAP_LEGEND_IMPORTANT,  Tooltip = MAP_LEGEND_IMPORTANT_TOOLTIP},
+        {Name = MAP_LEGEND_LEGENDARY,  Tooltip = MAP_LEGEND_LEGENDARY_TOOLTIP},
+        {Name = MAP_LEGEND_META,       Tooltip = MAP_LEGEND_META_TOOLTIP},
+        {Name = MAP_LEGEND_REPEATABLE, Tooltip = MAP_LEGEND_REPEATABLE_TOOLTIP},
+        {Name = MAP_LEGEND_LOCALSTORY, Tooltip = MAP_LEGEND_LOCALSTORY_TOOLTIP},
+        {Name = MAP_LEGEND_INPROGRESS, Tooltip = MAP_LEGEND_INPROGRESS_TOOLTIP},
+        {Name = MAP_LEGEND_TURNIN,     Tooltip = MAP_LEGEND_TURNIN_TOOLTIP}
+    }
+    local LimitedCategoryData = {
+        {Name = MAP_LEGEND_WORLDQUEST,     Tooltip = MAP_LEGEND_WORLDQUEST_TOOLTIP},
+        {Name = MAP_LEGEND_WORLDBOSS,      Tooltip = MAP_LEGEND_WORLDBOSS_TOOLTIP},
+        {Name = MAP_LEGEND_BONUSOBJECTIVE, Tooltip = MAP_LEGEND_BONUSOBJECTIVE_TOOLTIP},
+        {Name = MAP_LEGEND_EVENT,          Tooltip = MAP_LEGEND_EVENT_TOOLTIP},
+        {Name = MAP_LEGEND_RARE,           Tooltip = MAP_LEGEND_RARE_TOOLTIP},
+        {Name = MAP_LEGEND_RAREELITE,      Tooltip = MAP_LEGEND_RAREELITE_TOOLTIP},
+    }
+    local ActivitiesCategoryData = {
+        {Name = MAP_LEGEND_DUNGEON,   Tooltip = MAP_LEGEND_DUNGEON_TOOLTIP},
+        {Name = MAP_LEGEND_RAID,      Tooltip = MAP_LEGEND_RAID_TOOLTIP},
+        {Name = MAP_LEGEND_HUB,       Tooltip = MAP_LEGEND_HUB_TOOLTIP},
+        {Name = MAP_LEGEND_DIGSITE,   Tooltip = MAP_LEGEND_DIGSITE_TOOLTIP},
+        {Name = MAP_LEGEND_PETBATTLE, Tooltip = MAP_LEGEND_PETBATTLE_TOOLTIP},
+        {Name = MAP_LEGEND_DELVE,		Tooltip = MAP_LEGEND_DELVE_TOOLTIP},
+    }
+    local MovementCategoryData = {
+        {Name = MAP_LEGEND_TELEPORT,     Tooltip = MAP_LEGEND_TELEPORT_TOOLTIP,},
+        {Name = MAP_LEGEND_CAVE,         Tooltip = MAP_LEGEND_CAVE_TOOLTIP},
+        {Name = MAP_LEGEND_FLIGHTPOINT,  Tooltip = MAP_LEGEND_FLIGHTPOINT_TOOLTIP},
+    }
+    local MapLegendData = {
+        {CategoryTitle = MAP_LEGEND_CATEGORY_QUESTS,      CategoryData = QuestsCategoryData},
+        {CategoryTitle = MAP_LEGEND_CATEGORY_LTA,         CategoryData = LimitedCategoryData},
+        {CategoryTitle = MAP_LEGEND_CATEGORY_ACTIVITIES,  CategoryData = ActivitiesCategoryData},
+        {CategoryTitle = MAP_LEGEND_CATEGORY_MOVEMENT,    CategoryData = MovementCategoryData},
+    }
+    do
+        for _, data in pairs(MapLegendData) do
+            local frame=_G[data.CategoryTitle]
+            if frame then
+                self:SetLabel(frame.TitleText, data.CategoryTitle)
+            end
+            for _, categoryData in ipairs(data.CategoryData) do
+                local btn=_G[categoryData.Name]
+                if btn then
+                    self:SetLabel(btn, categoryData.Name)
+                    local tooltip= self:CN(categoryData.Tooltip)
+                    if tooltip then
+                        btn.tooltipText= tooltip
+                    end
+                end
+            end
+        end
+    end
+    QuestsCategoryData = nil
+    LimitedCategoryData = nil
+    ActivitiesCategoryData = nil
+    MovementCategoryData = nil
+    MapLegendData = nil
+end
 
 
 
