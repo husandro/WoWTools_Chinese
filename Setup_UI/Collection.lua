@@ -110,7 +110,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_Collections()
         GameTooltip:Show()
     end)
 
-    self:SetRegions(MountJournal.ToggleDynamicFlightFlyoutButton)
+    self:SetFrame(MountJournal.ToggleDynamicFlightFlyoutButton)
 
 
 

@@ -29,9 +29,9 @@ AddonListTitleText:SetText('插件列表')
         end
     end)
 
-    C_Timer.After(2, function()
-        WoWTools_ChineseMixin:SetRegions(AddonListForceLoad)
-    end)
+    
+    WoWTools_ChineseMixin:SetFrame(AddonListForceLoad, nil, nil, 2)
+    
 
     WoWTools_ChineseMixin:HookLabel(AddonList.Dropdown.Text)
 

@@ -14,7 +14,7 @@ local function Init_Blizzard_PerksProgramElements()
 
     --PerksProgramProductDetailsFrameMixin
     --PerksProgramFrame.ProductsFrame.PerksProgramProductDetailsContainerFrame.DetailsFrame.CategoryText
-    WoWTools_ChineseMixin:SetRegions(PerksProgramFrame.ProductsFrame.PerksProgramProductDetailsContainerFrame.SetDetailsScrollBoxContainer)
+    WoWTools_ChineseMixin:SetFrame(PerksProgramFrame.ProductsFrame.PerksProgramProductDetailsContainerFrame.SetDetailsScrollBoxContainer)
 
     hooksecurefunc(PerksProgramFrame.ProductsFrame.PerksProgramProductDetailsContainerFrame.DetailsFrame, 'Refresh', function(self)
         if not self.data then

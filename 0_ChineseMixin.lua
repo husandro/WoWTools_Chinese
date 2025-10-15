@@ -490,41 +490,6 @@ function WoWTools_ChineseMixin:HookButton(btn, setFont)
 end
 
 
-
-
-function WoWTools_ChineseMixin:SetRegions(frame, setFont, isHook, notAfter)
-    if not frame or frame.region_chinese then
-        return
-    end
-
-    if isHook then
-        for _, region in pairs({frame:GetRegions()}) do
-            if region:GetObjectType()=='FontString' then
-                self:HookLabel(region, setFont)
-            end
-        end
-
-    else
-        if notAfter then
-            for _, region in pairs({frame:GetRegions()}) do
-                if region:GetObjectType()=='FontString' then
-                    self:SetLabel(region, setFont)
-                end
-            end
-        else
-            C_Timer.After(2, function()
-                for _, region in pairs({frame:GetRegions()}) do
-                    if region:GetObjectType()=='FontString' then
-                        self:SetLabel(region, setFont)
-                    end
-                end
-            end)
-        end
-    end
-    frame.region_chinese=true
-end
-
-
 function WoWTools_ChineseMixin:SetTabButton(frame, text, isSetCNFont)
     if not frame then
         return
@@ -532,7 +497,7 @@ function WoWTools_ChineseMixin:SetTabButton(frame, text, isSetCNFont)
     local padding= frame:GetParent().tabPadding or 0
     local minW= frame:GetParent().minTabWidth
     local maxW= frame:GetParent().maxTabWidth
-    
+
     if frame.GetTabSet then
         for _, tabID in pairs(frame:GetTabSet()) do
             local btn= frame:GetTabButton(tabID)
@@ -549,6 +514,8 @@ function WoWTools_ChineseMixin:SetTabButton(frame, text, isSetCNFont)
         end
     end
 end
+
+
 function WoWTools_ChineseMixin:SetFrame(frame, setFont, isHook, affer)
     if not frame then
         return

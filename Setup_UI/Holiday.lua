@@ -112,7 +112,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_Calendar()
     WoWTools_ChineseMixin:SetLabel(CalendarCreateEventInviteButtonText)
     WoWTools_ChineseMixin:SetLabel(CalendarCreateEventMassInviteButtonText)
     WoWTools_ChineseMixin:HookLabel(CalendarCreateEventCreateButton)
-    WoWTools_ChineseMixin:SetRegions(CalendarMassInviteFrame)
+    WoWTools_ChineseMixin:SetFrame(CalendarMassInviteFrame)
     WoWTools_ChineseMixin:SetLabel(CalendarMassInviteFrame.Header.Text)
     WoWTools_ChineseMixin:SetLabel(CalendarMassInviteAcceptButtonText)
 end

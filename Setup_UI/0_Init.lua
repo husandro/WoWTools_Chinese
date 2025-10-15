@@ -291,7 +291,7 @@ end)
 
 
 --MovieFrame.xml
-WoWTools_ChineseMixin:SetRegions(MovieFrame.CloseDialog)--, '你确定想要跳过这段过场动画吗？', 1)
+WoWTools_ChineseMixin:SetFrame(MovieFrame.CloseDialog)--, '你确定想要跳过这段过场动画吗？', 1)
 MovieFrame.CloseDialog.ConfirmButton:SetText('是')
 MovieFrame.CloseDialog.ResumeButton:SetText('否')
 
@@ -416,7 +416,7 @@ hooksecurefunc('CompactRaidFrameManager_SetSetting', function(settingName, value
     end
 end)]]
 
-WoWTools_ChineseMixin:SetRegions(RolePollPopup)--, '选择你的职责', 1)
+WoWTools_ChineseMixin:SetFrame(RolePollPopup)--, '选择你的职责', 1)
 RolePollPopupAcceptButtonText:SetText('接受')
 
 --HelpTipTemplateMixin:ApplyText()

@@ -245,10 +245,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_FriendsFrame()
         end
     end)
 
-    C_Timer.After(2, function()
-        self:SetRegions(FriendsFrameBattlenetFrame.BroadcastFrame)--, '通告', 1)
-        self:SetRegions(BattleTagInviteFrame)--, '发送一个|cff82c5ff战网昵称|r请求给：', 1)
-    end)
+    
+    self:SetFrame(FriendsFrameBattlenetFrame.BroadcastFrame, nil, nil, 2)--, '通告', 1)
+    self:SetFrame(BattleTagInviteFrame, nil, nil, 2)--, '发送一个|cff82c5ff战网昵称|r请求给：', 1)
+    
 
 end
 

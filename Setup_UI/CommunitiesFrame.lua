@@ -412,7 +412,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_Communities()
 
     --self:SetLabel(CommunitiesFrameGuildDetailsFrameNews.TitleText)--公会新闻
     self:SetLabel(CommunitiesFrameGuildDetailsFrameNews.SetFiltersButton)
-    self:SetRegions(CommunitiesFrameGuildDetailsFrameNews)
+    self:SetFrame(CommunitiesFrameGuildDetailsFrameNews)
     --公会新闻过滤
     if CommunitiesGuildNewsFiltersFrame then--CommunitiesGuildNewsFiltersFrame_OnLoad
         self:SetLabel(CommunitiesGuildNewsFiltersFrame.Title)

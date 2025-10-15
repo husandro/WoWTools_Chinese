@@ -1,5 +1,5 @@
 function WoWTools_ChineseMixin.Events:Blizzard_MacroUI()
-    self:SetRegions(MacroFrame)
+    self:SetFrame(MacroFrame)
     MacroFrameTab1:SetText('通用宏')
     MacroFrameTab2:SetText('专用宏', 0.3)
     MacroSaveButton:SetText('保存')
@@ -170,7 +170,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_ArtifactUI()
 
     --Blizzard_ArtifactPerks.lua ArtifactTitleTemplateMixin
     self:SetLabel(ArtifactFrame.PerksTab.TitleContainer.ArtifactPower)
-    self:SetRegions(ArtifactFrame.PerksTab.DisabledFrame, nil, nil, true)
+    self:SetFrame(ArtifactFrame.PerksTab.DisabledFrame, nil, nil, 2)
     hooksecurefunc(ArtifactFrame.PerksTab.TitleContainer, 'RefreshTitle', function(frame)
         local itemID, itemName= C_ArtifactUI.GetArtifactInfo()
         if not itemID then

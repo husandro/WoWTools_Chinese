@@ -50,6 +50,9 @@ end
 
 LFGListFrame.CategorySelection.Label:SetText('预创建队伍')
 
+WoWTools_ChineseMixin:SetLabel(LFGListFrame.NothingAvailable.Label)
+WoWTools_ChineseMixin:SetFrame(LFGListFrame.NothingAvailable)
+
 
 hooksecurefunc('LFGListCategorySelection_AddButton', function(frame, btnIndex, categoryID, filters)--LFGList.lua
     local baseFilters = frame:GetParent().baseFilters
