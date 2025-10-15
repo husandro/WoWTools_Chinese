@@ -4,16 +4,7 @@ hooksecurefunc(MenuUtil, 'SetElementText', function(desc)
         WoWTools_ChineseMixin:HookLabel(btn.fontString)
     end)
 end)
-    --[[if text then
-        if type(desc.data)=='table' and (desc.data.specID==251 or desc.data.specID==64) then--251 DK 专精 冰霜
-            text= text..desc.data.specID
-        end
-        local cn= WoWTools_ChineseMixin:SetText(text)
-        if cn then
-            desc.text= cn
-            
-        end
-    end]]
+
 
 hooksecurefunc(WowStyle1DropdownMixin, 'SetText', function(frame, text)
     WoWTools_ChineseMixin:SetLabel(frame.Text, text)
@@ -26,6 +17,9 @@ end)
 --下拉菜单
 hooksecurefunc(WowStyle2DropdownMixin, 'SetText', function(frame, text)
     WoWTools_ChineseMixin:SetLabel(frame.Text, text)
+end)
+hooksecurefunc(DropdownTextMixin, 'OnLoad', function(frame)
+    WoWTools_ChineseMixin:HookLabel(frame.Text)
 end)
 --[[
 hooksecurefunc(WowStyle1FilterDropdownMixin, 'SetText', function(frame, text)

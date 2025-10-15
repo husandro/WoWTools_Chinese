@@ -47,3 +47,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_FrameXML()
         self:SetLabel(frame.Text)
     end)
 end
+
+do
+    WoWTools_ChineseMixin.Events.Blizzard_FrameXML(WoWTools_ChineseMixin)
+end
+WoWTools_ChineseMixin.Events.Blizzard_FrameXML= nil
