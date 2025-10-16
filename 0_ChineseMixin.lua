@@ -222,10 +222,15 @@ function WoWTools_ChineseMixin:GetData(text, tab)
             data= self:GetProfessionNodeData(tab.ProfessionNodeID)
         end
 
-
     elseif tab.lfgDungeonID then
         data= self:GetLFGDungeonDesc(tab.lfgDungeonID)
 
+    elseif tab.campaignID then
+        if tab.isName then
+            return self:GetCampaignName(tab.campaignID)
+        else
+            return self:GetCampaignData(tab.campaignID)
+        end
     elseif tab.sectionID then
         if tab.isName then
             data= self:GetBoosSectionName(tab.sectionID, tab.difficultyID)
