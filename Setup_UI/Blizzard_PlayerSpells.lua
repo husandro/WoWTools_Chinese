@@ -73,11 +73,20 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
     self:SetLabel(PlayerSpellsFrame.TalentsFrame.ApplyButton)--:SetText('应用改动')
     self:HookLabel(PlayerSpellsFrame.TalentsFrame.LoadSystem.Dropdown.Text)
 
-    if PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton then--11.2.5没了
-        self:SetLabel(PlayerSpellsFrame.TalentsFrame.SearchPreviewContainer.DefaultResultButton.Text)
-    else
+--新建 天赋，配置
+    self:SetLabel(ClassTalentLoadoutCreateDialog.Title)
+    self:SetLabel(ClassTalentLoadoutCreateDialog.NameControl.Label)
+    self:SetButton(ClassTalentLoadoutCreateDialog.AcceptButton)
+    self:SetButton(ClassTalentLoadoutCreateDialog.CancelButton)
 
-    end
+--导入，天赋，配置
+    self:SetLabel(ClassTalentLoadoutImportDialog.Title)
+    self:SetLabel(ClassTalentLoadoutImportDialog.ImportControl.Label)
+    self:SetLabel(ClassTalentLoadoutImportDialog.ImportControl.InputContainer.EditBox.Instructions)
+    self:SetLabel(ClassTalentLoadoutImportDialog.NameControl.Label)
+    self:SetButton(ClassTalentLoadoutImportDialog.AcceptButton)
+    self:SetButton(ClassTalentLoadoutImportDialog.CancelButton)
+
     --专精，名称
     hooksecurefunc(PlayerSpellsFrame.TalentsFrame, 'RefreshCurrencyDisplay', function(frame)
         local className = self:SetText(frame:GetClassName()) or self:CN(PlayerUtil.GetClassName())
