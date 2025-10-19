@@ -46,6 +46,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_FrameXML()
     hooksecurefunc(AchievementDisplayOverviewBulletMixin, 'Setup', function(frame)
         self:SetLabel(frame.Text)
     end)
+
+    hooksecurefunc(UIButtonFitToTextBehaviorMixin, 'SetTextToFit', function(btn, text)
+        self:SetButton(btn, text)
+    end)
 end
 
 do
