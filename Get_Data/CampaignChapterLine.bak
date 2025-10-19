@@ -2377,7 +2377,6 @@ local CampaignLine= {
 function WoWTools_ChineseMixin:GetCampaignChapterLine(campaignID, index)
     if campaignID and index then
         local questLineID= CampaignLine[campaignID..'x'..(index+1)]
-        print(tab[questLineID], campaignID, index)
         if questLineID then
             return self:IsCN(tab[questLineID])
         end
