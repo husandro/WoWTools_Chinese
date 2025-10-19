@@ -8,8 +8,7 @@ hooksecurefunc(SettingsCategoryListButtonMixin, 'Init', function(self, initializ
     end
 end)
 hooksecurefunc(SettingsCategoryListHeaderMixin, 'Init', function(self, initializer)
-    
-        WoWTools_ChineseMixin:SetLabel(self.Label, initializer.data.label)
+    WoWTools_ChineseMixin:SetLabel(self.Label, initializer.data.label)
 end)
 
 --选项
@@ -53,7 +52,6 @@ end)
 
 
 hooksecurefunc('BindingButtonTemplate_SetupBindingButton', function(_, button)--BindingUtil.lua
-  
     local text= button:GetText()
     if text==GRAY_FONT_COLOR:WrapTextInColorCode(NOT_BOUND) then
         button:SetText(GRAY_FONT_COLOR:WrapTextInColorCode('未设置'))
@@ -63,8 +61,7 @@ hooksecurefunc('BindingButtonTemplate_SetupBindingButton', function(_, button)--
 end)
 
 hooksecurefunc(KeyBindingFrameBindingTemplateMixin, 'Init', function(self)
-    
-        WoWTools_ChineseMixin:SetLabel(self.Label)
+    WoWTools_ChineseMixin:SetLabel(self.Label)
 end)
 
 WoWTools_ChineseMixin:HookLabel(SettingsPanel.OutputText)
@@ -134,7 +131,6 @@ hooksecurefunc(Settings, 'CreateDropdownButton', function(btn)
         end
         if label then
             btn.data.label= label
-            
         end
         if tooltip then
             btn.data.tooltip= tooltip
