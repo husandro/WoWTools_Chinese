@@ -19,7 +19,12 @@ PlayerSpellsMicroButton:HookScript('OnEvent', function(self, event)
     end
 end)
 
-
+if HousingMicroButton then
+    hooksecurefunc(HousingMicroButton, 'UpdateTooltipText', function(self)
+        self.tooltipText = MicroButtonTooltipText('住宅信息板', "TOGGLEHOUSINGDASHBOARD");
+        self.newbieText = '!所有住宅系统相关的信息板!'
+    end)
+end
 
 
 AchievementMicroButton.tooltipText = MicroButtonTooltipText('成就', "TOGGLEACHIEVEMENT")
