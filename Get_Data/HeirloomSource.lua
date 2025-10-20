@@ -120,8 +120,13 @@ local tab={
 
 
 function WoWTools_ChineseMixin:GetHeirloomSource(itemID)
-    if itemID then
-        return self:IsCN(tab[itemID])
+    local cn= itemID and tab[itemID]
+    if cn then
+        if self:IsCN(cn) then
+            return cn
+        else
+            tab[itemID]=nil
+        end
     end
 end
 

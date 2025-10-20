@@ -1168,8 +1168,4 @@ end
 
 
 
-function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
-    
-end
-
 

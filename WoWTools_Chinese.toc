@@ -54,6 +54,7 @@ Data\Map_Data_UiMapGroupMember.lua
 Data\Item_Data_Set.lua
 Data\Item_Data_SubClass.lua
 Data\Item_Data_TransmogSet.lua
+
 ##职业
 Data\Class.lua
 
@@ -93,7 +94,8 @@ Get_Data\PetDesc.lua
 Get_Data\PetAblityData.lua
 ##传家宝, desc
 Get_Data\HeirloomSource.lua
-
+##住宅
+Get_Data\HouseDecor.lua
 ##法术
 Data\Spell_Data_Flyout.lua
 ##Data\Spell_Data_Add.lua
