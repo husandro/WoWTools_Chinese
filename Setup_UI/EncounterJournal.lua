@@ -493,6 +493,16 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
         WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
     end
     WoWTools_ChineseMixin.Events.Blizzard_EncounterJournal_PerksActivity=nil
+
+
+
+
+
+    if EncounterJournal.TutorialsFrame.Contents then--11.2.7
+        self:SetFrame(EncounterJournal.TutorialsFrame.Contents)
+        self:SetButton(EncounterJournal.TutorialsFrame.Contents.StartButton)
+        self:SetLabel(EncounterJournalInstanceSelect.Title)
+    end
 end
 
 
