@@ -854,7 +854,80 @@ function WoWTools_ChineseMixin:GetHouseDecoName(entryID)
     end
 end
 
+
+
+
+
+
+
+
+
+
+function WoWTools_ChineseMixin.Events:Blizzard_HousingTemplates()
+    for value, name in pairs(HousingResultToErrorText or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingResultToErrorText[value]= cn
+        end
+    end
+
+    for value, name in pairs(NeighborhoodTypeStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            NeighborhoodTypeStrings[value]= cn
+        end
+    end
+
+    for value, name in pairs(HousingAccessTypeStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingAccessTypeStrings[value]= cn
+        end
+    end
+
+
+
+
+
+
+
+    for value, name in pairs(HouseOwnerErrorTypeStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HouseOwnerErrorTypeStrings[value]= cn
+        end
+    end
+    for value, name in pairs(HousingLayoutGenericRestrictionStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingLayoutGenericRestrictionStrings[value]= cn
+        end
+    end
+    for value, name in pairs(HousingLayoutRotateRestrictionStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingLayoutRotateRestrictionStrings[value]= cn
+        end
+    end
+    for value, name in pairs(HousingLayoutRemoveRestrictionString or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingLayoutRemoveRestrictionString[value]= cn
+        end
+    end
+    for value, name in pairs(HousingLayoutMoveRestrictionStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingLayoutMoveRestrictionStrings[value]= cn
+        end
+    end
+end
+
 function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
+--Blizzard_HousingData.lua
+    WoWTools_ChineseMixin:SetCN(HOUSING_EXPERT_DECOR_GLOBAL_SPACE_ACTIVATE, '切换到私密住宅编辑')
+    WoWTools_ChineseMixin:SetCN(HOUSING_EXPERT_DECOR_GLOBAL_SPACE_DEACTIVATE, '切换到公共住宅编辑')
+
     HousingDashboardFrame.houseInfoTab.titleText = HOUSING_DASHBOARD_HOUSEINFO_FRAMETITLE
     self:HookLabel(HousingDashboardFrameTitleText)
     self:HookLabel(HousingDashboardFrame.CatalogContent.TempDisclaimer.DisclaimerText)
@@ -870,5 +943,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
             end
         end
     end)
+
+    
 end
 
