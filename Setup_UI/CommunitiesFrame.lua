@@ -401,13 +401,16 @@ function WoWTools_ChineseMixin.Events:Blizzard_Communities()
 
     --信息 GuildNews.lua
     --GuildUtil.lua
-    CommunitiesFrameGuildDetailsFrameInfo.TitleText:SetText('信息')
-    self:SetLabel(CommunitiesFrameGuildDetailsFrameInfoHeader1Label)
-    self:SetLabel(CommunitiesFrameGuildDetailsFrameInfo.Header2Label)
+    --CommunitiesFrameGuildDetailsFrameInfo.TitleText:SetText('信息')
+    self:SetFrame(CommunitiesFrameGuildDetailsFrameInfo)
+    --self:SetLabel(CommunitiesFrameGuildDetailsFrameInfoHeader1Label)
+    --self:SetLabel(CommunitiesFrameGuildDetailsFrameInfo.Header2Label)
 
     for i=1, 4 do
         local btn= _G['CommunitiesFrameGuildDetailsFrameInfoChallenge'..i]
-        self:HookLabel(btn and btn.label)
+        if btn then
+            self:HookLabel(btn.label)
+        end
     end
 
     --self:SetLabel(CommunitiesFrameGuildDetailsFrameNews.TitleText)--公会新闻
