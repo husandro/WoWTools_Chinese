@@ -1185,6 +1185,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingCreateNeighborhood()
     self:SetFrame(HousingCreateNeighborhoodCharterFrame)
 end
 
-
+function WoWTools_MoveMixin.Events:Blizzard_HousingCornerstone()
+    self:SetFrame(HousingCornerstoneVisitorFrame)
+end
 
 
