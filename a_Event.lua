@@ -1162,9 +1162,28 @@ function WoWTools_ChineseMixin.Events:Blizzard_WorldMap()
     end
 end
 
+function WoWTools_ChineseMixin.Events:Blizzard_HousingBulletinBoard()
+    self:SetLabel(HousingBulletinBoardFrame.RosterTabButton.Label)
+    C_Timer.After(0.3, function()
+        self:SetLabel(HousingBulletinBoardFrame.ResidentsTab.ColumnDisplay)
+    end)
+    self:SetFrames(HousingBulletinBoardFrame)
+end
 
-
-
+function WoWTools_ChineseMixin.Events:Blizzard_HousingCharter()
+    self:SetFrame(HousingCharterFrame)
+    self:SetButton(HousingCharterFrame.RequestButton)
+    self:SetButton(HousingCharterFrame.SettingsButton)
+    self:SetButton(HousingCharterFrame.CloseButton)
+end
+--住宅区登记表 11.2.7
+function WoWTools_ChineseMixin.Events:Blizzard_HousingCreateNeighborhood()
+    self:HookButton(HousingCreateNeighborhoodCharterFrame.ConfirmButton)
+    self:SetLabel(HousingCreateNeighborhoodCharterFrame.CancelButton)
+    self:HookLabel(HousingCreateNeighborhoodCharterFrame.LocationText)
+    self:HookLabel(HousingCreateNeighborhoodCharterFrame.NeighborhoodInfoText)
+    self:SetFrame(HousingCreateNeighborhoodCharterFrame)
+end
 
 
 
