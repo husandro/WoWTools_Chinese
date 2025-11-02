@@ -1189,4 +1189,12 @@ function WoWTools_MoveMixin.Events:Blizzard_HousingCornerstone()
     self:SetFrame(HousingCornerstoneVisitorFrame)
 end
 
+--住宅搜索器
+function WoWTools_ChineseMixin.Events:Blizzard_HousingHouseFinder()
+    self:SetLabel(HouseFinderFrameTitleText)
+    self:SetLabel(HouseFinderFrame.NeighborhoodListFrame.NeighborhoodsLabel)
 
+    self:SetFrame(HouseFinderFrame.PlotInfoFrame)
+    self:SetLabel(HouseFinderFrame.PlotInfoFrame.BackButton.ButtonLabel)
+    self:SetButton(HouseFinderFrame.PlotInfoFrame.VisitHouseButton)
+end
