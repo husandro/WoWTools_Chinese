@@ -552,13 +552,18 @@ function WoWTools_ChineseMixin:SetFrames(frame, setFont, isHook, affer)
 
     local t
     for _, f in pairs({frame:GetChildren()}) do
-        t= f:GetObjectType()
-        if t=='Frame' then
-            self:SetFrame(f, setFont, isHook, affer)
-        elseif t=='Button' then
-            self:SetButton(f, nil, affer, setFont)
+        if f and f.GetObjectType then
+            t= f:GetObjectType()
+            if t=='Frame' then
+                self:SetFrame(f, setFont, isHook, affer)
+            elseif t=='Button' then
+                self:SetButton(f, nil, affer, setFont)
+            elseif t=='FontString' then
+                self:SetLabel(f, nil, affer, setFont)
+            end
         end
     end
+    self:SetFrame(f, setFont, isHook, affer)
 end
 
 

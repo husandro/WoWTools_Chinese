@@ -21,13 +21,11 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingCreateNeighborhood()
     self:HookLabel(HousingCreateNeighborhoodCharterFrame.NeighborhoodInfoText)
     self:SetFrame(HousingCreateNeighborhoodCharterFrame)
 end
-
-function WoWTools_MoveMixin.Events:Blizzard_HousingCornerstone()
+--住宅信息板
+function WoWTools_ChineseMixin.Events:Blizzard_HousingCornerstone()
+    self:HookLabel(HousingCornerstoneVisitorFrame.NeighborhoodText)
     self:SetFrame(HousingCornerstoneVisitorFrame)
-
-    self:SetFrame(HousingCornerstonePurchaseFrame)
 end
-
 --住宅搜索器
 function WoWTools_ChineseMixin.Events:Blizzard_HousingHouseFinder()
     self:SetLabel(HouseFinderFrameTitleText)
@@ -82,4 +80,113 @@ function WoWTools_ChineseMixin.Events:Blizzard_HouseEditor()
 
     self:SetLabel(HouseEditorFrame.StoragePanel.OptionsContainer.CategoryText)
     self:SetLabel(HouseEditorFrame.StoragePanel.SearchBox.Instructions)
+
+    self:SetFrames(HouseEditorFrame.ExteriorCustomizationModeFrame.CoreOptionsPanel)
+
+    for _, btn in pairs({HouseEditorFrame.ModeBar:GetRegions()}) do
+        local cn= self:CN(btn.modeName)
+        if cn then
+            btn.modeName= cn
+        end
+        --[[cn= self:CN(btn.keybindName)
+        if cn then
+            btn.keybindName= cn
+        end]]
+        cn= self:CN(btn.enabledTooltip)
+        if cn then
+            btn.enabledTooltip= cn
+        end
+
+        cn= self:CN(btn.enabledTooltipKeybind)
+        if cn then
+            btn.enabledTooltipKeybind= cn
+        end
+    end
+end
+
+
+--住宅信息板
+function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
+--Blizzard_HousingData.lua
+    WoWTools_ChineseMixin:SetCN(HOUSING_EXPERT_DECOR_GLOBAL_SPACE_ACTIVATE, '切换到私密住宅编辑')
+    WoWTools_ChineseMixin:SetCN(HOUSING_EXPERT_DECOR_GLOBAL_SPACE_DEACTIVATE, '切换到公共住宅编辑')
+
+    HousingDashboardFrame.houseInfoTab.titleText = HOUSING_DASHBOARD_HOUSEINFO_FRAMETITLE
+    self:HookLabel(HousingDashboardFrameTitleText)
+    self:HookLabel(HousingDashboardFrame.CatalogContent.TempDisclaimer.DisclaimerText)
+    self:SetLabel(HousingDashboardFrame.CatalogContent.Categories.BackButton.Text)
+    self:SetFrame(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame)
+    self:SetButton(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame.NoHouseButton)
+--HousingModelPreviewMixin
+    hooksecurefunc(HousingDashboardFrame.CatalogContent.PreviewFrame, 'PreviewCatalogEntryInfo', function(frame, info)
+        if info and info.entryID then
+            local cn= self:CN(info.name) or self:GetHouseDecoName(info.entryID.recordID)
+            if cn then
+                frame.Name:SetText(cn)
+            end
+        end
+    end)
+
+    self:SetLabel(HousingDashboardFrame.HouseInfoContent.ContentFrame.HouseUpgradeFrame.WatchFavorButton.Label)
+end
+
+
+
+function WoWTools_ChineseMixin.Events:Blizzard_HousingTemplates()
+    for value, name in pairs(HousingResultToErrorText or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingResultToErrorText[value]= cn
+        end
+    end
+
+    for value, name in pairs(NeighborhoodTypeStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            NeighborhoodTypeStrings[value]= cn
+        end
+    end
+
+    for value, name in pairs(HousingAccessTypeStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingAccessTypeStrings[value]= cn
+        end
+    end
+
+
+    for value, name in pairs(HouseOwnerErrorTypeStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HouseOwnerErrorTypeStrings[value]= cn
+        end
+    end
+    for value, name in pairs(HousingLayoutGenericRestrictionStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingLayoutGenericRestrictionStrings[value]= cn
+        end
+    end
+    for value, name in pairs(HousingLayoutRotateRestrictionStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingLayoutRotateRestrictionStrings[value]= cn
+        end
+    end
+    for value, name in pairs(HousingLayoutRemoveRestrictionString or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingLayoutRemoveRestrictionString[value]= cn
+        end
+    end
+    for value, name in pairs(HousingLayoutMoveRestrictionStrings or {}) do
+        local cn= self:CN(name)
+        if cn then
+            HousingLayoutMoveRestrictionStrings[value]= cn
+        end
+    end
+
+    --hooksecurefunc(HousingModelPreviewMixin, 'PreviewCatalogEntryInfo', function(frame, catalogEntryInfo)--可用
+
+
 end
