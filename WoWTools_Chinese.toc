@@ -151,12 +151,11 @@ Setup_UI\Professions.lua
 Setup_UI\Professions_BookFrame.lua
 Setup_UI\Professions_CustomerOrders.lua
 Setup_UI\Professions_ClassTrainerFrame.lua
-##冒险指南
 Setup_UI\EncounterJournal.lua
 Setup_UI\EncounterJournal_PerksProgram.lua
-
 Setup_UI\Item_MerchantFrame.lua
 Setup_UI\Item_LootFrame.lua
+Setup_UI\House.lua
 
 ##地下城查找器
 Setup_UI\LFG_QueueFrame.lua
