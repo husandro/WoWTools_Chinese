@@ -4,6 +4,7 @@ https://wago.tools/db2/MapChallengeMode?locale=zhCN
 ]]
 
 local tab={
+[556]= '执政团之座',
 [542]= '奥尔达尼生态圆顶',
 [541]= '巨石之核',
 [525]= '水闸行动',

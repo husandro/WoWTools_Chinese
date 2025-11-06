@@ -1,4 +1,6 @@
---https://wago.tools/db2/WarbandScene?locale=zhCN
+--[[
+https://wago.tools/db2/WarbandScene?locale=zhCN
+]]
 
 local tab={
 [1]= {"冒险者之眠", "郁郁葱葱的林地和风景优美的瀑布，还有什么比这更好的扎营地点吗？"},

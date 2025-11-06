@@ -6,6 +6,8 @@ https://wago.tools/db2/Achievement_Category?locale=zhCN
 
 
 local tab={
+[15567]= '搏击俱乐部',
+[15566]= '至暗之夜团队副本',
 [15562]= '军团再临：幻境新生',
 [15561]= '英雄世界难度',
 [15560]= '团队副本',
