@@ -486,3 +486,13 @@ hooksecurefunc('BattlePetTooltipTemplate_SetBattlePet', function(tooltipFrame, d
     end
     tooltipFrame.Level:SetFormattedText('等级%d', data.level)
 end)
+
+
+
+
+for i=1, 2 do
+    local tooltip= _G['ShoppingTooltip'..i]
+    if tooltip and tooltip.CompareHeader then--11.2.7才有
+        WoWTools_ChineseMixin:SetLabel(tooltip.CompareHeader.Lable)
+    end
+end
