@@ -498,7 +498,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
 
 
-    if EncounterJournal.TutorialsFrame.Contents then--11.2.7
+    if EncounterJournal.TutorialsFrame then--11.2.7
         self:SetFrame(EncounterJournal.TutorialsFrame.Contents)
         self:SetButton(EncounterJournal.TutorialsFrame.Contents.StartButton)
         self:SetLabel(EncounterJournalInstanceSelect.Title)
