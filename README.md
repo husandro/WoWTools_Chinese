@@ -24,6 +24,9 @@
 > ### <https://www.curseforge.com/wow/addons/wowtoolschinese>
 > ### <https://addons.wago.io/addons/wowtools-chinese>
 > ### <https://github.com/husandro/WoWTools_Chinese>
+## 备注
+> ### 目录 Data Get_Data 可用 Visual Studio Code 里的 “扩展” Edit CSV 可修该获取
+> ### 目录 SC 可用 插件 WoWTools_Chinese_Scanner 获取
 ***
 
 # WoWTools_Chinese_Scanner
@@ -33,3 +36,4 @@
 > ### https://github.com/husandro/WoWTools_Chinese_Scanner
 > ### https://www.curseforge.com/wow/addons/wowtools-chinese-scanner
 ***
+

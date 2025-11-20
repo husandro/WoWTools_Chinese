@@ -18,6 +18,7 @@ local tab= {
 [12] ='恶魔猎手',
 [13] ='唤魔师',
 [14] ='冒险者',
+[15]= '旅行者',
 }
 do
     for classID, name in pairs(tab) do
@@ -50,6 +51,7 @@ for index, name in pairs({
     'Druid',
     'Demon Hunter',
     'Evoker',
+    'Traveler'
 }) do
     WoWTools_ChineseMixin:SetCN(name,  tab[index])
 

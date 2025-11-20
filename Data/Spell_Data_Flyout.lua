@@ -2,7 +2,6 @@
 --[[
 [ID] ={'Name_lang', 'Description_lang'},
 https://wago.tools/db2/SpellFlyout?locale=zhCN
-11.0.2.55789
 ]]
 
 local tab={
