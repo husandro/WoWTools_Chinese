@@ -20,7 +20,7 @@ local tab= {
 [14] ='冒险者',
 [15]= '旅行者',
 }
-do
+--[[do
     for classID, name in pairs(tab) do
         local classFilename= select(2, GetClassInfo(classID))
         local hex=classFilename and select(4, GetClassColor(classFilename))
@@ -33,7 +33,7 @@ do
                 ..'|c'..hex..name..'|r'
         end
     end
-end
+end]]
 do
 
 --英文
