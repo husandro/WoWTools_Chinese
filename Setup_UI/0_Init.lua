@@ -302,38 +302,6 @@ MovieFrame.CloseDialog.ResumeButton:SetText('否')
 
 
 
---SharedUIPanelTemplates.lua
-hooksecurefunc(SliderControlFrameMixin, 'SetupSlider', function(self, _, _, _, _, label)
-    WoWTools_ChineseMixin:SetLabel(self.Label, label)
-end)
-
-hooksecurefunc('SearchBoxTemplate_OnLoad', function(self)--SharedUIPanelTemplates.lua
-    self.Instructions:SetText('搜索')
-end)
-if _G['Main_HelpPlate_Button_ShowTooltip'] then--11.1.5 无
-    hooksecurefunc('Main_HelpPlate_Button_ShowTooltip', function(self)
-        HelpPlateTooltip.Text:SetText(self.MainHelpPlateButtonTooltipText or '点击这里打开/关闭本窗口的帮助系统。')
-    end)
-end
-hooksecurefunc(SearchBoxListMixin, 'UpdateSearchPreview', function(self, finished, dbLoaded, numResults)
-    if finished and not self.searchButtons[numResults] then
-        self.showAllResults.text:SetFormattedText('显示全部%d个结果', numResults)
-    end
-end)
-hooksecurefunc(IconSelectorPopupFrameTemplateMixin, 'SetSelectedIconText', function(self)
-    if ( self:GetSelectedIndex() ) then
-        self.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconDescription:SetText('点击在列表中浏览')
-    else
-        self.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconDescription:SetText('此图标不在列表中')
-    end
-end)
---[[hooksecurefunc(LabeledEnumDropDownControlMixin, 'SetLabelText', function(self, text)
-    WoWTools_ChineseMixin:SetLabel(self.Label, text)
-end)]]
-
-
-
-
 
 
 

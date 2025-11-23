@@ -190,7 +190,14 @@ local function Init_HonorFrame(self)
         end
     end)
 
-
+    hooksecurefunc('HonorFrameBonusFrame_SetButtonState', function(button, enable, minLevel)
+        if ( not enable ) then
+            local tooLowLevel = minLevel and PartyUtil.GetMinLevel() < minLevel
+            if tooLowLevel then
+                button.LevelRequirement:SetFormattedText('在%d级解锁', minLevel)
+            end
+        end
+    end)
 
 
     --加入战斗，按钮

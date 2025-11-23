@@ -5,8 +5,11 @@ hooksecurefunc(MenuUtil, 'SetElementText', function(desc)
     end)
 end)
 
-
+--显示，选定, 文本，如 专精 中下拉菜单
 hooksecurefunc(WowStyle1DropdownMixin, 'SetText', function(frame, text)
+    WoWTools_ChineseMixin:SetLabel(frame.Text, text)
+end)
+hooksecurefunc(WowStyle1DropdownMixin, 'UpdateText', function(frame, text)
     WoWTools_ChineseMixin:SetLabel(frame.Text, text)
 end)
 

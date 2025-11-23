@@ -117,6 +117,7 @@ SC\z_Init.lua
 a_Event.lua
 b_Frames.lua
 c_Blizzard_FrameXML.lua
+d_Blizzard_SharedXML.lua
 
 Setup_UI\Menu.lua
 Setup_UI\StaticPopup.lua
