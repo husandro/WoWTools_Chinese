@@ -252,14 +252,20 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
 
 --子，名称
     hooksecurefunc(SpellBookItemMixin, 'UpdateSubName', function(frame, subNameText)
-        local cn= self:CN(subNameText)
-        if frame.spellBookItemInfo and not cn then
-            cn= select(3, self:GetSpellName(frame.spellBookItemInfo.spellID))
-        end
-        if cn then
-            frame.SubName:SetText(cn)
-        else
-            self:SetLabel(frame.SubName, subNameText)
+        if subNameText == "" and frame.spellBookItemInfo.isPassive then
+		    subNameText = '被动'
+            frame.spellBookItemInfo.subName = subNameText
+            frame.SubName:SetText(subNameText)
+	    else
+            local cn= self:CN(subNameText)
+            if frame.spellBookItemInfo and not cn then
+                cn= select(3, self:GetSpellName(frame.spellBookItemInfo.spellID))
+            end
+            if cn then
+                frame.SubName:SetText(cn)
+            else
+                self:SetLabel(frame.SubName, subNameText)
+            end
         end
     end)
 
@@ -284,5 +290,17 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
                 btn.Text:SetText(cn)
             end
         end
+    end)
+end
+
+
+
+
+
+
+function WoWTools_ChineseMixin.Events:Blizzard_SpellSearch()
+    hooksecurefunc(SpellSearchPreviewResultMixin, 'Init', function(frame, data)
+        info= data
+        for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR|r') for k2,v2 in pairs(v) do print('|cffffff00',k2,v2, '|r') end print('|cffff0000---',k, '---END|r') else print(k,v) end end print('|cffff00ff——————————|r')
     end)
 end
