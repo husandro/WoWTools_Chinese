@@ -21,7 +21,8 @@ WoWTools_ChineseMixin:HookLabel(GroupFinderFrameGroupButton3Name)--预创建队�
 
 
 
-WoWTools_ChineseMixin:SetTabButton(PVEFrameTab1)--:SetText('地下城和团队副本')
+--WoWTools_ChineseMixin:SetTabButton(PVEFrameTab1)--:SetText('地下城和团队副本')
+PVEFrameTab1:SetText('地下城')
 WoWTools_ChineseMixin:SetTabButton(PVEFrameTab2)--:SetText('PvP')
 WoWTools_ChineseMixin:SetTabButton(PVEFrameTab3)--:SetText('史诗钥石地下城')
 WoWTools_ChineseMixin:SetTabButton(PVEFrameTab4)--:SetText('地下堡')

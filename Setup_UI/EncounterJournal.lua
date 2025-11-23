@@ -151,13 +151,14 @@ end]]
 function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
     EncounterJournalTitleText:SetText('冒险指南')
-    EncounterJournalSuggestTab:SetText('推荐玩法')
+    EncounterJournalSuggestTab:SetText('推荐')
     EncounterJournalDungeonTab:SetText('地下城')
-    EncounterJournalRaidTab:SetText('团队副本')
-    EncounterJournalLootJournalTab:SetText('套装物品')
+    EncounterJournalRaidTab:SetText('团本')
+    EncounterJournalLootJournalTab:SetText('套装')
     EncounterJournalSearchBox.Instructions:SetText('搜索')
+    self:HookLabel(EncounterJournal.instanceSelect.Title)
 
-    hooksecurefunc('EJInstanceSelect_UpdateTitle', function(tabId)
+    --[[hooksecurefunc('EJInstanceSelect_UpdateTitle', function(tabId)
         local text
         if ( tabId == EncounterJournal.suggestTab:GetID()) then
             text= '推荐玩法'
@@ -170,9 +171,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
             text= '套装物品'
         end
         if text then
-            EncounterJournal.instanceSelect.Title:SetText(text)
+            self:HookLabel(EncounterJournal.instanceSelect.Title):SetText(text)
         end
-    end)
+    end)]]
 
 
     --EncounterJournalEncounterFrameInfoFilterToggle.Text:SetText('过滤器')

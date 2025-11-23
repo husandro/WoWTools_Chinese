@@ -92,7 +92,7 @@ end
 function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
 
     EncounterJournalMonthlyActivitiesFrame.RestrictedText:SetText('你必须有可用的订阅或游戏时间|n才能完成活动并在商栈赢取奖励')
-    EncounterJournalMonthlyActivitiesTab:SetText('旅行者日志')
+    EncounterJournalMonthlyActivitiesTab:SetText('旅行者')
     EncounterJournalMonthlyActivitiesTab:SetScript('OnEnter', function()
         if not C_PlayerInfo.IsTravelersLogAvailable() then
             local tradingPostLocation = UnitFactionGroup('player') == "Alliance" and '暴风城' or '奥格瑞玛'
