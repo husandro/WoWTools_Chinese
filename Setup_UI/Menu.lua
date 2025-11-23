@@ -1,9 +1,19 @@
 --Blizzard_Menu/MenuUtil.lua
+hooksecurefunc(CompositorMixin, 'AttachFontString', function(parent)
+    for _, r in pairs(parent.attachments) do
+        if r:GetObjectType()=='FontString' then
+            WoWTools_ChineseMixin:HookLabel(r)
+        end
+    end
+end)
+
+--[[
+这个有BUG
 hooksecurefunc(MenuUtil, 'SetElementText', function(desc)
     desc:AddInitializer(function(btn)
         WoWTools_ChineseMixin:HookLabel(btn.fontString)
     end)
-end)
+end)]]
 
 --显示，选定, 文本，如 专精 中下拉菜单
 hooksecurefunc(WowStyle1DropdownMixin, 'SetText', function(frame, text)

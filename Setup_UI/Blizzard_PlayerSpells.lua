@@ -71,7 +71,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_PlayerSpells()
 
 --天赋
     self:SetLabel(PlayerSpellsFrame.TalentsFrame.ApplyButton)--:SetText('应用改动')
-    self:HookLabel(PlayerSpellsFrame.TalentsFrame.LoadSystem.Dropdown.Text)
+    --self:HookLabel(PlayerSpellsFrame.TalentsFrame.LoadSystem.Dropdown.Text)
 
 --新建 天赋，配置
     self:SetLabel(ClassTalentLoadoutCreateDialog.Title)
