@@ -1,17 +1,7 @@
 
 
 
---插件
-
-AddonListTitleText:SetText('插件列表')
-
-
-    WoWTools_ChineseMixin:SetLabel(AddonList.SearchBox.Instructions)
-    WoWTools_ChineseMixin:SetLabel(AddonList.Performance.Header)
-
-    AddonList.EnableAllButton:SetText('全部启用')
-    AddonList.DisableAllButton:SetText('全部禁用')
-    hooksecurefunc('AddonList_Update', function()--AddonList.lua
+    --[[hooksecurefunc('AddonList_Update', function()--AddonList.lua
         if ( not InGlue() ) then
             if ( AddonList_HasAnyChanged() ) then
                 AddonList.OkayButton:SetText('重新加载UI')
@@ -19,31 +9,13 @@ AddonListTitleText:SetText('插件列表')
                 AddonList.OkayButton:SetText('确定')
             end
         end
-    end)
-    AddonList.CancelButton:SetText('取消')
+    end)]]
     --hooksecurefunc('AddonList_InitButton', function(entry)
-    hooksecurefunc('AddonList_InitAddon', function(entry)
-        if entry then
-            WoWTools_ChineseMixin:HookLabel(entry.Status)
-            WoWTools_ChineseMixin:HookLabel(entry.Reload)
-        end
-    end)
-
-    
-    WoWTools_ChineseMixin:SetFrame(AddonListForceLoad, nil, nil, 2)
     
 
-    WoWTools_ChineseMixin:HookLabel(AddonList.Dropdown.Text)
+    
+    
 
---替换原生
-function AddonList:UpdatePerformance()
-    local enabled = C_AddOnProfiler.IsEnabled()
-	local showPerfUI = enabled and not InGlue()
-	if not showPerfUI then
-		return
-	end
-    local perfUI = self.Performance
-	self:UpdateOverallMetric(perfUI.Current, '当前CPU：%s', Enum.AddOnProfilerMetric.RecentAverageTime)
-	self:UpdateOverallMetric(perfUI.Average, '平均CPU：%s', Enum.AddOnProfilerMetric.SessionAverageTime)
-	self:UpdateOverallMetric(perfUI.Peak, '峰值CPU：%s', Enum.AddOnProfilerMetric.PeakTime)
-end
+
+
+    

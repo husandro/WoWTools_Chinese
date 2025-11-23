@@ -1169,3 +1169,44 @@ function WoWTools_ChineseMixin.Events:Blizzard_WorldMap()
         end)
     end
 end
+
+
+
+
+
+
+
+
+
+--插件
+function WoWTools_ChineseMixin.Events:Blizzard_AddOnList()
+    self:SetLabel(AddonListTitleText)--:SetText('插件列表')
+    self:SetLabel(AddonList.SearchBox.Instructions)
+    self:SetLabel(AddonList.Performance.Header)
+
+    self:SetButton(AddonList.EnableAllButton)--:SetText('全部启用')
+    self:SetButton(AddonList.DisableAllButton)--:SetText('全部禁用')
+    self:HookButton(AddonList.OkayButton)
+    self:SetButton(AddonList.CancelButton)--:SetText('取消')
+    hooksecurefunc('AddonList_InitAddon', function(entry)
+        if entry then
+            self:HookLabel(entry.Status)
+            self:HookLabel(entry.Reload)
+        end
+    end)
+    self:SetFrame(AddonListForceLoad, nil, nil, 2)
+    self:HookLabel(AddonList.Dropdown.Text)
+
+--替换原生
+    function AddonList:UpdatePerformance()
+        local enabled = C_AddOnProfiler.IsEnabled()
+        local showPerfUI = enabled and not InGlue()
+        if not showPerfUI then
+            return
+        end
+        local perfUI = self.Performance
+        self:UpdateOverallMetric(perfUI.Current, '当前CPU：%s', Enum.AddOnProfilerMetric.RecentAverageTime)
+        self:UpdateOverallMetric(perfUI.Average, '平均CPU：%s', Enum.AddOnProfilerMetric.SessionAverageTime)
+        self:UpdateOverallMetric(perfUI.Peak, '峰值CPU：%s', Enum.AddOnProfilerMetric.PeakTime)
+    end
+end

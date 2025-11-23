@@ -129,7 +129,6 @@ Setup_UI\Blizzard_Settings.lua
 Setup_UI\EditModeManagerFrame.lua
 Setup_UI\NavBar.lua
 Setup_UI\GameTooltip.lua
-Setup_UI\AddonList.lua
 Setup_UI\FriendsFrame.lua
 Setup_UI\QuickKeybindFrame.lua
 Setup_UI\MainMicroButton.lua
