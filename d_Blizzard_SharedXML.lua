@@ -31,4 +31,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_SharedXML()
             frame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconDescription:SetText('此图标不在列表中')
         end
     end)]]
+
+--新，字 NEW_CAPS
+    hooksecurefunc(NewFeatureLabelMixin, 'OnLoad', function(frame)
+        self:SetLabel(frame.Label)
+    end)
 end
