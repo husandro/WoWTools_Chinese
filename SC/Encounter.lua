@@ -1,4 +1,3 @@
-
 WoWTools_SC_Encounter = {
 [1531] = {
 ["T"] = "勒什雷尔",
