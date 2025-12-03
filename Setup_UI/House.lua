@@ -1,6 +1,5 @@
 function WoWTools_ChineseMixin.Events:Blizzard_HousingModelPreview()
     hooksecurefunc(HousingModelPreviewMixin, 'OnLoad', function(frame)
-        print('a')
         frame:SetupTextTooltip(frame.TextContainer.CollectionBonus,
             function(tooltip)
                 GameTooltip_AddHighlightLine(tooltip, format('首次收集奖励：|cnHIGHLIGHT_FONT_COLOR:+%d点住宅经验值|r', frame.catalogEntryInfo.firstAcquisitionBonus));
