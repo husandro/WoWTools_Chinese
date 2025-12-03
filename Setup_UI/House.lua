@@ -108,12 +108,13 @@ end
 --住宅信息板
 function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
 --Blizzard_HousingData.lua
+    self:SetLabel(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame.TitleText)
     WoWTools_ChineseMixin:SetCN(HOUSING_EXPERT_DECOR_GLOBAL_SPACE_ACTIVATE, '切换到私密住宅编辑')
     WoWTools_ChineseMixin:SetCN(HOUSING_EXPERT_DECOR_GLOBAL_SPACE_DEACTIVATE, '切换到公共住宅编辑')
 
     HousingDashboardFrame.houseInfoTab.titleText = HOUSING_DASHBOARD_HOUSEINFO_FRAMETITLE
     self:HookLabel(HousingDashboardFrameTitleText)
-    self:HookLabel(HousingDashboardFrame.CatalogContent.TempDisclaimer.DisclaimerText)
+    
     self:SetLabel(HousingDashboardFrame.CatalogContent.Categories.BackButton.Text)
     self:SetFrame(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame)
     self:SetButton(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame.NoHouseButton)
