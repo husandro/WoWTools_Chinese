@@ -1,3 +1,17 @@
+function WoWTools_ChineseMixin.Events:Blizzard_HousingModelPreview()
+    hooksecurefunc(HousingModelPreviewMixin, 'OnLoad', function(frame)
+        print('a')
+        frame:SetupTextTooltip(frame.TextContainer.CollectionBonus,
+            function(tooltip)
+                GameTooltip_AddHighlightLine(tooltip, format('首次收集奖励：|cnHIGHLIGHT_FONT_COLOR:+%d点住宅经验值|r', frame.catalogEntryInfo.firstAcquisitionBonus));
+            end);
+
+        frame:SetupTextTooltip(frame.TextContainer.NumOwned,
+            function(tooltip)
+                GameTooltip_AddHighlightLine(tooltip, format('已放置：%d，储存空间：%d', frame.catalogEntryInfo.numPlaced, frame.catalogEntryInfo.numStored));
+            end);
+    end)
+end
 
 function WoWTools_ChineseMixin.Events:Blizzard_HousingBulletinBoard()
     self:SetLabel(HousingBulletinBoardFrame.RosterTabButton.Label)
@@ -114,7 +128,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
 
     HousingDashboardFrame.houseInfoTab.titleText = HOUSING_DASHBOARD_HOUSEINFO_FRAMETITLE
     self:HookLabel(HousingDashboardFrameTitleText)
-    
+
     self:SetLabel(HousingDashboardFrame.CatalogContent.Categories.BackButton.Text)
     self:SetFrame(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame)
     self:SetButton(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame.NoHouseButton)
