@@ -4,6 +4,7 @@ https://wago.tools/db2/Heirloom?locale=zhCN
 ]]
 
 if PlayerGetTimerunningSeasonID() then
+    function WoWTools_ChineseMixin:GetHeirloomSource()end
     return
 end
 
