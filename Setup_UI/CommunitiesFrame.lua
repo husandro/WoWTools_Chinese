@@ -7,7 +7,7 @@
 
 function WoWTools_ChineseMixin.Events:Blizzard_Communities()
 
-
+    self:HookLabel(CommunitiesFrame.GuildMemberListDropdown.Text)
 
     CommunitiesFrameTitleText:SetText('公会与社区')
     CommunitiesFrame.AddToChatButton.Label:SetText('添加至聊天窗口')
