@@ -123,7 +123,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
         if info and info.entryID then
             local cn= self:CN(info.name) or self:GetHouseDecoName(info.entryID.recordID)
             if cn then
-                frame.Name:SetText(cn)
+                frame.NameContainer.Name:SetText(cn)
             end
         end
     end)
