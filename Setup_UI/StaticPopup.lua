@@ -5,15 +5,17 @@
 
 
 function WoWTools_ChineseMixin.Events:Blizzard_StaticPopup()
-    for i=1, STATICPOPUP_NUMDIALOGS or 4 do
+    for i=1, 4 do--STATICPOPUP_NUMDIALOGS
         self:HookLabel(_G['StaticPopup'..i..'Text'])
         self:HookButton(_G['StaticPopup'..i..'Button1'])
         self:HookButton(_G['StaticPopup'..i..'Button2'])
         self:HookButton(_G['StaticPopup'..i..'Button3'])
 
-        if _G['StaticPopup'..i..'ItemFrameText'] then
-            hooksecurefunc(G['StaticPopup'..i..'ItemFrameText'], 'SetText', function(frame, name)
+
+        if _G['StaticPopup'..i] and _G['StaticPopup'..i].ItemFrame then
+            hooksecurefunc(_G['StaticPopup'..i].ItemFrame.Text, 'SetText', function(frame, name)
                  local itemName= self:CN(name)
+                 print(name)
                 if not itemName then
                     local link= frame:GetParent().link
                     local itemID= link and C_Item.GetItemInfoInstant(link)
