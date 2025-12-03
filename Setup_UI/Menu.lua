@@ -13,6 +13,8 @@ hooksecurefunc(CompositorMixin, 'Init', function(parent)
         end
     end
 end)
+
+
 --[[
 这个有BUG
 hooksecurefunc(MenuUtil, 'SetElementText', function(desc)
