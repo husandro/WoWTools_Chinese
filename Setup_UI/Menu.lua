@@ -6,7 +6,13 @@ hooksecurefunc(CompositorMixin, 'AttachFontString', function(parent)
         end
     end
 end)
-
+hooksecurefunc(CompositorMixin, 'Init', function(parent)
+    for _, r in pairs(parent.attachments) do
+        if r:GetObjectType()=='FontString' then
+            WoWTools_ChineseMixin:HookLabel(r)
+        end
+    end
+end)
 --[[
 这个有BUG
 hooksecurefunc(MenuUtil, 'SetElementText', function(desc)
