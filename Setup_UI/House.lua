@@ -1,4 +1,5 @@
 function WoWTools_ChineseMixin.Events:Blizzard_HousingModelPreview()
+    self:SetLabel(HousingModelPreviewFrame.ModelPreview.TextContainer.CollectionBonus)
     hooksecurefunc(HousingModelPreviewMixin, 'OnLoad', function(frame)
         frame:SetupTextTooltip(frame.TextContainer.CollectionBonus,
             function(tooltip)
@@ -141,7 +142,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
         end
     end)
 
-    self:HookLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.TextContainer.CollectionBonus)
+    self:SetLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.TextContainer.CollectionBonus)
 
     self:SetLabel(HousingDashboardFrame.HouseInfoContent.ContentFrame.HouseUpgradeFrame.WatchFavorButton.Label)
 end
