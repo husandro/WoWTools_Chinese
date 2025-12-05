@@ -162,6 +162,10 @@ end
 
 
 function WoWTools_ChineseMixin.Events:Blizzard_HousingTemplates()
+
+    --self:AddDialogs("CONFIRM_DESTROY_DECOR", {button1 = '接受', button2 = '拒绝'})
+    
+
     for value, name in pairs(HousingResultToErrorText or {}) do
         local cn= self:CN(name)
         if cn then
