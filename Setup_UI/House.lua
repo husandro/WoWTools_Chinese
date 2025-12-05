@@ -132,6 +132,18 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
     self:SetLabel(HousingDashboardFrame.CatalogContent.Categories.BackButton.Text)
     self:SetFrame(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame)
     self:SetButton(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame.NoHouseButton)
+
+--11.2.7中显示图标，会出错
+    WoWTools_DataMixin:Hook(HousingDashboardFrame.CatalogContent, 'UpdateCategoryText', function(frame)
+        local categoryString = frame.Categories:GetFocusedCategoryString()
+        if categoryString then
+            local t= self:SetText(categoryString)
+            if t then
+                frame.OptionsContainer.CategoryText:SetText(t)
+            end
+        end
+    end)
+
 --HousingModelPreviewMixin
     hooksecurefunc(HousingDashboardFrame.CatalogContent.PreviewFrame, 'PreviewCatalogEntryInfo', function(frame, info)
         if info and info.entryID then
