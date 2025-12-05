@@ -155,6 +155,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
     end)
 
     self:SetLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.TextContainer.CollectionBonus)
+    self:SetLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.PreviewUnavailableText)
 
     self:SetLabel(HousingDashboardFrame.HouseInfoContent.ContentFrame.HouseUpgradeFrame.WatchFavorButton.Label)
 end
