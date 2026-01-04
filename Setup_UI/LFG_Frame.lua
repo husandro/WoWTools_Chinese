@@ -9,11 +9,6 @@
 
 
 
-WoWTools_ChineseMixin:HookLabel(GroupFinderFrameGroupButton1Name)--地下城查找器 GroupFinderFrame.groupButton1.name
-WoWTools_ChineseMixin:HookLabel(GroupFinderFrameGroupButton2Name)--团队查找器 GroupFinderFrame.groupButton2.name
-WoWTools_ChineseMixin:HookLabel(GroupFinderFrameGroupButton3Name)--预创建队伍 GroupFinderFrame.groupButton3.name
-
-
 
 --LFD PVEFrame.lua
 --地下城和团队副本

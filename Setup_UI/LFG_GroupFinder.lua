@@ -41,6 +41,10 @@ end
 
 
 function WoWTools_ChineseMixin.Events:Blizzard_GroupFinder()
+    self:HookLabel(GroupFinderFrameGroupButton1Name)--地下城查找器 GroupFinderFrame.groupButton1.name
+    self:HookLabel(GroupFinderFrameGroupButton2Name)--团队查找器 GroupFinderFrame.groupButton2.name
+    self:HookLabel(GroupFinderFrameGroupButton3Name)--预创建队伍 GroupFinderFrame.groupButton3.name
+
 
     self:SetLabel(RaidFinderQueueFrameSelectionDropdownName)
     self:SetLabel(RaidFinderQueueFrameScrollFrameChildFrameRewardsLabel)
