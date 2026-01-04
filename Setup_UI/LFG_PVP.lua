@@ -740,10 +740,11 @@ function WoWTools_ChineseMixin.Events:Blizzard_PVPUI()
             PVEFrame:SetTitleFormatted('玩家VS玩家 '..(WoWTools_ChineseMixin:CN(expName) or expName)..' 第 %d 赛季', PVPUtil.GetCurrentSeasonNumber())
         end
     end)
-    PVPQueueFrameCategoryButton1.Name:SetText('快速比赛')
+    self:SetLabel(PVPQueueFrame.CategoryButton1.Name)
 
-    PVPQueueFrameCategoryButton2.Name:SetText('评级')
-    PVPQueueFrameCategoryButton3.Name:SetText('预创建队伍')
+    self:SetLabel(PVPQueueFrame.CategoryButton2.Name)
+    self:SetLabel(PVPQueueFrame.CategoryButton3.Name)
+    self:SetLabel(PVPQueueFrame.CategoryButton4.Name)
     PVPQueueFrame.NewSeasonPopup.Leave:SetText('关闭')
 
     hooksecurefunc('PVPConquestLockTooltipShow', function()
