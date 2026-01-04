@@ -1212,3 +1212,36 @@ function WoWTools_ChineseMixin.Events:Blizzard_AddOnList()
         self:UpdateOverallMetric(perfUI.Peak, '峰值CPU：%s', Enum.AddOnProfilerMetric.PeakTime)
     end
 end
+
+
+
+
+
+
+
+--幻化 12.0 才有
+function WoWTools_ChineseMixin.Events:Blizzard_Transmog()
+    self:SetLabel(TransmogFrameTitleText)
+
+    self:SetLabel(TransmogFrame.OutfitCollection.ShowEquippedGearSpellFrame.Label)
+    self:SetLabel(TransmogFrame.OutfitCollection.PurchaseOutfitButton.Text)
+    self:SetButton(TransmogFrame.OutfitCollection.SaveOutfitButton)
+
+    self:SetLabel(TransmogFrame.CharacterPreview.HideIgnoredToggle.Text)
+
+    self:HookLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.ActiveSlotTitle)
+    self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypeUnassignedButton.Text)
+    self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypeEquippedButton.Text)
+
+    self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.CustomSetsFrame.NewCustomSetButton.Text)
+
+    self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.SituationsFrame.DescriptionText)
+    self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.SituationsFrame.EnabledToggle.Text)
+    self:SetButton(TransmogFrame.WardrobeCollection.TabContent.SituationsFrame.DefaultsButton)
+    self:SetButton(TransmogFrame.WardrobeCollection.TabContent.SituationsFrame.ApplyButton)
+    hooksecurefunc(TransmogFrame.WardrobeCollection.TabContent.SituationsFrame, 'Refresh', function(frame)
+        for pool in frame.SituationFramePool:EnumerateActive() do
+            self:SetLabel(pool.Title)
+        end
+    end)
+end

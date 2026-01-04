@@ -156,7 +156,6 @@ Setup_UI\EncounterJournal_PerksProgram.lua
 Setup_UI\Item_MerchantFrame.lua
 Setup_UI\Item_LootFrame.lua
 Setup_UI\House.lua
-
 ##地下城查找器
 Setup_UI\LFG_GroupFinder.lua
 Setup_UI\LFG_Frame.lua
