@@ -355,7 +355,7 @@ self:AddDialogs("BATTLE_PET_RENAME", {text = '重命名', button1 = '接受', bu
 
 
 
---幻化
+--[[幻化12.0没有了
     self:SetLabel(WardrobeTransmogFrame.OutfitDropdown.SaveButton)
     WardrobeCollectionFrameSearchBox.Instructions:SetText('搜索')
     WardrobeCollectionFrameTab1:SetText('物品')
@@ -380,6 +380,7 @@ self:AddDialogs("BATTLE_PET_RENAME", {text = '重命名', button1 = '接受', bu
     WardrobeTransmogFrame.ModelScene.ClearAllPendingButton:HookScript('OnEnter', function()
         GameTooltip:SetText('取消所有的待定改动')
     end)
+    ]]
 
     hooksecurefunc(WardrobeSetsScrollFrameButtonMixin, 'Init', function(btn, data)
         self:SetLabel(btn.Name)
