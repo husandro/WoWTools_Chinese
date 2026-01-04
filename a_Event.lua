@@ -670,12 +670,14 @@ function WoWTools_ChineseMixin.Events:Blizzard_MajorFactions()
     end)
 
     --Blizzard_MajorFactionRenown.lua
-    hooksecurefunc(MajorFactionRenownFrame, 'SetUpMajorFactionData', function(frame)
-        local majorFactionData = C_MajorFactions.GetMajorFactionData(frame.majorFactionID) or {}
-        if majorFactionData.name and majorFactionData.currentFactionID ~= frame.majorFactionID then
-            self:SetLabel(frame.TrackFrame.Title, majorFactionData.name)
-        end
-    end)
+    if MajorFactionRenownFrame and MajorFactionRenownFrame.SetUpMajorFactionData then--12.0没有了
+        hooksecurefunc(MajorFactionRenownFrame, 'SetUpMajorFactionData', function(frame)
+            local majorFactionData = C_MajorFactions.GetMajorFactionData(frame.majorFactionID) or {}
+            if majorFactionData.name and majorFactionData.currentFactionID ~= frame.majorFactionID then
+                self:SetLabel(frame.TrackFrame.Title, majorFactionData.name)
+            end
+        end)
+    end
 end
 
 

@@ -1,10 +1,10 @@
 
 
-
+--[[12.0没有了
 hooksecurefunc(DragonridingPanelSkillsButtonMixin, 'OnLoad', function(self)--Blizzard_DragonflightLandingPage.lua
     WoWTools_ChineseMixin:SetLabel(self)
 end)
-
+]]
 
 
 

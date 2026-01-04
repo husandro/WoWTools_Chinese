@@ -158,10 +158,9 @@ Setup_UI\Item_LootFrame.lua
 Setup_UI\House.lua
 
 ##地下城查找器
-Setup_UI\LFG_QueueFrame.lua
+Setup_UI\GroupFinder.lua
 ##团队查找器
 Setup_UI\LFG_Frame.lua
-Setup_UI\LFG_ListFrame.lua
 ## PvP查找器
 Setup_UI\LFG_PVP.lua
 

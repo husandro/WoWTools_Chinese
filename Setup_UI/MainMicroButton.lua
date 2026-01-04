@@ -112,17 +112,7 @@ end)
 
 
 StoreMicroButton.tooltipText = '商城'
-hooksecurefunc(StoreMicroButton, 'UpdateMicroButton', function(self)
-    if ( C_StorePublic.IsDisabledByParentalControls() ) then
-        self.disabledTooltip = '家长监控已禁用了该功能。'
-    elseif ( Kiosk.IsEnabled() ) then
-        self.disabledTooltip = '该系统目前已被禁用。'
-    elseif ( not C_StorePublic.IsEnabled() ) then
-        if not ( GetCurrentRegionName() == "CN" ) then
-            self.disabledTooltip = '商城当前不可用。'
-        end
-    end
-end)
+
 
 
 

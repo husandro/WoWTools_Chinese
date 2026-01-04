@@ -38,8 +38,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EditMode()
         self:SetLabel(frame.Title, name)
     end)
 
-
-
+--[[EditModeNewLayoutDialog 12.0没有了
     EditModeNewLayoutDialog.Title:SetText('给新布局起名')
     EditModeNewLayoutDialog.CharacterSpecificLayoutCheckButton.Label:SetText('角色专用布局')
     EditModeNewLayoutDialog.AcceptButton:SetText('保存')
@@ -90,7 +89,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EditMode()
             and not CheckForDuplicateLayoutName(frame.AcceptButton, frame.LayoutNameEditBox)  then
             frame.AcceptButton.disabledTooltip = '输入布局的名称'
         end
-    end)
+    end)]]
 
 
 
