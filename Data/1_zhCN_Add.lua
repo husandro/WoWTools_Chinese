@@ -22,6 +22,7 @@ local tab_G={
 ['CATALOG_SHOP_BACK'] = "返回",
 ['IGNORE'] = "屏蔽",
 ['TRANSMOG_SOURCE_7']= '商栈',
+['PARTY_LEAVE'] = "离开队伍",
 }
 for en, cn in pairs(tab_G) do
     WoWTools_ChineseMixin:SetCN(_G[en], cn)
