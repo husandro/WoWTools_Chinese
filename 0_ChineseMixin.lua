@@ -443,7 +443,7 @@ end
 function WoWTools_ChineseMixin:AddDialogs(string, tab)
     if StaticPopupDialogs[string] then
         for name, text in pairs(tab) do
-            if StaticPopupDialogs[string][name] then
+            if not issecurevalue(StaticPopupDialogs[string][name]) and StaticPopupDialogs[string][name] then
                 StaticPopupDialogs[string][name]= text
             end
         end
