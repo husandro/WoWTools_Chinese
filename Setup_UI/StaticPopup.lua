@@ -220,9 +220,43 @@ self:AddDialogs("CHAT_CHANNEL_PASSWORD", {text = '请输入\'%1$s\'的密码。'
 self:AddDialogs("CAMP", {text = '%d%s后返回角色选择画面', button1 = '取消'})
 self:AddDialogs("QUIT", {text = '%d%s后退出游戏', button1 = '立刻退出', button2 = '取消'})
 self:AddDialogs("LOOT_BIND", {text = '拾取%s后，该物品将与你绑定', button1 = '确定', button2 = '取消'})
+
 self:AddDialogs("EQUIP_BIND", {text = '装备之后，该物品将与你绑定。', button1 = '确定', button2 = '取消'})
+local function GetBindWarning(itemLocation)
+	local item = Item:CreateFromItemLocation(itemLocation);
+	if not item then
+		return;
+	end
+
+	local _itemID, _itemType, _itemSubType, _itemEquipLoc, _icon, itemClassID, itemSubclassID = C_Item.GetItemInfoInstant(item:GetItemID());
+	local isArmor = (itemClassID == Enum.ItemClass.Armor) and (itemSubclassID ~= Enum.ItemArmorSubclass.Shield);
+	if isArmor and not IsItemPreferredArmorType(item:GetItemLocation()) then
+		return '|cnRED_FONT_COLOR:这不是你偏好的护甲类型。|r';
+	end
+end
+self:HookDialog('EQUIP_BIND', 'OnShow', function(dialog, data)
+    local warning = GetBindWarning(data.itemLocation)
+    if warning then
+        dialog:SetText("装备之后，该物品将与你绑定。|n|n" .. warning)
+    end
+end)
+
 self:AddDialogs("EQUIP_BIND_REFUNDABLE", {text = '进行此项操作会使该物品无法退还', button1 = '确定', button2 = '取消'})
+self:HookDialog('EQUIP_BIND_REFUNDABLE', 'OnShow', function(dialog, data)
+    local warning = GetBindWarning(data.itemLocation)
+    if warning then
+        dialog:SetText("进行此项操作会使该物品无法退还" .. warning)
+    end
+end)
+
 self:AddDialogs("EQUIP_BIND_TRADEABLE", {text = '执行此项操作会使该物品不可交易。', button1 = '确定', button2 = '取消'})
+self:HookDialog('EQUIP_BIND_TRADEABLE', 'OnShow', function(dialog, data)
+    local warning = GetBindWarning(data.itemLocation)
+    if warning then
+        dialog:SetText("执行此项操作会使该物品不可交易。" .. warning)
+    end
+end)
+
 self:AddDialogs("USE_BIND", {text = '使用该物品后会将它和你绑定', button1 = '确定', button2 = '取消'})
 self:AddDialogs("CONFIM_BEFORE_USE", {text = '你确定要使用这个物品吗？', button1 = '确定', button2 = '取消'})
 self:AddDialogs("USE_NO_REFUND_CONFIRM", {text = '进行此项操作会使该物品无法退还', button1 = '确定', button2 = '取消'})
