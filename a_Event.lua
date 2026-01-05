@@ -1245,3 +1245,18 @@ function WoWTools_ChineseMixin.Events:Blizzard_Transmog()
         end
     end)
 end
+
+
+function WoWTools_ChineseMixin.Events:Blizzard_CompactRaidFrames()
+    self:HookLabel(CompactRaidFrameManagerDisplayFrameModeControlDropdown.Text)
+    self:HookLabel(CompactRaidFrameManagerDisplayFrameRestrictPingsDropdown.Text)
+    self:HookLabel(CompactRaidFrameManagerDisplayFrameModeControlDropdown.Text)
+
+    self:SetLabel(CompactRaidFrameManagerDisplayFrame.RestrictPingsLabel)
+    self:SetLabel(CompactRaidFrameManagerLeavePartyButtonText)
+    self:HookButton(CompactRaidFrameManagerLeaveInstanceGroupButton)
+    self:HookLabel(parentBottomButtonsLeaveInstanceGroupButton)
+
+    self:SetLabel(CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerUnitTab)
+    self:SetLabel(CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerGroundTab)
+end

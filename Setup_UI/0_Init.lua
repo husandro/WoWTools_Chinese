@@ -347,42 +347,8 @@ hooksecurefunc(UIErrorsFrame, 'AddMessage', function(self, msg, ...)
 end)
 
 
---团队
-CompactRaidFrameManager.displayFrame.label:SetText(IsInRaid() and '团员' or '队员')
-hooksecurefunc('CompactRaidFrameManager_UpdateLabel', function()
-    CompactRaidFrameManager.displayFrame.label:SetText(IsInRaid() and '团员' or '队员')
-end)
---WoWTools_ChineseMixin:SetLabel(parentBottomButtonsLeavePartyButton)
-if parentBottomButtonsLeavePartyButton then--11.2没有了
-    parentBottomButtonsLeavePartyButton:SetText('离开队伍')
-else
-    WoWTools_ChineseMixin:SetLabel(CompactRaidFrameManagerDisplayFrame.RestrictPingsLabel)
-    WoWTools_ChineseMixin:SetLabel(CompactRaidFrameManagerLeavePartyButtonText)
-    WoWTools_ChineseMixin:HookButton(CompactRaidFrameManagerLeaveInstanceGroupButton)
-end
 
---WoWTools_ChineseMixin:SetLabel(parentBottomButtonsLeaveInstanceGroupButton)
-WoWTools_ChineseMixin:HookLabel(parentBottomButtonsLeaveInstanceGroupButton)--:SetText('离开副本队伍')
 
-WoWTools_ChineseMixin:SetLabel(CompactRaidFrameManagerDisplayFrame.RestrictPingsLabel.Label)
-WoWTools_ChineseMixin:SetLabel(CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerUnitTab)
-WoWTools_ChineseMixin:SetLabel(CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerGroundTab)
---[[hooksecurefunc(CompactRaidFrameManagerDisplayFrame.RestrictPingsButton, 'UpdateLabel', function(self)
-    self.Text:SetText(IsInRaid() and '只限助手发送信号' or '只限领袖发送信号')
-end)
-CompactRaidFrameManagerDisplayFrameEveryoneIsAssistButtonText:SetText('将所有人提升为助理')
-
-CompactRaidFrameManagerDisplayFrameEditMode:SetText('编辑')
-CompactRaidFrameManagerDisplayFrameConvertToRaid:SetText('转团')
-hooksecurefunc('CompactRaidFrameManager_SetSetting', function(settingName, value)
-    if ( settingName == "IsShown" ) then
-        if EditModeManagerFrame:AreRaidFramesForcedShown() or (value and value ~= "0") then
-            CompactRaidFrameManagerDisplayFrameHiddenModeToggle:SetText('隐藏')
-        else
-            CompactRaidFrameManagerDisplayFrameHiddenModeToggle:SetText('显示')
-        end
-    end
-end)]]
 
 WoWTools_ChineseMixin:SetFrame(RolePollPopup)--, '选择你的职责', 1)
 RolePollPopupAcceptButtonText:SetText('接受')
