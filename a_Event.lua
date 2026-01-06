@@ -567,6 +567,17 @@ function WoWTools_ChineseMixin.Events:Blizzard_TimeManager()
     end)
 
 end
+
+
+
+
+
+
+
+if ArcheologyDigsiteProgressBar then
+    WoWTools_ChineseMixin:HookLabel(ArcheologyDigsiteProgressBar.BarTitle)
+end
+
 function WoWTools_ChineseMixin.Events:Blizzard_ArchaeologyUI()
     ArchaeologyFrameTitleText:SetText('考古学')
     ArchaeologyFrameSummaryPageTitle:SetText('种族')
