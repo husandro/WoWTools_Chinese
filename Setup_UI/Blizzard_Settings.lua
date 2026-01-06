@@ -146,10 +146,11 @@ function WoWTools_ChineseMixin.Events:Blizzard_Settings()
     WoWTools_ChineseMixin:AddDialogs('GAME_SETTINGS_APPLY_DEFAULTS', {text= '你想要将所有用户界面和插件设置重置为默认状态，还是只重置这个界面或插件的设置？', button1= '所有设置', button2= '取消', button3= '这些设置'})--Blizzard_Dialogs.lua
     SettingsPanel.GameTab.Text:SetText('游戏')
     SettingsPanel.AddOnsTab.Text:SetText('插件')
-    SettingsPanel.NineSlice.Text:SetText('选项')
+    
+    self:SetLabel(SettingsPanel.NineSlice.Text)
+    
     SettingsPanel.CloseButton:SetText('关闭')
     SettingsPanel.ApplyButton:SetText('应用')
 
-    SettingsPanel.NineSlice.Text:SetText('选项')
     SettingsPanel.SearchBox.Instructions:SetText('搜索')
 end
