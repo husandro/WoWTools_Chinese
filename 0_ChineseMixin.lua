@@ -56,7 +56,7 @@ function WoWTools_ChineseMixin:SetCN(en, cn)
 end
 
 function WoWTools_ChineseMixin:CN(text)
-    if text then
+    if canaccessvalue(text) and text then
         return CNData[text]
     end
 end
@@ -89,6 +89,10 @@ end
 
 
 function WoWTools_ChineseMixin:GetData(text, tab)
+    if not canaccessvalue(text) then
+        return
+    end
+
     local data= self:CN(text)
     if data then
         return data
@@ -344,7 +348,11 @@ end
 
 --( ) . % + - * ? [ ^ $
 function WoWTools_ChineseMixin:SetText(text)
-    if type(text)~='string' or not text:find('[%a]') or self:IsCN(text) then
+    if not canaccessvalue(text)
+        or type(text)~='string'
+        or not text:find('[%a]')
+        or self:IsCN(text)
+    then
         return
     end
 
