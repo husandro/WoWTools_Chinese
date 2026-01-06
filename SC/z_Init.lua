@@ -74,18 +74,20 @@ end
 
 --单位
 local function Get_NPC_ID(unit)--NPC ID
-    if UnitExists(unit) and not UnitIsPlayer(unit) then
+    if canaccessvalue(unit) and UnitExists(unit) and not UnitIsPlayer(unit) then
         local guid= UnitGUID(unit)
-        if guid then
+        if canaccessvalue(guid) and guid then
             return select(6,  strsplit("-", guid))
         end
     end
 end
 --Unit 单位 [npcID]={T=, D=}
 function WoWTools_ChineseMixin:GetUnitData(unit, npcID)
-    npcID= GetValueID(npcID or Get_NPC_ID(unit))
-    if npcID and WoWTools_SC_Unit then
-        return WoWTools_SC_Unit[npcID]
+    if canaccessvalue(unit) then
+        npcID= GetValueID(npcID or Get_NPC_ID(unit))
+        if npcID and WoWTools_SC_Unit then
+            return WoWTools_SC_Unit[npcID]
+        end
     end
 end
 
