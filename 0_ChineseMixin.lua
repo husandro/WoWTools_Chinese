@@ -310,6 +310,7 @@ end
 local function set(self, text)
     if not self
         or not self.SetText
+        or not canaccessvalue(text)
         or (not text and not self.GetText)
     then
         return
@@ -469,19 +470,28 @@ function WoWTools_ChineseMixin:HookDialog(string, text, func)
 end
 
 function WoWTools_ChineseMixin:HookLabel(label, setFont)
-    if label and not label.hook_chinese and label.SetText then
-        if setFont then
-            self:SetCNFont(label)
-        end
-        self:SetLabel(label)
-        hooksecurefunc(label, 'SetText', function(obj, name)
-            set(obj, name)
-        end)
-        label:HookScript('OnShow', function(obj)
-            set(obj)
-        end)
-        label.hook_chinese=true
+    if not label
+        or label.hook_chinese
+        or not label.SetText
+        or (label.IsPreventingSecretValues and label:IsPreventingSecretValues())
+    then
+        return
     end
+
+    if setFont then
+        self:SetCNFont(label)
+    end
+
+    self:SetLabel(label)
+
+    hooksecurefunc(label, 'SetText', function(obj, name)
+        if obj:IsVisible() then
+            set(obj, name)
+        end
+    end)
+    label:HookScript('OnShow', set)
+
+    label.hook_chinese=true
 end
 
 
