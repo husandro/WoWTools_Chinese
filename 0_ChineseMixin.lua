@@ -307,7 +307,7 @@ end
 
 
 
-local function set(self, text)
+local function set_label(self, text)
     if not self
         or not self.SetText
         or not canaccessvalue(text)
@@ -316,7 +316,10 @@ local function set(self, text)
         return
     end
 
-    text= text or self:GetText()
+    if not text then
+        text= self:GetText()
+    end
+
     local cn= WoWTools_ChineseMixin:SetText(text)
     if cn and cn~=text then
         self:SetText(cn)
@@ -424,9 +427,9 @@ function WoWTools_ChineseMixin:SetLabel(label, text, affer, setFont)
             self:SetCNFont(lable)
         end
         if affer then
-            C_Timer.After(affer, function() set(label, text) end)
+            C_Timer.After(affer, function() set_label(label, text) end)
         else
-            set(label, text)
+            set_label(label, text)
         end
     end
 end
@@ -484,12 +487,8 @@ function WoWTools_ChineseMixin:HookLabel(label, setFont)
 
     self:SetLabel(label)
 
-    hooksecurefunc(label, 'SetText', function(obj, name)
-        if obj:IsVisible() then
-            set(obj, name)
-        end
-    end)
-    label:HookScript('OnShow', set)
+    hooksecurefunc(label, 'SetText', set_label)
+    label:HookScript('OnShow', set_label)
 
     label.hook_chinese=true
 end

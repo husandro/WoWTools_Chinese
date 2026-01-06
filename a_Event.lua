@@ -575,7 +575,7 @@ end
 
 
 if ArcheologyDigsiteProgressBar then
-    WoWTools_ChineseMixin:HookLabel(ArcheologyDigsiteProgressBar.BarTitle)
+    WoWTools_ChineseMixin:SetLabel(ArcheologyDigsiteProgressBar.BarTitle)
 end
 
 function WoWTools_ChineseMixin.Events:Blizzard_ArchaeologyUI()
