@@ -57,8 +57,8 @@ Data\Item_Data_TransmogSet.lua
 
 ##职业
 Data\Class.lua
-
-
+##考古
+Data\ArchaeologyUI.lua
 
 ##Function
 ##英雄专精
