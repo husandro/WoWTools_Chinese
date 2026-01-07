@@ -158,31 +158,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
     EncounterJournalSearchBox.Instructions:SetText('搜索')
     self:HookLabel(EncounterJournal.instanceSelect.Title)
 
-    --[[hooksecurefunc('EJInstanceSelect_UpdateTitle', function(tabId)
-        local text
-        if ( tabId == EncounterJournal.suggestTab:GetID()) then
-            text= '推荐玩法'
-        elseif ( tabId == EncounterJournal.raidsTab:GetID()) then
-            text= '团队副本'
-        elseif ( tabId == EncounterJournal.dungeonsTab:GetID()) then
-            text= '地下城'
-        --elseif ( tabId == EncounterJournal.MonthlyActivitiesTab:GetID()) then
-        elseif (tabId == EncounterJournal.LootJournalTab:GetID()) then
-            text= '套装物品'
-        end
-        if text then
-            self:HookLabel(EncounterJournal.instanceSelect.Title):SetText(text)
-        end
-    end)]]
-
-
-    --EncounterJournalEncounterFrameInfoFilterToggle.Text:SetText('过滤器')
     EncounterJournalEncounterFrameInstanceFrameMapButtonText:SetText('显示\n地图')
     EncounterJournalEncounterFrameInfoOverviewScrollFrameScrollChildTitle:SetText('综述')
 
 
-    --hooksecurefunc('EncounterJournal_ListInstances', function()
-    --EncounterInstanceButtonTemplate
     hooksecurefunc(EncounterJournal.instanceSelect.ScrollBox, 'Update', function(frame)
         frame= frame or EncounterJournal.instanceSelect.ScrollBox
         if not frame:GetView() then
@@ -195,7 +174,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
     
 
-    --BOSS，掉落
+--BOSS，掉落
     hooksecurefunc(EncounterJournalItemMixin,'Init', function(frame)--Blizzard_EncounterJournal.lua
         if not frame:IsVisible() then
             return
@@ -338,14 +317,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
         end
 	    btn.ItemLevel:SetFormattedText('物品等级%d', data.itemLevel)
     end)
-    --[[hooksecurefunc(EncounterJournal.LootJournalItems.ItemSetsFrame.ScrollBox, 'Update', function(frame)
-        if not frame:GetView() then
-            return
-        end
-        for _, btn in pairs(frame:GetFrames() or {}) do
-            self:SetLabel(btn.SetName)
-        end
-    end)]]
 
 
 
@@ -356,7 +327,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
         end
     end)
 
-    --副本，数据
+--副本，数据
     hooksecurefunc('EncounterJournal_DisplayInstance', function()
         local frame= EncounterJournal.encounter
         local instanceName, description = EJ_GetInstanceInfo()
@@ -369,10 +340,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
         if tooltip then
             frame.info['overviewTab'].tooltip= tooltip
         end
-        --[[local desc= self:GetInstanceDesc(instanceID)
-        if desc then
-            EncounterJournal.encounter.instance.LoreScrollingFont:SetText(desc)
-        end]]
     end)
 
     self:HookButton(EncounterJournalEncounterFrameInfoSlotFilterToggle)
@@ -391,9 +358,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
         self:SetLabel(frame.info.encounterTitle, ename)
 
         local desc= WoWTools_ChineseMixin:CN(description)
-        
-        --set_navButton(EncounterJournal.navBar, title)--导航条
-        
         if desc then
             frame.overviewFrame.loreDescription:SetText(desc)
             frame.infoFrame.description:SetText(desc)
@@ -488,8 +452,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
             end
     end)
 
-
-    --hooksecurefunc(EncounterJournalItemMixin, 'Init', function(frame, data)可用
     do
         WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
     end
@@ -499,11 +461,42 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
 
 
-    if EncounterJournal.TutorialsFrame then--11.2.7
-        self:SetFrame(EncounterJournal.TutorialsFrame.Contents)
-        self:SetButton(EncounterJournal.TutorialsFrame.Contents.StartButton)
-        self:SetLabel(EncounterJournalInstanceSelect.Title)
+
+    self:SetFrame(EncounterJournal.TutorialsFrame.Contents)
+    self:SetButton(EncounterJournal.TutorialsFrame.Contents.StartButton)
+    self:SetLabel(EncounterJournalInstanceSelect.Title)
+
+--旅程 12.0
+    if not EncounterJournalJourneysFrame  then
+        return
     end
+
+
+    self:HookLabel(EncounterJournalJourneysFrame.JourneyOverview.JourneyName)
+    self:SetLabel(EncounterJournalJourneysFrame.JourneyOverview.JourneyWarbandLabel)
+    self:HookLabel(EncounterJournalJourneysFrame.JourneyOverview.JourneyDescription)
+
+    hooksecurefunc(EncounterJournalJourneysFrame.JourneysList, 'Update', function(frame)
+        if not frame:HasView() then
+            return
+        end
+        for _, btn in pairs(frame:GetFrames() or {}) do
+            self:SetLabel(btn.RenownCardFactionName)
+            self:SetLabel(btn.RenownCardFactionLevel)
+            self:SetLabel(btn.CategoryName)
+        end
+    end)
+
+--奖励
+    self:HookLabel(EncounterJournalJourneysFrame.JourneyProgress.JourneyName)
+    self:SetLabel(EncounterJournalJourneysFrame.JourneyProgress.LockedStateFrame.JourneyLockedText)
+    self:HookButton(EncounterJournalJourneysFrame.JourneyProgress.OverviewBtn)
+    hooksecurefunc(JourneyProgressFrameMixin, 'SetRewards', function(frame, level)
+        for btn in frame.rewardPool:EnumerateActive() do
+            self:SetLabel(btn.RewardCardName)
+        end
+        
+    end)
 end
 
 
