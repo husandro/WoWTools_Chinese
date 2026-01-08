@@ -155,7 +155,7 @@ end
 
 
 
-
+--[[
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
     --sectionID= GetValueID(sectionID)
     difficultyID= difficultyID or EJ_GetDifficulty()
@@ -169,9 +169,9 @@ function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
             }
         end
     end
-end
+end]]
 
---[[function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
+function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
     sectionID= GetValueID(sectionID)
     difficultyID= GetValueID(difficultyID) or EJ_GetDifficulty()
     if sectionID and WoWTools_SC_SectionEncounter then
@@ -179,11 +179,11 @@ end
         if data then
             return {
                 T=data.T,
-                D=data[difficultyID],
+                D=data[difficultyID] or data[14] or data[1],
             }
         end
     end
-end]]
+end
 
 function WoWTools_ChineseMixin:GetBoosSectionName(sectionID, difficultyID)
     local data= self:GetBoosSectionData(sectionID, difficultyID)
