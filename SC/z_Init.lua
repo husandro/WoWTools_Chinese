@@ -14,14 +14,21 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
 
     local title, desc
 
-    local data= itemID<=15e4 and WoWTools_SC_Item[itemID] or WoWTools_SC_Item2[itemID]
+    local data
+
+    if WoWTools_SC_Item and itemID<=15e4 then
+        data= WoWTools_SC_Item[itemID]
+    elseif WoWTools_SC_Item2 then
+        data= WoWTools_SC_Item2[itemID]
+    end
+    
     if data then
         title= data.T
         desc= data.D
     end
 
     local setID= select(16, C_Item.GetItemInfo(itemID))
-    if setID then
+    if setID and WoWTools_SC_Sets then
         data= WoWTools_SC_Sets[setID]
         if data then
             local specID= PlayerUtil.GetCurrentSpecID()
