@@ -20,10 +20,10 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
         desc= data.D
     end
 
-    if WoWTools_SC_SetsItem then
+    if WoWTools_SC_Sets then
         local setID= select(16, C_Item.GetItemInfo(itemID))
         if setID then
-            data= WoWTools_SC_SetsItem[setID]
+            data= WoWTools_SC_Sets[setID]
             if data then
                 local specID= PlayerUtil.GetCurrentSpecID()
                 if data[specID] then
