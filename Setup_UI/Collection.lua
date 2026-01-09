@@ -167,12 +167,14 @@ self:AddDialogs("BATTLE_PET_RENAME", {text = '重命名', button1 = '接受', bu
         PetJournalHealPetButtonSpellName:SetText('复活\n战斗宠物')
     end
 --列表，名称
-    hooksecurefunc('PetJournal_InitPetButton', function(pet)
+    hooksecurefunc('PetJournal_InitPetButton', function(pet, elementData)
         if not pet:IsVisible() then
             return
         end
-        local companionID= select(11, C_PetJournal.GetPetInfoByIndex(pet.index))
+        local companionID= select(11, C_PetJournal.GetPetInfoByIndex(pet.index or elementData.index))
+       
         local npcName= self:GetUnitName(nil, companionID)
+         print(npcName)
         if npcName and not pet.cnName then
             pet.cnName= self:Cstr(pet, {layer='ARTWORK'})
             pet.cnName:SetPoint('BOTTOMLEFT', pet.icon, 'BOTTOMRIGHT', 10, 1)
