@@ -5,6 +5,7 @@ https://wago.tools/db2/ItemSubClass?locale=zhCN
 
 local tab={
 {20,0, '装饰'},
+{20,1, '住宅染料'},
 {20,2, '房间'},
 {20,3, '房间自定义'},
 {20,4, '室外自定义'},
