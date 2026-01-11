@@ -172,9 +172,9 @@ self:AddDialogs("BATTLE_PET_RENAME", {text = '重命名', button1 = '接受', bu
             return
         end
         local companionID= select(11, C_PetJournal.GetPetInfoByIndex(pet.index or elementData.index))
-       
+
         local npcName= self:GetUnitName(nil, companionID)
-         print(npcName)
+
         if npcName and not pet.cnName then
             pet.cnName= self:Cstr(pet, {layer='ARTWORK'})
             pet.cnName:SetPoint('BOTTOMLEFT', pet.icon, 'BOTTOMRIGHT', 10, 1)

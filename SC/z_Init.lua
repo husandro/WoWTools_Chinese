@@ -89,9 +89,13 @@ local function Get_NPC_ID(unit)--NPC ID
 end
 --Unit 单位 [npcID]={T=, D=}
 function WoWTools_ChineseMixin:GetUnitData(unit, npcID)
+    if not WoWTools_SC_Unit then
+        return
+    end
     if canaccessvalue(unit) or npcID then
-        npcID= GetValueID(npcID or Get_NPC_ID(unit))
-        if npcID and WoWTools_SC_Unit then
+        npcID= npcID or Get_NPC_ID(unit)
+        npcID= GetValueID(npcID)
+        if npcID then
             return WoWTools_SC_Unit[npcID]
         end
     end
@@ -101,7 +105,7 @@ function WoWTools_ChineseMixin:GetUnitName(unit, npcID)
     unit= unit or 'npc'
     local data= self:GetUnitData(unit, npcID)
     if data then
-        return data[1], data[2]
+        return data.T, data.D
     end
 end
 

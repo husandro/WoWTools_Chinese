@@ -15,7 +15,6 @@ function WoWTools_ChineseMixin.Events:Blizzard_StaticPopup()
         if _G['StaticPopup'..i] and _G['StaticPopup'..i].ItemFrame then
             hooksecurefunc(_G['StaticPopup'..i].ItemFrame.Text, 'SetText', function(frame, name)
                  local itemName= self:CN(name)
-                 print(name)
                 if not itemName then
                     local link= frame:GetParent().link
                     local itemID= link and C_Item.GetItemInfoInstant(link)

@@ -165,13 +165,6 @@ end
 function WoWTools_ChineseMixin.Events:Blizzard_HousingTemplates()
 
     self:AddDialogs("CONFIRM_DESTROY_DECOR", {button1 = '接受', button2 = '拒绝'})
-    --[[hooksecurefunc(StaticPopupDialogs["CONFIRM_DESTROY_DECOR"], "OnShow", function(frame, data)
-        print(frame.Text)
-        info= data
-        for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR|r') for k2,v2 in pairs(v) do print('|cffffff00',k2,v2, '|r') end print('|cffff0000---',k, '---END|r') else print(k,v) end end print('|cffff00ff——————————|r')
-    end)]]
-    
-
     for value, name in pairs(HousingResultToErrorText or {}) do
         local cn= self:CN(name)
         if cn then
