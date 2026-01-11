@@ -783,6 +783,14 @@ local tab={
 {"熵逝残痕", 463,2469},
 {"吞噬者之心", 463,2470},
 {"幽暗之心", 463,2471},
+
+
+}
+
+
+local tab2
+if not CombatLogGetCurrentEventInfo then
+    tab={
 {"密谋小径", 464,2433},
 {"非法降雨", 464,2435},
 {"占卜师平台", 464,2434},
@@ -809,11 +817,8 @@ local tab={
 {"觅食溪谷", 470,2514},
 {"狂怒之心", 470,2513},
 
-}
-
-
-
-
+    }
+end
 
 
 
@@ -829,5 +834,18 @@ do
             end
         end
     end
+    if tab2 then
+        for _, data in pairs(tab2) do
+        if data[2] and data[3] then
+            for _, member in pairs(C_Map.GetMapGroupMembersInfo(data[2])) do
+                if member and member.mapID==data[3] then
+                    WoWTools_ChineseMixin:SetCN(member.name, data[1])
+                    break
+                end
+            end
+        end
+    end
+    end
 end
-tab=nil
+tab= nil
+tab2= nil
