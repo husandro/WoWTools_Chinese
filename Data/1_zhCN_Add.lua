@@ -23,10 +23,8 @@ local tab_G={
 ['IGNORE'] = "屏蔽",
 ['TRANSMOG_SOURCE_7']= '商栈',
 ['PARTY_LEAVE'] = "离开队伍",
+['BUG_CATEGORY14'] = "PvP"
 }
-for en, cn in pairs(tab_G) do
-    WoWTools_ChineseMixin:SetCN(_G[en], cn)
-end
 
 
 
@@ -34,10 +32,7 @@ local tabString={
 [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_ONLINE, FRIENDS_LIST_AVAILABLE)]= "|TInterface\\FriendsFrame\\StatusIcon-Online:16:16|t 有空",
 [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_AFK, FRIENDS_LIST_AWAY)]= "|TInterface\\FriendsFrame\\StatusIcon-Away:16:16|t 离开",
 [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_DND, FRIENDS_LIST_BUSY)]= "|TInterface\\FriendsFrame\\StatusIcon-DnD:16:16|t 忙碌",
-
 [CURRENCY_FILTER_TYPE_CHARACTER:format(UnitName('player'))] = "仅限|A:auctionhouse-icon-favorite:0:0|a我",
-    --['Alliance', '联盟')
-    --'Horde', '部落')
 }
 
 
@@ -122,6 +117,18 @@ do
     end
 end
 tabItem=nil
+
+
+
+
+
+
+
+
+
+for en, cn in pairs(tab_G) do
+    WoWTools_ChineseMixin:SetCN(_G[en], cn)
+end
 
 
 EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)

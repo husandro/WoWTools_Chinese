@@ -597,15 +597,16 @@ local tab={
 
 
 
-
-
-do
-    for currencyID, info in pairs(tab) do
-        local data =C_CurrencyInfo.GetCurrencyInfo(currencyID)
-        if data then
-            WoWTools_ChineseMixin:SetCN(data.name, info[1])
-            WoWTools_ChineseMixin:SetCN(data.description, info[2])
+EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
+    do
+        for currencyID, info in pairs(tab) do
+            local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+            if data then
+                WoWTools_ChineseMixin:SetCN(data.name, info[1])
+                WoWTools_ChineseMixin:SetCN(data.description, info[2])
+            end
         end
     end
-end
-tab=nil
+    tab=nil
+    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
+end)

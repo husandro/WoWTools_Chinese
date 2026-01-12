@@ -35,6 +35,7 @@ Data\Faction_Data_Race.lua
 Data\Faction_Data_Friend.lua
 ##货币
 Data\Currency_Data.lua
+Data\Currency_Category.lua
 ##战役，章节
 Data\CampaignChapter.lua
 ##专业
