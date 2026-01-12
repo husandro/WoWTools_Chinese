@@ -534,6 +534,23 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
         progressFrame.JourneyLevelProgress:SetFormattedText('当前进度 |cnHIGHLIGHT_FONT_COLOR:%d/%d|r', progress, threshold)
     end)
 end
+    --[[local function set_enter(frame)
+        if frame.majorFactionData and frame.majorFactionData.isUnlocked then
+            local cn= self:CN(frame.majorFactionData.unlockDescription)
+            if cn then
+                GameTooltip_AddErrorLine(GameTooltip, cn)
+                GameTooltip:Show()
+            end
+        end
+    end
+    for _, frame in EncounterJournalJourneysFrame.JourneysList:EnumerateFrames() do
+        local data= frame:GetElementData()
+		if data and data.isRenownJourney then
+            frame:HookScript('OnEnter', set_enter)
+        end
+	end
+    hooksecurefunc(RenownCardButtonMixin, 'OnEnter', set_enter)]]
+
 
 
 

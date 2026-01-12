@@ -5801,9 +5801,9 @@ EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(ow
 
                 if C_Reputation.IsMajorFaction(factionID) and tab.O then
                     if tab.U then
-                        local major= C_MajorFactions.GetMajorFactionData(factionID) or {}
-                        if major.isUnlocked==false then
-                            WoWTools_ChineseMixin:SetCN(tab.U, major.unlockDescription)
+                        local major= C_MajorFactions.GetMajorFactionData(factionID)
+                        if major and not major.isUnlocked then
+                            WoWTools_ChineseMixin:SetCN(major.unlockDescription, tab.U)
                         end
                     end
 
