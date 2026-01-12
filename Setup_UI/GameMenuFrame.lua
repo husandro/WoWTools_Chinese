@@ -9,3 +9,6 @@ hooksecurefunc(GameMenuFrame, 'InitButtons', function(self)
     end
 end)
 
+WoWTools_ChineseMixin:SetLabel(GameMenuFrame.NewOptionsFrame.Label)
+WoWTools_ChineseMixin:SetLabel(GameMenuFrame.NewOptionsFrame.BGLabel)
+WoWTools_ChineseMixin:SetLabel(GameMenuFrame.NewOptionsFrame.label)

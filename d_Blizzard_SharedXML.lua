@@ -35,5 +35,12 @@ function WoWTools_ChineseMixin.Events:Blizzard_SharedXML()
 --新，字 NEW_CAPS
     hooksecurefunc(NewFeatureLabelMixin, 'OnLoad', function(frame)
         self:SetLabel(frame.Label)
+        self:SetLabel(frame.BGLabel)
+        self:SetLabel(frame.label)
     end)
+    --[[hooksecurefunc(NewFeatureLabelMixin, 'NewFeatureLabel_OnShow', function(frame)
+        self:SetLabel(frame.Label)
+        self:SetLabel(frame.BGLabel)
+        self:SetLabel(frame.label)
+    end)]]
 end
