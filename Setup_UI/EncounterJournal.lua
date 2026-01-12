@@ -172,7 +172,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
         end
     end)
 
-    
+
 
 --BOSS，掉落
     hooksecurefunc(EncounterJournalItemMixin,'Init', function(frame)--Blizzard_EncounterJournal.lua
@@ -296,7 +296,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
 
 
-    
+
 
 
 
@@ -430,8 +430,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
 
     hooksecurefunc('EJSuggestFrame_RefreshDisplay', function()
-        local frame = EncounterJournal.suggestFrame;
-        local num= #frame.suggestions
+        local frame = EncounterJournal.suggestFrame        local num= #frame.suggestions
         if  num== 0 then
             return
         end
@@ -481,9 +480,31 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
             return
         end
         for _, btn in pairs(frame:GetFrames() or {}) do
-            self:SetLabel(btn.RenownCardFactionName)
-            self:SetLabel(btn.RenownCardFactionLevel)
-            self:SetLabel(btn.CategoryName)
+            local data= btn:GetElementData() or {}
+
+            if data.category then
+                self:SetLabel(btn.CategoryName)--类别
+            elseif data.divider then
+            elseif data.isRenownJourney then
+                self:SetLabel(btn.RenownCardFactionName)--名称
+
+                if data.paragonInfo and data.paragonInfo.level ~= 0 then
+                    btn.RenownCardFactionLevel:SetFormattedText('最大名望：等级%d', data.renownLevel + data.paragonInfo.level)
+                else
+                    btn.RenownCardFactionLevel:SetFormattedText('等级 %d', data.renownLevel)
+                end
+
+                self:SetLabel(btn.WatchedFactionToggleFrame.WatchFactionCheckbox.Label)--"显示为经验条
+
+            else
+                self:SetLabel(btn.JourneyCardName)
+
+                if data.paragonInfo and data.paragonInfo.level ~= 0 then
+                    btn.JourneyCardLevel:SetFormattedText('最大名望：等级%d', data.renownLevel + data.paragonInfo.level)
+                else
+                    btn.JourneyCardLevel:SetFormattedText('等级 %d', data.renownLevel)
+                end
+            end
         end
     end)
 
@@ -491,11 +512,26 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
     self:HookLabel(EncounterJournalJourneysFrame.JourneyProgress.JourneyName)
     self:SetLabel(EncounterJournalJourneysFrame.JourneyProgress.LockedStateFrame.JourneyLockedText)
     self:HookButton(EncounterJournalJourneysFrame.JourneyProgress.OverviewBtn)
-    hooksecurefunc(JourneyProgressFrameMixin, 'SetRewards', function(frame, level)
+
+--JourneyProgressFrameMixin
+    hooksecurefunc(EncounterJournalJourneysFrame.JourneyProgress, 'SetRewards', function(frame)
         for btn in frame.rewardPool:EnumerateActive() do
             self:SetLabel(btn.RewardCardName)
         end
-        
+    end)
+
+    hooksecurefunc(EncounterJournalJourneysFrame.JourneyProgress, 'SetupProgressDetails', function(frame)
+        local progressFrame = frame.ProgressDetailsFrame
+        local threshold, progress
+        if frame.majorFactionData.paragonInfo and frame.majorFactionData.renownLevel == frame.maxLevel  then
+            threshold = frame.majorFactionData.paragonInfo.threshold
+            progress = frame.majorFactionData.paragonInfo.value - (threshold * frame.majorFactionData.paragonInfo.level)
+        else
+            threshold = frame.majorFactionData.renownLevelThreshold
+            progress = frame.majorFactionData.renownReputationEarned
+        end
+
+        progressFrame.JourneyLevelProgress:SetFormattedText('当前进度 |cnHIGHLIGHT_FONT_COLOR:%d/%d|r', progress, threshold)
     end)
 end
 
