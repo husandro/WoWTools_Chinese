@@ -29,7 +29,6 @@ Data\EncounterJournal_Data_PerksActivity_Tag.lua
 Data\EncounterJournal_Data_Instance.lua
 Data\EncounterJournal_PerksActivity.lua
 ##派系
-Data\Faction_Data.lua
 Data\Faction_Data_AlliedRace.lua
 Data\Faction_Data_Race.lua
 Data\Faction_Data_Friend.lua
@@ -114,7 +113,9 @@ SC\Spell.lua
 SC\Spell2.lua
 SC\Unit.lua
 SC\Gossip.lua
+SC\Faction.lua
 SC\z_Init.lua
+
 
 a_Event.lua
 b_Frames.lua

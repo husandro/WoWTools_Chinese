@@ -21,7 +21,7 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
     elseif WoWTools_SC_Item2 then
         data= WoWTools_SC_Item2[itemID]
     end
-    
+
     if data then
         title= data.T
         desc= data.D
@@ -42,7 +42,6 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
             end
         end
     end
-    
 
     if not desc then
         local spellID= C_Item.GetItemSpell(itemID)
