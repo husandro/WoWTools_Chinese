@@ -39,10 +39,12 @@ end)
 
 
 
-local CNData={
-    [BUG_CATEGORY14] = "PvP"
-}--主要，汉化
+local CNData={}--主要，汉化
 
+EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
+    CNData[BUG_CATEGORY14] = "PvP"
+    EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
+end)
 --[\228-\233][\128-\191][\128-\191]--检查 UTF-8 字符
 function WoWTools_ChineseMixin:IsCN(text)
     if text and string.find(text, '[\228-\233]') then
