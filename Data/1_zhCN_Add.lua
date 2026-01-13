@@ -23,7 +23,7 @@ local tab_G={
 ['IGNORE'] = "屏蔽",
 ['TRANSMOG_SOURCE_7']= '商栈',
 ['PARTY_LEAVE'] = "离开队伍",
-['BUG_CATEGORY14'] = "PvP"
+['GARRISON_LANDING_PAGE_TITLE'] = "要塞报告",
 }
 
 
@@ -141,10 +141,13 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
         WoWTools_ChineseMixin:SetCN(name, '本赛季')
     end
 
+
+
     do
         for en, cn in pairs(tab_G) do
             WoWTools_ChineseMixin:SetCN(_G[en], cn)
         end
+            
 
         for en, cn in pairs(tabString) do
             WoWTools_ChineseMixin:SetCN(en, cn)

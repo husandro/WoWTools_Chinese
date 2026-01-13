@@ -39,7 +39,9 @@ end)
 
 
 
-local CNData={}--主要，汉化
+local CNData={
+    [BUG_CATEGORY14] = "PvP"
+}--主要，汉化
 
 --[\228-\233][\128-\191][\128-\191]--检查 UTF-8 字符
 function WoWTools_ChineseMixin:IsCN(text)

@@ -269,6 +269,21 @@ function WoWTools_ChineseMixin.Events:Blizzard_GarrisonUI()
     self:AddDialogs("COVENANT_MISSIONS_CONFIRM_ADVENTURE", {text  = '开始冒险？', button1 = '确认', button2 = '取消'})
     self:AddDialogs("COVENANT_MISSIONS_HEAL_CONFIRMATION", {text  = '你确定要彻底治愈这名追随者吗？', button1 = '确认', button2 = '取消'})
     self:AddDialogs("COVENANT_MISSIONS_HEAL_ALL_CONFIRMATION", {text  = '你确定要付出%s，治疗所有受伤的伙伴？', button1 = '治疗全部', button2 = '取消'})
+
+    self:SetLabel(GarrisonLandingPageTab1Text)
+    self:HookLabel(GarrisonLandingPageReport.Title)
+    self:HookLabel(GarrisonLandingPageReportList.EmptyMissionText)
+    hooksecurefunc('GarrisonLandingPageReportList_UpdateItems', function()
+        local garrTypeID = GarrisonLandingPage.garrTypeID;
+       
+        GarrisonLandingPageReport.InProgress.Text:SetFormattedText('进行中 - %d', #GarrisonLandingPageReport.List.items)
+
+        local availableString = garrTypeID == Enum.GarrisonType.Type_9_0_Garrison and '可选 - %d' or '可选任务：%d';
+        GarrisonLandingPageReport.Available.Text:SetFormattedText(availableString, #GarrisonLandingPageReport.List.AvailableItems)
+    end)
+
+    self:SetLabel(GarrisonLandingPageTab2Text)
+    self:SetLabel(GarrisonLandingPageFollowerList.LandingPageHeader)
 end
 
 
@@ -1192,4 +1207,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_CompactRaidFrames()
 
     self:SetLabel(CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerUnitTab)
     self:SetLabel(CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerGroundTab)
+end
+
+function WoWTools_ChineseMixin.Events:Blizzard_GenericTraitUI()
+    self:HookLabel(GenericTraitFrame.Header.Title)
 end

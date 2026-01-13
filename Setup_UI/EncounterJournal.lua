@@ -533,6 +533,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
         progressFrame.JourneyLevelProgress:SetFormattedText('当前进度 |cnHIGHLIGHT_FONT_COLOR:%d/%d|r', progress, threshold)
     end)
+
+    self:SetButton(EncounterJournalJourneysFrame.JourneyOverview.OverviewBtn)
 end
     --[[local function set_enter(frame)
         if frame.majorFactionData and frame.majorFactionData.isUnlocked then
