@@ -40,11 +40,12 @@ end)
 
 
 local CNData={}--主要，汉化
-
 EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
     CNData[BUG_CATEGORY14] = "PvP"
+    CNData[TRANSMOG_SET_PVE] = "PvE"
     EventRegistry:UnregisterCallback('LOADING_SCREEN_DISABLED', owner)
 end)
+
 --[\228-\233][\128-\191][\128-\191]--检查 UTF-8 字符
 function WoWTools_ChineseMixin:IsCN(text)
     if text and string.find(text, '[\228-\233]') then
@@ -359,14 +360,19 @@ function WoWTools_ChineseMixin:SetText(text)
     if not canaccessvalue(text)
         or type(text)~='string'
         or not text:find('[%a]')
-        or self:IsCN(text)
     then
         return
     end
 
-    local text2= self:CN(text)
+    local text2= self:CN(text) --or self:CN(text:gsub('^- ', ''))
     if text2 then
         return text2
+
+    elseif text:find('^%- ') then-- - 说明
+        text2= self:CN(text:match('^%- (.+)'))
+        if text2 then
+            return '- '..text2
+        end
     end
 
     text2= text:gsub('|c.-|r', function(s)--颜色

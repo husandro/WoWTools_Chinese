@@ -150,7 +150,7 @@ end]]
 
 function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
-    EncounterJournalTitleText:SetText('冒险指南')
+    self:HookLabel(EncounterJournalTitleText)
     EncounterJournalSuggestTab:SetText('推荐')
     EncounterJournalDungeonTab:SetText('地下城')
     EncounterJournalRaidTab:SetText('团本')
@@ -519,6 +519,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
             self:SetLabel(btn.RewardCardName)
         end
     end)
+    hooksecurefunc(EncounterJournalJourneysFrame.JourneyProgress.EncounterRewardProgressFrame, 'Init', function(frame)
+
+    end)
 
     hooksecurefunc(EncounterJournalJourneysFrame.JourneyProgress, 'SetupProgressDetails', function(frame)
         local progressFrame = frame.ProgressDetailsFrame
@@ -535,30 +538,59 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
     end)
 
     self:SetButton(EncounterJournalJourneysFrame.JourneyOverview.OverviewBtn)
+    self:SetLabel(EncounterJournalJourneysFrame.JourneyProgress.RenownTrackFrame.ClipFrame.ParagonLevelFrame.Label)
+
+    self:HookLabel(EncounterJournalJourneysFrame.JourneyProgress.DelvesCompanionConfigurationFrame.CompanionConfigBtn.CompanionName)
 end
-    --[[local function set_enter(frame)
-        if frame.majorFactionData and frame.majorFactionData.isUnlocked then
-            local cn= self:CN(frame.majorFactionData.unlockDescription)
-            if cn then
-                GameTooltip_AddErrorLine(GameTooltip, cn)
-                GameTooltip:Show()
-            end
-        end
-    end
-    for _, frame in EncounterJournalJourneysFrame.JourneysList:EnumerateFrames() do
-        local data= frame:GetElementData()
-		if data and data.isRenownJourney then
-            frame:HookScript('OnEnter', set_enter)
-        end
+--[[
+
+-- In order to be able to use companion config, players need to have unlocked a companion and have it set with a proper trait config
+function JourneyCompanionConfigBtnMixin:SetCompanionEnabledState()
+	local progressFrame = self:GetParent():GetParent();
+	if progressFrame and progressFrame.majorFactionData and progressFrame.majorFactionData.playerCompanionID then
+		self.playerCompanionID = progressFrame.majorFactionData.playerCompanionID;
+		local traitTreeID = C_DelvesUI.GetTraitTreeForCompanion(self.playerCompanionID);
+
+		if C_Traits.GetConfigIDByTreeID(traitTreeID) then
+			self.enabled = true;
+		else
+			self.enabled = false;
+		end
+	else
+		self.enabled = false;
 	end
-    hooksecurefunc(RenownCardButtonMixin, 'OnEnter', set_enter)]]
+	self:SetEnabled(self.enabled);
+end
 
+function JourneyCompanionConfigBtnMixin:OnShow()
+	self:SetCompanionEnabledState();
+end
 
+function JourneyCompanionConfigBtnMixin:ToggleCompanionConfig()
+	if not DelvesCompanionConfigurationFrame:IsShown() then
+		local playerCompanionID = self:GetParent():GetParent().majorFactionData.playerCompanionID;
+		DelvesCompanionConfigurationFrame.playerCompanionID = playerCompanionID;
+		ShowUIPanel(DelvesCompanionConfigurationFrame);
+	else
+		HideUIPanel(DelvesCompanionConfigurationFrame);
+	end
+end
 
+function JourneyCompanionConfigBtnMixin:OnEnter()
+	if not self.enabled then
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -10, -10);
+		GameTooltip_AddErrorLine(GameTooltip, C_DelvesUI.GetLockedTextForCompanion(self.playerCompanionID));
+		GameTooltip:Show();
+	end
+end
 
+function JourneyCompanionConfigBtnMixin:OnLeave()
+	GameTooltip:Hide();
+end
 
-
-
-
-
-
+function JourneyCompanionConfigBtnMixin:OnClick()
+	if self.enabled then
+		self:ToggleCompanionConfig();
+	end
+end
+]]
