@@ -24,6 +24,7 @@ local tab_G={
 ['TRANSMOG_SOURCE_7']= '商栈',
 ['PARTY_LEAVE'] = "离开队伍",
 ['GARRISON_LANDING_PAGE_TITLE'] = "要塞报告",
+['JOURNEYS_LABEL'] = "旅程",
 }
 
 

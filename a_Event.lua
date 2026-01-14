@@ -284,7 +284,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_GarrisonUI()
 --追随者
     self:SetLabel(GarrisonLandingPageTab2Text)
     self:SetLabel(GarrisonLandingPageFollowerList.LandingPageHeader)
---
+
     self:SetLabel(GarrisonLandingPageTab3Text)
 end
 

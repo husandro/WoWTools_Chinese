@@ -215,10 +215,14 @@ end
 
 
 TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes, function(tooltip, data)
+    if not canaccesstable(data) or not canaccessvalue(data.type) then
+        return
+    end
+
     Set_Lines(tooltip)
 
     if data.type==Enum.TooltipDataType.Item then--0
-        if not GetItemData then--排除，插件 WoWeuCN_Tooltips
+        --if not GetItemData then--排除，插件 WoWeuCN_Tooltips
             Set_Item(tooltip, data)
             if data.id and C_Heirloom.IsItemHeirloom(data.id) then
                 local source= WoWTools_ChineseMixin:GetHeirloomSource(data.id)
@@ -226,7 +230,7 @@ TooltipDataProcessor.AddTooltipPostCall(TooltipDataProcessor.AllTypes, function(
                     tooltip:AddLine(source, nil,nil,nil, true)
                 end
             end
-        end
+        --end
         if not WoWTools_TooltipMixin then
             local speciesID = select(13, C_PetJournal.GetPetInfoByItemID(data.id))
             Set_Battle_Pet(tooltip, speciesID)

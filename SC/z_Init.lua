@@ -6,7 +6,11 @@ end
 
 --Item 物品[itemID]={T=, D=, S={specID=}}
 function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
-    itemID= C_Item.GetItemInfoInstant(itemID or itemLink)
+    if itemID then
+        itemID= C_Item.GetItemInfoInstant(itemID)
+    elseif itemLink then
+        itemID= C_Item.GetItemInfoInstant(itemLink)
+    end
 
     if not itemID  then
         return
@@ -44,7 +48,7 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
     end
 
     if not desc then
-        local spellID= C_Item.GetItemSpell(itemID)
+        local spellID= select(2, C_Item.GetItemSpell(itemID))
         if spellID then
             desc= select(2, WoWTools_ChineseMixin:GetSpellName(spellID))
         end
