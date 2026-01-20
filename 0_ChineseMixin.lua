@@ -4,6 +4,14 @@ GetLocale=function()
     return "zhCN"
 end]]
 
+if not canaccessvalue then--12.0才有 SecureTypes.lua
+    canaccessvalue= function() return true end
+    canaccesstable= function() return true end
+    issecretvalue= function() return true end
+    issecrettable= function() return true end
+    canaccesssecrets= function() return true end
+end
+
 WoWTools_ChineseMixin={
     Events={},
     Frames={},

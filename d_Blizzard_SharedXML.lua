@@ -33,6 +33,8 @@ hooksecurefunc(NewFeatureLabelMixin, 'OnLoad', function(frame)
 end)
 
 --旅行，地下堡，声望，奖励，等级奖励
-hooksecurefunc(RenownLevelMixin, 'SetRewardName', function(frame)
-    WoWTools_ChineseMixin:SetLabel(frame.RewardName)
-end)
+if RenownLevelMixin and RenownLevelMixin.SetRewardName then--12.0才有
+    hooksecurefunc(RenownLevelMixin, 'SetRewardName', function(frame)
+        WoWTools_ChineseMixin:SetLabel(frame.RewardName)
+    end)
+end

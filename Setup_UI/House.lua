@@ -134,7 +134,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
     self:SetButton(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame.NoHouseButton)
 
 --11.2.7中显示图标，会出错
-    WoWTools_DataMixin:Hook(HousingDashboardFrame.CatalogContent, 'UpdateCategoryText', function(frame)
+    hooksecurefunc(HousingDashboardFrame.CatalogContent, 'UpdateCategoryText', function(frame)
         local categoryString = frame.Categories:GetFocusedCategoryString()
         if categoryString then
             local t= self:SetText(categoryString)
