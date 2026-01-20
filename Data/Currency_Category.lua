@@ -30,7 +30,6 @@ local tab={
 [268]= "第1赛季",
 }
 
-EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
         for id, name in pairs(tab) do
             local info= C_CurrencyInfo.GetPlayerCurrencyCategoryInfo(id)
@@ -40,5 +39,3 @@ EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(ow
         end
     end
     tab= nil
-    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
-end)

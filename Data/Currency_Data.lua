@@ -594,10 +594,6 @@ local tab={
 }
 
 
-
-
-
-EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
         for currencyID, info in pairs(tab) do
             local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
@@ -608,5 +604,3 @@ EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(ow
         end
     end
     tab=nil
-    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
-end)
