@@ -493,10 +493,10 @@ end)
 
 
 
-
+--TooltipComparisonManager.lua
 for i=1, 2 do
     local tooltip= _G['ShoppingTooltip'..i]
     if tooltip and tooltip.CompareHeader then--11.2.7才有
-        WoWTools_ChineseMixin:SetLabel(tooltip.CompareHeader.Lable)
+        WoWTools_ChineseMixin:HookLabel(tooltip.CompareHeader.Label)
     end
 end
