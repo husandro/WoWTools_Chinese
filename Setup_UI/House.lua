@@ -136,6 +136,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
 --11.2.7中显示图标，会出错
     hooksecurefunc(HousingDashboardFrame.CatalogContent, 'UpdateCategoryText', function(frame)
         local categoryString = frame.Categories:GetFocusedCategoryString()
+        print(categoryString)
         if categoryString then
             local t= self:SetText(categoryString)
             if t then

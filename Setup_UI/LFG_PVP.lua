@@ -754,7 +754,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_PVPUI()
 
     Init_HonorFrame(self)
     Init_ConquestFrame(self)
---12.0才有
+
+if TrainingGroundsFrame then--12.0才有
     self:SetLabel(TrainingGroundsFrame.BonusTrainingGroundList.RandomTrainingGroundButton.Title)
     self:HookButton(TrainingGroundsFrame.QueueButton)
     hooksecurefunc(TrainingGroundsFrame.BonusTrainingGroundList, 'InitializeBonusButtons', function(list)
@@ -762,4 +763,5 @@ function WoWTools_ChineseMixin.Events:Blizzard_PVPUI()
             self:SetLabe(button)
         end
     end)
+end
 end
