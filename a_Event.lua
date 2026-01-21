@@ -1109,7 +1109,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_WorldMap()
             elseif data.entryType ==  3 then
                 frame.Label:SetText('活动日程')
             elseif data.entryType ==  5 then
-                local monthName = frame:CN(CALENDAR_FULLDATE_MONTH_NAMES[data.date.month])
+                local monthName = self:CN(CALENDAR_FULLDATE_MONTH_NAMES[data.date.month])
                 if monthName then
                     frame.Label:SetFormattedText('EVENT_SCHEDULER_DAY_FORMAT', monthName, data.date.day);
                 else
