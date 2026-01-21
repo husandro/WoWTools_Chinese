@@ -349,7 +349,7 @@ local function Init_CraftingPage_SchematicForm(self)
                 f.UpdateRequiredTools = function()
                     local requirements = C_TradeSkillUI.GetRecipeRequirements(recipeID)
                     if (#requirements > 0) then
-                        
+
                         local requirementsText = BuildColoredListString(unpack(FormatRequirements(requirements)))
                         local maxWidth = minimized and 250 or 800
                         local multiline = minimized
@@ -388,7 +388,7 @@ local function Init_CraftingPage_SchematicForm(self)
         end
     end)
 
-    
+
 
     Init_CraftingPage_SchematicForm=function()end
 end
@@ -1071,9 +1071,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_Professions()
         self:SetTabButton(frame)
     end)
 
+    ProfessionsFrame.CraftingPage.RecipeList.SearchBox.Instructions:SetText('搜索')
 
-     --目录，列表，标题
-     ProfessionsFrame.CraftingPage.RecipeList.SearchBox.Instructions:SetText('搜索')
+--目录，列表，标题
      hooksecurefunc(ProfessionsRecipeListCategoryMixin, 'Init', function(frame, node)
         local info= node:GetData().categoryInfo
         if info then
