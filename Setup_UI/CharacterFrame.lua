@@ -25,7 +25,9 @@ PAPERDOLL_SIDEBARS[3].name= '装备管理'
 PaperDollFrameEquipSetText:SetText('装备')
 PaperDollFrameSaveSetText:SetText('保存')
 
-GearManagerPopupFrame.BorderBox.EditBoxHeaderText:SetText('输入方案名称（最多16个字符）：')
+WoWTools_ChineseMixin:SetLabel(GearManagerPopupFrame.BorderBox.EditBoxHeaderText)
+WoWTools_ChineseMixin:HookLabel(GearManagerPopupFrame.BorderBox.IconTypeDropdown.Text)
+WoWTools_ChineseMixin:SetLabel(GearManagerPopupFrame.BorderBox.IconDragArea.IconDragAreaContent.IconDragText)
 GearManagerPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconHeader:SetText('选择一个图标：')
 WoWTools_ChineseMixin:HookLabel(GearManagerPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconDescription)
 GearManagerPopupFrame.BorderBox.OkayButton:SetText('确认')

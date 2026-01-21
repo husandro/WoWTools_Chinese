@@ -10,6 +10,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_MacroUI()
     self:AddDialogs("CONFIRM_DELETE_SELECTED_MACRO", {text= '确定要删除这个宏吗？', button1= '是', button2= '取消'})
 
     self:SetLabel(MacroPopupFrame.BorderBox.EditBoxHeaderText)
+    self:SetLabel(MacroPopupFrame.BorderBox.IconDragArea.IconDragAreaContent.IconDragText)
     self:SetLabel(MacroPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconHeader)
     self:SetButton(MacroPopupFrame.BorderBox.CancelButton)
     self:SetButton(MacroPopupFrame.BorderBox.OkayButton)
@@ -117,6 +118,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_GuildBankUI()
     GuildBankInfoSaveButton:SetText('保存改变')
 
     self:SetLabel(GuildBankPopupFrame.BorderBox.EditBoxHeaderText)
+    self:SetLabel(GuildBankPopupFrame.BorderBox.IconDragArea.IconDragAreaContent.IconDragText)
     self:SetLabel(GuildBankPopupFrame.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconHeader)
     GuildBankPopupFrame.BorderBox.OkayButton:SetText('确定')
     GuildBankPopupFrame.BorderBox.CancelButton:SetText('取消')
@@ -1189,6 +1191,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_Transmog()
     self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.SituationsFrame.EnabledToggle.Text)
     self:SetButton(TransmogFrame.WardrobeCollection.TabContent.SituationsFrame.DefaultsButton)
     self:SetButton(TransmogFrame.WardrobeCollection.TabContent.SituationsFrame.ApplyButton)
+
+    self:HookLabel(TransmogFrame.OutfitPopup.BorderBox.EditBoxHeaderText)
+    self:SetLabel(TransmogFrame.OutfitPopup.BorderBox.IconDragArea.IconDragAreaContent.IconDragText)
+
     hooksecurefunc(TransmogFrame.WardrobeCollection.TabContent.SituationsFrame, 'Refresh', function(frame)
         for pool in frame.SituationFramePool:EnumerateActive() do
             self:SetLabel(pool.Title)

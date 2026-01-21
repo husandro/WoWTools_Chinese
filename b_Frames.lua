@@ -21,6 +21,7 @@ function WoWTools_ChineseMixin.Frames:BankFrame()
     self:HookLabel(BankPanel.TabSettingsMenu.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconDescription)
     self:SetLabel(BankPanel.TabSettingsMenu.BorderBox.SelectedIconArea.SelectedIconText.SelectedIconHeader)
     self:HookLabel(BankPanel.TabSettingsMenu.BorderBox.EditBoxHeaderText)
+    self:SetLabel(BankPanel.TabSettingsMenu.BorderBox.IconDragArea.IconDragAreaContent.IconDragText)
 
     self:SetButton(BankPanel.TabSettingsMenu.BorderBox.OkayButton)
     self:SetButton(BankPanel.TabSettingsMenu.BorderBox.CancelButton)
