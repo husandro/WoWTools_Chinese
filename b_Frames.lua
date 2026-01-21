@@ -346,7 +346,7 @@ function WoWTools_ChineseMixin.Frames:DressUpFrame()
             local slotName = TransmogUtil.GetSlotName(slotID);
             local cn= self:CN(_G[slotName])
             if cn then
-                frame.Name:SetFormattedText(TRANSMOG_EMPTY_SLOT_FORMAT, cn);
+                frame.Name:SetFormattedText('(%s)', cn);
             end
         end
     end)
