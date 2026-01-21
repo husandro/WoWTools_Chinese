@@ -8,17 +8,17 @@ end
 
 
 
-local function set_objective_header(self)
-    if self.Header then
-        WoWTools_ChineseMixin:SetLabel(self.Header.Text, self.headerText)
+local function set_objective_header(frame)
+    if frame.Header then
+        WoWTools_ChineseMixin:SetLabel(frame.Header.Text, frame.headerText)
     end
 end
 
 
 
-local function Get_Block(self, index)
-    if self.usedBlocks[self.blockTemplate] then
-        return self.usedBlocks[self.blockTemplate][index]
+local function Get_Block(frame, index)
+    if frame.usedBlocks[frame.blockTemplate] then
+        return frame.usedBlocks[frame.blockTemplate][index]
     end
 end
 
@@ -51,9 +51,9 @@ end
 
 
 --任务 QuestObjectiveTracker QuestObjectiveTrackerMixin
-hooksecurefunc(QuestObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
---QuestObjectiveTracker:HookScript('OnShow', function(...) set_objective_header(...) end)
-hooksecurefunc(QuestObjectiveTracker, 'AddBlock', function(...) set_quest(...) end)
+hooksecurefunc(QuestObjectiveTracker, 'LayoutContents', set_objective_header)
+--QuestObjectiveTracker:HookScript('OnShow', set_objective_header)
+hooksecurefunc(QuestObjectiveTracker, 'AddBlock', set_quest)
 
 --[[hooksecurefunc(QuestObjectiveLineMixin, 'UpdateModule', function(...)
 
@@ -97,10 +97,10 @@ hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, qu
     end
 end)
 
---[[hooksecurefunc(QuestObjectiveTracker, 'UpdateSingle', function(self, quest)
+--[[hooksecurefunc(QuestObjectiveTracker, 'UpdateSingle', function(frame, quest)
 		local questID = quest:GetID();
 	    local isComplete = quest:IsComplete()
-       -- local block, isExistingBlock = self:GetBlock(questID);
+       -- local block, isExistingBlock = frame:GetBlock(questID);
 
 
     local obj= isComplete and WoWTools_ChineseMixin:GetQuestObjectText(questID)
@@ -113,9 +113,9 @@ end)
     end
 end)]]
 
-hooksecurefunc(AutoQuestPopupBlockMixin, 'Update', function(self, questTitle, questID, popUpType)
-    local contents = self.Contents
-    if self.popUpType == "COMPLETE" then
+hooksecurefunc(AutoQuestPopupBlockMixin, 'Update', function(frame, questTitle, questID, popUpType)
+    local contents = frame.Contents
+    if frame.popUpType == "COMPLETE" then
         if C_QuestLog.IsQuestTask(questID) then
             contents.TopText:SetText('点击完成')
         else
@@ -138,10 +138,10 @@ end)
 
 
 --战役，任务 CampaignQuestObjectiveTracker
---CampaignQuestObjectiveTracker:HookScript('OnShow', function(...) set_objective_header(...) end)
---hooksecurefunc(CampaignQuestObjectiveTracker, 'UpdateSingle', function(...) set_quest(...) end)
-hooksecurefunc(CampaignQuestObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
-hooksecurefunc(CampaignQuestObjectiveTracker, 'AddBlock', function(...) set_quest(...) end)
+--CampaignQuestObjectiveTracker:HookScript('OnShow', set_objective_header)
+--hooksecurefunc(CampaignQuestObjectiveTracker, 'UpdateSingle', set_quest)
+hooksecurefunc(CampaignQuestObjectiveTracker, 'LayoutContents', set_objective_header)
+hooksecurefunc(CampaignQuestObjectiveTracker, 'AddBlock', set_quest)
 
 
 
@@ -150,9 +150,9 @@ hooksecurefunc(CampaignQuestObjectiveTracker, 'AddBlock', function(...) set_ques
 
 
 --世界，任务 WorldQuestObjectiveTracker
---WorldQuestObjectiveTracker:HookScript('OnShow', function(...) set_objective_header(...) end)
-hooksecurefunc(WorldQuestObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
-hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', function(...) set_quest(...) end)
+--WorldQuestObjectiveTracker:HookScript('OnShow', set_objective_header)
+hooksecurefunc(WorldQuestObjectiveTracker, 'LayoutContents', set_objective_header)
+hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', set_quest)
 
 
 
@@ -163,7 +163,7 @@ hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', function(...) set_quest(.
 
 --旅行者日志 MonthlyActivitiesObjectiveTracker
 --MonthlyActivitiesObjectiveTracker:HookScript('OnShow', )
-hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
+hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'AddBlock', function(_, block)
     local data= WoWTools_ChineseMixin:GetPerksActivityData(block.id)
     if data and data[1] then
@@ -176,10 +176,10 @@ end)
 --成就
 --AchievementObjectiveTracker
 --AchievementObjectiveTrackerMixin
---AchievementObjectiveTracker:HookScript('OnShow', function(...) set_objective_header(...) end)
-hooksecurefunc(AchievementObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
-hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(self, achievementID, achievementName, description)
-    local block = self.usedBlocks[self.blockTemplate] and self.usedBlocks[self.blockTemplate][achievementID]
+--AchievementObjectiveTracker:HookScript('OnShow', set_objective_header)
+hooksecurefunc(AchievementObjectiveTracker, 'LayoutContents', set_objective_header)
+hooksecurefunc(AchievementObjectiveTracker, 'AddAchievement', function(frame, achievementID, achievementName, description)
+    local block = frame.usedBlocks[frame.blockTemplate] and frame.usedBlocks[frame.blockTemplate][achievementID]
 
     if not block then
          return
@@ -251,8 +251,8 @@ end)
 
 --场景
 --标题
-hooksecurefunc(ScenarioObjectiveTracker, 'LayoutContents', function(self)
-    if not self.scenarioID or not self.currentStage then
+hooksecurefunc(ScenarioObjectiveTracker, 'LayoutContents', function(frame)
+    if not frame.scenarioID or not frame.currentStage then
         return
     end
 
@@ -261,7 +261,7 @@ hooksecurefunc(ScenarioObjectiveTracker, 'LayoutContents', function(self)
 	if scenarioType == LE_SCENARIO_TYPE_CHALLENGE_MODE then
         name= WoWTools_ChineseMixin:GetScenarioName(scenarioID) or WoWTools_ChineseMixin:CN(scenarioName)
 
-	elseif scenarioType == LE_SCENARIO_TYPE_PROVING_GROUNDS or self.ProvingGroundsBlock:IsActive() then
+	elseif scenarioType == LE_SCENARIO_TYPE_PROVING_GROUNDS or frame.ProvingGroundsBlock:IsActive() then
 		name= '试炼场'
 	elseif scenarioType == LE_SCENARIO_TYPE_USE_DUNGEON_DISPLAY then
 		name= '地下城'
@@ -271,40 +271,40 @@ hooksecurefunc(ScenarioObjectiveTracker, 'LayoutContents', function(self)
 		name= WoWTools_ChineseMixin:GetScenarioName(scenarioID) or WoWTools_ChineseMixin:CN(scenarioName)
 	end
     if name then
-        self.Header.Text:SetText(name)
+        frame.Header.Text:SetText(name)
     end
 end)
 
 --ScenarioObjectiveTrackerStageMixin
 --内容
 ScenarioObjectiveTracker.StageBlock.Name:SetPoint('RIGHT', -20, 0)
-hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function(self, _, _, _, _, flags, currentStage, _, numStages)
+hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'UpdateStageBlock', function(frame, _, _, _, _, flags, currentStage, _, numStages)
     if bit.band(flags, SCENARIO_FLAG_SUPRESS_STAGE_TEXT) == SCENARIO_FLAG_SUPRESS_STAGE_TEXT then
-        WoWTools_ChineseMixin:SetLabel(self.Stage)
+        WoWTools_ChineseMixin:SetLabel(frame.Stage)
 	else
 		if currentStage == numStages then
-			self.Stage:SetText('|cnGREEN_FONT_COLOR:最终阶段|r')
+			frame.Stage:SetText('|cnGREEN_FONT_COLOR:最终阶段|r')
 		else
-			self.Stage:SetFormattedText('阶段 %d', currentStage)
+			frame.Stage:SetFormattedText('阶段 %d', currentStage)
 		end
 	end
-    WoWTools_ChineseMixin:SetLabel(self.Name)
+    WoWTools_ChineseMixin:SetLabel(frame.Name)
 end)
 
-hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'SetupStageTransition', function(self, hasNewStage, scenarioCompleted)
-    if self.WidgetContainer:IsShown() then
+hooksecurefunc(ScenarioObjectiveTracker.StageBlock, 'SetupStageTransition', function(frame, hasNewStage, scenarioCompleted)
+    if frame.WidgetContainer:IsShown() then
         return
     end
     if scenarioCompleted then
         local scenarioType = select(10, C_Scenario.GetInfo())
         local dungeonDisplay = (scenarioType == LE_SCENARIO_TYPE_USE_DUNGEON_DISPLAY)
         if dungeonDisplay then
-            self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:地下城完成！|r')
+            frame.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:地下城完成！|r')
         else
-            self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:完成！|r')
+            frame.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:完成！|r')
         end
     else
-        self.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:阶段完成|r')
+        frame.CompleteLabel:SetText('|cnGREEN_FONT_COLOR:阶段完成|r')
     end
 end)
 
@@ -317,7 +317,7 @@ end)
 
 
 --奖励目标
-hooksecurefunc(BonusObjectiveTracker, 'LayoutContents',  function(...) set_objective_header(...) end)
+hooksecurefunc(BonusObjectiveTracker, 'LayoutContents',  set_objective_header)
 
 
 
@@ -343,11 +343,11 @@ hooksecurefunc(BonusObjectiveTracker, 'LayoutContents',  function(...) set_objec
 
 
 --专业技能 ProfessionsRecipeTracker
---ProfessionsRecipeTracker:HookScript('OnShow', function(...) set_objective_header(...) end)
-hooksecurefunc(ProfessionsRecipeTracker, 'LayoutContents', function(...) set_objective_header(...) end)
-hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(self, recipeID, isRecraft)
+--ProfessionsRecipeTracker:HookScript('OnShow', set_objective_header)
+hooksecurefunc(ProfessionsRecipeTracker, 'LayoutContents', set_objective_header)
+hooksecurefunc(ProfessionsRecipeTracker,'AddRecipe', function(frame, recipeID, isRecraft)
     local blockID = NegateIf(recipeID, isRecraft)
-    local block = Get_Block(self, blockID)
+    local block = Get_Block(frame, blockID)
     local recipeSchematic = C_TradeSkillUI.GetRecipeSchematic(recipeID, isRecraft)
     if not block then
         return
@@ -415,7 +415,6 @@ end)
 
 
 
-hooksecurefunc(AdventureObjectiveTracker, 'LayoutContents', function(...) set_objective_header(...) end)
 
 
 
@@ -425,28 +424,48 @@ hooksecurefunc(AdventureObjectiveTracker, 'LayoutContents', function(...) set_ob
 
 
 --ObjectiveTrackerFrame
-hooksecurefunc(ObjectiveTrackerFrame, 'Init', function(...) set_objective_header(...) end)
+hooksecurefunc(ObjectiveTrackerFrame, 'Init', set_objective_header)
 
 
 
-hooksecurefunc(UIWidgetObjectiveTracker, 'OnEvent', function(self)
-    local block = self.Block
+hooksecurefunc(UIWidgetObjectiveTracker, 'OnEvent', function(frame)
+    local block = frame.Block
 	if block:IsShown() then
         local name= WoWTools_ChineseMixin:CN(GetRealZoneText())
         if name then
-		    self:SetHeader(name)
+		    frame:SetHeader(name)
         end
 	end
 end)
 
 --UIWidgetObjectiveTracker
-hooksecurefunc(UIWidgetObjectiveTracker, 'LayoutContents', function(self)
-    local block = self.Block
+hooksecurefunc(UIWidgetObjectiveTracker, 'LayoutContents', function(frame)
+    local block = frame.Block
 	if block and block:IsShown() then
         local name= WoWTools_ChineseMixin:CN(GetRealZoneText())
         if name then
-		    self:SetHeader(name)
+		    frame:SetHeader(name)
         end
 	end
 end)
 
+
+hooksecurefunc(AdventureObjectiveTracker, 'LayoutContents', set_objective_header)
+
+--[[hooksecurefunc(AdventureObjectiveTracker, 'ProcessTrackingEntry', function(frame, trackableType, trackableID)
+    local targetType, targetID = C_ContentTracking.GetCurrentTrackingTarget(trackableType, trackableID);
+   
+	local block = targetType and frame:GetBlock(ContentTrackingUtil.MakeCombinedID(trackableType, trackableID))
+    if not block then
+        return
+    end
+
+    local title = C_ContentTracking.GetTitle(trackableType, trackableID)
+    local cn= WoWTools_ChineseMixin:CN(title)
+    if cn then
+        --block.name = cn
+       -- block:SetHeader(cn)
+        
+        print(cn, block.HeaderText:GetText(), block:IsShown())
+    end
+end)]]

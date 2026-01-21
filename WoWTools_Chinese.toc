@@ -59,6 +59,9 @@ Data\Item_Data_TransmogSet.lua
 Data\Class.lua
 ##考古
 Data\ArchaeologyUI.lua
+##住宅
+Data\HouseDecor.lua
+Data\House.lua
 
 ##Function
 ##英雄专精
@@ -94,12 +97,12 @@ Get_Data\PetDesc.lua
 Get_Data\PetAblityData.lua
 ##传家宝, desc
 Get_Data\HeirloomSource.lua
-##住宅
-Get_Data\HouseDecor.lua
+
 ##法术
 Data\Spell_Data_Flyout.lua
 ##Data\Spell_Data_Add.lua
 Data\Spell_Data_Specialization.lua
+
 
 ##插件 WoWTools_Chinese_Scanner 中的数据
 SC\Achievement.lua
@@ -114,7 +117,6 @@ SC\Spell2.lua
 SC\Unit.lua
 SC\Gossip.lua
 SC\Faction.lua
-SC\House.lua
 SC\z_Init.lua
 
 

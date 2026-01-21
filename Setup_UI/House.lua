@@ -19,6 +19,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingBulletinBoard()
         self:SetLabel(HousingBulletinBoardFrame.ResidentsTab.ColumnDisplay)
     end)
     self:SetFrames(HousingBulletinBoardFrame)
+    self:HookLabel(HousingBulletinBoardFrame.ResidentsTab.NeighborhoodNameText)
 end
 
 function WoWTools_ChineseMixin.Events:Blizzard_HousingCharter()
@@ -148,14 +149,15 @@ if not WoWTools_TextureMixin or not WoWTools_TextureMixin.disabled then
 end
 
 --HousingModelPreviewMixin
-    hooksecurefunc(HousingDashboardFrame.CatalogContent.PreviewFrame, 'PreviewCatalogEntryInfo', function(frame, info)
+    self:HookLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.NameContainer.Name)
+    --[[hooksecurefunc(HousingDashboardFrame.CatalogContent.PreviewFrame, 'PreviewCatalogEntryInfo', function(frame, info)
         if info and info.entryID then
-            local cn= self:CN(info.name) or self:GetHouseDecoName(info.entryID.recordID)
+            local cn= self:CN(info.name)
             if cn then
                 frame.NameContainer.Name:SetText(cn)
             end
         end
-    end)
+    end)]]
 
     self:SetLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.TextContainer.CollectionBonus)
     self:SetLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.PreviewUnavailableText)
@@ -220,6 +222,15 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingTemplates()
             HousingLayoutMoveRestrictionStrings[value]= cn
         end
     end
+
+
+
+        hooksecurefunc(HousingCatalogCategoryMixin, 'Init', function(frame, displayInfo)
+            local name= displayInfo and self:CN(displayInfo.name)
+            if name then
+                frame.enabledTooltip = name
+            end
+        end)
 --[[
     
 function HousingCatalogDecorEntryMixin:GetEntryData()
@@ -256,7 +267,7 @@ end
         end
     end]]
 
-    WoWTools_DataMixin:Hook(HousingCatalogDecorEntryMixin, 'AddTooltipTrackingLines', function(btn, tooltip)
+    --[[WoWTools_DataMixin:Hook(HousingCatalogDecorEntryMixin, 'AddTooltipTrackingLines', function(btn, tooltip)
         local entryInfo= btn:HasValidData() and btn.entryInfo
         if not entryInfo then
             return
@@ -264,7 +275,7 @@ end
         info=entryInfo
         for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR|r') for k2,v2 in pairs(v) do print('|cffffff00',k2,v2, '|r') end print('|cffff0000---',k, '---END|r') else print(k,v) end end print('|cffff00ff——————————|r')
         tooltip:Show()
-    end)
+    end)]]
     --hooksecurefunc(HousingModelPreviewMixin, 'PreviewCatalogEntryInfo', function(frame, catalogEntryInfo)--可用
 
 
