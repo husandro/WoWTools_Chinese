@@ -133,17 +133,19 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
     self:SetFrame(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame)
     self:SetButton(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame.NoHouseButton)
 
---11.2.7中显示图标，会出错
-    hooksecurefunc(HousingDashboardFrame.CatalogContent, 'UpdateCategoryText', function(frame)
+if not WoWTools_TextureMixin or not WoWTools_TextureMixin.disabled then
+--12.0中显示图标，会出错
+    WoWTools_DataMixin:Hook(HousingDashboardFrame.CatalogContent, 'UpdateCategoryText', function(frame)
         local categoryString = frame.Categories:GetFocusedCategoryString()
-        print(categoryString)
         if categoryString then
-            local t= self:SetText(categoryString)
-            if t then
+            local t= categoryString:match('(.+) | |TInterfaceIcons.+') or categoryString:match('(.+) ||TInterfaceIcons.+')
+            t= t and self:CN(t) or WoWTools_TextMixin:CN(categoryString)
+            if t and t~=categoryString then
                 frame.OptionsContainer.CategoryText:SetText(t)
             end
         end
     end)
+end
 
 --HousingModelPreviewMixin
     hooksecurefunc(HousingDashboardFrame.CatalogContent.PreviewFrame, 'PreviewCatalogEntryInfo', function(frame, info)
@@ -218,7 +220,51 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingTemplates()
             HousingLayoutMoveRestrictionStrings[value]= cn
         end
     end
+--[[
+    
+function HousingCatalogDecorEntryMixin:GetEntryData()
+	-- Overrides HousingCatalogEntryMixin.
 
+	local tryGetOwnedInfo = false;
+	return self:IsBundleItem() and C_HousingCatalog.GetCatalogEntryInfoByRecordID(Enum.HousingCatalogEntryType.Decor, self.bundleItemInfo.decorID, tryGetOwnedInfo) or HousingCatalogEntryMixin.GetEntryData(self);
+end
+
+function HousingCatalogEntryMixin:AddTooltipTitle(tooltip)
+	-- Optional override
+	local wrap = false;
+	GameTooltip_SetTitle(tooltip, self.entryInfo.name, nil, wrap);
+end
+替换原生
+    
+    function HousingCatalogDecorEntryMixin:AddTooltipTrackingLines(tooltip)
+    	if self:IsInStorageView() then
+            return
+        end
+        if not ContentTrackingUtil.IsContentTrackingEnabled() then
+            GameTooltip_AddColoredLine(tooltip, '追踪当前不可用', GRAY_FONT_COLOR);
+            return
+        end
+        local ContentTrackingAtlasMarkup = CreateAtlasMarkup("waypoint-mappin-minimap-untracked", 16, 16, -3, 0);
+        if C_ContentTracking.IsTrackable(Enum.ContentTrackingType.Decor, self.entryInfo.entryID.recordID) then
+            if C_ContentTracking.IsTracking(Enum.ContentTrackingType.Decor, self.entryInfo.entryID.recordID) then
+                GameTooltip_AddColoredLine(tooltip, ContentTrackingAtlasMarkup..'<按住Shift点击停止追踪>', GREEN_FONT_COLOR);
+            else
+                GameTooltip_AddInstructionLine(tooltip, ContentTrackingAtlasMarkup..'<按住Shift点击追踪此物品>', GREEN_FONT_COLOR);
+            end
+        else
+            GameTooltip_AddDisabledLine(tooltip, ContentTrackingAtlasMarkup..'追踪功能对此物品不可用', GRAY_FONT_COLOR);
+        end
+    end]]
+
+    WoWTools_DataMixin:Hook(HousingCatalogDecorEntryMixin, 'AddTooltipTrackingLines', function(btn, tooltip)
+        local entryInfo= btn:HasValidData() and btn.entryInfo
+        if not entryInfo then
+            return
+        end
+        info=entryInfo
+        for k, v in pairs(info or {}) do if v and type(v)=='table' then print('|cff00ff00---',k, '---STAR|r') for k2,v2 in pairs(v) do print('|cffffff00',k2,v2, '|r') end print('|cffff0000---',k, '---END|r') else print(k,v) end end print('|cffff00ff——————————|r')
+        tooltip:Show()
+    end)
     --hooksecurefunc(HousingModelPreviewMixin, 'PreviewCatalogEntryInfo', function(frame, catalogEntryInfo)--可用
 
 
