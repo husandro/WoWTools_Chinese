@@ -512,6 +512,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
     self:HookLabel(EncounterJournalJourneysFrame.JourneyProgress.JourneyName)
     self:SetLabel(EncounterJournalJourneysFrame.JourneyProgress.LockedStateFrame.JourneyLockedText)
     self:HookButton(EncounterJournalJourneysFrame.JourneyProgress.OverviewBtn)
+    self:SetButton(EncounterJournalJourneysFrame.JourneyProgress.LevelSkipButton)
 
 --JourneyProgressFrameMixin
     hooksecurefunc(EncounterJournalJourneysFrame.JourneyProgress, 'SetRewards', function(frame)
