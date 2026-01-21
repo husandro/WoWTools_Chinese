@@ -307,3 +307,47 @@ end
 
 
 
+function WoWTools_ChineseMixin.Frames:DressUpFrame()
+    self:HookLabel(DressUpFrameCustomSetDropdown.Text)
+    self:SetLabel(DressUpFrameTitleText)
+    self:SetButton(DressUpFrameCustomSetDropdown.SaveButton)
+    self:SetButton(DressUpFrame.LinkButton)
+    self:SetButton(DressUpFrameResetButton)
+    self:SetButton(DressUpFrameCancelButton)
+
+    hooksecurefunc(DressUpCustomSetDetailsSlotMixin, 'SetDetails', function(frame, transmogID)--, icon, name, useSmallIcon, slotState, isHiddenVisual)
+        local itemID= frame.item and frame.item:GetItemID()
+        local cn= itemID and WoWTools_ChineseMixin:GetItemName(itemID)
+
+        if not cn and transmogID then
+            local illusionInfo = C_TransmogCollection.GetIllusionInfo(transmogID)
+            if illusionInfo then
+                local name= self:CN(C_TransmogCollection.GetIllusionStrings(illusionInfo.sourceID))
+                if name then
+                    cn= format('幻象：%s', name)
+                end
+            end
+        end
+        if cn then
+            cn= cn:gsub('|c........', '')
+            cn= cn:gsub('|r', '')
+            frame.Name:SetText(cn)
+        else
+            self:SetLabel(frame.Name)
+        end
+    end)
+
+    hooksecurefunc(DressUpCustomSetDetailsSlotMixin, 'SetAppearance', function(frame, slotID, transmogID, isSecondary)
+        local itemID = C_TransmogCollection.GetSourceItemID(transmogID);
+        if not itemID then
+            if isSecondary then
+                return
+            end
+            local slotName = TransmogUtil.GetSlotName(slotID);
+            local cn= self:CN(_G[slotName])
+            if cn then
+                frame.Name:SetFormattedText(TRANSMOG_EMPTY_SLOT_FORMAT, cn);
+            end
+        end
+    end)
+end
