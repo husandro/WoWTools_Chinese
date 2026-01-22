@@ -62,8 +62,6 @@ do
     for specID, data in pairs(tab) do
         local name, description, icon
         if data[1] then
-            --local classFilename= data[3] and data[3]>0 and select(2, GetClassInfo(data[3] or 0))--classID
-            --local hex=classFilename and select(4, GetClassColor(classFilename))
             for _, sex in pairs(Enum.UnitSex) do--男，女
                 name, description, icon= select(2, GetSpecializationInfoByID(specID, sex))
                 if name then
@@ -73,12 +71,7 @@ do
                     end
                     WoWTools_ChineseMixin:SetCN(
                         name,
-
-                        --(icon and '|T'..icon..':0|t' or '')
-                        --..(hex and '|c'..hex or '')
                         data[1]
-                        --..(hex and '|r' or '')
-                        --..(role and _G['INLINE_'..role..'_ICON'] or '')
                     )
                 end
             end
