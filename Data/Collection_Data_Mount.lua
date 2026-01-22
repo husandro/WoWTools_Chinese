@@ -4,6 +4,7 @@ https://wago.tools/db2/Mount?&locale=zhCN
 ]]
 
 local tab={
+--12.01
 [2917]= {"阿努莎拉，暗影启迪", "|cFFFFD200成就：|r难以逾越的收藏|n|cFFFFD200分类：|r坐骑", "她的双翼划破天际，宛如月夜下的暗影。"},
 [2914]= {"邪能尖塔飞鹰", "|cFFFFD200特殊|r", "看着这只神秘生物的眼睛，你就仿佛看见了太阳被邪能腐蚀后的中心。建议你在骑乘它时带上护目镜。"},
 [2913]= {"鲜艳的叶绿犀龙", "|cFFFFD200商人出售：|r养蛾人威塔姆|n|cFFFFD200地区：|r哈籁恩达尔|n|cFFFFD200价格：|r10|Hcurrency:3385|h|TInterface\\ICONS\\INV_MISC_DUST_05.BLP:0|t|h", "叶绿犀龙越健康，其身上的枝叶就越鲜嫩。"},
@@ -1603,11 +1604,11 @@ local tab={
 
 
 
-    do
-        for mountID, info in pairs(tab) do
-            local desc, source= select(2, C_MountJournal.GetMountInfoExtraByID(mountID))
-            WoWTools_ChineseMixin:SetCN(C_MountJournal.GetMountInfoByID(mountID), info[1])
-            WoWTools_ChineseMixin:SetCN(desc, info[2])
-            WoWTools_ChineseMixin:SetCN(source, info[3])
-        end
+do
+    for mountID, info in pairs(tab) do
+        local desc, source= select(2, C_MountJournal.GetMountInfoExtraByID(mountID))
+        WoWTools_ChineseMixin:SetCN(C_MountJournal.GetMountInfoByID(mountID), info[1])
+        WoWTools_ChineseMixin:SetCN(desc, info[2])
+        WoWTools_ChineseMixin:SetCN(source, info[3])
     end
+end

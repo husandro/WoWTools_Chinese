@@ -594,13 +594,13 @@ local tab={
 }
 
 
-    do
-        for currencyID, info in pairs(tab) do
-            local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-            if data then
-                WoWTools_ChineseMixin:SetCN(data.name, info[1])
-                WoWTools_ChineseMixin:SetCN(data.description, info[2])
-            end
+do
+    for currencyID, info in pairs(tab) do
+        local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
+        if data then
+            WoWTools_ChineseMixin:SetCN(data.name, info[1])
+            WoWTools_ChineseMixin:SetCN(data.description, info[2])
         end
     end
-    tab=nil
+end
+tab=nil

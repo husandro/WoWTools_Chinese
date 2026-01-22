@@ -3,7 +3,7 @@
 https://wago.tools/db2/CurrencyCategory?locale=zhCN
 ]]
 local tab={
-
+--12.01
 [1]= "其它",
 [2]= "PvP",
 [3]= "未使用",
