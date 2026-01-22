@@ -25,12 +25,20 @@ local tab={
 [424]= "德鲁斯特",
 }
 
-do
-    for branchID, cn in pairs(tab) do
-        WoWTools_ChineseMixin:SetCN(GetArchaeologyRaceInfoByID(branchID), cn)
+EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
+    do
+        for branchID, cn in pairs(tab) do
+            WoWTools_ChineseMixin:SetCN(GetArchaeologyRaceInfoByID(branchID), cn)
+        end
     end
-end
-tab=nil
+    tab=nil
+
+    if ArcheologyDigsiteProgressBar then
+        WoWTools_ChineseMixin:SetLabel(ArcheologyDigsiteProgressBar.BarTitle)
+    end
+
+    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
+end)
 
 
 
@@ -39,9 +47,8 @@ tab=nil
 
 
 
-if ArcheologyDigsiteProgressBar then
-    WoWTools_ChineseMixin:SetLabel(ArcheologyDigsiteProgressBar.BarTitle)
-end
+
+
 
 function WoWTools_ChineseMixin.Events:Blizzard_ArchaeologyUI()
     ArchaeologyFrameTitleText:SetText('考古学')

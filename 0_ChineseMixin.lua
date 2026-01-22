@@ -4,13 +4,6 @@ GetLocale=function()
     return "zhCN"
 end]]
 
-if not canaccessvalue then--12.0才有 SecureTypes.lua
-    canaccessvalue= function() return true end
-    canaccesstable= function() return true end
-    issecretvalue= function() return true end
-    issecrettable= function() return true end
-    canaccesssecrets= function() return true end
-end
 
 WoWTools_ChineseMixin={
     Events={},
@@ -59,12 +52,12 @@ function WoWTools_ChineseMixin:IsCN(text)
     if text and string.find(text, '[\228-\233]') then
         return text
     end
-
 end
 function WoWTools_ChineseMixin:SetCN(en, cn)
     cn= en and en~='' and self:IsCN(cn)
     if cn then
         CNData[en]=cn
+        return true
     end
 end
 
@@ -115,13 +108,13 @@ function WoWTools_ChineseMixin:GetData(text, tab)
         return
     end
 
-    if tab.areaPoiID then
+    --[[if tab.areaPoiID then
         if tab.isName then
             data= self:GetAreaPOIName(tab.areaPoiID)
         else
             data= self:GetAreaPOIData(tab.areaPoiID)
         end
-    elseif tab.holydayID then
+    else]]if tab.holydayID then
         local d= self:GetHolidayData(tab.holydayID)
         if d then
             if tab.isName then

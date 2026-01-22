@@ -54,7 +54,8 @@ Data\Map_Data_UiMapGroupMember.lua
 Data\Item_Data_Set.lua
 Data\Item_Data_SubClass.lua
 Data\Item_Data_TransmogSet.lua
-
+##AreaPOI
+Data\AreaPOI.lua
 ##职业
 Data\Class.lua
 ##考古
@@ -73,8 +74,7 @@ Get_Data\TitleName.lua
 ##场景
 Data\ScenarioStepData.lua
 Get_Data\ScenarioName.lua
-##AreaPOI
-Get_Data\AreaPOI.lua
+
 
 ##专业
 Get_Data\TradeSkillCategoryName.lua
