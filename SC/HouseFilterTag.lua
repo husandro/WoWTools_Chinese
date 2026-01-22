@@ -536,7 +536,7 @@ do
                 end
                 if tab[i].tags then
                     for i2, data2 in pairs(data.tags) do
-                        if tab[i].tags[i2] and tab[i].tags[i2].tagID==data2.tags.tagID then
+                        if tab[i].tags[i2] and tab[i].tags[i2].tagID==data2.tagID then
                             WoWTools_ChineseMixin:SetCN(data2.tagName, tab[i].tags[i2].tagName)
                         end
                     end
