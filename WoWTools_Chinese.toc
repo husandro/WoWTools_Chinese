@@ -118,6 +118,7 @@ SC\Unit.lua
 SC\Gossip.lua
 SC\Faction.lua
 SC\HouseItemSource.lua
+SC\HouseFilterTag.lua
 SC\z_Init.lua
 
 
