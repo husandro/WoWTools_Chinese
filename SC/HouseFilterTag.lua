@@ -1,40 +1,40 @@
 
 WoWTools_SC_HouseFilterTag = {
 {
-["groupName"] = "主题",
-["groupID"] = 6,
-["tags"] = {
-{
-["anyAssociatedEntries"] = true,
-["tagID"] = 70,
-["orderIndex"] = 0,
-["tagName"] = "粗犷",
-},
-{
-["anyAssociatedEntries"] = true,
-["tagID"] = 71,
-["orderIndex"] = 1,
-["tagName"] = "民间",
-},
-{
-["anyAssociatedEntries"] = true,
-["tagID"] = 72,
-["orderIndex"] = 2,
-["tagName"] = "阔绰",
-},
-{
-["anyAssociatedEntries"] = true,
-["tagID"] = 73,
-["orderIndex"] = 3,
-["tagName"] = "节日/事件",
-},
-{
-["anyAssociatedEntries"] = true,
-["tagID"] = -33,
-["orderIndex"] = 4,
-["tagName"] = "无",
-},
-},
+    ["groupName"] = "主题",
+    ["groupID"] = 6,
+    ["tags"] = {
+        {
+        ["anyAssociatedEntries"] = true,
+        ["tagID"] = 70,
+        ["orderIndex"] = 0,
+        ["tagName"] = "粗犷",
+        },
+        {
+        ["anyAssociatedEntries"] = true,
+        ["tagID"] = 71,
+        ["orderIndex"] = 1,
+        ["tagName"] = "民间",
+        },
+        {
+        ["anyAssociatedEntries"] = true,
+        ["tagID"] = 72,
+        ["orderIndex"] = 2,
+        ["tagName"] = "阔绰",
+        },
+        {
+        ["anyAssociatedEntries"] = true,
+        ["tagID"] = 73,
+        ["orderIndex"] = 3,
+        ["tagName"] = "节日/事件",
+        },
+        {
+        ["anyAssociatedEntries"] = true,
+        ["tagID"] = -33,
+        ["orderIndex"] = 4,
+        ["tagName"] = "无",
+        },
+    },
 },
 {
 ["groupName"] = "内容更新",
@@ -523,3 +523,31 @@ WoWTools_SC_HouseFilterTag = {
 },
 },
 }
+
+
+EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
+    if arg1=='Blizzard_HousingDashboard' then
+        local tab= WoWTools_SC_HouseFilterTag
+do
+        for i, data in pairs(C_HousingCatalog.GetAllFilterTagGroups() or {}) do
+            if tab[i] then
+                if data.groupID==tab[i].groupID then
+                    WoWTools_ChineseMixin:SetCN(data.groupName, tab[i].groupName)
+                end
+                if tab[i].tags then
+                    for i2, data2 in pairs(data.tags) do
+                        if tab[i].tags[i2] and tab[i].tags[i2].tagID==data2.tags.tagID then
+                            WoWTools_ChineseMixin:SetCN(data2.tagName, tab[i].tags[i2].tagName)
+                        end
+                    end
+                end
+            end
+        end
+end
+        tab= nil
+        WoWTools_SC_HouseFilterTag= nil
+
+        EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
+    end
+end)
+
