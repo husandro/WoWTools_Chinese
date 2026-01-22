@@ -134,6 +134,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
     self:SetFrame(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame)
     self:SetButton(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame.NoHouseButton)
 
+    HousingDashboardFrame.CatalogContent.Categories.AllSubcategoriesStandIn.enabledTooltip='全部'
 if not WoWTools_TextureMixin or not WoWTools_TextureMixin.disabled then
 --12.0中显示图标，会出错
     WoWTools_DataMixin:Hook(HousingDashboardFrame.CatalogContent, 'UpdateCategoryText', function(frame)
