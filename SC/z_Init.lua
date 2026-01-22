@@ -274,9 +274,12 @@ end
 
 
 
-
-
-
+--住宅，物品来源
+function WoWTools_ChineseMixin:GetHouseItemSource(itemID)
+    if WoWTools_SC_HouseItemSource then
+        return WoWTools_SC_HouseItemSource[GetValueID(itemID)]
+    end
+end
 
 
 
