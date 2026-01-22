@@ -6192,18 +6192,18 @@ EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(ow
                 WoWTools_ChineseMixin:SetCN(data.name, tab.T)
                 WoWTools_ChineseMixin:SetCN(data.description, tab.D)
                 WoWTools_ChineseMixin:SetCN(data.unlockDescription, tab.U)
-                
+
                 local rew= tab.O
                 if rew then
                     for level in pairs(C_MajorFactions.GetRenownLevels(factionID) or {}) do
                         if rew[level] then
-                            for index, info in pairs(C_MajorFactions.GetRenownRewardsForLevel(factionID, level) or {}) do                            
+                            for index, info in pairs(C_MajorFactions.GetRenownRewardsForLevel(factionID, level) or {}) do
                                 if rew[level][index] then
                                     WoWTools_ChineseMixin:SetCN(info.name, rew[level][index].T)
                                     WoWTools_ChineseMixin:SetCN(info.description, rew[level][index].D)
                                     WoWTools_ChineseMixin:SetCN(info.toastDescription, rew[level][index].U)
                                 end
-                                
+
                             end
                         end
                     end

@@ -525,6 +525,11 @@ WoWTools_SC_HouseFilterTag = {
 }
 
 
+
+
+
+
+
 EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1)
     if arg1=='Blizzard_HousingDashboard' then
         C_Timer.After(2, function()

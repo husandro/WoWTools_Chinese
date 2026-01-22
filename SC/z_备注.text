@@ -1,5 +1,8 @@
-数据来源 WoWTools_Chinese_Scanner 插件
-https://github.com/husandro/WoWTools_Chinese_Scanner
-https://www.curseforge.com/wow/addons/wowtools-chinese-scanner
+本目录下所有，数据来源 
+    WoWTools_Chinese_Scanner 插件
+    https://github.com/husandro/WoWTools_Chinese_Scanner
+    https://www.curseforge.com/wow/addons/wowtools-chinese-scanner
 
-Visual Studio Code 用到扩展 Edit CSV
+
+https://wago.tools/db2/
+中的数据库，可用 Visual Studio Code 扩展 Edit CSV 提取
