@@ -1,5 +1,5 @@
 
-WoWTools_SC_Faction = {
+local faction = {
 {
 ["T"] = "人类(玩家)",
 },
@@ -6183,9 +6183,8 @@ nil,
 },
 }
 
-EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
-        for factionID, tab in pairs(WoWTools_SC_Faction or {}) do
+        for factionID, tab in pairs(faction or {}) do
             if C_Reputation.IsMajorFaction(factionID) then
 
                 local data= C_MajorFactions.GetMajorFactionData(factionID) or {}
@@ -6217,6 +6216,4 @@ EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(ow
             end
         end
     end
-    WoWTools_SC_Faction= nil
-    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
-end)
+    faction= nil
