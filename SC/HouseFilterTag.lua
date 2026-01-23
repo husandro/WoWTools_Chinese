@@ -1,5 +1,5 @@
 
-WoWTools_SC_HouseFilterTag = {
+local tab = {
 {
     ["groupName"] = "主题",
     ["groupID"] = 6,
@@ -536,21 +536,21 @@ EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1
 
 do
         for i, data in pairs(C_HousingCatalog.GetAllFilterTagGroups() or {}) do
-            if WoWTools_SC_HouseFilterTag[i] then
-                if data.groupID==WoWTools_SC_HouseFilterTag[i].groupID then
-                    WoWTools_ChineseMixin:SetCN(data.groupName, WoWTools_SC_HouseFilterTag[i].groupName)
+            if tab[i] then
+                if data.groupID==tab[i].groupID then
+                    WoWTools_ChineseMixin:SetCN(data.groupName, tab[i].groupName)
                 end
-                if WoWTools_SC_HouseFilterTag[i].tags then
+                if tab[i].tags then
                     for i2, data2 in pairs(data.tags) do
-                        if WoWTools_SC_HouseFilterTag[i].tags[i2] and WoWTools_SC_HouseFilterTag[i].tags[i2].tagID==data2.tagID then
-                            WoWTools_ChineseMixin:SetCN(data2.tagName, WoWTools_SC_HouseFilterTag[i].tags[i2].tagName)
+                        if tab[i].tags[i2] and tab[i].tags[i2].tagID==data2.tagID then
+                            WoWTools_ChineseMixin:SetCN(data2.tagName, tab[i].tags[i2].tagName)
                         end
                     end
                 end
             end
         end
 end
-        WoWTools_SC_HouseFilterTag= nil
+        tab= nil
 end)
         EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
     end
