@@ -463,8 +463,9 @@ hooksecurefunc(AdventureObjectiveTracker, 'AddBlock', function(_, block)--functi
 
 
     if block.objective then
+        --local objectiveText = C_ContentTracking.GetObjectiveText(block.targetType, block.targetID)
         WoWTools_ChineseMixin:SetLabel(block.objective.Text)
-        print(block.targetType, block.targetID)
+        --print(block.targetType, block.targetID)
     end
     if block.lastRegion then
         WoWTools_ChineseMixin:SetLabel(block.lastRegion.Text)

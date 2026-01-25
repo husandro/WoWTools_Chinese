@@ -5398,13 +5398,19 @@ local HouseTrackerObjective = {
 },
 }
 
-do
-    for recordID, data in pairs(HouseTrackerObjective) do
-        local obj= C_ContentTracking.GetObjectiveText(data.entryType, recordID)
-        if obj then
-            local faction= UnitFactionGroup('player')
-            WoWTools_ChineseMixin:SetCN(obj, data[faction])
+
+
+EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
+    do
+        local faction= UnitFactionGroup('player')
+        for recordID, data in pairs(HouseTrackerObjective) do
+            local obj= C_ContentTracking.GetObjectiveText(data.entryType, recordID)
+            if obj then
+                WoWTools_ChineseMixin:SetCN(obj, data[faction])
+            end
         end
     end
-end
-HouseTrackerObjective= nil
+    HouseTrackerObjective= nil
+
+    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
+end)
