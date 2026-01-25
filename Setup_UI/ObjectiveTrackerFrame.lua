@@ -458,14 +458,15 @@ block.trackableType = trackableType;
 block.trackableID = trackableID;
 block.trackableType = trackableType;
 ]]
-hooksecurefunc(AdventureObjectiveTracker, 'AddBlock', function(_, block)
+hooksecurefunc(AdventureObjectiveTracker, 'AddBlock', function(_, block)--function AdventureObjectiveTrackerMixin:Untrack(trackableType, id)
     WoWTools_ChineseMixin:SetLabel(block.HeaderText)
 
 
     if block.objective then
         WoWTools_ChineseMixin:SetLabel(block.objective.Text)
-
-    elseif block.lastRegion then
+        print(block.targetType, block.targetID)
+    end
+    if block.lastRegion then
         WoWTools_ChineseMixin:SetLabel(block.lastRegion.Text)
     end
 end)
