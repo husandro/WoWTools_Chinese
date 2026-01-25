@@ -30,7 +30,7 @@ do
 end
 
 
---英文
+--[[英文
 do
     tab= {
 
@@ -68,6 +68,6 @@ do
     }) do
         WoWTools_ChineseMixin:SetCN(name,  tab[index])
     end
-end
+end]]
 
 tab= nil
