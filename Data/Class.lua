@@ -4,88 +4,70 @@ https://wago.tools/db2/ChrClasses?locale=zhCN
 ]]
 local tab= {
 
-[1] ='战士',
-[2] ='圣骑士',
-[3] ='猎人',
-[4] ='潜行者',
-[5] ='牧师',
-[6] ='死亡骑士',
-[7] ='萨满祭司',
-[8] ='法师',
-[9] ='术士',
-[10] ='武僧',
-[11] ='德鲁伊',
-[12] ='恶魔猎手',
-[13] ='唤魔师',
-[14] ='冒险者',
-[15]= '旅行者',
+WARRIOR ='战士',
+PALADIN ='圣骑士',
+HUNTER ='猎人',
+ROGUE ='潜行者',
+PRIEST ='牧师',
+DEATHKNIGHT ='死亡骑士',
+SHAMAN ='萨满祭司',
+MAGE ='法师',
+WARLOCK ='术士',
+MONK ='武僧',
+DRUID ='德鲁伊',
+DEMONHUNTER ='恶魔猎手',
+EVOKER ='唤魔师',
+Adventurer ='冒险者',
+TRAVELER= '旅行者',
 }
---[[do
-    for classID, name in pairs(tab) do
-        local classFilename= select(2, GetClassInfo(classID))
-        local hex=classFilename and select(4, GetClassColor(classFilename))
-        if hex then
-            tab[classID]=(
-                    classFilename~='EVOKER'
-                    and '|A:groupfinder-icon-class-'..classFilename..':0:0|a'
-                    or '|A:UI-HUD-UnitFrame-Player-Portrait-ClassIcon-Evoker:0:0|a'
-                )
-                ..'|c'..hex..name..'|r'
-        end
-    end
-end]]
 do
+    for name, en in pairs(LOCALIZED_CLASS_NAMES_MALE or {}) do
+        WoWTools_ChineseMixin:SetCN(en, tab[name])
+    end
+    for name, en in pairs(LOCALIZED_CLASS_NAMES_FEMALE or {}) do
+        WoWTools_ChineseMixin:SetCN(en, tab[name])
+    end
+end
+
 
 --英文
-for index, name in pairs({
-    'Warrior',
-    'Paladin',
-    'Hunter',
-    'Rogue',
-    'Priest',
-    'Death Knight',
-    'Shaman',
-    'Mage',
-    'Warlock',
-    'Monk',
-    'Druid',
-    'Demon Hunter',
-    'Evoker',
-    'Traveler'
-}) do
-    WoWTools_ChineseMixin:SetCN(name,  tab[index])
+do
+    tab= {
 
-end
-
-
-
-
---有男，女之分
-
-
-	--[[for i = 1, GetNumClasses() do
-		local _, _, classID = GetClassInfo(i);
-		for specIndex = 1, C_SpecializationInfo.GetNumSpecializationsForClassID(classID) or 0 do
-            local specID= GetSpecializationInfoForClassID(classID, specIndex)
-		end
-	end]]
-
-    
-    for id, cn in pairs(tab) do
-        WoWTools_ChineseMixin:SetCN(GetClassInfo(id), cn)
-        --WoWTools_ChineseMixin:SetCN(classFile, cn)
+    [1] ='战士',
+    [2] ='圣骑士',
+    [3] ='猎人',
+    [4] ='潜行者',
+    [5] ='牧师',
+    [6] ='死亡骑士',
+    [7] ='萨满祭司',
+    [8] ='法师',
+    [9] ='术士',
+    [10] ='武僧',
+    [11] ='德鲁伊',
+    [12] ='恶魔猎手',
+    [13] ='唤魔师',
+    [14] ='冒险者',
+    [15]= '旅行者',
+    }
+    for index, name in pairs({
+        'Warrior',
+        'Paladin',
+        'Hunter',
+        'Rogue',
+        'Priest',
+        'Death Knight',
+        'Shaman',
+        'Mage',
+        'Warlock',
+        'Monk',
+        'Druid',
+        'Demon Hunter',
+        'Evoker',
+        'Traveler'
+    }) do
+        WoWTools_ChineseMixin:SetCN(name,  tab[index])
     end
-
-    local className, _, classID=  UnitClass('player')--男
-    --WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
-    WoWTools_ChineseMixin:SetCN(className, tab[classID])
-
-
-    --[[className, _, classID=  UnitClass('player', 3)--女
-    --WoWTools_ChineseMixin:SetCN(classFile, tab[classID])
-    WoWTools_ChineseMixin:SetCN(className, tab[classID])]]
 end
 
-tab=nil
-
-
+tab= nil
