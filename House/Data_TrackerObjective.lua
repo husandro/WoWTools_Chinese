@@ -651,7 +651,13 @@ local HouseTrackerObjective = {
 
 do
     for recordID, cn in pairs(HouseTrackerObjective) do
-        WoWTools_ChineseMixin:SetCN(C_ContentTracking.GetObjectiveText(Enum.HousingCatalogEntryType.Decor, recordID), cn)
+        local obj= C_ContentTracking.GetObjectiveText(Enum.HousingCatalogEntryType.Decor, recordID)
+        if obj then
+            if boj==[[Mercante: "Yen" Malone a Punta della Fondazione]] then
+                print(cn)
+            end
+            WoWTools_ChineseMixin:SetCN(obj, cn)
+        end
     end
 end
 HouseTrackerObjective= nil

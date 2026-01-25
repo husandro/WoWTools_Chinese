@@ -460,8 +460,13 @@ block.trackableType = trackableType;
 ]]
 hooksecurefunc(AdventureObjectiveTracker, 'AddBlock', function(_, block)
     WoWTools_ChineseMixin:SetLabel(block.HeaderText)
+
+
     if block.objective then
         WoWTools_ChineseMixin:SetLabel(block.objective.Text)
+
+    elseif block.lastRegion then
+        WoWTools_ChineseMixin:SetLabel(block.lastRegion.Text)
     end
 end)
 
