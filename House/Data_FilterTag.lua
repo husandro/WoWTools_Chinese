@@ -1,4 +1,4 @@
-
+-- 住宅，物品来源， 数据来源 WoWTools_Chinese_Scanner 插件
 local tab = {
 {
     ["groupName"] = "主题",

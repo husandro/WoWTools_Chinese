@@ -449,8 +449,21 @@ hooksecurefunc(UIWidgetObjectiveTracker, 'LayoutContents', function(frame)
 	end
 end)
 
-
+--ObjectiveTrackerBlockMixin
 hooksecurefunc(AdventureObjectiveTracker, 'LayoutContents', set_objective_header)
+--[[
+AdventureObjectiveTrackerMixin:ProcessTrackingEntry(trackableType, trackableID)
+block.trackableID = trackableID;
+block.trackableType = trackableType;
+block.trackableID = trackableID;
+block.trackableType = trackableType;
+]]
+hooksecurefunc(AdventureObjectiveTracker, 'AddBlock', function(_, block)
+    WoWTools_ChineseMixin:SetLabel(block.HeaderText)
+    if block.objective then
+        WoWTools_ChineseMixin:SetLabel(block.objective.Text)
+    end
+end)
 
 --[[hooksecurefunc(AdventureObjectiveTracker, 'ProcessTrackingEntry', function(frame, trackableType, trackableID)
     local targetType, targetID = C_ContentTracking.GetCurrentTrackingTarget(trackableType, trackableID);

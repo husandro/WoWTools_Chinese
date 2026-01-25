@@ -28,7 +28,7 @@ do
         WoWTools_ChineseMixin:SetCN(en, tab[name])
     end
 end
-
+tab= nil
 
 --[[英文
 do
@@ -70,4 +70,3 @@ do
     end
 end]]
 
-tab= nil

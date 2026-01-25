@@ -1,5 +1,13 @@
---住宅，物品来源， 数据来源 WoWTools_Chinese_Scanner 插件
-WoWTools_SC_HouseItemSource = {
+--[[住宅，物品来源， 数据来源 WoWTools_Chinese_Scanner 插件
+--住宅，物品来源
+local HouseSource
+function WoWTools_ChineseMixin:GetHouseItemSource(itemID)
+    if HouseSource then
+        return HouseSource[tonumber(itemID)]
+    end
+end]]
+
+local HouseSource = {
 [245518] = "|cFFFFD200世界任务：|r最后的美餐|n|cFFFFD200地区：|r吉尔尼斯",
 [245263] = "|cFFFFD200世界任务：|r问题之源|n|cFFFFD200地区：|r沃顿",
 [250123] = "|cFFFFD200成就：|r死亡领主潜能无限|n|cFFFFD200分类：|r军团再临职业大厅|n|cFFFFD200商人出售：|r军需官奥佐格|n|cFFFFD200地区：|r阿彻鲁斯：黑锋要塞|n|cFFFFD200价格：|r2500|Hcurrency:1220|h|TInterface\\ICONS\\INV_OrderHall_OrderResources.BLP:0|t|h",
@@ -826,5 +834,12 @@ WoWTools_SC_HouseItemSource = {
 }
 
 
-
-
+do 
+    for itemID, desc in pairs(HouseSource) do
+        local entryInfo = C_HousingCatalog.GetCatalogEntryInfoByItem(itemID, false)
+        if entryInfo then
+            WoWTools_ChineseMixin:SetCN(entryInfo.sourceText, desc)
+        end
+    end
+end
+HouseSource= nil

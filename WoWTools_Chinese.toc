@@ -58,9 +58,6 @@ Data\AreaPOI.lua
 Data\Class.lua
 ##考古
 Data\ArchaeologyUI.lua
-##住宅
-Data\HouseDecor.lua
-Data\House.lua
 
 ##Function
 ##英雄专精
@@ -118,11 +115,15 @@ SC\Faction.lua
 SC\Currency.lua
 SC\Mount.lua
 
-SC\HouseItemSource.lua
-SC\HouseFilterTag.lua
+##住宅
+House\Data_FilterTag.lua
+House\Data_Name.lua
+House\Data_House.lua
+House\Data_Source.lua
+House\Data_TrackerObjective.lua
+House\UI.lua
 
 SC\z_Init.lua
-
 
 a_Event.lua
 b_Frames.lua
@@ -165,7 +166,7 @@ Setup_UI\EncounterJournal.lua
 Setup_UI\EncounterJournal_PerksProgram.lua
 Setup_UI\Item_MerchantFrame.lua
 Setup_UI\Item_LootFrame.lua
-Setup_UI\House.lua
+
 ##地下城查找器
 Setup_UI\LFG_GroupFinder.lua
 Setup_UI\LFG_Frame.lua

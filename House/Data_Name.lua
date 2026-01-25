@@ -1,8 +1,10 @@
 --[[
 https://wago.tools/db2/HouseDecor?locale=zhCN
 [ID] = "Name_lang",
+或
+  住宅，物品来源， 数据来源 WoWTools_Chinese_Scanner 插件
 ]]
-local decorName={
+local HouseName={
 [19252] = "虚影尖塔征服者闪银战利品",
 [19234] = "虚触无尽法典",
 [19231] = "自然的优雅无尽法典",
@@ -1874,18 +1876,8 @@ local decorName={
 }
 
 do
-    for id, cn in pairs(decorName) do
+    for id, cn in pairs(HouseName) do
         WoWTools_ChineseMixin:SetCN(C_HousingDecor.GetDecorName(id), cn)
     end
 end
-decorName= nil
-
-
-
-
-
-
-
-
-
-
+HouseName= nil
