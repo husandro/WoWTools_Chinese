@@ -4729,7 +4729,7 @@ local HouseTrackerObjective = {
 
 
 
-EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
+--EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
         local faction= UnitFactionGroup('player')
         for targetID, data in pairs(HouseTrackerObjective) do
@@ -4741,5 +4741,5 @@ EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(ow
     end
     HouseTrackerObjective= nil
 
-    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
-end)
+  --  EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
+--end)
