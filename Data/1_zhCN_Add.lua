@@ -35,7 +35,9 @@ local tabString={
 [format('\124T%s.tga:16:16:0:0\124t %s', FRIENDS_TEXTURE_DND, FRIENDS_LIST_BUSY)]= "|TInterface\\FriendsFrame\\StatusIcon-DnD:16:16|t 忙碌",
 [CURRENCY_FILTER_TYPE_CHARACTER:format(UnitName('player'))] = "仅限|A:auctionhouse-icon-favorite:0:0|a我",
 [CreateAtlasMarkup("waypoint-mappin-minimap-untracked", 16, 16, -3, 0)..CONTENT_TRACKING_UNTRACK_TOOLTIP_PROMPT]= CreateAtlasMarkup("waypoint-mappin-minimap-untracked", 16, 16, -3, 0)..'<按住Shift点击停止追踪>',
-[CreateAtlasMarkup("waypoint-mappin-minimap-untracked", 16, 16, -3, 0)..CONTENT_TRACKING_TRACKABLE_TOOLTIP_PROMPT]= CreateAtlasMarkup("waypoint-mappin-minimap-untracked", 16, 16, -3, 0)..'<按住Shift点击追踪此物品>'
+[CreateAtlasMarkup("waypoint-mappin-minimap-untracked", 16, 16, -3, 0)..CONTENT_TRACKING_TRACKABLE_TOOLTIP_PROMPT]= CreateAtlasMarkup("waypoint-mappin-minimap-untracked", 16, 16, -3, 0)..'<按住Shift点击追踪此物品>',
+
+[format(HUD_EDIT_MODE_NEW_LAYOUT_DISABLED, CreateAtlasMarkup("editmode-new-layout-plus-disabled"))]= format('%s 新布局', CreateAtlasMarkup("editmode-new-layout-plus-disabled"))
 }
 
 
@@ -132,6 +134,9 @@ tabItem=nil
 for en, cn in pairs(tab_G) do
     WoWTools_ChineseMixin:SetCN(_G[en], cn)
 end
+for en, cn in pairs(tabString) do
+    WoWTools_ChineseMixin:SetCN(en, cn)
+end
 
 
 EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(owner)
@@ -144,13 +149,11 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
         WoWTools_ChineseMixin:SetCN(name, '本赛季')
     end
 
-
-
     do
         for en, cn in pairs(tab_G) do
             WoWTools_ChineseMixin:SetCN(_G[en], cn)
         end
-            
+
 
         for en, cn in pairs(tabString) do
             WoWTools_ChineseMixin:SetCN(en, cn)

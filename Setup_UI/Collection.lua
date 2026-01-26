@@ -61,6 +61,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_Collections()
         end
         if btn.cnName then
             btn.cnName:SetText(cn or '')
+            btn.cnName:SetTextColor(btn.name:GetTextColor())
         end
     end)
 
@@ -182,6 +183,7 @@ self:AddDialogs("BATTLE_PET_RENAME", {text = '重命名', button1 = '接受', bu
         end
         if pet.cnName then
             pet.cnName:SetText(npcName or '')
+            pet.cnName:SetTextColor(pet.name:GetTextColor())
         end
     end)
 
@@ -266,12 +268,24 @@ self:AddDialogs("BATTLE_PET_RENAME", {text = '重命名', button1 = '接受', bu
                     loadoutPlate.cnName:SetText(cnName or '')
                 end
             end
+            if loadoutPlate.requirement:IsShown() then
+                local name= i==1 and '|T643856:0|t战斗宠物训练' or (i==2 and '|T651382:0|t菜鸟') or (i==3 and '|T651383:0|t小崽子')
+                if name then
+                    name= '|cnACCOUNT_WIDE_FONT_COLOR:['..name..']'
+                    loadoutPlate.requirement.str:SetText(name)
+                end
+            end
         end
     end)
     self:SetLabel(PetJournalLoadoutBorderSlotHeaderText)
     self:SetLabel(PetJournalLoadoutPet1EmptySlotDragHere)
     self:SetLabel(PetJournalLoadoutPet2EmptySlotDragHere)
     self:SetLabel(PetJournalLoadoutPet3EmptySlotDragHere)
+
+    self:HookLabel(PetJournalLoadoutPet1HelpFrameText)
+    self:HookLabel(PetJournalLoadoutPet2HelpFrameText)
+    self:HookLabel(PetJournalLoadoutPet3HelpFrameText)
+
 
 
 

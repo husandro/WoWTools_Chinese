@@ -99,10 +99,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_EditMode()
         end
     end)
 --保存布局
-    self:SetLabel(EditModeLayoutDialog.Title)
+    self:HookLabel(EditModeLayoutDialog.Title)
     self:SetLabel(EditModeLayoutDialog.CharacterSpecificLayoutCheckButton.Label)
-    self:SetButton(EditModeLayoutDialog.AcceptButton)
-    self:SetButton(EditModeLayoutDialog.CancelButton)
+    self:HookButton(EditModeLayoutDialog.AcceptButton)
+    self:HookButton(EditModeLayoutDialog.CancelButton)
 
     --[[hooksecurefunc(EditModeSystemSettingsDialog, 'UpdateButtons', function(_, systemFrame)--12.0有BUG
         --if systemFrame == frame.attachedToSystem then

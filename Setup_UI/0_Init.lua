@@ -594,21 +594,22 @@ WoWTools_ChineseMixin:HookLabel(PetitionFrameRenameButton)
 WoWTools_ChineseMixin:SetLabel(PetitionFrameRequestButtonText)
 WoWTools_ChineseMixin:SetLabel(PetitionFrameCancelButtonText)
 WoWTools_ChineseMixin:SetLabel(PetitionFrameMemberTitle)
+WoWTools_ChineseMixin:SetLabel(PetitionFrameSignButtonText)
+
 PetitionFrameNpcNameText:SetParent(PetitionFrame.TitleContainer)
 
-hooksecurefunc('PetitionFrame_Update', function()
+hooksecurefunc('PetitionFrame_Update', function(frame)
 	local petitionType, title, _, _, _, _, _ = GetPetitionInfo();
 
 	if ( petitionType == "guild" ) then
 		PetitionFrameNpcNameText:SetFormattedText('%s公会登记表', title)
 	end
-	local memberText;
-	local numNames = GetNumPetitionNames();
 
-	for i=1, minSignatures do
-		memberText = _G["PetitionFrameMemberName"..i];
-		if ( i > numNames ) then
-			memberText:SetText('<未被签名>');
+	local numNames = GetNumPetitionNames()
+	for i=1, frame.minSignatures or 4 do
+		local memberText = _G["PetitionFrameMemberName"..i];
+		if memberText and ( i > numNames ) then
+			memberText:SetText('<未被签名>')
 		end
 	end
 end)

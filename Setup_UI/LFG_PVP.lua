@@ -544,6 +544,8 @@ local function Init_ConquestFrame(self)
         self:SetLabel(ConquestFrame.RatedBGBlitz.TeamTypeText)
     end
 
+
+
     --加入战斗，按钮
     hooksecurefunc('ConquestFrame_UpdateJoinButton', function()-- RATED_SOLO_SHUFFLE_BUTTON_ID=1  RATED_BG_BLITZ_BUTTON_ID=2 RATED_BG_BUTTON_ID =5
         local button = ConquestFrame.JoinButton
@@ -704,6 +706,20 @@ local function Init_ConquestFrame(self)
             end
         end
     end)
+
+
+--[[ConquestQueueFrame_UpdateJoinButton()
+    local function set_CategoryButton(btn)
+        if btn.tooltip and GameTooltip:IsShown() then
+            print(btn.tooltip)
+        end
+    end
+   for i=1, 4 do
+        local btn= PVPQueueFrame['CategoryButton'..i]
+        if btn then
+            btn:HookScript('OnEnter', set_CategoryButton)
+        end
+    end]]
 end
 
 
