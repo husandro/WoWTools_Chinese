@@ -1,5 +1,5 @@
 -- 住宅，物品来源， 数据来源 WoWTools_Chinese_Scanner 插件
-local tab = {
+local HouseFilter = {
 {
     ["groupName"] = "主题",
     ["groupID"] = 6,
@@ -536,21 +536,21 @@ EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(owner, arg1
 
 do
         for i, data in pairs(C_HousingCatalog.GetAllFilterTagGroups() or {}) do
-            if tab[i] then
-                if data.groupID==tab[i].groupID then
-                    WoWTools_ChineseMixin:SetCN(data.groupName, tab[i].groupName)
+            if HouseFilter[i] then
+                if data.groupID==HouseFilter[i].groupID then
+                    WoWTools_ChineseMixin:SetCN(data.groupName, HouseFilter[i].groupName)
                 end
-                if tab[i].tags then
+                if HouseFilter[i].tags then
                     for i2, data2 in pairs(data.tags) do
-                        if tab[i].tags[i2] and tab[i].tags[i2].tagID==data2.tagID then
-                            WoWTools_ChineseMixin:SetCN(data2.tagName, tab[i].tags[i2].tagName)
+                        if HouseFilter[i].tags[i2] and HouseFilter[i].tags[i2].tagID==data2.tagID then
+                            WoWTools_ChineseMixin:SetCN(data2.tagName, HouseFilter[i].tags[i2].tagName)
                         end
                     end
                 end
             end
         end
 end
-        tab= nil
+        HouseFilter= nil
 end)
         EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
     end
