@@ -23,9 +23,8 @@ hooksecurefunc(SettingsPanel.Container.SettingsList.ScrollBox, 'Update', functio
         local lable
         if btn.Button then--按钮
             lable= btn.Button.Text or btn.Button
-            if lable and lable:GetText()==NOT_BOUND then
-                lable:SetText('未设置')
-                --WoWTools_ChineseMixin:SetLabel(lable)
+            if lable then
+                WoWTools_ChineseMixin:SetLabel(lable)
             end
         end
         if btn.DropDown and btn.DropDown.Button and btn.DropDown.Button.SelectionDetails  then--下拉，菜单info= btn

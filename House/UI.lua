@@ -1,5 +1,6 @@
 function WoWTools_ChineseMixin.Events:Blizzard_HousingModelPreview()
     self:SetLabel(HousingModelPreviewFrame.ModelPreview.TextContainer.CollectionBonus)
+
     hooksecurefunc(HousingModelPreviewMixin, 'OnLoad', function(frame)
         frame:SetupTextTooltip(frame.TextContainer.CollectionBonus,
             function(tooltip)
@@ -10,6 +11,16 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingModelPreview()
             function(tooltip)
                 GameTooltip_AddHighlightLine(tooltip, format('已放置：%d，储存空间：%d', frame.catalogEntryInfo.numPlaced, frame.catalogEntryInfo.numStored));
             end);
+    end)
+
+    hooksecurefunc(HousingModelPreviewMixin, 'PreviewCatalogEntryInfo', function(frame, catalogEntryInfo)
+        local sourceText= catalogEntryInfo.sourceText
+        local cn= self:CN(sourceText)
+        if cn then
+
+        else
+
+        end
     end)
 end
 
@@ -149,21 +160,15 @@ if not WoWTools_TextureMixin or not WoWTools_TextureMixin.disabled then
     end)
 end
 
---HousingModelPreviewMixin
+-- HousingModelPreviewMixin:PreviewCatalogEntryInfo(catalogEntryInfo)
     self:HookLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.NameContainer.Name)
-    --[[hooksecurefunc(HousingDashboardFrame.CatalogContent.PreviewFrame, 'PreviewCatalogEntryInfo', function(frame, info)
-        if info and info.entryID then
-            local cn= self:CN(info.name)
-            if cn then
-                frame.NameContainer.Name:SetText(cn)
-            end
-        end
-    end)]]
+    self:HookLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.TextContainer.SourceInfo)
 
     self:SetLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.TextContainer.CollectionBonus)
     self:SetLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.PreviewUnavailableText)
 
     self:SetLabel(HousingDashboardFrame.HouseInfoContent.ContentFrame.HouseUpgradeFrame.WatchFavorButton.Label)
+    --self:HookLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.TextContainer.SourceInfo)
 end
 
 

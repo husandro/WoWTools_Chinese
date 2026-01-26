@@ -460,8 +460,6 @@ block.trackableType = trackableType;
 ]]
 hooksecurefunc(AdventureObjectiveTracker, 'AddBlock', function(_, block)--function AdventureObjectiveTrackerMixin:Untrack(trackableType, id)
     WoWTools_ChineseMixin:SetLabel(block.HeaderText)
-
-
     if block.objective then
         --local objectiveText = C_ContentTracking.GetObjectiveText(block.targetType, block.targetID)
         WoWTools_ChineseMixin:SetLabel(block.objective.Text)

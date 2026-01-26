@@ -313,35 +313,38 @@ end
 
 
 
-local function set_label(self, text)
+local function set_label(self, enText)
     if not self
         or not self.SetText
-        or not canaccessvalue(text)
-        or (not text and not self.GetText)
+        or not canaccessvalue(enText)
+        or (not enText and not self.GetText)
     then
         return
     end
 
-    if not text then
-        text= self:GetText()
+    if not enText then
+        enText= self:GetText()
+        if not canaccessvalue(enText) then
+            return
+        end
     end
 
-    local cn= WoWTools_ChineseMixin:SetText(text)
-    if cn and cn~=text then
+    local cn= WoWTools_ChineseMixin:SetText(enText)
+    if cn and cn~=enText then
         self:SetText(cn)
     end
 end
 
 
 
-local function set_match(text, a, b)
+local function set_match(enText, a, b)
     local a1=WoWTools_ChineseMixin:CN(a)
     local b1= WoWTools_ChineseMixin:CN(b)
 
-    local r= a1 and a1:find('[\228-\233]') and text:gsub(a, a1) or text
+    local r= a1 and a1:find('[\228-\233]') and enText:gsub(a, a1) or enText
     r= b1 and b1:find('[\228-\233]') and r:gsub(b, b1) or r
 
-    if text~= r then
+    if enText~= r then
         return r
     end
 end
