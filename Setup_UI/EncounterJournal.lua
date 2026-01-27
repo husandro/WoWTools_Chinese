@@ -451,11 +451,11 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
             end
     end)
 
-    do
+    --[[do
         WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
     end
     WoWTools_ChineseMixin.Events.Blizzard_EncounterJournal_PerksActivity=nil
-
+]]
 
 
 
@@ -465,12 +465,11 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
     self:SetButton(EncounterJournal.TutorialsFrame.Contents.StartButton)
     self:SetLabel(EncounterJournalInstanceSelect.Title)
 
+
+
+
+
 --旅程 12.0
-    if not EncounterJournalJourneysFrame  then
-        return
-    end
-
-
     self:HookLabel(EncounterJournalJourneysFrame.JourneyOverview.JourneyName)
     self:SetLabel(EncounterJournalJourneysFrame.JourneyOverview.JourneyWarbandLabel)
     self:HookLabel(EncounterJournalJourneysFrame.JourneyOverview.JourneyDescription)
@@ -542,6 +541,106 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
     self:SetLabel(EncounterJournalJourneysFrame.JourneyProgress.RenownTrackFrame.ClipFrame.ParagonLevelFrame.Label)
 
     self:HookLabel(EncounterJournalJourneysFrame.JourneyProgress.DelvesCompanionConfigurationFrame.CompanionConfigBtn.CompanionName)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--旅行者
+    EncounterJournalMonthlyActivitiesFrame.RestrictedText:SetText('你必须有可用的订阅或游戏时间|n才能完成活动并在商栈赢取奖励')
+    EncounterJournalMonthlyActivitiesTab:SetText('旅行者')
+    EncounterJournalMonthlyActivitiesTab:SetScript('OnEnter', function()
+        if not C_PlayerInfo.IsTravelersLogAvailable() then
+            local tradingPostLocation = UnitFactionGroup('player') == "Alliance" and '暴风城' or '奥格瑞玛'
+            GameTooltip_AddBlankLineToTooltip(GameTooltip)
+            GameTooltip_AddErrorLine(GameTooltip, format('拜访%s的商栈，查看旅行者日志。', tradingPostLocation))
+            if AreMonthlyActivitiesRestricted() then
+                GameTooltip_AddBlankLineToTooltip(GameTooltip)
+                GameTooltip_AddErrorLine(GameTooltip, '需要可用的游戏时间。')
+            end
+
+            GameTooltip:Show()
+        end
+    end)
+    if EncounterJournalMonthlyActivitiesFrame.ThresholdContainer then
+        WoWTools_ChineseMixin:SetLabel(EncounterJournalMonthlyActivitiesFrame.ThresholdContainer.TextContainer.Points)
+    end
+    EncounterJournalMonthlyActivitiesFrame.HeaderContainer.Title:SetText('旅行者日志')
+    EncounterJournalMonthlyActivitiesFrame.BarComplete.AllRewardsCollectedText:SetText('你已经收集完了本月的所有奖励')
+
+
+
+
+
+local function set_desc_event(data)
+    local desc= data and WoWTools_ChineseMixin:CN(data.description)
+    if desc then
+        if data.eventStartTime and desc:find('{EventStartDate}') then
+            local eventStartTimeUnits = date("*t", data.eventStartTime)
+            local eventStartDate = FormatShortDate(eventStartTimeUnits.day, eventStartTimeUnits.month)
+            if eventStartDate then
+                desc= desc:gsub('{EventStartDate}', '|cnGREEN_FONT_COLOR:'..eventStartDate..'|r')
+            end
+        end
+        if data.eventEndTime and desc:find('{EventEndDate}') then
+            local eventEndTimeUnits = date("*t", data.eventEndTime)
+            local eventEndDate = FormatShortDate(eventEndTimeUnits.day, eventEndTimeUnits.month)
+            if eventEndDate then
+                desc= desc:gsub('{EventEndDate}', '|cnRED_FONT_COLOR:'..eventEndDate..'|r')
+            end
+        end
+        return desc
+    end
+end
+
+    --任务，名称
+    hooksecurefunc(MonthlyActivitiesButtonTextContainerMixin, 'UpdateText', function(frame, data)
+        self:SetLabel(frame.NameText)
+        local desc= set_desc_event(data)
+        if desc then
+            frame.ConditionsText:SetText(desc)
+        end
+    end)
+
+    --任务，提示
+    hooksecurefunc(MonthlyActivitiesButtonMixin, 'ShowTooltip', function(frame)
+        local data = frame:GetData()
+
+        if data and GameTooltip:IsShown() and not self:CN(data.description) then
+            GameTooltip_AddBlankLineToTooltip(GameTooltip)
+            GameTooltip:AddLine(desc, nil,nil,nil, true)
+            GameTooltip:Show()
+        end
+    end)
+
+
+    --任务，列表，名称
+    hooksecurefunc(EncounterJournalMonthlyActivitiesFrame.FilterList.ScrollBox, 'Update', function(frame)
+        if not frame:GetView() then
+            return
+        end
+        for _, btn in pairs(frame:GetFrames() or {}) do
+            self:SetLabel(btn.Label)
+        end
+    end)
+
+    --月份 名称 MonthlyActivitiesFrameMixin
+    hooksecurefunc(EncounterJournalMonthlyActivitiesFrame, 'UpdateTime', function(frame, _, secondsRemaining)
+        local text = EncounterJournalMonthlyActivitiesFrame.TimeLeftFormatter:Format(secondsRemaining)
+        frame.HeaderContainer.TimeLeft:SetFormattedText('|A:activities-clock:0:0:0:0|a %s |cnRED_FONT_COLOR:后结束|r', text)
+        self:SetLabel(frame.HeaderContainer.Month)
+    end)
+
 end
 --[[
 

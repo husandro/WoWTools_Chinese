@@ -25,9 +25,10 @@ Data\AccountStore.lua
 Data\Achievement_Data_Category.lua
 ##Data\Achievement_Data.lua
 ##冒险指南
-Data\EncounterJournal_Data_PerksActivity_Tag.lua
+##Data\EncounterJournal_Data_PerksActivity_Tag.lua
 Data\EncounterJournal_Data_Instance.lua
-Data\EncounterJournal_PerksActivity.lua
+Data\PerksActivityThresholdGroup.lua
+##Data\EncounterJournal_PerksActivity.lua
 ##派系
 Data\Faction_Data_AlliedRace.lua
 Data\Faction_Data_Race.lua
@@ -82,8 +83,7 @@ Get_Data\DigSite.lua
 Get_Data\LFGDungeonDesc.lua
 ##节日
 Get_Data\HolidayData.lua
-##冒险指南
-Get_Data\PerksActivityData.lua
+
 ##玩具，来原
 Get_Data\ToySource.lua
 ##宠物, desc
@@ -114,6 +114,8 @@ SC\Gossip.lua
 SC\Faction.lua
 SC\Currency.lua
 SC\Mount.lua
+##冒险指南 旅行者
+SC\PerksActivity.lua
 
 ##住宅
 House\Data_FilterTag.lua

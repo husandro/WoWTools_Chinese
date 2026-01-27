@@ -3,7 +3,6 @@
 https://wago.tools/db2/CurrencyCategory?locale=zhCN
 ]]
 local tab={
---12.01
 [1]= "其它",
 [2]= "PvP",
 [3]= "未使用",
@@ -30,12 +29,12 @@ local tab={
 [268]= "第1赛季",
 }
 
-    do
-        for id, name in pairs(tab) do
-            local info= C_CurrencyInfo.GetPlayerCurrencyCategoryInfo(id)
-            if info then
-                WoWTools_ChineseMixin:SetCN(info.categoryName, name)
-            end
+do
+    for id, name in pairs(tab) do
+        local info= C_CurrencyInfo.GetPlayerCurrencyCategoryInfo(id)
+        if info then
+            WoWTools_ChineseMixin:SetCN(info.categoryName, name)
         end
     end
-    tab= nil
+end
+tab= nil

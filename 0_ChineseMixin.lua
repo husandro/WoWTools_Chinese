@@ -125,7 +125,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
                 data= d
             end
         end
-    elseif tab.perksActivityID then
+    --[[elseif tab.perksActivityID then
 
         if tab.isName then
             data= self:GetPerksActivityName(tab.perksActivityID)
@@ -133,7 +133,7 @@ function WoWTools_ChineseMixin:GetData(text, tab)
             data= self:GetPerksActivityDesc(tab.perksActivityID)
         else
             data= self:GetPerksActivityData(tab.perksActivityID)--PERKS
-        end
+        end]]
 
     elseif tab.vignetteID then
         data= self:GetVignetteName(tab.vignetteID)--Vignette
