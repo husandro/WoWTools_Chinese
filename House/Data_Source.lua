@@ -3327,7 +3327,7 @@ local HouseSource = {
 
 
 
-local faction
+
 
 local function Load_Item(itemID, source)
     ItemEventListener:AddCancelableCallback(itemID, function()
@@ -3341,7 +3341,7 @@ local function Load_Item(itemID, source)
     end)
 end
 
-
+local faction
 faction= UnitFactionGroup('player')
 for itemID, data in pairs(HouseSource) do
     local source= data and data[faction]
