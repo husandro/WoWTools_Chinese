@@ -3341,13 +3341,12 @@ local function Load_Item(itemID, source)
     end)
 end
 
-do
-    faction= UnitFactionGroup('player')
-    for itemID, data in pairs(HouseSource) do
-        local source= data and data[faction]
-        if source then
-            Load_Item(itemID, source)
-        end
+
+faction= UnitFactionGroup('player')
+for itemID, data in pairs(HouseSource) do
+    local source= data and data[faction]
+    if source then
+        Load_Item(itemID, source)
     end
 end
 
