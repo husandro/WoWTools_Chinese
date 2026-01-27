@@ -3353,9 +3353,9 @@ end
 
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     for itemID, data in pairs(HouseSource) do
-        local entryInfo = C_HousingCatalog.GetCatalogEntryInfoByItem(itemID, true)
-        if entryInfo then
-            WoWTools_ChineseMixin:SetCN(entryInfo.sourceText, data[faction])
+        local source= data and data[faction]
+        if source then
+            Load_Item(itemID, source)
         end
     end
     faction= nil
