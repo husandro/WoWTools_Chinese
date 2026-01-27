@@ -3315,14 +3315,26 @@ local HouseSource = {
 },
 }
 
+local faction
 
-do
-    local faction= UnitFactionGroup('player')
-    for itemID, data in pairs(HouseSource) do
-        
+local function Load_Item(itemID, source)
+    ItemEventListener:AddCancelableCallback(itemID, function()
         local entryInfo = C_HousingCatalog.GetCatalogEntryInfoByItem(itemID, false)
         if entryInfo then
-            WoWTools_ChineseMixin:SetCN(entryInfo.sourceText, data[faction])
+            WoWTools_ChineseMixin:SetCN(entryInfo.sourceText, source)
+            if HouseSource then
+                HouseSource[itemID]= nil
+            end
+        end
+    end)
+end
+
+do
+    faction= UnitFactionGroup('player')
+    for itemID, data in pairs(HouseSource) do
+        local source= data and data[faction]
+        if source then
+            Load_Item(itemID, source)
         end
     end
 end
@@ -3334,6 +3346,7 @@ EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(ow
             WoWTools_ChineseMixin:SetCN(entryInfo.sourceText, data[faction])
         end
     end
+    faction= nil
     HouseSource= nil
     EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
 end)
