@@ -333,7 +333,7 @@ TOOLTIP_QUEST_REWARDS_STYLE_ISLANDS_QUEUE.headerText = '获胜奖励：'
 TOOLTIP_QUEST_REWARDS_STYLE_EMISSARY_REWARD.headerText = '奖励'
 TOOLTIP_QUEST_REWARDS_PRIORITIZE_CURRENCY_OVER_ITEM.headerText = '奖励'
 
---替换，原生
+--[[替换，原生
 function GameTooltip_OnTooltipAddMoney(self, cost, maxcost)
     if( not maxcost or maxcost < 1 ) then --We just have 1 price to display
         SetTooltipMoney(self, cost, nil, string.format("%s:", '卖价'))
@@ -343,7 +343,7 @@ function GameTooltip_OnTooltipAddMoney(self, cost, maxcost)
         SetTooltipMoney(self, cost, nil, string.format("%s%s:", indent, '最小'))
         SetTooltipMoney(self, maxcost, nil, string.format("%s%s:", indent, '最大'))
     end
-end
+end]]
 
 
 
