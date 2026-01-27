@@ -24,6 +24,10 @@ WoWTools_ChineseMixin:SetTabButton(PVEFrameTab4)--:SetText('地下堡')
 
 WoWTools_ChineseMixin:SetLabel(LFDQueueFrameRandomScrollFrameChildFrameXPLabel)
 WoWTools_ChineseMixin:HookButton(LFDQueueFrameFindGroupButton)
+WoWTools_ChineseMixin:SetLabel(LFDQueueFramePartyBackfillDescription)
+WoWTools_ChineseMixin:SetButton(LFDQueueFramePartyBackfillBackfillButton)
+WoWTools_ChineseMixin:SetButton(LFDQueueFramePartyBackfillNoBackfillButton)
+WoWTools_ChineseMixin:SetLabel(LFDQueueFrameRandomScrollFrameChildFrameDescription)
 --[[hooksecurefunc('LFDQueueFrameFindGroupButton_Update', function()--LFDFrame.lua
     local mode = GetLFGMode(LE_LFG_CATEGORY_LFD)
     if ( mode == "queued" or mode == "rolecheck" or mode == "proposal" or mode == "suspended" ) then
