@@ -3,7 +3,7 @@
 https://wago.tools/db2/HouseDecor?locale=zhCN
 ]]
 local HouseName={
-    [383] = "锻铁地灯",
+[383] = "锻铁地灯",
 [12252] = "庇护之地象棋：黑暗战车",
 [8191] = "德莱尼观星者的望远镜",
 [18483] = "阿彻鲁斯之眼",
