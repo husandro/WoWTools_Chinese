@@ -9,20 +9,30 @@
 
 local function calendar_Uptate()
     local indexInfo = C_Calendar.GetEventIndex()
-    local info= indexInfo and C_Calendar.GetDayEvent(indexInfo.offsetMonths, indexInfo.monthDay, indexInfo.eventIndex)
-    local data= info and WoWTools_ChineseMixin:GetHolidayData(info.eventID)
-    if data then
-        if data.T then
-            CalendarViewHolidayFrame.Header:Setup(data.T)
+    local info= indexInfo and C_Calendar.GetHolidayInfo(indexInfo.offsetMonths, indexInfo.monthDay, indexInfo.eventIndex)--C_Calendar.GetDayEvent(indexInfo.offsetMonths, indexInfo.monthDay, indexInfo.eventIndex)
+
+    if info then
+        local header, desc= WoWTools_ChineseMixin:GetHoliDayName(info.eventID)
+
+        header= header or WoWTools_ChineseMixin:CN(info.name)
+        if header then
+            CalendarViewHolidayFrame.Header:Setup(header)
         end
-        local desc= data.D
+
+        desc= desc or WoWTools_ChineseMixin:CN(info.description)
+        if (info.startTime and info.endTime) then
+            desc= desc or info.description or ''
+            desc = format('%1$s|n|n开始：%2$s %3$s|n结束：%4$s %5$s', desc,
+                FormatShortDate(info.startTime.monthDay, info.startTime.month, 0),
+                GameTime_GetFormattedTime(info.startTime.hour, info.startTime.minute, true),
+                FormatShortDate(info.endTime.monthDay, info.endTime.month),
+                GameTime_GetFormattedTime(info.endTime.hour, info.endTime.minute, true)
+            )
+        end
         if desc then
-            if (info.startTime and info.endTime) then
-                desc = format('%1$s|n|n开始：%2$s %3$s|n结束：%4$s %5$s', desc, FormatShortDate(info.startTime.monthDay, info.startTime.month, 0), GameTime_GetFormattedTime(info.startTime.hour, info.startTime.minute, true), FormatShortDate(info.endTime.monthDay, info.endTime.month), GameTime_GetFormattedTime(info.endTime.hour, info.endTime.minute, true));
-            end
             CalendarViewHolidayFrame.ScrollingFont:SetText(desc)
         end
-    end
+     end
 end
 
 
@@ -53,7 +63,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_Calendar()
         local day = dayButton.day
         local eventIndex = elementData.index
         local event = C_Calendar.GetDayEvent(monthOffset, day, eventIndex) or {}
-        local title= WoWTools_ChineseMixin:GetHoliDayName(event.eventID)
+        local title= WoWTools_ChineseMixin:GetHoliDayName(event.eventID) or WoWTools_ChineseMixin:CN(event.name)
         if title then
             btn.Title:SetText(title)
         end
@@ -75,7 +85,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_Calendar()
             local eventButtonText1 = _G[dayButtonName..'EventButton'..eventButtonIndex.."Text1"]
             local event = C_Calendar.GetDayEvent(monthOffset, day, eventIndex)
             if ShouldDisplayEventOnCalendar(event) then
-                local title= WoWTools_ChineseMixin:GetHoliDayName(event.eventID)
+                local title= WoWTools_ChineseMixin:GetHoliDayName(event.eventID) or WoWTools_ChineseMixin:CN(event.name)
                 if title then
                     eventButtonText1:SetText(title)
                 end
@@ -86,8 +96,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_Calendar()
     end)
 
 
-    hooksecurefunc(CalendarViewHolidayFrame, 'update', function(...) calendar_Uptate(...) end)--提示节目ID
-    hooksecurefunc('CalendarViewHolidayFrame_Update', function(...) calendar_Uptate(...) end)
+    hooksecurefunc(CalendarViewHolidayFrame, 'update', calendar_Uptate)--提示节目ID
+    hooksecurefunc('CalendarViewHolidayFrame_Update', calendar_Uptate)
 
 
     WoWTools_ChineseMixin:HookLabel(CalendarTexturePickerFrame.Header.Text)
