@@ -39,7 +39,7 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
     end
 
     local setID= select(16, C_Item.GetItemInfo(itemID))
-
+-- C_Item.GetSetBonusesForSpecializationByItemID
     if setID and WoWTools_SC_Sets then
         data= WoWTools_SC_Sets[setID]
         if data then
