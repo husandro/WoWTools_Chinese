@@ -4,9 +4,10 @@ local function GetValueID(id)
     end
 end
 
+
 --Item 物品[itemID]={T=, D=, S={specID=}}
 function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
-    if not canaccessvalue(itemID) or canaccessvalue(itemLink) then
+    if not canaccessvalue(itemID) or not canaccessvalue(itemLink) then
         return
     end
 
@@ -89,7 +90,7 @@ end
 
 --单位
 local function Get_NPC_ID(unit)--NPC ID
-    local exists= canaccessvalue(unit) and UnitExists(unit)
+    local exists= UnitExists(unit)
     if canaccessvalue(exists) and exists and not UnitIsPlayer(unit) then
         local guid= UnitGUID(unit)
         if guid then
