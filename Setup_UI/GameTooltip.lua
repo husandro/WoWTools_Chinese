@@ -158,7 +158,7 @@ local function Set_Item(tooltip, info)
             desc= select(2, WoWTools_ChineseMixin:GetSpellName(spellID))
         end
     end
-    
+
     if desc then
         tooltip:AddLine(' ')
         tooltip:AddLine(NORMAL_FONT_COLOR:WrapTextInColorCode(desc), nil,nil,nil, true)
