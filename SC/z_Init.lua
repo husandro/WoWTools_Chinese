@@ -1,11 +1,15 @@
 local function GetValueID(id)
-    if id then
+    if canaccessvalue(id) and id then
         return tonumber(id)
     end
 end
 
 --Item 物品[itemID]={T=, D=, S={specID=}}
 function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
+    if not canaccessvalue(itemID) or canaccessvalue(itemLink) then
+        return
+    end
+
     if itemID then
         itemID= C_Item.GetItemInfoInstant(itemID)
     elseif itemLink then
@@ -24,6 +28,8 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
         data= WoWTools_SC_Item[itemID]
     elseif WoWTools_SC_Item2 then
         data= WoWTools_SC_Item2[itemID]
+    else
+        return
     end
 
     if data then
@@ -83,30 +89,33 @@ end
 
 --单位
 local function Get_NPC_ID(unit)--NPC ID
-    if canaccessvalue(unit) and UnitExists(unit) and not UnitIsPlayer(unit) then
+    local exists= canaccessvalue(unit) and UnitExists(unit)
+    if canaccessvalue(exists) and exists and not UnitIsPlayer(unit) then
         local guid= UnitGUID(unit)
-        if canaccessvalue(guid) and guid then
+        if guid then
             return select(6, strsplit("-", guid))
         end
     end
 end
 --Unit 单位 [npcID]={T=, D=}
 function WoWTools_ChineseMixin:GetUnitData(unit, npcID)
-    if not WoWTools_SC_Unit then
+    if not WoWTools_SC_Unit or not canaccessvalue(unit) or not canaccessvalue(npcID) then
         return
     end
-    if canaccessvalue(unit) or npcID then
-        npcID= npcID or Get_NPC_ID(unit)
-        npcID= GetValueID(npcID)
-        if npcID then
-            return WoWTools_SC_Unit[npcID]
-        end
+
+    npcID= npcID or Get_NPC_ID(unit)
+
+    if npcID then
+       return WoWTools_SC_Unit[npcID]
     end
 end
 
 function WoWTools_ChineseMixin:GetUnitName(unit, npcID)
-    unit= unit or 'npc'
-    local data= self:GetUnitData(unit, npcID)
+    if not canaccessvalue(unit) or not canaccessvalue(npcID) then
+        return
+    end
+
+    local data= self:GetUnitData(unit or 'npc', npcID)
     if data then
         return data.T, data.D
     end
@@ -122,9 +131,9 @@ end
 
 --法术 [spellID]={T=, D=}
 function WoWTools_ChineseMixin:GetSpellData(spellID)
-    spellID= spellID and tonumber(spellID)
-    local ID= GetValueID(spellID)
-    if not ID then
+    spellID= GetValueID(spellID)
+
+    if not spellID then
         return
     end
 
@@ -132,21 +141,24 @@ function WoWTools_ChineseMixin:GetSpellData(spellID)
 
     if spellID>=1200000 then
         if WoWTools_SC_Spell2 then
-            data= WoWTools_SC_Spell2[ID]
+            data= WoWTools_SC_Spell2[spellID]
         end
     elseif WoWTools_SC_Spell then
-        data= WoWTools_SC_Spell[ID]
+        data= WoWTools_SC_Spell[spellID]
     end
-    if data then
-        return data
-    else
+
+    if not data then
         local name= self:CN(C_Spell.GetSpellName(spellID))
         if name then
-            return {
-                    T=name
+            data= {
+                    T= name,
+                    D= self:CN(C_Spell.GetSpellDescription(spellID)),
+                    S= self:CN(C_Spell.GetSpellSubtext(spellID)),
                 }
         end
     end
+
+    return data
 end
 
 function WoWTools_ChineseMixin:GetSpellName(spellID)
@@ -185,19 +197,19 @@ function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
 end]]
 
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
-    if not WoWTools_SC_SectionEncounter then
+    if not WoWTools_SC_SectionEncounter or not canaccessvalue(sectionID) or not canaccessvalue(difficultyID) then
         return
     end
-    sectionID= sectionID and tonumber(sectionID)
-    if sectionID then
-        difficultyID= difficultyID and tonumber(difficultyID) or EJ_GetDifficulty()
-        local data=WoWTools_SC_SectionEncounter[sectionID]
-        if data then
-            return {
-                T=data.T,
-                D=data[difficultyID] or data[14] or data[1],
-            }
-        end
+
+    sectionID= GetValueID(sectionID)
+    difficultyID= GetValueID(difficultyID) or EJ_GetDifficulty()
+
+    local data= sectionID and WoWTools_SC_SectionEncounter[sectionID]
+    if data then
+        return {
+            T=data.T,
+            D=data[difficultyID] or data[14] or data[1],
+        }
     end
 end
 

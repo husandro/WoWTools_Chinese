@@ -95,7 +95,7 @@ end
 
 
 function WoWTools_ChineseMixin:GetData(text, tab)
-    if not canaccessvalue(text) then
+    if not canaccessvalue(text) or issecrettable(tab) then
         return
     end
 
@@ -600,10 +600,12 @@ end
 
 
 function WoWTools_ChineseMixin:Set_Quest(tooltip, questID, isShow)
-    local data= questID and self:GetQuestData(questID)
+
+    local data= self:GetQuestData(questID)
     if not data then
         return
     end
+
     tooltip= tooltip or GameTooltip
     if data then
         tooltip:AddLine(' ')
