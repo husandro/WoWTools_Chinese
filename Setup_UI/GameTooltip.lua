@@ -136,7 +136,12 @@ end
 
 
 local function Set_Item(tooltip, info)
-    local title, desc= WoWTools_ChineseMixin:GetItemName(info.id)
+    local itemID= info.id
+    if not canaccessvalue(itemID) or not itemID then
+        return
+    end
+
+    local title, desc= WoWTools_ChineseMixin:GetItemName(itemID)
     if title then
         local name= tooltip:GetName() or 'Gametooltip'
         local line= (name=='ShoppingTooltip1' or name=='ShoppingTooltip2') and _G[name.."TextLeft2"] or _G[name.."TextLeft1"]
@@ -146,6 +151,14 @@ local function Set_Item(tooltip, info)
             tooltip:AddLine(title)
         end
     end
+
+    if not desc then
+        local spellID= select(2, C_Item.GetItemSpell(itemID))
+        if spellID then
+            desc= select(2, WoWTools_ChineseMixin:GetSpellName(spellID))
+        end
+    end
+    
     if desc then
         tooltip:AddLine(' ')
         tooltip:AddLine(NORMAL_FONT_COLOR:WrapTextInColorCode(desc), nil,nil,nil, true)
