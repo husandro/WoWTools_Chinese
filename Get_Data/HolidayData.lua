@@ -1141,36 +1141,42 @@ function WoWTools_ChineseMixin:GetHoliDayName(eventID)
         return data.T, data.D
     end
 end
+
+
+--[[仅当前一个月
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
-    --[[if not C_AddOns.IsAddOnLoaded('Blizzard_Calendar') then
+    if not C_AddOns.IsAddOnLoaded('Blizzard_Calendar') then
         C_AddOns.LoadAddOn('Blizzard_Calendar')
-    end]]
-local n=0
-     for eventID, data in pairs(indexTab) do
+    end
+
+    local n=0
+    for eventID, data in pairs(indexTab) do
         local info= C_Calendar.GetEventIndexInfo(eventID)
         if info then
-            C_Calendar.SetMonth(info.offsetMonths)
-            local month= C_Calendar.GetMonthInfo()
-
-            local event = C_Calendar.GetHolidayInfo(month.month, info.monthDay, info.eventIndex)
+            local event = C_Calendar.GetHolidayInfo(info.offsetMonths, info.monthDay, info.eventIndex)
             if event then
+                n=n+1
                 local num=0
-                print(nameTab[data[1]], descTab[data[2]])
-                if WoWTools_ChineseMixin:SetCN(event.name,  nameTab[data[1]]) then
-                    nameTab[data[1]]= nil
+                local nameID= data[1]
+                local descID= data[2]
+                
+
+                if nameID and WoWTools_ChineseMixin:SetCN(event.name,  nameTab[nameID]) then
+                    nameTab[nameID]= nil
                     num= num+1
                 end
-                if WoWTools_ChineseMixin:SetCN(event.description,  descTab[data[2]]) then
-                    descTab[data[2]]= nil
+                if descID and WoWTools_ChineseMixin:SetCN(event.description,  descTab[descID]) then
+                    descTab[descID]= nil
                     num= num+1
                 end
                 if num==2 then
                     indexTab[eventID]= nil
-                    n=n+1
                 end
             end
         end
     end
-    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
+
+    print(n)
+EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
 end)
-   
+   ]]
