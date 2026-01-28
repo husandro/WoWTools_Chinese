@@ -55,22 +55,25 @@ function WoWTools_ChineseMixin:GetItemData(itemID, itemLink)
         end
     end
 
-    if not desc then
-        local spellID= select(2, C_Item.GetItemSpell(itemID))
-        if spellID then
-            desc= select(2, WoWTools_ChineseMixin:GetSpellName(spellID))
-        end
-    end
     if not desc and setID then
         local specID= PlayerUtil.GetCurrentSpecID()
         if specID then
             local itemSetSpellIDs = C_Item.GetSetBonusesForSpecializationByItemID(specID, itemID)
-            for _, spellID in pairs(itemSetSpellIDs) do
-                local d=  select(2, WoWTools_ChineseMixin:GetSpellName(spellID))
-                if d then
-                    desc= (desc and desc..'|n' or '')..d
+            if itemSetSpellIDs then
+                for _, spellID in pairs(itemSetSpellIDs) do
+                    local d=  select(2, WoWTools_ChineseMixin:GetSpellName(spellID))
+                    if d then
+                        desc= (desc and desc..'|n' or '')..d
+                    end
                 end
             end
+        end
+    end
+
+    if not desc then
+        local spellID= select(2, C_Item.GetItemSpell(itemID))
+        if spellID then
+            desc= select(2, WoWTools_ChineseMixin:GetSpellName(spellID))
         end
     end
 

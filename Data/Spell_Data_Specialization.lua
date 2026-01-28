@@ -63,7 +63,9 @@ do
         local name, description, icon
         if data[1] then
             for _, sex in pairs(Enum.UnitSex) do--男，女
-                name, description, icon= select(2, GetSpecializationInfoByID(specID, sex))
+                local desc
+                name, desc, icon= select(2, GetSpecializationInfoByID(specID, sex))
+
                 if name then
                     icon= icon or data[5]
                     if specID==251 or specID==64 then
@@ -74,6 +76,8 @@ do
                         data[1]
                     )
                 end
+
+                description= description or desc
             end
         end
         if description and data[2] then
