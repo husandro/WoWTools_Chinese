@@ -88,16 +88,20 @@ function WoWTools_ChineseMixin.Frames:QuestMapFrame()
             else
                 local obj= select(3, self:GetQuestName(questID))
                 local line= lines[1]
-                if obj and line then
-                    line.Text:SetText(obj)
-                    line:SetHeight(line.Text:GetStringHeight())
-                end
+				if line then
+                	if obj then
+						line.Text:SetText(obj)
+						line:SetHeight(line.Text:GetStringHeight())
+					else
+						self:SetLabel(line.Text)
+					end
+				end
             end
         end
 
         for line in QuestScrollFrame.campaignHeaderFramePool:EnumerateActive() do
-        self:SetLabel(line.Text)
-        self:SetLabel(line.Progress)
+			self:SetLabel(line.Text)
+			self:SetLabel(line.Progress)
         end
 
         for line in QuestScrollFrame.covenantCallingsHeaderFramePool:EnumerateActive() do--没测试
@@ -111,6 +115,8 @@ function WoWTools_ChineseMixin.Frames:QuestMapFrame()
             local map= mapInfo and self:CN(mapInfo.name) or nil
             if map then
                 QuestScrollFrame.Contents.StoryHeader.Text:SetText(amp)
+			else
+				self:SetLabel(QuestScrollFrame.Contents.StoryHeader.Text)
             end
 
             local numCriteria = GetAchievementNumCriteria(storyAchievementID)
@@ -421,10 +427,8 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 
 	hooksecurefunc('QuestInfo_ShowObjectives', function()
 		local questID= self:GetQuestID()
-		if questID then
-			local data= questID and self:GetQuestData(questID)
-			set_objectives(questID, data and data.S)
-		end
+		local data= self:GetQuestData(questID)
+		set_objectives(questID, data and data.S)
 	end)
 
 

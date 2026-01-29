@@ -282,12 +282,8 @@ function WoWTools_ChineseMixin:GetQuestData(questID)
     if questID and WoWTools_SC_Quest then
         local data= WoWTools_SC_Quest[questID]
         if data then
-            if data.T then
-                if self:SetCN(QuestUtils_GetQuestName(questID), data.T) then
-                    WoWTools_SC_Quest[questID].T= nil
-                end
-            else
-                data.T= self:CN(QuestUtils_GetQuestName(questID))
+            if data.T then--添加，内容
+                self:SetCN(QuestUtils_GetQuestName(questID), data.T)
             end
             return data
         end
