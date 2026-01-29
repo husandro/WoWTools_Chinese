@@ -68,20 +68,20 @@ local tab= {
 
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
+        local info
         for raceID, data in pairs(tab) do
-            local info
-    --同盟
-            info= C_AlliedRaces.GetRaceInfoByID(raceID)
-            if info then
-                print(info.maleName, info.femaleName)
-                WoWTools_ChineseMixin:SetCN(info.maleName, data[1])
-                WoWTools_ChineseMixin:SetCN(info.femaleName, data[1])
-                WoWTools_ChineseMixin:SetCN(info.description, data[2])
-            end
     --种族
             info= C_CreatureInfo.GetRaceInfo(raceID)
             if info then
                 WoWTools_ChineseMixin:SetCN(info.raceName, data[1])
+            end
+
+--同盟
+            info= C_AlliedRaces.GetRaceInfoByID(raceID)
+            if info then
+                WoWTools_ChineseMixin:SetCN(info.maleName, data[1])
+                WoWTools_ChineseMixin:SetCN(info.femaleName, data[1])
+                WoWTools_ChineseMixin:SetCN(info.description, data[2])
             end
         end
     end
