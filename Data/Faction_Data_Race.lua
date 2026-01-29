@@ -66,23 +66,25 @@ local tab= {
 [1]= {"人类", "暴风城高贵的人类是联盟的先锋，他们身先士卒，守护着艾泽拉斯。"},
 }
 
-
-do
-    for raceID, data in pairs(tab) do
-        local info
---同盟
-        info= C_AlliedRaces.GetRaceInfoByID(raceID)
-        if info then
-
-            WoWTools_ChineseMixin:SetCN(info.maleName, data[1])
-            WoWTools_ChineseMixin:SetCN(info.femaleName, data[1])
-            WoWTools_ChineseMixin:SetCN(info.description, data[2])
-        end
---种族
-        info= C_CreatureInfo.GetRaceInfo(raceID)
-        if info then
-            WoWTools_ChineseMixin:SetCN(info.raceName, data[1])
+EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
+    do
+        for raceID, data in pairs(tab) do
+            local info
+    --同盟
+            info= C_AlliedRaces.GetRaceInfoByID(raceID)
+            if info then
+                print(info.maleName, info.femaleName)
+                WoWTools_ChineseMixin:SetCN(info.maleName, data[1])
+                WoWTools_ChineseMixin:SetCN(info.femaleName, data[1])
+                WoWTools_ChineseMixin:SetCN(info.description, data[2])
+            end
+    --种族
+            info= C_CreatureInfo.GetRaceInfo(raceID)
+            if info then
+                WoWTools_ChineseMixin:SetCN(info.raceName, data[1])
+            end
         end
     end
-end
-tab=nil
+    tab=nil
+    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
+end)
