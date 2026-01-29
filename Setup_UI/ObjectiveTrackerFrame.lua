@@ -165,10 +165,7 @@ hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', set_quest)
 --MonthlyActivitiesObjectiveTracker:HookScript('OnShow', )
 hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'AddBlock', function(_, block)
-    local data= WoWTools_ChineseMixin:GetPerksActivityData(block.id)
-    if data and data[1] then
-        block:SetHeader(data[1])
-    end
+    WoWTools_ChineseMixin:SetLabel(block.HeaderText)
 end)
 
 
