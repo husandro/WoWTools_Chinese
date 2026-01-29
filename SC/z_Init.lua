@@ -280,9 +280,20 @@ end
 function WoWTools_ChineseMixin:GetQuestData(questID)
     questID= GetValueID(questID)
     if questID and WoWTools_SC_Quest then
-        return WoWTools_SC_Quest[questID]
+        local data= WoWTools_SC_Quest[questID]
+        if data then
+            if data.T then
+                if self:SetCN(QuestUtils_GetQuestName(questID), data.T) then
+                    WoWTools_SC_Quest[questID].T= nil
+                end
+            else
+                data.T= self:CN(QuestUtils_GetQuestName(questID))
+            end
+            return data
+        end
     end
 end
+
 function WoWTools_ChineseMixin:GetQuestName(questID)
     local data=self:GetQuestData(questID)
     if data then

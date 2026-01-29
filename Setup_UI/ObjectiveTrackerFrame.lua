@@ -37,13 +37,11 @@ end
 local function set_quest(_, block)
     local questID= block.id and tonumber(block.id)
     local data= WoWTools_ChineseMixin:GetQuestData(questID)
-    if not data or not data.T then
-        return
+    if data and data.T then
+        block:SetHeader(data.T)
+    else
+        WoWTools_ChineseMixin:SetLabel(block.HeaderText)
     end
-
-    block:SetHeader(data.T)
-
-
 end
 
 
@@ -458,9 +456,7 @@ block.trackableType = trackableType;
 hooksecurefunc(AdventureObjectiveTracker, 'AddBlock', function(_, block)--function AdventureObjectiveTrackerMixin:Untrack(trackableType, id)
     WoWTools_ChineseMixin:SetLabel(block.HeaderText)
     if block.objective then
-        --local objectiveText = C_ContentTracking.GetObjectiveText(block.targetType, block.targetID)
         WoWTools_ChineseMixin:SetLabel(block.objective.Text)
-        --print(block.targetType, block.targetID)
     end
     if block.lastRegion then
         WoWTools_ChineseMixin:SetLabel(block.lastRegion.Text)

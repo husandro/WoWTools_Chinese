@@ -1,12 +1,12 @@
 
 
 function WoWTools_ChineseMixin.Frames:QuestMapFrame()
-    
+
 
     self:SetLabel(QuestScrollFrame.SearchBox.Instructions)
     self:SetLabel(QuestScrollFrame.NoSearchResultsText)
-    
-    
+
+
     self:SetLabel(QuestMapFrame.MapLegend.TitleText)
     self:SetFrame(QuestInfoRewardsFrame)
 	if QuestMapFrame.QuestsFrame then
@@ -24,7 +24,7 @@ function WoWTools_ChineseMixin.Frames:QuestMapFrame()
 		self:SetFrame(QuestMapFrame.DetailsFrame.RewardsFrame)--, '奖励')
 		self:SetLabel(QuestMapFrame.DetailsFrame.RewardsFrameContainer.RewardsFrame.Label)
 	end
-    
+
     self:SetLabel(QuestInfoRequiredMoneyText)--:SetText('需要金钱：')
 
     self:HookButton(QuestLogPopupDetailFrame.TrackButton)
@@ -372,6 +372,8 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 		set_objectives(questID, objects)
 		if obj then
 			QuestInfoObjectivesText:SetText(obj)
+		else
+			self:SetLabel(QuestInfoObjectivesText)
 		end
 		set_quest_item(questID)
 	end
@@ -387,13 +389,14 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 
 	hooksecurefunc('QuestInfo_ShowTitle', function()
 		local title= self:GetQuestName(self:GetQuestID())
-		if not title then
-		return
+		if title then
+			if QuestInfoFrame.questLog and IsCurrentQuestFailed() then
+				title = format('%s-(|cnRED_FONT_COLOR:失败|r)', title)
+			end
+			QuestInfoTitleHeader:SetText(title)
+		else
+			self:SetLabel(QuestInfoTitleHeader)
 		end
-		if QuestInfoFrame.questLog and IsCurrentQuestFailed() then
-			title = format('%s-(|cnRED_FONT_COLOR:失败|r)', title)
-		end
-		QuestInfoTitleHeader:SetText(title)
 	end)
 
 
@@ -403,6 +406,8 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 		local desc= select(2,self:GetQuestName(questID))
 		if desc then
 			QuestInfoDescriptionText:SetText(desc)
+		else
+			self:SetLabel(QuestInfoDescriptionText)
 		end
 	end)
 
@@ -473,14 +478,16 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 	end)
 
 	hooksecurefunc('QuestFrameProgressItems_Update', function()
-		local data= self:GetQuestData(GetQuestID())
-		if data then
-			if data.T then
-				QuestProgressTitleText:SetText(data.T..'|n'..GetTitleText())
-			end
-			if data.O then
-				QuestProgressText:SetText(data.O..'|n'..GetProgressText())
-			end
+		local data= self:GetQuestData(GetQuestID()) or {}
+		if data.T then
+			QuestProgressTitleText:SetText(data.T..'|n'..GetTitleText())
+		else
+			self:SetLabel(QuestProgressTitleText)
+		end
+		if data.O then
+			QuestProgressText:SetText(data.O..'|n'..GetProgressText())
+		else
+			self:SetLabel(QuestProgressText)
 		end
 	end)
 
@@ -521,7 +528,7 @@ function WoWTools_ChineseMixin.Frames:GossipFrame()
         end)
     end
 
-	
+
     --可接任务,多个任务GossipFrameShared.lua questInfo.questID, questInfo.title, questInfo.isIgnored, questInfo.isTrivial
     hooksecurefunc(GossipSharedAvailableQuestButtonMixin, 'Setup', function(btn, info)-- questID, titleText, isIgnored, isTrivial)
 		local name= WoWTools_ChineseMixin:GetQuestName(info.questID) or self:SetText(info.title)
