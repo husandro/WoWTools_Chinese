@@ -148,7 +148,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
     HousingDashboardFrame.CatalogContent.Categories.AllSubcategoriesStandIn.enabledTooltip='全部'
 if not WoWTools_TextureMixin or not WoWTools_TextureMixin.disabled then
 --12.0中显示图标，会出错
-    WoWTools_DataMixin:Hook(HousingDashboardFrame.CatalogContent, 'UpdateCategoryText', function(frame)
+    hooksecurefunc(HousingDashboardFrame.CatalogContent, 'UpdateCategoryText', function(frame)
         local categoryString = frame.Categories:GetFocusedCategoryString()
         if categoryString then
             local t= categoryString:match('(.+) | |TInterfaceIcons.+') or categoryString:match('(.+) ||TInterfaceIcons.+')
@@ -231,12 +231,13 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingTemplates()
 
 
 
-        hooksecurefunc(HousingCatalogCategoryMixin, 'Init', function(frame, displayInfo)
-            local name= displayInfo and self:CN(displayInfo.name)
-            if name then
-                frame.enabledTooltip = name
-            end
-        end)
+    hooksecurefunc(HousingCatalogCategoryMixin, 'Init', function(frame, displayInfo)
+        local name= displayInfo and self:CN(displayInfo.name)
+        if name then
+            frame.enabledTooltip = name
+        end
+    end)
+end
 --[[
     
 function HousingCatalogDecorEntryMixin:GetEntryData()
@@ -285,4 +286,4 @@ end
     --hooksecurefunc(HousingModelPreviewMixin, 'PreviewCatalogEntryInfo', function(frame, catalogEntryInfo)--可用
 
 
-end
+
