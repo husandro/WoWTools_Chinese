@@ -83,6 +83,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.QuantityInput.Label:SetText('数量')
     AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.UnitPrice.Label:SetText('单价')
     AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.TotalPrice.Label:SetText('总价')
+     self:SetLabel(AuctionHouseFrame.CommoditiesBuyFrame.ItemList.ResultsText)
 
     AuctionHouseFrame.ItemBuyFrame.BackButton:SetText('返回')
     AuctionHouseFrame.ItemBuyFrame.BidFrame.BidButton:SetText('竞标')
@@ -186,6 +187,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
 
 
     self:HookLabel(AuctionHouseFrame.BrowseResultsFrame.ItemList.ResultsText)
+    self:SetLabel(AuctionHouseFrame.BrowseResultsFrame.ItemList.LoadingSpinner.SearchingText)
 
     hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'Update', function(frame)
         if not frame:GetView() then
@@ -207,11 +209,17 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
         end
     end)
 
-
-
-    hooksecurefunc(AuctionHouseTableHeaderStringMixin, 'Init', function(btn, _, headerText)
-        self:SetLabel(btn.Text, headerText)
+    hooksecurefunc(AuctionHouseTableHeaderStringMixin, 'Init', function(btn)--, _, headerText)    
+        self:HookLabel(btn)
     end)
+        --[[local cn
+        
+        self:CN(headerText)
+        if cn then
+            btn.Text:SetText(cn)
+            btn.Text:SetPoint('RIGHT')
+        end]]
+
 
 end
 

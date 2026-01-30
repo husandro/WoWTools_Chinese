@@ -157,7 +157,7 @@ Setup_UI\Challenges.lua
 Setup_UI\Holiday.lua
 Setup_UI\CharacterFrame.lua
 Setup_UI\CharacterFrame_Faction.lua
-Setup_UI\Bank_AuctionHouse.lua
+Setup_UI\AuctionHouse.lua
 Setup_UI\ChatConfig.lua
 Setup_UI\Quest.lua
 Setup_UI\Professions.lua
