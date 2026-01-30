@@ -98,7 +98,14 @@ function WoWTools_ChineseMixin.Events:Blizzard_EditMode()
             self:SetLabel(frame.Slider.MaxText, settingData.displayInfo.maxText)
         end
     end)
---保存布局
+
+--保存布局 EditModeLayoutDialogMixin
+    hooksecurefunc(EditModeLayoutDialog, 'SetupControlsForMode', function(frame, modeData, layoutName, ...)
+        local title= self:CN(modeData.title)
+        if title then
+            frame.Title:SetFormattedText(title, layoutName, ...)
+        end
+    end)
     self:HookLabel(EditModeLayoutDialog.Title)
     self:SetLabel(EditModeLayoutDialog.CharacterSpecificLayoutCheckButton.Label)
     self:HookButton(EditModeLayoutDialog.AcceptButton)

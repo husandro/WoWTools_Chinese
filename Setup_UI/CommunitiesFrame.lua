@@ -192,7 +192,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_Communities()
 
     CommunitiesFrame.ClubFinderInvitationFrame.AcceptButton:SetText('接受')
     CommunitiesFrame.ClubFinderInvitationFrame.DeclineButton:SetText('拒绝')
-    CommunitiesFrame.ClubFinderInvitationFrame.InvitationText:SetText('')
+    --CommunitiesFrame.ClubFinderInvitationFrame.InvitationText:SetText('')
+
+    --self:HookLabel(CommunitiesFrame.ClubFinderInvitationFrame.Description)
+
 
     hooksecurefunc(CommunitiesFrame.ClubFinderInvitationFrame, 'DisplayInvitation', function(frame, clubInfo)--ClubFinderInvitationsFrameMixin
         if clubInfo then
