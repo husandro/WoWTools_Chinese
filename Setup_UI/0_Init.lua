@@ -47,7 +47,16 @@ ReadyCheckFrameNoButton:SetText('未就绪')--:SetText(GetText("NOT_READY", Unit
 GroupLootHistoryFrameTitleText:SetText('战利品掷骰')
 GroupLootHistoryFrame.NoInfoString:SetText('地下城和团队副本的战利品掷骰在此显示')
 WoWTools_ChineseMixin:HookLabel(GroupLootHistoryFrame.EncounterDropdown.Text)
-LootHistoryElementMixin
+hooksecurefunc(LootHistoryElementMixin, 'Init', function(btn, dropInfo)
+	if not dropInfo then
+		return
+	end
+    --local item = Item:CreateFromItemLink(dropInfo.itemHyperlink)
+    local cn= WoWTools_ChineseMixin:GetItemName(dropInfo.itemID, dropInfo.itemHyperlink)
+    if cn then
+        btn.ItemName:SetText(cn);
+    end
+end)
 
 hooksecurefunc('GuildChallengeAlertFrame_SetUp', function(frame, challengeType)--AlertFrameSystems.lua
     local name= _G["GUILD_CHALLENGE_TYPE"..challengeType]
