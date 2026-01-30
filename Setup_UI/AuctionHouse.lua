@@ -189,7 +189,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     self:HookLabel(AuctionHouseFrame.BrowseResultsFrame.ItemList.ResultsText)
     self:SetLabel(AuctionHouseFrame.BrowseResultsFrame.ItemList.LoadingSpinner.SearchingText)
 
-    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'Update', function(frame)
+    local function Browse_Results(frame)
         if not frame:GetView() then
             return
         end
@@ -207,7 +207,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
                 end
             end
         end
-    end)
+    end
+
+    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'Update', Browse_Results)
+    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'SetScrollTargetOffset', Browse_Results)
 
     hooksecurefunc(AuctionHouseTableHeaderStringMixin, 'Init', function(btn)--, _, headerText)    
         self:HookLabel(btn)
