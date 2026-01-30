@@ -31,7 +31,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     AuctionHouseFrameSellTab.Text:SetText('出售')
     AuctionHouseFrameAuctionsTab.Text:SetText('拍卖')
     AuctionHouseFrameAuctionsFrame.CancelAuctionButton:SetText('取消拍卖')
-    
+
     self:HookLabel(AuctionHouseFrameAuctionsFrame.AllAuctionsList.ResultsText)
 
     self:HookLabel(AuctionHouseFrameAuctionsFrame.BidsList.ResultsText)
@@ -153,10 +153,40 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
 
     AuctionHouseFrame.BuyDialog.BuyNowButton:SetText('立即购买')
     AuctionHouseFrame.BuyDialog.CancelButton:SetText('取消')
+    self:HookLabel(AuctionHouseFrame.BuyDialog.Notification.Text)
+    self:SetButton(AuctionHouseFrame.BuyDialog.OkayButton)
+
+--购买，选定物品 AuctionHouseFrame.ItemBuyFrame.ItemDisplay.ItemButton
+--AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.ItemDisplay.Name
+    hooksecurefunc(AuctionHouseFrame, 'SelectBrowseResult', function(frame, browseResult)
+        local itemKey = browseResult.itemKey
+        if itemKey then
+            local itemKeyInfo = C_AuctionHouse.GetItemKeyInfo(itemKey)
+            if itemKeyInfo and itemKeyInfo.itemID then
+                local name= self:GetItemName(itemKeyInfo.itemID)
+                if name then
+                    local f= itemKeyInfo.isCommodity and frame.CommoditiesBuyFrame.BuyDisplay.ItemDisplay or frame.ItemBuyFrame.ItemDisplay
+                    f.Name:SetText(name)
+                end
+            end
+        end
+    end)
 
 
+    hooksecurefunc(AuctionHouseBuyDialogMixin, 'SetItemID', function(frame, itemID, quantity, unitPricePreview, totalPricePreview)
+        local itemName = self:GetItemName(itemID)
+        if itemName and quantity then
+            local itemQuality = C_Item.GetItemQualityByID(itemID);
+            if itemQuality then
+                local colorData = ColorManager.GetColorDataForItemQuality(itemQuality or Enum.ItemQuality.Common)
+                if colorData then
+                    itemName = colorData.color:WrapTextInColorCode(itemName)
+                end
+                frame.ItemDisplay.ItemText:SetFormattedText('%s  x%s', itemName, quantity)
+            end
+        end
 
-
+    end)
 
     --Blizzard_AuctionHouseFrame.lua
     WoWTools_ChineseMixin:AddDialogs("BUYOUT_AUCTION", {text = '以一口价购买：', button1 = '接受', button2 = '取消',})
