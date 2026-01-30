@@ -46,6 +46,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingCharter()
     self:SetButton(HousingCharterFrame.SettingsButton)
     self:SetButton(HousingCharterFrame.CloseButton)
 end
+
 --住宅区登记表 11.2.7
 function WoWTools_ChineseMixin.Events:Blizzard_HousingCreateNeighborhood()
     self:HookButton(HousingCreateNeighborhoodCharterFrame.ConfirmButton)
@@ -54,11 +55,21 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingCreateNeighborhood()
     self:HookLabel(HousingCreateNeighborhoodCharterFrame.NeighborhoodInfoText)
     self:SetFrame(HousingCreateNeighborhoodCharterFrame)
 end
+
 --住宅信息板
 function WoWTools_ChineseMixin.Events:Blizzard_HousingCornerstone()
     self:HookLabel(HousingCornerstoneVisitorFrame.NeighborhoodText)
     self:SetFrame(HousingCornerstoneVisitorFrame)
+
+    self:SetLabel(HousingCornerstonePurchaseFrame.ForSaleSign.ForSaleText)
+    self:HookLabel(HousingCornerstonePurchaseFrame.ErrorText)
+    self:HookButton(HousingCornerstonePurchaseFrame.BuyButton)
+    self:HookLabel(HousingCornerstonePurchaseFrame.NeighborhoodText)
+    self:HookLabel(HousingCornerstonePurchaseFrame.NeighborhoodLocationTe)
+    self:HookLabel(HousingCornerstonePurchaseFrame.NeighborhoodTypeText)
+    self:SetFrame(HousingCornerstonePurchaseFrame)
 end
+
 --住宅搜索器
 function WoWTools_ChineseMixin.Events:Blizzard_HousingHouseFinder()
     self:SetLabel(HouseFinderFrameTitleText)
