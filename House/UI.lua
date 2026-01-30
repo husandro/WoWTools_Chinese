@@ -31,11 +31,13 @@ end
 
 function WoWTools_ChineseMixin.Events:Blizzard_HousingBulletinBoard()
     self:SetLabel(HousingBulletinBoardFrame.RosterTabButton.Label)
-    C_Timer.After(0.3, function()
-        self:SetLabel(HousingBulletinBoardFrame.ResidentsTab.ColumnDisplay)
-    end)
-    self:SetFrames(HousingBulletinBoardFrame)
     self:HookLabel(HousingBulletinBoardFrame.ResidentsTab.NeighborhoodNameText)
+    C_Timer.After(0.3, function()
+        self:SetFrames(HousingBulletinBoardFrame.ResidentsTab.ColumnDisplay)
+    end)
+    hooksecurefunc(NeighborhoodRosterEntryMixin, 'Init', function(frame, info)
+        self:SetLabel(frame.Status)
+    end)
 end
 
 function WoWTools_ChineseMixin.Events:Blizzard_HousingCharter()
