@@ -481,19 +481,54 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 		end
 	end)
 
+--任务，进度 QuestFrame
+	self:SetLabel(QuestProgressRequiredItemsText)
+
 	hooksecurefunc('QuestFrameProgressItems_Update', function()
 		local data= self:GetQuestData(GetQuestID()) or {}
 		if data.T then
-			QuestProgressTitleText:SetText(data.T..'|n'..GetTitleText())
+			QuestProgressTitleText:SetText(data.T..'|n'..(GetTitleText() or ''))
 		else
 			self:SetLabel(QuestProgressTitleText)
 		end
 		if data.O then
-			QuestProgressText:SetText(data.O..'|n'..GetProgressText())
+			QuestProgressText:SetText(data.O..'|n'..(GetProgressText() or ''))
 		else
 			self:SetLabel(QuestProgressText)
 		end
+
+--物品，货币，名称
+		local numRequiredItems = GetNumQuestItems()
+		local numRequiredCurrencies = GetNumQuestCurrencies()
+		local questItemName = "QuestProgressItem"
+		local buttonIndex = 1
+		if ( numRequiredItems > 0 or GetQuestMoneyToGet() > 0 or numRequiredCurrencies > 0) then
+
+			if not C_QuestOffer.GetHideRequiredItems() then
+				for i=1, numRequiredItems do
+					local hidden = IsQuestItemHidden(i)
+					if (hidden == 0) then
+						local requiredItem = _G[questItemName..buttonIndex]
+						local name, _, _, _, _, itemID = GetQuestItemInfo(requiredItem.type, i)
+						local cn= WoWTools_ChineseMixin:GetItemName(itemID) or self:CN(name)
+						if cn then
+							_G[questItemName..buttonIndex.."Name"]:SetText(cn)
+						end
+						buttonIndex = buttonIndex+1
+					end
+				end
+			end
+
+			for i=1, numRequiredCurrencies do
+				local requiredCurrencyInfo = C_QuestOffer.GetQuestRequiredCurrencyInfo(i)
+				if requiredCurrencyInfo then
+					self:SetLabel(_G[questItemName..buttonIndex.."Name"])
+				end
+				buttonIndex = buttonIndex+1
+			end
+		end
 	end)
+
 
 end
 

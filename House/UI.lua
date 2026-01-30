@@ -1,5 +1,10 @@
 function WoWTools_ChineseMixin.Events:Blizzard_HousingModelPreview()
+    self:SetLabel(HousingModelPreviewFrameTitleText)
     self:SetLabel(HousingModelPreviewFrame.ModelPreview.TextContainer.CollectionBonus)
+
+    self:HookLabel(HousingModelPreviewFrame.ModelPreview.NameContainer.Name)
+    self:HookLabel(HousingModelPreviewFrame.ModelPreview.TextContainer.SourceInfo)
+    
 
     hooksecurefunc(HousingModelPreviewMixin, 'OnLoad', function(frame)
         frame:SetupTextTooltip(frame.TextContainer.CollectionBonus,
@@ -12,8 +17,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingModelPreview()
                 GameTooltip_AddHighlightLine(tooltip, format('已放置：%d，储存空间：%d', frame.catalogEntryInfo.numPlaced, frame.catalogEntryInfo.numStored));
             end);
     end)
-
-    hooksecurefunc(HousingModelPreviewMixin, 'PreviewCatalogEntryInfo', function(frame, catalogEntryInfo)
+end
+    --[[hooksecurefunc(HousingModelPreviewMixin, 'PreviewCatalogEntryInfo', function(frame, catalogEntryInfo)
         local sourceText= catalogEntryInfo.sourceText
         local cn= self:CN(sourceText)
         if cn then
@@ -21,8 +26,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingModelPreview()
         else
 
         end
-    end)
-end
+    end)]]
+
 
 function WoWTools_ChineseMixin.Events:Blizzard_HousingBulletinBoard()
     self:SetLabel(HousingBulletinBoardFrame.RosterTabButton.Label)
