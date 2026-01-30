@@ -164,6 +164,9 @@ hooksecurefunc(WorldQuestObjectiveTracker, 'AddBlock', set_quest)
 hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'LayoutContents', set_objective_header)
 hooksecurefunc(MonthlyActivitiesObjectiveTracker, 'AddBlock', function(_, block)
     WoWTools_ChineseMixin:SetLabel(block.HeaderText)
+    if block.lastRegion then
+        WoWTools_ChineseMixin:SetLabel(block.lastRegion.Text)
+    end
 end)
 
 

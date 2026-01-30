@@ -487,12 +487,12 @@ function WoWTools_ChineseMixin.Frames:QuestFrame()
 	hooksecurefunc('QuestFrameProgressItems_Update', function()
 		local data= self:GetQuestData(GetQuestID()) or {}
 		if data.T then
-			QuestProgressTitleText:SetText(data.T..'|n'..(GetTitleText() or ''))
+			QuestProgressTitleText:SetText(data.T)--..'|n'..(GetTitleText() or ''))
 		else
 			self:SetLabel(QuestProgressTitleText)
 		end
 		if data.O then
-			QuestProgressText:SetText(data.O..'|n'..(GetProgressText() or ''))
+			QuestProgressText:SetText(data.O)--..'|n'..(GetProgressText() or ''))
 		else
 			self:SetLabel(QuestProgressText)
 		end
