@@ -219,31 +219,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     self:HookLabel(AuctionHouseFrame.BrowseResultsFrame.ItemList.ResultsText)
     self:SetLabel(AuctionHouseFrame.BrowseResultsFrame.ItemList.LoadingSpinner.SearchingText)
 
-    --[[local function Browse_Results(frame)
-        if not frame:GetView() then
-            return
-        end
-        for _, btn in pairs(frame:GetFrames() or {}) do
-            local itemKey= btn.rowData and btn.rowData.itemKey
-            local itemKeyInfo = itemKey and C_AuctionHouse.GetItemKeyInfo(itemKey)--itemID battlePetSpeciesID itemName battlePetLink appearanceLink quality iconFileID isPet isCommodity isEquipment
-            if itemKeyInfo then
-                local name= WoWTools_ChineseMixin:GetItemName(itemKeyInfo.itemID) or WoWTools_ChineseMixin:CN(itemKeyInfo.itemName)
-                if name then
-                    local hex= select(4, C_Item.GetItemQualityColor(itemKeyInfo.quality))
-                    if hex then
-                        name= '|c'..hex..name..'|r'
-                    end
-                    btn.cells[2].Text:SetText(name)
-                end
-            end
-        end
-    end
 
-    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'Update', Browse_Results)
-    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'SetScrollTargetOffset', Browse_Results)]]
-
-    --AuctionHouseItemListMixin:Init()
-    ScrollUtil.RegisterAlternateRowBehavior(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, function(btn)
+    local function set_item(btn)
         local rowData= btn:GetRowData()
         local itemKey= rowData and rowData.itemKey
 --itemID battlePetSpeciesID itemName battlePetLink appearanceLink quality iconFileID isPet isCommodity isEquipment
@@ -262,18 +239,27 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
         end
 
         btn.cells[2].Text:SetText(name)
-    end)
-    hooksecurefunc(AuctionHouseTableHeaderStringMixin, 'Init', function(btn)--, _, headerText)    
-        self:HookLabel(btn)
-    end)
-        --[[local cn
-        
-        self:CN(headerText)
-        if cn then
-            btn.Text:SetText(cn)
-            btn.Text:SetPoint('RIGHT')
-        end]]
+    end
+    local function Browse_Results(frame)
+        if not frame:GetView() then
+            return
+        end
+        for _, btn in pairs(frame:GetFrames() or {}) do
+           set_item(btn)
+        end
+    end
 
+    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'Update', Browse_Results)
+    --hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'SetScrollTargetOffset', Browse_Results)
+
+    --AuctionHouseItemListMixin:Init()
+    ScrollUtil.RegisterAlternateRowBehavior(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, set_item)
+    hooksecurefunc(AuctionHouseTableHeaderStringMixin, 'Init', function(btn, _, headerText)
+        local cn= self:CN(headerText)
+        if cn then
+            btn.Text:SetTextToFit(cn)
+        end
+    end)
 
 end
 
