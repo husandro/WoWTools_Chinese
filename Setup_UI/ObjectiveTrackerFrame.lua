@@ -63,10 +63,10 @@ hooksecurefunc(QuestObjectiveTracker, 'DoQuestObjectives', function(_, block, qu
         local obj= select(3, WoWTools_ChineseMixin:GetQuestName(questID))
         if obj then
             block:ForEachUsedLine(function(line)--, objectiveKey) --objectiveKey=='QuestComplete'
-                C_Timer.After(0.3, function()
+                --C_Timer.After(0.3, function()
                     line.Text:SetText(obj)
                     line:SetHeight(line.Text:GetStringHeight())
-                end)
+                --end)
             end)
         end
     else

@@ -173,7 +173,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     end)
 
 
-    hooksecurefunc(AuctionHouseBuyDialogMixin, 'SetItemID', function(frame, itemID, quantity, unitPricePreview, totalPricePreview)
+    hooksecurefunc(AuctionHouseBuyDialogMixin, 'SetItemID', function(frame, itemID, quantity)--, unitPricePreview, totalPricePreview)
         local itemName = self:GetItemName(itemID)
         if itemName and quantity then
             local itemQuality = C_Item.GetItemQualityByID(itemID);
