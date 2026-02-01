@@ -254,11 +254,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
 
     --AuctionHouseItemListMixin:Init()
     ScrollUtil.RegisterAlternateRowBehavior(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, set_item)
-    hooksecurefunc(AuctionHouseTableHeaderStringMixin, 'Init', function(btn, _, headerText)
-        local cn= self:CN(headerText)
-        if cn then
-            btn.Text:SetTextToFit(cn)
-        end
+    hooksecurefunc(AuctionHouseTableHeaderStringMixin, 'Init', function(btn)--, _, headerText)
+        self:HookLabel(btn.Text)--:SetTextToFit(cn)
     end)
 
 end
