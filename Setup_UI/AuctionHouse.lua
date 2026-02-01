@@ -219,7 +219,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     self:HookLabel(AuctionHouseFrame.BrowseResultsFrame.ItemList.ResultsText)
     self:SetLabel(AuctionHouseFrame.BrowseResultsFrame.ItemList.LoadingSpinner.SearchingText)
 
-    local function Browse_Results(frame)
+    --[[local function Browse_Results(frame)
         if not frame:GetView() then
             return
         end
@@ -240,8 +240,29 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
     end
 
     hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'Update', Browse_Results)
-    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'SetScrollTargetOffset', Browse_Results)
+    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'SetScrollTargetOffset', Browse_Results)]]
 
+    --AuctionHouseItemListMixin:Init()
+    ScrollUtil.RegisterAlternateRowBehavior(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, function(btn)
+        local rowData= btn:GetRowData()
+        local itemKey= rowData and rowData.itemKey
+--itemID battlePetSpeciesID itemName battlePetLink appearanceLink quality iconFileID isPet isCommodity isEquipment
+        local itemKeyInfo = itemKey and C_AuctionHouse.GetItemKeyInfo(itemKey)
+        if not itemKeyInfo then
+            return
+        end
+        local name= WoWTools_ChineseMixin:GetItemName(itemKeyInfo.itemID) or WoWTools_ChineseMixin:CN(itemKeyInfo.itemName)
+        if not name then
+            return
+        end
+
+        local color= itemKeyInfo.quality and C_ColorOverrides.GetColorForQuality(itemKeyInfo.quality)
+        if color then
+            name= color:WrapTextInColorCode(name)
+        end
+
+        btn.cells[2].Text:SetText(name)
+    end)
     hooksecurefunc(AuctionHouseTableHeaderStringMixin, 'Init', function(btn)--, _, headerText)    
         self:HookLabel(btn)
     end)
