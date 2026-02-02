@@ -364,6 +364,7 @@ function WoWTools_ChineseMixin:SetText(text)
     if not canaccessvalue(text)
         or type(text)~='string'
         or not text:find('[%a]')
+        or self:IsCN(text)
     then
         return
     end

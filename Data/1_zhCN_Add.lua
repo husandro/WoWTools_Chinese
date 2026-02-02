@@ -160,6 +160,22 @@ EventRegistry:RegisterFrameEventAndCallback("LOADING_SCREEN_DISABLED", function(
         end
     end
 
+    --[[for index, cn in pairs({
+        "粗糙",
+        "普通",
+        "优秀",
+        "精良",
+        "史诗",
+        "传说",
+        "神器",
+        "传家宝",
+        "时光徽章",
+    }) do
+        local en= _G['ITEM_QUALITY'..(index-1)..'_DESC']
+        if en then
+
+        end
+    end]]
     tab_G=nil
     tabString=nil
 

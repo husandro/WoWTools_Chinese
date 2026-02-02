@@ -77,27 +77,30 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
         GameTooltip:Show()
     end)
 
+
+
     --刷新，列表
     AuctionHouseFrame.CommoditiesBuyFrame.BackButton:SetText('返回')
     AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.BuyButton:SetText('一口价')
     AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.QuantityInput.Label:SetText('数量')
     AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.UnitPrice.Label:SetText('单价')
     AuctionHouseFrame.CommoditiesBuyFrame.BuyDisplay.TotalPrice.Label:SetText('总价')
-     self:SetLabel(AuctionHouseFrame.CommoditiesBuyFrame.ItemList.ResultsText)
+    self:HookLabel(AuctionHouseFrame.CommoditiesBuyFrame.ItemList.ResultsText)
 
     AuctionHouseFrame.ItemBuyFrame.BackButton:SetText('返回')
     AuctionHouseFrame.ItemBuyFrame.BidFrame.BidButton:SetText('竞标')
     AuctionHouseFrame.ItemBuyFrame.BuyoutFrame.BuyoutButton:SetText('一口价')
 
 
-
     --Blizzard_AuctionHouseSharedTemplates.lua
-
+    self:HookLabel(AuctionHouseFrame.ItemSellList.ResultsText)
     hooksecurefunc(AuctionHouseFrame.ItemSellList.RefreshFrame, 'SetQuantity', function(frame, totalQuantity)
         if totalQuantity ~= 0 then
             frame.TotalQuantity:SetFormattedText('可购买数量：|cnGREEN_FONT_COLOR:%s|r', WoWTools_ChineseMixin:MK(totalQuantity, 0))
         end
     end)
+
+    self:HookLabel(AuctionHouseFrame.CommoditiesSellList.ResultsText)
     hooksecurefunc(AuctionHouseFrame.CommoditiesSellList.RefreshFrame, 'SetQuantity', function(frame, totalQuantity)
         if totalQuantity ~= 0 then
             frame.TotalQuantity:SetFormattedText('可购买数量：|cnGREEN_FONT_COLOR:%s|r', WoWTools_ChineseMixin:MK(totalQuantity, 0))
@@ -240,7 +243,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
 
         btn.cells[2].Text:SetText(name)
     end
-    local function Browse_Results(frame)
+
+
+    --[[local function Browse_Results(frame)
+        
         if not frame:GetView() then
             return
         end
@@ -249,11 +255,17 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
         end
     end
 
-    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'Update', Browse_Results)
-    --hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'SetScrollTargetOffset', Browse_Results)
+    hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'OnUpdate', Browse_Results)
+    --hooksecurefunc(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, 'SetScrollTargetOffset', Browse_Results)]]
 
     --AuctionHouseItemListMixin:Init()
-    ScrollUtil.RegisterAlternateRowBehavior(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, set_item)
+    ScrollUtil.RegisterAlternateRowBehavior(AuctionHouseFrame.BrowseResultsFrame.ItemList.ScrollBox, function(btn)
+        set_item(btn)
+        C_Timer.After(0.3, function()
+            set_item(btn)
+        end)
+    end)
+
     hooksecurefunc(AuctionHouseTableHeaderStringMixin, 'Init', function(btn)--, _, headerText)
         self:HookLabel(btn.Text)--:SetTextToFit(cn)
     end)
