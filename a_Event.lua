@@ -1178,7 +1178,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_Transmog()
     self:SetLabel(TransmogFrame.OutfitCollection.ShowEquippedGearSpellFrame.Label)
     self:SetLabel(TransmogFrame.OutfitCollection.PurchaseOutfitButton.Text)
     self:SetButton(TransmogFrame.OutfitCollection.SaveOutfitButton)
-
+    self:SetLabel(TransmogFrame.OutfitCollection.UsableDiscountText)
     self:SetLabel(TransmogFrame.CharacterPreview.HideIgnoredToggle.Text)
 
     self:HookLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.ActiveSlotTitle)
