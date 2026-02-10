@@ -3516,6 +3516,9 @@ local PerksActivityTags={
 "至暗之夜",
 }
 
+PerksActivity['0000版本']= nil
+PerksActivityTags['0000版本']= nil
+PerksVendorCategory['0000版本']= nil
 
 do
     local tags= C_PerksActivities.GetAllPerksActivityTags()

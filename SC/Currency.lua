@@ -2225,6 +2225,7 @@ local tab={
 },
 }
 
+tab['0000版本']= nil
 do
     for currencyID, info in pairs(tab) do
         local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)

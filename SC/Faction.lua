@@ -6183,37 +6183,42 @@ nil,
 },
 }
 
-    do
-        for factionID, tab in pairs(faction or {}) do
-            if C_Reputation.IsMajorFaction(factionID) then
 
-                local data= C_MajorFactions.GetMajorFactionData(factionID) or {}
-                WoWTools_ChineseMixin:SetCN(data.name, tab.T)
-                WoWTools_ChineseMixin:SetCN(data.description, tab.D)
-                WoWTools_ChineseMixin:SetCN(data.unlockDescription, tab.U)
 
-                local rew= tab.O
-                if rew then
-                    for level in pairs(C_MajorFactions.GetRenownLevels(factionID) or {}) do
-                        if rew[level] then
-                            for index, info in pairs(C_MajorFactions.GetRenownRewardsForLevel(factionID, level) or {}) do
-                                if rew[level][index] then
-                                    WoWTools_ChineseMixin:SetCN(info.name, rew[level][index].T)
-                                    WoWTools_ChineseMixin:SetCN(info.description, rew[level][index].D)
-                                    WoWTools_ChineseMixin:SetCN(info.toastDescription, rew[level][index].U)
-                                end
 
+
+faction['0000版本']= nil
+do
+    for factionID, tab in pairs(faction) do
+        if C_Reputation.IsMajorFaction(factionID) then
+
+            local data= C_MajorFactions.GetMajorFactionData(factionID) or {}
+            WoWTools_ChineseMixin:SetCN(data.name, tab.T)
+            WoWTools_ChineseMixin:SetCN(data.description, tab.D)
+            WoWTools_ChineseMixin:SetCN(data.unlockDescription, tab.U)
+
+            local rew= tab.O
+            if rew then
+                for level in pairs(C_MajorFactions.GetRenownLevels(factionID) or {}) do
+                    if rew[level] then
+                        for index, info in pairs(C_MajorFactions.GetRenownRewardsForLevel(factionID, level) or {}) do
+                            if rew[level][index] then
+                                WoWTools_ChineseMixin:SetCN(info.name, rew[level][index].T)
+                                WoWTools_ChineseMixin:SetCN(info.description, rew[level][index].D)
+                                WoWTools_ChineseMixin:SetCN(info.toastDescription, rew[level][index].U)
                             end
+
                         end
                     end
                 end
-            else
-                local data= C_Reputation.GetFactionDataByID(factionID)
-                if data then
-                    WoWTools_ChineseMixin:SetCN(data.name, tab.T)
-                    WoWTools_ChineseMixin:SetCN(data.description, tab.D)
-                end
+            end
+        else
+            local data= C_Reputation.GetFactionDataByID(factionID)
+            if data then
+                WoWTools_ChineseMixin:SetCN(data.name, tab.T)
+                WoWTools_ChineseMixin:SetCN(data.description, tab.D)
             end
         end
     end
-    faction= nil
+end
+faction= nil

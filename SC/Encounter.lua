@@ -4463,3 +4463,9 @@ WoWTools_SC_Encounter = {
 ["T"] = "伊希斯特，魔法的造物",
 },
 }
+
+
+
+
+
+WoWTools_SC_Encounter['0000版本']= nil

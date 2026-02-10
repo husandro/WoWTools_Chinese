@@ -7854,7 +7854,7 @@ nil,
 
 
 
-
+tab['0000版本']= nil
 
 do
     for mountID, info in pairs(tab) do

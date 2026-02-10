@@ -108600,3 +108600,5 @@ WoWTools_SC_Spell2 = {
 ["D"] = "将此装饰添加到你的住宅收纳箱中。",
 },
 }
+
+WoWTools_SC_Spell2['0000版本']= nil
