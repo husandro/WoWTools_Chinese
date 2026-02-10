@@ -169,6 +169,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
                 local name= self:GetItemName(itemKeyInfo.itemID)
                 if name then
                     local f= itemKeyInfo.isCommodity and frame.CommoditiesBuyFrame.BuyDisplay.ItemDisplay or frame.ItemBuyFrame.ItemDisplay
+                    local data= C_TradeSkillUI.GetItemCraftedQualityInfo(itemKeyInfo)
+                    if data and data.icon then
+                        name= name..'|A:'..data.icon..':0:0|a'
+                    end
                     f.Name:SetText(name)
                 end
             end
@@ -184,6 +188,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_AuctionHouseUI()
                 local colorData = ColorManager.GetColorDataForItemQuality(itemQuality or Enum.ItemQuality.Common)
                 if colorData then
                     itemName = colorData.color:WrapTextInColorCode(itemName)
+                end
+                local data= C_TradeSkillUI.GetItemCraftedQualityInfo(itemID)
+                if data and data.icon then
+                    itemName= itemName..'|A:'..data.icon..':0:0|a'
                 end
                 frame.ItemDisplay.ItemText:SetFormattedText('%s  x%s', itemName, quantity)
             end
