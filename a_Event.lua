@@ -1090,7 +1090,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_WorldMap()
     self:SetCNFont(WorldMapFrameHomeButtonText)
     WorldMapFrameHomeButtonText:SetText('世界')
 
-    if EventSchedulerBaseLabelMixin then--11.2.7才有
+    --11.2.7才有
                 --[[local EntryType = EnumUtil.MakeEnum(
                 "OngoingHeader",--1
                 "OngoingEvent",
@@ -1100,28 +1100,37 @@ function WoWTools_ChineseMixin.Events:Blizzard_WorldMap()
                 "HiddenEventsLabel",
                 "NoEventsLabel"
             )]]
-        self:SetLabel(QuestMapFrame.EventsFrame.TitleText)
-        hooksecurefunc(EventSchedulerBaseLabelMixin, 'Init', function(frame, data)
-            if not data then
-                self:SetLabel(frame.Label)
-            elseif data.entryType ==  1 then
-                frame.Label:SetText('进行中的活动')
-            elseif data.entryType ==  3 then
-                frame.Label:SetText('活动日程')
-            elseif data.entryType ==  5 then
-                local monthName = self:CN(CALENDAR_FULLDATE_MONTH_NAMES[data.date.month])
-                if monthName then
-                    frame.Label:SetFormattedText('EVENT_SCHEDULER_DAY_FORMAT', monthName, data.date.day);
-                else
-                    frame:SetLabel(frame.Label)
-                end
-            elseif data.entryType == 6 then
-                frame.Label:SetFormattedText('%d个活动已被隐藏', data.count);
-            elseif data.entryType == 7 then
-                frame.Label:SetText('没有可用的活动')
+    self:SetLabel(QuestMapFrame.EventsFrame.TitleText)
+    hooksecurefunc(EventSchedulerBaseLabelMixin, 'Init', function(frame, data)
+        if not data then
+            self:SetLabel(frame.Label)
+        elseif data.entryType ==  1 then
+            frame.Label:SetText('进行中的活动')
+        elseif data.entryType ==  3 then
+            frame.Label:SetText('活动日程')
+        elseif data.entryType ==  5 then
+            local monthName = self:CN(CALENDAR_FULLDATE_MONTH_NAMES[data.date.month])
+            if monthName then
+                frame.Label:SetFormattedText('EVENT_SCHEDULER_DAY_FORMAT', monthName, data.date.day);
+            else
+                frame:SetLabel(frame.Label)
             end
-        end)
-    end
+        elseif data.entryType == 6 then
+            frame.Label:SetFormattedText('%d个活动已被隐藏', data.count);
+        elseif data.entryType == 7 then
+            frame.Label:SetText('没有可用的活动')
+        end
+    end)
+
+    hooksecurefunc(EventSchedulerOngoingEntryMixin, 'Init', function(frame, info)
+        self:SetLabel(frame.Name)
+        self:SetLabel(frame.Location)
+    end)
+    hooksecurefunc(EventSchedulerScheduledEntryMixin, 'Init', function(frame, info)
+        self:SetLabel(frame.Name)
+        self:SetLabel(frame.Location)
+    end)
+
 end
 
 
