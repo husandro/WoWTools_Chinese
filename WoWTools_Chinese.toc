@@ -15,7 +15,7 @@
 2_Func_Mixin.lua
 
 ##字符, 常用
-Data\0_zhCN.lua
+SC\GlobalStrings.lua
 ##插件WoWTools 中 WoWTools_GossipMixin 对话汉化模块
 ##Data\2_Gossip_TextData.lua
 ##商店

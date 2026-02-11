@@ -197,7 +197,7 @@ end
 
 
 
---[[
+
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
     --sectionID= GetValueID(sectionID)
     difficultyID= difficultyID or EJ_GetDifficulty()
@@ -211,8 +211,8 @@ function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
             }
         end
     end
-end]]
-
+end
+--[[
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
     if not WoWTools_SC_SectionEncounter or not canaccessvalue(sectionID) or not canaccessvalue(difficultyID) then
         return
@@ -236,6 +236,7 @@ function WoWTools_ChineseMixin:GetBoosSectionName(sectionID, difficultyID)
         return data.T, data.D
     end
 end
+]]
 
 
 
