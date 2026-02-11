@@ -1214,6 +1214,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_Transmog()
     hooksecurefunc(TransmogFrame.WardrobeCollection.TabContent.SituationsFrame, 'Refresh', function(frame)
         for pool in frame.SituationFramePool:EnumerateActive() do
             self:SetLabel(pool.Title)
+            print(pool.Title:GetText(), self:CN(pool.Title:GetText()))
         end
     end)
 end
