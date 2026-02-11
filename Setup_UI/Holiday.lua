@@ -83,11 +83,15 @@ function WoWTools_ChineseMixin.Events:Blizzard_Calendar()
     end)
 
     local function ShouldDisplayEventOnCalendar(event)
-        local shouldDisplayBeginEnd = event and event.sequenceType ~= "ONGOING"
-        if ( event.sequenceType == "END" and event.dontDisplayEnd ) then
-            shouldDisplayBeginEnd = false
+        if event then
+            if canaccessvalue(event.sequenceType) and event.sequenceTyp then
+                if event.sequenceType == "END" and event.dontDisplayEnd then
+                    return false
+                else
+                    return event.sequenceType ~= "ONGOING"
+                end
+            end
         end
-        return shouldDisplayBeginEnd
     end
     hooksecurefunc('CalendarFrame_UpdateDayEvents', function(index, day, monthOffset)
         local dayButtonName= 'CalendarDayButton'..index
