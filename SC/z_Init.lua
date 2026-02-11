@@ -212,6 +212,12 @@ function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
         end
     end
 end
+function WoWTools_ChineseMixin:GetBoosSectionName(sectionID, difficultyID)
+    local data= self:GetBoosSectionData(sectionID, difficultyID)
+    if data then
+        return data.T, data.D
+    end
+end
 --[[
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
     if not WoWTools_SC_SectionEncounter or not canaccessvalue(sectionID) or not canaccessvalue(difficultyID) then
