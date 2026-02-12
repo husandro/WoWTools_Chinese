@@ -1,12 +1,3 @@
-
-
-
-
-
-
-
-
-
 --[[
 https://wago.tools/db2/PerksActivity?locale=zhCN
 [ID]= {'ActivityName_lang', 'Description_lang'},
@@ -20,11 +11,12 @@ https://warcraft.wiki.gg/wiki/API_C_PerksProgram.GetCategoryInfo
 https://wago.tools/db2/PerksVendorCategory?locale=zhCN
 https://wago.tools/db2/PerksActivityTag?locale=zhCN
 [ID]= 'TagName_lang',
+
+
+
+
+[0] = "当前数据版本 12.0.1 - 65867 总数 887, 由 WoWTools Chinese Scanner 插件收集",
 ]]
-
-
-
---[0] = "当前数据版本 12.0.1 - 65867 总数 887, 由 WoWTools Chinese Scanner 插件收集",
 local PerksActivity = {
 nil,
 nil,

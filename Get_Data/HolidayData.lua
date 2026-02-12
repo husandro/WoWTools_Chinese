@@ -1,5 +1,7 @@
 --[[
 https://wago.tools/db2/HolidayNames?locale=zhCN
+
+12.0.1.65867
 ]]
 local nameTab={
 [459]= "“至暗之夜”地下城活动",
@@ -408,7 +410,7 @@ local descTab={
 https://wago.tools/db2/Holidays?locale=zhCN
 ]]
 local indexTab={
-    [1805]= {459,510},
+[1805]= {459,510},
 [1804]= {459,510},
 [1803]= {459,510},
 [1802]= {459,510},
