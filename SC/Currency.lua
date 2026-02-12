@@ -1,8 +1,10 @@
 --[[
 [ID]= {'Name_lang', 'Description_lang'},
 https://wago.tools/db2/CurrencyTypes?locale=zhCN
+
+[0] = "当前数据版本 12.0.1 - 65867 总数 616, 由 WoWTools Chinese Scanner 插件收集",
 ]]
---[0] = "当前数据版本 12.0.1 - 65867 总数 616, 由 WoWTools Chinese Scanner 插件收集",
+
 local tab={
 [3049] = {
 ["name"] = "制皮专注",

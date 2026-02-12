@@ -1,40 +1,40 @@
--- 住宅，物品来源， 数据来源 WoWTools_Chinese_Scanner 插件
+--[0] = "HouseFilter 数据版本 12.0.1 - 65867 总数 6, 由 WoWTools Chinese Scanner 插件收集",
 local HouseFilter = {
 {
-    ["groupName"] = "主题",
-    ["groupID"] = 6,
-    ["tags"] = {
-        {
-        ["anyAssociatedEntries"] = true,
-        ["tagID"] = 70,
-        ["orderIndex"] = 0,
-        ["tagName"] = "粗犷",
-        },
-        {
-        ["anyAssociatedEntries"] = true,
-        ["tagID"] = 71,
-        ["orderIndex"] = 1,
-        ["tagName"] = "民间",
-        },
-        {
-        ["anyAssociatedEntries"] = true,
-        ["tagID"] = 72,
-        ["orderIndex"] = 2,
-        ["tagName"] = "阔绰",
-        },
-        {
-        ["anyAssociatedEntries"] = true,
-        ["tagID"] = 73,
-        ["orderIndex"] = 3,
-        ["tagName"] = "节日/事件",
-        },
-        {
-        ["anyAssociatedEntries"] = true,
-        ["tagID"] = -33,
-        ["orderIndex"] = 4,
-        ["tagName"] = "无",
-        },
-    },
+["groupName"] = "主题",
+["groupID"] = 6,
+["tags"] = {
+{
+["anyAssociatedEntries"] = true,
+["tagID"] = 70,
+["orderIndex"] = 0,
+["tagName"] = "粗犷",
+},
+{
+["anyAssociatedEntries"] = true,
+["tagID"] = 71,
+["orderIndex"] = 1,
+["tagName"] = "民间",
+},
+{
+["anyAssociatedEntries"] = true,
+["tagID"] = 72,
+["orderIndex"] = 2,
+["tagName"] = "阔绰",
+},
+{
+["anyAssociatedEntries"] = true,
+["tagID"] = 73,
+["orderIndex"] = 3,
+["tagName"] = "节日/事件",
+},
+{
+["anyAssociatedEntries"] = true,
+["tagID"] = -33,
+["orderIndex"] = 4,
+["tagName"] = "无",
+},
+},
 },
 {
 ["groupName"] = "内容更新",
@@ -366,8 +366,14 @@ local HouseFilter = {
 },
 {
 ["anyAssociatedEntries"] = true,
-["tagID"] = -33,
+["tagID"] = 452,
 ["orderIndex"] = 13,
+["tagName"] = "哈籁尼尔",
+},
+{
+["anyAssociatedEntries"] = true,
+["tagID"] = -33,
+["orderIndex"] = 14,
 ["tagName"] = "无",
 },
 },
@@ -522,6 +528,7 @@ local HouseFilter = {
 },
 },
 },
+
 }
 
 
