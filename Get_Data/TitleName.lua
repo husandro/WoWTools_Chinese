@@ -695,18 +695,17 @@ local tab={
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
         for id, name in pairs(tab) do
-
+            WoWTools_ChineseMixin:SetCN(GetTitleName(id), name)
         end
     end
 
     tab= nil
-    EventRegistry:UnregisterCallback('ADDON_LOADED', owner)
+    EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
 end)
 
 
 
 
-function WoWTools_ChineseMixin:GetTitleName(titleMaskID)
+--[[function WoWTools_ChineseMixin:GetTitleName(titleMaskID)
     return self:IsCN(tab[titleMaskID])
-end
---GetTitleName(1)
+end]]

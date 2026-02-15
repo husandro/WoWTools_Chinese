@@ -288,8 +288,8 @@ function WoWTools_ChineseMixin:GetData(text, tab)
         end
 
 
-    elseif tab.titleID then
-        data= self:GetTitleName(tab.titleID)
+    --elseif tab.titleID then
+        --data= self:GetTitleName(tab.titleID)
 
     elseif tab.subTreeID then
         data= self:Get_TraitSubTree(subTreeID, isName, isDesc)
