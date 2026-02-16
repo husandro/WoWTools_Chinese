@@ -5442,10 +5442,11 @@ local HouseTrackerObjective = {
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
     do
         local faction= UnitFactionGroup('player')
+        local faction2= faction=='Alliance' and 'Horde' or 'Alliance'
         for targetID, data in pairs(HouseTrackerObjective) do
             local obj= C_ContentTracking.GetObjectiveText(data.targetType, targetID, true)
             if obj then
-                WoWTools_ChineseMixin:SetCN(obj, data[faction])
+                WoWTools_ChineseMixin:SetCN(obj, data[faction] or data[faction2])
             end
         end
     end
