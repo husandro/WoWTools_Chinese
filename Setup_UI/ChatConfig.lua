@@ -172,41 +172,41 @@ function WoWTools_ChineseMixin.Events:Blizzard_ChatFrame()
 
 
 
-    CombatConfigColorsExampleTitle:SetText('范例文字：')
-    CombatConfigFormattingExampleTitle:SetText('范例文字：')
-    CombatConfigFormattingShowTimeStamp.Text:SetText('显示时间戳')
-    CombatConfigFormattingShowTimeStamp.tooltip = '显示战斗记录信息的时间戳。'
-    CombatConfigFormattingShowBraces.Text:SetText('显示括号')
-    CombatConfigFormattingShowBraces.tooltip = '在战斗记录信息中的超链接外显示括号。'
-    CombatConfigFormattingUnitNamesText:SetText('单位名称')
-    CombatConfigFormattingUnitNames.tooltip = '在单位名称外显示括号。'
+    self:SetLabel(CombatConfigColorsExampleTitle)--:SetText('范例文字：')
+    self:SetLabel(CombatConfigFormattingExampleTitle)--:SetText('范例文字：')
+    self:SetLabel(CombatConfigFormattingShowTimeStamp.Text)--:SetText('显示时间戳')
+    --CombatConfigFormattingShowTimeStamp.tooltip = '显示战斗记录信息的时间戳。'
+    self:SetLabel(CombatConfigFormattingShowBraces.Text)--:SetText('显示括号')
+    --CombatConfigFormattingShowBraces.tooltip = '在战斗记录信息中的超链接外显示括号。'
+    self:SetLabel(CombatConfigFormattingUnitNamesText)--:SetText('单位名称')
+    --CombatConfigFormattingUnitNames.tooltip = '在单位名称外显示括号。'
 
-    CombatConfigFormattingSpellNamesText:SetText('法术名')
-    CombatConfigFormattingSpellNames.tooltip= '在法术名称外显示括号。'
-    CombatConfigFormattingItemNamesText:SetText('物品名')
-    CombatConfigFormattingItemNames.tooltip= '在物品名称外显示括号。'
-    CombatConfigFormattingFullTextText:SetText('使用详细模式')
-    CombatConfigFormattingItemNames.tooltip= '整句显示战斗记录信息。'
-    CombatConfigSettingsShowQuickButtonText:SetText('显示快捷按钮')
-    CombatConfigSettingsShowQuickButton.tooltip= '在聊天窗口中放置一个该过滤条件的快捷方式。'
-    CombatConfigSettingsSoloText:SetText('独身')
-    CombatConfigSettingsPartyText:SetText('小队')
-    CombatConfigSettingsRaidText:SetText('团队')
+    self:SetLabel(CombatConfigFormattingSpellNamesText)--:SetText('法术名')
+    --CombatConfigFormattingSpellNames.tooltip= '在法术名称外显示括号。'
+    self:SetLabel(CombatConfigFormattingItemNamesText)--:SetText('物品名')
+    --CombatConfigFormattingItemNames.tooltip= '在物品名称外显示括号。'
+    self:SetLabel(CombatConfigFormattingFullTextText)--:SetText('使用详细模式')
+    --CombatConfigFormattingItemNames.tooltip= '整句显示战斗记录信息。'
+    self:SetLabel(CombatConfigSettingsShowQuickButtonText)--:SetText('显示快捷按钮')
+    --CombatConfigSettingsShowQuickButton.tooltip= '在聊天窗口中放置一个该过滤条件的快捷方式。'
+    self:SetLabel(CombatConfigSettingsSoloText)--:SetText('独身')
+    self:SetLabel(CombatConfigSettingsPartyText)--:SetText('小队')
+    self:SetLabel(CombatConfigSettingsRaidText)--:SetText('团队')
 
     self:SetFrame(CombatConfigSettingsNameEditBox)
 
-    ChatConfigFrameDefaultButton:SetText('聊天默认')
+    self:SetButton(ChatConfigFrameDefaultButton)--:SetText('聊天默认')
 
     self:SetButton(ChatConfigFrameRedockButton, nil, nil, nil, true)--:SetText('重置聊天窗口位置')
 
-    ChatConfigFrameOkayButton:SetText('确定')
-    CombatLogDefaultButton:SetText('战斗记录默认')
-    TextToSpeechDefaultButton:SetText('文字转语音默认设置')
+    self:SetButton(ChatConfigFrameOkayButton)--:SetText('确定')
+    self:SetButton(CombatLogDefaultButton)--:SetText('战斗记录默认')
+    self:SetButton(TextToSpeechDefaultButton)--:SetText('文字转语音默认设置')
 
-    ChatConfigCombatSettingsFiltersCopyFilterButton:SetText('复制')
-    ChatConfigCombatSettingsFiltersAddFilterButton:SetText('添加')
-    ChatConfigCombatSettingsFiltersDeleteButton:SetText('删除')
-    CombatConfigSettingsSaveButton:SetText('保存')
+    self:SetButton(ChatConfigCombatSettingsFiltersCopyFilterButton)--:SetText('复制')
+    self:SetButton(ChatConfigCombatSettingsFiltersAddFilterButton)--:SetText('添加')
+    self:SetButton(ChatConfigCombatSettingsFiltersDeleteButton)--:SetText('删除')
+    self:SetButton(CombatConfigSettingsSaveButton)--:SetText('保存')
 
 
     self:SetButton(TextToSpeechFramePanelContainer.PlaySampleButton)

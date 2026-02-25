@@ -529,19 +529,19 @@ function WoWTools_ChineseMixin.Events:Blizzard_CombatLog()
             if type(tab)=='table' then
                 local name= tab.name
                 local quickButtonName= tab.quickButtonName
-                local tooltip= tab.tooltip
+                --local tooltip= tab.tooltip
                 name= name and self:SetText(name)
                 quickButtonName= quickButtonName and self:SetText(quickButtonName)
-                tooltip= tooltip and self:SetText(tooltip)
+                --tooltip= tooltip and self:SetText(tooltip)
                 if name then
                     frame[index].name= name
                 end
                 if quickButtonName then
                     frame[index].quickButtonName= quickButtonName
                 end
-                if tooltip then
+                --[[if tooltip then
                     frame[index].tooltip= tooltip
-                end
+                end]]
             end
         end
     end
