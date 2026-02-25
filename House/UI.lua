@@ -153,8 +153,10 @@ end
 function WoWTools_ChineseMixin.Events:Blizzard_HousingDashboard()
 --Blizzard_HousingData.lua
     self:SetLabel(HousingDashboardFrame.HouseInfoContent.DashboardNoHousesFrame.TitleText)
-    WoWTools_ChineseMixin:SetCN(HOUSING_EXPERT_DECOR_GLOBAL_SPACE_ACTIVATE, '切换到私密住宅编辑')
-    WoWTools_ChineseMixin:SetCN(HOUSING_EXPERT_DECOR_GLOBAL_SPACE_DEACTIVATE, '切换到公共住宅编辑')
+    self:SetLabel(HousingDashboardFrame.CatalogContent.SearchBox.Instructions)
+    self:SetLabel(HousingDashboardFrame.CatalogContent.Filters.FilterDropdown.Text)
+    self:SetCN(HOUSING_EXPERT_DECOR_GLOBAL_SPACE_ACTIVATE, '切换到私密住宅编辑')
+    self:SetCN(HOUSING_EXPERT_DECOR_GLOBAL_SPACE_DEACTIVATE, '切换到公共住宅编辑')
 
     HousingDashboardFrame.houseInfoTab.titleText = HOUSING_DASHBOARD_HOUSEINFO_FRAMETITLE
     self:HookLabel(HousingDashboardFrameTitleText)
