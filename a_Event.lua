@@ -1236,3 +1236,28 @@ end
 function WoWTools_ChineseMixin.Events:Blizzard_GenericTraitUI()
     self:HookLabel(GenericTraitFrame.Header.Title)
 end
+
+
+
+
+
+
+
+
+
+
+--12.0 伤害统计
+function WoWTools_ChineseMixin.Events:Blizzard_DamageMeter()
+
+    for _, windowData in pairs(DamageMeter:GetWindowDataList()) do
+        if windowData.sessionWindow then
+            self:HookLabel(windowData.sessionWindow.DamageMeterTypeDropdown.TypeName)
+        end
+    end
+    hooksecurefunc(DamageMeterSessionWindowMixin, 'OnLoad', function(frame)
+        if frame.DamageMeterTypeDropdown then
+            self:HookLabel(frame.DamageMeterTypeDropdown.TypeName)
+        end
+    end)
+
+end
