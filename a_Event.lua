@@ -1192,7 +1192,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_Transmog()
 
     self:HookLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.ActiveSlotTitle)
 
-    self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypes.DisplayTypeUnassignedButton.Text)
+    self:HookButton(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypes.DisplayTypeUnassignedButton)--不能正常
+    
     self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypes.DisplayTypeEquippedButton.Text)
 
     self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.CustomSetsFrame.NewCustomSetButton.Text)

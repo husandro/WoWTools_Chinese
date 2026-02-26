@@ -202,6 +202,7 @@ function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
     difficultyID= difficultyID or EJ_GetDifficulty()
     if sectionID and WoWTools_SC_SectionEncounter then
         local data=WoWTools_SC_SectionEncounter[difficultyID..'x'..sectionID]
+
         if data then
 
             return {
