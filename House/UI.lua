@@ -189,7 +189,29 @@ end
 
     self:SetLabel(HousingDashboardFrame.HouseInfoContent.ContentFrame.HouseUpgradeFrame.WatchFavorButton.Label)
     --self:HookLabel(HousingDashboardFrame.CatalogContent.PreviewFrame.TextContainer.SourceInfo)
+
+--替换，原生
+    for frame in  HousingDashboardFrame.CatalogContent.Categories.categoryPool:EnumerateActive() do
+        hooksecurefunc(frame, 'Init', function(f, displayInfo)
+            local name= displayInfo and self:CN(displayInfo.name)
+            if name then
+                f.enabledTooltip = name
+            end
+        end)
+    end
 end
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -251,6 +273,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_HousingTemplates()
 
 
 
+
+--替换，原生
     hooksecurefunc(HousingCatalogCategoryMixin, 'Init', function(frame, displayInfo)
         local name= displayInfo and self:CN(displayInfo.name)
         if name then
