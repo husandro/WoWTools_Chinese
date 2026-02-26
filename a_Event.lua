@@ -1192,14 +1192,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_Transmog()
 
     self:HookLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.ActiveSlotTitle)
 
-    if TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypes then--12.01才有
-        self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypes.DisplayTypeUnassignedButton.Text)
-        self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypes.DisplayTypeEquippedButton.Text)
-    else
-        self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypeUnassignedButton.Text)
-        self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypeEquippedButton.Text)
-    end
-
+    self:HookLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypes.DisplayTypeUnassignedButton.Text)
+    self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypes.DisplayTypeEquippedButton.Text)
 
     self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.CustomSetsFrame.NewCustomSetButton.Text)
 
