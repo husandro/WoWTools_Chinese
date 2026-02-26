@@ -196,7 +196,7 @@ end
 
 
 
-
+--[[
 
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
     difficultyID= difficultyID or EJ_GetDifficulty()
@@ -218,11 +218,11 @@ function WoWTools_ChineseMixin:GetBoosSectionName(sectionID, difficultyID)
         return data.T, data.D
     end
 end
+]]
 
 
---[[
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
-    if not WoWTools_SC_SectionEncounter or not canaccessvalue(sectionID) or not canaccessvalue(difficultyID) then
+    if not WoWTools_SC_SectionEncounter then
         return
     end
 
@@ -244,7 +244,7 @@ function WoWTools_ChineseMixin:GetBoosSectionName(sectionID, difficultyID)
         return data.T, data.D
     end
 end
-]]
+
 
 
 
@@ -273,7 +273,8 @@ local function expand_text(msg)-- function WoWeuCN_Quests_ExpandUnitInfo(desc)
    end
 
    msg= msg:gsub("NEW_LINE", "\n")
-   msg= msg:gsub('YOUR_GENDER%(.-;.-%)', YOUR_GENDER)--YOUR_GENDER(兄弟;小姐)
+   msg= msg:gsub('
+   %(.-;.-%)', YOUR_GENDER)--YOUR_GENDER(兄弟;小姐)
    msg= msg:gsub("{name}", Player_Name)
    msg= msg:gsub("{race}", Player_Race)
    msg= msg:gsub("{class}", Player_Class)
