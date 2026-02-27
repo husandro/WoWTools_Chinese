@@ -1,4 +1,5 @@
 <img width="246" height="45" alt="wowtools" src="https://github.com/user-attachments/assets/d01a74b9-fba7-4c85-b6ac-84b28451b3bb" />
+
 # WoWTools
 > ## WoW 增强插件
 > ## 功能包含四大模块>
@@ -8,7 +9,7 @@
 > ### ChatButton: 聊天按钮和常用功能
 ## 下载
 > ### <https://www.curseforge.com/wow/addons/wowtools>
-> ### <https://addons.wago.io/addons/wowtools> 无效
+> ### <https://addons.wago.io/addons/wowtools> 可能无效
 > ### <https://github.com/husandro/WoWTools>
 ## Wiki
 > ### <https://github.com/husandro/WoWTools/wiki>
@@ -21,7 +22,7 @@
 > ## 仅限欧服
 ## 下载
 > ### <https://www.curseforge.com/wow/addons/wowtoolschinese>
-> ### <https://addons.wago.io/addons/wowtools-chinese> 无效
+> ### <https://addons.wago.io/addons/wowtools-chinese> 可能无效
 > ### <https://github.com/husandro/WoWTools_Chinese>
 ***
 
