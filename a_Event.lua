@@ -519,7 +519,7 @@ end
 
 
 
---聊天框，战斗记录
+--[[聊天框，战斗记录 可能会出错
 function WoWTools_ChineseMixin.Events:Blizzard_CombatLog()
     local function set_filter(frame)
         if not frame then
@@ -539,15 +539,12 @@ function WoWTools_ChineseMixin.Events:Blizzard_CombatLog()
                 if quickButtonName then
                     frame[index].quickButtonName= quickButtonName
                 end
-                --[[if tooltip then
-                    frame[index].tooltip= tooltip
-                end]]
             end
         end
     end
     set_filter(Blizzard_CombatLog_Filter_Defaults.filters)
     set_filter(Blizzard_CombatLog_Filters.filters )
-end
+end]]
 
 
 
