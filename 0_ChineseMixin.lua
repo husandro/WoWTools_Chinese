@@ -1,8 +1,12 @@
-GAME_LOCALE= "zhCN"
---[[LOCALE_zhCN= true
+--[[GAME_LOCALE= "zhCN"
+LOCALE_zhCN= true
+C_CVar.SetCVar('audioLocale', 'zhCN')
+C_CVar.SetCVar('textLocale', 'zhCN')
+
 GetLocale=function()
     return "zhCN"
-end]]
+end
+]]
 
 
 WoWTools_ChineseMixin={
