@@ -362,7 +362,6 @@ end
 
 
 
-
 --( ) . % + - * ? [ ^ $
 function WoWTools_ChineseMixin:SetText(text)
     if not canaccessvalue(text)
@@ -428,11 +427,9 @@ function WoWTools_ChineseMixin:SetText(text)
         return set_match(s, s:match('(.-)'..PLAYER_LIST_DELIMITER))
     end)
 
-    text2= text2:gsub('(.+) %d+/%d+', function(s)--耐久度 50/50
-        return set_match(s, s:match('(.+) %d+/%d+'))
+    text2= text2:gsub('.+ %d+/%d+$', function(s)--耐久度 50/50
+        return set_match(s, s:match('(.+) %d+/%d+$'))
     end)
-
-
 
     if text ~= text2 and text2:find('[\228-\233]') then
         return text2
