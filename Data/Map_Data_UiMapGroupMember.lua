@@ -1,6 +1,7 @@
 --[[
 {'Name_lang', UiMapGroupID,UiMapID},
 https://wago.tools/db2/UiMapGroupMember?locale=zhCN
+12.0.1.66102
 ]]
 
 local tab={
