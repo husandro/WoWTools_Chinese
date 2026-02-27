@@ -1,38 +1,37 @@
 
-
+local Flags={
+    [0] = "坦克预警",
+    [1] = "伤害输出预警",
+    [10] = "疾病效果",
+    [11] = "激怒",
+    [12] = "史诗难度",
+    [13] = "流血",
+    [2] = "治疗预警",
+    [3] = "英雄难度",
+    [4] = "灭团技",
+    [5] = "重要",
+    [6] = "可打断技能",
+    [7] = "法术效果",
+    [8] = "诅咒效果",
+    [9] = "中毒效果",
+}
 
 local function EncounterJournal_SetupIconFlags(sectionID, infoHeaderButton, index)--Blizzard_EncounterJournal.lua
     local iconFlags = C_EncounterJournal.GetSectionIconFlags(sectionID)
     for index2, icon in ipairs(infoHeaderButton.icons or {}) do
         local iconFlag = iconFlags and iconFlags[index2]
-        if iconFlag then
-            local tab={
-                [0] = "坦克预警",
-                [1] = "伤害输出预警",
-                [10] = "疾病效果",
-                [11] = "激怒",
-                [12] = "史诗难度",
-                [13] = "流血",
-                [2] = "治疗预警",
-                [3] = "英雄难度",
-                [4] = "灭团技",
-                [5] = "重要",
-                [6] = "可打断技能",
-                [7] = "法术效果",
-                [8] = "诅咒效果",
-                [9] = "中毒效果",
-            }
-            if tab[iconFlag] then
-                icon.tooltipTitle = tab[iconFlag]--_G["ENCOUNTER_JOURNAL_SECTION_FLAG"..iconFlag]
-                if index then
-                    if iconFlag==1 then
-                        WoWTools_ChineseMixin:SetLabel(infoHeaderButton.title, '伤害')
-                    elseif iconFlag==2 then
-                        WoWTools_ChineseMixin:SetLabel(infoHeaderButton.title, '治疗者')
-                    elseif iconFlag==0 then
-                        WoWTools_ChineseMixin:SetLabel(infoHeaderButton.title, '坦克')
-                    end
-                end
+        if iconFlag and Flags[iconFlag] then
+            icon.tooltipTitle = Flags[iconFlag]--_G["ENCOUNTER_JOURNAL_SECTION_FLAG"..iconFlag]
+        end
+        if index then
+            if iconFlag==1 then
+                WoWTools_ChineseMixin:SetLabel(infoHeaderButton.title, '伤害')
+            elseif iconFlag==2 then
+                WoWTools_ChineseMixin:SetLabel(infoHeaderButton.title, '治疗者')
+            elseif iconFlag==0 then
+                WoWTools_ChineseMixin:SetLabel(infoHeaderButton.title, '坦克')
+            else
+                WoWTools_ChineseMixin:SetLabel(infoHeaderButton.title)
             end
         end
     end
