@@ -356,7 +356,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
         self:SetLabel(frame.info.encounterTitle, ename)
 
-        local desc= WoWTools_ChineseMixin:CN(description)
+        local desc= self:CN(description)
         if desc then
             frame.overviewFrame.loreDescription:SetText(desc)
             frame.infoFrame.description:SetText(desc)
@@ -366,7 +366,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
             end
         end
 
-        desc= select(2, WoWTools_ChineseMixin:GetBoosSectionName(frame.overviewFrame.rootOverviewSectionID))
+        desc= select(2, self:GetBoosSectionName(frame.overviewFrame.rootOverviewSectionID))
         if desc then
             frame.overviewFrame.overviewDescription.Text:SetText(desc)
             frame.overviewFrame.overviewDescription.descriptionHeight = frame.overviewFrame.overviewDescription:GetHeight()
@@ -382,7 +382,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
     end)
 
     hooksecurefunc("EncounterJournal_SetDescriptionWithBullets", function(infoHeader)
-        local data = infoHeader and WoWTools_ChineseMixin:GetBoosSectionData(infoHeader.sectionID)
+        local data = infoHeader and self:GetBoosSectionData(infoHeader.sectionID)
         if data then
             local title= data.T
             local desc= data.D
@@ -397,8 +397,30 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
 
 
+--技能提示，OnEnter, OnMouseDown发超链接
+if not WoWTools_DataMixin then
+    hooksecurefunc('EncounterJournal_UpdateButtonState', function(frame)
+        if frame.isHooked2 then
+            return
+        end
 
-
+        frame:HookScript("OnEnter", function(btn)
+            local p= btn:GetParent()
+            local spellID= p.spellID or 0
+            if spellID<1 or GameTooltip:IsShown() then
+                return
+            end
+            if spellID and not C_Spell.IsSpellDataCached(spellID) then
+                C_Spell.RequestLoadSpellData(spellID)
+            end
+            GameTooltip:SetOwner(btn, "ANCHOR_RIGHT")
+            GameTooltip:ClearLines()
+            GameTooltip:SetSpellByID(spellID)
+            GameTooltip:Show()
+        end)
+        frame.isHooked2=true
+    end)
+end
 
 
 
@@ -440,21 +462,15 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
                     break
                 end
 
-                WoWTools_ChineseMixin:SetLabel(suggestion.centerDisplay.title.text, data.title)
-                WoWTools_ChineseMixin:SetLabel(suggestion.centerDisplay.description.text, data.description)
+                self:SetLabel(suggestion.centerDisplay.title.text, data.title)
+                self:SetLabel(suggestion.centerDisplay.description.text, data.description)
                 if suggestion.centerDisplay then
-                    WoWTools_ChineseMixin:SetLabel(suggestion.centerDisplay.button, data.buttonText)
+                    self:SetLabel(suggestion.centerDisplay.button, data.buttonText)
                 else
-                    WoWTools_ChineseMixin:SetLabel(suggestion.button, data.buttonText)
+                    self:SetLabel(suggestion.button, data.buttonText)
                 end
             end
     end)
-
-    --[[do
-        WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal_PerksActivity()
-    end
-    WoWTools_ChineseMixin.Events.Blizzard_EncounterJournal_PerksActivity=nil
-]]
 
 
 
@@ -572,7 +588,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
         end
     end)
     if EncounterJournalMonthlyActivitiesFrame.ThresholdContainer then
-        WoWTools_ChineseMixin:SetLabel(EncounterJournalMonthlyActivitiesFrame.ThresholdContainer.TextContainer.Points)
+        self:SetLabel(EncounterJournalMonthlyActivitiesFrame.ThresholdContainer.TextContainer.Points)
     end
     EncounterJournalMonthlyActivitiesFrame.HeaderContainer.Title:SetText('旅行者日志')
     EncounterJournalMonthlyActivitiesFrame.BarComplete.AllRewardsCollectedText:SetText('你已经收集完了本月的所有奖励')
@@ -582,7 +598,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_EncounterJournal()
 
 
 local function set_desc_event(data)
-    local desc= data and WoWTools_ChineseMixin:CN(data.description)
+    local desc= data and self:CN(data.description)
     if desc then
         if data.eventStartTime and desc:find('{EventStartDate}') then
             local eventStartTimeUnits = date("*t", data.eventStartTime)

@@ -1,7 +1,7 @@
 --[[
 [ID]= 'Name_lang',
 https://wago.tools/db2/Vignette?locale=zhCN
-
+仅限 WoWTools 插件调用
 ]]
 local tab={
 [7555]= "努尔拉托斯",
@@ -6778,3 +6778,11 @@ local tab={
 function WoWTools_ChineseMixin:GetVignetteName(vignetteID)
     return tab[vignetteID]
 end
+
+EventRegistry:RegisterFrameEventAndCallback("PLAYER_ENTERING_WORLD", function(owner)
+if not WoWTools_DataMixin then
+    WoWTools_ChineseMixin.GetVignetteName=function()end
+    tab={}
+end
+EventRegistry:UnregisterCallback('PLAYER_ENTERING_WORLD', owner)
+end)

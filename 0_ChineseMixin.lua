@@ -15,6 +15,8 @@ WoWTools_ChineseMixin={
 }
 EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(_, arg1)
     if arg1=='WoWTools_Chinese' then
+        WoWToolsChineseSave= WoWToolsChineseSave or {}
+
         for name in pairs(WoWTools_ChineseMixin.Events) do
             if C_AddOns.IsAddOnLoaded(name) then
                  do

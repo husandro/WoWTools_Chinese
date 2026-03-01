@@ -7,6 +7,7 @@
 ## X-Category: Data Export, Plugins
 ## Notes: |A:Icon-WoW:0:0|aWoW |cff28a3ff中文化|r|n|A:WoWShare-TwitterLogo:0:0|a|cff00ccffhttps://www.curseforge.com/wow/addons/wowtools_chinese|r
 ## DefaultState: Enabled
+## SavedVariables: WoWToolsChineseSave
 ## IconTexture: Interface\AddOns\WoWTools_Chinese\Source\WoWtools.tga
 
 ##繁体，简体，不会载加
