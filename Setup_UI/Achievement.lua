@@ -157,7 +157,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
     end)
 --条件
     hooksecurefunc('AchievementObjectives_DisplayCriteria', function(objectivesFrame, achievementID)
-        if self:Save().Achievement and not objectivesFrame or not achievementID then
+        if self:Save().Achievement
+            or not objectivesFrame
+            or not achievementID
+        then
             return
         end
         local requiresRep, repLevel, _
