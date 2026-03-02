@@ -2,6 +2,7 @@
 ID= Name_lang
 --[ID] = {"Name_lang", ItemID_0,ItemID_1,ItemID_2,ItemID_3,ItemID_4,ItemID_5,ItemID_6,ItemID_7},
 https://wago.tools/db2/ItemSet?locale=zhCN
+12.0.1.66198
 ]]
 
 

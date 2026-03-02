@@ -1,6 +1,8 @@
 --[[
 [ID]= {"Name_lang", "Description_lang"},
 https://wago.tools/db2/GroupFinderCategory?locale=zhCN
+
+12.0.1.66198
 ]]
 local tab={
 [121]= {"地下堡", "搜索地下堡，难度……"},

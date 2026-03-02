@@ -1,6 +1,7 @@
 --[[
 [ID]= 'Name_lang',
 https://wago.tools/db2/TransmogSet?locale=zhCN
+12.0.1.66198
 ]]
 
 local tab={

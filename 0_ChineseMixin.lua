@@ -433,6 +433,14 @@ function WoWTools_ChineseMixin:SetText(text)
         return set_match(s, s:match('(.+) %d+/%d+$'))
     end)
 
+    text2= text2:gsub('.+%(%d+/%d+%)$', function(s)--套装|cff626262(0/9)|r
+        if s:find('.+|c.-%(%d+/%d+%)$') then
+            return  set_match(s, s:match('(.+)|c.-%(%d+/%d+%)$'))
+        else
+            return set_match(s, s:match('(.+)%(%d+/%d+%)$'))
+        end
+    end)
+
     if text ~= text2 and text2:find('[\228-\233]') then
         return text2
     end

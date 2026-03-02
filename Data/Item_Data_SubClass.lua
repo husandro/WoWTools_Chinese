@@ -1,6 +1,7 @@
 --[[
 {ClassID,SubClassID, "DisplayName_lang", "VerboseName_lang"},
 https://wago.tools/db2/ItemSubClass?locale=zhCN
+12.0.1.66198
 ]]
 
 local tab={
