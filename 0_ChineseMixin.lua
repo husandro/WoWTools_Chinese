@@ -12,6 +12,9 @@ end
 WoWTools_ChineseMixin={
     Events={},
     Frames={},
+    Save= function()
+        return WoWToolsChineseSave or {}
+    end,
 }
 EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(_, arg1)
     if arg1=='WoWTools_Chinese' then

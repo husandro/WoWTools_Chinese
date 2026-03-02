@@ -1,0 +1,76 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\..\..\..\WoW\Data\Interface\AddOns\Blizzard_SharedXML\UI.xsd">
+    <Button name="WoWToolsCNTemplate" virtual="true">
+        <Size x="23" y="23"/>
+        <PushedTexture atlas="Forge-ColorSwatchHighlight"/>
+        <HighlightTexture atlas="Forge-ColorSwatchSelection"/>        
+    </Button>
+
+
+    <Button name="WoWToolsCNButtonTemplate" inherits="WoWToolsCNTemplate" virtual="true">     
+        <Scripts>
+            <OnLoad>
+                self:EnableMouseWheel(true)
+                self:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+                self:SetNormalTexture('Interface\\AddOns\\WoWTools_Chinese\\Source\\WoWtools.tga')
+                self:GetNormalTexture():ClearAllPoints()
+                self:GetNormalTexture():SetPoint('CENTER')
+                self:GetNormalTexture():SetSize(12,12)
+                function self:settings()
+                    local enabled= not WoWToolsChineseSave[self.value]
+                    if enabled then
+                        self:SetNormalAtlas('MonkUI-LightOrb')
+                    else
+                        self:SetNormalTexture('Interface\\AddOns\\WoWTools_Chinese\\Source\\WoWtools.tga')
+                    end
+                    self:GetNormalTexture():SetAlpha((not enabled or self:IsMouseOver())  and 1 or 0.5)
+                end
+            </OnLoad>
+            <OnMouseDown>
+                WoWToolsChineseSave[self.value]= not WoWToolsChineseSave[self.value] and true or nil
+                if self.callback then
+                    if type[self.callback]=='function' then
+                        self.callback()
+                    else
+                        local callback= _G[self.callback]
+                        if callback then
+                            callback()
+                        end
+                    end
+                end
+                self:settings()
+            </OnMouseDown>
+            <OnLeave>
+                ResetCursor()
+                GameTooltip_Hide()
+                if self.set_alpha then
+                    self:set_alpha()
+                elseif self.alpha then
+                    self:SetAlpha(self:IsMouseOver() and 1 or self.alpha)
+                elseif not self.callback then
+                    self:settings()
+                end
+            </OnLeave>
+            <OnEnter>
+                GameTooltip:SetOwner(self, self.owner or 'ANCHOR_LEFT')
+                GameTooltip_SetTitle(GameTooltip, '|TInterface\\AddOns\\WoWTools_Chinese\\Source\\WoWtools.tga:0|t|cffff00ffWoW|r|cff00ff00Tools|r_|cff28a3ffChinese|r')
+                if type(self.tooltip)=='function' then
+                    self:tooltip(GameTooltip)
+                elseif self.tooltip then
+                    GameTooltip:AddLine(GameTooltip, self.tooltip, NORMAL_FONT_COLOR:GetRGB())
+                else
+                    GameTooltip:AddLine('需要刷新')
+                end
+                GameTooltip:Show()
+                if self.set_alpha then
+                    self:set_alpha()
+                elseif self.alpha then
+                    self:SetAlpha(self:IsMouseOver() and 1 or self.alpha)
+                else
+                    self:settings()
+                end
+            </OnEnter>
+        </Scripts>
+    </Button>
+
+</Ui>

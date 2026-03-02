@@ -20,9 +20,13 @@ end
 
 
 
-
 function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
 
+    local btn= CreateFrame('Button', 'WoWToolsCNAchievementButton', AchievementFrameCloseButton, 'WoWToolsCNButtonTemplate')
+    --btn:SetPoint('RIGHT', AchievementFrame.Header.Title, 'LEFT')
+    btn:SetPoint('RIGHT', AchievementFrame.Header.Points, 'LEFT', -27, 0)
+    btn.value= 'Achievement'
+    btn:settings()
 
     AchievementFrameTab1:SetText('成就')
     AchievementFrameTab2:SetText('公会')
@@ -35,11 +39,16 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
     --标题
     AchievementFrame.Header.Title:SetText('成就点数')
     hooksecurefunc('AchievementFrame_RefreshView', function()--Blizzard_AchievementUI.lua
-        WoWTools_ChineseMixin:SetLabel(AchievementFrame.Header.Title)
+        if not self:Save().Achievement then
+            WoWTools_ChineseMixin:SetLabel(AchievementFrame.Header.Title)
+        end
     end)
 
     --近期成就
     hooksecurefunc('AchievementFrameSummary_UpdateAchievements', function(...)
+        if self:Save().Achievement then
+            return
+        end
         local numAchievements = select("#", ...)
         if not AchievementFrameSummaryAchievements.buttons or not numAchievements then
             return
@@ -86,6 +95,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
         end
     end)
     hooksecurefunc('AchievementFrameSummary_UpdateSummaryProgressBars', function(categories)
+        if self:Save().Achievement then
+            return
+        end
         for i = 1, 12 do
             local statusBar = _G["AchievementFrameSummaryCategoriesCategory"..i]
             if statusBar and i <= #categories then
@@ -97,7 +109,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
 
     --列表
     hooksecurefunc(AchievementCategoryTemplateMixin, 'Init', function(f)
-        WoWTools_ChineseMixin:SetLabel(f.Button.Label, f.Button.name)
+        if not self:Save().Achievement then
+            WoWTools_ChineseMixin:SetLabel(f.Button.Label, f.Button.name)
+        end
     end)
 
     hooksecurefunc(AchievementCategoryTemplateMixin, 'Init', function(frame, info)
@@ -107,7 +121,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
             frame.Button.text = "对于许多公会来说，“光辉事迹”几乎不可能完成，至少是极端困难的。它们并不奖励点数，而是见证了这个公会在艾泽拉斯世界曾经创下的丰功伟绩的纪录。"
         end
     end)
-    hooksecurefunc('AchievementFrameCategories_OnCategoryChanged', function(category)
+    hooksecurefunc('AchievementFrameCategories_OnCategoryChanged', function()
         if AchievementFrameAchievementsFeatOfStrengthText:IsShown() then
             AchievementFrameAchievementsFeatOfStrengthText:SetText(
                 InGuildView() and '对于许多公会来说，“光辉事迹”几乎不可能完成，至少是极端困难的。它们并不奖励点数，而是见证了这个公会在艾泽拉斯世界曾经创下的丰功伟绩的纪录。'
@@ -118,6 +132,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
 
     --成就
     hooksecurefunc(AchievementTemplateMixin, 'Init', function(frame, elementData)
+        if self:Save().Achievement then
+            return
+        end
+
         local _, name, description,rewardText
         if frame.index then
             _, name, _, _, _, _, _, description, _, _, rewardText = GetAchievementInfo(elementData.category, frame.index)
@@ -139,7 +157,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
     end)
 --条件
     hooksecurefunc('AchievementObjectives_DisplayCriteria', function(objectivesFrame, achievementID)
-        if not objectivesFrame or not achievementID then
+        if self:Save().Achievement and not objectivesFrame or not achievementID then
             return
         end
         local requiresRep, repLevel, _
@@ -186,7 +204,7 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
 
     --搜索
     hooksecurefunc('AchievementFrame_ShowSearchPreviewResults', function()
-        local numResults = GetNumFilteredAchievements() or 0
+        local numResults = not self:Save().Achievement and GetNumFilteredAchievements() or 0
         if numResults == 0 then
             return
         end
@@ -206,6 +224,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
         end
     end)
     hooksecurefunc(AchievementFullSearchResultsButtonMixin, 'Init', function(frame)
+        if self:Save().Achievement or not frame.achievementID then
+            return
+        end
+
         local _, name, _, completed = GetAchievementInfo(frame.achievementID)
         WoWTools_ChineseMixin:SetLabel(frame.Name, name)
 
@@ -232,23 +254,24 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
 
     --统计
     hooksecurefunc(AchievementStatTemplateMixin, 'Init', function(frame, elementData)
-        if elementData then
-            local category = elementData.id
-            --local colorIndex = elementData.colorIndex
-            if elementData.header then
-                local text
-                if ( category == ACHIEVEMENT_COMPARISON_STATS_SUMMARY_ID ) then
-                    text = '总览'
-                else
-                    text = WoWTools_ChineseMixin:CN(GetCategoryInfo(category))
-                end
-                if text then
-                    frame.Title:SetText(text)
-                end
+        if self:Save().Achievement or not elementData then
+            return
+        end
+        local category = elementData.id
+        --local colorIndex = elementData.colorIndex
+        if elementData.header then
+            local text
+            if ( category == ACHIEVEMENT_COMPARISON_STATS_SUMMARY_ID ) then
+                text = '总览'
             else
-                local name= select(2, GetAchievementInfo(category))
-                WoWTools_ChineseMixin:SetLabel(frame.Text, name)
+                text = WoWTools_ChineseMixin:CN(GetCategoryInfo(category))
             end
+            if text then
+                frame.Title:SetText(text)
+            end
+        else
+            local name= select(2, GetAchievementInfo(category))
+            WoWTools_ChineseMixin:SetLabel(frame.Text, name)
         end
     end)
 
@@ -257,6 +280,9 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
 
     --比较
     hooksecurefunc(AchievementComparisonTemplateMixin, 'Init', function(frame, elementData)
+         if self:Save().Achievement or not elementData then
+            return
+        end
         local _, name, _, _, _, _, _, description = GetAchievementInfo(elementData.category, elementData.index)
         WoWTools_ChineseMixin:SetLabel(frame.Player.Label, name)
         WoWTools_ChineseMixin:SetLabel(frame.Player.Description, description)
@@ -265,6 +291,10 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
         end
     end)
     hooksecurefunc('AchievementFrameComparison_UpdateStatusBars', function(ID)
+        if self:Save().Achievement then
+            return
+        end
+
         local name
         if ID == ACHIEVEMENT_COMPARISON_SUMMARY_ID then-- -1
             name = '总览'
@@ -275,10 +305,13 @@ function WoWTools_ChineseMixin.Events:Blizzard_AchievementUI()
             AchievementFrameComparison.Summary.Player.StatusBar.Title:SetFormattedText('已获得 %s 项成就', name)
         end
     end)
-    hooksecurefunc(AchivementComparisonStatMixin, 'Init', function(frame, elementData)--比较, 统计        
-        if not elementData then return end
+    hooksecurefunc(AchivementComparisonStatMixin, 'Init', function(frame, elementData)--比较, 统计       
+        if self:Save().Achievement or not elementData then
+            return
+        end
+
         local category = elementData.id
-        local colorIndex = elementData.colorIndex
+        --local colorIndex = elementData.colorIndex
         if elementData.header then
             local title= WoWTools_ChineseMixin:CN(GetCategoryInfo(category))
             if title then
