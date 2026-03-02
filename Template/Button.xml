@@ -59,7 +59,7 @@
                 elseif self.tooltip then
                     GameTooltip:AddLine(GameTooltip, self.tooltip, NORMAL_FONT_COLOR:GetRGB())
                 else
-                    GameTooltip:AddLine('需要刷新')
+                    GameTooltip:AddLine('需要刷新', GREEN_FONT_COLOR:GetRGB())
                 end
                 GameTooltip:Show()
                 if self.set_alpha then
