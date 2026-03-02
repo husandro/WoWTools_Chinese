@@ -44,22 +44,36 @@ local function UpdateEncounterJournalHeaders()
     for index, infoHeader in pairs(EncounterJournal.encounter.usedHeaders or {}) do
         if infoHeader.myID and infoHeader.button then
 
-            if infoHeader.description then
-                local difficultyID = EJ_GetDifficulty()
-                local data = WoWTools_ChineseMixin:GetBoosSectionData(infoHeader.myID, difficultyID)--difficultyID and WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
-                if data then
-                    if data.T then
-                        infoHeader.button.title:SetText(data.T)
-                    end
-                    if data.D then
-                        infoHeader.description:SetText(data.D)
-                    end
-                    EncounterJournal_ShiftHeaders(index)
-                end
+            local difficultyID = EJ_GetDifficulty()
+            local title, desc = WoWTools_ChineseMixin:GetBoosSectionName(infoHeader.myID, difficultyID)--difficultyID and WoWeuCN_Tooltips_EncounterSectionData[difficultyID .. 'x' .. sectionID]
+
+            if (not title or not desc) and infoHeader.spellID then
+                local spellTitle, spellDesc= WoWTools_ChineseMixin:GetSpellName(infoHeader.spellID)
+                title= title or spellTitle
+                desc= desc or spellDesc
             end
 
-            EncounterJournal_SetupIconFlags(infoHeader.myID, infoHeader.button)
+            if desc then
+                desc= desc:gsub("|cffffffff(.-)|r", "%1")
+                local sectionInfo = C_EncounterJournal.GetSectionInfo(infoHeader.myID)
+                if sectionInfo and sectionInfo.description then
+                    desc= desc..'|n|n'..sectionInfo.description:gsub("|cffffffff(.-)|r", "%1")
+                end
+                infoHeader.description:SetText(desc)
+            else
+                WoWTools_ChineseMixin:SetLabel(infoHeader.description)
+            end
+
+            if title then
+                infoHeader.button.title:SetText(title)
+            else
+                WoWTools_ChineseMixin:SetLabel(infoHeader.button.title)
+            end
+            EncounterJournal_ShiftHeaders(index)
+
         end
+
+        EncounterJournal_SetupIconFlags(infoHeader.myID, infoHeader.button)
     end
 end
 
