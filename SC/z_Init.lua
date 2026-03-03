@@ -197,23 +197,33 @@ end
 
 
 function WoWTools_ChineseMixin:GetBoosSectionData(sectionID, difficultyID)
-    if not WoWeuCN_Tooltips_EncounterSectionData
-        or not canaccessvalue(sectionID)
+    sectionID= GetValueID(sectionID)
+
+    if  not sectionID
         or not canaccessvalue(difficultyID)
-        or not sectionID
     then
         return
     end
 
-    difficultyID= difficultyID or EJ_GetDifficulty()
-   
-    local data=WoWeuCN_Tooltips_EncounterSectionData[difficultyID..'x'..sectionID]
+    difficultyID= GetValueID(difficultyID) or EJ_GetDifficulty()
 
-    if data then
-        return {
-            T=data.Title~='' and data.Title or nil,
-            D=data.Description~='' and data.Description or nil,
-        }
+    if WoWeuCN_Tooltips_EncounterSectionData then
+        local data= WoWeuCN_Tooltips_EncounterSectionData[difficultyID..'x'..sectionID]
+        if data then
+            return {
+                T=data.Title~='' and data.Title or nil,
+                D=data.Description~='' and data.Description or nil,
+            }
+        end
+    end
+    if WoWTools_SC_SectionEncounter then
+        local data= WoWTools_SC_SectionEncounter[sectionID]
+        if data then
+            return {
+                T=data.T,
+                D=data[difficultyID] or data[14] or data[1],
+            }
+        end
     end
 end
 
