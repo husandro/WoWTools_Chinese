@@ -112,45 +112,7 @@ WoWTools_ChineseMixin:AddDialogs("RESURRECT_NO_TIMER", {text = '%s想要复活�
 
 
 local function set_DeathRecapFrame_OpenRecap()
-    local self = DeathRecapFrame;
-    if not DeathRecapFrame:IsShown() then
-        return
-    end
 
-    local events = DeathRecap_GetEvents(self.recapID );
-    if( not events or #events <= 0 ) then
-        return;
-    end
-
-    for i = 1, #events do
-        local entry = self.DeathRecapEntry[i]
-        local evtData = events[i]
-        if entry and entry:IsShown() and evtData then
-            local spellId, spellName = DeathRecapFrame_GetEventInfo(evtData)
-            local name= WoWTools_ChineseMixin:GetSpellName(spellId) or WoWTools_ChineseMixin:CN(spellName)
-            if name then
-                entry.SpellInfo.Name:SetText(name)
-            end
-            WoWTools_ChineseMixin:SetLabel(entry.SpellInfo.Caster)
-
-            local dmgInfo = entry.DamageInfo;
-            if dmgInfo and evtData.amount then
-                dmgInfo.dmgExtraStr = "";
-                if ( evtData.overkill and evtData.overkill > 0 ) then
-                    dmgInfo.dmgExtraStr = format('（%s 过量伤害）', evtData.overkill);
-                end
-                if ( evtData.absorbed and evtData.absorbed > 0 ) then
-                    dmgInfo.dmgExtraStr = dmgInfo.dmgExtraStr.." "..format('（%s 吸收）', evtData.absorbed);
-                end
-                if ( evtData.resisted and evtData.resisted > 0 ) then
-                    dmgInfo.dmgExtraStr = dmgInfo.dmgExtraStr.." "..format('（%s 抵抗）', evtData.resisted);
-                end
-                if ( evtData.blocked and evtData.blocked > 0 ) then
-                    dmgInfo.dmgExtraStr = dmgInfo.dmgExtraStr.." "..format('（%s 格挡）', evtData.blocked);
-                end
-            end
-        end
-    end
 end
 
 
@@ -159,8 +121,44 @@ end
 
 
 function WoWTools_ChineseMixin.Events:Blizzard_DeathRecap()
-    DeathRecapFrame.CloseButton:SetText('关闭')
-    DeathRecapFrame.Title:SetText('死亡摘要')
+    self:SetButton(DeathRecapFrame.CloseButton)
+    self:SetLabel(DeathRecapFrame.Title)
 
-    hooksecurefunc('DeathRecapFrame_OpenRecap', set_DeathRecapFrame_OpenRecap)
+    hooksecurefunc(DeathRecapEntryMixin, 'Init', function(frame, elementData)
+        if not canaccesstable(elementData)
+            or not canaccessvalue(elementData.amount)
+            or not elementData.amount
+        then
+            return
+        end
+
+		frame.dmgExtraStr = "";
+		if elementData.overkill and elementData.overkill > 0 then
+			frame.dmgExtraStr = format('（%s 过量伤害）', elementData.overkill)
+		end
+
+		if elementData.absorbed and elementData.absorbed > 0 then
+			frame.dmgExtraStr = frame.dmgExtraStr.." "..format('（%s 吸收）', elementData.absorbed)
+		end
+
+		if elementData.resisted and elementData.resisted > 0 then
+			frame.dmgExtraStr = frame.dmgExtraStr.." "..format('（%s 抵抗）', elementData.resisted);
+		end
+
+		if elementData.blocked and elementData.blocked > 0 then
+			frame.dmgExtraStr = frame.dmgExtraStr.." "..format('（%s 格挡）', elementData.blocked);
+		end
+
+        local spellInfo = frame:GetSpellInfo()
+        if not canaccesstable(spellInfo) then
+            return
+        end
+
+        local spellName= self:GetSpellName(frame.spellId)
+        if spellName then
+            spellInfo.Name:SetText(spellName)
+        else
+            self:SetLabel(spellInfo.Name)
+        end
+    end)
 end

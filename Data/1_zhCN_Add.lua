@@ -26,6 +26,7 @@ local tab_G={
 ['GARRISON_LANDING_PAGE_TITLE'] = "要塞报告",
 ['JOURNEYS_LABEL'] = "旅程",
 ['EJ_TUTORIALS'] = "教程",
+['NO'] = "否",
 }
 
 

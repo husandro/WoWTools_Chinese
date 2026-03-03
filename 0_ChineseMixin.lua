@@ -58,7 +58,7 @@ end)
 
 --[\228-\233][\128-\191][\128-\191]--检查 UTF-8 字符
 function WoWTools_ChineseMixin:IsCN(text)
-    if text and string.find(text, '[\228-\233]') then
+    if canaccessvalue(text) and text and string.find(text, '[\228-\233]') then
         return text
     end
 end
@@ -487,23 +487,37 @@ function WoWTools_ChineseMixin:SetButton(btn, text, affer, setFont, isRestWidth)
     end
 end
 
-function WoWTools_ChineseMixin:AddDialogs(string, tab)
-    if StaticPopupDialogs[string] then
-        for name, text in pairs(tab) do
-            if not issecurevalue(StaticPopupDialogs[string][name]) and StaticPopupDialogs[string][name] then
-                StaticPopupDialogs[string][name]= text
-            end
+function WoWTools_ChineseMixin:AddDialogs(dia, tab)
+    local data= canaccesstable(StaticPopupDialogs[dia]) and StaticPopupDialogs[dia]
+    if not data or type(tab)~='table' then
+        return
+    end
+    for t, cn in pairs(tab) do
+        if data[t] then
+            StaticPopupDialogs[dia][t]=cn
         end
     end
 end
-
-function WoWTools_ChineseMixin:HookDialog(string, text, func)
-    if StaticPopupDialogs[string] then
-        if StaticPopupDialogs[string][text] then
-            hooksecurefunc(StaticPopupDialogs[string], text, func)
-        else
-            StaticPopupDialogs[string][text]=func
+    --[[for name, en in pairs(data) do
+        if type(en)=='string' and not self:IsCN(en) then
+            local cn= tab[name] or self:CN(en)
+            if cn then
+                StaticPopupDialogs[dia][name]= cn
+            end
         end
+    end]]
+
+
+function WoWTools_ChineseMixin:HookDialog(dia, hookType, func)
+    local data= canaccesstable(StaticPopupDialogs[dia]) and StaticPopupDialogs[dia]
+    if not data or not hookType or type(func)~='function' then
+        return
+    end
+
+    if data[hookType] then
+        hooksecurefunc(StaticPopupDialogs[dia], hookType, func)
+    else
+        StaticPopupDialogs[dia][hookType]=func
     end
 end
 
