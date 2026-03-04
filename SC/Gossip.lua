@@ -718,9 +718,3 @@ WoWTools_SC_Gossip = {
 [44034] = "专业训练师",
 [135732] = "|cFF0000FF（任务）|r我想四处参观一下。",
 }
-
-
-
-
-
-WoWTools_SC_Gossip['0000版本']= nil
