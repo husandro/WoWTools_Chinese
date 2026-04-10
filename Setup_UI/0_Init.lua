@@ -302,9 +302,11 @@ end)
 
 
 --MovieFrame.xml
-WoWTools_ChineseMixin:SetFrame(MovieFrame.CloseDialog)--, '你确定想要跳过这段过场动画吗？', 1)
-MovieFrame.CloseDialog.ConfirmButton:SetText('是')
-MovieFrame.CloseDialog.ResumeButton:SetText('否')
+--if MovieFrame then--11.05没有了
+    WoWTools_ChineseMixin:SetFrame(MovieFrame.CloseDialog)--, '你确定想要跳过这段过场动画吗？', 1)
+    WoWTools_ChineseMixin:SetButton(MovieFrame.CloseDialog.ConfirmButton)
+    WoWTools_ChineseMixin:SetButton(MovieFrame.CloseDialog.ResumeButton)
+--end
 
 
 
@@ -317,9 +319,9 @@ MovieFrame.CloseDialog.ResumeButton:SetText('否')
 
 
 
-ColorPickerFrame.Footer.OkayButton:SetText('确定')
-ColorPickerFrame.Footer.CancelButton:SetText('取消')
-ColorPickerFrame.Header.Text:SetText('颜色选择器')
+WoWTools_ChineseMixin:SetFrame(ColorPickerFrame.Footer.OkayButton)--:SetText('确定')
+WoWTools_ChineseMixin:SetFrame(ColorPickerFrame.Footer.CancelButton)--:SetText('取消')
+WoWTools_ChineseMixin:SetLabel(ColorPickerFrame.Header.Text)--:SetText('颜色选择器')
 
 
 
