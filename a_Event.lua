@@ -1185,7 +1185,13 @@ function WoWTools_ChineseMixin.Events:Blizzard_Transmog()
     self:SetLabel(TransmogFrame.OutfitCollection.PurchaseOutfitButton.Text)
     self:SetButton(TransmogFrame.OutfitCollection.SaveOutfitButton)
     self:SetLabel(TransmogFrame.OutfitCollection.UsableDiscountText)
-    self:SetLabel(TransmogFrame.CharacterPreview.HideIgnoredToggle.Text)
+
+    if TransmogFrame.CharacterPreview.ToggleOptions then--11.0.5才有
+        self:SetLabel(TransmogFrame.CharacterPreview.ToggleOptions.HideIgnoredToggle.Text)
+        self:SetLabel(TransmogFrame.CharacterPreview.ToggleOptions.SheatheWeaponToggle.Text)
+    else
+        self:SetLabel(TransmogFrame.CharacterPreview.HideIgnoredToggle.Text)
+    end
 
     self:HookLabel(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.ActiveSlotTitle)
     self:HookButton(TransmogFrame.WardrobeCollection.TabContent.ItemsFrame.DisplayTypes.DisplayTypeUnassignedButton)--不能正常
@@ -1207,6 +1213,8 @@ function WoWTools_ChineseMixin.Events:Blizzard_Transmog()
             self:SetLabel(pool.Title)
         end
     end)
+
+    self:SetLabel(TransmogFrame.WardrobeCollection.TabContent.CustomSetsFrame.PagedContent.NoEntriesText)
 end
 
 
